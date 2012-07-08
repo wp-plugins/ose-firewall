@@ -50,15 +50,19 @@ Please feel free to share your translation by sending the language file to: part
 
 == Frequently asked questions ==
 
+* Please raise all questions / bug fixes in our support tickcet here: 
+http://www.opensource-excellence.com/customers/general-enquries.html
 
 
 == Screenshots ==
 
-1. http://cdn.opensource-excellence.eu/images/ose_firewall/screen3.png
-2. http://cdn.opensource-excellence.eu/images/ose_firewall/screen4.png
+Screenshots are located in this page:
+
+http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
-
+1.0.0 - Initial release
 
 
 == Upgrade notice ==
+N/A
