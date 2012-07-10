@@ -53,6 +53,16 @@ Please feel free to share your translation by sending the language file to: part
 * Please raise all questions / bug fixes in our support tickcet here: 
 http://www.opensource-excellence.com/customers/general-enquries.html
 
+* Does the plugin block User Agent attacks?
+
+Yes, the plugin checks whether the user agent environment variables contains PHP command, linux system commands and sql commands. If these are detected, the firewall will stop the user by throwing a ban page. 
+
+* What is DFI or LFI?
+
+DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with the user agent attacks. Hackers first test if your server has the vulnerabilities in Direct File Inclusion before they start the User Agent Attacks. They test if including the local file can review your website's environment variables, e.g. adding the following into your URL to review linux username and passwords: ../../../../etc/passwd. If this is successfuly, they can use User Agent to start attacking your server by downloading shell codes into your website. 
+
+More are coming up...
+
 
 == Screenshots ==
 
