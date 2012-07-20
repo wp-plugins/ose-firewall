@@ -4,7 +4,7 @@ Donate link:
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin
 Requires at least: 3.3
 Tested up to: 3.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,7 @@ The plugin currently supports the following languages:
 
     English
     Chinese
+	French - Credits to Valérie CREPIN (contact@geromweb.com)
 
 The language files can be found in this folder:
 
@@ -71,6 +72,7 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
+1.0.1 - Added French Translation language
 1.0.0 - Initial release
 
 
