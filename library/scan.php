@@ -32,6 +32,9 @@ class oseWPFirewall {
 		private $wpsettings = array(); 
 		private $admin_email = null;
 		private $blog_name = null;
+		private $useragent = null;
+		private $attack = null;
+		private $value = null;
 		
 		function __construct($settings,$admin_email, $blog_name) {
 			$this -> getBasicInfo();
@@ -46,9 +49,9 @@ class oseWPFirewall {
 			} else {
 				$this->referer= "N/A";
 			}
-			$this->ip= self :: getRealIP();
+			$this->ip= $this->getRealIP();
 			$this->logtime = date("Y-m-d h:i:s");
-			
+			$this->useragent = (!empty($_SERVER['HTTP_USER_AGENT']))?$_SERVER['HTTP_USER_AGENT']: 'N/A';
 		}
 		function scan()
 		{
@@ -59,6 +62,7 @@ class oseWPFirewall {
 			{
 				return; // Dont run in admin
 			}
+			$this->checkIP(); 
 			if($this -> wpsettings['osefirewall_blockbl_method'] == true)
 			{
 				$this -> BlockblMethod();
@@ -92,6 +96,23 @@ class oseWPFirewall {
 				$this->checkQuerytooLong();
 			}
 			return true;
+		}
+		private function checkIP()
+		{
+			if(!isset($_SESSION[$this->ip]))
+			{
+				$_SESSION[$this->ip]= 0;
+			}
+			if ($_SESSION[$this->ip]>$this -> wpsettings['osefirewall_whitelistvars'])
+			{
+				redirect(false);
+			}
+		}
+		private function logAttack($attack, $value)
+		{
+			$this->attack = $attack;
+			$this->value = $value;
+			$_SESSION[$this->ip]++;
 		}
 		private function getRealIP() {
 			$ip= false;
@@ -167,7 +188,8 @@ class oseWPFirewall {
 			unset($patterns);
 			if($detected == true)
 			{
-				self :: redirect(FOUNDMUA);
+				self :: logAttack(FOUNDMUA, $mua);
+				self :: redirect(true);
 			}
 		}
 		// Basic function - Checks Direct Files Inclusion attack
@@ -180,7 +202,7 @@ class oseWPFirewall {
 				continue;
 				if(self :: DFImathched($allVars))
 				{
-					self :: redirect(FOUNDDFI);
+					self :: redirect(true);
 				}
 			}
 		}
@@ -217,6 +239,7 @@ class oseWPFirewall {
 						if(strstr($value, "\u0000"))
 						{
 							$result= true;
+							self :: logAttack(FOUNDDFI, 'null byte');
 							break;
 						}
 						// If the value starts with a /, ../ or [a-z]{1,2}:, block
@@ -224,6 +247,7 @@ class oseWPFirewall {
 						{
 							// Fix 2.0.1: Check that the file exists
 							$result= @ file_exists($value);
+							self :: logAttack(FOUNDDFI, $value);
 							break;
 						}
 						if($result)
@@ -282,7 +306,10 @@ class oseWPFirewall {
 						{
 							$result=(strstr($fContents, '<?php') !== false);
 							if($result)
-							break;
+							{	
+								self :: logAttack(FOUNDRFI, $value);
+								break;
+							}
 						}
 						else
 						{
@@ -303,6 +330,7 @@ class oseWPFirewall {
 						$result=(strstr($fContents, '<?php') !== false);
 						if($result)
 						{
+							self :: logAttack(FOUNDRFI, $value);
 							break;
 						}
 					}
@@ -323,27 +351,31 @@ class oseWPFirewall {
 			}
 			if(empty($_SERVER['HTTP_USER_AGENT']) || $_SERVER['HTTP_USER_AGENT'] == '-' || !isset($_SERVER['HTTP_USER_AGENT']))
 			{
-				self :: redirect(FOUNDDOS);
+				self :: logAttack(FOUNDDOS, 'dDos Attack');
+				self :: redirect(true);
 			}
 		}
 		private function checkTrasversal()
 		{
 			$trasversal = "\.\.\/|\.\.\\|%2e%2e%2f|%2e%2e\/|\.\.%2f|%2e%2e%5c";
 			if (preg_match("/^.*(".$trasversal.").*/i", $_SERVER['url'], $matched)){
-				self :: redirect(FOUNDTrasversal);
+				self :: logAttack(FOUNDTrasversal, $matched[0]);
+				self :: redirect(true);
 			}
 		}
 		private function BlockblMethod()
 		{
 			/* Method Blacklist*/
 			if (preg_match("/^(TRACE|DELETE|TRACK)/i", $_SERVER['REQUEST_METHOD'], $matched)){
-				self :: redirect(FOUNDBL_METHOD);
+				self :: logAttack(FOUNDBL_METHOD, $matched[0]);
+				self :: redirect(true);
 			}
 		}
 		private function checkQuerytooLong()
 		{
 			if (strlen($_SERVER['QUERY_STRING']) > 255){
-				self :: redirect(FOUNDQUERY_LONGER_THAN_255CHAR);
+				self :: logAttack(FOUNDQUERY_LONGER_THAN_255CHAR, '');
+				self :: redirect(true);
 			}
 		}
 		private function checkJSInjection()
@@ -363,7 +395,8 @@ class oseWPFirewall {
 					}
 					if(preg_match("#<[^>]*\w*\"?[^>]*>#is", $value))
 					{
-						self :: redirect(FOUNDJSInjection);
+						self :: logAttack(FOUNDJSInjection, $value);
+						self :: redirect(true);
 					}
 				}
 			}
@@ -390,20 +423,25 @@ class oseWPFirewall {
 					// First scanning
 					if(preg_match('#[\d\W](union select|union join|union distinct)[\d\W]#is', $value))
 					{
-						self :: redirect();
+						self :: logAttack(FOUNDSQLInjection, $value);
+						self :: redirect(true);
 					}
 					// Check for the database name and an SQL command in the value
 					if(preg_match('#[\d\W]('.implode('|', $commonSQLInjWords).')[\d\W]#is', $value) && preg_match('#'.$dbprefix.'(\w+)#s', $value) && $option != 'com_search')
 					{
-						self :: redirect(FOUNDSQLInjection);
+						self :: logAttack(FOUNDSQLInjection, $value);
+						self :: redirect(true);
 					}
 				}
 			}
 			return false;
 		}
-		function redirect($attack_type)
+		function redirect($sendmail=true)
 		{
-			$this->send_email($attack_type);
+			if ($sendmail==true)
+			{	
+				$this->send_email();
+			}
 			/* Set alert */
 			$alert  = "<br><center>";
 			$alert .= "<h2>".OSE_WORDPRESS_FIREWALL."</h2>";
@@ -434,19 +472,20 @@ class oseWPFirewall {
 			}
 		}
 		/* Block request and send email */
-		function send_email($attack_type){
+		function send_email(){
 			$email = isset( $this -> wpsettings['osefirewall_email'] ) ? $this -> wpsettings['osefirewall_email'] : $this->admin_email;
 			/* Compose email */
-			$subject = OSE_WORDPRESS_FIREWALL." - ".$blog_name;
-			$body = "== Attack Details ==\n\n";
-			$body .= "TYPE: $attack_type\n";
+			$subject = OSE_WORDPRESS_FIREWALL." - ".$this->blog_name;
+			$body  = "== Attack Details ==\n\n";
+			$body .= "TYPE: $this->attack\n";
+			$body .= "DETECTED ATTACK VALUE: $this->value\n";
 			$body .= "ACTION: Blocked\n";
 			/* Info User Log */
-			$body = "LOGTIME: ".$time."\n";
-			$body .= "\nFROM IP: http://whois.domaintools.com/".$this->ip."\n";
-			$body .= "URI: ".$this->target."\n";
+			$body .= "LOGTIME: ".$this->logtime."\n";
+			$body .= "FROM IP: http://whois.domaintools.com/".$this->ip."\n";
+			$body .= "URI: ".$this->url."\n";
 			$body .= "METHOD: ".$_SERVER['REQUEST_METHOD']."\n";
-			$body .= "USERAGENT: ".$_SERVER['HTTP_USER_AGENT']."\n";
+			$body .= "USERAGENT: ".$this->useragent."\n";
 			$body .= "REFERRER: ".$this->referer."\n";
 			$body .= "\n";
 			mail($email, $subject, $body);

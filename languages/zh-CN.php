@@ -35,3 +35,4 @@ define('FOUNDJSInjection', '发现基本的JavaScript感染攻击');
 define('FOUNDSQLInjection', '发现基本的数据库SQL注入攻击');
 define('FOUNDTrasversal', '发现基本的数据库SQL注入攻击');
 define('FOUNDQUERY_LONGER_THAN_255CHAR', '发现长于255个字符的网址');
+define('MAX_TOLERENCE', '最大的攻击容忍');

@@ -34,3 +34,4 @@ define('FOUNDJSInjection', 'Found Basic Javascript Injection');
 define('FOUNDSQLInjection', 'Found Basic Database SQL Injection');
 define('FOUNDTrasversal', 'Found Directory Traversal');
 define('FOUNDQUERY_LONGER_THAN_255CHAR', 'Found Queries longer than 255 characters');
+define('MAX_TOLERENCE', 'Maximum tolerence for an attack');

@@ -72,6 +72,9 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
+1.0.2 - Added Germany Translation language
+		Fixed the email message not showing in full issue
+		Added the maximum tolerance paramter, so the attacker will be blocked automatically after X times of attack
 1.0.1 - Added French Translation language
 1.0.0 - Initial release
 

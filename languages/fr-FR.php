@@ -34,3 +34,4 @@ define('FOUNDJSInjection', 'A trouv&eacute; des injections de Code Javascript');
 define('FOUNDSQLInjection', 'A trouv&eacute; des injections dans la base de donndonn&eacute;es SQL');
 define('FOUNDTrasversal', 'A trouv&eacute; des travers&eacute;es de r&eacute;pertoire');
 define('FOUNDQUERY_LONGER_THAN_255CHAR', 'A trouv&eacute; des requ&ecirc;tes de plus de 255 caract&egrave;res');
+define('MAX_TOLERENCE', 'Tolérance au maximum pour une attaque');

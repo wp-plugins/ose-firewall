@@ -18,6 +18,7 @@
 			$osefirewall_query_too_long  = isset( $settings['osefirewall_query_too_long'] ) ? $settings['osefirewall_query_too_long'] : false;
 			$osefirewall_blockpage       = isset( $settings['osefirewall_blockpage'] ) ? $settings['osefirewall_blockpage'] : 'osefirewall_logo';
 			$osefirewall_whitelistvars       = isset( $settings['osefirewall_whitelistvars'] ) ? $settings['osefirewall_whitelistvars'] : '';
+			$osefirewall_maxtolerance       = isset( $settings['osefirewall_maxtolerance'] ) ? $settings['osefirewall_maxtolerance'] : 5;
 			?>
 		 <div class="postbox">
 				<h3 style="cursor: default;">
@@ -120,6 +121,12 @@
 							</th>
 							<td><input type="textarea" name="ose_wp_firewall_settings[osefirewall_whitelistvars]" id ="osefirewall_whitelistvars" value ="<?php echo $osefirewall_whitelistvars; ?>" /></td>
 						</tr>
+						<tr valign="top">
+							<th scope="row"><?php _e(MAX_TOLERENCE, 'ose_wp_firewall'); ?>
+							</th>
+							<td><input type="textarea" name="ose_wp_firewall_settings[osefirewall_maxtolerance]" id ="osefirewall_maxtolerance" value ="<?php echo $osefirewall_maxtolerance; ?>" /></td>
+						</tr>
+						
 					</table>
 				</div>
 			</div>
