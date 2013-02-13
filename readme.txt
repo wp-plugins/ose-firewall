@@ -1,7 +1,7 @@
 === OSE Firewall™ ===
 Contributors: Open Source Excellence
 Donate link: 
-Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin
+Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.5.1
 Stable tag: 1.5.0
@@ -14,7 +14,7 @@ OSE Firewall™ - A WordPress Firewall created by Open Source Excellence. It pro
 
 OSE Firewall™ - A WordPress Firewall created by <a href = "http://www.opensource-excellence.com">Open Source Excellence</a>. It protects your WordPress-powered blog against attacks and hacking. Detailed description can be found in our main website <a href ="http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html">here</a>.
 
-The software has the following functions
+Since 1.0.0, The software has the following functions
 
     Block blacklisted methods (Trace / Delete / Track)     
     Checks Malicious User Agent     
@@ -24,6 +24,9 @@ The software has the following functions
     Checks Basic Remote File Inclusion     
     Checks Basic Javascript Injection     
     Checks Basic Database SQL Injection
+
+Since 1.5.0, the software supports the direction activation of OSE Security Suite to enhance the protection of your WordPress websites. The newly added Development mode also allows you to turn off the protection temporarily. 
+Since 1.5.0, a virus / malicious code scanner has been added to the plugin to help detect virus in your websites.
 
 Languages
 
