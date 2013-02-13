@@ -25,8 +25,11 @@ Since 1.0.0, The software has the following functions
     Checks Basic Javascript Injection     
     Checks Basic Database SQL Injection
 
-Since 1.5.0, the software supports the direction activation of OSE Security Suite to enhance the protection of your WordPress websites. The newly added Development mode also allows you to turn off the protection temporarily. 
-Since 1.5.0, a virus / malicious code scanner has been added to the plugin to help detect virus in your websites.
+Since 1.5.0, 
+
+    The software supports the direction activation of OSE Security Suite to enhance the protection of your WordPress websites. 
+    The newly added Development mode also allows you to turn off the protection temporarily. 
+    A virus / malicious code scanner has been added to the plugin to help detect virus in your websites.
 
 Languages
 
@@ -76,7 +79,9 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
-1.5.0 - Added four protection modes: OSE Firewall only, OSE Security Suite only, OSE Firewall plus OSE Security Suite and Development mode (protection temporarily turned off)
+1.5.0 
+
+	  - Added four protection modes: OSE Firewall only, OSE Security Suite only, OSE Firewall plus OSE Security Suite and Development mode (protection temporarily turned off)
  	  - Added a server IP field to avoid false alerts due to empty user agent
  	  - Fixed the field 'Detect Directory Traversal' not being saved properly issue
  	  - Added custom banning message field and custom banning message function
