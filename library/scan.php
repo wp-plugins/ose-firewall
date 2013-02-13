@@ -41,6 +41,10 @@ class oseWPFirewall {
 			$this -> wpsettings = $settings; 
 			$this->admin_email = $admin_email;
 			$this->blog_name = $blog_name;
+			if ($this->ip == $this -> wpsettings['osefirewall_serverip'])
+			{
+				return;
+			}
 		}
 		private function getBasicInfo() {
 			$this->url= 'http://'.str_replace("?".$_SERVER['QUERY_STRING'], "", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
@@ -101,11 +105,11 @@ class oseWPFirewall {
 		{
 			if(!isset($_SESSION[$this->ip]))
 			{
-				$_SESSION[$this->ip]= 0;
+				//$_SESSION[$this->ip]= 0;
 			}
 			if ($_SESSION[$this->ip]>$this -> wpsettings['osefirewall_whitelistvars'])
 			{
-				redirect(false);
+				//self::redirect(false);
 			}
 		}
 		private function logAttack($attack, $value)
@@ -393,7 +397,8 @@ class oseWPFirewall {
 					{
 						continue;
 					}
-					if(preg_match("#<[^>]*\w*\"?[^>]*>#is", $value))
+					if(preg_match("#<script[^>]*\w*\"?[^>]*>#is", $value))
+					//if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 					{
 						self :: logAttack(FOUNDJSInjection, $value);
 						self :: redirect(true);
@@ -436,6 +441,27 @@ class oseWPFirewall {
 			}
 			return false;
 		}
+		private function getOSEBanpage()
+		{
+			$alert  = "<br><center><div style='font-family:sans-serif;font-size: 24px;line-height:12px; color: #333333;'>".OSE_WEBSITE_PROTECTED_BY.'</div>';
+			$alert .= "<h1 style='font-family:sans-serif;font-size: 48px;line-height:1em; color: #333333;'>".OSE_WORDPRESS_FIREWALL."</h1>";
+			$alert .= "<img src='" . plugin_dir_url( __FILE__ ) . "../assets/images/firewall-security.jpg' /><br>";
+			$alert .= "<b><font color=\"red\">".BLOCK_MESSAGE."</font></b><br><br>";
+			$alert .= "</center>";
+			return $alert;
+		}
+		private function get403Page()
+		{
+			$alert = "<html>
+						   <head>
+							<title>403 Forbidden</title>
+							</head>
+						   <body>
+							<p>".BLOCK_MESSAGE."</p>
+							</body>
+						 </html>";
+			return $alert; 
+		}
 		function redirect($sendmail=true)
 		{
 			if ($sendmail==true)
@@ -443,15 +469,11 @@ class oseWPFirewall {
 				$this->send_email();
 			}
 			/* Set alert */
-			$alert  = "<br><center>";
-			$alert .= "<h2>".OSE_WORDPRESS_FIREWALL."</h2>";
-			$alert .= "<img src='" . plugin_dir_url( __FILE__ ) . "../assets/firewall.png' /><br>";
-			$alert .= "<b><font color=\"red\">".BLOCK_MESSAGE."</font></b><br><br>";
-			$alert .= "</center>";
 			switch( $this -> wpsettings['osefirewall_blockpage'] ) {
 				default:
 				case "osefirewall_logo":
 				case "":
+					$alert = $this->getOSEBanpage();
 					die( $alert );
 					break;
 				case "osefirewall_blank":
@@ -459,15 +481,12 @@ class oseWPFirewall {
 					break;
 				case "osefirewall_403error":
 					header('HTTP/1.1 403 Forbidden');
-					echo("<html>
-						   <head>
-							<title>403 Forbidden</title>
-							</head>
-						   <body>
-							<p>".BLOCK_MESSAGE."</p>
-							</body>
-						 </html>");
-					exit;
+					$alert = $this ->get403Page(); 
+					die( $alert );
+					break;
+				case "osefirewall_custom":
+					$alert = $this ->wpsettings['osefirewall_customban'];
+					die( $alert );
 					break;
 			}
 		}

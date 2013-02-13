@@ -1,4 +1,6 @@
 <?php
+defined('OSEFWDIR') or die;
+//Start here;
 define('OSE_WORDPRESS_FIREWALL', '傲视防火墙™');
 define('OSE_WORDPRESS_FIREWALL_SETTING', '傲视防火墙™设置');
 define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', '傲视防火墙™是一个<a href="http://www.opensource-excellence.com" target="_blank">傲视开源</a>针对Wordpress创建的网站应用防火墙. 它可以有效的保护你的网站免受黑客攻击.');
@@ -36,3 +38,4 @@ define('FOUNDSQLInjection', '发现基本的数据库SQL注入攻击');
 define('FOUNDTrasversal', '发现基本的数据库SQL注入攻击');
 define('FOUNDQUERY_LONGER_THAN_255CHAR', '发现长于255个字符的网址');
 define('MAX_TOLERENCE', '最大的攻击容忍');
+// Langauges for version 2.0 + start from here;

@@ -1,4 +1,6 @@
 <?php
+defined('OSEFWDIR') or die;
+//Start here;
 define('OSE_WORDPRESS_FIREWALL', 'OSE Firewall™');
 define('OSE_WORDPRESS_FIREWALL_SETTING', 'OSE Firewall™ Einstellungen');
 define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', 'OSE Firewall™ ist eine Web Application Firewall für WordPress von <a href="http://www.opensource-excellence.com" target="_blank">Open Source Excellence</a>. Sie hilft Ihre Webseite vor Angriffen und Hackversuchen effektiv zu schützen.');
@@ -35,3 +37,4 @@ define('FOUNDSQLInjection', 'Einfache SQL-Einschleusung in Datenbank gefunden');
 define('FOUNDTrasversal', 'Verzeichnisausbruch gefunden');
 define('FOUNDQUERY_LONGER_THAN_255CHAR', 'Datenbankabfragen länger als 255 Zeichen gefunden');
 define('MAX_TOLERENCE', 'Maximale tolerence für einen Angriff');
+// Langauges for version 2.0 + start from here;

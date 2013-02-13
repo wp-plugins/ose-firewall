@@ -3,8 +3,8 @@ Contributors: Open Source Excellence
 Donate link: 
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin
 Requires at least: 3.3
-Tested up to: 3.5
-Stable tag: 1.0.2
+Tested up to: 3.5.1
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,7 @@ The plugin currently supports the following languages:
     English
     Chinese
 	French - Credits to Valérie CREPIN (contact@geromweb.com)
+	Germany - Credits to Alexander Pfabel (alexander@pfabel.de)
 
 The language files can be found in this folder:
 
@@ -72,6 +73,14 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
+1.5.0 - Added four protection modes: OSE Firewall only, OSE Security Suite only, OSE Firewall plus OSE Security Suite and Development mode (protection temporarily turned off)
+ 	  - Added a server IP field to avoid false alerts due to empty user agent
+ 	  - Fixed the field 'Detect Directory Traversal' not being saved properly issue
+ 	  - Added custom banning message field and custom banning message function
+ 	  - Enhance OSE Banning page appearence
+ 	  - Enhance Javascript injection detection pattern to avoid false alerts
+ 	  - Added OSE Virus / Malicious codes scanning function
+
 1.0.2 - Added Germany Translation language
 		Fixed the email message not showing in full issue
 		Added the maximum tolerance paramter, so the attacker will be blocked automatically after X times of attack
