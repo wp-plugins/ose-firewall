@@ -1,0 +1,66 @@
+<?php
+if (!defined('OSEFWDIR'))
+{
+ 	die("Direct Access Not Allowed");
+}
+class oseVirusDefinitions
+{
+	var $version =array();
+	var $patterns =array();
+	public function __construct()
+	{
+		$this->setPatterns();
+	}
+	public function setPatterns()
+	{
+		$exp = array();
+		$exp[]= array( "[00001] Possible Shell Codes" ,"/preg_replace\(.*?x65.*?\)\;/");
+		$exp[]= array( "[00001] Possible Shell Codes" ,"#preg_replace\(.*?x65.*?\)\;#");
+		$exp[]= array( "[00002] Shell Codes" ,"/(r57\s*sh|c99\s*sh|fx29\s*sh|Sq\s*sh|N3t\s*she|phpshell|web\s*shell|Web\s*shell|Web\s*Shell|crystal\s*shell|ijo\.\s*shell|Ynx Shell).*?/");
+		$exp[]= array( "[00002] Shell Codes" ,"#(r57\s*sh|c99\s*sh|fx29\s*sh|Sq\s*sh|N3t\s*she|phpshell|web\s*shell|Web\s*shell|Web\s*Shell|crystal\s*shell|ijo\.\s*shell|Ynx Shell).*?#");
+		$exp[]= array( "[00003] Possible Shell Codes" ,"/(H|h)acked\s+(By|by).*?/");
+		$exp[]= array( "[00003] Possible Shell Codes" ,"#(H|h)acked\s+(By|by).*?#");
+		$exp[]= array( "[00004] Shell Codes" ,"/<\?(?s).*?.(x62|142).(x61|141).(x73|163).(x65|145).(x36|066).(x34|064).(x5f|137).(x64|144).(x65|145).(x63|143).(x6f|157).(x64|144).(x65|145).*?eval\(.*\).*(;|\?>)/");
+		$exp[]= array( "[00004] Shell Codes" ,"#<\?(?s).*?.(x62|142).(x61|141).(x73|163).(x65|145).(x36|066).(x340|64).(x5f|137).(x64|144).(x65|145).(x63|143).(x6f|157).(x64|144).(x65|145).*?eval\(.*\).*(;|\?>)#");
+		$exp[]= array( "[00005] Base64 Encoded Codes - Possible Shell Codes" ,"/eval\(.*?base64_decode\((?s).*?\)\);/");
+		$exp[]= array( "[00005] Base64 Encoded Codes - Possible Shell Codes" ,"#eval\(.*?base64_decode\((?s).*?\)\);#");
+		$exp[]= array( "[00006] Base64 Encoded Codes - Possible Shell Codes" ,"/eval\(.*?gzinflate\(.*?\(base64_decode\((?s).*?\);/");
+		$exp[]= array( "[00006] Base64 Encoded Codes - Possible Shell Codes" ,"#eval\(.*?gzinflate\(.*?\(base64_decode\((?s).*?\);#");
+		$exp[]= array( "[00007] Base64 Encoded Codes - Possible Shell Codes" ,"/eval\(.*?gzuncompress\(.*?\(base64_decode\((?s).*?\)\);/");
+		$exp[]= array( "[00007] Base64 Encoded Codes - Possible Shell Codes" ,"#eval\(.*?gzuncompress\(.*?\(base64_decode\((?s).*?\)\);#");
+		$exp[]= array( "[00008] Base64 Encoded Codes - Possible Shell Codes" ,"/<\?(?s).*?(e|.x65|.*?145)(v|.x76|.*?166)(a|.x61|.*?141)(l|.x6c|.*?154)(\(|.x28|.*?050)(b|.x62|.*?142)(a|.x61|.*?141)(s|.x73|.*?163)(e|.x65|.*?145)(6|.x36|.*?066)(4|.x34|.*?064)(_|.x5f|.*?137)(d|.x64|.*?144)(e|.x65|.*?145)(c|.x63|.*?143)(o|.x6f|.*?157)(d|.x64|.*?144)(e|.x65|.*?145).*?\?>/");
+		$exp[]= array( "[00008] Base64 Encoded Codes - Possible Shell Codes" ,"#<\?(?s).*?(e|.x65|.*?145)(v|.x76|.*?166)(a|.x61|.*?141)(l|.x6c|.*?154)(\(|.x28|.*?050)(b|.x62|.*?142)(a|.x61|.*?141)(s|.x73|.*?163)(e|.x65|.*?145)(6|.x36|.*?066)(4|.x34|.*?064)(_|.x5f|.*?137)(d|.x64|.*?144)(e|.x65|.*?145)(c|.x63|.*?143)(o|.x6f|.*?157)(d|.x64|.*?144)(e|.x65|.*?145).*?\?>#");
+		$exp[]= array( "[00009] Reported JS Injection" ,"/<(S|s)....(T|t)(?s).*?<\!--.*?[$][$][$].*?<\/(S|s)....(T|t)>/");
+		$exp[]= array( "[00009] Reported JS Injection" ,"#<(S|s)....(T|t)(?s).*?<\!--.*?[$][$][$].*?<\/(S|s)....(T|t)>#");
+		$exp[]= array( "[00010] Reported PHP Injection" ,"/print.*?file_get_contents\(base64_decode\(.*?\)\).*?;/");
+		$exp[]= array( "[00010] Reported PHP Injection" ,"#print.*?file_get_contents\(base64_decode\(.*?\)\).*?;#");
+		$exp[]= array( "[00011] Possible PHP Injection" ,"/(Buy|buy)(?s).*?(Cialis|Cheap|viagra).*?(O|o)n-?line.*?/");
+		$exp[]= array( "[00011] Possible PHP Injection" ,"#(Buy|buy)(?s).*?(Cialis|Cheap|viagra).*?(O|o)n-?line.*?#");
+		$exp[]= array( "[00012] Reported PHP Injection" ,"/<\?(?s).*?ini_set\(.*?max_execution_time.*?set_time_limit.*?get_current_user\(.*?mail\(.*?\?>/");
+		$exp[]= array( "[00012] Reported PHP Injection" ,"#<\?(?s).*?ini_set\(.*?max_execution_time.*?set_time_limit.*?get_current_user\(.*?mail\(.*?\?>#");
+		$exp[]= array( "[00013] Possible PHP Injection" ,"/<\?(?s).*?HTTP_HOST.*?HTTP_USER_AGENT.*?preg_replace.*?(ips|ip).(masks|mask).*?preg_match\(.*?\).*?header.*?http.*?(cgi|ru|fr|info|org|us|pl|net|php|cfg|pip|txt|\?).*\?>/");
+        $exp[]= array( "[00013] Possible PHP Injection" ,"#<\?(?s).*?HTTP_HOST.*?HTTP_USER_AGENT.*?preg_replace.*?(ips|ip).(masks|mask).*?preg_match\(.*?\).*?header.*?http.*?(cgi|ru|fr|info|org|us|pl|net|php|cfg|pip|txt|\?).*\?>#");
+		$exp[]= array( "[00014] Possible iFrame - Possible false alert" ,"/<iframe\s*src=.*?visibility.*?hidden.*?<\/iframe>/");
+        $exp[]= array( "[00014] Possible iFrame - Possible false alert" ,"#<iframe\s*src=.*?visibility.*?hidden.*?<\/iframe>#");
+		$exp[]= array( "[00015] iFrame Injection" , "/document.write.*?<iframe.*?src=.*?(\.cgi|\.ru|\.fr|\.info|\.org|\.us|\.pl|\.net|\.php|\.cfg|\.pip|\.txt|\.html|\?).*?><\/iframe>.*?;/");
+		$exp[]= array( "[00015] iFrame Injection" , "#document.write.*?<iframe.*?src=.*?(\.cgi|\.ru|\.fr|\.info|\.org|\.us|\.pl|\.net|\.php|\.cfg|\.pip|\.txt|\.html|\?).*?><\/iframe>.*?;#");
+		$exp[]= array( "[00016] Possible iFrame - Possible false alert" , '/<\!.*?><style>div.*?<iframe.*?src=.*?border=0.*?<\/iframe>.*?<\!.*?>/');
+		$exp[]= array( "[00016] Possible iFrame - Possible false alert" , '#<\!.*?><style>div.*?<iframe.*?src=.*?border=0.*?<\/iframe>.*?<\!.*?>#');
+		$exp[]= array( "[00017] Possible iFrame Injection" ,"/echo.*?\((\'|\")<iframe\s*src=.*?<\/iframe>(\'|\")\)\s*;/");
+		$exp[]= array( "[00017] Possible iFrame Injection" ,"#echo.*?\((\'|\")<iframe\s*src=.*?<\/iframe>(\'|\")\)\s*;#");
+        $exp[]= array( "[00018] VB Script Injection" ,"/<(S|s)....(T|t)\s+(L|l)........(VB|vb).....(T|t)>(?s).*(DropFileName|dropfilename).*?<\/(S|s)....(T|t)>/");
+		$exp[]= array( "[00018] VB Script Injection" ,"#<(S|s)....(T|t)\s+(L|l)........(VB|vb).....(T|t)>(?s).*(DropFileName|dropfilename).*?<\/(S|s)....(T|t)>#");
+		$exp[]= array( "[00019] File Injection" ,"/copy\(\"http:\/\/.*?\".*?index.*?\"\);/");
+		$exp[]= array( "[00019] File Injection" ,"#copy\(\"http:\/\/.*?\".*?index.*?\"\);#");
+		$exp[]= array( "[00020] Spam Mailer - Consider Quarantine" ,'/set_time_limit(?s).*?ignore_user_abort.*?function\s*send_mail/');
+		$exp[]= array( "[00020] Spam Mailer - Consider Quarantine" ,'#set_time_limit(?s).*?ignore_user_abort.*?function\s*send_mail#');
+		$this->patterns=$exp;
+		unset($exp);
+	}
+	function set_version()
+	{
+		$this->version = "2.0.130207";
+		return $version;
+	}
+}
+?>
