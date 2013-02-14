@@ -4,7 +4,7 @@ Plugin Name: OSE Firewall
 Plugin URI: http://wordpress.org/extend/plugins/ose-firewall/
 Description: OSE Firewall - A WordPress Firewall created by Open Source Excellence. It protects your WordPress-powered blog against attacks and hacking. The email alert / notification function is disabled by default, while it can be activated and configured in <strong>Settings -> OSE Firewall</strong>. Please go to your <a href="options-general.php?page=ose_wp_firewall">OSE Firewall configuration</a> page.
 Author: Open Sourcce Excellence
-Version: 1.5.0
+Version: 1.5.1
 Author URI: http://www.opensource-excellence.com/
 */
 define('DS', DIRECTORY_SEPARATOR);
@@ -20,16 +20,12 @@ if (isset($_GET['action']) && $_GET['action'] =='activate') {
 }
 else
 {	
-	if(! osewpUtils::isAdmin()){ 
+	if(!osewpUtils::isAdmin()){ 
 		return; 
 	}
 	$osewphelper = new OSEWPhelper(); 
 	$osewphelper->loadLanguage(); 
 	$osewphelper->addwpactions();
-	if (!isset($_GET['action']) && $_GET['action'] !='activate') {
-		$osewphelper->loadadminmenu();
-	}
-	
 	
 	foreach(array('activate', 'scan', 'scanvs','showtotal','showinfected') as $func){
 		add_action('wp_ajax_osefirewall_' . $func, 'osewpUtils::ajaxReceiver');

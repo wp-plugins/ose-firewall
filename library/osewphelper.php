@@ -38,7 +38,7 @@ Class OSEWPhelper {
 	public function loadLanguage() {
 		$curlang = get_bloginfo('language');
 		$langfile = OSEFWLANGUAGE . DS . $curlang . '.php';
-		if (file_exists($filename)) {
+		if (file_exists($langfile)) {
 			require_once($langfile);
 		} else {
 			require_once(OSEFWLANGUAGE . DS . 'en-GB.php');

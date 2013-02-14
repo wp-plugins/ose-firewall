@@ -109,6 +109,11 @@ function ose_wp_firewallplugin_menu() {
 	add_options_page(OSE_WORDPRESS_FIREWALL_CONFIG, OSE_WORDPRESS_FIREWALL_CONFIG, 'manage_options', 'ose_wp_firewall_conf', 'ose_wp_firewall_settings');
 	add_options_page(OSE_VIRUS_SCAN, OSE_VIRUS_SCAN, 'manage_options', 'ose_wp_firewall_avscan', 'ose_wp_firewall_avscan');
 	add_options_page(OSE_WORDPRESS_VIRUSSCAN_CONFIG, OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'manage_options', 'ose_wp_firewall_avconf', 'ose_wp_firewall_avconf');
+	add_menu_page(OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'options-general.php?page=ose_wp_firewall', '', OSEFWURL.'/assets/favicon.ico');
+	add_submenu_page('options-general.php?page=ose_wp_firewall', OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL_CONFIG, 'manage_options', 'options-general.php?page=ose_wp_firewall_conf' );
+	add_submenu_page('options-general.php?page=ose_wp_firewall', OSE_VIRUS_SCAN, OSE_VIRUS_SCAN, 'manage_options', 'options-general.php?page=ose_wp_firewall_avscan' );
+	add_submenu_page('options-general.php?page=ose_wp_firewall', OSE_WORDPRESS_VIRUSSCAN_CONFIG, OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'manage_options', 'options-general.php?page=ose_wp_firewall_avconf' );
+	
 }
 
 function ose_wp_firewall_main() {

@@ -41,10 +41,23 @@ class oseWPFirewall {
 			$this -> wpsettings = $settings; 
 			$this->admin_email = $admin_email;
 			$this->blog_name = $blog_name;
+		}
+		private function checkContinue()
+		{
 			if ($this->ip == $this -> wpsettings['osefirewall_serverip'])
 			{
-				return;
+				return false;
 			}
+			if(is_multisite()){
+				if(current_user_can('manage_network')){
+					return false;
+				}
+			} else {
+				if(current_user_can('manage_options')){
+					return false;
+				}
+			}
+			return true;
 		}
 		private function getBasicInfo() {
 			$this->url= 'http://'.str_replace("?".$_SERVER['QUERY_STRING'], "", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
@@ -59,6 +72,10 @@ class oseWPFirewall {
 		}
 		function scan()
 		{
+			if ($this->checkContinue() == false)
+			{
+				return;
+			}
 			// Get Whitelisted Variable;
 			$whitelistvars= $this -> wpsettings['osefirewall_whitelistvars'];
 			$this->whitelistvars= explode(",", $whitelistvars);
@@ -105,11 +122,11 @@ class oseWPFirewall {
 		{
 			if(!isset($_SESSION[$this->ip]))
 			{
-				//$_SESSION[$this->ip]= 0;
+				$_SESSION[$this->ip]= 0;
 			}
-			if ($_SESSION[$this->ip]>$this -> wpsettings['osefirewall_whitelistvars'])
+			if ((isset($_SESSION[$this->ip])) && $_SESSION[$this->ip]>$this -> wpsettings['osefirewall_whitelistvars'])
 			{
-				//self::redirect(false);
+				self::redirect(false);
 			}
 		}
 		private function logAttack($attack, $value)

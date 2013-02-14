@@ -38,7 +38,7 @@ The plugin currently supports the following languages:
     English
     Chinese
 	French - Credits to Valérie CREPIN (contact@geromweb.com)
-	Germany - Credits to Alexander Pfabel (alexander@pfabel.de)
+	Germany - Credits to Alexander Pfabel (homepage@pfabel.de)
 
 The language files can be found in this folder:
 
@@ -79,6 +79,12 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
+1.5.1 
+	  - Fixed backend admin menu causing warning message issues (reported by mike http://www.graphicline.co.za/ and Alan http://wordpress.org/support/profile/alanpae, AlanP57 http://wordpress.org/support/profile/alanp57)
+	  - Fixed language file loading error issue (credits to scottnath, http://wordpress.org/support/profile/scottnath)
+	  - Fixed redirection function error issue reported by numzi http://wordpress.org/support/profile/nunzi
+	  - Enhancement: avoid scanning backend blog post action to avoid false alerts with javascript codes inserted in to blog posts (thanks for the report by Alexander http://wordpress.org/support/profile/herzwacht and  
+	  
 1.5.0 
 
 	  - Added four protection modes: OSE Firewall only, OSE Security Suite only, OSE Firewall plus OSE Security Suite and Development mode (protection temporarily turned off)
