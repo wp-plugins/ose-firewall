@@ -4,7 +4,7 @@ Donate link:
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,9 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
+1.5.2
+	  - Enhancement: updated Chinese and Germany languages, credits to Mr Alexander Pfabel 
+	  
 1.5.1 
 	  - Fixed backend admin menu causing warning message issues (reported by mike http://www.graphicline.co.za/ and Alan http://wordpress.org/support/profile/alanpae, AlanP57 http://wordpress.org/support/profile/alanp57)
 	  - Fixed language file loading error issue (credits to scottnath, http://wordpress.org/support/profile/scottnath)
