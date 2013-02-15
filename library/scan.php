@@ -48,14 +48,9 @@ class oseWPFirewall {
 			{
 				return false;
 			}
-			if(is_multisite()){
-				if(current_user_can('manage_network')){
-					return false;
-				}
-			} else {
-				if(current_user_can('manage_options')){
-					return false;
-				}
+			if(is_admin())
+			{
+				return false;
 			}
 			return true;
 		}
@@ -79,40 +74,36 @@ class oseWPFirewall {
 			// Get Whitelisted Variable;
 			$whitelistvars= $this -> wpsettings['osefirewall_whitelistvars'];
 			$this->whitelistvars= explode(",", $whitelistvars);
-			if(is_admin())
-			{
-				return; // Dont run in admin
-			}
 			$this->checkIP(); 
-			if($this -> wpsettings['osefirewall_blockbl_method'] == true)
+			if(isset($this -> wpsettings['osefirewall_blockbl_method']) && $this -> wpsettings['osefirewall_blockbl_method'] == true)
 			{
 				$this -> BlockblMethod();
 			}
-			if($this -> wpsettings['osefirewall_checkmua'] == true)
+			if(isset($this -> wpsettings['osefirewall_checkmua']) && $this -> wpsettings['osefirewall_checkmua'] == true)
 			{
 				$this -> checkMUA();
 			}
-			if($this -> wpsettings['osefirewall_checkdfi'] == true)
+			if(isset($this -> wpsettings['osefirewall_checkdfi']) && $this -> wpsettings['osefirewall_checkdfi'] == true)
 			{
 				$this -> checkDFI();
 			}
-			if($this -> wpsettings['osefirewall_checkrfi'] == true)
+			if(isset($this -> wpsettings['osefirewall_checkrfi']) && $this -> wpsettings['osefirewall_checkrfi'] == true)
 			{
 				$this -> checkRFI();
 			}
-			if($this -> wpsettings['osefirewall_checkdos'] == true)
+			if(isset($this -> wpsettings['osefirewall_checkdos']) && $this -> wpsettings['osefirewall_checkdos'] == true)
 			{
 				$this -> checkDoS();
 			}
-			if($this -> wpsettings['osefirewall_checkjsinjection'] == true)
+			if(isset($this -> wpsettings['osefirewall_checkjsinjection']) && $this -> wpsettings['osefirewall_checkjsinjection'] == true)
 			{
 				$this -> checkJSInjection();
 			}
-			if($this -> wpsettings['osefirewall_checksqlinjection'] == true)
+			if(isset($this -> wpsettings['osefirewall_checksqlinjection']) && $this -> wpsettings['osefirewall_checksqlinjection'] == true)
 			{
 				$this -> checkSQLInjection();
 			}
-			if($this -> wpsettings['osefirewall_query_too_long'] == true)
+			if(isset($this -> wpsettings['osefirewall_query_too_long']) && $this -> wpsettings['osefirewall_query_too_long'] == true)
 			{
 				$this->checkQuerytooLong();
 			}
@@ -428,7 +419,7 @@ class oseWPFirewall {
 		{
 			$request= array($_GET, $_POST);
 			$dbprefix= 'wp_';
-			$option= $_GET['option'];
+
 			foreach($request as $allVars)
 			{
 				foreach($allVars as $element => $value)
@@ -449,7 +440,7 @@ class oseWPFirewall {
 						self :: redirect(true);
 					}
 					// Check for the database name and an SQL command in the value
-					if(preg_match('#[\d\W]('.implode('|', $commonSQLInjWords).')[\d\W]#is', $value) && preg_match('#'.$dbprefix.'(\w+)#s', $value) && $option != 'com_search')
+					if(preg_match('#[\d\W]('.implode('|', $commonSQLInjWords).')[\d\W]#is', $value) && preg_match('#'.$dbprefix.'(\w+)#s', $value) )
 					{
 						self :: logAttack(FOUNDSQLInjection, $value);
 						self :: redirect(true);

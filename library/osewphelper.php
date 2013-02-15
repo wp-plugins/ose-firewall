@@ -33,7 +33,7 @@ Class OSEWPhelper {
 		$this->blog_wpurl = get_bloginfo('wpurl');
 		$this->blog_name = get_bloginfo('name');
 		$this->admin_email = get_option('admin_email');
-		$this->osefwurl = $this->blog_wpurl.'/wp-content/plugins/ose-firewall/';
+		$this->osefwurl = OSEFWURL;
 	}
 	public function loadLanguage() {
 		$curlang = get_bloginfo('language');
