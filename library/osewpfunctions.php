@@ -24,14 +24,9 @@
 */
 defined('OSEFWDIR') or die;
 function ose_wp_firewallsettings_link($links, $file) {
-	static $this_plugin;
-	if (empty($this_plugin))
-	{
-		$this_plugin = plugin_basename(__FILE__);
-	}
-	if (strstr($this_plugin, 'ose-firewall'))
+	if (strstr($file, 'ose-firewall'))
 	{	
-		$links[] = '<a href="' . admin_url('options-general.php?page=ose_wp_firewall') . '">' . __('Settings', 'ose_wp_firewall') . '</a>';
+		$links[] = '<a href="' . admin_url('admin.php?page=ose_wp_firewall') . '">' . __('Settings', 'ose_wp_firewall') . '</a>';
 	}
 	return $links;
 }
@@ -105,15 +100,10 @@ function ose_wp_installSQL()
 	return $return; 
 }
 function ose_wp_firewallplugin_menu() {
-	add_options_page(OSE_WORDPRESS_FIREWALL, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_wp_firewall', 'ose_wp_firewall_main');
-	add_options_page(OSE_WORDPRESS_FIREWALL_CONFIG, OSE_WORDPRESS_FIREWALL_CONFIG, 'manage_options', 'ose_wp_firewall_conf', 'ose_wp_firewall_settings');
-	add_options_page(OSE_VIRUS_SCAN, OSE_VIRUS_SCAN, 'manage_options', 'ose_wp_firewall_avscan', 'ose_wp_firewall_avscan');
-	add_options_page(OSE_WORDPRESS_VIRUSSCAN_CONFIG, OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'manage_options', 'ose_wp_firewall_avconf', 'ose_wp_firewall_avconf');
-	add_menu_page(OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'options-general.php?page=ose_wp_firewall', '', OSEFWURL.'/assets/favicon.ico');
-	add_submenu_page('options-general.php?page=ose_wp_firewall', OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL_CONFIG, 'manage_options', 'options-general.php?page=ose_wp_firewall_conf' );
-	add_submenu_page('options-general.php?page=ose_wp_firewall', OSE_VIRUS_SCAN, OSE_VIRUS_SCAN, 'manage_options', 'options-general.php?page=ose_wp_firewall_avscan' );
-	add_submenu_page('options-general.php?page=ose_wp_firewall', OSE_WORDPRESS_VIRUSSCAN_CONFIG, OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'manage_options', 'options-general.php?page=ose_wp_firewall_avconf' );
-	
+	add_menu_page( OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_wp_firewall', 'ose_wp_firewall_main', OSEFWURL.'/assets/favicon.ico' );
+	add_submenu_page( 'ose_wp_firewall', OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL_CONFIG, 'manage_options', 'ose_wp_firewall_conf', 'ose_wp_firewall_settings' );
+	add_submenu_page( 'ose_wp_firewall', OSE_VIRUS_SCAN, OSE_VIRUS_SCAN, 'manage_options', 'ose_wp_firewall_avscan', 'ose_wp_firewall_avscan' );
+	add_submenu_page( 'ose_wp_firewall', OSE_WORDPRESS_VIRUSSCAN_CONFIG, OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'manage_options', 'ose_wp_firewall_avconf', 'ose_wp_firewall_avconf' );
 }
 
 function ose_wp_firewall_main() {

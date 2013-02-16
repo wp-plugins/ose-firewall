@@ -4,7 +4,7 @@ Donate link:
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,11 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
+1.5.4
+	  - Enhancement: removed duplicatd menus as suggested by Lime Canvas (http://wordpress.org/support/profile/limecanvas)
+	  - Bug fixed: fixed the issue where OSE Firewall Settings links are appended to all plugins links section (credits to Lime Canvas http://wordpress.org/support/profile/limecanvas)
+      - Bug fixed: fixed the wpdb undefined issue when initializing file list into the database
+      
 1.5.3
 	  - Enhancement: updated the codes to make it work with multiple websites (credits to scottnath, http://wordpress.org/support/profile/scottnath)
 	  - Enhancement: improved function to check admin accounts

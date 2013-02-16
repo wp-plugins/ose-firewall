@@ -9,7 +9,7 @@
           <ul >
             <li id="firewall" >
               <div class="option-items">
-              	<a href="<?php echo OSEWPADMINURL.'/options-general.php?page=ose_wp_firewall_conf';?>" >
+              	<a href="<?php echo OSEWPADMINURL.'/admin.php?page=ose_wp_firewall_conf';?>" >
 	              <img src="<?php echo OSEFWURL.'/assets/images/firewall.png'?>" alt="<?php _e(OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firwall'); ?>"><br/> 
 	              <?php _e(OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firwall'); ?>
 	            </a> 
@@ -17,7 +17,7 @@
             </li>
             <li id="vsscan">
               <div class="option-items">
-                <a href="<?php echo OSEWPADMINURL.'/options-general.php?page=ose_wp_firewall_avscan';?>" >
+                <a href="<?php echo OSEWPADMINURL.'/admin.php?page=ose_wp_firewall_avscan';?>" >
 	              <img src="<?php echo OSEFWURL.'/assets/images/scan.png'?>" alt="<?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firwall'); ?>"><br/>
 	              <?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firwall'); ?>
 	            </a>    
@@ -25,7 +25,7 @@
             </li>
             <li id="vsscanconf">
               <div class="option-items">
-	            <a href="<?php echo OSEWPADMINURL.'/options-general.php?page=ose_wp_firewall_avconf';?>" >
+	            <a href="<?php echo OSEWPADMINURL.'/admin.php?page=ose_wp_firewall_avconf';?>" >
 	              <img src="<?php echo OSEFWURL.'/assets/images/setting.png'?>" alt="<?php _e(OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firwall'); ?>"><br/>
 	              <?php _e(OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firwall'); ?>
 	            </a>  

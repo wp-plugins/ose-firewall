@@ -276,7 +276,7 @@ class osewpScanEngine {
 						'patterns' => ''
 				),
 				array ('%d','%s', '%s', '%d', '%s'));
-		return $wpdb->insert_id;
+		return $this->db->insert_id;
 	}
 	public function getfromDB($filename, $type) {
 		$query = "SELECT COUNT(`id`) as count FROM `".$this->table."`"
