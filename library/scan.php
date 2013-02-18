@@ -75,6 +75,10 @@ class oseWPFirewall {
 			$whitelistvars= $this -> wpsettings['osefirewall_whitelistvars'];
 			$this->whitelistvars= explode(",", $whitelistvars);
 			$this->checkIP(); 
+			if (isset($this -> wpsettings['osefirewall_sfspam']) && $this -> wpsettings['osefirewall_sfspam'] == true)
+			{
+				$this->checkSpambots();
+			}
 			if(isset($this -> wpsettings['osefirewall_blockbl_method']) && $this -> wpsettings['osefirewall_blockbl_method'] == true)
 			{
 				$this -> BlockblMethod();
@@ -470,7 +474,7 @@ class oseWPFirewall {
 						 </html>";
 			return $alert; 
 		}
-		function redirect($sendmail=true)
+		public function redirect($sendmail=true)
 		{
 			if ($sendmail==true)
 			{	
@@ -499,7 +503,7 @@ class oseWPFirewall {
 			}
 		}
 		/* Block request and send email */
-		function send_email(){
+		public function send_email(){
 			$email = isset( $this -> wpsettings['osefirewall_email'] ) ? $this -> wpsettings['osefirewall_email'] : $this->admin_email;
 			/* Compose email */
 			$subject = OSE_WORDPRESS_FIREWALL." - ".$this->blog_name;
@@ -517,4 +521,65 @@ class oseWPFirewall {
 			$body .= "\n";
 			mail($email, $subject, $body);
 		}
-}		
+		private function checkSpambots()
+		{
+			if($this->CheckIfSpambot($this->ip))
+			{
+				self :: logAttack(SFSPAMIP, SFSPAMIP);
+				self :: redirect(true);
+			}
+		}
+		private function CheckIfSpambot($ipAddress)
+		{
+			// Initiate and declare spambot/errorDetected as false - as we're just getting started
+			if (!isset($_SESSION['spamcheck']))
+			{
+				$_SESSION['spamcheck'] = false;
+			}
+			else
+			{
+				if ($_SESSION['spamcheck']==true)
+				{
+					return; 
+				}	
+			}	
+			if (!class_exists('oseJSON'))
+			{
+				require_once('oseJSON.php'); 
+			}	
+			$spambot = false;
+			if ($spambot != true && $ipAddress != ""  && $_SESSION['spamcheck']==false)
+			{
+				$data= array();
+				$data["ip"] = $ipAddress;
+				$data["f"] = 'json'; 
+				$json_return = $this->posttoSFS($data);
+				$result = oseJSON::decode($json_return); 
+				if (empty($result))
+				{
+					return false; 
+				}	
+				if ($result->ip->appears == true && $result->ip->confidence >= $this->wpsettings['sfs_confidence']) 
+				{
+					$spambot = true; // Check failed. Result indicates dangerous.
+				}
+				else
+				{
+					$_SESSION['spamcheck'] = true;
+					$spambot = false; // Check passed. Result returned safe.
+				}
+			}
+			return $spambot; // Return test results as either true/false or 1/0
+		}
+		private function posttoSFS($data) {
+			$Url = "http://www.stopforumspam.com/api?" . http_build_query($data);
+	        $Curl = curl_init();
+	        curl_setopt($Curl, CURLOPT_URL, $Url);
+	        curl_setopt($Curl, CURLOPT_RETURNTRANSFER, true);
+	        curl_setopt($Curl, CURLOPT_TIMEOUT, 4);
+	        curl_setopt($Curl, CURLOPT_FAILONERROR, 1);
+	        $ResultString = curl_exec($Curl);
+	        curl_close($Curl);
+	        return $ResultString; 
+		}
+}

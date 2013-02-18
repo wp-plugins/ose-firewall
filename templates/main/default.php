@@ -1,40 +1,48 @@
 <div id="container">
 	<div id = "stage">
 	<div>
-		<h1> <?php _e(OSE_WORDPRESS_FIREWALL, 'ose_wordpress_firwall'); ?></h1>
-		<p> <?php _e(OSE_WORDPRESS_FIREWALL_SETTING_DESC, 'ose_wp_firewall'); ?></p>
+		<h1> <?php _e(OSE_WORDPRESS_FIREWALL, 'ose_wordpress_firewall'); ?></h1>
+		<p> <?php _e(OSE_WORDPRESS_FIREWALL_SETTING_DESC, 'ose_wordpress_firewall'); ?></p>
 	</div>	
 	<section style="" class="ose-options">
-          <h2><?php _e(PLEASE_CHOOSE_OPTION, 'ose_wordpress_firwall'); ?></h2>
+          <h2><?php _e(PLEASE_CHOOSE_OPTION, 'ose_wordpress_firewall'); ?></h2>
           <ul >
             <li id="firewall" >
               <div class="option-items">
               	<a href="<?php echo OSEWPADMINURL.'/admin.php?page=ose_wp_firewall_conf';?>" >
-	              <img src="<?php echo OSEFWURL.'/assets/images/firewall.png'?>" alt="<?php _e(OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firwall'); ?>"><br/> 
-	              <?php _e(OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firwall'); ?>
+	              <img src="<?php echo OSEFWURL.'/assets/images/firewall.png'?>" alt="<?php _e(OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firewall'); ?>"><br/> 
+	              <?php _e(OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firewall'); ?>
 	            </a> 
               </div>
             </li>
             <li id="vsscan">
               <div class="option-items">
                 <a href="<?php echo OSEWPADMINURL.'/admin.php?page=ose_wp_firewall_avscan';?>" >
-	              <img src="<?php echo OSEFWURL.'/assets/images/scan.png'?>" alt="<?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firwall'); ?>"><br/>
-	              <?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firwall'); ?>
+	              <img src="<?php echo OSEFWURL.'/assets/images/scan.png'?>" alt="<?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firewall'); ?>"><br/>
+	              <?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firewall'); ?>
 	            </a>    
 	          </div>    
             </li>
             <li id="vsscanconf">
               <div class="option-items">
 	            <a href="<?php echo OSEWPADMINURL.'/admin.php?page=ose_wp_firewall_avconf';?>" >
-	              <img src="<?php echo OSEFWURL.'/assets/images/setting.png'?>" alt="<?php _e(OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firwall'); ?>"><br/>
-	              <?php _e(OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firwall'); ?>
+	              <img src="<?php echo OSEFWURL.'/assets/images/setting.png'?>" alt="<?php _e(OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firewall'); ?>"><br/>
+	              <?php _e(OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firewall'); ?>
+	            </a>  
+	          </div>    
+            </li>
+            <li id="antispam">
+              <div class="option-items">
+	            <a href="<?php echo OSEWPADMINURL.'/admin.php?page=ose_wp_firewall_antispam';?>" >
+	              <img src="<?php echo OSEFWURL.'/assets/images/antispam.png'?>" alt="<?php _e(OSE_WORDPRESS_ANTISPAM_CONFIG, 'ose_wordpress_firewall'); ?>"><br/>
+	              <?php _e(OSE_WORDPRESS_ANTISPAM_CONFIG, 'ose_wordpress_firewall'); ?>
 	            </a>  
 	          </div>    
             </li>
           </ul>
     </section>
 	<section style="" class="compatibility">
-          <h2><?php _e(COMPATIBILITY, 'ose_wordpress_firwall'); ?></h2>
+          <h2><?php _e(COMPATIBILITY, 'ose_wordpress_firewall'); ?></h2>
           <ol class="browsers">
             <li id="chrome" class="browser">
               <p>Google Chrome 12+</p>
@@ -54,7 +62,7 @@
           </ol>
     </section>
     <section>
-     	<h2><?php _e(OSE_FOLLOWUS, 'ose_wordpress_firwall'); ?></h2>
+     	<h2><?php _e(OSE_FOLLOWUS, 'ose_wordpress_firewall'); ?></h2>
 	    <div id="keepupdated">
 				<div class="mod-ose_social">
 					<div class="ose_social_icons">

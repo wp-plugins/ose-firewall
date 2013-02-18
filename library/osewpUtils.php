@@ -212,6 +212,27 @@ class osewpUtils {
 	{
 		print_r(oseJSON::encode($return)); exit;
 	}
+	public static function showOSEbadge() {
+		$osehelper = new OSEWPhelper();
+		$osewpScanEngine = new osewpScanEngine();
+		$setting = (array) get_option('ose_wp_firewall_settings');;
+		if ($setting['osefirewall_showbadge']==true)
+		{	
+			$log = $osewpScanEngine->getScanninglog(); 
+			if (empty($log))
+			{
+				$status='--';
+				$date = '--';
+			}	
+			else
+			{
+				$status=$log->status;
+				$date = $log->date;
+			}	
+			wp_enqueue_style('ose-badge-style', $osehelper->osefwurl .'assets/css/badge.css', '');
+			echo '<div id ="osebadge-bottom-right"><div id="osebadge-content"><div class="osestatus">'.$status.'</div>Last scanned on:<br/>'.$date.'</div><div id="osebadge-footer"><a href="https://www.opensource-excellence.com/shop/ose-wordpress-firewall.html" target="_blank">Proctected by OSE Firewall</a></div></div>';
+		}
+	}
 }
 
 

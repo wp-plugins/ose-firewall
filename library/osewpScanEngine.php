@@ -26,6 +26,7 @@ defined('OSEFWDIR') or die;
 class osewpScanEngine {
 	var $db = '';
 	var $table = '';
+	var $logtable = '';
 	var $setting = array();
 	var $ext = '';
 	var $maxfilesize = '';
@@ -35,6 +36,7 @@ class osewpScanEngine {
 		global $wpdb;
 		$this->db= $wpdb;
 		$this->table= $wpdb->base_prefix.'osefw_files';
+		$this->logtable= $wpdb->base_prefix.'osefw_logs';
 		$this->setting = (array) get_option('ose_wp_firewall_avsetting');
 		$this->ext = $this->getFileExts();;
 		$this->maxfilesize = $this->setting['maxfilesize'];
@@ -90,6 +92,47 @@ class osewpScanEngine {
 		}	
 		osewpUtils::jsonReturn($return);
 	}
+	private function logScanning($status)
+	{
+		$result = $this->getScanninglog();
+		if (!empty($result))
+		{
+			$this->updateScanninglog($result->id, $status);
+		}
+		else
+		{
+			$this->insertScanninglog($status);
+		}	
+	}
+	public function getScanninglog()
+	{
+		$query = "SELECT * FROM `".$this->logtable."`"
+				." WHERE `comp` = 'avs'";
+		$result = $this->db->get_results($query);
+		return (isset($result[0]))?$result[0]:null;
+	}
+	private function insertScanninglog($status)
+	{
+		$this->db->insert($this->logtable,
+				array(
+						'id' => NULL,
+						'date' => date('Y-m-d h:i:s'),
+						'comp' => 'avs',
+						'status' => $status
+				),
+				array ('%d','%s', '%s', '%s'));
+		return $this->db->insert_id;
+	}
+	private function updateScanninglog($id, $status)
+	{
+		$result = $this->db->query(
+				$this->db->prepare(
+						"UPDATE `".$this->logtable."` SET `status` = '%s', `date` = '%s'  WHERE id = %d",
+						$status, date('Y-m-d h:i:s'), $id
+			)
+		);
+		return $result;
+	}
 	public function startVSScan()
 	{
 		$init = (int) $_POST['init'];
@@ -128,6 +171,12 @@ class osewpScanEngine {
 			if (!empty($files))
 			{
 				$return['cont']=1;
+			}	
+			else
+			{
+				$infected = $this->CountInfectedFiles();
+				$status = ($infected >0)?'--':'Clean';
+				$this->logScanning($status);
 			}	
 		}
 		osewpUtils::jsonReturn($return);

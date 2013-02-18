@@ -53,6 +53,7 @@ Class OSEWPhelper {
 		add_filter('plugin_action_links', 'ose_wp_firewallsettings_link', 10, 2);
 		add_action('admin_menu', 'ose_wp_firewallplugin_menu');
 		add_action('init', 'ose_wp_firewallload_languages');
+		add_action('wp_footer', 'osewpUtils::showOSEbadge');
 	}
 	public function setupJSAdminVars($debug=0){
 		wp_localize_script('ose_wp_firewalljs', 'osefirewallAdminVars', array(

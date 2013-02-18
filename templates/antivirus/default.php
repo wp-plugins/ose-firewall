@@ -1,8 +1,8 @@
 <div id="container">
 	<div id = "stage">
 	<div id="header">
-		<img src="<?php echo OSEFWURL.'/assets/images/scan.png'?>" alt="<?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firwall'); ?>">
-		<h1><?php _e( OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firwall' ); ?></h1>
+		<img src="<?php echo OSEFWURL.'/assets/images/scan.png'?>" alt="<?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firewall'); ?>">
+		<h1><?php _e( OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'ose_wordpress_firewall' ); ?></h1>
 		<p> <?php _e( OSE_VIRUS_SCAN_DESC, 'ose_wp_firewall' ); ?></p>
 	</div>
 	

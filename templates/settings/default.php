@@ -1,8 +1,8 @@
 <div id="container">
 	<div id = "stage">
 	<div id="header">
-		<img src="<?php echo OSEFWURL.'/assets/images/scan.png'?>" alt="<?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firwall'); ?>">
-		<h1> <?php _e( OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firwall' ); ?></h1>
+		<img src="<?php echo OSEFWURL.'/assets/images/scan.png'?>" alt="<?php _e(OSE_VIRUS_SCAN, 'ose_wordpress_firewall'); ?>">
+		<h1> <?php _e( OSE_WORDPRESS_FIREWALL_SETTING, 'ose_wordpress_firewall' ); ?></h1>
 		<p> <?php _e( OSE_PLEASE_CONFIG_FIREWALL, 'ose_wp_firewall' ); ?></p>
 	</div>	
 	<div class="clear" id="poststuff" style="width: 98%;">
@@ -28,6 +28,7 @@
 			$osefirewall_customban = isset($settings['osefirewall_customban'])?$settings['osefirewall_customban']:'';
 			$osefirewall_mode = isset($settings['osefirewall_mode'])?$settings['osefirewall_mode']:1;
 			$osefirewall_suitepath = isset($settings['osefirewall_suitepath'])?$settings['osefirewall_suitepath']:'';
+			$osefirewall_showbadge = isset($settings['osefirewall_showbadge'])?$settings['osefirewall_showbadge']:true;
 			?>
 		 <section>
 				<h2><?php _e(NOTIFICATION_EMAIL_ATTACKS, 'ose_wp_firewall'); ?></h2>
@@ -176,6 +177,19 @@
 								<?php wp_editor($osefirewall_customban, 'ose_wp_firewall_settings[osefirewall_customban]', array('dfw' => true, 'tabfocus_elements' => '', 'editor_height' => 360) ); ?>
 								</div>
 							</td>
+						</tr>
+						
+						<tr valign="top">
+							<th scope="row"><?php _e(OSE_SHOW_BADGE, 'ose_wp_firewall'); ?>
+							</th>
+							<td><select name="ose_wp_firewall_settings[osefirewall_showbadge]">
+									<option  <?php selected( '1', $osefirewall_showbadge ); ?> value="1">
+										<?php _e(OSE_YES, 'ose_wp_firewall'); ?>
+									</option>
+									<option  <?php selected( '0', $osefirewall_showbadge ); ?> value="0">
+										<?php _e(OSE_NO, 'ose_wp_firewall'); ?>
+									</option>
+							</select></td>
 						</tr>
 						
 					</table>

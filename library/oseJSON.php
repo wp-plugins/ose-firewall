@@ -25,6 +25,10 @@
 if (!defined('OSEFWDIR')) {
 	die("Direct Access Not Allowed");
 }
+if (!defined('DS'))
+{
+	define('DS', DIRECTORY_SEPARATOR);
+}	
 class oseJSON {
 	function generateQueryWhere() {
 		$db = oseDB::instance();

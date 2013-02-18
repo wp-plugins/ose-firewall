@@ -38,7 +38,7 @@ define('FOUNDSQLInjection', '发现基本的数据库SQL注入攻击');
 define('FOUNDTrasversal', '发现基本的数据库SQL注入攻击');
 define('FOUNDQUERY_LONGER_THAN_255CHAR', '发现长于255个字符的网址');
 define('MAX_TOLERENCE', '最大的攻击容忍');
-// Langauges for version 2.0 + start from here;
+// Langauges for version 1.5 + start from here;
 define('OSE_SCANNING_SETTING','扫描设置');
 define('服务器IP','你的服务器IP(由于空的用户代理,以避免假警报)');
 define('OSE_WORDPRESS_FIREWALL_CONFIG','傲视防火墙™配置');

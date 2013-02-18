@@ -37,7 +37,7 @@ define('FOUNDSQLInjection', 'Einfache SQL-Einschleusung in Datenbank gefunden');
 define('FOUNDTrasversal', 'Verzeichnisausbruch gefunden');
 define('FOUNDQUERY_LONGER_THAN_255CHAR', 'Datenbankabfragen länger als 255 Zeichen gefunden');
 define('MAX_TOLERENCE', 'Maximale Toleranz bei einem Angriff');
-// Langauges for version 2.0 + start from here;
+// Langauges for version 1.5 + start from here;
 define('OSE_SCANNING_SETTING','Scan-Einstellungen');
 define('SERVERIP','Ihre Server-IP (zur Vermeidung von Fehlalarmen durch leere User-Agents)');
 define('OSE_WORDPRESS_FIREWALL_CONFIG','OSE Firewall™ Konfiguration');

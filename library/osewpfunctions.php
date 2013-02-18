@@ -33,6 +33,7 @@ function ose_wp_firewallsettings_link($links, $file) {
 function ose_wp_firewallinit() {
 	register_setting('ose_wp_firewall_settings_group', 'ose_wp_firewall_settings', 'ose_wp_firewallvalidation');
 	register_setting('ose_wp_firewall_avsetting_group', 'ose_wp_firewall_avsetting', 'ose_wp_firewallvalidation');
+	register_setting('ose_wp_firewall_antispam_group', 'ose_wp_firewall_antispam', 'ose_wp_firewallvalidation');
 }
 function ose_wp_firewallvalidation($input) {
 	$input['osefirewall_email'] = wp_filter_nohtml_kses($input['osefirewall_email']);
@@ -40,6 +41,9 @@ function ose_wp_firewallvalidation($input) {
 }
 function ose_wp_firewallfilter($content) {
 	$settings = (array) get_option('ose_wp_firewall_settings');
+	$spsettings = (array) get_option('ose_wp_firewall_antispam');
+	$settings['osefirewall_sfspam'] = $spsettings['osefirewall_sfspam'];
+	$settings['sfs_confidence'] = $spsettings['sfs_confidence'];
 	switch ($settings['osefirewall_mode']) {
 		case 0:
 			// do nothing;
@@ -97,6 +101,17 @@ function ose_wp_installSQL()
 				) ;
 	 ;";
 	$return = $wpdb->query($query);
+	
+	$query = "CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."_osefw_logs` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `date` datetime DEFAULT NULL,
+			  `comp` varchar(3) NOT NULL,
+			  `status` text NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+	 ;";
+	$return = $wpdb->query($query);
+	
 	return $return; 
 }
 function ose_wp_firewallplugin_menu() {
@@ -104,6 +119,7 @@ function ose_wp_firewallplugin_menu() {
 	add_submenu_page( 'ose_wp_firewall', OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL_CONFIG, 'manage_options', 'ose_wp_firewall_conf', 'ose_wp_firewall_settings' );
 	add_submenu_page( 'ose_wp_firewall', OSE_VIRUS_SCAN, OSE_VIRUS_SCAN, 'manage_options', 'ose_wp_firewall_avscan', 'ose_wp_firewall_avscan' );
 	add_submenu_page( 'ose_wp_firewall', OSE_WORDPRESS_VIRUSSCAN_CONFIG, OSE_WORDPRESS_VIRUSSCAN_CONFIG, 'manage_options', 'ose_wp_firewall_avconf', 'ose_wp_firewall_avconf' );
+	add_submenu_page( 'ose_wp_firewall', OSE_WORDPRESS_ANTISPAM_CONFIG, OSE_WORDPRESS_ANTISPAM_CONFIG, 'manage_options', 'ose_wp_firewall_antispam', 'ose_wp_firewall_antispam' );
 }
 
 function ose_wp_firewall_main() {
@@ -128,6 +144,11 @@ function ose_wp_firewall_avscan(){
 	$osewphelper->addAssets('js');
 	$osewphelper->setupJSAdminVars($debug=0);
 	include_once OSEFWTEMPLATES . DS . 'vsscan' . DS . 'default.php';
+}
+function ose_wp_firewall_antispam() {
+	$osewphelper = new OSEWPhelper();
+	$osewphelper->addAssets('css');
+	include_once OSEFWTEMPLATES . DS . 'antispam' . DS . 'default.php';
 }
 function ose_wp_firewallload_languages() {
 	load_plugin_textdomain('ose_wordpress_firwall', false, OSEFWLANGUAGE);
