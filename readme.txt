@@ -31,6 +31,11 @@ Since 1.5.0,
     The newly added Development mode also allows you to turn off the protection temporarily. 
     A virus / malicious code scanner has been added to the plugin to help detect virus in your websites.
 
+Since 1.6.0,
+
+    The software support anti-spamming function, where IPs are checked against Stop Forum Spam, it keeps your blog spam free
+    The software can show a security protection badge in your website to show that your website is under protection. 
+    
 Languages
 
 The plugin currently supports the following languages:
