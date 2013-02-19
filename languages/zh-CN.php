@@ -80,3 +80,12 @@ define('OSE_SUITE_PATH','傲视安全套件的绝对路径。<BR/> 例如 /home/
 define('NEED_HELP_CLEANING','需要帮助清除病毒吗?');
 define('NEED_HELP_CLEANING_DESC','病毒随着时间的推移正在发生变化,我们的病毒库可能不能在受感染的系统中扫描到最新的恶意文件。在这种情况下,请考虑聘请我们的<a href ="htt​​ps://www.opensource-excellence.com/service/removal-of-malware.html" target="_blank">恶意软件清除服务</a>。在您的网站扫描到的病毒将用以帮助其他用户。) ');
 define('OSE_DEVELOPMENT','开发模式(暂时关闭保护)');
+// Langauges for version 1.6 + start from here;
+define('OSE_WORDPRESS_ANTISPAM_CONFIG','傲视防垃圾广告™设置');
+define('OSE_ENABLE_SFSPAM','启用STOP FORUM SPAM 扫描');
+define('OSE_YES','是');
+define('OSE_NO','否');
+define('OSE_SFSPAM_API','Stop Forum Spam API密钥');
+define('SFSPAMIP','Stop Forum Spam IP');
+define('OSE_SFS_CONFIDENCE','置信度(1至100之间，越高越有可能是垃圾广告)');
+define('OSE_SHOW_BADGE','显示网站的保护密封,<br/>(请首先使用病毒扫描程序来扫描你的网站)');

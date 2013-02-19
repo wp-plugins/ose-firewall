@@ -1,10 +1,10 @@
 === OSE Firewall™ ===
 Contributors: Open Source Excellence
 Donate link: 
-Tags: security, admin, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, stop forum spam, anti-spam, antispam, virus scanning, virus cleanning, clean malicious codes
+Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,11 +31,6 @@ Since 1.5.0,
     The newly added Development mode also allows you to turn off the protection temporarily. 
     A virus / malicious code scanner has been added to the plugin to help detect virus in your websites.
 
-Since 1.6.0,
-
-    The software support anti-spamming function, where IPs are checked against Stop Forum Spam, it keeps your blog spam free
-    The software can show a security protection badge in your website to show that your website is under protection. 
-    
 Languages
 
 The plugin currently supports the following languages:
@@ -84,6 +79,10 @@ Screenshots are located in this page:
 http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
+1.6.1
+	  - Enhancement: updated Chinese and Germany languages, credits to Mr Alexander Pfabel
+	  - Bug fix: fixed the  Class 'osewpScanEngine' not found issue for some servers 
+	  
 1.6.0
 	  - New feature: Added Stop Forum Spam Anti-spamming checking, keep your blog spam free
 	  - New feature: Added Security Protection Badge, shows the confidence of your website security to your clients

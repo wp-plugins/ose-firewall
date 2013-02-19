@@ -214,6 +214,10 @@ class osewpUtils {
 	}
 	public static function showOSEbadge() {
 		$osehelper = new OSEWPhelper();
+		if (!class_exists('osewpScanEngine'))
+		{
+			require_once(OSEFWLIBRARY.DS.'osewpScanEngine.php');
+		}	
 		$osewpScanEngine = new osewpScanEngine();
 		$setting = (array) get_option('ose_wp_firewall_settings');;
 		if ($setting['osefirewall_showbadge']==true)
