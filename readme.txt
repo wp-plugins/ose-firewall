@@ -12,7 +12,8 @@ OSE Firewall™ - A WordPress Firewall created by Open Source Excellence. It pro
 
 == Description ==
 
-OSE Firewall™ - A WordPress Firewall created by <a href = "http://www.opensource-excellence.com">Open Source Excellence</a>. It protects your WordPress-powered blog against attacks and hacking. Detailed description can be found in our main website <a href ="http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html">here</a>.
+OSE Firewall™ - A WordPress Firewall created by <a href = "http://www.opensource-excellence.com">Open Source Excellence</a>. It protects your WordPress-powered blog against attacks and hacking. The built-in scanner can scan your websites for malicious codes. The newly added Anti-Spam funciton utilizes the IP pools in www.stopforumspam.com to keep your website spam free!
+Detailed description can be found in our main website <a href ="http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html">here</a>.
 
 Since 1.0.0, The software has the following functions
 
