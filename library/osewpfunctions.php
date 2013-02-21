@@ -102,7 +102,7 @@ function ose_wp_installSQL()
 	 ;";
 	$return = $wpdb->query($query);
 	
-	$query = "CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."_osefw_logs` (
+	$query = "CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."osefw_logs` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `date` datetime DEFAULT NULL,
 			  `comp` varchar(3) NOT NULL,
