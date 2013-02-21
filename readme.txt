@@ -8,7 +8,7 @@ Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-OSE Firewall™ - A WordPress Firewall created by Open Source Excellence. It protects your WordPress-powered blog against attacks and hacking. 
+OSE Firewall™ - A WordPress Firewall created by Open Source Excellence. It protects your WordPress-powered blog against attacks, hacking, virus and spam. 
 
 == Description ==
 
