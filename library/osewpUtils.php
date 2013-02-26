@@ -225,16 +225,18 @@ class osewpUtils {
 			$log = $osewpScanEngine->getScanninglog(); 
 			if (empty($log))
 			{
-				$status='--';
-				$date = '--';
+				$status='Protected';
+				$date = date('Y-m-d h:i:s');
+				$text = '';
 			}	
 			else
 			{
 				$status=$log->status;
 				$date = $log->date;
+				$text ='Last scanned on:';
 			}	
 			wp_enqueue_style('ose-badge-style', $osehelper->osefwurl .'assets/css/badge.css', '');
-			echo '<div id ="osebadge-bottom-right"><div id="osebadge-content"><div class="osestatus">'.$status.'</div>Last scanned:<br/>'.$date.'</div><div id="osebadge-footer"><a href="https://www.opensource-excellence.com/shop/ose-wordpress-firewall.html" target="_blank">Protected by OSE Firewall™</a></div></div>';
+			echo '<div id ="osebadge-bottom-right"><div id="osebadge-content"><div class="osestatus">'.$status.'</div>'.$text.'<br/>'.$date.'</div><div id="osebadge-footer"><a href="https://www.opensource-excellence.com/shop/ose-wordpress-firewall.html" target="_blank">Protected by OSE Firewall™</a></div></div>';
 		}
 	}
 }
