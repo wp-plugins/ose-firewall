@@ -1,6 +1,7 @@
 === OSE Firewall™ ===
 Contributors: Open Source Excellence
-Donate link: 
+Contributors: Open Source Excellence
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.6
