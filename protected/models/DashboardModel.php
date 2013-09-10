@@ -143,8 +143,8 @@ class DashboardModel extends BaseModel {
 		$array[] = $this->transMessage(true, oLang :: _get('INSERT_STAGE5_GEOIPDATA_COMPLETED'));
 		$array[] = $this->transMessage(true, oLang :: _get('INSERT_STAGE6_GEOIPDATA_COMPLETED'));
 		$array[] = $this->transMessage(true, oLang :: _get('INSERT_STAGE7_GEOIPDATA_COMPLETED'));
-		$array[] = $this->transMessage(true, oLang :: _get('INSTALLATION_COMPLETED'));
 		$array[] = $this->transMessage(true, oLang :: _get('CREATE_DECMALWAREVIEW_COMPLETED'));
+		$array[] = $this->transMessage(true, oLang :: _get('INSTALLATION_COMPLETED'));
 		$i = 0;
 		while ($i <= $step) {
 			$return .= $array[$i];
