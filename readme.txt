@@ -1,11 +1,11 @@
 === OSE Firewall™ ===
-Contributors: Open Source Excellence
+Contributors: Protect Website
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 1.6.4
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,12 @@ Since 1.5.0,
     The software supports the direction activation of OSE Security Suite to enhance the protection of your WordPress websites. 
     The newly added Development mode also allows you to turn off the protection temporarily. 
     A virus / malicious code scanner has been added to the plugin to help detect virus in your websites.
+
+Since 2.0.0, 
+
+    The software supports IP monitoring, blacklisting and whitelisting functions.
+    Improved Virus Scanning Functions
+
 
 Languages
 
@@ -77,8 +83,9 @@ More are coming up...
 == Screenshots ==
 
 Screenshots are located in this page:
+1. '/assets/screenshot-1.png'
+2. '/assets/screenshot-2.png'
 
-http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html
 
 == Changelog ==
 2.0.0  
