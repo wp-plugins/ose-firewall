@@ -86,6 +86,11 @@ More are coming up...
 
 
 == Changelog ==
+2.0.1
+	  - The Badge update issue -- fixed
+	  - The Virus database update issue -- fixed
+	  - Database keeps showing not ready -- fixed
+
 2.0.0  
 	  - Improved frontend protect seal showing function
 	  - Rewrite the whole pluguin to implement the MVC structure	  
