@@ -129,7 +129,7 @@ class oseFirewallInstaller extends oseInstaller {
 		return true;
 	}
 	public function createDetMalwareView($dbFile) {
-		$exists = $this->isViewExists('#__osefirwall_detmalware');
+		$exists = $this->isViewExists('#__osefirewall_detmalware');
 		if ($exists == false) {
 			$query = $this->readSQLFile($dbFile);
 			$this->db->setQuery($query);

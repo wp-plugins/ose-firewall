@@ -70,12 +70,6 @@ $this ->model->loadLocalscript ();
 	              <i class="icon-untitled"></i>
 	            </a>    
             </li>
-            <li>
-            	<a class ="obtn obtn-large obtn-orange" href="<?php echo OSE_ADMINURL. '?page=ose_fw_versionupdate';?>" >
-            	<?php oLang::_('VERSION_UPDATE'); ?>
-            	<i class="icon-arrow-up-11"></i>
-            	</a>
-            </li>
           </ul>
     </section>
 	<section class="compatibility">
