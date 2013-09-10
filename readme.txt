@@ -21,7 +21,7 @@ Since 1.0.0, The software has the following functions
     Block blacklisted methods (Trace / Delete / Track)     
     Checks Malicious User Agent     
     Detect Directory Traversal     
-    Checks Basic DoS Attacks     
+	Checks Basic DoS Attacks     
     Checks Basic Direct File Inclusion     
     Checks Basic Remote File Inclusion     
     Checks Basic Javascript Injection     
@@ -82,9 +82,7 @@ More are coming up...
 
 == Screenshots ==
 
-Screenshots are located in this page:
-1. '/assets/screenshot-1.png'
-2. '/assets/screenshot-2.png'
+1. Here's a screenshot of it in action
 
 
 == Changelog ==
