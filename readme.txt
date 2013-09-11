@@ -79,11 +79,9 @@ DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with 
 
 More are coming up...
 
-
 == Screenshots ==
 
 1. Here's a screenshot of it in action
-
 
 == Changelog ==
 2.0.2
