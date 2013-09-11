@@ -40,6 +40,17 @@ class BaseModel extends CFormModel {
 		oseFirewall::callLibClass('firewallstat', 'firewallstat');
 		oseFirewall::callLibClass('ipmanager', 'ipmanager');
 	}
+	protected function loadJSLauguage ($cs, $baseUrl) {
+		$lang = oseFirewall::getLocale ();
+		if (file_exists (OSE_FWLANGUAGE.DS . $lang.'.js'))
+		{
+			$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
+		}
+		else
+		{
+			$cs->registerScriptFile($baseUrl . '/public/messages/en_US.js', CClientScript::POS_HEAD);
+		}	
+	}
 	public function showHeader () { 
 		$html = '<div id="content-header">'.$this->getCHeader().'</div>';
 		$html .= '<div class="oseseparator"> &nbsp; </div>';
