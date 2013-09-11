@@ -35,10 +35,9 @@ class AvconfigModel extends ConfigurationModel {
 		return oLang :: _get('ANTIVIRUS_CONFIGURATION_DESC');
 	}
 	public function loadLocalscript () {
-		$lang = oseFirewall::getLocale (); 
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
-		$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScriptFile($baseUrl . '/public/js/avconfig.js', CClientScript::POS_END);
 	}
 }	

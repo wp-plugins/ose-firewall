@@ -29,8 +29,7 @@ class VsscanModel extends BaseModel {
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
-		$lang = oseFirewall::getLocale (); 
-		$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScript('oseAVScan', $this -> getAVScanScript(), CClientScript::POS_BEGIN); 
 		$cs->registerScriptFile($baseUrl . '/public/js/vsscan.js', CClientScript::POS_END);
 	}

@@ -82,7 +82,7 @@ class oseUsers {
 		$return = array();
 		for ($i =0; $i < COUNT($adminids); $i++)
 		{
-			$user = get_userdatabylogin($adminids[$i]);
+			$user = get_user_by('login', $adminids[$i]);
 			$return[$i]['id'] = $user->ID;
 			$return[$i]['name'] = $user->user_nicename;
 		}

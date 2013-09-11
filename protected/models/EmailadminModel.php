@@ -39,10 +39,9 @@ class EmailadminModel extends ConfigurationModel {
 		return oLang :: _get('EMAIL_ADMIN_DESC');
 	}
 	public function loadLocalscript () {
-		$lang = oseFirewall::getLocale (); 
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
-		$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScriptFile($baseUrl . '/public/js/emailadmin.js', CClientScript::POS_END);
 	}
 	public function getAdminEmailmap()

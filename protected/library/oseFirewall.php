@@ -138,7 +138,8 @@ class oseFirewall extends oseWordPress {
 		$appTitle = 'OSE <span>FIREWALL</span>®'; 
 		echo '<div id="logo-labels">
 					<h1><a href="'.$url.'" target= "_blank">'.$appTitle.'</a></h1>
-					<div id="support"><a href="http://www.protect-website.com/need-help/" target="__blank">Need Help?</a></div>		
+					<div id="support"><a href="http://www.protect-website.com/need-help/" target="__blank">Need Help?</a></div>
+					<div id="user-manual"><a href="https://www.protect-website.com/user-manual/" target="__blank">User Manual</a></div>		
 			  </div>';
 	}
 	public static function callLibClass($folder, $classname)

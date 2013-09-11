@@ -29,10 +29,9 @@ class ManageipsModel extends BaseModel {
 		$this->loadDatabase ();
 	}
 	public function loadLocalScript() {
-		$lang = oseFirewall::getLocale (); 
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
-		$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScriptFile($baseUrl . '/public/js/manageips.js', CClientScript::POS_END);
 	}
 	public function getCHeader() {

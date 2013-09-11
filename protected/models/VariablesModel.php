@@ -35,10 +35,9 @@ class VariablesModel extends BaseModel {
 		return oLang :: _get('VARIABLES_DESC');
 	}
 	public function loadLocalScript() {
-		$lang = oseFirewall::getLocale (); 
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
-		$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScriptFile($baseUrl . '/public/js/variables.js', CClientScript::POS_END);
 	}
 	public function getVariables()

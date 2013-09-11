@@ -1,5 +1,4 @@
 <?php
-
 /**
 * @version     2.0 +
 * @package       Open Source Excellence Security Suite
@@ -135,10 +134,9 @@ class VersionupdateModel extends ConfigurationModel {
 		return oLang::_get ( 'VERSION_UPDATE_DESC' );
 	}
 	public function loadLocalscript() {
-		$lang = oseFirewall::getLocale ();
 		$baseUrl = Yii::app ()->baseUrl;
 		$cs = Yii::app ()->getClientScript ();
-		$cs->registerScriptFile ( $baseUrl . '/public/messages/' . $lang . '.js', CClientScript::POS_HEAD );
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScriptFile ( $baseUrl . '/public/js/versionupdate.js', CClientScript::POS_END );
 		$cs->registerScriptFile ( $baseUrl . '/public/js/subscribe.js', CClientScript::POS_END );
 		

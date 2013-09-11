@@ -793,3 +793,23 @@ ol.browsers li {
 	margin: 0px 5px 0px 0px;
 	color: #fff;
 }
+
+#user-manual {
+	background-color: #FFBB00;
+	padding: 10px; 
+	float: right; 
+	margin-top: 20px; 
+	margin-right: 20px;  
+}
+
+#user-manual a {
+	color: #fff;
+}
+
+#user-manual:before {
+	content: "\e0f1";
+	font-family: 'icomoon';
+	font-size: 14px;
+	margin: 0px 5px 0px 0px;
+	color: #fff;
+}

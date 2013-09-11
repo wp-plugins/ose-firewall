@@ -38,10 +38,9 @@ class EmailconfigModel extends ConfigurationModel {
 		return oLang :: _get('EMAIL_CONFIGURATION_DESC');
 	}
 	public function loadLocalscript () {
-		$lang = oseFirewall::getLocale (); 
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
-		$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScriptFile($baseUrl . '/public/js/emailconfig.js', CClientScript::POS_END);
 	}
 	public function getEmails()

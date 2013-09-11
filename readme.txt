@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,10 @@ More are coming up...
 
 
 == Changelog ==
+2.0.2
+	  - Remove Secret Word Descriptions
+	  - Fixed non-English website not able to load javascript language files issues
+
 2.0.1
 	  - The Badge update issue -- fixed
 	  - The Virus database update issue -- fixed
