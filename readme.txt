@@ -68,8 +68,8 @@ More are coming up...
 
 == Changelog ==
 2.0.2
-	  - Remove Secret Word Descriptions
-	  - Fixed non-English website not able to load javascript language files issues
+* Remove Secret Word Descriptions
+* Fixed non-English website not able to load javascript language files issues
 
 2.0.1
 	  - The Badge update issue -- fixed
