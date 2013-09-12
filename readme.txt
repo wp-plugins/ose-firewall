@@ -67,72 +67,75 @@ More are coming up...
 1. Here's a screenshot of it in action
 
 == Changelog ==
-2.0.2
+= 2.0.2 =
 * Remove Secret Word Descriptions
 * Fixed non-English website not able to load javascript language files issues
 
-2.0.1
-	  - The Badge update issue -- fixed
-	  - The Virus database update issue -- fixed
-	  - Database keeps showing not ready -- fixed
+= 2.0.1 =
+* Fixed Badge update issue 
+* Fixed Virus database update issue 
+* Fixed Database keeps display not ready issue
 
-2.0.0  
-	  - Improved frontend protect seal showing function
-	  - Rewrite the whole pluguin to implement the MVC structure	  
+= 2.0.0 = 
+* Improved front-end protect seal showing function
+* Rewrite the whole plugin to implement the MVC structure	  
 
-1.6.4 
-      - Improved frontend protect seal showing function
-      - Improved frontend protect seal css style 
+= 1.6.4 =
+* Improved front-end protect seal showing function
+* Improved front-end protect seal CSS style 
       
-1.6.3 
-      - Fixed the log table not created properly issues on some servers 
+= 1.6.3 =
+* Fixed the log table not created properly issues on some servers 
       
-1.6.2 
-      - Fixed a typo in the security seal 
+= 1.6.2 =
+* Fixed a typo in the security seal 
 
-1.6.1
-	  - Enhancement: updated Chinese and Germany languages, credits to Mr Alexander Pfabel
-	  - Bug fix: fixed the  Class 'osewpScanEngine' not found issue for some servers 
+= 1.6.1 =
+* Updated Chinese and Germany languages, credits to Mr Alexander Pfabel
+* Fixed the  Class 'osewpScanEngine' not found issue for some servers 
 	  
-1.6.0
-	  - New feature: Added Stop Forum Spam Anti-spamming checking, keep your blog spam free
-	  - New feature: Added Security Protection Badge, shows the confidence of your website security to your clients
-	  - New feature: Added the logs of virus scanning to show the scanning records in the secuirty protection badge
+= 1.6.0 =
+* Added Stop Forum Spam Anti-spamming checking, keep your blog spam free
+* Added Security Protection Badge, shows the confidence of your website security to your clients
+* Added the logs of virus scanning to show the scanning records in the security protection badge
 
-1.5.4
-	  - Enhancement: removed duplicatd menus as suggested by Lime Canvas (http://wordpress.org/support/profile/limecanvas)
-	  - Bug fixed: fixed the issue where OSE Firewall Settings links are appended to all plugins links section (credits to Lime Canvas http://wordpress.org/support/profile/limecanvas)
-      - Bug fixed: fixed the wpdb undefined issue when initializing file list into the database
+= 1.5.4 =
+* Removed duplicated menus as suggested by Lime Canvas (http://wordpress.org/support/profile/limecanvas)
+* Fixed the issue where OSE Firewall Settings links are appended to all plugins links section (credits to Lime Canvas http://wordpress.org/support/profile/limecanvas)
+* Fixed the wpdb undefined issue when initializing file list into the database
       
-1.5.3
-	  - Enhancement: updated the codes to make it work with multiple websites (credits to scottnath, http://wordpress.org/support/profile/scottnath)
-	  - Enhancement: improved function to check admin accounts
-	  - Fixed PHP warning errors for undefined OSE Firewall setting variables 
+= 1.5.3 =
+* Updated the codes to make it work with multiple websites (credits to scottnath, http://wordpress.org/support/profile/scottnath)
+* Improved function to check admin accounts
+* Fixed PHP warning errors for undefined OSE Firewall setting variables 
 	  
-1.5.2
-	  - Enhancement: updated Chinese and Germany languages, credits to Mr Alexander Pfabel 
+= 1.5.2 =
+* Updated Chinese and Germany languages, credits to Mr Alexander Pfabel 
 	  
-1.5.1 
-	  - Fixed backend admin menu causing warning message issues (reported by mike http://www.graphicline.co.za/ and Alan http://wordpress.org/support/profile/alanpae, AlanP57 http://wordpress.org/support/profile/alanp57)
-	  - Fixed language file loading error issue (credits to scottnath, http://wordpress.org/support/profile/scottnath)
-	  - Fixed redirection function error issue reported by numzi http://wordpress.org/support/profile/nunzi
-	  - Enhancement: avoid scanning backend blog post action to avoid false alerts with javascript codes inserted in to blog posts (thanks for the report by Alexander http://wordpress.org/support/profile/herzwacht and  
+= 1.5.1 =
+* Fixed back-end admin menu causing warning message issues (reported by mike http://www.graphicline.co.za/ and Alan http://wordpress.org/support/profile/alanpae, AlanP57 http://wordpress.org/support/profile/alanp57)
+* Fixed language file loading error issue (credits to scottnath, http://wordpress.org/support/profile/scottnath)
+* Fixed redirection function error issue reported by numzi http://wordpress.org/support/profile/nunzi
+* Avoid scanning back-end blog post action to avoid false alerts with javascript codes inserted in to blog posts (thanks for the report by Alexander http://wordpress.org/support/profile/herzwacht and  
 	  
-1.5.0 
+= 1.5.0 =
+* Added four protection modes: OSE Firewall only, OSE Security Suite only, OSE Firewall plus OSE Security Suite and Development mode (protection temporarily turned off)
+* Added a server IP field to avoid false alerts due to empty user agent
+* Fixed the field 'Detect Directory Traversal' not being saved properly issue
+* Added custom banning message field and custom banning message function
+* Enhance OSE Banning page appearance
+* Enhance Javascript injection detection pattern to avoid false alerts
+* Added OSE Virus / Malicious codes scanning function
 
-	  - Added four protection modes: OSE Firewall only, OSE Security Suite only, OSE Firewall plus OSE Security Suite and Development mode (protection temporarily turned off)
- 	  - Added a server IP field to avoid false alerts due to empty user agent
- 	  - Fixed the field 'Detect Directory Traversal' not being saved properly issue
- 	  - Added custom banning message field and custom banning message function
- 	  - Enhance OSE Banning page appearence
- 	  - Enhance Javascript injection detection pattern to avoid false alerts
- 	  - Added OSE Virus / Malicious codes scanning function
+= 1.0.2 =
+* Added Germany Translation language
+* Added the maximum tolerance parameter, so the attacker will be blocked automatically after X times of attack
 
-1.0.2 - Added Germany Translation language
-		Fixed the email message not showing in full issue
-		Added the maximum tolerance paramter, so the attacker will be blocked automatically after X times of attack
-1.0.1 - Added French Translation language
-1.0.0 - Initial release
+= 1.0.1 =
+* Added French Translation language
+
+= 1.0.0 =
+* Initial release
 
 
 == Upgrade notice ==
