@@ -13,46 +13,29 @@ OSE Firewall™ - A WordPress Firewall created by Open Source Excellence, protec
 
 == Description ==
 
-OSE Firewall™ - A WordPress Firewall created by <a href = "http://www.opensource-excellence.com">Open Source Excellence</a>. It protects your WordPress-powered blog against attacks and hacking. The built-in scanner can scan your websites for malicious codes. The newly added Anti-Spam funciton utilizes the IP pools in www.stopforumspam.com to keep your website spam free!
-Detailed description can be found in our main website <a href ="http://www.opensource-excellence.com/shop/ose-wordpress-firewall.html">here</a>.
+<b>MOST EPIC WORDPRESS SECURITY PLUGIN</b>
+OSE Firewall™ - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The Built-in Scanner that identify any malicious codes, spam, virus, SQL injection attack, vulnerabilities. 
 
-Since 1.0.0, The software has the following functions
+<b>New Features in v2.0</b>
+*Manage IPs - blacklisting, whitelisting, and Monitoring IPs
+*Manage Rulesets - you can change the rule sets to that best fits for your website's requirements
+*Email Alert - choose different types of alert emails to receive when there�s an attack
+*Variables whitelisting functions - you can whitelist some variables in your website to enhance firewall in order to avoid false alerts. 
 
-    Block blacklisted methods (Trace / Delete / Track)     
-    Checks Malicious User Agent     
-    Detect Directory Traversal     
-    Checks Basic DoS Attacks     
-    Checks Basic Direct File Inclusion     
-    Checks Basic Remote File Inclusion     
-    Checks Basic Javascript Injection     
-    Checks Basic Database SQL Injection
+<b>Enhanced Features</b>
+*Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
+*Block blacklisted methods - Trace, Delete, Track
+*Checks Malicious User Agent     
+*Detect Directory Traversal 
+*Virus Scanning    
+*Checks DoS Attacks   
+*Checks Javascript Injection      
+*Checks Direct File Inclusion     
+*Checks Remote File Inclusion     
+*Checks Database SQL Injection
 
-Since 1.5.0, 
+The plugin currently supports ENGLISH language ONLY, we�ll add new languages in the future.
 
-    The software supports the direction activation of OSE Security Suite to enhance the protection of your WordPress websites. 
-    The newly added Development mode also allows you to turn off the protection temporarily. 
-    A virus / malicious code scanner has been added to the plugin to help detect virus in your websites.
-
-Since 2.0.0, 
-
-    The software supports IP monitoring, blacklisting and whitelisting functions.
-    Improved Virus Scanning Functions
-
-
-Languages
-
-The plugin currently supports the following languages:
-
-    English
-    Chinese
-	French - Credits to Valérie CREPIN (contact@geromweb.com)
-	Germany - Credits to Alexander Pfabel (homepage@pfabel.de)
-
-The language files can be found in this folder:
-
-YOUR_WORDPRESS_FOLDER/wp-content/plugins/ose_firewall/languages/
-
-Please feel free to share your translation by sending the language file to: partners@opensource-excellence.com, we will add it into our next release. Thank you!
 
 == Installation ==
 
