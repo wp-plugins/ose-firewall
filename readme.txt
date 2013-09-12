@@ -13,28 +13,28 @@ OSE Firewall‚Ñ¢ - A WordPress Firewall created by Open Source Excellence, protec
 
 == Description ==
 
-<b>MOST EPIC WORDPRESS SECURITY PLUGIN</b>
+= MOST EPIC WORDPRESS SECURITY PLUGIN =
 OSE Firewall‚Ñ¢ - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The Built-in Scanner that identify any malicious codes, spam, virus, SQL injection attack, vulnerabilities. 
 
-<b>New Features in v2.0</b>
-*Manage IPs - blacklisting, whitelisting, and Monitoring IPs
-*Manage Rulesets - you can change the rule sets to that best fits for your website's requirements
-*Email Alert - choose different types of alert emails to receive when there’s an attack
-*Variables whitelisting functions - you can whitelist some variables in your website to enhance firewall in order to avoid false alerts. 
+= New Features in v2.0 =
+* Manage IPs - blacklisting, whitelisting, and Monitoring IPs
+* Manage Rulesets - you can change the rule sets to that best fits for your website's requirements
+* Email Alert - choose different types of alert emails to receive when there's an attack
+* Variables whitelisting functions - you can whitelist some variables in your website to enhance firewall in order to avoid false alerts. 
 
-<b>Enhanced Features</b>
-*Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
-*Block blacklisted methods - Trace, Delete, Track
-*Checks Malicious User Agent     
-*Detect Directory Traversal 
-*Virus Scanning    
-*Checks DoS Attacks   
-*Checks Javascript Injection      
-*Checks Direct File Inclusion     
-*Checks Remote File Inclusion     
-*Checks Database SQL Injection
+= Enhanced Features =
+* Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
+* Block blacklisted methods - Trace, Delete, Track
+* Checks Malicious User Agent     
+* Detect Directory Traversal 
+* Virus Scanning    
+* Checks DoS Attacks   
+* Checks Javascript Injection      
+* Checks Direct File Inclusion     
+* Checks Remote File Inclusion     
+* Checks Database SQL Injection
 
-The plugin currently supports ENGLISH language ONLY, we’ll add new languages in the future.
+The plugin currently supports ENGLISH language ONLY, we'll add new languages in the future.
 
 
 == Installation ==
@@ -62,11 +62,9 @@ DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with 
 
 More are coming up...
 
-
 == Screenshots ==
 
 1. Here's a screenshot of it in action
-
 
 == Changelog ==
 2.0.2
