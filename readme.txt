@@ -17,7 +17,7 @@ OSE Firewall‚Ñ¢ - A WordPress Firewall created by ProWeb (Protect Website), prot
 OSE Firewall‚Ñ¢ - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The Built-in Scanner that identify any malicious codes, spam, virus, SQL injection attack, vulnerabilities. 
 
 = Customer Support =
-Need help? Save time by starting your support request online and we'll connect you in an expert.  <a href = "http://www.protect-website.com/support">Click here to get started.</a>
+Need help? Save time by starting your support request online and we'll connect you to an expert.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
 
 = New Features in v2.0 =
 * Manage IPs - blacklisting, whitelisting, and Monitoring IPs
@@ -37,23 +37,24 @@ Need help? Save time by starting your support request online and we'll connect y
 * Checks Remote File Inclusion     
 * Checks Database SQL Injection
 
-The plugin currently supports ENGLISH language ONLY, we'll add new languages in the future.
+The plugin currently supports ENGLISH language ONLY. 
+You can contribute by translating OSE Firewall <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
 
 
 == Installation ==
 
-1. Go to WordPress Plugin Page --> Add New --> Choose Upload --> Upload the file ose_firewall.zip
+To Install OSE Firewall Plugin:
 
-2. Activate the plugin through the 'Plugins' menu in WordPress
+1. Go to Plugins > Add New.
+2. Under Search bar, search for “OSE Firewall”.
+3. Click "Install Now" to install the Plugin.
 
-3. Then choose which of the anti-hacking rules you would like the firewall to enable
-
-4. The the configuration by clicking the 'Test Configuration' link, if you see the alert, that means the firewall has been enabled and protecting your wordpress blog.
+For more information visit <a href = "https://www.protect-website.com/installing-ose-firewall/">here</a>.
 
 == Frequently asked questions ==
 
 * Please raise all questions / bug fixes in our support tickcet here: 
-http://www.opensource-excellence.com/customers/general-enquries.html
+http://www.protect-website.com/support-center
 
 * Does the plugin block User Agent attacks?
 
