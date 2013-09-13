@@ -20,7 +20,7 @@ OSE Firewall™ - A WordPress Security Plugin powered by <a href = "http://www.p
 Need help? Save time by starting your support request online and we'll connect you to an expert.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
 
 = New Features in v2.0 =
-* Manage IPs - blacklisting, whitelisting, and Monitoring IPs
+* Manage IPs - blacklisting, whitelisting, and monitoring IPs
 * Manage Rulesets - you can change the rule sets to that best fits for your website's requirements
 * Email Alert - choose different types of alert emails to receive when there's an attack
 * Variables whitelisting functions - you can whitelist some variables in your website to enhance firewall in order to avoid false alerts. 
