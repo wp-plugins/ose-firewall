@@ -53,16 +53,20 @@ For more information visit <a href = "https://www.protect-website.com/installing
 
 == Frequently asked questions ==
 
-* Please raise all questions / bug fixes in our support tickcet here: 
-http://www.protect-website.com/support-center
+= What to do if i have a problem? =
+* You can always visit our <a href = "https://www.protect-website.com/support-center/">support center</a> to raise a ticket, and we will assign an expert to fix your problem immediately.
 
-* Does the plugin block User Agent attacks?
+= How to raise a ticket in the Support Center? =
+* Visit our <a href = "https://www.protect-website.com/support-center/">support center</a>, click 'Open a New Ticket', fill in all the details and click 'Create Ticket'. The system will automatically send you an email with a Ticket ID.
 
-Yes, the plugin checks whether the user agent environment variables contains PHP command, linux system commands and sql commands. If these are detected, the firewall will stop the user by throwing a ban page. 
+= How to use my Ticket ID? =
+* Ticket ID is an identification number for you to track the status of your request/enquiry. Visit our <a href = "https://www.protect-website.com/support-center/">support center</a>, click 'Check Ticket Status', enter your registered email address and Ticket ID to track the status.
 
-* What is DFI or LFI?
+= Does the plugin block User Agent attacks? =
+* Yes, the plugin checks whether the user agent environment variables contains PHP command, linux system commands and sql commands. If these are detected, the firewall will stop the user by throwing a ban page. 
 
-DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with the user agent attacks. Hackers first test if your server has the vulnerabilities in Direct File Inclusion before they start the User Agent Attacks. They test if including the local file can review your website's environment variables, e.g. adding the following into your URL to review linux username and passwords: ../../../../etc/passwd. If this is successfuly, they can use User Agent to start attacking your server by downloading shell codes into your website. 
+= What is DFI or LFI? =
+* DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with the user agent attacks. Hackers first test if your server has the vulnerabilities in Direct File Inclusion before they start the User Agent Attacks. They test if including the local file can review your website's environment variables, e.g. adding the following into your URL to review linux username and passwords: ../../../../etc/passwd. If this is successfuly, they can use User Agent to start attacking your server by downloading shell codes into your website. 
 
 More are coming up...
 
