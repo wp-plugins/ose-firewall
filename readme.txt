@@ -17,7 +17,7 @@ OSE Firewall™ - A WordPress Firewall created by ProWeb (Protect Website), prot
 OSE Firewall™ - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The Built-in Scanner that identify any malicious codes, spam, virus, SQL injection attack, vulnerabilities. 
 
 = Customer Support =
-Need help? Save time by starting your support request online and we'll connect you in an expert.  <a href = "http://www.protect-website.com">Click here to get started.</a>
+Need help? Save time by starting your support request online and we'll connect you in an expert.  <a href = "http://www.protect-website.com/support">Click here to get started.</a>
 
 = New Features in v2.0 =
 * Manage IPs - blacklisting, whitelisting, and Monitoring IPs
