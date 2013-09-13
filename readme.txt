@@ -46,10 +46,11 @@ You can contribute by translating OSE Firewall <a href = "https://www.protect-we
 To Install OSE Firewall Plugin:
 
 1. Go to Plugins > Add New.
-2. Under Search bar, search for “OSE Firewall”.
-3. Click "Install Now" to install the Plugin.
+2. Under Search bar, search for 'OSE Firewall'.
+3. Click 'Install Now' to install the Plugin.
 
 For more information visit <a href = "https://www.protect-website.com/installing-ose-firewall/">here</a>.
+
 
 == Frequently asked questions ==
 
@@ -68,7 +69,6 @@ For more information visit <a href = "https://www.protect-website.com/installing
 = What is DFI or LFI? =
 * DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with the user agent attacks. Hackers first test if your server has the vulnerabilities in Direct File Inclusion before they start the User Agent Attacks. They test if including the local file can review your website's environment variables, e.g. adding the following into your URL to review linux username and passwords: ../../../../etc/passwd. If this is successfuly, they can use User Agent to start attacking your server by downloading shell codes into your website. 
 
-More are coming up...
 
 == Screenshots ==
 
