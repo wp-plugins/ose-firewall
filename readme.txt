@@ -72,7 +72,9 @@ For more information visit <a href = "https://www.protect-website.com/installing
 
 == Screenshots ==
 
-1. Here's a screenshot of it in action
+1. Admin Panel
+2. IP Management Panel
+3. Virus Scanner
 
 == Changelog ==
 = 2.0.2 =
