@@ -31,7 +31,7 @@ Need help? Save time by starting your support request online and we'll connect y
 * Checks Malicious User Agent     
 * Detect Directory Traversal 
 * Virus Scanning    
-* Checks DoS Attacks   
+* Checks DoS Attacks  
 * Checks Javascript Injection      
 * Checks Direct File Inclusion     
 * Checks Remote File Inclusion     
