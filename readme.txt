@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,15 +77,18 @@ For more information visit <a href = "https://www.protect-website.com/installing
 3. Virus Scanner
 
 == Changelog ==
+= 2.1.1 =
+* Add back i18n multiple language solution library, some environment requires this. Credits to <a href = "http://wordpress.org/support/profile/joedeagnon">joedeagnon</a> 
+
 = 2.1.0 =
 * Significantly reduce package size
-* Fixed Class 'CHtmlPurifier' not found error during database creation section. Credits to mikeotgaar, http://wordpress.org/support/profile/mikeotgaar
-* Fixed wrong warning message shown in Variables management. Credits to shadowood, http://wordpress.org/support/profile/shadowood
-* Fixed Virus Scanner Panel: no progression bar during scan. Credits to shadowood, http://wordpress.org/support/profile/shadowood
-* Fixed Virus Scanner Panel: no progression bar during scan. Credits to shadowood, http://wordpress.org/support/profile/shadowood
-* Fixed incorrect format for option 'File Extensions' in the virus scan config page. Credits to shadowood, http://wordpress.org/support/profile/shadowood
-* Fixed incorrect sizing for scan file size box. Credits to shadowood, http://wordpress.org/support/profile/shadowood
-* Enhancement: remove GeoIP database tables requirements, significantly reducing Database size. . Credits to shadowood, http://wordpress.org/support/profile/shadowood
+* Fixed Class 'CHtmlPurifier' not found error during database creation section. Credits to <a href = "http://wordpress.org/support/profile/mikeotgaar">mikeotgaar</a> 
+* Fixed wrong warning message shown in Variables management. Credits to <a href = "http://wordpress.org/support/profile/shadowood">shadowood</a>, and <a href ="http://wordpress.org/support/profile/kamiill">kamill</a>
+* Fixed Virus Scanner Panel: no progression bar during scan. Credits to <a href = "http://wordpress.org/support/profile/shadowood">shadowood</a>
+* Fixed Virus Scanner Panel: no progression bar during scan. Credits to <a href = "http://wordpress.org/support/profile/shadowood">shadowood</a>
+* Fixed incorrect format for option 'File Extensions' in the virus scan config page. Credits to <a href = "http://wordpress.org/support/profile/shadowood">shadowood</a>
+* Fixed incorrect sizing for scan file size box. Credits to <a href = "http://wordpress.org/support/profile/shadowood">shadowood</a>
+* Enhancement: remove GeoIP database tables requirements, significantly reducing Database size. . Credits to <a href = "http://wordpress.org/support/profile/shadowood">shadowood</a>
  
 = 2.0.2 =
 * Remove Secret Word Descriptions
