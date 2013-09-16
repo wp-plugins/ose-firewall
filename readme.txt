@@ -40,6 +40,12 @@ Need help? Save time by starting your support request online and we'll connect y
 The plugin currently supports ENGLISH language ONLY. 
 You can contribute by translating OSE Firewall <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
 
+= System Requirements =
+* PHP 5.1.0 or above
+* MySQL 5.0 or above
+* Wordpress 3.5 or above
+* PHP Data Objects enabled (it is activated by default as of PHP 5.1.0, please contact your hosting to enable it if it is disabled. <a href ="http://www.php.net/manual/en/pdo.installation.php">Reference</a> 
+
 
 == Installation ==
 
@@ -69,6 +75,8 @@ For more information visit <a href = "https://www.protect-website.com/installing
 = What is DFI or LFI? =
 * DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with the user agent attacks. Hackers first test if your server has the vulnerabilities in Direct File Inclusion before they start the User Agent Attacks. They test if including the local file can review your website's environment variables, e.g. adding the following into your URL to review linux username and passwords: ../../../../etc/passwd. If this is successfuly, they can use User Agent to start attacking your server by downloading shell codes into your website. 
 
+= How to resolve the issue "Fatal error: Class 'PDO' not found" =
+* OSE Firewall is built on <a href ="http://php.net/manual/en/book.pdo.php">PHP Data Objects (PDO)</a>, which is an extension providing unified data access to many popular DBMS, such as MySQL, PostgreSQL. Therefore, to use OSE Firewall, the PDO extension and the specific PDO database driver (e.g. PDO_MYSQL) have to be installed 
 
 == Screenshots ==
 
