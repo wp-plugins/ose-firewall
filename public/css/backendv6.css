@@ -813,3 +813,23 @@ ol.browsers li {
 	margin: 0px 5px 0px 0px;
 	color: #fff;
 }
+
+#need-cleaning {
+	background-color: #0079C1;
+	padding: 10px; 
+	float: right; 
+	margin-top: 20px; 
+	margin-right: 20px;  
+}
+
+#need-cleaning a {
+	color: #fff;
+}
+
+#need-cleaning:before {
+	content: "\e3a2";
+	font-family: 'icomoon';
+	font-size: 14px;
+	margin: 0px 5px 0px 0px;
+	color: #fff;
+} 

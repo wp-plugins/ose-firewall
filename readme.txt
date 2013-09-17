@@ -78,6 +78,8 @@ For more information visit <a href = "https://www.protect-website.com/installing
 = How to resolve the issue "Fatal error: Class 'PDO' not found" =
 * OSE Firewall is built on <a href ="http://php.net/manual/en/book.pdo.php">PHP Data Objects (PDO)</a>, which is an extension providing unified data access to many popular DBMS, such as MySQL, PostgreSQL. Therefore, to use OSE Firewall, the PDO extension and the specific PDO database driver (e.g. PDO_MYSQL) have to be installed 
 
+
+
 == Screenshots ==
 
 1. Admin Panel
@@ -85,6 +87,11 @@ For more information visit <a href = "https://www.protect-website.com/installing
 3. Virus Scanner
 
 == Changelog ==
+= 2.1.2 =
+* Enhancement: Added Germany Support - credits to: German translation by Alexander Pfabel (http://alexander.pfabel.de)
+* Fixed no data issue in Admin Email Mapping config page, Credits to <a href = "http://wordpress.org/support/profile/shadowood">shadowood</a>, and <a href ="http://wordpress.org/support/profile/itpixie">itpixie</a>
+* Enhancement: make the Admin Email Mapping Editing window closable
+
 = 2.1.1 =
 * Add back i18n multiple language solution library, some environment requires this. Credits to <a href = "http://wordpress.org/support/profile/joedeagnon">joedeagnon</a> 
 

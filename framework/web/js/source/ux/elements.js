@@ -205,7 +205,7 @@ function oseGetAddWinButton(id, text, winTitle, winForm, width)
     			,items: [
     				winForm
     			]
-        		,closable: false
+        		,closable: true
            	});	
         	win.show().alignTo(Ext.getBody(),'t-t', [0, 50]);
         }

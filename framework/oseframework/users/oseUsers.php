@@ -78,15 +78,20 @@ class oseUsers {
 	}
 	private function getWordpressAdmin()
 	{
-		$adminids = get_super_admins(); 
+		$adminids = $this->get_super_admins();
 		$return = array();
 		for ($i =0; $i < COUNT($adminids); $i++)
 		{
-			$user = get_user_by('login', $adminids[$i]);
+			$user = get_user_by('id', $adminids[$i]);
 			$return[$i]['id'] = $user->ID;
-			$return[$i]['name'] = $user->user_nicename;
+			$return[$i]['name'] = $user->display_name;
 		}
 		return	$return;
+	}
+	private function get_super_admins () {
+		$query = "SELECT `user_id` FROM `#__usermeta` where `meta_key` ='wp_capabilities' and `meta_value` LIKE '%administrator%'";
+		$this->db->setQuery($query); 
+		return	$this->db->loadArrayList('user_id');
 	}
 	public function getJoomlaAdminGroups()
 	{	
