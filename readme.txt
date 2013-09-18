@@ -9,7 +9,7 @@ Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-OSE Firewall™ - Part of the Better WordPress Security™ Project, a WordPress Firewall / secuirty plugin to protect your website against hacking, virus and spam. 
+WordPress security plugin OSE Firewall™ is a firewall and website security tool that protects your website against hacking, virus and spam. 
 
 == Description ==
 
