@@ -31,18 +31,20 @@ Need help? Save time by starting your support request online and we'll connect y
 * Variables whitelisting functions - you can whitelist some variables in your website to enhance the secuirty setting in the firewall in order to avoid false alerts. 
 
 = Enhanced Security Features =
+Provides an industry level firewall to block common security threats:
 * Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
 * Block blacklisted IP methods - Trace, Delete, Track
-* Checks Malicious User Agent     
-* Detect Directory Traversal 
-* Virus Scanning    
-* Checks DoS Attacks  
-* Checks Javascript Injection      
-* Checks Direct File Inclusion     
-* Checks Remote File Inclusion     
-* Checks Database SQL Injection
+* Checks Malicious User Agent 
+* Detect Directory Traversal:
+* Virus Scanning - Scans for malware and variants that are known security threats, and scans for heuristics of backdoors, trojans, suspicious code and other security issues
+* Checks DoS Attacks: real-time scanning all traffic including automated bots that constitutes flooding attacks to your website. 
+* Checks Javascript Injection: real-time scanning all traffic including automated bots that constitutes security threats of Javascript Injection.      
+* Checks Direct File Inclusion: real-time scanning all traffic including automated bots that constitutes security threats of Local File Inclusion Attack.
+* Checks Remote File Inclusion: real-time scanning all traffic including automated bots that constitutes security threats of Remote File Inclusion Attack.
+* Checks Database SQL Injection real-time scanning all traffic including automated bots that constitutes security threats of SQL Injection Attack.
+* Report security threats to defined owner or security analysts
 
-The plugin currently supports ENGLISH and Germany language. 
+The plugin currently supports English and Germany language. 
 You can contribute by translating OSE Firewall Security <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
 
 = System Requirements =
