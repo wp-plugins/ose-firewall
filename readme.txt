@@ -30,8 +30,7 @@ Need help? Save time by starting your support request online and we'll connect y
 * Email Alert - choose different types of alert emails to receive when there's an attack
 * Variables whitelisting functions - you can whitelist some variables in your website to enhance the secuirty setting in the firewall in order to avoid false alerts. 
 
-= Enhanced Security Features =
-Provides an industry level firewall to block common security threats:
+= Enhanced Security Features: Provides an industry level firewall to block common security threats =
 * Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
 * Block blacklisted IP methods - Trace, Delete, Track
 * Checks Malicious User Agent 
