@@ -1,38 +1,38 @@
-=== OSE Firewall™ ===
+=== OSE Firewall™ Security===
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss
+Tags: better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker
 Requires at least: 3.3
 Tested up to: 3.6
 Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-OSE Firewall™ - Part of the Better WordPress Security™ Project, a WordPress Firewall / secuirty plugin to protect your website against hacking, virus and spam. 
+OSE Firewall™ Security - Part of the Better WordPress Security™ Project, a WordPress Firewall / secuirty plugin to protect your website against hacking, virus and spam. 
 
 == Description ==
 
 = MOST EPIC WORDPRESS SECURITY PLUGIN =
-OSE Firewall™ - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The Built-in Scanner that identify any malicious codes, spam, virus, SQL injection attack, vulnerabilities.
+OSE Firewall™ Security - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities.
 
 = Aim to build Better Wordpress Security - the more secure wordpress environment =  
-The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding users to avoid infected plugins and themes. OSE Firewall™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
+The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding them to avoid infected plugins and themes. OSE Firewall™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
 
-If you would like to know more about website security tips, please visit our blog to read articles about website security <a href = "http://www.protect-website.com/category/blog/">here.</a>. We will regularly write up security articles so you can enhance your website security. If you would like to promote a better and more secuire Wordpress environment, please feel free to Like us in Facebook <a href = "https://www.facebook.com/protectwebsite" alt="ProWeb" >here</a> or follow our <a href="https://twitter.com/ProtectWebsite">twitter</a> to ask any questions about website security. Our security analysts and security consultants will try to answer your questions as soon as possible.       
+If you would like to know more about website security tips, please visit our blog to read articles about website security <a href = "http://www.protect-website.com/category/blog/">here.</a>. We will regularly write up security articles so you can enhance your website security. If you would like to promote a better and more secure Wordpress environment, please feel free to Like us in Facebook <a href = "https://www.facebook.com/protectwebsite" alt="ProWeb" >here</a> or follow our <a href="https://twitter.com/ProtectWebsite">twitter</a> to ask any questions about website security. Our security analysts and security consultants will try to answer your questions as soon as possible.       
 
 = Customer Support =
-Need help? Save time by starting your support request online and we'll connect you to an expert.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
+Need help? Save time by starting your support request online and we'll connect you to a security expert.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
 
-= New Features in v2.0 =
+= New Security Features in v2.0 =
 * Manage IPs - blacklisting, whitelisting, and monitoring IPs
-* Manage Rulesets - you can change the rule sets to that best fits for your website's requirements
+* Manage Rulesets - you can change the security rule sets to that best fits for your website's requirements
 * Email Alert - choose different types of alert emails to receive when there's an attack
-* Variables whitelisting functions - you can whitelist some variables in your website to enhance firewall in order to avoid false alerts. 
+* Variables whitelisting functions - you can whitelist some variables in your website to enhance the secuirty setting in the firewall in order to avoid false alerts. 
 
-= Enhanced Features =
+= Enhanced Security Features =
 * Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
-* Block blacklisted methods - Trace, Delete, Track
+* Block blacklisted IP methods - Trace, Delete, Track
 * Checks Malicious User Agent     
 * Detect Directory Traversal 
 * Virus Scanning    
@@ -42,8 +42,8 @@ Need help? Save time by starting your support request online and we'll connect y
 * Checks Remote File Inclusion     
 * Checks Database SQL Injection
 
-The plugin currently supports ENGLISH language ONLY. 
-You can contribute by translating OSE Firewall <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
+The plugin currently supports ENGLISH and Germany language. 
+You can contribute by translating OSE Firewall Security <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
 
 = System Requirements =
 * PHP 5.1.0 or above
@@ -54,10 +54,10 @@ You can contribute by translating OSE Firewall <a href = "https://www.protect-we
 
 == Installation ==
 
-To Install OSE Firewall Plugin:
+To Install OSE Firewall Security Plugin:
 
 1. Go to Plugins > Add New.
-2. Under Search bar, search for 'OSE Firewall'.
+2. Under Search bar, search for 'OSE Firewall Security'.
 3. Click 'Install Now' to install the Plugin.
 
 For more information visit <a href = "https://www.protect-website.com/installing-ose-firewall/">here</a>.
@@ -84,12 +84,11 @@ For more information visit <a href = "https://www.protect-website.com/installing
 * OSE Firewall is built on <a href ="http://php.net/manual/en/book.pdo.php">PHP Data Objects (PDO)</a>, which is an extension providing unified data access to many popular DBMS, such as MySQL, PostgreSQL. Therefore, to use OSE Firewall, the PDO extension and the specific PDO database driver (e.g. PDO_MYSQL) have to be installed 
 
 
-
 == Screenshots ==
 
-1. Admin Panel
-2. IP Management Panel
-3. Virus Scanner
+1. Admin Panel of OSE Firewall Security
+2. IP Management Panel of OSE Firewall Security
+3. Virus Scanner of OSE Firewall Security
 
 == Changelog ==
 
