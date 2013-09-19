@@ -26,21 +26,21 @@ Need help? Save time by starting your support request online and we'll connect y
 
 = New Security Features in v2.0 =
 * Manage IPs - blacklisting, whitelisting, and monitoring IPs
-* Manage Rulesets - you can change the security rule sets to that best fits for your website's requirements
-* Email Alert - choose different types of alert emails to receive when there's an attack
-* Variables whitelisting functions - you can whitelist some variables in your website to enhance the secuirty setting in the firewall in order to avoid false alerts. 
+* Manage Security Rulesets - you can change the security rule sets to that best fits for your website's requirements
+* Email Security Threats - choose different types of security threats alert emails to receive when there's an attack
+* Variables whitelisting functions - you can whitelist some variables in the variable whitelisting configuration page in the firewall in order to avoid false security alerts. 
 
 = Enhanced Security Features: Provides an industry level firewall to block common security threats =
 * Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
-* Block blacklisted IP methods - Trace, Delete, Track
-* Checks Malicious User Agent 
-* Detect Directory Traversal:
-* Virus Scanning - Scans for malware and variants that are known security threats, and scans for heuristics of backdoors, trojans, suspicious code and other security issues
-* Checks DoS Attacks: real-time scanning all traffic including automated bots that constitutes flooding attacks to your website. 
-* Checks Javascript Injection: real-time scanning all traffic including automated bots that constitutes security threats of Javascript Injection.      
-* Checks Direct File Inclusion: real-time scanning all traffic including automated bots that constitutes security threats of Local File Inclusion Attack.
-* Checks Remote File Inclusion: real-time scanning all traffic including automated bots that constitutes security threats of Remote File Inclusion Attack.
-* Checks Database SQL Injection real-time scanning all traffic including automated bots that constitutes security threats of SQL Injection Attack.
+* Blacklisted IP Handling methods - Trace, Delete, Track
+* Security Check: Malicious User Agent blocks hundreds of the worst bots while ensuring open-access for normal traffic 
+* Security Check: Detect Directory Traversal that consists in exploiting insufficient security validation / sanitization of user-supplied input file names.
+* Malware Check: Virus Scanning that scans for malware and variants that are known security threats, and scans for heuristics of backdoors, trojans, suspicious code and other security issues
+* Security Check: DoS Attacks where automated bots constituting flooding attacks to your website. 
+* Security Check: Javascript Injection for any traffic including automated bots that constitutes security threats of injecting malicious javascript into your files.      
+* Security Check: Direct File Inclusion for any traffic including automated bots that constitutes security threats of including files on a server through the web browser.
+* Security Check: Remote File Inclusion for any traffic including automated bots that constitutes security threats of exploiting "dynamic file include" mechanisms in web applications.
+* Security Check: Database SQL Injection for any traffic traffic including automated bots that constitutes security threats of attacking data driven applications, in which malicious SQL statements are inserted into an entry field for execution.
 * Report security threats to defined owner or security analysts
 
 The plugin currently supports English and Germany language. 
