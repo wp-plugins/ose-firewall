@@ -45,20 +45,13 @@ class oseBadgeWidget extends WP_Widget {
 		oseFirewall::callLibClass ( 'vsscanner', 'vsscanner' );
 		$scanner = new virusScanner ();
 		$log = $scanner->getScanninglog ();
-		
 		if (empty ( $log )) {
-			
-			$status = 'Protected';
-			$date = date ( 'Y-m-d h:i:s' );
-			$text = '';
+			$status = 'Protected: '. date ( 'Y-m-d' );
 		} else {
-			
-			$status = $log->status;
-			$date = $log->date;
-			$text = 'Last scanned on:';
+			$status = $log->status.': '. date("Y-m-d", $log->date);
 		}
 		$this->register_plugin_styles ();
-		echo '<div id ="osebadge-bottom-right"><div id="osebadge-content"><div class="osestatus">' . $status . '</div>' . $text . '<br/>' . $date . '</div><div id="osebadge-footer"><a href="https://www.protect-website.com" target="_blank">Protected by OSE Firewall™</a></div></div>';
+		echo '<div id ="osebadge"><div id="osebadge-content"><div class="osestatus">' . $status . '</div></div><div id="osebadge-footer"><a href="https://www.protect-website.com" target="_blank">By OSE Firewall™</a></div></div>';
 	}
 	public function register_plugin_styles() {
 		wp_register_style ( 'ose-badge-style', plugins_url ( 'ose-firewall/public/css/badge.css' ) );

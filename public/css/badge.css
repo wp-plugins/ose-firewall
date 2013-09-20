@@ -1,44 +1,54 @@
-#osebadge-bottom-right
+#osebadge
 {
-	background: url('badge.png') no-repeat ;
-	width: 158px;
+	background: url('../images/badge.png') no-repeat ;
+	width: 200px;
 	height: 78px;
-	font-family: Helvetica,Arial,sans-serif;
+	font-family: Arial,sans-serif;
+	
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-#osebadge-bottom-right #osebadge-content
+#osebadge #osebadge-content
 {
-	text-shadow: black 0.1em 0.1em 0.2em;	
+	text-shadow: none;	
 	line-height: 1.0;
 }
 
-#osebadge-bottom-right #osebadge-content,
-#osebadge-bottom-right #osebadge-footer
+#osebadge #osebadge-content
 {
-	margin: 10px 5px 10px 10px;
+	padding-top: 38px;
 	font-size: 10px;
 	color: #FFFFFF;
 	text-align:left;
 	line-height: 1.0;
+	margin-left: 16px;
 }
-#osebadge-bottom-right #osebadge-footer
+#osebadge #osebadge-footer
 {
 	font-weight: bold;
 	line-height: 1.0;
 }
-#osebadge-bottom-right #osebadge-footer a
+#osebadge #osebadge-footer a
 {
 	text-decoration: none; 
 	color: #FFF; 
-	text-shadow: black 0.1em 0.1em 0.2em;
 	font-size: 10px;
 	font-weight: bold;
 	line-height: 1.0;
 }
-#osebadge-bottom-right #osebadge-content .osestatus
+#osebadge #osebadge-content .osestatus
 {
 	color: #FFF; 
-	font-size: 18px;
+	font-size: 11px;
 	font-weight: bold; 
 	line-height: 1.0;
+	font-style:italic; 
+}
+
+#osebadge #osebadge-footer {
+	margin-left: 16px;
+	font-style:italic;
+	float: left; 
 }
