@@ -163,7 +163,7 @@ class oseFirewall extends oseWordPress {
 					<h1><a href="'.$url.'" target= "_blank">'.$appTitle.'</a></h1>
 					<div id="support"><a href="http://www.protect-website.com/need-help/" target="__blank">Need Help?</a></div>
 					<div id="user-manual"><a href="https://www.protect-website.com/user-manual/" target="__blank">User Manual</a></div>
-					<div id="need-cleaning"><a href="https://www.protect-website.com/malware-cleaning-services/" target="__blank">Need Cleaning?</a></div>		
+					<div id="need-cleaning"><a href="https://www.protect-website.com/website-malware-removal-services/" target="__blank">Malware Removal</a></div>		
 			  </div>';
 	}
 	public static function callLibClass($folder, $classname)
