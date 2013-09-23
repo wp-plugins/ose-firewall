@@ -16,15 +16,4 @@ define('OSE_FWFRAMEWORK', OSEFWDIR . DS . 'protected' . DS.'library');
 define('OSE_FWLANGUAGE', OSEFWDIR . DS . 'public' . DS.'messages');
 define('OSE_FWDATA', OSEFWDIR . DS . 'protected' . DS.'data'); 
 define('OSE_DEFAULT_SCANPATH', ABSPATH);
-
-
-/*
-define('OSEFWLANGUAGE', OSEFWDIR . DS . 'languages');
-define('OSEFWLIBRARY', OSEFWDIR . DS . 'library');
-define('OSEFWTEMPLATES', OSEFWDIR . DS . 'views');
-define('OSEWPADMINURL',rtrim(site_url(), '/') . '/wp-admin');
-
-*/
-
-
 ?>

@@ -26,6 +26,16 @@ defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'wordpress.php');
 class oseFirewall extends oseWordPress {
 	private static $option = 'ose_firewall';
+	public function __construct () {
+		$debug = $this->getDebugMode(); 
+		$this->setDebugMode ($debug);
+	}
+	public function getDebugMode () {
+		global $wpdb;
+		$query = "SELECT `value` FROM `".$wpdb->prefix."ose_secConfig` WHERE `key` = 'debugMode' AND `type` = 'scan'";
+		$result =  $wpdb->get_var($query);
+    	return (empty($result) || ($result==1))?false:true;
+	}
 	public function loadBackendFunctions()
     {
     	$this -> addMenuActions () ;

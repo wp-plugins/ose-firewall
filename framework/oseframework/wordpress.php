@@ -25,7 +25,7 @@
 require_once (dirname(__FILE__).DS.'abstract.php'); 
 class oseWordPress extends oseFramework 
 {
-	private $debugMode = false; 
+	protected $debugMode = false; 
 	private static $option = '';
 	public function __construct ($debug) {
 		$this->setDebugMode ($debug);

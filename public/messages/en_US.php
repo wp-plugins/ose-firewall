@@ -24,9 +24,9 @@
 */
 defined('OSEFWDIR') or die;
 //Start here;
-define('OSE_WORDPRESS_FIREWALL', 'OSE Firewall®');
-define('OSE_WORDPRESS_FIREWALL_SETTING', 'OSE Firewall® Settings');
-define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', 'OSE Firewall® is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
+define('OSE_WORDPRESS_FIREWALL', 'OSE Firewall™');
+define('OSE_WORDPRESS_FIREWALL_SETTING', 'OSE Firewall™ Settings');
+define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', 'OSE Firewall™ is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
 define('NOTIFICATION_EMAIL_ATTACKS', 'Email that receives the notification of attacks');
 define('EMAIL_ADDRESS', 'Email Address');
 define('FIREWALL_SCANNING_OPTIONS', 'Firewall Scanning Options');

@@ -101,10 +101,8 @@ var O_INITDB_TERMINATED = "Database Initialization Terminated";
 var O_VSSCAN_INPROGRESS = "Virus Scanning In Progress";
 var O_VSSCAN_COMPLETED = "Virus Scanning Completed";
 var O_VSSCAN_TERMINATED = "Virus Scanning In Terminated";
-
 var O_PLS_ENTER_ADMIN_EMAIL = "Please enter an administrator email in the SEO section";
 var O_PLEASE_WAIT = "Please wait, this will take a few seconds ...";
-
 var O_PLS_ENTER_ADMIN_EMAIL_LONG = "Please edit your custom ban page and meta keywords and descriptions here. These will help you maintain Search Engine Ranking when OSE blocks search engine bots by mistake.";
 var O_CONF_UPDATE_SUCCESS = "Configuration is updated successfully.";
 var O_SUCCESS = "Success"
@@ -113,3 +111,5 @@ var O_BADGE_CSS_STYLE = "Badge CSS style";
 var O_SUBSCRIPTION_USERNAME = "Name";
 var O_SUBSCRIPTION_PASSWORD = "Password";
 var O_PLS_ENTER_USERINFO = "Please enter your username/password";
+// Added from 2.1.4
+var O_DEBUG_MODE = "Detect errors in the website?";

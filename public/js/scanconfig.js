@@ -20,6 +20,7 @@ oseConfScan.Form = new Ext.FormPanel({
         		//oseGetNormalTextField ('secretword', O_SECRET_WORD, 320, 600),
         		oseGetDisplayField(O_ANTI_HACKING_SCANNING_OPTIONS),
 				oseGetCombo('devMode', O_DEVELOPMENT_MODE, oseConfScan.Option, 600, 320, 100, 0),
+				oseGetCombo('debugMode', O_DEBUG_MODE, oseConfScan.Option, 600, 320, 100, 0),
 				oseGetCombo('blockIP', O_FRONTEND_BLOCKING_MODE, oseConfScan.banOption, 700, 320, 400, 0),
 		],
         buttons: [{

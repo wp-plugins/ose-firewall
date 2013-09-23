@@ -9,7 +9,7 @@ Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-OSE Firewall™ Security - Part of the Better WordPress Security™ Project, a WordPress Firewall / secuirty plugin to protect your website against hacking, virus and spam. 
+OSE Firewall™ Security - part of Better WordPress Security™ Project, a WordPress Firewall plugin to protect your website against hacking, virus and spam. 
 
 == Description ==
 
@@ -90,8 +90,13 @@ For more information visit <a href = "https://www.protect-website.com/installing
 1. Admin Panel of OSE Firewall Security
 2. IP Management Panel of OSE Firewall Security
 3. Virus Scanner of OSE Firewall Security
+4. Website Security Seal 
 
 == Changelog ==
+= 2.1.4 =
+* Enhancement: Improved Germany Language Translation. Credits to <a href="http://alexander.pfabel.de">Alexander Pfabel</a>
+* Enhancement: Added the debug mode option in the configuration panel to turn off error displaying function in the frontend. Credits to <a href="http://wordpress.org/support/profile/lewismedia">Wombat</a> 
+
 = 2.1.3 =
 * Enhancement: Added the function to check if the curl_exec is enabled for a hosting account, if so, the Stop Forum Spam function will be disabled. 
 * Enhancement: Improve the backend css file to adjust the font-size to match default wordpress font-size. Credits to <a href="http://alexander.pfabel.de">Alexander Pfabel</a>

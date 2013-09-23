@@ -43,6 +43,7 @@ class ScanconfigController extends BaseController {
 		$data = array();
 		$data['secretword'] = oRequest :: getVar('secretword', null);
 		$data['devMode'] = oRequest :: getInt('devMode', 0);
+		$data['debugMode'] = oRequest :: getInt('debugMode', 0);
 		$data['blockIP'] = oRequest :: getInt('blockIP', 0);
 		$data['threshold'] = oRequest :: getInt('threshold', 20);
 		$data['slient_max_att'] = oRequest :: getInt('slient_max_att', 10);
