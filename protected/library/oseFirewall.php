@@ -34,7 +34,7 @@ class oseFirewall extends oseWordPress {
 		global $wpdb;
 		$query = "SELECT `value` FROM `".$wpdb->prefix."ose_secConfig` WHERE `key` = 'debugMode' AND `type` = 'scan'";
 		$result =  $wpdb->get_var($query);
-    	return (empty($result) || ($result==1))?false:true;
+    	return (empty($result) || ($result==0))?false:true;
 	}
 	public function loadBackendFunctions()
     {
