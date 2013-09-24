@@ -35,37 +35,37 @@ defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 	<section class="ose-options">
           <ul >
             <li>
-              	<a class ="obtn obtn-large obtn-blue" href="<?php echo OSE_ADMINURL.'?page=ose_fw_scanconfig';?>" >
+              	<a class ="obtn obtn-large obtn-blue" href="<?php echo $this->model->getURL('scanconfig');?>" >
 	              <?php oLang::_('SCAN_CONFIGURATION'); ?>
 	              <i class="icon-cog"></i>
 	            </a> 
             </li>
             <li>
-              	<a class ="obtn obtn-large obtn-green" href="<?php echo OSE_ADMINURL.'?page=ose_fw_avconfig';?>" >
+              	<a class ="obtn obtn-large obtn-green" href="<?php echo $this->model->getURL('avconfig');?>" >
 	              <?php oLang::_('ANTIVIRUS_CONFIGURATION'); ?>
 	              <i class="icon-search"></i>
 	            </a> 
             </li>
             <li>
-	            <a class ="obtn obtn-large obtn-red" href="<?php echo OSE_ADMINURL.'?page=ose_fw_seoconfig';?>" >
+	            <a class ="obtn obtn-large obtn-red" href="<?php echo $this->model->getURL('seoconfig');?>" >
 	              <?php oLang::_('SEO_CONFIGURATION'); ?>
 				  <i class="icon-google"></i>	              
 	            </a>  
             </li>
             <li>
-	            <a class ="obtn obtn-large obtn-magenta" href="<?php echo OSE_ADMINURL.'?page=ose_fw_spamconfig';?>" >
+	            <a class ="obtn obtn-large obtn-magenta" href="<?php echo $this->model->getURL('spamconfig');?>" >
 	              <?php oLang::_('ANTISPAM_CONFIGURATION'); ?>
 				  <i class="icon-spam"></i>	              
 	            </a>  
             </li>
             <li>
-                <a class ="obtn obtn-large obtn-purple" href="<?php echo OSE_ADMINURL.'?page=ose_fw_emailconfig';?>" >
+                <a class ="obtn obtn-large obtn-purple" href="<?php echo $this->model->getURL('emailconfig');?>" >
 	              <?php oLang::_('EMAIL_CONFIGURATION'); ?>
 	              <i class="icon-mail-6"></i>
 	            </a>    
             </li>
             <li>
-                <a class ="obtn obtn-large obtn-yellow" href="<?php echo OSE_ADMINURL.'?page=ose_fw_emailadmin';?>" >
+                <a class ="obtn obtn-large obtn-yellow" href="<?php echo $this->model->getURL('emailadmin');?>" >
 	              <?php oLang::_('EMAIL_ADMIN'); ?>
 	              <i class="icon-user-8"></i>
 	            </a>    

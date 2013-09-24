@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-(defined('JPATH_PLATFORM')||defined('OSEDS')) or die;
+(defined('OSE_FRAMEWORK')) or die;
 
 /**
  * Email helper class, provides static methods to perform various tasks relevant

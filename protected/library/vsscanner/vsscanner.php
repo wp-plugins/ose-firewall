@@ -46,7 +46,12 @@ class virusScanner {
 	}
 	public function setFileExts()
 	{
+		if (!isset($this->config->file_ext))
+		{
+			$this->config->file_ext = "htm,html,shtm,shtml,css,js,php,php3,php4,php5,inc,phtml,jpg,jpeg,gif,png,bmp,c,sh,pl,perl,cgi,txt";
+		}
 		$this->file_ext = explode(',', trim($this->config->file_ext));
+			
 	}
 	private function setMaxFileSize () {
 		if ($this->maxfilesize>0)
@@ -314,7 +319,7 @@ class virusScanner {
 		$progress = 1-($completed/$total);
 		$return['completed'] = round($progress, 3);
 		$return['summary'] = ($return['completed']*100). '% ' .oLang::_get('COMPLETED');
-		$return['progress'] = $statusQuery= "<b>Progress: ".($completed)." files remaining.</b>. Memory Usage: ".$memory_usage."MB, CPU load:".$cpuload[0]."<br/><br/>".$statusQuery;
+		$return['progress'] = "<b>Progress: ".($completed)." files remaining.</b>. Memory Usage: ".$memory_usage."MB, CPU load:".$cpuload[0]."<br/><br/>";
 		$return['last_file'] = oLang::_get('LAST_SCANNED_FILE').' '.$last_file;
 		$return['cont'] = ($completed == $total)?false:true;
 		return $return;  

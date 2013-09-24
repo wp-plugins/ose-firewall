@@ -80,7 +80,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				return $scanResult;
 			}
 		}
-		if (isset ( $options ['checkjsinjection'] ) && $options ['osefirewall_checkjsinjection'] == true) {
+		if (isset ( $options ['checkjsinjection'] ) && $options ['checkjsinjection'] == true) {
 			$scanResult = $this->checkJSInjection ();
 			if (! empty ( $scanResult )) {
 				return $scanResult;
@@ -332,8 +332,6 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 		$db->setQuery($query);
         $db->query();
 		$results = $db->loadObject();
-        $lastSessionRequest = (int)($results->last_session_request);
-        $totalSessionRequest = (int)($results->total_session_request);
 		if (!$results){
 			$last_session_request = strval(time());
 			$total_session_request = strval(1);
@@ -349,50 +347,55 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
             $db->query();
             return;
 		}
-		if ((time() - $lastSessionRequest) < 10){
-			if($totalSessionRequest > 80){
-				$return['impact'] =100;
-				$return['detcontent_content'] = "dDos Attack";
-				$return['rule_id'] =4;
+		else 
+		{
+		    $lastSessionRequest = (int)($results->last_session_request);
+        	$totalSessionRequest = (int)($results->total_session_request);
+			if ((time() - $lastSessionRequest) < 10){
+				if($totalSessionRequest > 80){
+					$return['impact'] =100;
+					$return['detcontent_content'] = "dDos Attack";
+					$return['rule_id'] =4;
+				}
+				else{
+	                $lastSessionRequest = time();
+	                $totalSessionRequest = $totalSessionRequest +1;
+					$query =" UPDATE `#__osefirewall_iptable_tmp` SET `last_session_request` = " .$db->quoteValue((string)$lastSessionRequest).
+					", `total_session_request` = " .$db->quoteValue((string)$totalSessionRequest).
+					" WHERE `ip32_start` = ".$db->quoteValue($ip32);
+					$db->setQuery($query);
+	                $db->query();
+	                return;
+				}
 			}
 			else{
-                $lastSessionRequest = time();
-                $totalSessionRequest = $totalSessionRequest +1;
-				$query =" UPDATE `#__osefirewall_iptable_tmp` SET `last_session_request` = " .$db->quoteValue((string)$lastSessionRequest).
-				", `total_session_request` = " .$db->quoteValue((string)$totalSessionRequest).
-				" WHERE `ip32_start` = ".$db->quoteValue($ip32);
-				$db->setQuery($query);
-                $db->query();
-                return;
+				if ($totalSessionRequest > $visits)
+				{
+					// real flooding, return true;
+					$query =" DELETE FROM `#__osefirewall_iptable_tmp` WHERE `ip32_start` = ". $db->quoteValue($ip32);
+					$db->setQuery($query);
+	                $db->query();
+					$return['impact'] =100;
+					$return['detcontent_content'] = "dDos Attack";
+					$return['rule_id'] =4;
+				}
+				else
+				{
+	                $lastSessionRequest = time();
+					$query =" UPDATE `#__osefirewall_iptable_tmp` SET `last_session_request` = " .$db->quoteValue((string)$lastSessionRequest).
+					", `total_session_request` = 1" .
+					" WHERE `ip32_start` = ". $db->quoteValue($ip32);
+					$db->setQuery($query);
+	                $db->query();
+	                return;
+				}
 			}
-		}
-		else{
-			if ($totalSessionRequest > $visits)
-			{
-				// real flooding, return true;
-				$query =" DELETE FROM `#__osefirewall_iptable_tmp` WHERE `ip32_start` = ". $db->quoteValue($ip32);
-				$db->setQuery($query);
-                $db->query();
-				$return['impact'] =100;
-				$return['detcontent_content'] = "dDos Attack";
-				$return['rule_id'] =4;
-			}
-			else
-			{
-                $lastSessionRequest = time();
-				$query =" UPDATE `#__osefirewall_iptable_tmp` SET `last_session_request` = " .$db->quoteValue((string)$lastSessionRequest).
-				", `total_session_request` = 1" .
-				" WHERE `ip32_start` = ". $db->quoteValue($ip32);
-				$db->setQuery($query);
-                $db->query();
-                return;
-			}
-		}
+		}	
 	}
 	private function checkTrasversal() {
 		$return = array ();
 		$trasversal = "\.\.\/|\.\.\\|%2e%2e%2f|%2e%2e\/|\.\.%2f|%2e%2e%5c";
-		if (preg_match ( "/^.*(" . $trasversal . ").*/i", $_SERVER ['url'], $matched )) {
+		if (preg_match ( "/^.*(" . $trasversal . ").*/i", $_SERVER ['REQUEST_URI'], $matched )) {
 			$return ['impact'] = 100;
 			$return ['detcontent_content'] = $matched [0];
 			$return ['rule_id'] = 9;
@@ -440,14 +443,14 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 					$return ['rule_id'] = 7;
 					break;
 				}
-				if (preg_match ( "/((\%3C)|<)((\%69)|i|(\%49))((\%6D)|m|(\%4D))((\%67)|g|(\%47))[^\n]+((\%3E)|>)/I", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
+				if (preg_match ( "/((\%3C)|<)((\%69)|i|(\%49))((\%6D)|m|(\%4D))((\%67)|g|(\%47))[^\n]+((\%3E)|>)/i", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
 					$return ['impact'] = 100;
 					$return ['detcontent_content'] = $matches;
 					$return ['rule_id'] = 7;
 					break;
 				}
-				if (preg_match ( "/((\%3C)|<)[^\n]+((\%3E)|>)/I", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
+				if (preg_match ( "/((\%3C)|<)[^\n]+((\%3E)|>)/i", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
 					$return ['impact'] = 100;
 					$return ['detcontent_content'] = $matches;

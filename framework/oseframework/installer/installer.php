@@ -25,7 +25,7 @@
 
 abstract class Installer 
 {
-	private $db = null;
+	protected $db = null;
 	public function __construct() {
 		$this->db = $this->getDatabase();
 		oseWordPress :: loadFiles();
@@ -70,6 +70,59 @@ abstract class Installer
 		}
 		return $queries;
 	}
-	
+	public function createTables($dbFile) {
+		$data = $this->readSQLFile($dbFile);
+		$queries = $this->_splitQueries($data);
+		foreach ($queries as $query)
+		{	
+			$this->db->setQuery($query);
+			if(!$this->db->query()) {
+				return false;
+			}
+		}
+		return true; 
+	}
+	public function insertConfigData($dbFile, $key){
+		$query = "SELECT `key` FROM `#__ose_secConfig` WHERE `key` = ". $this->db->quoteValue($key);
+		$this->db->setQuery($query);
+		$result = $this->db->loadResult();
+		if (empty($result))
+		{
+			$query = $this->readSQLFile($dbFile);
+			$this->db->setQuery($query);
+			if(!$this->db->query()) {
+				return false;
+			}
+		}
+		return true; 
+	}
+	public function insertEmailData ($dbFile, $key) {
+	 	$query = "SELECT COUNT(id) as `count` FROM `#__ose_app_email` WHERE `app` = ". $this->db->quoteValue($key);
+		$this->db->setQuery($query);
+		$result = $this->db->loadResult();
+		if ($result['count']==0)
+		{
+			$query = $this->readSQLFile($dbFile);
+			$this->db->setQuery($query);
+			if(!$this->db->query()) {
+				return false;
+			}
+		}
+		return true; 
+	 }
+	protected function isViewExists($view)
+	{
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') 
+		{
+			$query= "SHOW CREATE VIEW `{$view}`";
+		}
+		else
+		{		
+			$query= "SHOW TABLE STATUS LIKE '{$view}'";
+		}
+		$query = $this->db->setQuery($query);
+		$result= $this->db->loadResult();
+		return (!empty($result))?true: false; 
+	}
 }
 ?>

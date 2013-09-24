@@ -97,7 +97,14 @@ class oseFirewallStat {
 		$start = oRequest::getInt('start', 0);
 		$page = oRequest::getInt('page', 1);
 		$search = oRequest::getVar('search', null);
-		$status = oRequest::getInt('status', null);
+		if (isset($_REQUEST['status']))
+		{
+			$status = oRequest::getInt('status', null);
+		}
+		else 
+		{
+			$status = null; 
+		}
 		$start = $limit * ($page-1);    
 		return $this->convertACLIPMap($this->getACLIPMapDB($search, $status, $start, $limit));
 	}
@@ -125,7 +132,7 @@ class oseFirewallStat {
 		$i = 0;
 		foreach ($results as $result)
 		{
-			if (empty($results[$i]->country_code))
+			if (!isset($results[$i]->country_code) || empty($results[$i]->country_code))
 			{
 				$results[$i]->country_code = $this->updateCountryCode($results[$i]->id, $results[$i]->ip32_start);
 			}
@@ -224,7 +231,7 @@ class oseFirewallStat {
 	{
 		$ip = long2ip($ip32_start);
 		$tags = get_meta_tags('http://www.geobytes.com/IpLocator.htm?GetLocation&template=php3.txt&IpAddress='.$ip);
-		$country  = strtolower($tags['iso2']);
+		$country  = (isset($tags['iso2']))?strtolower($tags['iso2']): '';
 		return $country;
 	}
 	private function updateCountryCode($acl_id, $ip32_start)

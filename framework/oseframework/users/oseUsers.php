@@ -66,6 +66,19 @@ class oseUsers {
 		}		
 		return $admins;
 	}
+	
+	public function getAllUsers () 
+	{
+		if ($this->cms=='joomla')
+		{
+		$admins = $this->getJoomlaUsers();
+		}
+		else {
+		$admins = $this->getWordpressUsers();
+		}
+		return $admins;
+	}
+	
 	private function getJoomlaAdmin()
 	{
 		$groupids = $this->getJoomlaAdminGroups(); 
@@ -92,6 +105,18 @@ class oseUsers {
 		$query = "SELECT `user_id` FROM `#__usermeta` where `meta_key` ='wp_capabilities' and `meta_value` LIKE '%administrator%'";
 		$this->db->setQuery($query); 
 		return	$this->db->loadArrayList('user_id');
+	}
+	private function getWordpressUsers () {
+		$where = ''; 
+		oseFramework::loadRequest ();
+		$query = oRequest ::getVar('query', null);
+		if (!empty($query))
+		{
+			$where = ' WHERE `user_nicename` LIKE "%'.$this->db->quoteValue($query).'%"'; 
+		}	
+		$query = "SELECT `ID`, `user_nicename` as `name` FROM `#__users` ". $where; 
+		$this->db->setQuery($query);
+		return	$this->db->loadObjectList();
 	}
 	public function getJoomlaAdminGroups()
 	{	
@@ -128,4 +153,25 @@ class oseUsers {
 		$user_groups = JAccess::getGroupsByUser($user->id);
 		return $user_groups; 
 	} 
+	
+	public function registerUser ($userInfo) {
+		return wp_insert_user( $userInfo ) ;
+	}
+	
+	public static function isLoggedin () {
+		if (class_exists('oseWordpress'))
+		{	
+			return is_user_logged_in();
+		}
+		else
+		{
+			$user = JFactory::getUser (); 
+			return ($user->guest==true)?false:true; 
+		}	
+	}
+	
+	public static function getUserID() {
+		$current_user = wp_get_current_user();
+		return $current_user->ID; 
+	}
 }

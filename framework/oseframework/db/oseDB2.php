@@ -149,7 +149,7 @@ abstract class oseDB2 {
 		$tables = $this->getTableFields($table);
 		$temp = array ();
 		foreach ($tables[$table] as $field => $info) {
-			if (!empty ($filterValues[$field]) || (is_numeric ($filterValues[$field]) && $filterValues[$field]==0)) {
+			if (isset($filterValues[$field]) && (!empty ($filterValues[$field]) || (is_numeric ($filterValues[$field]) && $filterValues[$field]==0))) {
 				$temp[$field] = $filterValues[$field];
 			}
 		}
@@ -173,7 +173,7 @@ abstract class oseDB2 {
 		$tables = $this->getTableFields($table);
 		$temp = array ();
 		foreach ($tables[$table] as $field => $info) {
-			if (!empty ($filterValues[$field]) || (is_numeric ($filterValues[$field]) && $filterValues[$field]==0)) {
+			if (isset($filterValues[$field]) && (!empty ($filterValues[$field]) || (is_numeric ($filterValues[$field]) && $filterValues[$field]==0))) {
 				$temp[$field] = $filterValues[$field];
 			}
 		}

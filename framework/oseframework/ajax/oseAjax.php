@@ -28,7 +28,17 @@ class oseAjax {
 		Yii :: app()->runController($_REQUEST['controller'].'/'.$_REQUEST['task']);
 	}
 	public static function addActions ($func) {
-		add_action('wp_ajax_' . $func, 'oseAjax::runAction');
+		if (class_exists('oseWordpress'))
+		{
+			add_action('wp_ajax_' . $func, 'oseAjax::runAction');
+		}
+		else
+		{
+			if (isset($_REQUEST['controller']) && isset($_REQUEST['task']))
+			{
+				self::runAction();
+			} 
+		}
 	}
 	public static function loadActions ($actions) {
 		foreach ( $actions as $action )

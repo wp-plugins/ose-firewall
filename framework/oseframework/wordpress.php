@@ -25,7 +25,7 @@
 require_once (dirname(__FILE__).DS.'abstract.php'); 
 class oseWordPress extends oseFramework 
 {
-	protected $debugMode = false; 
+	private $debugMode = false; 
 	private static $option = '';
 	public function __construct ($debug) {
 		$this->setDebugMode ($debug);
@@ -43,20 +43,13 @@ class oseWordPress extends oseFramework
     public static function getLocale () {
     	return get_locale();
     }
-    public static function loadBackendBasic () {
-    	$baseUrl = Yii :: app()->baseUrl;
-		$cs = Yii :: app()->getClientScript();
+	public static function loadallJs ($cs) {
 		$cs->registerCoreScript('extjsneptune');
 		$cs->registerCoreScript('extjs');
 		$cs->registerCoreScript('oseelements');
 		$cs->registerCoreScript('osefunctions');
 		$cs->registerCoreScript('ItemSelector');
 		$cs->registerCoreScript('MultiSelect');
-		$cs->registerCssFile($baseUrl . '/public/css/backendv6.css');
-		$cs->registerCssFile($baseUrl . '/public/css/bootmetro-icons.min.css');
-		$cs->registerCssFile($baseUrl . '/public/css/ext-debug.css');
-		$cs->registerCssFile('http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300');
-		$cs->registerScript('oseAjax', self::getAjaxScript(), CClientScript::POS_BEGIN); 
     }
     public static function loadGridAssets () {
     	$baseUrl = Yii :: app()->baseUrl;
@@ -70,12 +63,6 @@ class oseWordPress extends oseFramework
 		$cs->registerCoreScript('tinymce');
 		$cs->registerCoreScript('TinyMCE');
     }
-    public static function loadBackendAll () 
-    {
-    	self::loadBackendBasic ();
-    	self::loadGridAssets (); 
-    	self::loadFormAssets ();  
-    }
     public static function getDBO () {
     	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'db'. DS .'wordpress.php');
     	$db = new oseDB2Wordpress(); 
@@ -86,9 +73,8 @@ class oseWordPress extends oseFramework
     }
     
     public static function loadInstaller () { }
-    public static function getAjaxScript() {
-    	return "var url = \"".admin_url('admin-ajax.php')."\";".
-			   "var option=\"".self::$option."\";";
+    public static function getSiteURL () {
+    	return get_site_url();
     }
 }
 ?>

@@ -32,8 +32,7 @@ oseATHIPMANAGER.form = Ext.create('Ext.form.Panel', {
 				if (oseCheckIPValidity()==false) { return false; }
 				oseFormSubmit(oseATHIPMANAGER.form, url, option, controller, 'addips', oseATHIPMANAGER.store, 'Please wait, this will take a few seconds ...');
 			}
-		},
-		oseGetCloseButton()
+		}
 		]
 	    ,items:[
     		oseGetNormalTextField('title', O_IP_RULE, 100, 350, null),

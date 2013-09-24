@@ -23,7 +23,14 @@
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
-require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'installer' . DS . 'wordpress.php');
+if (OSE_CMS == 'joomla')
+{
+	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'installer' . DS . 'joomla.php');
+}
+else
+{
+	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'installer' . DS . 'wordpress.php');
+}
 class oseFirewallInstaller extends oseInstaller {
 	public function __construct() {
 		parent :: __construct();
@@ -57,7 +64,6 @@ class oseFirewallInstaller extends oseInstaller {
 	public function insertVspatterns($dbFile) {
 		$data = $this->readSQLFile($dbFile);
 		$queries = $this->_splitQueries($data);
-		
 		$query = "SELECT COUNT(id) as `count` FROM `#__osefirewall_vstypes` ";
 		$this->db->setQuery($query);
 		$result = $this->db->loadResult();
@@ -116,8 +122,11 @@ class oseFirewallInstaller extends oseInstaller {
 		return true;
 	}
 	private function replaceVars($query) {
-		$query = str_replace('`users`.`name`', '`users`.`user_nicename` AS `name` ', $query);
-		$query = str_replace('`users`.`email`', '`users`.`user_email` AS `email`', $query);
+		if (OSE_CMS =='wordpress') 
+		{
+			$query = str_replace('`users`.`name`', '`users`.`user_nicename` AS `name` ', $query);
+			$query = str_replace('`users`.`email`', '`users`.`user_email` AS `email`', $query);
+		}
 		return $query;
 	}
 	public function createAttackmapView($dbFile) {
@@ -220,7 +229,7 @@ class oseFirewallInstaller extends oseInstaller {
 		$model = new ConfigurationModel();
 		$config = $model -> getConfiguration('vsscan');
 		$this->config = (object)$config['data'];
-		return $this->config->file_ext; 
+		return (isset($this->config->file_ext))?$this->config->file_ext:null; 
 	}
 	
 } 

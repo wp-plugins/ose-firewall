@@ -57,4 +57,13 @@ class ConfigurationModel extends BaseModel {
 				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_SAVE_FAILED'), false);
 		}
 	}
+	public function getURL($view) {
+		if (class_exists('JFactory')) {
+			return OSE_ADMINURL.'&view='.$view; 
+		}
+		else
+		{
+			return OSE_ADMINURL.'?page=ose_fw_'.$view;
+		}
+	}
 }	

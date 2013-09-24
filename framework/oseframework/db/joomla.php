@@ -24,10 +24,27 @@
 */
 require_once (dirname(__FILE__).DS.'oseDB2.php'); 
 
-class oseDB2Joomla {
-	public function  getConnection ()
+class oseDB2Joomla extends oseDB2 {
+	public function __construct () {
+		$this->dbo = $this-> getConnection ();
+		$this->setPrefix (); 
+	}
+	protected function setPrefix () {
+		$config = JFactory::getConfig();
+		$this -> prefix = $config->get('dbprefix');
+	}	
+	public function getConnection ()
 	{
-		
+		$config = JFactory::getConfig();
+		$host = explode(':', $config->get('host')); 
+		if (!empty($host[1]))
+		{
+			$connection=new CDbConnection('mysql:host='.$host[0].';port='.$host[1].';dbname='.$config->get('db'),$config->get('user'),$config->get('password'));
+		}
+		else
+		{
+			$connection=new CDbConnection('mysql:host='.$host[0].';dbname='.$config->get('db'),$config->get('user'),$config->get('password'));
+		}
+		return $connection;
 	}
 }
-

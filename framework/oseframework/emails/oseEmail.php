@@ -28,23 +28,23 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH')) {
 	die('Direct Access Not Allowed');
 }
 class oseEmail {
-	private $table = '#__ose_app_email';
-	private $view = '#__ose_app_adminemailmap';
-	private $app = null;
-	private $db = null;
-	private $cms = null;
+	protected $table = '#__ose_app_email';
+	protected $view = '#__ose_app_adminemailmap';
+	protected $app = null;
+	protected $db = null;
+	protected $cms = null;
 	public function __construct($app) {
 		$this->app = $app;
 		$this->setCMS();
 		$this->setDB();
+		$this->loadRequest ();
+	}
+	private function loadRequest () {
+		oseFramework :: loadRequest();
 	}
 	private function setCMS()
 	{
-		if (defined('_JEXEC')) {
-			$this->cms = 'joomla';
-		} else if (defined('WPLANG')) {
-			$this->cms = 'wordpress';
-		}
+		$this->cms = OSE_CMS;
 	}
 	private function setDB()
 	{
@@ -58,7 +58,7 @@ class oseEmail {
 		}
 	}
 	public function getEmailList() {
-		oseWordpress :: loadRequest();
+		
 		$limit = oRequest :: getInt('limit', 25);
 		$start = oRequest :: getInt('start', 0);
 		$page = oRequest :: getInt('page', 1);
@@ -197,9 +197,9 @@ class oseEmail {
 	}
 	public function sendMail($email, $config_var) {
 		$receiptients = $this->getReceiptients($email->id);
-		require_once (OSE_FRAMEWORKDIR .DS . 'oseframework'. DS . 'emails' . DS . 'oseEmailHelper.php');
-		require_once (OSE_FRAMEWORKDIR .DS . 'oseframework'. DS . 'emails' . DS . 'phpmailer' . DS . 'phpmailer.php');
-		require_once (OSE_FRAMEWORKDIR .DS . 'oseframework'. DS . 'emails' . DS . 'phpmailer' . DS . 'smtp.php');
+		require_once (OSE_FRAMEWORKDIR . DS . 'emails' . DS . 'oseEmailHelper.php');
+		require_once (OSE_FRAMEWORKDIR . DS . 'emails' . DS . 'phpmailer' . DS . 'phpmailer.php');
+		require_once (OSE_FRAMEWORKDIR . DS . 'emails' . DS . 'phpmailer' . DS . 'smtp.php');
 		if (empty ($receiptients)) {
 			return false;
 		}
@@ -219,7 +219,7 @@ class oseEmail {
 		}
 		return true;
 	}
-	private function addRecipient(& $mailer, $recipient) {
+	protected function addRecipient(& $mailer, $recipient) {
 		// If the recipient is an array, add each recipient... otherwise just add the one
 		if (is_array($recipient)) {
 			foreach ($recipient as $to) {
@@ -231,10 +231,24 @@ class oseEmail {
 			$mailer->AddAddress($recipient);
 		}
 	}
-	private function getReceiptients($emailid) {
+	protected function getReceiptients($emailid) {
 		$query = "SELECT `name`, `email` FROM `#__ose_app_adminemailmap` where `email_id` = " . (int) $emailid;
 		$this->db->setQuery($query);
 		$items = $this->db->loadObjectList();
 		return $items;
 	}
+	
+	public function getTOS ($id = null) {
+		if (empty($id))
+		{
+			$query = "SELECT * FROM `{$this->table}` where `type` = 'tos' ORDER BY id DESC LIMIT 1 ";
+		}
+		else
+		{
+			$query = "SELECT * FROM `{$this->table}` where `id` = ". (int)$id;
+		}	
+		$this->db->setQuery($query);
+		$item = $this->db->loadObject();
+		return $item;
+	}	
 }

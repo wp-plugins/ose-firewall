@@ -261,14 +261,14 @@ class oseFirewallScanner {
 		$query = "SELECT `score` FROM `#__osefirewall_aclipmap` WHERE `id` = ". (int)$this->aclid; 
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return (int)$result->score; 
+		return (isset($result->score))?(int)$result->score:0; 
 	}
 	public function getVisits()
 	{
 		$query = "SELECT `visits` FROM `#__osefirewall_aclipmap` WHERE `id` =16";//. (int)$this->aclid; 
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return (int)$result->visits; 
+		return (isset($result->visits))?(int)$result->visits:0; 
 		
 	}
 	private function getNotified()
@@ -276,7 +276,7 @@ class oseFirewallScanner {
 		$query = "SELECT `notified` FROM `#__osefirewall_aclipmap` WHERE `id` = ". (int)$this->aclid; 
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return (int)$result->notified;
+		return (isset($result->notified))?(int)$result->notified:0; 
 	}
 	private function updateVisits()
 	{
@@ -432,7 +432,7 @@ class oseFirewallScanner {
 		$query = 'SELECT `id` FROM `#__osefirewall_detcontent` WHERE `content` = ' . $this->db->quoteValue($detcontent);
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return $result ->id;
+		return (isset($result ->id))?$result ->id:null;
 	}
 	private function addPages() {
 		$query = 'SELECT `id`, `visits` FROM `#__osefirewall_pages` WHERE `page_url` = ' . $this->db->quoteValue($this->url, true);

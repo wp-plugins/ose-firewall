@@ -28,7 +28,14 @@ class ManageipsController extends BaseController {
 	public $layout = '//layouts/grids';
 	public function actionGetACLIPMap() {
 		oseFirewall::loadRequest ();
-		$mobiledevice = oRequest :: getInt('mobiledevice', 0);
+		if (isset($_REQUEST['mobiledevice']))
+		{
+			$mobiledevice = oRequest :: getInt('mobiledevice', 0);
+		}
+		else
+		{
+			$mobiledevice = 0;
+		}
 		$results = $this ->model->getACLIPMap();
 		oseAjax::returnJSON($results, $mobiledevice);   		 
 	}
