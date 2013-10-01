@@ -11,7 +11,7 @@
 if(!class_exists('HTMLPurifier_Bootstrap',false))
 {
 	require_once(Yii::getPathOfAlias('system.vendors.htmlpurifier').DIRECTORY_SEPARATOR.'HTMLPurifier.standalone.php');
-	HTMLPurifier_Bootstrap::registerAutoload();
+	//HTMLPurifier_Bootstrap::registerAutoload();
 }
 
 /**
