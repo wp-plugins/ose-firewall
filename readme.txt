@@ -94,7 +94,7 @@ For more information visit <a href = "https://www.protect-website.com/installing
 
 == Changelog ==
 = 2.2.1 =
-* Enhancement: Remove the HTML Purifier in order to solve the 500 error issue in some server. 
+* Enhancement: Remove the HTML Purifier auro register function in order to solve the 500 error issue in some server. 
 
 = 2.2.0 =
 * Enhancement: Added menu bar into the control panel for easy navigation
