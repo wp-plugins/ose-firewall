@@ -102,9 +102,18 @@ class oseUsers {
 		return	$return;
 	}
 	private function get_super_admins () {
-		$query = "SELECT `user_id` FROM `#__usermeta` where `meta_key` ='wp_capabilities' and `meta_value` LIKE '%administrator%'";
+		$query = "SELECT * FROM `#__usermeta` where `meta_value` LIKE '%administrator%'";
 		$this->db->setQuery($query); 
-		return	$this->db->loadArrayList('user_id');
+		$objList = $this->db->loadObjectList();
+		$return = array (); 
+		foreach ($objList as $obj) 
+		{
+			if (preg_match("/wp\_*capabilities/", $obj->meta_key))
+			{
+				$return[] = $obj->user_id; 
+			}
+		}
+		return $return; 
 	}
 	private function getWordpressUsers () {
 		$where = ''; 
