@@ -51,7 +51,7 @@ class EmailadminController extends BaseController {
 			return; 
 		}
 		$result = $this->model -> addadminemailmap($userid, $emailid);
-		if ($result==true)
+		if (!empty($result))
 		{
 				oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get('LINKAGE_ADDED_SUCCESS'), true);
 		} 
