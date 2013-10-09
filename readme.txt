@@ -69,11 +69,11 @@ For more information visit <a href = "https://www.protect-website.com/installing
 = What to do if i have a problem? =
 * You can always visit our <a href = "https://www.protect-website.com/support-center/">support center</a> to raise a ticket, and we will assign an expert to fix your problem immediately.
 
-= How to raise a ticket in the Support Center? =
-* Visit our <a href = "https://www.protect-website.com/support-center/">support center</a>, click 'Open a New Ticket', fill in all the details and click 'Create Ticket'. The system will automatically send you an email with a Ticket ID.
+= I get a Fatal Error: 'Class PDO not found'? =
+* If you encounter the error ‘Fatal error: Class ‘PDO’ not found’ when the OSE Firewall is activated, this indicates the PHP Data Objects is not loaded in your PHP environment. PDO is activated by default as of PHP 5.1.0, so please contact your hosting company to enable it if it is disabled. If you know how to customize the php configuration, add these codes into... <a href = "https://www.protect-website.com/application-runtime-path-valid/">Learn more</a>.
 
-= How to use my Ticket ID? =
-* Ticket ID is an identification number for you to track the status of your request/enquiry. Visit our <a href = "https://www.protect-website.com/support-center/">support center</a>, click 'Check Ticket Status', enter your registered email address and Ticket ID to track the status.
+= Application runtimepath not valid? =
+* If you are getting this error, you have to change the permission for both of these folders and set them writable. <a href = "https://www.protect-website.com/application-runtime-path-valid/">Learn more</a>.
 
 = Does the plugin block User Agent attacks? =
 * Yes, the plugin checks whether the user agent environment variables contains PHP command, linux system commands and sql commands. If these are detected, the firewall will stop the user by throwing a ban page. 
