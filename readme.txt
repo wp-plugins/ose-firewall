@@ -81,9 +81,6 @@ For more information visit <a href = "https://www.protect-website.com/installing
 = What is DFI or LFI? =
 * DFI or LFI refers to Direct (Local) File Inclusion, where it usually comes with the user agent attacks. Hackers first test if your server has the vulnerabilities in Direct File Inclusion before they start the User Agent Attacks. They test if including the local file can review your website's environment variables, e.g. adding the following into your URL to review linux username and passwords: ../../../../etc/passwd. If this is successfuly, they can use User Agent to start attacking your server by downloading shell codes into your website. 
 
-= How to resolve the issue "Fatal error: Class 'PDO' not found" =
-* OSE Firewall is built on <a href ="http://php.net/manual/en/book.pdo.php">PHP Data Objects (PDO)</a>, which is an extension providing unified data access to many popular DBMS, such as MySQL, PostgreSQL. Therefore, to use OSE Firewall, the PDO extension and the specific PDO database driver (e.g. PDO_MYSQL) have to be installed 
-
 
 == Screenshots ==
 
