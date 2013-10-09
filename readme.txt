@@ -59,7 +59,7 @@ To Install OSE Firewall Security Plugin:
 
 1. Go to Plugins > Add New.
 2. Under Search bar, search for 'OSE Firewall Security'.
-3. Click 'Install Now' to install the Plugin.
+3. Click 'Install Now' to install the Plugin. 
 
 For more information visit <a href = "https://www.protect-website.com/installing-ose-firewall/">here</a>.
 
@@ -70,7 +70,7 @@ For more information visit <a href = "https://www.protect-website.com/installing
 * You can always visit our <a href = "https://www.protect-website.com/support-center/">support center</a> to raise a ticket, and we will assign an expert to fix your problem immediately.
 
 = I get a Fatal Error: 'Class PDO not found'? =
-* If you encounter the error ‘Fatal error: Class ‘PDO’ not found’ when the OSE Firewall is activated, this indicates the PHP Data Objects is not loaded in your PHP environment. PDO is activated by default as of PHP 5.1.0, so please contact your hosting company to enable it if it is disabled. If you know how to customize the php configuration, add these codes into... <a href = "https://www.protect-website.com/application-runtime-path-valid/">Learn more</a>.
+* If you encounter the error 'Fatal error: Class 'PDO' not found' when the OSE Firewall is activated, this indicates the PHP Data Objects is not loaded in your PHP environment. PDO is activated by default as of PHP 5.1.0, so please contact your hosting company to enable it if it is disabled. If you know how to customize the php configuration, add these codes into... <a href = "https://www.protect-website.com/application-runtime-path-valid/">Learn more</a>.
 
 = Application runtimepath not valid? =
 * If you are getting this error, you have to change the permission for both of these folders and set them writable. <a href = "https://www.protect-website.com/application-runtime-path-valid/">Learn more</a>.
