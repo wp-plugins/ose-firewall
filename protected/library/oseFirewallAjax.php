@@ -68,7 +68,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionEmailadmin () {
-		$actions = array ('getAdminEmailmap','getAdminUsers','getEmailList','addadminemailmap');
+		$actions = array ('getAdminEmailmap','getAdminUsers','getEmailList','addadminemailmap','deleteadminemailmap');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionAvconfig () {

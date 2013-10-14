@@ -90,6 +90,10 @@ For more information visit <a href = "https://www.protect-website.com/installing
 4. Website Security Seal 
 
 == Changelog ==
+= 2.2.4 =
+* Fixed: admin-email mapping delete function not working in some servers because the JSON encoded ID value is escaped
+* Fixed: admin-email mapping add linkage function showing incorrect return message even the linkage was added successfully
+
 = 2.2.3 =
 * Fixed the admin-email mapping controller for the incorrect return messages for the Ajax message box. 
 

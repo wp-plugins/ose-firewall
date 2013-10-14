@@ -63,7 +63,7 @@ class EmailadminController extends BaseController {
 	public function actionDeleteadminemailmap()
 	{
 		oseFirewall::loadRequest ();  
-		$ids= oRequest::getVar('ids',null);
+		$ids= stripslashes(oRequest::getVar('ids',null));
 		$ids = oseJSON::decode($ids);
 		if (empty($ids))
 		{

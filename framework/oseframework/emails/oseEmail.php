@@ -167,13 +167,31 @@ class oseEmail {
 		}
 	}
 	public function addadminemailmap($userid, $emailid) {
-		$admin_id = $this->addadminid($userid);
+		$admin_id = $this->getadminid($userid); 
+		if (empty($admin_id))
+		{ 
+			$admin_id = $this->addadminid($userid);
+		}
 		$varValues = array (
 			'admin_id' => (int) $admin_id,
 			'email_id' => (int) $emailid
 		);
-		$id = $this->db->addData('insert', '#__ose_app_adminrecemail', '', '', $varValues);
-		return $id;
+		$this->db->addData('insert', '#__ose_app_adminrecemail', '', '', $varValues);
+		$success = $this->isMappingExits ($userid, $emailid);
+		return $success; 
+	}
+	private function isMappingExits ($userid, $emailid) {
+		$admin_id = $this->getadminid($userid);
+		$query = " SELECT COUNT(`admin_id`) AS count FROM `#__ose_app_adminrecemail` WHERE `admin_id` = " . (int) $admin_id." AND `email_id` = ".$emailid;
+		$this->db->setQuery($query);
+		$item = (object)$this->db->loadResult();
+		return ($item->count>0)?true:false;
+	}
+	public function getadminid($userid) {
+		$query = " SELECT `id` FROM `#__ose_app_admin` WHERE `user_id` = " . (int)$userid . " LIMIT 1";
+		$this->db->setQuery($query);
+		$item = $this->db->loadObject();
+		return (isset($item->id) && !empty($item->id))?$item->id:null;
 	}
 	private function addadminid($userid) {
 		$varValues = array (
