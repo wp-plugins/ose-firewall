@@ -2,7 +2,7 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker
+Tags: antivirus, better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker
 Requires at least: 3.5
 Tested up to: 3.6.1
 Stable tag: 2.2.4
