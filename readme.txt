@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 2.2.1
+Stable tag: 2.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ OSE Firewall™ Security - part of Better WordPress Security™ Project, a WordP
 == Description ==
 
 = MOST EPIC WORDPRESS SECURITY PLUGIN =
-OSE Firewall™ Security - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities.
+OSE Firewall™ Security - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities. By using OSE Firewall™ Security, you don't need any other antivirus product!
 
 = Aim to build Better Wordpress Security - the more secure wordpress environment =  
 The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding them to avoid infected plugins and themes. OSE Firewall™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
@@ -26,17 +26,18 @@ If you need help in using OSE Firewall Securitiy plugin, save time by starting y
 
 = New Security Features in OSE Firewall v2.0 =
 * Manage IPs in Firewall Setting - blacklisting, whitelisting, and monitoring IPs in the Firewall IP Management Section
-* Manage Security Rulesets - you can change the security rule sets to that best fits for your website's requirements in the Firewall Security Ruleset Section 
+* Manage Security Rulesets - you can change the security rule sets to that best fits for your website's requirements in the Firewall Security Ruleset Section, which increase the performance of antivirus and antihacking.
 * Email Security Threats - choose different types of security threats alert emails to receive when there's an attack
-* Variables whitelisting functions - you can whitelist some variables in the variable whitelisting configuration page in the firewall in order to avoid false security alerts. 
+* Variables Whitelisting functions - you can whitelist some variables in the variable whitelisting configuration page in the firewall in order to avoid false security alerts. 
 
 = Enhanced Security Features: Provides an industry level firewall to block common security threats =
 * Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
+* AntiVirus - prevent, detect and remove malware from the website, keep website secure.
 * Blacklisted IP Handling methods - Trace, Delete, Track
 * Security Check: Malicious User Agent blocks hundreds of the worst bots while ensuring open-access for normal traffic 
 * Security Check: Detect Directory Traversal that consists in exploiting insufficient security validation / sanitization of user-supplied input file names.
-* Malware Check: Virus Scanning that scans for malware and variants that are known security threats, and scans for heuristics of backdoors, trojans, suspicious code and other security issues
-* Security Check: DoS Attacks where automated bots constituting flooding attacks to your website. 
+* Malware Check: Virus Scanning that scans for malware and variants that are known security threats, and scans for heuristics of backdoors, trojans, suspicious code and other security issues, which is the first stgae of antivirus.
+* Security Prevention: DoS Attacks where automated bots constituting flooding attacks to your website. 
 * Security Check: Javascript Injection for any traffic including automated bots that constitutes security threats of injecting malicious javascript into your files.      
 * Security Check: Direct File Inclusion for any traffic including automated bots that constitutes security threats of including files on a server through the web browser.
 * Security Check: Remote File Inclusion for any traffic including automated bots that constitutes security threats of exploiting "dynamic file include" mechanisms in web applications.
@@ -90,6 +91,16 @@ For more information visit <a href = "https://www.protect-website.com/installing
 4. Website Security Seal 
 
 == Changelog ==
+= 2.2.4 =
+* Fixed: admin-email mapping delete function not working in some servers because the JSON encoded ID value is escaped
+* Fixed: admin-email mapping add linkage function showing incorrect return message even the linkage was added successfully
+
+= 2.2.3 =
+* Fixed the admin-email mapping controller for the incorrect return messages for the Ajax message box. 
+
+= 2.2.2 =
+* Fixed some websites the administrator lists cannot be shown in the Admin-Email Mapping section. 
+
 = 2.2.1 =
 * Enhancement: Remove the HTML Purifier auro register function in order to solve the 500 error issue in some server. 
 
