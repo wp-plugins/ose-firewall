@@ -31,7 +31,7 @@ If you need help in using OSE Firewall Securitiy plugin, save time by starting y
 * Variables Whitelisting functions - you can whitelist some variables in the variable whitelisting configuration page in the firewall in order to avoid false security alerts. 
 
 = Enhanced Security Features: Provides an industry level firewall to block common security threats =
-* Anti-Spam - Utilizing Blacklisting IPs in Stop Forum Spam 
+* AntiSpam - Utilizing Blacklisting IPs in Stop Forum Spam 
 * AntiVirus - prevent, detect and remove malware from the website, keep website secure.
 * Blacklisted IP Handling methods - Trace, Delete, Track
 * Security Check: Malicious User Agent blocks hundreds of the worst bots while ensuring open-access for normal traffic 
