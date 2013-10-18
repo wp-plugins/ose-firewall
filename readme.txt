@@ -50,7 +50,7 @@ You can contribute by translating OSE Firewall Security <a href = "https://www.p
 = System Requirements =
 * PHP 5.1.0 or above
 * MySQL 5.0 or above
-* Wordpress 3.5 or above
+* WordPress 3.5 or above
 * PHP Data Objects enabled (it is activated by default as of PHP 5.1.0, please contact your hosting to enable it if it is disabled. <a href ="http://www.php.net/manual/en/pdo.installation.php">Reference</a> 
 
 
