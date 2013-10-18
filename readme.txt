@@ -22,7 +22,7 @@ The plugin is part of the Better WordPress Security™ Project. Better WordPress
 If you would like to know more about website security tips, e.g. installing web application firewall or a dedicated firewall in your server, please visit our blog to read articles about website security <a href = "http://www.protect-website.com/category/blog/">here.</a>. We will regularly write up security articles so you can enhance your website security. If you would like to promote a better and more secure Wordpress environment, please feel free to Like us in Facebook <a href = "https://www.facebook.com/protectwebsite" alt="ProWeb" >here</a> or follow our <a href="https://twitter.com/ProtectWebsite">twitter</a> to ask any questions about website security. Our security analysts and security consultants will try to answer your questions as soon as possible.       
 
 = Customer Support =
-If you need help in using OSE Firewall Securitiy plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
+If you need help in using OSE Firewall Security plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
 
 = New Security Features in OSE Firewall v2.0 =
 * Manage IPs in Firewall Setting - blacklisting, whitelisting, and monitoring IPs in the Firewall IP Management Section
