@@ -108,7 +108,7 @@ class oseUsers {
 		$return = array (); 
 		foreach ($objList as $obj) 
 		{
-			if (preg_match("/wp\_*capabilities/", $obj->meta_key))
+			if (preg_match("/[wp\_*|\w*]capabilities/", $obj->meta_key))
 			{
 				$return[] = $obj->user_id; 
 			}
