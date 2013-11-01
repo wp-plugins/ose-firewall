@@ -35,7 +35,7 @@ return array(
 		'depends'=>array('extjs')
 	),
 	'MultiSelect'=>array(
-		'js'=>array('ux/MultiSelect.js'),
+		'js'=>array('src/ux/form/MultiSelect.js'),
 		'depends'=>array('extjs')
 	),
 	'SearchField'=>array(

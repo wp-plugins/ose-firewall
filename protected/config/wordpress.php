@@ -2,7 +2,6 @@
 defined('OSEFWDIR') or die;
 define('OSEAPPDIR', OSEFWDIR);
 define('OSE_FRAMEWORK', true);
-define('OSEAPPDIR', OSEFWDIR);
 define('OSE_FRAMEWORKDIR', OSEFWDIR . 'framework');
 define('OSE_FWURL',plugins_url('',dirname(dirname(__FILE__))));
 

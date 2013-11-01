@@ -402,18 +402,21 @@ class YiiBase
 			{
 				if(self::$enableIncludePath===false)
 				{
-					foreach(self::$_includePaths as $path)
+					if (self::$_includePaths!==null)
 					{
-						$classFile=$path.DIRECTORY_SEPARATOR.$className.'.php';
-						if(is_file($classFile))
+						foreach(self::$_includePaths as $path)
 						{
-							include($classFile);
-							if(YII_DEBUG && basename(realpath($classFile))!==$className.'.php')
-								throw new CException(Yii::t('yii','Class name "{class}" does not match class file "{file}".', array(
-									'{class}'=>$className,
-									'{file}'=>$classFile,
-								)));
-							break;
+							$classFile=$path.DIRECTORY_SEPARATOR.$className.'.php';
+							if(file_exists ($classFile) && is_file($classFile))
+							{
+								include($classFile);
+								if(YII_DEBUG && basename(realpath($classFile))!==$className.'.php')
+									throw new CException(Yii::t('yii','Class name "{class}" does not match class file "{file}".', array(
+										'{class}'=>$className,
+										'{file}'=>$classFile,
+									)));
+								break;
+							}
 						}
 					}
 				}
@@ -852,6 +855,8 @@ class YiiBase
 		'CListPager' => '/web/widgets/pagers/CListPager.php',
 	);
 }
-
-spl_autoload_register(array('YiiBase','autoload'));
+if (OFRONTENDSCAN==false)
+{
+   spl_autoload_register(array('YiiBase','autoload'));
+}
 require(YII_PATH.'/base/interfaces.php');
