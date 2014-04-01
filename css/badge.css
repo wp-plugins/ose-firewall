@@ -1,0 +1,48 @@
+#osebadge-bottom-right
+{
+	position: fixed;
+	right: 0px; 
+	bottom: 0px;
+	background: url('badge.png') no-repeat ;
+	width: 158px;
+	height: 78px;
+	font-family: Helvetica,Arial,sans-serif;
+	line-height: 1.0;
+}
+
+#osebadge-bottom-right #osebadge-content
+{
+	text-shadow: black 0.1em 0.1em 0.2em;	
+	line-height: 1.0;
+}
+
+#osebadge-bottom-right #osebadge-content,
+#osebadge-bottom-right #osebadge-footer
+{
+	margin: 10px 5px 10px 10px;
+	font-size: 10px;
+	color: #FFFFFF;
+	text-align:left;
+	line-height: 1.0;
+}
+#osebadge-bottom-right #osebadge-footer
+{
+	font-weight: bold;
+	line-height: 1.0;
+}
+#osebadge-bottom-right #osebadge-footer a
+{
+	text-decoration: none; 
+	color: #FFF; 
+	text-shadow: black 0.1em 0.1em 0.2em;
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 1.0;
+}
+#osebadge-bottom-right #osebadge-content .osestatus
+{
+	color: #FFF; 
+	font-size: 18px;
+	font-weight: bold; 
+	line-height: 1.0;
+}
