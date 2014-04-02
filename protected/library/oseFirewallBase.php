@@ -295,9 +295,9 @@ class oseFirewallBase extends oseFirewallRoot
 		$url = 'http://www.centrora.com';
 		$appTitle = OSE_WORDPRESS_FIREWALL;
 		$head = '<div id="logo-labels">
-					<div class="text-normal"><span class="help-icons"><a href="http://www.protect-website.com/need-help/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con05.png"></a></span><h4>Need Help?</h4></div>
-					<div class="text-normal"><span class="help-icons"><a href="https://www.protect-website.com/user-manual/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con016.png"></a></span><h4>User Manual</h4></div>
-					<div class="text-normal"><span class="help-icons"><a href="https://www.protect-website.com/website-malware-removal-services/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con017.png"></a></span><h4>Malware Removal</h4></div>';
+					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/support-center/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con05.png"></a></span><h4>Need Help?</h4></div>
+					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/tutorial/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con016.png"></a></span><h4>User Manual</h4></div>
+					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/cleaning/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con017.png"></a></span><h4>Malware Removal</h4></div>';
 		if (OSE_CMS == 'joomla')
 		{
 			$head .= '<div id="back-to-admin"><a href="index.php" >Back to Admin Panel</a></div>';

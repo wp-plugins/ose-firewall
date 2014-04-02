@@ -25,7 +25,12 @@ oseATHINSTALLER.panel =
                 },{
                     xtype: 'panel',
                     title: 'Write a review on WordPress',
-                    html: '<a href = "http://wordpress.org/support/view/plugin-reviews/ose-firewall"><i class="fa fa-pencil"></i>Click here to write a review</a>',
+                    html: '<div style="padding: 10px 5px;"><i class="icon-wordpress" style="color: #666; margin-right: 5px; "></i><a href = "http://wordpress.org/support/view/plugin-reviews/ose-firewall" target="_blank">Click here to write a review</a></div>',
+                    flex: 1
+                },{
+                    xtype: 'panel',
+                    title: 'Sign up a Centrora account',
+                    html: '<div style="padding: 10px 5px;"><a style="padding: 3px 8px; border-radius: 4px; background-color: #fff; color: #2087FC; border: 1px solid #2087FC;" href = "https://www.centrora.com/free-signup/" target="_blank">Signup an account for free</a></div>',
                     flex: 1
                 }
             ]
@@ -34,8 +39,8 @@ oseATHINSTALLER.panel =
 });
 
 function getShareLinks(){
-	var	link = '<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fprotectwebsite&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>';
-		link += '<p><a href="https://twitter.com/ProtectWebsite" class="twitter-follow-button"  data-size="small" data-show-count="true" data-show-screen-name="false"></a>';
+	var	link = '<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fcentrora&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>';
+		link += '<p><a href="https://twitter.com/loveCentrora" class="twitter-follow-button"  data-size="small" data-show-count="true" data-show-screen-name="false"></a>';
 		link += '<div class="g-follow" data-annotation="bubble" data-height="20" data-href="https://plus.google.com/100825419799499224939" data-rel="publisher"></div>';
 	return link;
 }

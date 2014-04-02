@@ -416,7 +416,7 @@ oseATHBACKUPMANAGER.panel = Ext.create('Ext.grid.Panel', {
             //,{id: 'restore', header: '',  hidden:false, dataIndex: 'restore', width: 80, sortable: true}
            
             //,{id: 'fileBackupPath', header: 'File Download',  hidden:false, dataIndex: 'fileBackupPath', width: "20%", sortable: true} 
-            ,{id: 'delete', header: 'Delete',  hidden:false, dataIndex: 'delete', width: "10%", sortable: true}
+            ,{id: 'delete', header: 'Delete',  hidden:false, dataIndex: 'delete', width: "9.5%", sortable: true}
 	    ],
 	    sortInfo:{field: 'datetime', direction: "DESC"},
 	    height: 500,

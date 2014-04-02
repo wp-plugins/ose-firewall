@@ -15,7 +15,7 @@ oseConfScan.Form = new Ext.FormPanel({
         bodyStyle:'padding:10px',
         autoScroll: true,
         width: '100%',
-        height: 500,
+        height: 900,
         renderTo: 'ConfigScan',
         items: [
         		oseGetDisplayField(O_SECRET_WORD_DESC),
@@ -47,6 +47,7 @@ oseConfScan.Form = new Ext.FormPanel({
 		           name: 'privateAPIKey',
 		           id: 'privateAPIKey',
 		           anchor:'98%',
+		           height: 400,
 		           emptyText: 'Enter your Centrora private API Key'
 		   		}
 		],

@@ -32,8 +32,8 @@ a,a:hover {
 }
 
 #oseantivirusScanReport {
-	margin: 20px 20px 5px 30px;
-	width: 70%;
+	margin: 0px;
+	width: 100%;
 	float: left;
 }
 
@@ -956,8 +956,8 @@ ol.browsers li {
 #scanreport-right {
 	margin: 5px 5px 5px;
 	padding-top: 10px;
-	width: 25%;
-	float: left;
+	width: 100%;
+	float: right;
 }
 
 #container-right button {

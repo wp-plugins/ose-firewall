@@ -39,9 +39,9 @@ $this ->model->loadLocalscript ();
 		<?php
 		}
 	?>
-	<div id ='oseantivirusScanReport' ></div>
-	<div id = "scanreport-right">
-		<?php include (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'help.php');?>	
+    <div id = "scanreport-right">
+	  <?php include (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'help.php');?> 
 	</div>
+	<div id ='oseantivirusScanReport' ></div>
   </div>
 </div>

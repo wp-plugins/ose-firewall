@@ -1,28 +1,30 @@
-=== OSE Firewall™ Security===
+=== Centrora Security™===
 Contributors: osexcel, ProHelix, ProKai, ProChase
-Contributors: Open Source Excellence
+Contributors: Centrora
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker
-Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 2.2.1
+Requires at least: 3.7
+Tested up to: 3.8.1
+Stable tag: 2.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-OSE Firewall™ Security - part of Better WordPress Security™ Project, a WordPress Firewall plugin to protect your website against hacking, virus and spam. 
+Centrora Security™ - part of Better WordPress Security™ Project, a WordPress Firewall plugin to protect your website against hacking, virus and spam. 
 
 == Description ==
 
 = MOST EPIC WORDPRESS SECURITY PLUGIN =
-OSE Firewall™ Security - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities.
+Centrora Security™ - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities.
 
 = Aim to build Better Wordpress Security - the more secure wordpress environment =  
-The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding them to avoid infected plugins and themes. OSE Firewall™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
+The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding them to avoid infected plugins and themes. Centrora Security™™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
 
 If you would like to know more about website security tips, e.g. installig web application firewall or a dedicated firewall in your server, please visit our blog to read articles about website security <a href = "http://www.protect-website.com/category/blog/">here.</a>. We will regularly write up security articles so you can enhance your website security. If you would like to promote a better and more secure Wordpress environment, please feel free to Like us in Facebook <a href = "https://www.facebook.com/protectwebsite" alt="ProWeb" >here</a> or follow our <a href="https://twitter.com/ProtectWebsite">twitter</a> to ask any questions about website security. Our security analysts and security consultants will try to answer your questions as soon as possible.       
 
 = Customer Support =
-If you need help in using OSE Firewall Securitiy plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
+If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
+
+= New Security Features in Centrora Security v3.0 =
 
 = New Security Features in OSE Firewall v2.0 =
 * Manage IPs in Firewall Setting - blacklisting, whitelisting, and monitoring IPs in the Firewall IP Management Section
@@ -44,7 +46,7 @@ If you need help in using OSE Firewall Securitiy plugin, save time by starting y
 * Report security threats to defined owner or security analysts
 
 The plugin currently supports English and Germany language. 
-You can contribute by translating OSE Firewall Security <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
+You can contribute by translating Centrora Security™ <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
 
 = System Requirements =
 * PHP 5.1.0 or above
@@ -55,10 +57,10 @@ You can contribute by translating OSE Firewall Security <a href = "https://www.p
 
 == Installation ==
 
-To Install OSE Firewall Security Plugin:
+To Install Centrora Security™ Plugin:
 
 1. Go to Plugins > Add New.
-2. Under Search bar, search for 'OSE Firewall Security'.
+2. Under Search bar, search for 'Centrora Security™'.
 3. Click 'Install Now' to install the Plugin.
 
 For more information visit <a href = "https://www.protect-website.com/installing-ose-firewall/">here</a>.
@@ -87,12 +89,19 @@ For more information visit <a href = "https://www.protect-website.com/installing
 
 == Screenshots ==
 
-1. Admin Panel of OSE Firewall Security
-2. IP Management Panel of OSE Firewall Security
-3. Virus Scanner of OSE Firewall Security
+1. Admin Panel of Centrora Security™
+2. IP Management Panel of Centrora Security™
+3. Virus Scanner of Centrora Security™
 4. Website Security Seal 
 
 == Changelog ==
+
+= 3.0.0 =
+* Enhancement: Improved Backend User Interface
+* New Feature: Added Backup function
+* Enhancement: Faster Virus Scanning function
+* New Feature: Central Security Management Integration with Centrora Panel
+
 = 2.3.0 =
 * Enhancement: Improved Germany Translation
 * Enhancement: Improved Backend User Interface
@@ -172,13 +181,13 @@ For more information visit <a href = "https://www.protect-website.com/installing
 
 = 1.5.4 =
 * Removed duplicated menus as suggested by Lime Canvas (http://wordpress.org/support/profile/limecanvas)
-* Fixed the issue where OSE Firewall Settings links are appended to all plugins links section (credits to Lime Canvas http://wordpress.org/support/profile/limecanvas)
+* Fixed the issue where Centrora Security™ Settings links are appended to all plugins links section (credits to Lime Canvas http://wordpress.org/support/profile/limecanvas)
 * Fixed the wpdb undefined issue when initializing file list into the database
       
 = 1.5.3 =
 * Updated the codes to make it work with multiple websites (credits to scottnath, http://wordpress.org/support/profile/scottnath)
 * Improved function to check admin accounts
-* Fixed PHP warning errors for undefined OSE Firewall setting variables 
+* Fixed PHP warning errors for undefined Centrora Security™ setting variables 
 	  
 = 1.5.2 =
 * Updated Chinese and Germany languages, credits to Mr Alexander Pfabel 
@@ -190,7 +199,7 @@ For more information visit <a href = "https://www.protect-website.com/installing
 * Avoid scanning back-end blog post action to avoid false alerts with javascript codes inserted in to blog posts (thanks for the report by Alexander http://wordpress.org/support/profile/herzwacht and  
 	  
 = 1.5.0 =
-* Added four protection modes: OSE Firewall only, OSE Security Suite only, OSE Firewall plus OSE Security Suite and Development mode (protection temporarily turned off)
+* Added four protection modes: Centrora Security™ only, OSE Security Suite only, Centrora Security™ plus OSE Security Suite and Development mode (protection temporarily turned off)
 * Added a server IP field to avoid false alerts due to empty user agent
 * Fixed the field 'Detect Directory Traversal' not being saved properly issue
 * Added custom banning message field and custom banning message function
