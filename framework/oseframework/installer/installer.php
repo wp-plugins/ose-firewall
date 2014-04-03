@@ -82,6 +82,7 @@ abstract class Installer
 		}
 		return true; 
 	}
+	
 	public function insertConfigData($dbFile, $key){
 		$query = "SELECT `key` FROM `#__ose_secConfig` WHERE `key` = ". $this->db->quoteValue($key);
 		$this->db->setQuery($query);

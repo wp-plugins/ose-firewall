@@ -70,6 +70,7 @@ class oseFile {
 			@ chmod($file, 0777);
 			// In case of restricted permissions we zap it one way or the other
 			// as long as the owner is either the webserver or the ftp
+			
 			if (!@ unlink($file)) {
 				return false;
 			}
@@ -79,6 +80,7 @@ class oseFile {
 	public static function read($filename, $incpath = false, $amount = 0, $chunksize = 8192, $offset = 0) {
 		// Initialise variables.
 		$data = null;
+		$filename = preg_replace('#/+#','/',$filename);
 		if ($amount && $chunksize > $amount) {
 			$chunksize = $amount;
 		}

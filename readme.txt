@@ -1,34 +1,41 @@
-=== OSE Firewall™ Security===
+=== Centrora Security™===
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: antivirus, better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker
-Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 2.2.6
+Requires at least: 3.7
+Tested up to: 3.8.1
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-OSE Firewall™ Security - part of Better WordPress Security™ Project, a WordPress Firewall plugin to protect your website against hacking, virus and spam. 
+Centrora Security™ - part of Better WordPress Security™ Project, a WordPress Firewall plugin to protect your website against hacking, virus and spam. 
 
 == Description ==
 
 = MOST EPIC WORDPRESS SECURITY PLUGIN =
-OSE Firewall™ Security - A WordPress Security Plugin powered by <a href = "http://www.protect-website.com">ProWeb</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities. By using OSE Firewall™ Security, you don't need any other antivirus product!
+Centrora Security™ - Previously known as (OSE Firewall Security) A WordPress Security Plugin powered by <a href = "http://www.centrora.com" target="_blank">Centrora</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities. By using Centrora Security™, you don't need any other antivirus product!
 
 = Aim to build Better Wordpress Security - the more secure wordpress environment =  
-The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding them to avoid infected plugins and themes. OSE Firewall™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
+The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding them to avoid infected plugins and themes. Centrora Security™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
 
-If you would like to know more about website security tips, e.g. installing web application firewall or a dedicated firewall in your server, please visit our blog to read articles about website security <a href = "http://www.protect-website.com/category/blog/">here.</a>. We will regularly write up security articles so you can enhance your website security. If you would like to promote a better and more secure Wordpress environment, please feel free to Like us in Facebook <a href = "https://www.facebook.com/protectwebsite" alt="ProWeb" >here</a> or follow our <a href="https://twitter.com/ProtectWebsite">twitter</a> to ask any questions about website security. Our security analysts and security consultants will try to answer your questions as soon as possible.       
+If you would like to know more about website security tips, e.g. installing web application firewall or a dedicated firewall in your server, please visit our blog to read articles about website security <a href = "http://www.centrora.com/category/blog/">here.</a>. We will regularly write up security articles so you can enhance your website security. If you would like to promote a better and more secure Wordpress environment, please feel free to Like us in Facebook <a href = "https://www.facebook.com/centrora" alt="Centrora" >here</a> or follow our <a href="https://twitter.com/loveCentrora">twitter</a> to ask any questions about website security. Our security analysts and security consultants will try to answer your questions as soon as possible.       
 
 = Customer Support =
-If you need help in using OSE Firewall Security plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.protect-website.com/support-center">Click here to get started.</a>
+If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here to get started.</a>
 
-= New Security Features in OSE Firewall v2.0 =
-* Manage IPs in Firewall Setting - blacklisting, whitelisting, and monitoring IPs in the Firewall IP Management Section
-* Manage Security Rulesets - you can change the security rule sets to that best fits for your website's requirements in the Firewall Security Ruleset Section, which increase the performance of antivirus and antihacking.
-* Email Security Threats - choose different types of security threats alert emails to receive when there's an attack
-* Variables Whitelisting functions - you can whitelist some variables in the variable whitelisting configuration page in the firewall in order to avoid false security alerts. 
+= New Security Features in Centrora Security™ v3.0 =
+* Enhancement: Improved Backend User Interface
+* Enhancement: Rewrite Virus Scanning Engine, virus scanning now becomes faster
+* Enhancement: Improved Germany Translation
+* Enhancement: Improved Backend User Interface
+* New Feature: Added Database Backup function
+* New Feature: Central Security Management Integration with Centrora Panel
+* New Feature: Added File Upload Scanning function  
+* New Feature: Added Advanced Firewall Protection (Premium only)
+* New Feature: Added Advanced Virus Signatures (Premium only)
+* New Feature: Added Country Blocking function
+* New Feature: Added Google Authentication (2 step authentication) function
 
 = Enhanced Security Features: Provides an industry level firewall to block common security threats =
 * AntiSpam - Utilizing Blacklisting IPs in Stop Forum Spam 
@@ -56,25 +63,25 @@ You can contribute by translating OSE Firewall Security <a href = "https://www.p
 
 == Installation ==
 
-To Install OSE Firewall Security Plugin:
+To Install Centrora Security Plugin:
 
 1. Go to Plugins > Add New.
-2. Under Search bar, search for 'OSE Firewall Security'.
+2. Under Search bar, search for 'Centrora Security'.
 3. Click 'Install Now' to install the Plugin. 
 
-For more information visit <a href = "https://www.protect-website.com/installing-ose-firewall/">here</a>.
+For more information visit <a href = "http://www.centrora.com/centrora-security-plugin/">here</a>.
 
 
 == Frequently asked questions ==
 
 = What to do if i have a problem? =
-* You can always visit our <a href = "https://www.protect-website.com/support-center/">support center</a> to raise a ticket, and we will assign an expert to fix your problem immediately.
+* You can always visit our <a href = "https://www.centrora.com/support-center/">support center</a> to raise a ticket, and we will assign an expert to fix your problem immediately.
 
 = I get a Fatal Error: 'Class PDO not found'? =
-* If you encounter the error 'Fatal error: Class 'PDO' not found' when the OSE Firewall is activated, this indicates the PHP Data Objects is not loaded in your PHP environment. PDO is activated by default as of PHP 5.1.0, so please contact your hosting company to enable it if it is disabled. If you know how to customize the php configuration, add these codes into... <a href = "https://www.protect-website.com/application-runtime-path-valid/">Learn more</a>.
+* If you encounter the error 'Fatal error: Class 'PDO' not found' when the Centrora Security is activated, this indicates the PHP Data Objects is not loaded in your PHP environment. PDO is activated by default as of PHP 5.1.0, so please contact your hosting company to enable it if it is disabled. If you know how to customize the php configuration, add these codes into... <a href = "http://www.centrora.com/user-manual/application-runtime-path-valid/">Learn more</a>.
 
 = Application runtime path not valid? =
-* If you are getting this error, you have to change the permission for both of these folders and set them writable. <a href = "https://www.protect-website.com/application-runtime-path-valid/">Learn more</a>.
+* If you are getting this error, you have to change the permission for both of these folders and set them writable. <a href = "http://www.centrora.com/user-manual/application-runtime-path-valid/">Learn more</a>.
 
 = Does the plugin block User Agent attacks? =
 * Yes, the plugin checks whether the user agent environment variables contains PHP command, linux system commands and sql commands. If these are detected, the firewall will stop the user by throwing a ban page. 
@@ -91,6 +98,19 @@ For more information visit <a href = "https://www.protect-website.com/installing
 4. Website Security Seal 
 
 == Changelog ==
+= 3.0.0 =
+* Enhancement: Improved Backend User Interface
+* Enhancement: Rewrite Virus Scanning Engine, virus scanning now becomes faster
+* Enhancement: Improved Germany Translation
+* Enhancement: Improved Backend User Interface
+* New Feature: Added Database Backup function
+* New Feature: Central Security Management Integration with Centrora Panel
+* New Feature: Added File Upload Scanning function  
+* New Feature: Added Advanced Firewall Protection (Premium only)
+* New Feature: Added Advanced Virus Signatures (Premium only)
+* New Feature: Added Country Blocking function
+* New Feature: Added Google Authentication (2 step authentication) function
+
 = 2.2.6 =
 * Fixed: temporarily fix the admin-email mapping not being able to fix in Google Chrome browser
 * Fixed: fixed the 'Constant OSEAPPDIR already defined' error

@@ -71,7 +71,7 @@ OSEADMINEMAIL.panel = new Ext.grid.GridPanel({
 	},
 	store : OSEADMINEMAIL.store,
 	renderTo : 'oseAdminEmail',
-	height : 735,
+	height : 500,
 	tbar : new Ext.Toolbar({
 		items : [
 				oseGetAddWinButton('addLinkbutton', O_ADD_A_LINK, O_ADD_A_LINK, OSEADMINEMAIL.form, 600),

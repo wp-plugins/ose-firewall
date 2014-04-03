@@ -29,7 +29,6 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH')) {
 }
 class oseEmail {
 	protected $table = '#__ose_app_email';
-	protected $view = '#__ose_app_adminemailmap';
 	protected $app = null;
 	protected $db = null;
 	protected $cms = null;
@@ -58,7 +57,6 @@ class oseEmail {
 		}
 	}
 	public function getEmailList() {
-		
 		$limit = oRequest :: getInt('limit', 25);
 		$start = oRequest :: getInt('start', 0);
 		$page = oRequest :: getInt('page', 1);
@@ -101,13 +99,16 @@ class oseEmail {
 		return $list;
 	}
 	public function getAdminEmailListDB($search, $start, $limit) {
+		oseFirewall::callLibClass('convertviews','convertviews');
 		$where = array ();
 		if (!empty ($search)) {
 			$where[] = "`subject` LIKE " . $this->db->quoteValue('%' . $search . '%', true);
 		}
-		$where[] = "`app` = " . $this->db->quoteValue($this->app);
+		$where[] = "`email`.`app` = " . $this->db->quoteValue($this->app);
 		$where = $this->db->implodeWhere($where);
-		$query = " SELECT * FROM `{$this->view}`" .		$where;
+		$attrList = array("*");
+		$sql = convertViews::convertAdminEmail($attrList);
+		$query = $sql.$where;
 		$this->db->setQuery($query);
 		return $this->db->loadObjectList();
 	}
@@ -215,9 +216,9 @@ class oseEmail {
 	}
 	public function sendMail($email, $config_var) {
 		$receiptients = $this->getReceiptients($email->id);
-		require_once (OSE_FRAMEWORKDIR . DS . 'emails' . DS . 'oseEmailHelper.php');
-		require_once (OSE_FRAMEWORKDIR . DS . 'emails' . DS . 'phpmailer' . DS . 'phpmailer.php');
-		require_once (OSE_FRAMEWORKDIR . DS . 'emails' . DS . 'phpmailer' . DS . 'smtp.php');
+		require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'emails' . ODS . 'oseEmailHelper.php');
+		require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'emails' . ODS . 'phpmailer' . ODS . 'phpmailer.php');
+		require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'emails' . ODS . 'phpmailer' . ODS . 'smtp.php');
 		if (empty ($receiptients)) {
 			return false;
 		}
@@ -250,7 +251,10 @@ class oseEmail {
 		}
 	}
 	protected function getReceiptients($emailid) {
-		$query = "SELECT `name`, `email` FROM `#__ose_app_adminemailmap` where `email_id` = " . (int) $emailid;
+		oseFirewall::callLibClass('convertviews','convertviews');
+		$attrList = array("`users`.`display_name` AS `name`, `users`.`user_email` AS `email`");
+		$sql = convertViews::convertAdminEmail($attrList);
+		$query = $sql." where `adminemail`.`email_id`= " . (int) $emailid;
 		$this->db->setQuery($query);
 		$items = $this->db->loadObjectList();
 		return $items;

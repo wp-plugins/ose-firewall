@@ -54,7 +54,9 @@ class BaseModel extends CFormModel {
 	public function showHeader () { 
 		$html = '<div id="content-header">'.$this->getCHeader().'</div>';
 		$html .= '<div class="oseseparator"> &nbsp; </div>';
-		$html .= '<div class="content-description"><p>'. $this->getCDescription () .'</p></div>';	
+		$html .= '<div class="content-description"><p>'. $this->getCDescription ();
+		$html .= '</p></div>';
+
 		echo $html; 
 	}
 	public function throwAjaxReturn ($result, $status, $msg, $continue) {
@@ -102,5 +104,11 @@ class BaseModel extends CFormModel {
 			$id = $results->id;
 		}
 		return $id;
+	}
+	public function isDBReady(){
+		$return = array ();
+		$return['ready'] = oseFirewall :: isDBReady();
+		$return['type'] = 'base';
+		return $return['ready'];
 	}
 }	

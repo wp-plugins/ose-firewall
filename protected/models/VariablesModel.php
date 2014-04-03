@@ -44,14 +44,21 @@ class VariablesModel extends BaseModel {
 	{
 		$return = array(); 
 		$oseFirewallStat = new oseFirewallStat();
-		$return['id']=1; 
-		$return['results']= $oseFirewallStat->getVariables();
-		if (empty($return['results']))
-		{
+		if(oseFirewall::isDBReady()){
+			$return['id']=1; 
+			$return['results']= $oseFirewallStat->getVariables();
+			if (empty($return['results']))
+			{
+				$return['results']['id'] = 0;
+				$return['results']['keyname'] = 'N/A';
+			}
+			$return['total']= $oseFirewallStat->getVariablesTotal();
+		}else{
+			$return['id']=0;
 			$return['results']['id'] = 0;
 			$return['results']['keyname'] = 'N/A';
+			$return['total']=0;
 		}
-		$return['total']= $oseFirewallStat->getVariablesTotal();
 		return $return; 
 	}
 	public function changeVarStatus($ids, $status)
@@ -138,5 +145,52 @@ class VariablesModel extends BaseModel {
 		{
 			return true;
 		}
+	}
+	
+	public function blacklistvariables($ids)
+	{
+		$oseFirewallStat = new oseFirewallStat();
+		$result = $oseFirewallStat->blacklistvariables($ids);
+		if ($result == false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public function filtervariables($ids)
+	{
+		$oseFirewallStat = new oseFirewallStat();
+		$result = $oseFirewallStat->filtervariables($ids);
+		if ($result == false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public function whitelistvariables($ids)
+	{
+		$oseFirewallStat = new oseFirewallStat();
+		$result = $oseFirewallStat->whitelistvariables($ids);
+		if ($result == false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public function getStatistics(){
+		$oseFirewallStat = new oseFirewallStat();
+		return $oseFirewallStat->getVarStatistic();
 	}
 }	

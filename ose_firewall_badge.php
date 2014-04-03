@@ -1,9 +1,9 @@
 <?php  
 /* 
-   Plugin Name: OSE Firewall Badge
-   Description: Plugin For Showing OSE Firewall Badge 
-   Author: Protect Website
-   Version: 2.2.6
+   Plugin Name: Centrora Security Badge
+   Description: Plugin For Showing Centrora Security Badge 
+   Author: Centrora Security
+   Version: 3.0.0
 */  
 include(dirname(__FILE__).'/includes/oseBadgeWidget.php');
 ?>

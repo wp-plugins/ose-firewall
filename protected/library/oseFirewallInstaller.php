@@ -25,16 +25,17 @@
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 if (OSE_CMS == 'joomla')
 {
-	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'installer' . DS . 'joomla.php');
+	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'installer' . ODS . 'joomla.php');
 }
 else
 {
-	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'installer' . DS . 'wordpress.php');
+	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'installer' . ODS . 'wordpress.php');
 }
 class oseFirewallInstaller extends oseInstaller {
 	public function __construct() {
 		parent :: __construct();
 	}
+	
 	public function insertAttackType($dbFile) {
 		$query = "SELECT COUNT(id) as `count` FROM `#__osefirewall_attacktype` ";
 		$this->db->setQuery($query);
@@ -57,6 +58,18 @@ class oseFirewallInstaller extends oseInstaller {
 			$this->db->setQuery($query);
 			if (!$this->db->query()) {
 				return false;
+			}
+		}
+		else {
+			$query = "SELECT COUNT(id) as `count` FROM `#__osefirewall_basicrules` WHERE `id` = 11";
+			$this->db->setQuery($query);
+			$result = (object)$this->db->loadResult();
+			if (!empty($result->count))
+			{
+				$query = "INSERT INTO `#__osefirewall_basicrules` ( `id` , `rule` ,	`action` , `attacktype` )
+						  VALUES ('11', 'FILE_UPLOAD_VALIDATION', '1', '[\"13\"]');";
+				$this->db->setQuery($query);
+				$result = $this->db->query();
 			}
 		}
 		return true;
@@ -120,6 +133,19 @@ class oseFirewallInstaller extends oseInstaller {
 			}
 		}
 		return true;
+	}
+	public function createCountryDB($dbFile){
+		$exists = $this->isViewExists('#__osefirewall_country');
+		if ($exists == false) {
+			$query = $this->readSQLFile($dbFile);
+			$query = $this->replaceVars($query);
+			$this->db->setQuery($query);
+			if (!$this->db->query()) {
+				return false;
+			}
+		}
+		return true;
+		
 	}
 	private function replaceVars($query) {
 		if (OSE_CMS =='wordpress') 
@@ -187,16 +213,21 @@ class oseFirewallInstaller extends oseInstaller {
 		return $return;
 	}
 	public function cleanGeoIPDB ($step) {
-		$query = "TRUNCATE `#__ose_app_geoip` ";
-		$this->db->setQuery($query);
-		$result = $this->db->query();
 		$stage = $step-1; 
-		$dbFile = OSE_FWDATA . DS . 'osegeoip{num}.sql';
+		$dbFile = OSE_FWDATA . ODS . 'osegeoip{num}.sql';
 		$dbFile = str_replace('{num}', $stage, $dbFile);
 		if (file_exists($dbFile))
 		{
 			oseFile::delete($dbFile); 
 		}	
+		return $result;
+	}
+	public function cleanCountryDB(){
+		$dbFile = OSE_FWDATA . ODS . 'wp_osefirewall_country.sql';
+		if(file_exists($dbFile))
+		{
+			oseFile::delete($dbFile);
+		}
 		return $result;
 	}
 	public function insertConfigData($dbFile, $key){
@@ -231,5 +262,52 @@ class oseFirewallInstaller extends oseInstaller {
 		$this->config = (object)$config['data'];
 		return (isset($this->config->file_ext))?$this->config->file_ext:null; 
 	}
-	
+	private function getAdvRuleTableName ($type)
+	{
+		switch ($type) {
+			case 'ath':
+				return '#__osefirewall_advancerules';
+				break;
+			case 'avs':
+				return '#__osefirewall_advancepatterns';
+				break;
+		}
+	}
+	public function insertAdvRuleset($dbFile, $type) {
+		$data = $this->readSQLFile($dbFile);
+		$queries = $this->_splitQueries($data);
+		$createTable = $queries[0]; 
+		$this->db->setQuery($createTable);
+		$result = $this->db->query(); 
+		$table = $this -> getAdvRuleTableName ($type); 
+		$query = "SELECT COUNT(id) as `count` FROM ". $this->db->QuoteTable($table);
+		$this->db->setQuery($query);
+		$result = $this->db->loadResult();
+		if ($result['count'] == 0) {
+			$query = $queries[1];
+			$this->db->setQuery($query);
+			if (!$this->db->query()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public function updateAdvRuleset ($dbFile, $type) {
+		$table = $this -> getAdvRuleTableName ($type); 
+		$query = "SELECT COUNT(id) as `count` FROM ". $this->db->QuoteTable($table);
+		$this->db->setQuery($query);
+		$result = $this->db->loadResult();
+		if ($result['count'] > 0) {
+			$data = $this->readSQLFile($dbFile);
+			$queries = $this->_splitQueries($data);
+			foreach ($queries as $query) 
+			{
+				$this->db->setQuery($query);
+				if (!$this->db->query()) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 } 

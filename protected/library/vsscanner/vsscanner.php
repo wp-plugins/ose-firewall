@@ -34,15 +34,24 @@ class virusScanner {
 	private $patterns = '';
 	public function __construct()
 	{
+		oseFirewall::loadLanguage();
 		$this->db= oseFirewall::getDBO();
 		$this->setConfiguration();
 		$this->setFileExts();
 		$this->setMaxFileSize();
+		oseFirewall::loadFiles(); 
 	}
 	private function setConfiguration() {
-		$model = new ConfigurationModel(); 
-		$config = $model -> getConfiguration('vsscan');
-		$this->config = (object)$config['data'];
+		if (!isset($_SESSION['oseConfig']))
+		{
+			$model = new ConfigurationModel();
+			$config = $model -> getConfiguration('vsscan');
+			$this->config = $_SESSION['oseConfig'] = (object)$config['data'];
+		}
+		else 
+		{
+			$this->config = $_SESSION['oseConfig'];
+		}
 	}
 	public function setFileExts()
 	{
@@ -93,7 +102,7 @@ class virusScanner {
 		}
 		if ($return ['cont']==true)
 		{		
-			$return['summary'] = OSE_ADDED.' '.$return ['folder'].' '.OSE_FOLDERS.' '.OSE_AND.' '.$return ['file'].' '.OSE_FILES.' '.IN_THE_LAST_SCANNED.' '.O_CONTINUE;
+			$return['summary'] = OSE_SCANNING.' '.$return ['folder'].' '.OSE_FOLDERS.' '.OSE_AND.' '.$return ['file'].' '.OSE_FILES.' ';
 		}
 		else
 		{
@@ -167,18 +176,22 @@ class virusScanner {
 		$result = $this->getfromDB($filename, $type, $fileext);
 		if (empty($result))
 		{
-			$this->insertInDB($filename, $type, $fileext);
+			return $this->insertInDB($filename, $type, $fileext);
 		}	
+		else
+		{
+			return $result -> id; 
+		}
 	}
 	private function getfromDB($filename, $type, $fileext) {
-		$query = "SELECT COUNT(`id`) as count " 
+		$query = "SELECT `id` " 
 				."FROM ".$this->db->quoteTable($this->filestable)
 			    ." WHERE `filename` = ".$this->db->quoteValue($filename)
 			    ." AND `type` = ".$this->db->quoteValue($type)
 			    ." AND `ext` = ".$this->db->quoteValue($fileext);
 		$this->db->setQuery($query);
 		$result = $this->db->loadObject();
-		return $result->count;
+		return $result;
 	}
 	public function insertInDB($filename, $type, $fileext) {
 		$varValues = array(
@@ -238,7 +251,7 @@ class virusScanner {
 	private function setPatterns() {
 		$query = "SELECT `id`,`patterns` FROM `#__osefirewall_vspatterns`";
 		$this->db->setQuery($query);
-		$this->patterns = $this->db->loadObjectList();
+		$_SESSION['patterns'] = $this->db->loadObjectList();
 	}
 	private function updateAllFileStatus($status = 0)
 	{
@@ -248,50 +261,127 @@ class virusScanner {
 		return $result;
 	}
 	public function vsScan($step) {
-		if ($step<0)
-		{	
-			$return = $this ->updateAllFileStatus(0);
+		if ($step==-2)
+		{ 
+			$this->cleanMalwareData (); 
+			$_SESSION['completed'] = 0;
+			$_SESSION['start_time'] = time();  
+			return $this->showCountFilesMsg ();
 		}
-		oseFirewall::loadFiles(); 
-		$scan_files = $this->getFiles(300, 0);
-		if (empty($scan_files))
+		else if ($step==-1)
 		{
-			return $this->returnCompleteMsg();
+			$this->setPatterns ();
+			return $this->showScanningStatusMsg();
 		}
-		else
+		else 
 		{
-			$this->setPatterns (); 
-			$return=array();
-			$return['summary'] = null;
-			$return['found'] = 0;
-			$start_date = time();
-			$last_file = null; 
-			foreach($scan_files as $i => $scan_file) {
-				$since_start = $this->timeDifference($start_date, time());
-				if ($since_start>=2)
+			oseFirewall::loadFiles(); 
+			$this->setPatterns ();
+			return $this->showScanningResultMsg ();
+		}
+	}
+	private function showScanningResultMsg () {
+		$return=array();
+		$return['summary'] = null;
+		$return['found'] = 0;
+		$start_time = time();
+		$result = $this->scanFileLoop ($start_time);
+		if($result == false)
+		{
+			return false;
+		}
+		$last_file = $_SESSION['last_scanned'];
+		return $this->returnAjaxMsg($last_file);
+	}
+	private function scanFileLoop ($start_time) {
+		$vsInfo = $this->getVsFiles();
+		$_SESSION['oseFileArray'] = $vsInfo['fileset'];
+		$_SESSION['completed'] = $vsInfo['completed'];
+		while (count($_SESSION['oseFileArray'])>0)
+		{
+			$since_start = $this->timeDifference($start_time, time());
+			if ($since_start>=2)
+			{
+				$result = $this->saveVsFiles($_SESSION['oseFileArray'], $_SESSION['completed']);
+				if($result == false)
 				{
-					break;		
+					return false;
 				}
-				if(oseFile::exists($scan_file->filename)==false) {
-					$this->updateFile($scan_file->id, 'checked', 1); 
-					continue;
-				}
-				if (filesize($scan_file->filename)>2048000)
-				{
-					$this->updateFile($scan_file->id, 'checked', 1); 
-					continue;
-				}
-				else
-				{
-					//$statusQuery .= $scan_file->filename.'<br/>';
-					$scanResult= $this->scanFile($scan_file);
-					//$statusQuery .= $scanResult;
-				}
-				$last_file = $scan_file->filename;
-				$this->updateFile($scan_file->id, 'checked', 1); 
+				break;
 			}
-			return $this->returnAjaxMsg($last_file);
+			$_SESSION['last_scanned'] = array_pop($_SESSION['oseFileArray']);
+			$_SESSION['completed'] ++; 
+			if(oseFile::exists($_SESSION['last_scanned'] )==false) {
+				continue;
+			}
+			if (filesize($_SESSION['last_scanned'] )>2048000)
+			{
+				continue;
+			}
+			else
+			{
+				$this->scanFile($_SESSION['last_scanned']);
+			}
 		}
+		return true; 
+	}
+	private function clearFileFromArray ($index) {
+		unset($_SESSION['oseFileArray'][$index]);
+	}
+	private function showScanningStatusMsg () {
+		$_SESSION['oseFileArray'] = $this->getVsFiles();
+		$fileCount = count($_SESSION['oseFileArray']['fileset']);
+		$return['completed'] = 0;
+		$return['summary'] = 'There are in total of '.$fileCount.' files in your website, the scanning will start shortly';
+		$return['progress'] = 'Found '.$fileCount.' number of files';
+		$return['last_file'] = '';
+		$return['cont'] = true;
+		$return['showCountFiles'] = false;
+		return $return; 
+	}
+	private function showCountFilesMsg () {
+		$first  = new DateTime(date('Y-m-d h:i:s'));
+		$fileCount = $this->getNumberofFiles(OSE_ABSPATH);
+		$timeUsed = $this->getTimeUsed ($first);  
+		$memUsed = $this->getMemoryUsed (); 
+		$return['completed'] = 0;
+		$return['summary'] = 'There are in total of '.$fileCount.' files in your website (time used '.$timeUsed.', current memory usage is '.$memUsed.'MB), the scanning will start shortly';
+		$return['progress'] = 'Found '.$fileCount.' number of files';
+		$return['last_file'] = '';
+		$return['cont'] = true;
+		$return['showCountFiles'] = true;
+		return $return; 
+	} 
+	private function getMemoryUsed () {
+		$newMemoryUsage = round(memory_get_usage(true)/(1028*1024), 2);
+		return $newMemoryUsage; 
+	}
+	private function getTimeUsed ($first) {
+		$second = new DateTime(date('Y-m-d h:i:s'));
+		$diff = $first->diff( $second );
+		$timeUsed = $diff->format( '%H:%I:%S' );
+		return $timeUsed; 
+	}
+	private function getNumberofFiles ($path) {
+		$x = 0; 
+		$_SESSION['oseFileArray'] = array (); 
+		if (!empty($path)) {
+			$dir_iterator = new RecursiveDirectoryIterator($path);
+			$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
+			foreach ($iterator as $fullFileName => $fileSPLObject)
+			{
+				if ($fileSPLObject->isFile() && in_array($this->getFileExtension($fullFileName), $this->file_ext)) {
+					$x++;
+					$_SESSION['oseFileArray'][] = $fullFileName; 
+				}
+			}
+		}
+		$this->saveVsFiles($_SESSION['oseFileArray'], $_SESSION['completed']);
+		return $x; 
+	}
+	private function getFileExtension ($path) {
+		$ext = pathinfo($path, PATHINFO_EXTENSION);
+		return $ext;
 	}
 	private function returnCompleteMsg ($last_file=null) {
 		$return['completed'] = 1;
@@ -300,29 +390,46 @@ class virusScanner {
 		$return['last_file'] = '';
 		$return['status']='Completed';
 		$return['cont'] = false;
-		return $return;  
-	}	
-	private function returnAjaxMsg ($last_file=null) {
-		oseFirewall::loadLanguage();
-		$return = array (); 
 		$infectedNum= $this->getNumInfectedFiles();
-		// Start to make result report
 		if($infectedNum < 1) {
-			$return['status']= oLang :: _get('WEBSITE_CLEAN');
+				$return['result']= oLang :: _get('WEBSITE_CLEAN');
 		} else {
-			$return['status']= oLang:: _get('OSE_THERE_ARE'). ' '. $infectedNum. ' '. oLang :: _get('OSE_INFECTED_FILES');
+				$return['result']= '<a href = "http://www.centrora.com/scan-report/">'. oLang:: _get('OSE_THERE_ARE'). ' '. $infectedNum. ' '. oLang :: _get('OSE_INFECTED_FILES') .'</a>';
 		}
-		$memory_usage = round(memory_get_usage(true)/(1028*1024), 2);
-		$cpuload = sys_getloadavg();
-		$completed = $this->getCompleted();
-		$total = $this->getTotal();
-		$progress = 1-($completed/$total);
-		$return['completed'] = round($progress, 3);
-		$return['summary'] = ($return['completed']*100). '% ' .oLang::_get('COMPLETED');
-		$return['progress'] = "<b>Progress: ".($completed)." files remaining.</b>. Memory Usage: ".$memory_usage."MB, CPU load:".$cpuload[0]."<br/><br/>";
-		$return['last_file'] = oLang::_get('LAST_SCANNED_FILE').' '.$last_file;
-		$return['cont'] = ($completed == $total)?false:true;
 		return $return;  
+	}
+	
+	
+	
+	private function returnAjaxMsg ($last_file=null) {
+		if (count($_SESSION['oseFileArray']) == 0)
+		{
+			return $this->returnCompleteMsg();
+		}
+		else
+		{
+			$return = array (); 
+			$infectedNum= $this->getNumInfectedFiles();
+			// Start to make result report
+			if($infectedNum < 1) {
+				$return['status']= oLang :: _get('WEBSITE_CLEAN');
+			} else {
+				$return['status']= oLang:: _get('OSE_THERE_ARE'). ' '. $infectedNum. ' '. oLang :: _get('OSE_INFECTED_FILES');
+			}
+			$memory_usage = $this->getMemoryUsed();
+			$cpuload = sys_getloadavg();
+			$timeUsed = $this->timeDifference($_SESSION['start_time'], time());
+			$completed = $_SESSION['completed'];
+			$left = count($_SESSION['oseFileArray']);
+			$total = $_SESSION['completed'] + $left;
+			$progress = ($completed/$total);
+			$return['completed'] = round($progress, 3);
+			$return['summary'] = ($return['completed']*100). '% ' .oLang::_get('COMPLETED');
+			$return['progress'] = "<b>Progress: ".($left)." files remaining.</b>. Memory Usage: ".$memory_usage."MB, CPU load:".$cpuload[0].", Time Used: ".$timeUsed." seconds<br/><br/>";
+			$return['last_file'] = oLang::_get('LAST_SCANNED_FILE').' '.$last_file;
+			$return['cont'] = ($left > 0 )?true:false;
+			return $return;  
+		}
 	}
 	private function getCompleted() {
 		$query= "SELECT COUNT(`id`) as `count` FROM `#__osefirewall_files` WHERE `checked` = 0 ";
@@ -346,25 +453,26 @@ class virusScanner {
 	private function timeDifference($timeStart, $timeEnd){
 		return $timeEnd- $timeStart; 
 	}
-	private function scanFile($fileObj)
+	private function scanFile($scan_file)
 	{
-		if (empty($fileObj->filename))
+		if (empty($scan_file))
 		{
 			return false; 
 		}
 		oseFirewall::loadFiles(); 
 		$virus_found= false;
-		$content = oseFile::read ($fileObj->filename);
+		$content = oseFile::read ($scan_file);
 		$matches = array ();
 		$i=0; 
-		foreach($this->patterns as $key => $pattern)
+		foreach($_SESSION['patterns'] as $key => $pattern)
 		{
 			$i++;
 			preg_match('/'.trim($pattern->patterns).'/im', $content, $matches);
 			if(!empty($matches))
 			{
 				$virus_found= true;
-				$this->logMalware($fileObj->id, $pattern->id);
+				$file_id = $this->insertData($scan_file,'f', ''); 
+				$this->logMalware($file_id, $pattern->id);
 				break;
 			}
 		}
@@ -381,7 +489,7 @@ class virusScanner {
 						'file_id' => (int)$file_id,
 						'pattern_id' => (int)$pattern_id
 					);
-			$id = $db->addData ('insert', '#__osefirewall_malware', '', '', $varValues);
+			$id = $db->addData ('insert', $this->malwaretable, '', '', $varValues);
 			return $id;
 		}
 		else
@@ -431,7 +539,6 @@ class virusScanner {
 		return $result;
 		
 	}
-	
 	private function insertScanninglog($status)
 	{
 		$this->db->insert($this->logtable,
@@ -454,6 +561,29 @@ class virusScanner {
 			)
 		);
 		return $result;
+	}
+	private function cleanMalwareData () {
+		$query = "TRUNCATE TABLE `". $this->malwaretable."`;"; 
+		$this->db->setQuery ($query);
+		$result = $this->db->query(); 
+		return $result;
+	}
+	
+	private function saveVsFiles($fileset, $completed)
+	{
+		$fileContentArray = array("completed" => $completed,
+								  "fileset" => $fileset);
+		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."path.json";
+		$fileContent = serialize($fileContentArray);
+		$result = oseFile::write($filePath, $fileContent);
+		return $result;
+	}
+	
+	private function getVsFiles()
+	{
+		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."path.json";
+		$fileContent = oseFile::read($filePath);
+		return unserialize($fileContent);
 	}
 }
 ?>

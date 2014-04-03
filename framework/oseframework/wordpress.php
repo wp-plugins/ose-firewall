@@ -22,7 +22,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
-require_once (dirname(__FILE__).DS.'abstract.php'); 
+require_once (dirname(__FILE__).ODS.'abstract.php'); 
 class oseWordPress extends oseFramework 
 {
 	private $debugMode = false; 
@@ -64,17 +64,27 @@ class oseWordPress extends oseFramework
 		$cs->registerCoreScript('TinyMCE');
     }
     public static function getDBO () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'db'. DS .'wordpress.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'db'. ODS .'wordpress.php');
     	$db = new oseDB2Wordpress(); 
     	return $db; 
     }
     public static function loadJSON () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS.'json'.DS . 'oseJSON.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'json'.ODS . 'oseJSON.php');
     }
     
     public static function loadInstaller () { }
     public static function getSiteURL () {
     	return get_site_url();
     }
+	public static function getConfig () {
+		global $wpdb; 
+		$copy = new stdClass(); 
+		$copy->host = $wpdb->dbhost;
+		$copy->db = $wpdb->dbname; 
+		$copy->user = $wpdb->dbuser; 
+		$copy->password = $wpdb->dbpassword;  
+		$copy->prefix = $wpdb->base_prefix;
+		return $copy;  
+	}
 }
 ?>

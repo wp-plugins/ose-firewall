@@ -23,7 +23,7 @@
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
-require_once (OSE_FWCONTROLLERS. DS. 'BaseController.php'); 
+require_once (OSE_FWCONTROLLERS. ODS. 'BaseController.php'); 
 class ScanconfigController extends BaseController {
 	public $layout = '//layouts/forms';
 	public function actionGetConfiguration () {
@@ -51,6 +51,13 @@ class ScanconfigController extends BaseController {
 		$data['scanFileVirus'] = oRequest :: getInt('scanFileVirus', 0);
 		$data['showBadge'] = oRequest :: getInt('showBadge', 0);
 		$data['badgeCSS'] = oRequest :: getVar('badgeCSS', null);
+		$data['scanUpFiles'] = oRequest :: getInt('scanUpFiles', null);
+		$data['allowExts'] = oRequest :: getVar('allowExts', null);
+		$data['blockCountry'] = oRequest :: getVar('blockCountry', 0);
+		$data['googleVerification'] = oRequest :: getVar('googleVerification', 0);
+		$data['privateAPIKey'] = $_POST['privateAPIKey'];
+		$data['adVsPatterns'] = oRequest :: getVar('adVsPatterns', 0);
+		$data['adRules'] = oRequest :: getVar('adRules', 0);
 		$this->model ->saveConfiguration($type, $data);
 	}
 }

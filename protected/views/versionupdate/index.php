@@ -34,6 +34,9 @@ $this ->model->loadLocalscript ();
 		$this ->model->showLogo ();
 		$this ->model->showHeader ();
 		$this ->model->showStatus ();
+		if(!oseFirewall :: isDBReady()){
+			include_once(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');
+		}
 	?>
 	<div id ='VersionUpdate'></div>
 	<div id ='simple-form'></div>

@@ -31,21 +31,39 @@ class DashboardModel extends BaseModel {
 		if ($dbReady['ready'] == false) {
 			echo '<div class ="warning">' . oLang :: _get('DBNOTREADY') . ' &nbsp;&nbsp; <button id ="install-button" name ="install-button" class = "button" onClick = "installDB ();">' . oLang :: _get('INSTALLDB') . '</button></div>';
 		} else {
-			echo '<div class ="ready">' . oLang :: _get('READYTOGO') . '</div>';
+			echo '<div class ="ready">' . oLang :: _get('READYTOGO') .' </div>';
 		}
 	}
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
-		$cs->registerScriptFile($baseUrl . '/public/js/installer.js');
+		$cs->registerScriptFile($baseUrl . '/public/js/installer.js', CClientScript::POS_END);
 
 	}
 	public function getCHeader() {
 		return oLang :: _get('DASHBOARD_TITLE');
 	}
 	public function getCDescription() {
-		return oLang :: _get('OSE_WORDPRESS_FIREWALL_SETTING_DESC');
+		return oLang :: _get('OSE_WORDPRESS_FIREWALL_UPDATE_DESC');
 	}
+	
+	public function showBtnList(){
+		$html = '<div id = "menu-btn-list">';
+		$html .= '<table id="hor-minimalist-b" summary="">';
+		$html .= '<tbody>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('vsscan').'\'">Virus Scanner</button></td><td>'.VIRUS_SCANNER_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('vsreport').'\'">Scan Report</a></td><td>'.SCAN_REPORT_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('manageips').'\'">IP Management</a></td><td>'.IPMANAGEMENT_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('rulesets').'\'">Firewall Settings</a></td><td>'.FIREWALL_SETTING_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('variables').'\'">Variables</a></td><td>'.VARIABLES_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('configuration').'\'">Configuration</a></td><td>'.CONFIGURATION_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('backup').'\'">Back Up</a></td><td>'.BACK_UP_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('ountryblock').'\'">Country Block</a></td><td>'.COUNTRY_BLOCK_INTRO.'</td></tr>';
+		$html .= '</tbody>';
+		$html .= '</table></div>';
+		echo $html; 	
+	}
+	
 	public function actionCreateTables() {
 		oseFirewall :: loadInstaller();
 		oseFirewall :: loadRequest();
@@ -155,74 +173,74 @@ class DashboardModel extends BaseModel {
 	}
 	private function createTables() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'createTable.sql';
+		$dbFile = OSE_FWDATA . ODS . 'createTable.sql';
 		$result = $installer->createTables($dbFile);
 		return $result;
 	}
 	private function insertConfigData() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'dataSecConfig.sql';
+		$dbFile = OSE_FWDATA . ODS . 'dataSecConfig.sql';
 		$result = $installer->insertConfigData($dbFile, 'threshold');
 		
 		return $result;
 	}
 	private function insertEmailData() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'dataAppEmail.sql';
+		$dbFile = OSE_FWDATA . ODS . 'dataAppEmail.sql';
 		$result = $installer->insertEmailData($dbFile, 'firewall');
 		return $result;
 	}
 	private function insertAttackType() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'dataAttacktype.sql';
+		$dbFile = OSE_FWDATA . ODS . 'dataAttacktype.sql';
 		$result = $installer->insertAttackType($dbFile);
 		return $result;
 	}
 	private function insertBasicRules() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'dataRulesBasic.sql';
+		$dbFile = OSE_FWDATA . ODS . 'dataRulesBasic.sql';
 		$result = $installer->insertBasicRules($dbFile);
 		return $result;
 	}
 	private function insertVspatterns() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'dataVspatterns.sql';
+		$dbFile = OSE_FWDATA . ODS . 'dataVspatterns.sql';
 		$result = $installer->insertVspatterns($dbFile);
 		return $result;
 	}
 	private function createACLIPView() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'viewAclipmap.sql';
+		$dbFile = OSE_FWDATA . ODS . 'viewAclipmap.sql';
 		$result = $installer->createACLIPView($dbFile);
 		return $result;
 	}
 	private function createAdminEmailView() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'viewAdminEmail.sql';
+		$dbFile = OSE_FWDATA . ODS . 'viewAdminEmail.sql';
 		$result = $installer->createAdminEmailView($dbFile);
 		return $result;
 	}
 	private function createAttackmapView() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'viewAttackmap.sql';
+		$dbFile = OSE_FWDATA . ODS . 'viewAttackmap.sql';
 		$result = $installer->createAttackmapView($dbFile);
 		return $result;
 	}
 	private function createAttacktypeView() {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'viewAttackTypesum.sql';
+		$dbFile = OSE_FWDATA . ODS . 'viewAttackTypesum.sql';
 		$result = $installer->createAttacktypeView($dbFile);
 		return $result;
 	}
 	private function createDetMalwareView () {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'viewDetMalware.sql';
+		$dbFile = OSE_FWDATA . ODS . 'viewDetMalware.sql';
 		$result = $installer->createDetMalwareView($dbFile);
 		return $result;
 	}
 	private function installGeoIPDB($step) {
 		$installer = new oseFirewallInstaller();
-		$dbFile = OSE_FWDATA . DS . 'osegeoip{num}.sql';
+		$dbFile = OSE_FWDATA . ODS . 'osegeoip{num}.sql';
 		$result = $installer->installGeoIPDB($step, $dbFile);
 		return $result;
 	}
@@ -236,5 +254,15 @@ class DashboardModel extends BaseModel {
 		$return['ready'] = oseFirewall :: isDBReady();
 		$return['type'] = 'base';
 		return $return;
+	}
+	
+	public function getURL($view) {
+		if (class_exists('JFactory')) {
+			return OSE_ADMINURL.'&view='.$view; 
+		}
+		else
+		{
+			return OSE_ADMINURL.'?page=ose_fw_'.$view;
+		}
 	}
 }

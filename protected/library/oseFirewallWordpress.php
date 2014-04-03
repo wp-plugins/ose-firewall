@@ -23,27 +23,12 @@
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
-require_once (dirname(__FILE__).DS.'oseFirewallBase.php');
+require_once (dirname(__FILE__).ODS.'oseFirewallBase.php');
 class oseFirewall extends oseFirewallBase {
 	protected static $option = 'ose_firewall';
 	public function __construct () {
 		$debug = $this->getDebugMode(); 
 		$this->setDebugMode ($debug);
-	}
-	public function getDebugMode () {
-		global $wpdb;
-		$query = "SHOW TABLES LIKE '".$wpdb->prefix."ose_secConfig' "; 
-		$result =  $wpdb->get_results($query); 
-		if (empty($result))
-		{
-			return true;
-		}
-		else
-		{		
-			$query = "SELECT `value` FROM `".$wpdb->prefix."ose_secConfig` WHERE `key` = 'debugMode' AND `type` = 'scan'";
-			$result =  $wpdb->get_var($query);
-	    	return (empty($result) || ($result==1))?false:true;
-		}	
 	}
 	protected function loadViews () {
        
@@ -55,39 +40,93 @@ class oseFirewall extends oseFirewallBase {
     	$extension = 'ose_firewall';
 		$view = $_GET['page'];
 		$menu = '<div class="menu-search">';
-		$menu .= '<ul>';
+		$menu .= '<ul id ="nav">';
+		// Dashboard Menu; 
 		$menu .= '<li ';
-		$menu .= ($view == 'dashboard') ? 'class="current"' : '';
-		$menu .= '><a href="admin.php?page=ose_firewall">' . oLang::_get('DASHBOARD') . '</a></li>';
+		$menu .= ($view == 'ose_firewall') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_firewall">' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
+		// Anti-Hacking Menu; 
+		$menu .= '<li ';
+		$menu .= (in_array($view, array('ose_fw_manageips', 'ose_fw_rulesets', 'ose_fw_adrulesets', 'ose_fw_variables'))) ? 'class="current"' : '';
+		$menu .= '><a href="#">' . oLang::_get('ANTI_HACKING') . '</a>';
+		// SubMenu Anti-Hacking Starts; 
+		$menu .= '<ul>';
 		$menu .= '<li ';
 		$menu .= ($view == 'manageips') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_manageips">' . oLang::_get('MANAGE_IPS') . '</a></li>';
 		$menu .= '<li ';
-		$menu .= ($view == 'activation') ? 'class="current"' : '';
+		$menu .= ($view == 'ose_fw_rulesets') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_rulesets">' . oLang::_get('RULESETS'). '</a></li>';
+		/*$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_adrulesets') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_adrulesets">' . oLang::_get('ADRULESETS'). '</a></li>';*/
 		$menu .= '<li ';
-		$menu .= ($view == 'activation') ? 'class="current"' : '';
+		$menu .= ($view == 'ose_fw_variables') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_variables">' . oLang::_get('VARIABLES'). '</a></li>';
+		$menu .= '</ul>';
+	    // SubMenu Anti-Hacking Ends;
+		$menu .= '</li>';
+		// Anti-Virus Menu; 
 		$menu .= '<li ';
-		$menu .= ($view == 'activation') ? 'class="current"' : '';
+		$menu .= (in_array($view, array('ose_fw_vsscan', 'ose_fw_vsreport'))) ?'class="current"' : '';
+		$menu .= '><a href="#">' . oLang::_get('ANTI_VIRUS') . '</a>';
+		// SubMenu Anti-Virus Starts; 
+		$menu .= '<ul>';
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_vsscan') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_vsscan">' . oLang::_get('ANTIVIRUS'). '</a></li>';
 		$menu .= '<li ';
-		$menu .= ($view == 'activation') ? 'class="current"' : '';
+		$menu .= ($view == 'ose_fw_vsreport') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_vsreport">' . oLang::_get('VSREPORT'). '</a></li>';
+		$menu .= '</ul>';
+	    // SubMenu Anti-Virus Ends;
+		$menu .= '</li>';
+		// Premium Feature Menu; 
+		/*$menu .= '<li ';
+		$menu .= ($view == 'antivirus') ? 'class="current"' : '';
+		$menu .= '><a href="#">' . oLang::_get('PREMIUM_FEATURES') . '</a>';
+		// SubMenu Premium Feature Starts; 
+		$menu .= '<ul>';
 		$menu .= '<li ';
-		$menu .= ($view == 'activation') ? 'class="current"' : '';
+		$menu .=(in_array($view, array('ose_fw_backup', 'ose_fw_versionupdate'))) ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_countryblock">' . oLang::_get('COUNTRYBLOCK'). '</a></li>';
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_versionupdate') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_versionupdate">' . oLang::_get('VERSION_UPDATE'). '</a></li>';
+		$menu .= '</ul>';
+	    // SubMenu Premium Feature Ends;
+		$menu .= '</li>';*/
+		
+		// Configuration Menu; 
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_configuration') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_configuration">' . oLang::_get('CONFIGURATION'). '</a></li>';
-		$menu .= '</ul></div>';
+		
+		// Backup Feature Menu
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_backup') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_backup">' . oLang::_get('BACKUP'). '</a></li>';
+		// BackUp Feature Ends
+		
+		// Main Feature Ends; 
+		$menu .= '</ul>
+		
+		</div>';
 		return $menu;
 	}
 	public static function showmenus(){
-    	add_menu_page( OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard', OSE_FWURL.'/public/images/favicon.ico' );
-		add_submenu_page( 'ose_firewall', MANAGE_IPS, MANAGE_IPS, 'manage_options', 'ose_fw_manageips', 'oseFirewall::manageips' );
-		add_submenu_page( 'ose_firewall', RULESETS, RULESETS, 'manage_options', 'ose_fw_rulesets', 'oseFirewall::rulesets' );
-		add_submenu_page( 'ose_firewall', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables' );
+    	add_menu_page( OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard',OSE_FWURL.'/public/images/favicon.ico');
+    	add_submenu_page( 'ose_firewall', OSE_DASHBOARD_SETTING, OSE_DASHBOARD, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard' );
 		add_submenu_page( 'ose_firewall', ANTIVIRUS, ANTIVIRUS, 'manage_options', 'ose_fw_vsscan', 'oseFirewall::vsscan' );
 		add_submenu_page( 'ose_firewall', VSREPORT, VSREPORT, 'manage_options', 'ose_fw_vsreport', 'oseFirewall::vsreport' );
+		add_submenu_page( 'ose_firewall', MANAGE_IPS, MANAGE_IPS, 'manage_options', 'ose_fw_manageips', 'oseFirewall::manageips' );
+		add_submenu_page( 'ose_firewall', RULESETS, RULESETS, 'manage_options', 'ose_fw_rulesets', 'oseFirewall::rulesets' );
+		//add_submenu_page( 'ose_firewall', ADRULESETS, ADRULESETS, 'manage_options', 'ose_fw_adrulesets', 'oseFirewall::advancerulesets' );
+		add_submenu_page( 'ose_firewall', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables' );
 		add_submenu_page( 'ose_firewall', CONFIGURATION, CONFIGURATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration' );
+		add_submenu_page( 'ose_firewall', CONFIGURATION, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup' );
+		//add_submenu_page( 'ose_firewall', COUNTRYBLOCK, COUNTRYBLOCK, 'manage_options', 'ose_fw_countryblock', 'oseFirewall::countryblock' );
+		//add_submenu_page( 'ose_firewall', VERSION_UPDATE, VERSION_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::versionupdate' );
 		add_submenu_page( 'ose_fw_configuration', SEO_CONFIGURATION, SEO_CONFIGURATION, 'manage_options', 'ose_fw_seoconfig', 'oseFirewall::seoconfig' );
 		add_submenu_page( 'ose_fw_configuration', SCAN_CONFIGURATION, SCAN_CONFIGURATION, 'manage_options', 'ose_fw_scanconfig', 'oseFirewall::scanconfig' );
 		add_submenu_page( 'ose_fw_configuration', ANTIVIRUS_CONFIGURATION, ANTIVIRUS_CONFIGURATION, 'manage_options', 'ose_fw_avconfig', 'oseFirewall::avconfig' );

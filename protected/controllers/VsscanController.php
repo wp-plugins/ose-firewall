@@ -23,13 +23,20 @@
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
-require_once (OSE_FWCONTROLLERS. DS. 'BaseController.php'); 
+require_once (OSE_FWCONTROLLERS. ODS. 'BaseController.php'); 
 class VsscanController extends BaseController {
 	public $layout = '//layouts/main';
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
+	public function __construct($id,$module=null)
+	{
+		
+		parent::__construct($id,$module=null);
+		$this -> getModel () ;
+		$this -> model -> isDBReady();
+	}
 	public function actionInitDatabase() {
 		oseFirewall::loadRequest (); 
 		oseFirewall::loadFiles ();

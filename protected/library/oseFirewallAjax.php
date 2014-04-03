@@ -23,7 +23,7 @@
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
-require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'ajax' . DS . 'oseAjax.php');
+require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'ajax' . ODS . 'oseAjax.php');
 class oseFirewallAjax extends oseAjax{
 	public static function loadAppActions () {
 		if (!empty($_REQUEST['controller']))
@@ -50,6 +50,10 @@ class oseFirewallAjax extends oseAjax{
 	public static function loadActionRulesets () {
 		$actions = array ('getRulesets', 'changeRuleStatus');
 		parent::loadActions($actions); 
+	}
+	public static function loadActionAdvancerulesets () {
+		$actions = array ('getRulesets', 'changeRuleStatus');
+		parent::loadActions($actions);
 	}
 	public static function loadActionSeoconfig () {
 		$actions = array ('getConfiguration', 'saveConfigSEO');
@@ -91,4 +95,16 @@ class oseFirewallAjax extends oseAjax{
 		$actions = array ('createTables', 'saveUserInfo', 'changeUserInfo');
 		parent::loadActions($actions);
 	}
+	public static function loadActionCountryblock () {
+		$actions = array ('downLoadTables' , 'createTables' , 'getCountryList' , 'changeCountryStatus' , 'blacklistIP' , 'whitelistIP');
+		parent::loadActions($actions);
+	}
+	public static function loadActionBackup () {
+		$actions = array ('backup', 'getBackupList', 'backupFile' , 'deleteBackup' , 'deleteItemByID', 'downloadBackupDB' , 'downloadBackupFile' , 'saveAppAccess', 'checkAuth');
+		parent::loadActions($actions);
+	}
+	public static function loadactionUninstall(){
+		$actions = array ('uninstallTables');
+		parent::loadActions($actions);
+	}	
 }

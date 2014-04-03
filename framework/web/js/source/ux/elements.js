@@ -110,6 +110,23 @@ function oseGetIPTextField (name, fieldlabel, labelWidth, width)
     };
 	return iptextfield; 
 }
+
+function oseGetNormalPassword(name, fieldlabel, labelWidth, width, allowBlank)
+{
+	var textfield = {   
+			xtype:'textfield',
+	        fieldLabel: fieldlabel,
+	        inputType: 'password',
+	        name: name,
+	        id: name,
+	        labelWidth: labelWidth,
+	        width: width,
+	        allowBlank: allowBlank,
+	        msgTarget : 'side'
+    }
+	return textfield; 
+}
+
 function oseGetCombo(name, fieldlabel, data, width,  labelWidth, ListWidth, defaultValue)
 {
 	var combo = new Ext.form.ComboBox({
@@ -150,6 +167,7 @@ function oseGetStore(name, fields, url, option, controller, task)
 		  storeId: name,
 		  fields:fields,
 	      autoLoad:{},
+	      pageSize:15,
 		  proxy: {
 	        type: 'ajax',
 	        url: url,
@@ -197,6 +215,7 @@ function oseGetAddWinButton(id, text, winTitle, winForm, width)
         handler: function(){
         	var win = new Ext.Window({
     			title: winTitle
+    			,id: id+'win'
     			,modal: true
     			,width: width
     			,border: false
@@ -265,7 +284,7 @@ function oseGetPaginator(ns)
 {
 	var pagingtoolbar = {
         xtype: 'pagingtoolbar',
-        pageSize: 25,
+        pageSize: 15,
         store: ns.store,
         displayInfo: true,
         plugins: new Ext.ux.SlidingPager()
@@ -334,7 +353,7 @@ function oseGetRuleStatusOptions()
 {
 	return new Array(
 			   new Array(1, 'Active'), 
-			   new Array(0, 'Whitelisted')
+			   new Array(0, 'Inactive')
 	);
 }
 

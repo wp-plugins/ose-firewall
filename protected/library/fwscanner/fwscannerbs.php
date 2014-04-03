@@ -104,8 +104,15 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				return $scanResult;
 			}
 		}
+		if (isset ( $options ['file_upload_validation'] ) && $options ['file_upload_validation'] == true) {
+			$scanResult = $this->scanUploadFiles ();
+			if (! empty ( $scanResult )) {
+				return $scanResult;
+			}
+		}
 		return false;
 	}
+	
 	private function getScanOptions() {
 		$query = "SELECT * FROM `#__osefirewall_basicrules` WHERE `action` = 1";
 		$this->db->setQuery ( $query );
@@ -207,8 +214,9 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 		}
 		return $return;
 	}
+	
 	private function getWhitelistVars() {
-		$query = "SELECT `keyname` FROM `#__osefirewall_vars` WHERE `status`  = 0";
+		$query = "SELECT `keyname` FROM `#__osefirewall_vars` WHERE `status`  =". (int)0;
 		$this->db->setQuery ( $query );
 		$results = $this->db->loadArrayList ( 'keyname' );
 		return $results;

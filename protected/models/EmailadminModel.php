@@ -48,15 +48,23 @@ class EmailadminModel extends ConfigurationModel {
 	{
 		$oseEmail = new oseEmail('firewall');
 		$return = array();
-		$return['id']=1; 
-		$return['results'] = $oseEmail->getAdminEmailList();
-		if (empty($return['results']))
-		{
+		if(oseFirewall::isDBReady()){
+			$return['id']=1; 
+			$return['results'] = $oseEmail->getAdminEmailList();
+			if (empty($return['results']))
+			{
+				$return['results']['id'] = 0;
+				$return['results']['user'] = 'N/A';
+				$return['results']['subject'] = 'N/A';
+			}		
+			$return['total'] = COUNT($return['results']);
+		}else{
+			$return['id']=1;
 			$return['results']['id'] = 0;
 			$return['results']['user'] = 'N/A';
 			$return['results']['subject'] = 'N/A';
-		}		
-		$return['total'] = COUNT($return['results']);
+			$return['total'] = 0;
+		}
 		return $return;  
 	}
 	public function getAdminUsers()

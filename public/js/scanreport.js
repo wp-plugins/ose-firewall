@@ -56,12 +56,12 @@ oseATHVSREPORT.panel = Ext.create('Ext.grid.Panel', {
     multiSelect: true,
     columns: [
         {id: 'file_id', header: O_FILE_ID,  hidden:false, dataIndex: 'file_id', width: 80, sortable: true}
-        ,{id: 'filename', header: O_FILE_NAME,  hidden:false, dataIndex: 'filename',width: '80%', sortable: true}
-        ,{id: 'confidence', header: O_CONFIDENCE,  hidden:false, dataIndex: 'confidence', width: '7%',  sortable: true}
-        ,{id: 'view', header: '',  hidden:false, dataIndex: 'view', width: '3%',  sortable: true}
+        ,{id: 'filename', header: O_FILE_NAME,  hidden:false, dataIndex: 'filename',width: '65%', sortable: true}
+        ,{id: 'confidence', header: O_CONFIDENCE,  hidden:false, dataIndex: 'confidence', width: '13%',  sortable: true}
+        ,{id: 'view', header: '',  hidden:false, dataIndex: 'view', width: '12%',  sortable: true}
     ],
     sortInfo:{field: 'filename', direction: "ASC"},
-    height: 735,
+    height: 500,
     width: '100%',
     renderTo: 'oseantivirusScanReport',
     tbar: new Ext.Toolbar({

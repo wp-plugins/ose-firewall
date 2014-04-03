@@ -112,4 +112,7 @@ var O_SUBSCRIPTION_USERNAME = "Name";
 var O_SUBSCRIPTION_PASSWORD = "Passwort";
 var O_PLS_ENTER_USERINFO = "Bitte gib Benutzername/Passwort ein.";
 //Added from 2.1.4
-var O_DEBUG_MODE = "Erkennen Fehler in der Website";
+var O_DEBUG_MODE = "Fehler im Frontend anzeigen?";
+//Added from 2.3.0
+var O_FILE_UPLOAD_SCANNING = "Scannen hochgeladenen Dateien im Frontend?";
+var O_ALLOWED_FILE_TYPES = "Erlaubt laden Dateiendungen (Bitte beachten: FILEINFO Modul muss richtig installiert sein)"

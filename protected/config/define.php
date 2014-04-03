@@ -1,11 +1,12 @@
 <?php
 defined('OSEFWDIR') or die;
-if (class_exists('JFactory'))
+require_once(dirname(__FILE__).ODS.'uri.php');
+if (class_exists('JConfig') || class_exists('SConfig'))
 {
-	require_once(dirname(__FILE__).DS.'joomla.php');
+	require_once(dirname(__FILE__).ODS.'joomla.php');
 }
 else
 {
-	require_once(dirname(__FILE__).DS.'wordpress.php'); 
+	require_once(dirname(__FILE__).ODS.'wordpress.php');
 }
 ?>

@@ -32,10 +32,14 @@ class oseFirewallIpManager {
 	private $ipStatus = null;
 	private $aclid = null;
 	private $db = null;
+	private $countryBlock = null;
 	public function __construct($db) {
+		oseFirewall::callLibClass('convertviews','convertviews');
 		$this->db = $db; 
 		$this->setIP();
 		$this->checkIPStatus();
+		$this->checkCountryBlockEnable();
+		$this->checkCountryIPStatus();
 	}
 	public function getIP() {
 		return $this->ip;
@@ -60,9 +64,11 @@ class oseFirewallIpManager {
 	public function getIPStatus() {
 		return $this->ipStatus;
 	}
+	
 	public function getACLID() {
 		return $this->aclid;
 	}
+	
 	public function checkIPValidity($start = true) {
 		if ($start == true) {
 			return $this->checkIsValidIP($this->ip);
@@ -70,13 +76,60 @@ class oseFirewallIpManager {
 			return $this->checkIsValidIP($this->ipend);
 		}
 	}
+	
+	private function checkCountryIPStatus(){
+		if($this->countryBlock && ($this->ipStatus == 3 || $this->ipStatus == 2 || $this->ipStatus == null)){
+			$ipLong = $this->getIPLong(true);
+			$query = "SELECT 
+							`country`.`status` 
+					  FROM 
+							`#__osefirewall_country` `country` LEFT JOIN `#__ose_app_geoip` `geoip`
+					  ON
+							`country`.`country_code` = `geoip`.`country_code`
+					  WHERE 
+							 `ip32_start`<= " . $this->db->quoteValue($ipLong) . " AND " . $this->db->quoteValue($ipLong) . "<=`ip32_end`";
+			$this->db->setQuery($query);
+			$result = $this->db->loadObject();
+			if (!empty ($result)) {
+				$this->ipStatus = $result->status;
+			}
+		}
+	}
+	
+	private function checkCountryBlockEnable(){	 
+		$data = $this->db->isTableExists('#__osefirewall_advancerules');
+		if(empty($data))
+		{
+			$this->countryBlock =  false;
+		}
+		else
+		{
+			$query = "SELECT `value` FROM `#__ose_secConfig` " . "WHERE `key` = " . $this->db->quoteValue("blockCountry");
+			$this->db->setQuery($query);
+			$result = $this->db->loadObject();
+			if(!empty($result)){
+				if($result->value == 1)
+					$this->countryBlock =  true;
+				else
+					$this->countryBlock =  false;
+			}
+			else{
+				$this->countryBlock =  false;
+			}
+		}
+	}
+	
 	private function checkIPStatus() {
 		$ipLong = $this->getIPLong(true);
-		$query = "SELECT `id`, `status` FROM `#__osefirewall_aclipmap` " .	"WHERE `ip32_start` = " . $this->db->quoteValue($ipLong);
+		$attrList = array("`acl`.`id` AS `id`", "`acl`.`status` AS `status`");
+		$sql = convertViews::convertAclipmap($attrList);
+		$query = $sql . "WHERE `ip32_start` = " . $this->db->quoteValue($ipLong);
 		$this->db->setQuery($query);
 		$result = $this->db->loadObject();
 		if (empty ($result)) {
-			$query = "SELECT `id`, `status` FROM `#__osefirewall_aclipmap` " .	"WHERE `ip32_start`<= " . $this->db->quoteValue($ipLong) . " AND " . $this->db->quoteValue($ipLong) . "<=`ip32_end`";
+			$attrList = array("`acl`.`id` AS `id`", "`acl`.`status` AS `status`");
+			$sql = convertViews::convertAclipmap($attrList);
+			$query = $sql. "WHERE `ip32_start`<= " . $this->db->quoteValue($ipLong) . " AND " . $this->db->quoteValue($ipLong) . "<=`ip32_end`";
 			$this->db->setQuery($query);
 			$result = $this->db->loadObject();
 		}
@@ -92,7 +145,9 @@ class oseFirewallIpManager {
 		$db = oseFirewall :: getDBO();
 		$ipStartLong = $this->getIPLong(true);
 		$ipEndLong = $this->getIPLong(false);
-		$query = "SELECT `id`, `status` FROM `#__osefirewall_aclipmap` " .		"WHERE `ip32_start`= " . $this->db->quoteValue($ipStartLong) . " AND `ip32_end`=" . $this->db->quoteValue($ipEndLong);
+		$attrList = array("`acl`.`id` AS `id`", "`acl`.`status` AS `status`");
+		$sql = convertViews::convertAclipmap($attrList);
+		$query = $sql . "WHERE `ip32_start`= " . $this->db->quoteValue($ipStartLong) . " AND `ip32_end`=" . $this->db->quoteValue($ipEndLong);
 		$this->db->setQuery($query);
 		$result = $this->db->loadObject();
 		if (!empty ($result)) {
@@ -117,7 +172,9 @@ class oseFirewallIpManager {
 	}
 	private function InsertIP($aclid, $ipstart, $ipend, $iptype) {
 		$db = oseFirewall :: getDBO();
-		$query = "SELECT `ipid` FROM `#__osefirewall_aclipmap` " .		"WHERE `ip32_start`= " . $this->db->quoteValue($ipstart) . " AND " . $this->db->quoteValue($ipend) . "=`ip32_end`";
+		$attrList = array("`ip`.`id` AS `ipid`");
+		$sql = convertViews::convertAclipmap($attrList);
+		$query = $sql . "WHERE `ip32_start`= " . $this->db->quoteValue($ipstart) . " AND " . $this->db->quoteValue($ipend) . "=`ip32_end`";
 		$this->db->setQuery($query);
 		$result = $this->db->loadObject();
 		if (empty ($result)) {

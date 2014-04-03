@@ -5,7 +5,7 @@
  * @subpackage    Open Source Excellence CPU
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
  * @author        Created on 30-Sep-2010
- * @author        Updated on 30-Mar-2013 
+ * @author        Updated on 30-Mar-2013
  * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
  * @copyright Copyright (C) 2008 - 2010- ... Open Source Excellence
  *
@@ -22,7 +22,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 if (!defined('OSE_FRAMEWORK')) {
 	die('Direct Access Not Allowed');
 }
@@ -53,11 +53,12 @@ class oseFirewallScanner {
 	protected $sfs_confidence = 30;
 	protected $visits = 0;
 	protected $blockMode = 1;
-	protected $replaced  = array(); 
+	protected $replaced  = array();
 	public function __construct() {
 		$this->initSetting();
 	}
 	private function initSetting() {
+		oseFirewall::callLibClass('convertviews','convertviews');
 		$this->setDBO();
 		$this->setTargetURL();
 		$this->setReferer();
@@ -70,7 +71,7 @@ class oseFirewallScanner {
 		$results = $this->db->loadResultArray();
 		foreach ($results as $result)
 		{
-			$key = $result['key']; 
+			$key = $result['key'];
 			if (in_array($key, array('threshold', 'slient_max_att', 'sfs_confidence')))
 			{
 				$this->$key = (int) $result['value'] ;
@@ -78,9 +79,10 @@ class oseFirewallScanner {
 			else
 			{
 				$this->$key = $result['value'] ;
-			} 
+			}
 		}
 	}
+	
 	private function setTargetURL() {
 		$this->url = ((!empty($_SERVER['HTTPS'])) ? "https://" : "http://") . str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 	}
@@ -120,36 +122,37 @@ class oseFirewallScanner {
 		$this->db->closeDBO ();
 	}
 	protected function controlAttack() {
-		
-		$a = $this->getVisits();
-		$b = $this->getblockIP();
-        $score = $this->getScore();
+
+		$visits = $this->getVisits();
+		$blockMode = $this->getblockIP();
+		$score = $this->getScore();
 		$notified = $this->getNotified();
- 		if ($score < $this->threshold)
- 		{
- 			return; 
- 		}
-		// Ensure everything is cleaned before moving on; 
-		switch ($b)
+		if ($score < $this->threshold)
+		{
+			return;
+		}
+		// Ensure everything is cleaned before moving on;
+		switch ($blockMode)
 		{
 			case 1:
-				$this -> sendEmail('blacklisted', $notified); 
-				$this -> showBanPage(); 
-			break;
+				$this -> sendEmail('blacklisted', $notified);
+				$this -> showBanPage();
+				break;
+				//modify
 			case 0:
-				if ($a <= $this->tolerance ){
-					
+				if ($visits <= $this->tolerance ){
+						
 					$this -> updateVisits();
 					$this -> show403Page();
 				}
 				else{
-					$this -> updateStatus(1); 
+					$this -> updateStatus(1);
 					$this -> sendEmail('blacklisted', $notified);
 					$this -> showBanPage();
 				}
-			break;
+				break;
 			case 2:
-				if ($a <= $this->slient_max_att)
+				if ($visits <= $this->slient_max_att)
 				{
 					$this -> updateVisits();
 					$url = $this -> filterAttack(true);
@@ -159,16 +162,18 @@ class oseFirewallScanner {
 				else
 				{
 					$this -> filterAttack(false);
-					$this -> updateStatus(1); 
+					$this -> updateStatus(1);
 					$this -> sendEmail('blacklisted', $notified);
 					$this -> showBanPage();
 				}
-			break;
+				break;
 		}
 	}
 	private function filterAttack($redirect)
 	{
-		$query= 'SELECT `attacktypeid`,`rule_id`, `keyname`, `content` FROM `#__osefirewall_attackmap` WHERE `aclid` = '. (int)$this->aclid.' GROUP BY `rule_id` ORDER BY LENGTH(`content`) DESC';
+		$attrList = array("`detattacktype`.`attacktypeid` AS `attacktypeid`", "`detcontdetail`.`rule_id` AS `rule_id`", "`vars`.`keyname` AS `keyname`","`detcontent`.`content` AS `content`");
+		$sql = convertViews::convertAttackmap($attrList);
+		$query= $sql . 'WHERE `acl`.`id` = '. (int)$this->aclid.' GROUP BY `rule_id` ORDER BY LENGTH(`content`) DESC';
 		$this->db->setQuery($query);
 		$results = $this->db->loadObjectList();
 		foreach ($results as $result)
@@ -178,63 +183,63 @@ class oseFirewallScanner {
 				$url = $this->convertL1Attack($result->content);
 				if ($redirect==true)
 				{
-					return $url; 
+					return $url;
 				}
 			}
 			elseif (!empty($result->keyname) && !empty($result->rule_id))
 			{
 				$this->convertL2Attack($result->rule_id, $result->keyname);
 			}
-		} 
+		}
 	}
 	private function convertL1Attack($content)
 	{
 		$content = $this->cleanVariable($content);
 		$this->replaced['original']['URL'] = ((!empty($_SERVER['HTTPS'])) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$_SERVER['REQUEST_URI'] = $this->cleanVariable($_SERVER['REQUEST_URI']);
-		$_SERVER['QUERY_STRING'] = $this->cleanVariable($_SERVER['QUERY_STRING']); 
+		$_SERVER['QUERY_STRING'] = $this->cleanVariable($_SERVER['QUERY_STRING']);
 		$_SERVER['REQUEST_URI'] = str_replace($content, '', $_SERVER['REQUEST_URI']);
 		$_SERVER['QUERY_STRING'] = str_replace($content, '', $_SERVER['QUERY_STRING']);
 		$redirect = ((!empty($_SERVER['HTTPS'])) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$this->replaced['filtered']['URL'] = $redirect;
-		return $redirect; 
+		return $redirect;
 	}
 	private function convertL2Attack($rule_id, $keyname)
 	{
 		$tmp = explode('.', $keyname);
 		if (!empty($tmp) && is_array($tmp))
-		{ 
+		{
 			switch($tmp[0])
 			{
 				case 'GET':
-				   $this->replaced['original']['GET'][$tmp[1]] = $_GET[$tmp[1]];
-				   $_GET[$tmp[1]] = $this->filterVariable($_GET[$tmp[1]], $rule_id);
-				   $this->replaced['filtered']['GET'][$tmp[1]] = $_GET[$tmp[1]];
-				break; 
+					$this->replaced['original']['GET'][$tmp[1]] = $_GET[$tmp[1]];
+					$_GET[$tmp[1]] = $this->filterVariable($_GET[$tmp[1]], $rule_id);
+					$this->replaced['filtered']['GET'][$tmp[1]] = $_GET[$tmp[1]];
+					break;
 				case 'POST':
-				   $this->replaced['original']['POST'][$tmp[1]] = $_POST[$tmp[1]];	
-				   $_POST[$tmp[1]] = $this->filterVariable($_POST[$tmp[1]], $rule_id);
-				   $this->replaced['filtered']['POST'][$tmp[1]] = $_POST[$tmp[1]]; 
-				break; 
+					$this->replaced['original']['POST'][$tmp[1]] = $_POST[$tmp[1]];
+					$_POST[$tmp[1]] = $this->filterVariable($_POST[$tmp[1]], $rule_id);
+					$this->replaced['filtered']['POST'][$tmp[1]] = $_POST[$tmp[1]];
+					break;
 			}
 		}
 	}
 	private function filterVariable($var, $rule_id)
 	{
-		$pattern = '/'.$this -> getPattern($rule_id).'/ims'; 
+		$pattern = '/'.$this -> getPattern($rule_id).'/ims';
 		$var = preg_replace($pattern, '', $var);
-		return $var; 
+		return $var;
 	}
 	private function getPattern($rule_id)
 	{
 		$query = "SELECT `filter` FROM `#__osefirewall_filters` WHERE `id` = " . (int) $rule_id;
 		$this->db->setQuery($query);
 		$filter =  $this->db->loadResult();
-		return $filter;   
+		return $filter;
 	}
 	private function cleanVariable($var)
 	{
-		return html_entity_decode(urldecode($var)); 
+		return html_entity_decode(urldecode($var));
 	}
 	private function redirect($url)
 	{
@@ -244,46 +249,57 @@ class oseFirewallScanner {
 	{
 		$varValues = array (
 				'status' => (int)$status
-			);
+		);
 		$result = $this->db->addData('update', '#__osefirewall_acl', 'id', $this->aclid, $varValues);
 		return (boolean)$result;
 	}
-	
+
 	public function getBlockIP() {
 		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'blockIP'";
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
 		return (int)$result->value;
-		
+
 	}
 	private function getScore()
 	{
-		$query = "SELECT `score` FROM `#__osefirewall_aclipmap` WHERE `id` = ". (int)$this->aclid; 
+		$attrList = array(" `acl`.`score` AS `score`");
+		$sql = convertViews::convertAclipmap($attrList);
+		$query =  $sql." WHERE `acl`.`id` = ". (int)$this->aclid;
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return (isset($result->score))?(int)$result->score:0; 
+		return (isset($result->score))?(int)$result->score:0;
 	}
 	public function getVisits()
 	{
-		$query = "SELECT `visits` FROM `#__osefirewall_aclipmap` WHERE `id` =16";//. (int)$this->aclid; 
+		$attrList = array(" `acl`.`visits` AS `visits`");
+		$sql = convertViews::convertAclipmap($attrList);
+		$query = $sql." WHERE `acl`.`id` = ". (int)$this->aclid;
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return (isset($result->visits))?(int)$result->visits:0; 
-		
+		return (isset($result->visits))?(int)$result->visits:0;
+
 	}
 	private function getNotified()
 	{
-		$query = "SELECT `notified` FROM `#__osefirewall_aclipmap` WHERE `id` = ". (int)$this->aclid; 
+		$attrList = array(" `acl`.`notified` AS `notified`");
+		$sql = convertViews::convertAclipmap($attrList);
+		$query = $sql." WHERE `acl`.`id` = ". (int)$this->aclid;
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return (isset($result->notified))?(int)$result->notified:0; 
+		return (isset($result->notified))?(int)$result->notified:0;
 	}
 	private function updateVisits()
 	{
-		$query = "UPDATE `#__osefirewall_acl` SET `visits` = (`visits` +1) WHERE `id` = ". (int)$this->aclid; 
+		$query = "UPDATE `#__osefirewall_acl` SET `visits` = (`visits` +1) WHERE `id` = ". (int)$this->aclid;
 		$this->db->setQuery($query);
-		$result = $this->db->query(); 
-		return (boolean)$result; 
+		$result = $this->db->query();
+		return (boolean)$result;
+	}
+	protected function getDateTime () {
+		oseFirewall::loadDateClass();
+		$time = new oseDatetime(); 
+		return $time->getDateTime (); 
 	}
 	protected function addACLRule($status, $score) {
 		$page_id = $this->addPages();
@@ -292,13 +308,14 @@ class oseFirewallScanner {
 			$varValues = array (
 				'id' => $this->aclid,
 				'name' => $this->ip,
-				'datetime' => date('Y-m-d h:i:s'),
+				'datetime' => $this -> getDateTime (),
 				'score' => (int)$score,
 				'status' => (int) $status,
 				'referers_id' => $referer_id,
 				'pages_id' => $page_id,
 				'visits' => 1 
 			);
+			
 			$ipmanager = new oseFirewallIpManager($this->db);
 			$aclid = $ipmanager->getACLID();
 			if (empty($aclid))
@@ -322,7 +339,7 @@ class oseFirewallScanner {
 	{
 		$varValues = array (
 				'score' => $score
-			);
+		);
 		$this->db->addData('update', '#__osefirewall_acl', 'id', $this->aclid, $varValues);
 	}
 	private function addL1DetContent($attacktypeID, $detcontent_content = null, $rule_id = null) {
@@ -357,7 +374,7 @@ class oseFirewallScanner {
 			}
 		}
 	}
-	private function insertVarKey($varKey) {
+	public function insertVarKey($varKey) {
 		$query = 'SELECT `id` FROM `#__osefirewall_vars` WHERE `keyname` = ' . $this->db->quoteValue($varKey);
 		$this->db->setQuery($query);
 		$id = $this->db->loadResult();
@@ -370,6 +387,8 @@ class oseFirewallScanner {
 			$id = $this->db->addData('insert', '#__osefirewall_vars', null, null, $varValues);
 			return $id;
 		} else {
+			$tmp = array_values($id); 
+			$id = $tmp[0]; 
 			return $id;
 		}
 	}
@@ -390,18 +409,19 @@ class oseFirewallScanner {
 	}
 	protected function isDetContentExists($attacktypeID, $rule_id = null) {
 		$where = array ();
-		$where[] = '`aclid` = ' . (int) $this->aclid;
-		$where[] = '`attacktypeid` = ' . (int) $attacktypeID;
+		$where[] = '`acl`.`id` = ' . (int) $this->aclid;
+		$where[] = '`detattacktype`.`attacktypeid` = ' . (int) $attacktypeID;
 		if (!empty ($rule_id)) {
-			$where[] = '`rule_id` = ' . (int) $rule_id;
+			$where[] = '`detcontdetail`.`rule_id` = ' . (int) $rule_id;
 		}
 		$where = $this->db->implodeWhere($where);
-		$query = 'SELECT COUNT(`aclid`) as `count` FROM `#__osefirewall_attackmap` ' . $where;
+		$sql = convertViews::convertAttackmap(array('COUNT(`acl`.`id`) as `count`'));
+		$query = $sql . $where;
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
 		return $result->count;
 	}
-	protected function insertDetContentDetail($detattacktype_id, $detcontent, $rule_id, $var_id = null) {
+	protected function insertDetContentDetail($detattacktype_id, $detcontent, $rule_id, $var_id) {
 		$detcontent_id = $this->insertDetContent($detcontent);
 		$varValues = array (
 			'detattacktype_id' => (int) $detattacktype_id,
@@ -503,14 +523,14 @@ class oseFirewallScanner {
 			return false;
 		}
 		if (preg_match("/wp-login/", $_SERVER['SCRIPT_NAME'])) {
-			return false; 
+			return false;
 		}
 		if((preg_match("/administrator\/*index.?\.php$/", $_SERVER['SCRIPT_NAME'])) || !empty($_SESSION['secretword']))
 		{
 			if(isset($this->secretword) && $this->secretword == $_SERVER['QUERY_STRING'])
 			{
 				$_SESSION['secretword'] = $this->secretword;
-				return false; 
+				return false;
 			}
 		}
 		if (isset ($_REQUEST['option'])) {
@@ -519,11 +539,11 @@ class oseFirewallScanner {
 					'com_ose_antihacker',
 					'com_ose_antivirus',
 					'com_civicrm'
-				)))) {
-				return false;
-			} else {
-				return true;
-			}
+					)))) {
+						return false;
+					} else {
+						return true;
+					}
 		} else {
 			return true;
 		}
@@ -579,12 +599,25 @@ class oseFirewallScanner {
 								".$banbody."
 						</body>
 					 </html>";
-		echo $banbody;			 
+		echo $banbody;
+		exit;
+	}
+	private function show403Msg ($msg) {
+		header('HTTP/1.1 403 Forbidden');
+		$banbody  = "<html>
+						<head>
+							<title>403 Forbidden</title>
+						</head>
+						<body>
+								".$msg."
+						</body>
+					 </html>";
+		echo $banbody;
 		exit;
 	}
 	private function sendEmail($type, $notified)
 	{
-		$config_var = $this->getConfigVars(); 
+		$config_var = $this->getConfigVars();
 		oseFirewall::loadEmails();
 		$oseEmail = new oseEmail('firewall');
 		$email = $oseEmail->getEmailByType($type);
@@ -592,24 +625,24 @@ class oseFirewallScanner {
 		$result = $oseEmail->sendMail($email, $config_var);
 		if ($result == true)
 		{
-			$this->updateNotified(1); 
+			$this->updateNotified(1);
 		}
 	}
 	private function updateNotified($status)
 	{
 		$varValues = array (
 				'notified' => (int)$status
-			);
+		);
 		$result = $this->db->addData('update', '#__osefirewall_acl', 'id', $this->aclid, $varValues);
 		return (boolean)$result;
 	}
 	private function convertEmail($email, $config_var)
 	{
 		$attackType = $this->getAttackTypes();
-		$attackType = implode(',', $attackType); 
-		$ipURL = $this ->getIPURL($config_var); 
+		$attackType = implode(',', $attackType);
+		$ipURL = $this ->getIPURL($config_var);
 		$violation = $this->getViolation();
-		$totalImpact = $this->getScore(); 
+		$totalImpact = $this->getScore();
 		$email->subject = $email->emailSubject." for [".$_SERVER['HTTP_HOST']."]";
 		$email->body = str_replace('[attackType]', $attackType, $email->emailBody);
 		$email->body = str_replace('[violation]', $violation, $email->body);
@@ -619,7 +652,7 @@ class oseFirewallScanner {
 		$email->body = str_replace(array('[referrer]', '[referer]'), $this->referer, $email->body);
 		$email->body = str_replace('[aclid]', $ipURL, $email->body);
 		$email->body = str_replace('[score]', $totalImpact, $email->body);
-		return $email; 
+		return $email;
 	}
 	private function getViolation()
 	{
@@ -630,7 +663,7 @@ class oseFirewallScanner {
 			{
 				if ($key =='URL')
 				{
-					$return .= $key. ' <br />redirected from <font color="red">'.$this->replaced['original'][$key]. '</font> <br />to '. $this->replaced['filtered'][$key].'<br/>'; 
+					$return .= $key. ' <br />redirected from <font color="red">'.$this->replaced['original'][$key]. '</font> <br />to '. $this->replaced['filtered'][$key].'<br/>';
 				}
 				elseif (in_array($key, array('GET', 'POST')))
 				{
@@ -639,9 +672,9 @@ class oseFirewallScanner {
 						$return .= $key.'.'.$k.' changed from <font color="red">'.$this->replaced['original'][$key][$k].'</font> to '. $this->replaced['filtered'][$key][$k].'<br/>';
 					}
 				}
- 		}
+			}
 		}
- 		return $return; 
+		return $return;
 	}
 	private function getIPURL($config_var)
 	{
@@ -649,22 +682,24 @@ class oseFirewallScanner {
 	}
 	private function getAttackTypes()
 	{
-		$query = 'SELECT DISTINCT `name` FROM `#__osefirewall_attackmap` WHERE `aclid` = '.(int)$this->aclid; 
-		$this->db->setQuery($query); 
-		$results = $this->db -> loadResultArray(); 
-		return $results;  	
+		$attrList = array("DISTINCT `attacktype`.`name` AS `name`");
+		$sql = convertViews::convertAttackmap($attrList);
+		$query = $sql.'WHERE `acl`.`id` = '.(int)$this->aclid;
+		$this->db->setQuery($query);
+		$results = $this->db -> loadResultArray();
+		return $results;
 	}
 	private function getConfigVars()
 	{
 		if (class_exists('SConfig'))
 		{
-			$config = new SConfig(); 
-			return $config; 
+			$config = new SConfig();
+			return $config;
 		}
 		elseif (class_exists('JConfig'))
 		{
-			$config = new JConfig(); 
-			return $config; 
+			$config = new JConfig();
+			return $config;
 		}
 	}
 	protected function CheckIsSpambot() {
@@ -685,10 +720,10 @@ class oseFirewallScanner {
 			elseif ($result->ip->appears == 1 && $result->ip->confidence >= (int)$this->sfs_confidence) // Was the result was registered
 			{
 				$spambot = true; // Check failed. Result indicates dangerous.
-				$scanReturn['detcontent_content'] = oseJSON::encode($result->ip); 
+				$scanReturn['detcontent_content'] = oseJSON::encode($result->ip);
 				$scanReturn['rule_id'] = 1;
 				$scanReturn['impact'] = 100;
-				return $scanReturn; 
+				return $scanReturn;
 			} else {
 				return false; // Check passed. Result returned safe.
 			}
@@ -711,7 +746,7 @@ class oseFirewallScanner {
 		$varValues = array (
 				'ip32_start' => $this->ip32,
 				'ischecked' => 1
-			);
+		);
 		$this->db->addData('insert', '#__osefirewall_sfschecked', '', '', $varValues);
 	}
 	protected function posttoSFS($data) {
@@ -726,5 +761,135 @@ class oseFirewallScanner {
 		unset ($Url);
 		unset ($Curl);
 		return $ResultString;
+	}
+	protected function scanUploadFiles () {
+		$this->getAllowExts ();
+		$scanResult = $this->checkFileTypes();
+		return $scanResult; 
+	}
+	protected function getAllowExts () {
+		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'allowExts' ";
+		$this->db->setQuery($query);
+		$result = (object) $this->db->loadResult();
+		$this->allowExts = (!empty($result->value))?$result->value:null;
+	}
+	protected function cleanFileVariable($fileVar)
+	{
+		if (is_array($fileVar)) {
+			foreach ($fileVar as $filetmp) {
+				$fileVar= $filetmp;
+				break;
+			}
+		}
+		return $fileVar;
+	}
+	protected function checkFileTypes() {
+		if (!empty ($this->allowExts)) {
+			foreach ($_FILES as $file) {
+				if (!empty ($file['tmp_name'])) {
+					if (is_array($file['tmp_name']))
+					{
+						$file['tmp_name'] = $file['tmp_name'][0];
+					}
+					if (!empty($file['tmp_name']))
+					{
+						$file['tmp_name'] = $this->cleanFileVariable($file['tmp_name']);
+						$file['type'] = $this->cleanFileVariable($file['type']);
+						$mimeType = $this->getMimeType($file);
+						$ext = explode('/', $file['type']);
+						$allowExts = explode(",", trim($this->allowExts));
+						$allowExts = array_map('trim', $allowExts);
+						if ($ext[1] == 'vnd.openxmlformats-officedocument.wordprocessingml.document' && ($mimeType[1] != $ext[1])) {
+							$ext[1] = 'msword';
+						}
+						if ($ext[1] != $mimeType[1]) {
+							$return['rule_id'] = 11;
+							$return['detcontent_content'] = $file['name'];
+							$return['impact'] = 100;
+							$this->unlinkUPloadFiles();
+							return $return;
+						}
+						elseif (in_array($mimeType[1], $allowExts) == false) {
+							$this -> show403Msg('The upload of this file type ' . $mimeType[1] . ' is not allowed this website. If you are the server administrator, please add the extensions in the configuraiton in the configuration panel first.');
+						}
+						else
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
+	}
+	private function getMimeType($file) {
+		$mimeType = $this->getFileInfo($file['tmp_name']);
+		if (empty ($mimeType)) {
+			$mimeType = $this -> checkisPHPfile($file['tmp_name']);
+		}
+		if (!empty ($mimeType)) {
+			if (strstr($mimeType, '/')!=false)
+			{
+				$mimeType = explode("/", $mimeType);
+			}
+			else
+			{
+				$tmp = explode(" ", $mimeType);
+				$mimeType = array();
+				$mimeType[0] = strtolower ($tmp [1]);
+				$mimeType[1] = strtolower ($tmp [0]);
+			}
+		} else {
+			$mimeType = explode("/", $file['type']);
+		}
+		return $mimeType;
+	}
+	private function getFileInfo($filename) {
+		if (!defined('FILEINFO_MIME_TYPE')) {
+			define('FILEINFO_MIME_TYPE', 1);
+		}
+		$defined_functions = get_defined_functions();
+		if ((in_array('finfo_open', $defined_functions['internal'])) || function_exists('finfo_open')) {
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$content_type = finfo_file($finfo, $filename);
+			finfo_close($finfo);
+			return $content_type;
+		}
+		elseif (function_exists('mime_content_type')) {
+			$content_type = mime_content_type($filename);
+			return $content_type;
+		} else {
+			return false;
+		}
+	}
+	protected function checkisPHPfile($file) {
+		if (empty($file)) {
+			return false;
+		}
+		if (filesize($file) > '2048000') {
+			return false;
+		}
+		$data = file($file);
+		$data = implode("\r\n", $data);
+		$pattern = "/(\<\?)|(\<\?php)/";
+		if (preg_match($pattern, $data)) {
+			return 'application/x-httpd-php';
+		} else {
+			return false;
+		}
+	}
+	protected function unlinkUPloadFiles () {
+		if (is_array($_FILES['tmp_name']))
+		{
+			foreach ($_FILES['tmp_name'] as $filetmp)
+			{
+				unlink($filetmp);
+				break;
+			}
+		}
+		else
+		{
+			unlink($_FILES['tmp_name']);
+		}
+		unset ($_FILES);
 	}
 }

@@ -31,7 +31,16 @@ $this ->model->loadLocalscript ();
 	<?php 
 		$this ->model->showLogo ();
 		$this ->model->showHeader ();
+		if(!oseFirewall :: isDBReady()){
+			include_once(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');
+		}
 	?>
 	<div id ='oseantihackerIPManager'></div>
   </div>
+  <div class='explanation'>
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/accept.png"> WhiteList
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/delete.png"> BlackList
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/error.png"> Monitored
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/information.png"> Information
+  </div>	    
 </div>

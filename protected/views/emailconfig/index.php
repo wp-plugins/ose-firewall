@@ -32,6 +32,9 @@ $this ->model->loadLocalscript ();
 	<?php 
 		$this ->model->showLogo ();
 		$this ->model->showHeader ();
+		if(!oseFirewall :: isDBReady()){
+			include_once(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');
+		}
 	?>
 	<div id ='oseEmailsList'></div>
   </div>

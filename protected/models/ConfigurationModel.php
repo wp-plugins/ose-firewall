@@ -34,6 +34,22 @@ class ConfigurationModel extends BaseModel {
 	public function getCDescription() {
 		return oLang :: _get('CONFIGURATION_DESC');
 	}
+	
+	public function showConfigBtnList(){
+		$html = '<div id = "Config-Btn-List">';
+		$html .= '<table id="hor-minimalist-config">';
+		$html .= '<tbody>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('scanconfig').'\'">'.SCAN_CONFIGURATION.'</button></td><td>'.SCANCONFIG_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('avconfig').'\'">'.ANTIVIRUS_CONFIGURATION.'</button></td><td>'.VSCONFIG_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('seoconfig').'\'">'.SEO_CONFIGURATION.'</button></td><td>'.SEOCONFIG_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('spamconfig').'\'">'.ANTISPAM_CONFIGURATION.'</button></td><td>'.ANTISPAMCONFIG_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('emailconfig').'\'">'.EMAIL_CONFIGURATION.'</button></td><td>'.EMAILCONFIG_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('emailadmin').'\'">'.EMAIL_ADMIN.'</button></td><td>'.ADMINEMAILCONFIG_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "uninstallDB();">'.UNINSTALLDB.'</button></td><td>'.UNINSTALLDB_INTRO.'</td></tr>';
+		$html .= '</tbody>';
+		$html .= '</div></table>';
+		echo $html; 	
+	}
 	public function getConfiguration($type)
 	{
 		$oseFirewallStat = new oseFirewallStat();
@@ -42,6 +58,7 @@ class ConfigurationModel extends BaseModel {
 	}
 	public function saveConfiguration($type, $data)
 	{
+		$this->isConfigurationDBReady($data);
 		$oseFirewallStat = new oseFirewallStat();
 		$result = $oseFirewallStat->saveConfiguration($type, $data);
 		$this -> ajaxReturn ($result); 
@@ -57,6 +74,32 @@ class ConfigurationModel extends BaseModel {
 				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_SAVE_FAILED'), false);
 		}
 	}
+	
+	private function isConfigurationDBReady($data)
+	{
+		require_once(OSE_FWFRAMEWORK.ODS.'oseFirewallBase.php');
+		if($data['blockCountry'] == 1)
+		{
+			if(oseFirewallBase :: isCountryBlockConfigDBReady() == false)
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_SAVECOUNTRYBLOCK_FAILE'), false);
+			}
+		}
+		if($data['adVsPatterns'] == 1){
+			if(oseFirewallBase :: isAdvancePatternConfigDBReady() == false)
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_ADPATTERNS_FAILE'), false);
+			}
+		}
+		if($data['adRules'] == 1)
+		{
+			if(oseFirewallBase :: isAdvanceSettingConfigDBReady() == false)
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_ADRULES_FAILE'), false);
+			}
+		}
+	}
+	
 	public function getURL($view) {
 		if (class_exists('JFactory')) {
 			return OSE_ADMINURL.'&view='.$view; 

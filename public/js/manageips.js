@@ -3,7 +3,11 @@ var controller = "manageips";
 Ext.ns('oseATH','oseATHIPMANAGER');
 function changeItemStatus(id, status)
 {
-	oseChangeItemStatus(url, option, controller, 'changeIPStatus', id, status , oseATHIPMANAGER.store);
+	Ext.Msg.confirm(O_CHANGE_IP_STATUS, O_CHANGE_IP_STATUS_DESC, function(btn, text){
+		if (btn == 'yes'){
+			oseChangeItemStatus(url, option, controller, 'changeIPStatus', id, status , oseATHIPMANAGER.store);
+		}
+	});
 }
 function viewIPdetail(id)
 {
@@ -90,7 +94,7 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 	    selType: 'rowmodel',
 	    multiSelect: true,
 	    columns: [
-            {id: 'country_code', header: '',  hidden:false, dataIndex: 'country_code', width: 30, sortable: true}
+	        {id: 'country_code', header: '',  hidden:false, dataIndex: 'country_code', width: 30, sortable: true}
             ,{id: 'id', header: O_ID,  hidden:false, dataIndex: 'id', width: 40, sortable: true}
             ,{id: 'datetime', header: O_DATE,  hidden:false, dataIndex: 'datetime',width: 130, sortable: true}
             ,{id: 'name', header: O_IP_RULE_TITLE,  hidden:false, dataIndex: 'name', width: 130,  sortable: true}
@@ -116,7 +120,7 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
             ,{id: 'view', header: O_VIEWDETAIL,  hidden:false, width: 40, dataIndex: 'view', width: 80, sortable: false}
 	    ],
 	    sortInfo:{field: 'datetime', direction: "DESC"},
-	    height: 735,
+	    height: 500,
 	    width: '100%',
 	    renderTo: 'oseantihackerIPManager',
 	    tbar: new Ext.Toolbar({

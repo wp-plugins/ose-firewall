@@ -22,7 +22,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
-require_once (dirname(__FILE__).DS.'abstract.php'); 
+require_once (dirname(__FILE__).ODS.'abstract.php'); 
 class oseJoomla extends oseFramework 
 {
 	private $debugMode = false;
@@ -67,12 +67,12 @@ class oseJoomla extends oseFramework
 		$cs->registerCoreScript('TinyMCE');
     }
     public static function getDBO () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS . 'db'. DS .'joomla.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS . 'db'. ODS .'joomla.php');
     	$db = new oseDB2Joomla(); 
     	return $db; 
     }
     public static function loadJSON () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS.'json'.DS . 'oseJSON.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'json'.ODS . 'oseJSON.php');
     }
     
     public static function loadInstaller () { }
@@ -80,5 +80,26 @@ class oseJoomla extends oseFramework
     public static function getSiteURL () {
     	return JURI::root();
     }
+	public static function getConfig () {
+		if (class_exists("SConfig"))
+		{
+			$config = new SConfig(); 
+		}
+		else if (class_exists("JConfig"))
+		{
+			$config = new JConfig(); 
+		} 
+		else
+		{
+			$config = JFactory::getConfig();	
+		}
+		$copy = new stdClass(); 
+		$copy->host = $config->host;
+		$copy->db = $config->db; 
+		$copy->user = $config->user; 
+		$copy->password = $config->password;  
+		$copy->prefix = $config->dbprefix;
+		return $copy; 
+	}
 }
 ?>

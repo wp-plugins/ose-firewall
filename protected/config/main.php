@@ -6,7 +6,7 @@
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 
-require_once (dirname(__FILE__).DS."define.php"); 
+require_once (dirname(__FILE__).ODS."define.php"); 
 return array(
 	'basePath'=>dirname(__FILE__) . DIRECTORY_SEPARATOR.'..',
 	'name'=>'OSE Firewall',
@@ -69,8 +69,23 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'trace',
 				),
+				array(
+				    'class'=>'CWebLogRoute',
+				        //
+				        // I include *trace* for the 
+				        // sake of the example, you can include
+				        // more levels separated by commas
+				    'levels'=>'trace',
+				        //
+				        // I include *vardump* but you
+				        // can include more separated by commas
+				    'categories'=>'vardump',
+				        //
+				        // This is self-explanatory right?
+				    'showInFireBug'=>true
+				)
 			),
 		),
 	),

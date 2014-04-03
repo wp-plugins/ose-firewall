@@ -49,7 +49,7 @@ abstract class oseFramework
     {
     	return $this->debugMode; 
     }
-    private function initYiiConfiguration () 
+    protected function initYiiConfiguration () 
     {
     	// remove the following lines when in production mode
 		defined('YII_DEBUG') or define('YII_DEBUG',$this->debugMode);
@@ -58,8 +58,13 @@ abstract class oseFramework
     }
     public static function runYiiApp() 
     {
-    	require_once(OSE_FRAMEWORKDIR.DS.'yii.php');
-    	$config=OSEAPPDIR.DS.'protected'.DS.'config'.DS.'main.php';
+    	require_once(OSE_FRAMEWORKDIR.ODS.'yii.php');
+    	$config=OSEAPPDIR.ODS.'protected'.ODS.'config'.ODS.'main.php';
+		Yii::createWebApplication($config);
+    }
+    public static function runYiiConsole () {
+    	require_once(OSE_FRAMEWORKDIR.ODS.'yii.php');
+    	$config=OSEAPPDIR.ODS.'protected'.ODS.'config'.ODS.'console.php';
 		Yii::createWebApplication($config);
     }
     public function initSystem () 
@@ -67,16 +72,20 @@ abstract class oseFramework
     	$this ->initYiiConfiguration ();
     }
     public static function loadFiles () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS.'files'.DS . 'oseFile.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'files'.ODS . 'oseFile.php');
     }
+    public static function loadJSON(){
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'json'.ODS . 'oseJSON.php');
+    }
+    
     public static function loadRequest () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS.'request'.DS . 'oseRequest.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'request'.ODS . 'oseRequest.php');
     }
     public static function loadEmails () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS.'emails'.DS . 'oseEmail.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'emails'.ODS . 'oseEmail.php');
     }
     public static function loadUsers () {
-    	require_once (OSE_FRAMEWORKDIR . DS . 'oseframework' . DS.'users'.DS . 'oseUsers.php');
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'users'.ODS . 'oseUsers.php');
     }
     public static function loadBackendCSS ($cs,$baseUrl) {
     	$cs->registerCssFile($baseUrl . '/public/css/backendv6.css');
@@ -89,5 +98,8 @@ abstract class oseFramework
     	$cs->registerCssFile($baseUrl . '/public/css/bootmetro-icons.min.css');
     	$cs->registerCssFile($baseUrl . '/public/css/ext-debug.css');
     }   
+	public static function loadDateClass () {
+    	require_once (OSE_FRAMEWORKDIR . ODS . 'oseframework' . ODS.'datetime'.ODS . 'datetime.php');
+    }
 }
 ?>

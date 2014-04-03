@@ -1,10 +1,13 @@
 var controller = "variables";
 
 Ext.ns('oseATH','oseATHVARIABLES');
-
 function changeItemStatus(id, status)
 {
-	oseChangeItemStatus(url, option, controller, 'changeVarStatus', id, status , oseATHVARIABLES.store);
+	Ext.Msg.confirm(O_CHANGE_VAR_STATUS, O_CHANGE_VAR_STATUS_DESC, function(btn, text){
+		if (btn == 'yes'){
+			oseChangeItemStatus(url, option, controller, 'changeVarStatus', id, status , oseATHVARIABLES.store);
+		}
+	});
 }
 oseATHVARIABLES.vartypeOptions = new Array(
 			   new Array('POST', 'POST'), 
@@ -48,7 +51,7 @@ oseATHVARIABLES.panel = new Ext.grid.GridPanel({
 	    sortInfo:{field: 'id', direction: "ASC"},
 	    store: oseATHVARIABLES.store,
 	    renderTo: 'oseATHVARIABLESPanel',
-	    height: 735,
+	    height: 500,
 	    tbar: new Ext.Toolbar({
 			items: [
 					oseGetAddWinButton('addSigbutton', ADD_A_VARIABLE, ADD_A_VARIABLE, oseATHVARIABLES.form, 600),

@@ -22,7 +22,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
-require_once (dirname(__FILE__).DS.'oseDB2.php'); 
+require_once (dirname(__FILE__).ODS.'oseDB2.php'); 
 
 class oseDB2Joomla extends oseDB2 {
 	public function __construct () {
@@ -30,20 +30,20 @@ class oseDB2Joomla extends oseDB2 {
 		$this->setPrefix (); 
 	}
 	protected function setPrefix () {
-		$config = JFactory::getConfig();
-		$this -> prefix = $config->get('dbprefix');
+		$config = oseJoomla::getConfig(); 
+		$this -> prefix = $config->prefix;
 	}	
 	public function getConnection ()
 	{
-		$config = JFactory::getConfig();
-		$host = explode(':', $config->get('host')); 
+		$config = oseJoomla::getConfig(); 
+		$host = explode(':', $config->host); 
 		if (!empty($host[1]))
 		{
-			$connection=new CDbConnection('mysql:host='.$host[0].';port='.$host[1].';dbname='.$config->get('db'),$config->get('user'),$config->get('password'));
+			$connection=new CDbConnection('mysql:host='.$host[0].';port='.$host[1].';dbname='.$config->db,$config->user,$config->password);
 		}
 		else
 		{
-			$connection=new CDbConnection('mysql:host='.$host[0].';dbname='.$config->get('db'),$config->get('user'),$config->get('password'));
+			$connection=new CDbConnection('mysql:host='.$host[0].';dbname='.$config->db,$config->user,$config->password);
 		}
 		return $connection;
 	}

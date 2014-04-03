@@ -23,29 +23,12 @@
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
-require_once (dirname(__FILE__).DS.'oseFirewallBase.php');
+require_once (dirname(__FILE__).ODS.'oseFirewallBase.php');
 class oseFirewall extends oseFirewallBase {
 	protected static $option = 'com_ose_firewall';
 	public function __construct () {
 		$debug = $this->getDebugMode(); 
 		$this->setDebugMode ($debug);
-	}
-	public function getDebugMode () {
-		$dbo = JFactory::getDBO();
-		$query = "SHOW TABLES LIKE '#__ose_secConfig' "; 
-		$dbo->setQuery($query); 
-		$result =  $dbo->loadResult();
-		if (empty($result))
-		{
-			return true;  
-		}
-		else
-		{
-			$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'debugMode' AND `type` = 'scan'";
-			$dbo->setQuery($query); 
-			$result =  $dbo->loadResult();
-    		return (empty($result) || ($result==0))?false:true;
-		}
 	}
 	protected function loadViews () {
        	$view = JRequest::getVar('view');
@@ -104,7 +87,7 @@ class oseFirewall extends oseFirewallBase {
 		return $menu;
 	}
 	public static function getAjaxScript() {
-    	return "var url = \"".JURI::base()."index.php\";".
+    	return "var url = \"".OURI::base()."index.php\";".
 			   "var option=\"".self::$option."\";";
     }
 }

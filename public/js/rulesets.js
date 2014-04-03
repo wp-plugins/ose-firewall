@@ -2,7 +2,11 @@ var controller = "rulesets";
 
 Ext.ns('oseATH', 'oseantihackerRulesets');
 function changeItemStatus(id, status) {
-	oseChangeItemStatus(url, option, controller, 'changeRuleStatus', id, status, oseantihackerRulesets.store);
+	Ext.Msg.confirm(O_CHANGE_FIREWALL_STATUS, O_CHANGE_FIREWALL_STATUS_DESC, function(btn, text){
+		if (btn == 'yes'){
+			oseChangeItemStatus(url, option, controller, 'changeRuleStatus', id, status, oseantihackerRulesets.store);
+		}
+	});
 }
 oseantihackerRulesets.attacktypefields = new Array('id', 'name');
 oseantihackerRulesets.attacktypeStore = oseGetStore('attacktypeStore', oseantihackerRulesets.attacktypefields, url, option, controller, 'getAttackTypes');
@@ -38,7 +42,7 @@ oseantihackerRulesets.panel = new Ext.grid.GridPanel({
 		header : O_ID,
 		hidden : false,
 		dataIndex : 'id',
-		width : 40,
+		width : "4.5%",
 		sortable : true
 	}, {
 		id : 'rule',
@@ -59,7 +63,7 @@ oseantihackerRulesets.panel = new Ext.grid.GridPanel({
 		header : O_STATUS,
 		hidden : false,
 		dataIndex : 'action',
-		width : 80,
+		width : "4.5",
 		sortable : true
 	} ],
 	sortInfo : {
@@ -68,7 +72,7 @@ oseantihackerRulesets.panel = new Ext.grid.GridPanel({
 	},
 	store : oseantihackerRulesets.store,
 	renderTo : 'oseantihackerRulesets',
-	height : 735,
+	height : 500,
 	tbar : new Ext.Toolbar({
 		items : [ '->', oseGetStatusFilter(oseantihackerRulesets) ]
 	}),

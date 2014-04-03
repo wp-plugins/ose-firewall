@@ -26,11 +26,11 @@
 if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH')) {
 	die('Direct Access Not Allowed');
 }
-require_once (OSE_FWFRAMEWORK . DS. 'firewallstat.php'. DS. 'firewallStat.php');
+require_once (OSE_FWFRAMEWORK . ODS. 'firewallstat.php'. ODS. 'firewallStat.php');
 class oseFirewallStatPro extends oseFirewallStat {
 public function getSignatures()
 	{
-		$limit = oRequest::getInt('limit', 25);
+		$limit = oRequest::getInt('limit', 15);
 		$start = oRequest::getInt('start', 0);
 		$page = oRequest::getInt('page', 1);
 		$search = oRequest::getVar('search', null);

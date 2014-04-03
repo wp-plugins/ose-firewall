@@ -41,7 +41,7 @@ class oseSysguard {
 		$phpRuntime = $this->getPHPEnv();
 		if ($frontend == true) {
 			$directoryName = 'protected directory';
-			$autoPrependFile = '"' . JPATH_ADMINISTRATOR . DS . 'scan.php' . '"';
+			$autoPrependFile = '"' . JPATH_ADMINISTRATOR . ODS . 'scan.php' . '"';
 			$allow_url_fopen = 'off';
 		} else {
 			$directoryName = 'administrator directory';
@@ -96,10 +96,10 @@ class oseSysguard {
 		}
 	}
 	public function getBasicInfo() {
-		$return['frontPath'] = realpath($_SERVER['DOCUMENT_ROOT'] . DS) . DS;
-		$return['backPath'] = OSEFIREWALL_ADMIN_PATH . DS;
-		//$htpassfile =  realpath(dirname($_SERVER['DOCUMENT_ROOT'].DS)).DS.'osehtpasswd'.DS.'osehtpasswd';
-		$htpassfile = OSEFIREWALL_ADMIN_PATH . DS . '.htpasswd';
+		$return['frontPath'] = realpath($_SERVER['DOCUMENT_ROOT'] . ODS) . ODS;
+		$return['backPath'] = OSEFIREWALL_ADMIN_PATH . ODS;
+		//$htpassfile =  realpath(dirname($_SERVER['DOCUMENT_ROOT'].ODS)).ODS.'osehtpasswd'.ODS.'osehtpasswd';
+		$htpassfile = OSEFIREWALL_ADMIN_PATH . ODS . '.htpasswd';
 		if (file_exists($htpassfile)) {
 			$content = oseFile :: read($htpassfile);
 			$content = explode(":", $content);
@@ -116,7 +116,7 @@ class oseSysguard {
 		return $authUser . ":" . $encryptedPassword;
 	}
 	private function createEncryptPass($authUser, $authPass, $backPath) {
-		$htpassfile = $backPath . DS . '.htpasswd';
+		$htpassfile = $backPath . ODS . '.htpasswd';
 		$content = $this->getEncryptPass($authUser, $authPass);
 		if (!is_writable(dirname($htpassfile))) {
 			oseCPU :: ajaxResponse('ERROR', 'htpassword cannot be written to the folder: ' . dirname($htpassfile) . ", please see this <a href='http://wiki.opensource-excellence.com/index.php?title=How_to_setup_a_.htpassword_in_your_control_panel%3F&action=edit&redlink=1' target='_blank'>WIKI</a>on how to setup a .htpassword in your control panel", true);
@@ -134,13 +134,13 @@ class oseSysguard {
 		$this->checkValue('.htpassword Username', $authUser);
 		$this->checkValue('.htpassword Password', $authPass);
 		$this->checkValue('Backend Path', $backPath);
-		$htpassfile = $backPath . DS . '.htpasswd';
+		$htpassfile = $backPath . ODS . '.htpasswd';
 		if (!file_exists($htpassfile)) {
 			$this->createEncryptPass($authUser, $authPass, $backPath);
 		} else {
 			oseCPU :: ajaxResponse('ERROR', JText :: _("The .htpassword file already exists, your action will override the existing setting."), false);
 		}
-		$htaccessFile = oseFile :: clean($backPath) . DS . ".htaccess";
+		$htaccessFile = oseFile :: clean($backPath) . ODS . ".htaccess";
 		$filepath = oseFile :: clean($htpassfile);
 		$htaccessContent = $this->gethtaccessContent($filepath);
 		if ((!file_exists($htaccessFile)) || (is_writable(dirname($htaccessFile)))) {

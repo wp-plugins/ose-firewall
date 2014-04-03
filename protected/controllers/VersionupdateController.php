@@ -23,7 +23,7 @@
  *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
 defined ( 'OSE_FRAMEWORK' ) or die ( "Direct Access Not Allowed" );
-require_once (OSE_FWCONTROLLERS . DS . 'BaseController.php');
+require_once (OSE_FWCONTROLLERS . ODS . 'BaseController.php');
 class VersionupdateController extends BaseController {
 	public $layout = '//layouts/grids';
 	public function actionCreateTables() {

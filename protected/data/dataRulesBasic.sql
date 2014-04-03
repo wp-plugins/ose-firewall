@@ -8,4 +8,5 @@ INSERT INTO `#__osefirewall_basicrules` (`id`, `rule`, `action`, `attacktype`) V
 (7, 'checkJSInjection', 1, '["10"]'),
 (8, 'checkSQLInjection', 1, '["4"]'),
 (9, 'checkTrasversal', 1, '["8"]'),
-(10, 'BLOCK_QUERY_LONGER_THAN_255CHAR', 1, '["1"]');
+(10, 'BLOCK_QUERY_LONGER_THAN_255CHAR', 1, '["1"]'),
+(11, 'FILE_UPLOAD_VALIDATION', 1, '["13"]');

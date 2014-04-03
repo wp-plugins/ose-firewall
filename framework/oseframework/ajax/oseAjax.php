@@ -47,6 +47,7 @@ class oseAjax {
 		}
 	}
 	public static function aJaxReturn ($result, $status, $msg, $continue=false, $id = null) {
+		oseFramework :: loadJSON();
 		$return = array (
 				'success' => (boolean)$result,
 				'status' => $status,
@@ -54,23 +55,38 @@ class oseAjax {
 				'cont' => (boolean)$continue,
 				'id' => (int)$id
 		); 
-		$tmp = oseJSON::encode ($return); 
-		print_r($tmp); exit; 		
+		$tmp = oseJSON::encode ($return);
+		$callback = oRequest::getVar('callback', null); 
+		if ($callback == null)
+		{
+			print_r($tmp);  
+		} 
+		else
+		{
+			header ("Content-Type: text/javascript");
+			$return = $callback.'('.$tmp.');'; 
+			print_r($return); 
+		}
+		exit; 
+		 		
 	}
 	public static function returnJSON ($var, $mobiledevice = false)
 	{
-		if ($mobiledevice == false)
+		oseFramework :: loadJSON();
+		$callback = oRequest::getVar('callback', null);
+		if ($callback == null)
 		{
 			print_r(oseJSON::encode($var)); 
 		} 
 		else
 		{
 			header ("Content-Type: text/javascript");
-			$return = 'Ext.data.JsonP.callback1('.oseJSON::encode($var).');'; 
+			$return = $callback.'('.oseJSON::encode($var).');'; 
 			print_r($return); 
 		}
 		exit;
 	}
+	
 	public static function throwAjaxRecursive ($result, $status, $msg, $continue, $step) {
 		$return = array (
 				'success' => (boolean)$result,

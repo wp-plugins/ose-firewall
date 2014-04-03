@@ -24,7 +24,7 @@
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 class VsscanModel extends BaseModel {
-	public function __construct() {
+	public function __construct() {	
 	}
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
@@ -49,17 +49,28 @@ class VsscanModel extends BaseModel {
 	}
 	public function getTotalFiles()
 	{
-		oseFirewall::callLibClass('vsscanner','vsscanner'); 
-		$scanner = new virusScanner ();
-		$totalNum = $scanner->countFiles();
+		oseFirewall::callLibClass('vsscanner','vsscanner');
+		$scanner = new virusScanner ();	
+		/*$totalNum = $scanner->countFiles();
 		if ($totalNum)
 		{
 			return oLang::_get('OSE_THERE_ARE').' '.oLang::_get('OSE_INTOTAL').' '.$totalNum.' '.oLang::_get('OSE_FILES').' '.oLang::_get('OSE_IN_DB');
-		} 
-		else
-		{
-			return oLang::_get('O_PLS').' '.oLang::_get('START_DB_INIT');
 		}
+		else
+		{*/
+			return oLang::_get('SCAN_READY');
+		/*}*/
+	}
+	private function assembleArray($result, $status, $msg, $continue, $id)
+	{
+		$return = array(
+			'success' => (boolean) $result,
+			'status' => $status,
+			'result' => $msg,
+			'cont' => (boolean) $continue,
+			'id' => (int) $id
+		);
+		return $return;
 	}
 	public function vsScan($step) {
 		$result= array();
@@ -69,6 +80,11 @@ class VsscanModel extends BaseModel {
 		oseFirewall::callLibClass('vsscanner','vsscanner'); 
 		$scanner = new virusScanner ();
 		$results = $scanner -> vsScan ($step);
+		if($results == false)
+		{
+			$results = $this->assembleArray (false, 'ERROR', FILE_VSSCAN_FAILED_INCORRECT_PERMISSIONS, $continue = false, $id = null);
+			oseAjax::returnJSON($results);
+		}
 		return $results;  
 	}
 	public function getTotalInfected()
@@ -84,5 +100,12 @@ class VsscanModel extends BaseModel {
 		{
 			return oLang::_get('YOUR_SYSTEM_IS_CLEAN');
 		}
+	}
+	
+	public function isDBReady(){
+		$return = array ();
+		$return['ready'] = oseFirewall :: isDBReady();
+		$return['type'] = 'base';
+		return $return['ready'];
 	}
 }

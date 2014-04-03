@@ -3,6 +3,8 @@ var controller = "vsscan";
 Ext.ns('oseATH','oseATHScanner');
 oseATHScanner.pbar1 = oseGetProgressbar('pbar1', 'Database Initialisation Ready') ;
 oseATHScanner.pbar2 = oseGetProgressbar('pbar2', 'Virus Scanning Ready') ;
+oseATHScanner.pbar2.render ('progress-bar');
+oseATHScanner.pbar2.updateProgress(0, totalFiles);
 
 function initDBButtonUpdate (status) {
 	Ext.getCmp('path').setDisabled(status);
@@ -10,8 +12,36 @@ function initDBButtonUpdate (status) {
 }
 
 function vsScanButtonUpdate (status) {
-	Ext.getCmp('vsscanbutton').setDisabled(status);
-	Ext.getCmp('vsscancontinue').setDisabled(status);
+	//Ext.get('vsscan').dom.disabled = status;
+	//Ext.get('init').dom.disabled = status;
+}
+
+function Countdown(options) {
+	  var timer,
+	  instance = this,
+	  seconds = options.seconds || 10,
+	  updateStatus = options.onUpdateStatus || function () {},
+	  counterEnd = options.onCounterEnd || function () {};
+
+	  function decrementCounter() {
+	    updateStatus(seconds);
+	    if (seconds === 0) {
+	      counterEnd();
+	      instance.stop();
+	    }
+	    seconds--;
+	  }
+
+	  this.start = function () {
+	    clearInterval(timer);
+	    timer = 0;
+	    seconds = options.seconds;
+	    timer = setInterval(decrementCounter, 1000);
+	  };
+
+	  this.stop = function () {
+	    clearInterval(timer);
+	  };
 }
 
 oseATHScanner.initDBForm = Ext.create('Ext.form.Panel', {
@@ -28,7 +58,16 @@ oseATHScanner.initDBForm = Ext.create('Ext.form.Panel', {
 		,handler: function(){
 			oseATHScanner.pbar1.updateProgress(0, O_INITDB_INPROGRESS);
 			initDBButtonUpdate (true); 
-			initDatabase(-1, oseATHScanner.InitDBWin, 'initDatabase'); 
+			initDatabase(-1, oseATHScanner.InitDBWin, 'initDatabase', 0); 
+		}
+	},
+	{
+		text: O_CONTINUE,
+		id: 'contdbbutton'
+		,handler: function(){
+			oseATHScanner.pbar1.updateProgress(0, O_INITDB_INPROGRESS);
+			initDBButtonUpdate (true); 
+			initDatabase(0, oseATHScanner.InitDBWin, 'initDatabase', 0); 
 		}
 	},
     {
@@ -38,13 +77,6 @@ oseATHScanner.initDBForm = Ext.create('Ext.form.Panel', {
 			oseATHScanner.pbar1.updateProgress(0, O_INITDB_TERMINATED);
 			initDBButtonUpdate (false); 
 			Ext.Ajax.abort(); 
-		}
-	},
-	{
-		text: O_CLOSE,
-		id: 'closebutton'
-		,handler: function(){
-			location.reload();  
 		}
 	}
 	]
@@ -57,61 +89,7 @@ oseATHScanner.initDBForm = Ext.create('Ext.form.Panel', {
     ]
 });
 
-oseATHScanner.vsScanform = Ext.create('Ext.form.Panel', {
-	bodyStyle: 'padding: 10px; padding-left: 20px'
-	,autoScroll: true
-	,autoWidth: true
-    ,border: false
-    ,labelAlign: 'left'
-    ,labelWidth: 150
-    ,buttons: [
-    {
-		text: O_SCAN_VIRUS,
-		id: 'vsscanbutton'
-		,handler: function(){
-			oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_INPROGRESS);
-			vsScanButtonUpdate (true); 
-			scanAntivirus (-1, 'vsscan');
-		}
-	},
-	{
-		text: O_SCAN_VIRUS_CONTINUE,
-		id: 'vsscancontinue'
-		,handler: function(){
-			vsScanButtonUpdate (true); 
-			scanAntivirus (1, 'vsscan');
-		}
-	},
-    {
-		text: O_STOP,
-		id: 'stopvsscanbutton'
-		,handler: function(){
-			oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_TERMINATED);
-			vsScanButtonUpdate (false); 
-			Ext.Ajax.abort(); 
-		}
-	}
-	,
-	{
-		text: O_CLOSE,
-		id: 'closebutton'
-		,handler: function(){
-			location.reload();  
-		}
-	}
-	]
-    ,items:[
-		{
-			html: '<div id ="scan_progress">&nbsp;</div>'
-		},
-		oseATHScanner.pbar2,
-		{
-			html: '<div id ="last_file">&nbsp;</div>'
-		}
-    ]
-});
-
-function initDatabase (step, win, task) {
+function initDatabase (step, win, task, counter) {
 	Ext.Ajax.request({
 		url : url,
 		params : {
@@ -133,23 +111,80 @@ function initDatabase (step, win, task) {
 			}
 			else
 			{
-				oseATHScanner.pbar1.updateProgress(1, msg.summary);
+				if(step >= 1 || step < 0){
+					step=0;
+				}
+				oseATHScanner.pbar1.updateProgress(step, msg.summary);
 				Ext.fly('scanned_files').update(msg.lastscanned);
 				if (msg.cont > 0)
 				{	
-					initDatabase (1, win, task);
+					/*if (counter < 15) 
+					{
+						counter ++;
+						initDatabase (step+0.1, win, task, counter); 
+					}
+					else
+					{
+						counter = 0;
+						Ext.MessageBox.show({ 
+							msg: "Let's give the server a rest", 
+							progressText: 'Wait...', 
+							width:300, 
+							wait:true
+						}); 
+
+						var myCounter = new Countdown({  
+						    seconds:5,  // number of seconds to count down
+						    onUpdateStatus: function(sec){
+								Ext.MessageBox.updateProgress(0.2, sec + ' seconds left...',sec + ' seconds left...');
+									
+						    }, // callback for each second
+						    onCounterEnd: function(){ 
+						    	Ext.MessageBox.close(); */
+						    	initDatabase (step+0.1, win, task, 0); 
+	                     /*   } // final action
+						});
+						
+						myCounter.start(); 
+					}	 */
+
 				}
 				else
 				{
-					oseATHScanner.pbar1.updateProgress(0, O_INITDB_COMPLETED);
+					oseATHScanner.pbar1.updateProgress(1, O_INITDB_COMPLETED);
 					initDBButtonUpdate (false);
 				}	
 			}
+		},
+		failure : function ( request, status ) {
+			if (request.timedout==true)
+			{
+				counter = 0;
+				/*Ext.MessageBox.show({ 
+					msg: "Server respond aborted message, let's wait for a while and continue later", 
+					progressText: 'Wait...', 
+					width:300, 
+					wait:true
+				}); */
+
+				var myCounter = new Countdown({  
+					seconds:1,  // number of seconds to count down
+				    onUpdateStatus: function(sec){
+						//Ext.MessageBox.updateProgress(0.05, sec + ' seconds left...',sec + ' seconds left...');
+				    },  // callback for each second
+				    onCounterEnd: function(){ 
+				    	//Ext.MessageBox.close(); 
+				    	initDatabase(0, oseATHScanner.InitDBWin, 'initDatabase', 0); 
+	                	    } // final action
+				});
+				myCounter.start();
+			}
+			
 		}
 	});	
 }
 
-function scanAntivirus (step, task) {
+function scanAntivirus (step, task, counter) {
 	Ext.Ajax.request({
 		url : url,
 		params : {
@@ -163,33 +198,107 @@ function scanAntivirus (step, task) {
 		method: 'POST',
 		success: function ( response, options ) {
 			var msg  = Ext.decode(response.responseText);
-			if (msg.status=='Completed')
+			if (msg.showCountFiles == true )
 			{
-				oseATHScanner.pbar2.updateProgress(msg.completed, msg.summary);
 				Ext.Msg.show({
-				    title: msg.status,
-				    msg: O_VSSCAN_COMPLETED,
-				    width: 300,
-				    buttons: Ext.Msg.OK,
-				    fn: function() { location.reload(); }
-				});
-			}
+				    title: 'Total Files Count',
+				    msg: msg.summary,
+				    width: 600
+				});    
+				scanAntivirus (-1, task, 0);
+			}	
 			else
 			{
-				oseATHScanner.form2
-				oseATHScanner.pbar2.updateProgress(msg.completed, msg.summary);
-				Ext.fly('scan_progress').update(msg.progress);
-				Ext.fly('last_file').update(msg.last_file);
-				if (msg.cont > 0)
-				{	
-					scanAntivirus (1, task);
+				Ext.Msg.hide();
+				
+				if(msg.status == 'ERROR')
+				{
+					Ext.Msg.alert("Error", msg.result);
+				}
+
+				if (msg.status=='Completed')
+				{
+					oseATHScanner.pbar2.updateProgress(msg.completed, msg.summary);
+					Ext.Msg.show({
+					    title: msg.status,
+					    msg: O_VSSCAN_COMPLETED,
+					    width: 300,
+					    buttons: Ext.Msg.OK,
+					    fn: function() { location.reload(); }
+					});
 				}
 				else
 				{
-					oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_TERMINATED);
-					vsScanButtonUpdate (false); 
-				}	
+					oseATHScanner.form2
+					oseATHScanner.pbar2.updateProgress(msg.completed, msg.summary);
+					Ext.fly('scan_progress').update(msg.progress);
+					Ext.fly('last_file').update(msg.last_file);
+					if (msg.cont > 0)
+					{	
+						/*if (counter < 15) 
+						{
+							counter ++;
+							scanAntivirus (1, task, counter);
+						}	
+						else
+						{
+							counter = 0;
+							Ext.MessageBox.show({ 
+								msg: "Let's give the server a rest", 
+								progressText: 'Wait...', 
+								width:300, 
+								wait:true
+							}); 
+
+							var myCounter = new Countdown({  
+							    seconds:5,  // number of seconds to count down
+							    onUpdateStatus: function(sec){
+									Ext.MessageBox.updateProgress(0.05, sec + ' seconds left...', 'Server respond aborted message, let\'s wait for a while and continue later');
+							    }, // callback for each second
+							    onCounterEnd: function(){ 
+							    	Ext.MessageBox.close(); */
+							    	scanAntivirus (1, task, 0);
+		                       /* } // final action
+							});
+							
+							myCounter.start(); 
+						}*/
+					}
+					else
+					{
+						oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_TERMINATED);
+						vsScanButtonUpdate (false); 
+					}	
+				}
+				
+			}	
+			
+			
+		},
+		failure : function ( request, status ) {
+			if (request.timedout==true)
+			{
+				counter = 0;
+				/*Ext.MessageBox.show({ 
+					msg: "Server respond aborted message, let's wait for a while and continue later", 
+					progressText: 'Wait...', 
+					width:300, 
+					wait:true
+				}); */
+
+				var myCounter = new Countdown({  
+					seconds:1,  // number of seconds to count down
+				    onUpdateStatus: function(sec){
+						//Ext.MessageBox.updateProgress(0.05, sec + ' seconds left...', 'Server respond aborted message, let\'s wait for a while and continue later');							
+				    },  // callback for each second
+				    onCounterEnd: function(){ 
+				    	//Ext.MessageBox.close(); 
+				    	scanAntivirus (1, task, 0); 
+				    } // final action
+				});
+				myCounter.start();
 			}
+			
 		}
 	});	
 }
@@ -218,21 +327,21 @@ oseATHScanner.scanDBWin = new Ext.Window({
 	]
 });	
 
-oseATHScanner.InitDBWin.on ('close', function () {
-	location.reload(); 
-})
-
-oseATHScanner.scanDBWin.on ('close', function () {
-		location.reload(); 
-})
-
-Ext.get('init').on('click', function(){
-	Ext.fly('scannedInfo').update(DB_INITIALIZATION_IN_PROGRESS);
-	oseATHScanner.InitDBWin.show();
+Ext.get('vsscan').on('click', function(){
+	oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_INPROGRESS);
 	Ext.getCmp('path').setValue(path);
+	vsScanButtonUpdate (true); 
+	scanAntivirus (-2, 'vsscan');
 });
 
-Ext.get('vsscan').on('click', function(){
-	Ext.fly('scannedInfo').update(VIRUS_SCANNING_IN_PROGRESS);
-	oseATHScanner.scanDBWin.show();
+Ext.get('vsstop').on('click', function(){
+	oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_TERMINATED);
+	vsScanButtonUpdate (false); 
+	Ext.Ajax.abort(); 
+});
+
+Ext.get('vscont').on('click', function(){
+	oseATHScanner.pbar2.updateProgress(0, O_CONTINUE_SCAN);
+	vsScanButtonUpdate (true); 
+	scanAntivirus (1, 'vsscan');
 });

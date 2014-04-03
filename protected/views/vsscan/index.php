@@ -25,22 +25,32 @@
 $this ->getModel();
 $this ->model->loadLocalscript (); 
 ?>
+
 <div id = "oseappcontainer">
   <div class="container">
 	<?php 
 		$this ->model->showLogo ();
 		$this ->model->showHeader ();
+		if(oseFirewall :: isDBReady()){
 	?>
-		<div id = "scannedInfo" class ="warning"><?php echo $this->model->getTotalFiles();?></div>
-		<div>
-			<button id="init" class='obtn obtn-large obtn-blue'><?php oLang::_('START_DB_INIT') ?></button>
-		</div>
-		<div>
-            <button id="vsscan" class='obtn obtn-large obtn-red'><?php oLang::_('START_NEW_VIRUSSCAN') ?></button><br>
-        </div>
-        <div id="p4" style="width:300px;"></div>
-        <div class="content-description">
-            <b>Status:</b> <span id="p4text"> <?php echo $this->model->getTotalInfected(); ?></span>
+		<?php echo '<script type="text/javascript"> var totalFiles = "'. $this->model->getTotalFiles().'"; </script>'; ?>
+		<?php //include (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'help.php')?>
+        <div id = "scan-window"> 
+        	<div id = "scanbuttons">
+				<button id="vsstop" class='obtn obtn-small obtn-blue'><?php oLang::_('STOP_VIRUSSCAN') ?></button>
+			    <button id="vscont" class='obtn obtn-small obtn-blue'><?php oLang::_('O_CONTINUE_SCAN') ?></button>
+			    <button id="vsscan" class='obtn obtn-small obtn-blue'><?php oLang::_('START_NEW_VIRUSSCAN') ?></button>
+	        </div>
+	        <div id='progress-bar'></div> 
+	        
+	        <div id="p4" style="width:300px;"></div>
+	        <div id ="scan_progress" class="content-description">
+	            <b>Status:</b> <span id="p4text"> <?php echo $this->model->getTotalInfected(); ?></span>
+	        </div>
+	        <div id ="last_file">&nbsp;</div>
         </div>	
-	</div>
+     <?php }else{
+     	include(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');
+     }?>
+   </div>
 </div>

@@ -41,7 +41,7 @@ class oseVsscanStat {
 		return $db->loadObjectList();
 	}
 	public function getMalwareMap () {
-		$limit = oRequest::getInt('limit', 25);
+		$limit = oRequest::getInt('limit', 15);
 		$start = oRequest::getInt('start', 0);
 		$page = oRequest::getInt('page', 1);
 		$search = oRequest::getVar('search', null);
@@ -61,25 +61,31 @@ class oseVsscanStat {
 		return $results;
 	}
 	public function getMalwareMapDB ($search, $type_id, $start, $limit) {
+		oseFirewall::callLibClass('convertviews','convertviews');
 		$db = oseFirewall::getDBO ();
 		$where = array(); 
 		if (!empty($search))
 		{
-			$where[] = "`filename` LIKE ".$db->quoteValue($search.'%', true) ;
+			$where[] = "`f`.`filename` LIKE ".$db->quoteValue($search.'%', true) ;
 		}
 		if (!empty($type_id))
 		{
-			$where[] = "`type_id` = ".(int)$type_id;
+			$where[] = "`v`.`type_id` = ".(int)$type_id;
 		}
 		$where = $db->implodeWhere($where);
-		$query = "SELECT * FROM `#__osefirewall_detmalware`" .$where
-				 ." ORDER BY `filename` DESC LIMIT ".$start.", ".$limit;
+		$attrList = array("*");
+		$sql = convertViews::convertDetMalware($attrList);
+		$query = $sql.$where
+				 ." ORDER BY `f`.`filename` DESC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query); 
 		return $db->loadObjectList();
 	}
 	public function getMalwareTotal () {
+		oseFirewall::callLibClass('convertviews','convertviews');
 		$db = oseFirewall::getDBO ();
-		$query = "SELECT COUNT(file_id) as `count` FROM `#__osefirewall_detmalware`";
+		$attrList = array("COUNT(`file_id`) as `count`");
+		$sql = convertViews::convertDetMalware($attrList);
+		$query = $sql;
 		$db->setQuery($query);
 		$result = (object) ($db->loadResult());  
 		return $result->count;
@@ -92,7 +98,7 @@ class oseVsscanStat {
 		{
 			$fileType = 'htmlmixed';
 		}
-		$content = '<div class="'.$fileType.'" style="width:100%;" name="codearea" id="codearea" rows="25" cols="120" wrap="off" >';
+		$content = '<div class="'.$fileType.'" style="width:100%;" name="codearea" id="codearea" rows="15" cols="120" wrap="off" >';
 		if (!empty($filename))
 		{
 			$fileContent = oseFile::read($filename);

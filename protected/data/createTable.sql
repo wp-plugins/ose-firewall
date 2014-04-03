@@ -344,3 +344,54 @@ CREATE TABLE IF NOT EXISTS `#__osefirewall_sfschecked` (
   `ischecked` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE  TABLE IF NOT EXISTS `#__osefirewall_bkfiles` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `filename` TEXT NOT NULL ,
+  `ext` VARCHAR(20) NOT NULL ,
+  `type` CHAR(1) NOT NULL ,
+  `checked` TINYINT(1) NULL ,
+  `datechecked` DATE NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `#__osefirewall_backup` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `date` DATE NOT NULL,
+  `type` SMALLINT NOT NULL,
+  `dbBackupPath` TEXT NULL,
+  `fileBackupPath` TEXT NULL,
+  `server` TINYINT DEFAULT 1,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `#__osefirewall_versions` (
+  `version_id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` varchar(32) NOT NULL,
+  `type` varchar(4) NOT NULL,
+  PRIMARY KEY (`version_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `#__osefirewall_advancepatterns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `patterns` text NOT NULL,
+  `type_id` tinyint(3) NOT NULL,
+  `confidence` tinyint(3) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  INDEX `osefirewall_vspatterns_idx1` (`type_id`), 
+  CONSTRAINT `#__osefirewall_advancepatterns_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `#__osefirewall_vstypes` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `#__osefirewall_backupath` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `path` text,
+  `time` datetime NOT NULL,
+  `fileNum` bigint(20) NOT NULL,
+  `fileTotal` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+
+

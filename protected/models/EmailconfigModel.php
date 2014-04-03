@@ -47,14 +47,21 @@ class EmailconfigModel extends ConfigurationModel {
 	{
 		$oseEmail = new oseEmail('firewall');
 		$return = array();
-		$return['id']=1; 
-		$return['results'] = $oseEmail->getEmailList();
-		if (empty($return['results']))
-		{
+		if(oseFirewall::isDBReady()){
+			$return['id']=1; 
+			$return['results'] = $oseEmail->getEmailList();
+			if (empty($return['results']))
+			{
+				$return['results']['id'] = 0;
+				$return['results']['subject'] = 'N/A';
+			}
+			$return['total'] = $oseEmail->getEmailListTotal();
+		}else{
+			$return['id']=1;
 			$return['results']['id'] = 0;
 			$return['results']['subject'] = 'N/A';
+			$return['total'] = 0;
 		}
-		$return['total'] = $oseEmail->getEmailListTotal();
 		return $return;  
 	}
 	public function getEmailParams($id)

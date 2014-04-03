@@ -22,7 +22,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
-require_once (dirname(__FILE__) . DS . 'installer.php');
+require_once (dirname(__FILE__) . ODS . 'installer.php');
 class oseInstaller extends Installer {
 	protected $db = null;
 	public function __construct() {

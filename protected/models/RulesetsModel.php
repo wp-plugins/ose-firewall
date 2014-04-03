@@ -43,14 +43,21 @@ class RulesetsModel extends BaseModel {
 	public function getRulesets() {
 		$return = array(); 
 		$oseFirewallStat = new oseFirewallStat();
-		$return['id']=1; 
-		$return['results']= $oseFirewallStat->getRulesets();
-		if (empty($return['results']))
-		{
+		if(oseFirewall::isDBReady()){
+			$return['id']=1; 
+			$return['results']= $oseFirewallStat->getRulesets();
+			if (empty($return['results']))
+			{
+				$return['results']['id'] = 0;
+				$return['results']['name'] = 'N/A';
+			}
+			$return['total']= $oseFirewallStat->getRulesetsTotal();
+		}else{
+			$return['id']=1;
 			$return['results']['id'] = 0;
 			$return['results']['name'] = 'N/A';
+			$return['total']= 0;
 		}
-		$return['total']= $oseFirewallStat->getRulesetsTotal();
 		return $return; 
 	}
 	public function changeRuleStatus($ids, $status)
@@ -65,5 +72,11 @@ class RulesetsModel extends BaseModel {
 			}
 		}
 		return true; 	
+	}
+	
+	public function getStatistics(){
+		$oseFirewallStat = new oseFirewallStat();
+		return $oseFirewallStat->getBasicRulesStatistic();
+		
 	}
 }	

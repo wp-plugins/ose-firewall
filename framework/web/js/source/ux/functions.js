@@ -1,3 +1,7 @@
+var uninstallController = "uninstall";
+var task = "createTables";
+var uninstallTask = "uninstallTables";
+
 function oseCheckIPValidity()
 {
 	var ip_startCmp = Ext.getCmp('ip_start');
@@ -18,6 +22,45 @@ function oseCheckIPValidity()
 		}
 	}
 }
+
+function uninstallDB(){
+	Ext.Msg.confirm('Uninstall Centrora Security', 'Are you sure you want to uninstall Centrora Security?', function(btn, text){
+		if (btn == 'yes')
+		{		
+			Ext.Ajax.request({
+				url : url,
+				params : {
+					option : option,
+					controller: uninstallController,
+					task: uninstallTask,
+					action: uninstallTask
+				},
+				method: 'POST',
+				success: function ( response, options ) {
+					var msg  = Ext.decode(response.responseText);
+					if (msg.status=='SUCCESS')
+					{
+						Ext.MessageBox.show({
+			                title: 'SUCCESS',
+			                msg: msg.result,
+			                buttons: Ext.MessageBox.OK
+			           });
+						location.reload(); 
+					}
+					else
+					{	
+						Ext.MessageBox.show({
+			                title: 'FAILED',
+			                msg: msg.result,
+			                buttons: Ext.MessageBox.OK
+			           });
+					}
+				}
+			});	
+		}
+	});
+}
+
 function oseValidateIPAddress(ipaddr) {
     ipaddr = ipaddr.replace( /\s/g, "")
     var re = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
@@ -102,6 +145,23 @@ function oseChangeItemStatus(url, option, controller, task, id, status, store)
 	});
 }
 
+function oseDeleteItem(url, option, controller, task, id, store)
+{
+	Ext.Ajax.request({
+				url : url,
+				params : {
+					option : option,
+					controller: controller,
+					task: task,
+					action: task,
+					id: id,
+				},
+				method: 'POST',
+				success: function ( response, options ) {
+					oseAjaxSuccessReload(Ext.decode(response.responseText),  'show',  store, true);
+				}
+	});
+}
 
 function oseFormSubmit(form, url, option, controller, task, store, waitMsg) 
 {

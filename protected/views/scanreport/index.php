@@ -31,7 +31,17 @@ $this ->model->loadLocalscript ();
 	<?php 
 		$this ->model->showLogo ();
 		$this ->model->showHeader ();
+		if(!oseFirewall :: isDBReady()){
+		?>
+			<div id = "scanreportwarning">
+				<?php include_once(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');?>
+			</div>
+		<?php
+		}
 	?>
-	<div id ='oseantivirusScanReport'></div>
+    <div id = "scanreport-right">
+	  <?php include (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'help.php');?> 
+	</div>
+	<div id ='oseantivirusScanReport' ></div>
   </div>
 </div>

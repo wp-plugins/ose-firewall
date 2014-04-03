@@ -101,14 +101,14 @@ class oseUsers {
 		}
 		return	$return;
 	}
-	private function get_super_admins () {
+	public function get_super_admins () {
 		$query = "SELECT * FROM `#__usermeta` where `meta_value` LIKE '%administrator%'";
 		$this->db->setQuery($query); 
 		$objList = $this->db->loadObjectList();
 		$return = array (); 
 		foreach ($objList as $obj) 
 		{
-			if (preg_match("/[wp\_*|\w*]*capabilities/", $obj->meta_key))
+			if (preg_match("/[wp|\w+]\_*capabilities/", $obj->meta_key))
 			{
 				$return[] = $obj->user_id; 
 			}

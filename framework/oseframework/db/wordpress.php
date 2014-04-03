@@ -22,7 +22,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
 */
-require_once (dirname(__FILE__).DS.'oseDB2.php'); 
+require_once (dirname(__FILE__).ODS.'oseDB2.php'); 
 
 class oseDB2Wordpress extends oseDB2 {
 	public function __construct () {
@@ -30,21 +30,25 @@ class oseDB2Wordpress extends oseDB2 {
 		$this->setPrefix (); 
 	}
 	protected function setPrefix () {
-		global $wpdb;
-		$this -> prefix = $wpdb->base_prefix;
+		$config = oseWordpress::getConfig(); 
+		$this -> prefix = $config->prefix;
 	}	
 	public function getConnection ()
 	{
-		global $wpdb; 
-		$host = explode(':', $wpdb->dbhost); 
+		$config = oseWordpress::getConfig(); 
+		$host = explode(':', $config->host); 
 		if (!empty($host[1]))
 		{
-			$connection=new CDbConnection('mysql:host='.$host[0].';port='.$host[1].';dbname='.$wpdb->dbname,$wpdb->dbuser,$wpdb->dbpassword);
+			$connection=new CDbConnection('mysql:host='.$host[0].';port='.$host[1].';dbname='.$config->db,$config->user,$config->password);
 		}
 		else
 		{
-			$connection=new CDbConnection('mysql:host='.$host[0].';dbname='.$wpdb->dbname,$wpdb->dbuser,$wpdb->dbpassword);
+			$connection=new CDbConnection('mysql:host='.$host[0].';dbname='.$config->db,$config->user,$config->password);
 		}
 		return $connection;
+	}
+	public function getDBName () {
+		$config = oseWordpress::getConfig(); 
+		return $config->db; 
 	}
 }
