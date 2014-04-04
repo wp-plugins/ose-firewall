@@ -2,7 +2,7 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: antivirus, better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security, plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker, google, Google authenticator, Two-Factor Authentication, block country, Geo Block
+Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
 Tested up to: 3.8.1
 Stable tag: 3.0.0
