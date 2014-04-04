@@ -2,7 +2,7 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: antivirus, better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker
+Tags: antivirus, better wordpress security, better wp security, security, admin, anti-spam, wordpress, anti-hack, anti-virus, wordpress security, anti-malware, firewall,security plugin, virus scanning, virus cleanning, clean malicious codes,firewall security, front-end security, personal security, protection, rfi, secure, secure website, security, security log, security plugin, SQL Injection, web server security, website security, wordpress security, xss, malware, spam, hack, hacker, google authenticator, 2-step authenticator, country blocking
 Requires at least: 3.7
 Tested up to: 3.8.1
 Stable tag: 3.0.0
@@ -92,10 +92,14 @@ For more information visit <a href = "http://www.centrora.com/centrora-security-
 
 == Screenshots ==
 
-1. Admin Panel of OSE Firewall Security
-2. IP Management Panel of OSE Firewall Security
-3. Virus Scanner of OSE Firewall Security
-4. Website Security Seal 
+1. Firewall Configuration Setting in Centrora Security Plugin 
+2. IP Management Panel in Centrora Security Plugin 
+3. Variables Management Panel in Centrora Security Plugin
+4. Virus Scanning Panel in Centrora Security Plugin
+5. Configuration Panel in Centrora Security Plugin
+6. Dashboard Panel in Centrora Control Panel
+7. Country Blocking Management Panel in Centrora Control Panel
+8. Google 2-step authentication activation in Centrora Control Panel
 
 == Changelog ==
 = 3.0.0 =
