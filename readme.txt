@@ -13,52 +13,46 @@ Centrora Security™ - part of Better WordPress Security™ Project, a WordPress
 
 == Description ==
 
-= MOST EPIC WORDPRESS SECURITY PLUGIN =
-Centrora Security™ - Previously known as (OSE Firewall Security) A WordPress Security Plugin powered by <a href = "http://www.centrora.com" target="_blank">Centrora</a>. It protects your WordPress Website from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection attack, and security vulnerabilities. By using Centrora Security™, you don't need any other antivirus product!
+= MOST POWERFUL WORDPRESS SECURITY PLUGIN =
+Centrora Security is a new plugin that modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities. 
 
-= Aim to build Better Wordpress Security - the more secure wordpress environment =  
-The plugin is part of the Better WordPress Security™ Project. Better WordPress Security™ is a project that aims to create a safer WordPress environment for every WordPress users by guiding them to avoid infected plugins and themes. Centrora Security™ is the first plugin of the project, that tries to help all Wordpress users to enhance the security of their website. 
+= Are you manage more than one websites?=
+You can now manage all your WordPress sites with Centrora Security features in one place with our panel, Centrora Panel. Centrora Panel aims to provide you the ability to perform websites security management, without accessing your admin sites one by one.<a href="http://www.centrora.com/centrora-features/">Visit Centrora Panel</a>
 
-If you would like to know more about website security tips, e.g. installing web application firewall or a dedicated firewall in your server, please visit our blog to read articles about website security <a href = "http://www.centrora.com/category/blog/">here.</a>. We will regularly write up security articles so you can enhance your website security. If you would like to promote a better and more secure Wordpress environment, please feel free to Like us in Facebook <a href = "https://www.facebook.com/centrora" alt="Centrora" >here</a> or follow our <a href="https://twitter.com/loveCentrora">twitter</a> to ask any questions about website security. Our security analysts and security consultants will try to answer your questions as soon as possible.       
+= New features in v3.0: =
+* Enhancement: Improved Backend User Interface
+* Enhancement: Re-designed Virus Scanning Engine, virus scanner is now 20x faster
+* Enhancement: Improved Backend User Interface
+* New: Added Database Backup function
+* New: Central Security Management Integration with Centrora Panel
+* New: Added File Upload Scanning function
+* New: Added Google Authenticator (2 step authentication) function
 
 = Customer Support =
-If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here to get started.</a>
+If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here for help.</a>
 
-= New Security Features in Centrora Security™ v3.0 =
-* Enhancement: Improved Backend User Interface
-* Enhancement: Rewrite Virus Scanning Engine, virus scanning now becomes faster
-* Enhancement: Improved Germany Translation
-* Enhancement: Improved Backend User Interface
-* New Feature: Added Database Backup function
-* New Feature: Central Security Management Integration with Centrora Panel
-* New Feature: Added File Upload Scanning function  
-* New Feature: Added Advanced Firewall Protection (Premium only)
-* New Feature: Added Advanced Virus Signatures (Premium only)
-* New Feature: Added Country Blocking function
-* New Feature: Added Google Authentication (2 step authentication) function
-
-= Enhanced Security Features: Provides an industry level firewall to block common security threats =
-* AntiSpam - Utilizing Blacklisting IPs in Stop Forum Spam 
-* AntiVirus - prevent, detect and remove malware from the website, keep website secure.
-* Blacklisted IP Handling methods - Trace, Delete, Track
-* Security Check: Malicious User Agent blocks hundreds of the worst bots while ensuring open-access for normal traffic 
-* Security Check: Detect Directory Traversal that consists in exploiting insufficient security validation / sanitization of user-supplied input file names.
-* Malware Check: Virus Scanning that scans for malware and variants that are known security threats, and scans for heuristics of backdoors, trojans, suspicious code and other security issues, which is the first stgae of antivirus.
-* Security Prevention: DoS Attacks where automated bots constituting flooding attacks to your website. 
-* Security Check: Javascript Injection for any traffic including automated bots that constitutes security threats of injecting malicious javascript into your files.      
-* Security Check: Direct File Inclusion for any traffic including automated bots that constitutes security threats of including files on a server through the web browser.
-* Security Check: Remote File Inclusion for any traffic including automated bots that constitutes security threats of exploiting "dynamic file include" mechanisms in web applications.
-* Security Check: Database SQL Injection for any traffic traffic including automated bots that constitutes security threats of attacking data driven applications, in which malicious SQL statements are inserted into an entry field for execution.
+= Security Firewall =
+* AntiSpam: utilizing blacklisting IPs from Stop Forum Spam.
+* AntiVirus: virus scanning that scans through your site for malware and variants that are known security threats, heuristics of backdoors, trojans, suspicious code and other security issues.
+* IP Mangement: manage ip by allow, block and track IP that access to your site
+* Security Check: malicious user agent blocks hundreds of bad bots while ensuring open-access for normal traffic.
+* Security Check: detect directory traversal that consists in exploiting insufficient security validation/sanitization of user-supplied input file names.
+* Security Check: javascript injection for any traffic including automated bots that constitutes security threats of injecting malicious javascript into your files.
+* Security Check: direct file inclusion for any traffic including automated bots that constitutes security threats of including files on a server through the web browser.
+* Security Check: remote file inclusion for any traffic including automated bots that constitutes security threats of exploiting "dynamic file include" mechanisms in web applications.
+* Security Check: database SQL injection for any traffic traffic including automated bots that constitutes security threats of attacking data driven applications, in which malicious SQL statements are inserted into an entry field for execution.
+* Security Check: DoS Attacks where automated bots constituting flooding attacks to your website.
 * Report security threats to defined owner or security analysts
 
-The plugin currently supports English and Germany language. 
-You can contribute by translating OSE Firewall Security <a href = "https://www.protect-website.com/how-to-translate-ose-firewall/">here</a>.
+Language
+* English
+You can contribute translation for Centrora Security plugin <a href="http://www.centrora.com/blog/translate-centrora-security-plugin/">here</a>. 
 
 = System Requirements =
 * PHP 5.1.0 or above
 * MySQL 5.0 or above
 * WordPress 3.5 or above
-* PHP Data Objects enabled (it is activated by default as of PHP 5.1.0, please contact your hosting to enable it if it is disabled. <a href ="http://www.php.net/manual/en/pdo.installation.php">Reference</a> 
+* PHP Data Objects enabled (it is activated by default as of PHP 5.1.0, please contact your hosting to enable it if it is disabled. <a href ="http://www.php.net/manual/en/pdo.installation.php">reference</a> 
 
 
 == Installation ==
@@ -69,7 +63,7 @@ To Install Centrora Security Plugin:
 2. Under Search bar, search for 'Centrora Security'.
 3. Click 'Install Now' to install the Plugin. 
 
-For more information visit <a href = "http://www.centrora.com/centrora-security-plugin/">here</a>.
+Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugin-ip-management/">here</a>.
 
 
 == Frequently asked questions ==
@@ -104,16 +98,12 @@ For more information visit <a href = "http://www.centrora.com/centrora-security-
 == Changelog ==
 = 3.0.0 =
 * Enhancement: Improved Backend User Interface
-* Enhancement: Rewrite Virus Scanning Engine, virus scanning now becomes faster
-* Enhancement: Improved Germany Translation
+* Enhancement: Re-designed Virus Scanning Engine, virus scanner is now 20x faster
 * Enhancement: Improved Backend User Interface
-* New Feature: Added Database Backup function
-* New Feature: Central Security Management Integration with Centrora Panel
-* New Feature: Added File Upload Scanning function  
-* New Feature: Added Advanced Firewall Protection (Premium only)
-* New Feature: Added Advanced Virus Signatures (Premium only)
-* New Feature: Added Country Blocking function
-* New Feature: Added Google Authentication (2 step authentication) function
+* New: Added Database Backup function
+* New: Central Security Management Integration with Centrora Panel
+* New: Added File Upload Scanning function
+* New: Added Google Authenticator (2 step authentication) function
 
 = 2.2.6 =
 * Fixed: temporarily fix the admin-email mapping not being able to fix in Google Chrome browser
