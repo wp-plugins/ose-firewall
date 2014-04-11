@@ -45,8 +45,9 @@ If you need help in using Centrora Security™ plugin, save time by starting you
 * Report security threats to defined owner or security analysts
 
 = Language =
-* English
-** You can contribute translation for Centrora Security plugin <a href="http://www.centrora.com/blog/translate-centrora-security-plugin/">here</a>. 
+* English 
+
+You can contribute translation for Centrora Security plugin <a href="http://www.centrora.com/blog/translate-centrora-security-plugin/">here</a>. 
 
 = System Requirements =
 * PHP 5.1.0 or above
