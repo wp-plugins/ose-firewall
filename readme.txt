@@ -44,7 +44,7 @@ If you need help in using Centrora Security™ plugin, save time by starting you
 * Security Check: DoS Attacks where automated bots constituting flooding attacks to your website.
 * Report security threats to defined owner or security analysts
 
-Language
+= Language =
 * English
 You can contribute translation for Centrora Security plugin <a href="http://www.centrora.com/blog/translate-centrora-security-plugin/">here</a>. 
 
