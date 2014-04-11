@@ -9,7 +9,7 @@ Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Centrora Security™ - part of Better WordPress Security™ Project, a WordPress Firewall plugin to protect your website against hacking, virus and spam. 
+Centrora Security™ - a WordPress Firewall Security plugin to protect your website from hacking, virus and spam. Strongly recommended for every WordPress sites that often got attacked or infected by hackers.
 
 == Description ==
 
