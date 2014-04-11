@@ -46,7 +46,7 @@ If you need help in using Centrora Security™ plugin, save time by starting you
 
 = Language =
 * English
-You can contribute translation for Centrora Security plugin <a href="http://www.centrora.com/blog/translate-centrora-security-plugin/">here</a>. 
+** You can contribute translation for Centrora Security plugin <a href="http://www.centrora.com/blog/translate-centrora-security-plugin/">here</a>. 
 
 = System Requirements =
 * PHP 5.1.0 or above
