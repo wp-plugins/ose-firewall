@@ -35,8 +35,13 @@ $this ->model->loadLocalscript ();
 			include_once(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');
 		}
 	?>
-	<div id ='oseadantihackerRulesets'></div>
+	<div id ='oseadantihackerRulesets'>
+      <div id ='image'>
+       <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/advance-setting.png">
+      </div>
+      <div id ='text'>
+        To turn on the Advance Firewall Rulesets, please <a href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">read this tutorial</a>.
+      </div>
+    </div>
   </div>
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/accept.png"> Active
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/delete.png"> Inactive
 </div>

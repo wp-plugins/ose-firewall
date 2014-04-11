@@ -18,7 +18,6 @@ oseConfScan.Form = new Ext.FormPanel({
         height: 900,
         renderTo: 'ConfigScan',
         items: [
-        		oseGetDisplayField(O_SECRET_WORD_DESC),
         		//oseGetNormalTextField ('secretword', O_SECRET_WORD, 320, 600),
         		oseGetDisplayField(O_ANTI_HACKING_SCANNING_OPTIONS),
 				oseGetCombo('devMode', O_DEVELOPMENT_MODE, oseConfScan.Option, 600, 320, 100, 0),

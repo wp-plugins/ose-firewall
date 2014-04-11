@@ -1018,3 +1018,16 @@ ol.browsers li {
 	padding: 0px 20px 20px 20px; 
 	color: #fff; 
 }
+
+#oseadantihackerRulesets #image {
+	float: left; 
+	width: 700px; 
+}
+
+#oseadantihackerRulesets #text{
+	float: left;
+    font-size: 25px;
+    line-height: 35px;
+    padding: 20px;
+    width: 350px;
+}
