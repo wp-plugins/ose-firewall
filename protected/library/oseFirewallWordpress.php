@@ -63,8 +63,11 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_variables') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_variables">' . oLang::_get('VARIABLES'). '</a></li>';
+		$menu .= '<li ';
+		$menu .=(in_array($view, array('ose_fw_backup', 'ose_fw_versionupdate'))) ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_countryblock">' . oLang::_get('COUNTRYBLOCK'). '</a></li>';
 		$menu .= '</ul>';
-	    // SubMenu Anti-Hacking Ends;
+		// SubMenu Anti-Hacking Ends;
 		$menu .= '</li>';
 		// Anti-Virus Menu; 
 		$menu .= '<li ';
@@ -85,16 +88,7 @@ class oseFirewall extends oseFirewallBase {
 		/*$menu .= '<li ';
 		$menu .= ($view == 'antivirus') ? 'class="current"' : '';
 		$menu .= '><a href="#">' . oLang::_get('PREMIUM_FEATURES') . '</a>';
-		// SubMenu Premium Feature Starts; 
-		$menu .= '<ul>';
-		$menu .= '<li ';
-		$menu .=(in_array($view, array('ose_fw_backup', 'ose_fw_versionupdate'))) ? 'class="current"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_countryblock">' . oLang::_get('COUNTRYBLOCK'). '</a></li>';
-		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_versionupdate') ? 'class="current"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_versionupdate">' . oLang::_get('VERSION_UPDATE'). '</a></li>';
-		$menu .= '</ul>';
-	    // SubMenu Premium Feature Ends;
+		// SubMenu Premium Feature Ends;
 		$menu .= '</li>';*/
 		
 		// Configuration Menu; 
@@ -125,7 +119,7 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_firewall', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables' );
 		add_submenu_page( 'ose_firewall', CONFIGURATION, CONFIGURATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration' );
 		add_submenu_page( 'ose_firewall', CONFIGURATION, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup' );
-		//add_submenu_page( 'ose_firewall', COUNTRYBLOCK, COUNTRYBLOCK, 'manage_options', 'ose_fw_countryblock', 'oseFirewall::countryblock' );
+		add_submenu_page( 'ose_firewall', COUNTRYBLOCK, COUNTRYBLOCK, 'manage_options', 'ose_fw_countryblock', 'oseFirewall::countryblock' );
 		//add_submenu_page( 'ose_firewall', VERSION_UPDATE, VERSION_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::versionupdate' );
 		add_submenu_page( 'ose_fw_configuration', SEO_CONFIGURATION, SEO_CONFIGURATION, 'manage_options', 'ose_fw_seoconfig', 'oseFirewall::seoconfig' );
 		add_submenu_page( 'ose_fw_configuration', SCAN_CONFIGURATION, SCAN_CONFIGURATION, 'manage_options', 'ose_fw_scanconfig', 'oseFirewall::scanconfig' );

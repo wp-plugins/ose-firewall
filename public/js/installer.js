@@ -4,11 +4,11 @@ Ext.ns('oseATH','oseATHINSTALLER');
 oseATHINSTALLER.panel = 
 	Ext.create('Ext.panel.Panel', {	
 	renderTo: 'container-right',
-    title : 'Like & Follow Centrora',
-    width : 300,
-    height: 400,
+    title : 'Encourage us to do better!',
+    width : 220,
+    height: 500,
     layout: 'fit',
-    bodyStyle: 'padding:5px',
+    bodyStyle: 'padding:10px 0px',
     items: [
         {
             xtype: 'panel',
@@ -22,15 +22,17 @@ oseATHINSTALLER.panel =
                     html: getShareLinks(),
                     height:100,
                     margin: '0 0 0 0'
-                },{
+                },
+                {
                     xtype: 'panel',
-                    title: 'Write a review on WordPress',
-                    html: '<div style="padding: 10px 5px;"><i class="icon-wordpress" style="color: #666; margin-right: 5px; "></i><a href = "http://wordpress.org/support/view/plugin-reviews/ose-firewall" target="_blank">Click here to write a review</a></div>',
+                    title: 'Enhance your protection',
+                    html: '<div style="padding: 10px 0px;">Do you know you can add an <font color="red">advanced firewall</font> to your website <br/>by signing up an account in Centrora? Here is the <a href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target ="_blank">guide</a>. <br/><br/> <a style="padding: 3px 8px; border-radius: 4px; background-color: #fff; color: #2087FC; border: 1px solid #2087FC;" href = "https://www.centrora.com/free-signup/" target="_blank">Signup an account for free</a></div><br/><br/>',
                     flex: 1
-                },{
+                },
+                {
                     xtype: 'panel',
-                    title: 'Sign up a Centrora account',
-                    html: '<div style="padding: 10px 5px;"><a style="padding: 3px 8px; border-radius: 4px; background-color: #fff; color: #2087FC; border: 1px solid #2087FC;" href = "https://www.centrora.com/free-signup/" target="_blank">Signup an account for free</a></div>',
+                    title: 'Let us know if we do well',
+                    html: '<div style="padding: 10px 0px;"><i class="icon-wordpress" style="color: #666; margin-right: 5px; "></i><a href = "http://wordpress.org/support/view/plugin-reviews/ose-firewall" target="_blank">Click here to write a review</a></div>',
                     flex: 1
                 }
             ]
@@ -42,6 +44,7 @@ function getShareLinks(){
 	var	link = '<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fcentrora&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>';
 		link += '<p><a href="https://twitter.com/loveCentrora" class="twitter-follow-button"  data-size="small" data-show-count="true" data-show-screen-name="false"></a>';
 		link += '<div class="g-follow" data-annotation="bubble" data-height="20" data-href="https://plus.google.com/100825419799499224939" data-rel="publisher"></div>';
+		link += '<br/><br/>';
 	return link;
 }
 

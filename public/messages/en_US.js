@@ -140,7 +140,7 @@ var O_IMPACT = "Impact";
 var O_GOOGLE_2_VERIFICATION = "Google 2-Step Verification";
 var O_SOCIAL_BOARD1 = "Like us? Tell your friend about us";
 var O_SOCIAL_BOARD2 = "Visit & Like us";
-var O_ADRULESETS = "Advanced Firewall Setting (<a href = 'http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/' target='_blank'>Tutorial</a>)";
+var O_ADRULESETS = "Advanced Firewall Setting";
 var O_ADVS_PATTERNS = "Advanced Virus Patterns (<a href = 'http://www.centrora.com/centrora-premium/' target='_blank'>Premium Only</a>)";
 var O_SOCIAL_SHARE = "Protect your website better? Choose Centrora";
 var O_CONTINUE = "Continue";

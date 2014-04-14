@@ -37,8 +37,14 @@ $this ->model->loadLocalscript ();
 			include_once(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');
 		}
 	?>
-	<div id ='oseantihackerIPManager'></div>
+    <div id ='oseadantihackerRulesets'>
+      <div id ='image'>
+       <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/country-blocking.png">
+      </div>
+      <div id ='text'>
+        To turn on the Country Block function, please <a href ="http://www.centrora.com/centrora-tutorial/country-blocking/" target="_blank">read this tutorial</a>.
+      </div>
+    </div>
+    
   </div>
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/accept.png"> WhiteList
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/delete.png"> BlackList
 </div>
