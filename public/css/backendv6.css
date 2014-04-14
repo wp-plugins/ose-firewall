@@ -611,12 +611,15 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 #hor-minimalist-b {
-	font-size: 13px;
-	background: #fff;
-	margin: 20px 20px 20px 30px;
-	width: 60%;
-	float: left;
-	text-align: left;
+	background: none repeat scroll 0 0 #FFFFFF;
+    float: right;
+    font-size: 13px;
+    margin: 20px 30px 20px 0;
+    text-align: justify;
+    width: 75%;
+    border-left: 1px solid #EDEDED;
+    border-right: 1px solid #EDEDED;
+    border-top: 1px solid #EDEDED;
 }
 
 #hor-minimalist-b th {
@@ -948,10 +951,10 @@ ol.browsers li {
 }
 
 #container-right {
-	margin: 25px 5px 5px;
-	padding-top: 10px;
-	width: 32%;
 	float: left;
+    margin: 35px 0 5px 12px;
+    padding-top: 10px;
+    width: 20%;
 }
 #scanreport-right {
 	margin: 5px 5px 5px;

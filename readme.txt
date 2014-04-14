@@ -5,18 +5,18 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: security, wordpress security, admin, anti-spam, comments, antihack, anti-virus, firewall, plugin, virus cleaning, google, Google authenticator, country block, hack, malware, scanner
 Requires at least: 3.7
 Tested up to: 3.8.1
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Protect your WordPress site with Firewall Security. Also recommended for multiple sites security management. 
+Protect your WordPress site with Centrora Security. Also recommended for multiple sites security management. 
 
 == Description ==
 
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
 Centrora Security is a new plugin that modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities. 
 
-= Are you manage more than one websites? =
+= Are you managing more than one websites? =
 You can now manage all your WordPress sites with Centrora Security features in one place with our panel, Centrora Panel. Centrora Panel aims to provide you the ability to perform websites security management, without accessing your admin sites one by one.<a href="http://www.centrora.com/centrora-features/">Visit Centrora Panel</a>
 
 = New features in v3.0: =
@@ -97,6 +97,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Google 2-step authentication activation in Centrora Control Panel
 
 == Changelog ==
+= 3.0.2 =
+* Enhancement: Improved Dashboard Layout to have more user friendly navigation
+* Enhancement: Improved Configuration Layout to have clearer navigation for functions like advanced firewall setting, country block and Google Authenticator
+* Enhancement: Checked if the user has used other Google Authenticator plugin than Centrora Google Authenticator before loading the Google Authenticator plugin
+* Enhancement: Remove the permission denied message for Country Block Page
+
 = 3.0.1 =
 * Enhancement: Removed the secret word wording from scanning configuration page
 * New: Added Advance Firewall Setting function

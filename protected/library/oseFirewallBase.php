@@ -65,6 +65,7 @@ class oseFirewallBase extends oseFirewallRoot
 			oseFirewall::runYiiApp(); 
 		}*/
 		//$enable = true;
+		require_once(OSEFWDIR.ODS.'protected'.ODS.'library'.ODS.'googleAuthenticator'.ODS.'class_gauthenticator.php');
 		$enable = $this->isGAuthenticatorEnabled();
 		if ($enable == true)
 		{
