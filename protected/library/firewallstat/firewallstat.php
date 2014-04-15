@@ -1049,6 +1049,24 @@ class oseFirewallStat
 		$return['success'] = true;
 		return $return;
 	}
+	
+	public function getConfigurationByName($name)
+	{
+		$db = oseFirewall::getDBO();
+		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = ".$db->quoteValue('devMode');
+		$db->setQuery($query);
+		$results = $db->loadResultList();
+		if($results[0]['value'] == 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	
 	private function convertValue($key, $value)
 	{
 		if (is_numeric($value))
