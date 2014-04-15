@@ -26,7 +26,7 @@
 if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH')) {
 	die('Direct Access Not Allowed');
 }
-require_once (OSE_FWFRAMEWORK . ODS. 'firewallstat.php'. ODS. 'firewallStat.php');
+require_once (OSE_FWFRAMEWORK . ODS. 'firewallstat'. ODS. 'firewallstat.php');
 class oseFirewallStatPro extends oseFirewallStat {
 public function getSignatures()
 	{
@@ -223,6 +223,7 @@ public function getSignatures()
 		$id = $db->addData ('insert', '#__osefirewall_filters', '', '', $varValues);
 		return $id; 
 	}
+	
 	public function deleteruleset($id)
 	{
 		$detattacktype_ids = $this->getDetattacktypeIDByRuleID($id, array(2,3,4,5,6,7,8,9,10,11,12));
@@ -232,5 +233,27 @@ public function getSignatures()
 			$result = $this->deleteFilterbyID($id);
 		}
 		return $result; 
+	}
+	
+	public function isAdFirewallReady()
+	{
+		$db = oseFirewall::getDBO();
+		if(!$db->isTableExists('#__osefirewall_advancerules'))
+		{
+			return false;
+		}
+		else{
+			$query = "SELECT Count(*) as Count FROM `#__osefirewall_advancerules`";
+			$db->setQuery($query);
+			$results = $db->loadResultList();
+			if($results[0]['Count'] > 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }

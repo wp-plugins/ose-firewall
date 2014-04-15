@@ -48,6 +48,7 @@ class oseAjax {
 	}
 	public static function aJaxReturn ($result, $status, $msg, $continue=false, $id = null) {
 		oseFramework :: loadJSON();
+		oseFramework :: loadRequest();
 		$return = array (
 				'success' => (boolean)$result,
 				'status' => $status,

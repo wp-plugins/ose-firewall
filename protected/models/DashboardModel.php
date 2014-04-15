@@ -25,6 +25,8 @@
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 class DashboardModel extends BaseModel {
 	public function __construct() {
+		$this->loadLibrary ();
+		oseFirewall::callLibClass('firewallstat', 'firewallstatPro');
 	}
 	public function showStatus() {
 		$dbReady = $this->isDBReady();
@@ -33,6 +35,9 @@ class DashboardModel extends BaseModel {
 		} else {
 			echo '<div class ="ready">' . oLang :: _get('READYTOGO') .' </div>';
 		}
+		$this->isDevelopModelEnable();
+		$this->isAdFirewallReady();
+		
 	}
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
@@ -254,6 +259,24 @@ class DashboardModel extends BaseModel {
 		$return['ready'] = oseFirewall :: isDBReady();
 		$return['type'] = 'base';
 		return $return;
+	}
+	
+	public function isDevelopModelEnable(){
+		$oseFirewallStat = new oseFirewallStat();
+		$isEnable = $oseFirewallStat->getConfigurationByName($type);
+		if($isEnable)
+		{
+			echo '<div class ="warning">' . oLang :: _get('DISDEVELOPMODE');
+		}
+	}
+	
+	public function isAdFirewallReady(){
+		$oseFirewallStat = new oseFirewallStatPro();
+		$isReady = $oseFirewallStat->isAdFirewallReady();
+		if(!$isReady)
+		{
+			echo '<div class ="warning">' . oLang :: _get('ADVANCERULESNOTREADY');
+		}
 	}
 	
 	public function getURL($view) {

@@ -558,12 +558,14 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 
 .warning {
 	background-color: #FF8000;
-	padding: 10px;
-	margin: 20px;
 	color: #fff;
-	font-family: "Open Sans";
-	font-size: 18px;
 	line-height: 24px;
+	border-radius: 5px;
+    color: #FFFFFF;
+    font-family: "Open Sans";
+    font-weight: 500;
+    margin: 10px;
+    padding: 10px;
 }
 
 .ready {

@@ -27,7 +27,7 @@ oseATHINSTALLER.panel =
                     xtype: 'panel',
                     title: 'Enhance your protection',
                     html: '<div style="padding: 10px 0px;">Do you know you can add an <font color="red">advanced firewall</font> to your website <br/>by signing up an account in Centrora? Here is the <a href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target ="_blank">guide</a>. <br/><br/> <a style="padding: 3px 8px; border-radius: 4px; background-color: #fff; color: #2087FC; border: 1px solid #2087FC;" href = "https://www.centrora.com/free-signup/" target="_blank">Signup an account for free</a></div><br/><br/>',
-                    flex: 1
+                    height: 200,
                 },
                 {
                     xtype: 'panel',

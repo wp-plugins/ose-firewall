@@ -72,8 +72,22 @@ class oseDownloader
 			return false; 
 		}
 	}
+	private function setPHPSetting () {
+		if (function_exists('ini_set'))
+		{
+			ini_set("allow_url_fopen", 1); 
+		}
+		if (function_exists('ini_get'))
+		{
+			if (ini_get('allow_url_fopen') == 0)
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', 'The PHP function \'allow_url_fopen\' is turned off, please turn it on to allow the task to continue.', FALSE);
+			}
+		}
+	}
 	private function downloadFile($url, $key)
 	{
+		$this->setPHPSetting (); 
 		$inputHandle = fopen($url, "r");
 		// Set the target path to store data
 		$target = OSE_FWDATA.ODS.'tmp'.ODS.$key.".data";

@@ -27,10 +27,6 @@ oseConfScan.Form = new Ext.FormPanel({
         			height: 40
 				},
 				oseGetCombo('adRules', O_ADRULESETS, oseConfScan.Option, 600, 320, 100, 0),
-				{
-        			html: '<table height="30" width="600"><tr><td width="325">'+O_ADRULESETS+'</td><td width="280">(See <a href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">Tutorial Here</a>)</td></tr></table>',
-        			height: 40
-				},
 				//oseGetCombo('adVsPatterns', O_ADVS_PATTERNS, oseConfScan.Option, 600, 320, 100, 0),
 				{
         			html: '<table height="30" width="600"><tr><td width="325">'+O_GOOGLE_2_VERIFICATION+'</td><td width="280">(See <a href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Tutorial Here</a>)</td></tr></table>',
