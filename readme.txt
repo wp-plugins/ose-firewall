@@ -2,7 +2,7 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: security, wordpress security, admin, anti-spam, comments, antihack, anti-virus, firewall, plugin, virus cleaning, google, Google authenticator, country block, hack, malware, scanner
+Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
 Tested up to: 3.8.1
 Stable tag: 3.0.3
