@@ -74,6 +74,7 @@ class oseAjax {
 	public static function returnJSON ($var, $mobiledevice = false)
 	{
 		oseFramework :: loadJSON();
+		oseFramework :: loadRequest();
 		$callback = oRequest::getVar('callback', null);
 		if ($callback == null)
 		{

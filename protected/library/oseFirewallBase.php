@@ -303,9 +303,14 @@ class oseFirewallBase extends oseFirewallRoot
 		{
 			$head .= '<div id="back-to-admin"><a href="index.php" >Back to Admin Panel</a></div>';
 		}
+		$head .= '<div class ="version-normal">'.self::getVersion ().'</div> ';
 		$head .= '</div>';
 		echo $head;
 		echo oseFirewall::getmenus();
+	}
+	private static function getVersion () {
+		$pluginData = get_plugin_data(OSEFWDIR.'/ose_wordpress_firewall.php');
+		return 'Version: '.	$pluginData['Version']; 
 	}
 	public static function callLibClass($folder, $classname)
 	{

@@ -4,8 +4,8 @@ Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
-Tested up to: 3.8.1
-Stable tag: 3.0.4
+Tested up to: 3.9.0
+Stable tag: 3.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,11 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Google 2-step authentication activation in Centrora Control Panel
 
 == Changelog ==
+
+= 3.0.5 =
+* Enhancement: Added the version number in the dashboard
+* Enhancement: Updated the remoteLogin class to work with Centrora Panel 1.0.5 
+* Fixed: On some websites, the adminsitrator's email cannot show up in the Admin-Email Mapping Panel
 
 = 3.0.4 =
 * Fixed: On some websites, the checking of Development mode causes a blank screen

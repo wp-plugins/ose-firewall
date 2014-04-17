@@ -1036,3 +1036,13 @@ ol.browsers li {
     padding: 20px;
     width: 350px;
 }
+
+.version-normal {
+	float: left; 
+	padding: 5px 10px; 
+	background-color: #FFB400;
+	color: #fff;
+	margin-top: 78px;
+	margin-left: 350px; 
+	border-radius: 5px;
+}
