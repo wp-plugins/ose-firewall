@@ -282,6 +282,6 @@ define('CONFIG_ADPATTERNS_FAILE', 'Save Advanced Virus Pattern config failed, Ad
 define('UNINSTALL_SUCCESS', 'Uninstall database table success!');
 define('UNINSTALL_FAILED', 'Uninstall database table failed!');
 define('SCAN_READY','Ready to scan virus');
-define('DISDEVELOPMODE', 'Please disable the Development Mode in the Scanning Configuration panel to activate the firewall protection.');
-define('ADVANCERULESNOTREADY', 'Your website may be at risk. Please follow this tutorial (See <a href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">Tutorial Here</a> to turn on the advance firewall protection');
+define('DISDEVELOPMODE', '<b>WARNING</b>: Please disable the Development Mode in the Scanning Configuration panel to activate the firewall protection.');
+define('ADVANCERULESNOTREADY', '<b>WARNING</b>: Your website may be at risk. Please follow this <a href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">tutorial</a> to turn on the advance firewall protection. It\'s free.');
 ?>

@@ -262,11 +262,15 @@ class DashboardModel extends BaseModel {
 	}
 	
 	public function isDevelopModelEnable(){
-		$oseFirewallStat = new oseFirewallStat();
-		$isEnable = $oseFirewallStat->getConfigurationByName($type);
-		if($isEnable)
+		$dbReady = oseFirewall :: isDBReady();
+		if ($dbReady == true)
 		{
-			echo '<div class ="warning">' . oLang :: _get('DISDEVELOPMODE');
+			$oseFirewallStat = new oseFirewallStat();
+			$isEnable = $oseFirewallStat->getConfigurationByName($type);
+			if($isEnable)
+			{
+				echo '<div class ="warning">' . oLang :: _get('DISDEVELOPMODE')."</div>";
+			}
 		}
 	}
 	
@@ -275,7 +279,7 @@ class DashboardModel extends BaseModel {
 		$isReady = $oseFirewallStat->isAdFirewallReady();
 		if(!$isReady)
 		{
-			echo '<div class ="warning">' . oLang :: _get('ADVANCERULESNOTREADY');
+			echo '<div class ="warning">' . oLang :: _get('ADVANCERULESNOTREADY')."</div>";
 		}
 	}
 	
