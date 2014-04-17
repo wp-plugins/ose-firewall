@@ -557,7 +557,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .warning {
-	background-color: #FF8000;
+	background-color: #FF0000;
 	color: #fff;
 	line-height: 24px;
 	border-radius: 5px;
