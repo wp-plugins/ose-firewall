@@ -25,4 +25,5 @@
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 oseFirewall::loadBackendAll ();
 echo $content; 
+
 ?>
