@@ -284,7 +284,7 @@ class DashboardModel extends BaseModel {
 	}
 	
 	public function getURL($view) {
-		if (class_exists('JFactory')) {
+		if (class_exists('JFactory', false)) {
 			return OSE_ADMINURL.'&view='.$view; 
 		}
 		else

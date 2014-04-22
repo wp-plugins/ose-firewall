@@ -22,7 +22,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-if (!class_exists('oseDB2'))
+if (!class_exists('oseDB2', false))
 {
 	abstract class oseDB2
 	{

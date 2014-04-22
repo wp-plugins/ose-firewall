@@ -97,6 +97,9 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Google 2-step authentication activation in Centrora Control Panel
 
 == Changelog ==
+= 3.0.6 =
+* Fixed: On some servers, the auto loader function cause blank screen. 
+* Fixed: On some servers, the PDO connection exceeds the maximum number of connection configured in MySQL setting. Adding datanbase connection closing codes to resolve it.   
 
 = 3.0.5 =
 * Enhancement: Added the version number in the dashboard

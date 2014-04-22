@@ -367,6 +367,7 @@ class oseFirewallBase extends oseFirewallRoot
 			$result = $stmt->fetch();
 			return (empty($result) || ($result->value == 0)) ? false : true;
 		}
+		$dbo = null; 
 	}
 	private function splitHost($host)
 	{
