@@ -551,10 +551,10 @@ class oseFirewallScanner {
 	private function showBanPage() {
 		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail: '';
 		$customBanPage = (!empty ($this->customBanpage)) ? $this->customBanpage: 'Banned';
-		$pageTitle = (!empty ($this->pageTitle)) ? $this->pageTitle : 'OSE Security Suite';
-		$metaKeys = (!empty ($this->metaKeywords)) ? $this->metaKeywords : 'OSE Security Suite';
-		$metaDescription = (!empty ($this->metaDescription)) ? $this->metaDescription : 'OSE Security Suite';
-		$metaGenerator = (!empty ($this->metaGenerator)) ? $this->metaGenerator : 'OSE Security Suite';
+		$pageTitle = (!empty ($this->pageTitle)) ? $this->pageTitle : 'Centrora Security';
+		$metaKeys = (!empty ($this->metaKeywords)) ? $this->metaKeywords : 'Centrora Security';
+		$metaDescription = (!empty ($this->metaDescription)) ? $this->metaDescription : 'Centrora Security';
+		$metaGenerator = (!empty ($this->metaGenerator)) ? $this->metaGenerator : 'Centrora Security';
 		$banhtml = $this->getBanPage($adminEmail, $pageTitle, $metaKeys, $metaDescription, $metaGenerator, $customBanPage);
 		echo $banhtml; exit;
 	}
@@ -584,6 +584,9 @@ class oseFirewallScanner {
 								' . $customBanPage . '
 							  <div style="font-family: arial,helvetica,sans-serif;background-color:#ffffff;padding: 10px 0px 0px 0px" align="center"><font color="#666666" size="1">Your IP address is ' . $this->ip . '. If you believe this is an error, please contact the <a href="mailto:' . $adminEmail . '?Subject=Inquiry:%20Banned%20for%20suspicious%20hacking%20behaviour - IP: ' . $this->ip . ' - Violation"> Webmaster </a>.</font></div>
 					</div>';
+		$admin_email = get_option( 'admin_email' );
+		$banbody = str_replace ('info@opensource-excellence.com', $admin_email, $banbody);
+		$banbody = str_replace ('OSE Team', 'Management Team', $banbody);
 		return $banbody;
 	}
 	private function show403Page() {
