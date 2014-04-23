@@ -586,6 +586,7 @@ class oseFirewallScanner {
 					</div>';
 		$admin_email = get_option( 'admin_email' );
 		$banbody = str_replace ('info@opensource-excellence.com', $admin_email, $banbody);
+		$banbody = str_replace ('info@your-website.com', $admin_email, $banbody);
 		$banbody = str_replace ('OSE Team', 'Management Team', $banbody);
 		return $banbody;
 	}
