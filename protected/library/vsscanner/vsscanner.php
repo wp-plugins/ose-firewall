@@ -39,6 +39,7 @@ class virusScanner {
 		$this->setConfiguration();
 		$this->setFileExts();
 		$this->setMaxFileSize();
+		$this->optimizePHP (); 
 		oseFirewall::loadFiles(); 
 	}
 	private function setConfiguration() {
@@ -60,13 +61,19 @@ class virusScanner {
 			$this->config->file_ext = "htm,html,shtm,shtml,css,js,php,php3,php4,php5,inc,phtml,jpg,jpeg,gif,png,bmp,c,sh,pl,perl,cgi,txt";
 		}
 		$this->file_ext = explode(',', trim($this->config->file_ext));
-			
 	}
 	private function setMaxFileSize () {
 		if ($this->maxfilesize>0)
 		{
 			$this->maxfilesize = $this->maxfilesize * 1024 * 1024; 
 		}
+	}
+	private function optimizePHP () {
+		if (function_exists('ini_set'))
+		{
+			ini_set('max_execution_time', 300);
+			ini_set('memory_limit', '512M');
+		}	
 	}
 	public function initDatabase($step, $directory) {
 		if ($step<0)
@@ -398,9 +405,6 @@ class virusScanner {
 		}
 		return $return;  
 	}
-	
-	
-	
 	private function returnAjaxMsg ($last_file=null) {
 		if (count($_SESSION['oseFileArray']) == 0)
 		{

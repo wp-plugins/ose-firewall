@@ -407,7 +407,7 @@ class YiiBase
 						foreach(self::$_includePaths as $path)
 						{
 							$classFile=$path.DIRECTORY_SEPARATOR.$className.'.php';
-							if(file_exists ($classFile) && is_file($classFile))
+							if(@file_exists ($classFile) && is_file($classFile))
 							{
 								include($classFile);
 								if(YII_DEBUG && basename(realpath($classFile))!==$className.'.php')
