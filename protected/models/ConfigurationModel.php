@@ -39,16 +39,21 @@ class ConfigurationModel extends BaseModel {
 		$html = '<div id = "Config-Btn-List">';
 		$html .= '<table id="hor-minimalist-config">';
 		$html .= '<tbody>';
-		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('scanconfig').'\'">'.SCAN_CONFIGURATION.'</button></td><td>'.SCANCONFIG_INTRO.'</td></tr>';
+		$html .= $this->getAllBtns ();
+		$html .= '</tbody>';
+		$html .= '</table>';
+		$html .= '</div>';
+		echo $html; 	
+	}
+	public function getAllBtns () {
+		$html = '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('scanconfig').'\'">'.SCAN_CONFIGURATION.'</button></td><td>'.SCANCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('avconfig').'\'">'.ANTIVIRUS_CONFIGURATION.'</button></td><td>'.VSCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('seoconfig').'\'">'.SEO_CONFIGURATION.'</button></td><td>'.SEOCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('spamconfig').'\'">'.ANTISPAM_CONFIGURATION.'</button></td><td>'.ANTISPAMCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('emailconfig').'\'">'.EMAIL_CONFIGURATION.'</button></td><td>'.EMAILCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('emailadmin').'\'">'.EMAIL_ADMIN.'</button></td><td>'.ADMINEMAILCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "uninstallDB();">'.UNINSTALLDB.'</button></td><td>'.UNINSTALLDB_INTRO.'</td></tr>';
-		$html .= '</tbody>';
-		$html .= '</div></table>';
-		echo $html; 	
+		return $html;  
 	}
 	public function getConfiguration($type)
 	{

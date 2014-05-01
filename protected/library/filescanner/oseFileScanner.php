@@ -38,5 +38,4 @@ class oseFileScanner {
 		$this->file_ext= $file_ext;
 		$this->maxfilesize= $maxfilesize;
 	}
-	
-}	
+}

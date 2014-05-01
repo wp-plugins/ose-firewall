@@ -125,5 +125,8 @@ abstract class Installer
 		$result= $this->db->loadResult();
 		return (!empty($result))?true: false; 
 	}
+	public function closeDBO () {
+		$this->db->closeDBO ();
+	}
 }
 ?>

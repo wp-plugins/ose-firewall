@@ -24,7 +24,6 @@
 */
 defined('OSEFWDIR') or die;
 class oseVsscanStat {
-	private $db = null;
 	private $filestable = '#__osefirewall_files';
 	private $logstable = '#__osefirewall_logs';
 	private $malwaretable = '#__osefirewall_malware';
@@ -32,13 +31,14 @@ class oseVsscanStat {
 	{
 		oseFirewall::loadRequest();
 		oseFirewall::loadFiles(); 
-		$this->db= oseFirewall::getDBO();
 	}
 	public function getTypeList() {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT * FROM `#__osefirewall_vstypes`";
 		$db->setQuery($query); 
-		return $db->loadObjectList();
+		$result = $db->loadObjectList();
+		$db->closeDBO ();
+		return $result; 
 	}
 	public function getMalwareMap () {
 		$limit = oRequest::getInt('limit', 15);
@@ -78,7 +78,9 @@ class oseVsscanStat {
 		$query = $sql.$where
 				 ." ORDER BY `f`.`filename` DESC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query); 
-		return $db->loadObjectList();
+		$result = $db->loadObjectList();
+		$db->closeDBO ();
+		return $result; 
 	}
 	public function getMalwareTotal () {
 		oseFirewall::callLibClass('convertviews','convertviews');
@@ -88,6 +90,7 @@ class oseVsscanStat {
 		$query = $sql;
 		$db->setQuery($query);
 		$result = (object) ($db->loadResult());  
+		$db->closeDBO ();
 		return $result->count;
 	}
 	public function getFileContent($id)
@@ -118,6 +121,7 @@ class oseVsscanStat {
 		$query = "SELECT `filename` FROM `#__osefirewall_files` WHERE `id` =".(int)$id;
 		$db->setQuery($query);
 		$result = (object) $db->loadResult();
+		$db->closeDBO ();
 		return $result ->filename; 
 	}
 	private function getFileType($filepath)

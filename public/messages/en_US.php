@@ -114,8 +114,8 @@ define('SFSPAMIP','Stop Forum Spam IP');
 define('OSE_SFS_CONFIDENCE','Confidence Level (between 1 and 100, the higher the more likely a spam)');
 define('OSE_SHOW_BADGE','Show Website Protection Seal <br/>(Please use Virus scanner to scan your website first)');
 // Languages for version 2.0 start from here:
-define('DBNOTREADY','Warning: the database is not ready, plesea click the install button to create the database table.');
-define('DBNOTREADY_OTHER','Warning: the database is not ready, plesea return to dashboard to install the database.');
+define('DBNOTREADY','WARNING: the database is not ready, plesea click the install button to create the database table.');
+define('DBNOTREADY_OTHER','WARNING: the database is not ready, plesea return to dashboard to install the database.');
 define('DASHBOARD_TITLE','Dash<span>board</span>');
 define('INSTALLDB','Install');
 define('UNINSTALLDB', 'Uninstall');
@@ -284,4 +284,16 @@ define('UNINSTALL_FAILED', 'Uninstall database table failed!');
 define('SCAN_READY','Ready to scan virus');
 define('DISDEVELOPMODE', '<b>WARNING</b>: Please disable the Development Mode in the Scanning Configuration panel to activate the firewall protection.');
 define('ADVANCERULESNOTREADY', '<b>WARNING</b>: Your website may be at risk. Please follow this <a href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">tutorial</a> to turn on the advance firewall protection. It\'s free.');
+define('ABOUT', 'About');
+define('ABOUT_DESC', 'The detailed descriptions of each section of our plugin and what it does');
+define('DEVELOPMODE_DISABLED','Great! Your website is now protected by Centrora Security');
+define('ADVANCERULES_READY','Great! Your website has stronger protection now');
+define('ADMINUSER_EXISTS','<b>WARNING</b>: The administrator account \'admin\' still exists, please change the username for the administrator user ASAP.');
+define('ADMINUSER_REMOVED','Great! The admin account \'admin\' has been removed.');
+define('FIREWALL','Firewall');
+define('OSE_AUDIT','Audit');
+define('GAUTHENTICATOR_NOTUSED','<b>WARNING</b>: Google 2 Step Authenticator is not used. This is an effective method to avoid brute force attack, we strongly suggest you enable this function. Please follow this <a href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">tutorial</a> to enable it.');
+define('GAUTHENTICATOR_READY','Great! Google Authenticator is available in this website, please ensure all web adminsitrators have enabled the function for their accounts.');
+define('WORDPRESS_OUTDATED','<b>WARNING</b>: Your Wordpress is out dated, please update it ASAP. Current version is ');
+define('WORDPRESS_UPTODATE','Great! Your website is up-to-date with current version of ');
 ?>

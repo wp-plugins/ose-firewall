@@ -111,7 +111,7 @@ a,a:hover {
 	background-color: #ffffff;
 	background: url(../images/logo3.png) no-repeat 20px 20px #ffffff;
 	padding: 10px;
-	height: 140px;
+	height: 104px;
 }
 
 #logo-labels h1 {
@@ -391,6 +391,14 @@ a,a:hover {
 	padding-top: 0px;
 }
 
+.support-center {
+	width: 100px !important;
+}
+.support-center h4 {
+	margin-left: -16px;
+}
+
+
 #oseappcontainer {
 	background: url("../images/background.gif") repeat scroll left top #DEDEDE;
 	margin: 0 auto;
@@ -412,24 +420,6 @@ a,a:hover {
 	font-size: 40px;
 	color: #999;
 	text-shadow: 0 2px 2px #222222;
-}
-
-#content-header {
-	color: #00bfff;
-	background-color: #FDFDFD;
-	float: left;
-	padding: 25px 10px 10px 15px;
-	text-align: left;
-	width: 100%;
-	height: 85px;
-	font-family: "Open Sans", "arial", "Helvetica", "sans-serif";
-	font-size: 40px;
-	font-weight: 300;
-	line-height: 36px;
-}
-
-#content-header span {
-	color: #444;
 }
 
 div.notice-title {
@@ -557,11 +547,12 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .warning {
-	background-color: #FF0000;
-	color: #fff;
+	background-color: #ffd5d6;
+	border-bottom: 1px solid #ff7377;
+	border-left: 5px solid #ff7377;
+	color: #444444;
 	line-height: 24px;
 	border-radius: 5px;
-    color: #FFFFFF;
     font-family: "Open Sans";
     font-weight: 500;
     margin: 10px;
@@ -569,14 +560,15 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .ready {
-	background-color: #5DE100;
+	background-color: #b6ffb2;
+	border-bottom: 1px solid #49ff40;
+	border-left: 5px solid #49ff40;
 	padding: 10px;
-	color: #fff;
+	color: #444444;
 	font-family: "Open Sans";
 	font-weight: 500;
-	border: 1px solid #00ff56;
 	border-radius: 5px;
-	margin: 0px 10px;
+	margin: 10px;
 }
 
 .ajax-success {
@@ -616,9 +608,9 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	background: none repeat scroll 0 0 #FFFFFF;
     float: right;
     font-size: 13px;
-    margin: 20px 30px 20px 0;
+    margin: 20px 10px;
     text-align: justify;
-    width: 75%;
+    width: 98%;
     border-left: 1px solid #EDEDED;
     border-right: 1px solid #EDEDED;
     border-top: 1px solid #EDEDED;
@@ -889,23 +881,23 @@ ol.browsers li {
 }
 
 .text-normal {
-	width: 120px;
-	height: 100px;
 	float: right;
+    height: 95px;
+    width: 115px;
 }
 
 .text-normal .help-icons {
-	background-color: #00bfff;
-	padding: 2px;
-	float: right;
-	margin: 20px 30px 10px 30px;
-	font-size: 1px;
-	height: 60px;
-	line-height: 60px;
-	position: relative;
-	width: 60px;
-	border-radius: 8px;
-	clear: both;
+	background-color: #00BFFF;
+    border-radius: 8px;
+    clear: both;
+    float: right;
+    font-size: 0;
+    height: 44px;
+    line-height: 0;
+    margin: 5px 38px 2px;
+    padding: 2px;
+    position: relative;
+    width: 44px;
 }
 
 .text-normal h4 {
@@ -952,11 +944,16 @@ ol.browsers li {
     cursor: pointer;
 }
 
+#container-left {
+	float: left;
+	width: 75%;
+}
 #container-right {
 	float: left;
-    margin: 35px 0 5px 12px;
-    padding-top: 10px;
-    width: 20%;
+    margin: 0px 1% 5px 1%;
+    padding-top: 0px;
+    width: 22%;
+    min-width: 265px;
 }
 #scanreport-right {
 	margin: 5px 5px 5px;
@@ -1038,11 +1035,72 @@ ol.browsers li {
 }
 
 .version-normal {
-	float: left; 
-	padding: 5px 10px; 
 	background-color: #FFB400;
-	color: #fff;
-	margin-top: 78px;
-	margin-left: 350px; 
-	border-radius: 5px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    float: left;
+    font-size: 11px;
+    margin-left: 225px;
+    margin-top: 41px;
+    padding: 3px 6px;
 }
+
+#action-list {
+	border-bottom: 4px solid #A7A7A7;
+    float: left;
+    margin-bottom: 20px;
+    min-height: 180px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+#audit-list {
+	width: 100%; 
+	float: left;
+}
+
+.action-icons {
+	float: left;
+    height: 105px;
+    margin: 10px 40px 25px;
+    width: 12%;
+}
+
+.action-icons .action-icon {
+	background-color: #555;
+    border-radius: 8px;
+    clear: both;
+    float: left;
+    font-size: 0;
+    height: 100px;
+    line-height: 0;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+    width: 100px;
+}
+
+.action-icons a {
+	color: #474950;
+}
+
+.action-icons h4 {
+	float: left;
+    width: 100px;
+}
+
+.firewall h4 {
+	margin: 0 0 0 30px;
+}
+
+.vsscan h4 {
+	margin: 0 0 0 18px;
+}
+
+.backup h4 {
+	margin: 0 0 0 35px;
+}
+
+.config h4 {
+	margin: 0 0 0 17px;
+} 

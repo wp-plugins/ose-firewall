@@ -54,7 +54,9 @@ public function getSignatures()
 		$query = "SELECT * FROM `#__osefirewall_signatures`".$where
 				 ." ORDER BY id ASC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
-		return $db->loadObjectList();
+		$result = $db->loadObjectList();
+		$db->closeDBO ();
+		return $result;
 	}
 	private function convertSignatures($results)
 	{
@@ -70,7 +72,9 @@ public function getSignatures()
 	public function getSignaturesTotal()
 	{
 		$db = oseFirewall::getDBO ();
-		return $db->getTotalNumber('id', '#__osefirewall_signatures');
+		$result = $db->getTotalNumber('id', '#__osefirewall_signatures');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function changeL1RuleStatus($id, $status)
 	{
@@ -78,7 +82,9 @@ public function getSignatures()
 		$varValues = array (
 				'action' => (int)$status
 		);
-		return $db->addData('update', '#__osefirewall_signatures', 'id', (int)$id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_signatures', 'id', (int)$id, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
 	public function addsignature($signature, $status)
 	{
@@ -90,6 +96,7 @@ public function getSignatures()
 					'attacktype' => '["1"]'
 				);
 		$id = $db->addData ('insert', '#__osefirewall_signatures', '', '', $varValues);
+		$db->closeDBO ();
 		return $id; 
 	}
 	public function deletesignature($id)
@@ -105,7 +112,9 @@ public function getSignatures()
 	private function deleteSignaturebyID($id)
 	{
 		$db = oseFirewall::getDBO ();
-		return $db->deleteRecord(array('id'=>$id), '#__osefirewall_signatures');
+		$result = $db->deleteRecord(array('id'=>$id), '#__osefirewall_signatures');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function restoreRules($type)
 	{
@@ -127,7 +136,9 @@ public function getSignatures()
 			$db = oseFirewall::getDBO ();
 			$query = "INSERT INTO `#__osefirewall_signatures` SELECT * FROM `#__osefirewall_signatures_bk`";
 			$db->setQuery($query); 
-			return $db->query();
+			$result = $db->query();
+			$db->closeDBO ();
+			return $result;
 		}
 		else
 		{
@@ -142,7 +153,9 @@ public function getSignatures()
 			$db = oseFirewall::getDBO ();
 			$query = "INSERT INTO `#__osefirewall_filters` SELECT * FROM `#__osefirewall_filters_bk`";
 			$db->setQuery($query); 
-			return $db->query();
+			$result = $db->query();
+			$db->closeDBO ();
+			return $result;
 		}
 		else
 		{
@@ -161,7 +174,9 @@ public function getSignatures()
 			$query = "TRUNCATE `#__osefirewall_filters`";
 		}
 		$db->setQuery($query); 
-		return $db->query();
+		$result = $db->query();
+		$db->closeDBO ();
+		return $result;
 	}
 	private function getRulesetsDB($search, $status, $start, $limit)
 	{
@@ -180,6 +195,7 @@ public function getSignatures()
 				 ." ORDER BY id ASC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList(); 
+		$db->closeDBO ();
 		return $results;
 	}
 	private function convertRulesets($results)
@@ -198,7 +214,9 @@ public function getSignatures()
 	public function getRulesetsTotal()
 	{
 		$db = oseFirewall::getDBO ();
-		return $db->getTotalNumber('id', '#__osefirewall_filters');
+		$result = $db->getTotalNumber('id', '#__osefirewall_filters');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function changeL2RuleStatus($id, $status)
 	{
@@ -206,7 +224,9 @@ public function getSignatures()
 		$varValues = array (
 				'action' => (int)$status
 		);
-		return $db->addData('update', '#__osefirewall_filters', 'id', (int)$id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_filters', 'id', (int)$id, $varValues);
+		$db->closeDBO ();
+		return $result;
 		
 	}
 	public function addruleset($filter, $status, $impact, $description, $attacktype)
@@ -221,6 +241,7 @@ public function getSignatures()
 					'description' => (string)$description
 				);
 		$id = $db->addData ('insert', '#__osefirewall_filters', '', '', $varValues);
+		$db->closeDBO ();
 		return $id; 
 	}
 	
@@ -246,6 +267,7 @@ public function getSignatures()
 			$query = "SELECT Count(*) as Count FROM `#__osefirewall_advancerules`";
 			$db->setQuery($query);
 			$results = $db->loadResultList();
+			$db->closeDBO ();
 			if($results[0]['Count'] > 0)
 			{
 				return true;
@@ -255,5 +277,59 @@ public function getSignatures()
 				return false;
 			}
 		}
+	}
+	public function isUserAdminExist () {
+		if (username_exists('admin') == true)
+		{
+			$user = get_user_by( 'login', 'admin');
+			return  $user->ID;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public function isGAuthenticatorReady () {
+		if (class_exists('GoogleAuthenticator', false))
+		{
+			if (oseFirewall::isDBReady())
+			{
+				$db = oseFirewall::getDBO();
+				$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'googleVerification'";
+				$db->setQuery($query);
+				$result = $db->loadResult();
+				$db->closeDBO ();
+				if($results['value']== 1)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else 
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public function isWPUpToDate () {
+	    global $wp_version;
+	    $updates = get_core_updates();
+	    if(!is_array($updates) || empty($updates) || $updates[0]->response == 'latest'){
+	        $current = true;
+	    } else {
+	        $current = false;
+	    }
+	    if(strcmp($wp_version, "3.7") < 0)
+	    {
+	        $current = false;
+	    }
+	    return $current; 
 	}
 }
