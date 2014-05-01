@@ -3,10 +3,9 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH')) {
 	die('Direct Access Not Allowed');
 }
 class RemoteLogin{
-	
 	public function login(){
 		oseFirewall::loadLanguage();
-		require_once (OSEFWDIR.ODS.'framework'.ODS.'oseframework'.ODS.'ajax'.ODS.'oseAjax.php'); 
+		require_once (OSEFWDIR.ODS.'framework'.ODS.'oseframework'.ODS.'ajax'.ODS.'oseAjax.php');
 		$privateKey = null;
 		$privateKey = $this -> getPrivateKeyFromDB();
 		$info = $this -> decryptInfo($privateKey);
@@ -70,14 +69,15 @@ class RemoteLogin{
 	private function decryptInfo($privateKey){	
 		if($privateKey != null){
 			$encryptedLogin = oRequest :: getVar('encryptedLogin', null);
-			$crypttext = base64_decode($encryptedLogin);	
-			$res = openssl_get_privatekey($privateKey);
-			$result = @openssl_private_decrypt($crypttext, $decrypttext, $res);
+			oseFirewall::callLibClass('cipher', 'Cipher');
+			$Cipher = new Cipher ();
+			$Cipher->setSecretKey($privateKey);
+			$result = $Cipher->decrypt($encryptedLogin);
 			if($result == false)
 			{
 				return false;
 			}
-			$info = explode("-", $decrypttext);	
+			$info = explode("-", $result);	
 			return $info;
 		}else{
 			return false;
@@ -91,6 +91,7 @@ class RemoteLogin{
 				  WHERE `config`.`key` = 'privateAPIKey' ";
 		$db->setQuery($query);
 		$result = $db->loadObject();
+		$db->closeDBO ();
 		$privateKey = $result->value;
 		return $privateKey;
 	}
@@ -116,7 +117,6 @@ class RemoteLogin{
 	
 	private function getRemoteController(){
 		// add encrypted login; 
-		
 		$controller = oRequest :: getVar('controller', null);
 		if ($controller!=null)
 		{

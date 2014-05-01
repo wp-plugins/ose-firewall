@@ -180,6 +180,7 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		$oseDB2 = self::getDBO();
 		$data = $oseDB2->isTableExists('#__osefirewall_backupath');
+		$oseDB2->closeDBO();
 		$ready = (!empty($data)) ? true : false;
 		return $ready;
 	}
@@ -194,6 +195,7 @@ class oseFirewallBase extends oseFirewallRoot
 			$query = "SELECT COUNT(`id`) as `count` FROM `#__ose_app_geoip` ";
 			$oseDB2->setQuery($query);
 			$result = $oseDB2->loadResult();
+			$oseDB2->closeDBO();
 			return ($result['count'] > 0) ? true : false;
 		}
 		else
@@ -291,14 +293,19 @@ class oseFirewallBase extends oseFirewallRoot
 		self::runYiiApp();
 		Yii::app()->runController('backup/index');
 	}
+	public static function about()
+	{
+		self::runYiiApp();
+		Yii::app()->runController('about/index');
+	}
 	public static function showLogo()
 	{
 		$url = 'http://www.centrora.com';
 		$appTitle = OSE_WORDPRESS_FIREWALL;
 		$head = '<div id="logo-labels">
-					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/support-center/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con05.png"></a></span><h4>Need Help?</h4></div>
-					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/tutorial/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con016.png"></a></span><h4>User Manual</h4></div>
-					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/cleaning/" target="__blank"><img width="56" height="56" alt="" src="'.OSE_FWRELURL.'/public/images/con017.png"></a></span><h4>Malware Removal</h4></div>';
+					<div class="text-normal support-center"><span class="help-icons"><a href="http://www.centrora.com/support-center/" target="__blank"><img width="40" height="40" alt="" src="'.OSE_FWRELURL.'/public/images/con05.png"></a></span><h4>Need Help?</h4></div>
+					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/tutorial/" target="__blank"><img width="40" height="40" alt="" src="'.OSE_FWRELURL.'/public/images/con016.png"></a></span><h4>User Manual</h4></div>
+					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/cleaning/" target="__blank"><img width="40" height="40" alt="" src="'.OSE_FWRELURL.'/public/images/con017.png"></a></span><h4>Malware Removal</h4></div>';
 		if (OSE_CMS == 'joomla')
 		{
 			$head .= '<div id="back-to-admin"><a href="index.php" >Back to Admin Panel</a></div>';
@@ -358,6 +365,7 @@ class oseFirewallBase extends oseFirewallRoot
 		$result = $stmt->fetch();
 		if (empty($result))
 		{
+			$dbo = null;
 			return true;
 		}
 		else
@@ -365,9 +373,9 @@ class oseFirewallBase extends oseFirewallRoot
 			$stmt = $dbo->query ("SELECT `value` FROM `".$dbConfig->prefix."ose_secConfig` WHERE `key` = '".$key."' AND `type` = '".$type."'");
 			$stmt->setFetchMode(PDO::FETCH_OBJ);
 			$result = $stmt->fetch();
+			$dbo = null;
 			return (empty($result) || ($result->value == 0)) ? false : true;
 		}
-		$dbo = null; 
 	}
 	private function splitHost($host)
 	{

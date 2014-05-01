@@ -220,7 +220,7 @@ class oseFirewallInstaller extends oseInstaller {
 		{
 			oseFile::delete($dbFile); 
 		}	
-		return $result;
+		return true;
 	}
 	public function cleanCountryDB(){
 		$dbFile = OSE_FWDATA . ODS . 'wp_osefirewall_country.sql';

@@ -101,8 +101,8 @@ class CountryBlock
 		$start = oRequest::getInt('start', 0);
 		$limit = oRequest::getInt('limit', 20);
 		$search = oRequest::getVar('search', null);
-		if(empty($search)){
-			
+		if (empty($search))
+		{
 		}
 		$page = oRequest::getInt('page', 1);
 		if (isset($_REQUEST['status']))
@@ -177,6 +177,7 @@ class CountryBlock
 						(`#__osefirewall_country` `country`)".$where." ORDER BY name ASC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	private function getCountryImage($country_code)
@@ -194,8 +195,9 @@ class CountryBlock
 	public function getCountryTotal()
 	{
 		$db = oseFirewall::getDBO();
-		$result = $db->getTotalNumber('country_id', '#__osefirewall_country');
-		return $db->getTotalNumber('country_id', '#__osefirewall_country');
+		$results = $db->getTotalNumber('country_id', '#__osefirewall_country');
+		$db->closeDBO ();
+		return $results;
 	}
 	public function changeCountryStatus($aclid, $status)
 	{
@@ -204,11 +206,12 @@ class CountryBlock
 			'status' => (int) $status
 		);
 		$result = $db->addData('update', '#__osefirewall_country', 'country_id', (int) $aclid, $varValues);
+		$db->closeDBO ();
 		return $result;
 	}
 	public function alterTable()
 	{
-		if($this->checkTableAltered() == true)
+		if ($this->checkTableAltered() == true)
 		{
 			$this->alterGeoIPTable();
 			$this->alterCountryTable();
@@ -217,7 +220,7 @@ class CountryBlock
 	private function alterGeoIPTable()
 	{
 		$result = $this->checkGeoIPIndextExists();
-		if(!$result)
+		if (!$result)
 		{
 			$db = oseFirewall::getDBO();
 			$query = "CREATE INDEX `index_ip32_start` ON `#__ose_app_geoip` (`ip32_start`(10))";
@@ -226,22 +229,22 @@ class CountryBlock
 			$query = "CREATE INDEX `index_ip32_end` ON `#__ose_app_geoip` (`ip32_end`(10))";
 			$db->setQuery($query);
 			$results = $db->query();
+			$db->closeDBO ();
 		}
 	}
-	
 	private function checkTableAltered()
 	{
 		$db = oseFirewall::getDBO();
-		$query = "SHOW COLUMNS FROM `#__osefirewall_country` LIKE 'country_3_code'" ;
+		$query = "SHOW COLUMNS FROM `#__osefirewall_country` LIKE 'country_3_code'";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
-		if($results[0] != null)
+		$db->closeDBO ();
+		if ($results[0] != null)
 		{
 			return true;
 		}
 		return false;
 	}
-	
 	private function checkGeoIPIndextExists()
 	{
 		$db = oseFirewall::getDBO();
@@ -251,8 +254,9 @@ class CountryBlock
 				  AND index_name = 'index_ip32_start'";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
-		if($results[0]->index_exists > 0)
+		if ($results[0]->index_exists > 0)
 		{
+			$db->closeDBO ();
 			return true;
 		}
 		$query = "SELECT COUNT( * ) AS index_exists
@@ -261,16 +265,14 @@ class CountryBlock
 				  AND index_name = 'index_ip32_end'";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
-		if($results[0]->index_exists > 0)
+		if ($results[0]->index_exists > 0)
 		{
+			$db->closeDBO ();
 			return true;
 		}
-		
+		$db->closeDBO ();
 		return false;
-		
-
 	}
-	
 	private function alterCountryTable()
 	{
 		$db = oseFirewall::getDBO();
@@ -283,22 +285,22 @@ class CountryBlock
 		$query = "ALTER TABLE `#__osefirewall_country` ADD COLUMN `status` Tinyint DEFAULT 3";
 		$db->setQuery($query);
 		$results = $db->query();
+		$db->closeDBO ();
 	}
-	
 	public function getCountryBlockStatistic()
 	{
 		$db = oseFirewall::getDBO();
 		$data = $db->isTableExists('#__osefirewall_country');
-		if(empty($data))
+		if (empty($data))
 		{
 			return false;
 		}
 		$query = "SELECT status, count(status) as number FROM `#__osefirewall_country` group by status;";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $this->convertStatistic($results);
 	}
-	
 	private function convertStatistic($results)
 	{
 		$i = 0;

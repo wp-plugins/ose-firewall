@@ -95,6 +95,7 @@ class oseBackupManager
 				);
 			$this->updateBackUpFilePath($array, $i);
 		}
+		$this->db->closeDBO ();
 	}
 	
 	private function checkDBReady($dbName)
@@ -260,7 +261,7 @@ class oseBackupManager
 	public function backupDB()
 	{
 		$dbBackupResult = $this->backupDatabase ($this->backup_type);
-		$result = null;
+		$this->db->closeDBO ();
 		if ($dbBackupResult == false && $this->backup_type != 3)
 		{
 			return false;
@@ -302,6 +303,7 @@ class oseBackupManager
 	{
 		$db = oseFirewall::getDBO();
 		$result = $db->getTotalNumber('id', '#__osefirewall_backup');
+		$db->closeDBO ();
 		return $result;
 	}
 	public function removeBackUp($id)
@@ -311,17 +313,16 @@ class oseBackupManager
 		$query = "SELECT * FROM `#__osefirewall_backup` WHERE `id` = ".(int) $id;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db -> closeDBO();
 		$results = $results[0];
 		if (!empty($results->dbBackupPath))
 		{
 			$result = osefile::delete($results->dbBackupPath.".gz");
-
 			if ($result == false)
 			{
 				return false;
 			}
 		}
-		
 		if (!empty($results->fileBackupPath))
 		{
 			$result = osefile::delete($results->fileBackupPath);
@@ -343,7 +344,9 @@ class oseBackupManager
 	private function deleteBackupID($id)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('id' => $id), '#__osefirewall_backup');
+		$result =  $db->deleteRecord(array('id' => $id), '#__osefirewall_backup');
+		$db -> closeDBO();
+		return $result;
 	}
 	public function getBackupDB($search, $start, $limit, $status)
 	{
@@ -356,6 +359,7 @@ class oseBackupManager
 		$query = "SELECT * FROM `#__osefirewall_backup` ". $where ."ORDER BY date DESC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	public function getBackupDBByID($id)
@@ -364,6 +368,7 @@ class oseBackupManager
 		$query = "SELECT * FROM `#__osefirewall_backup` WHERE `id` = $id ";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results[0];
 	}
 	private function convertVariables($results)
@@ -457,11 +462,9 @@ class oseBackupManager
 				'fileBackupPath' => $filePath
 			)
 		);
-		$db = oseFirewall::getDBO();
 		$query = $this->getInsertTable('#__osefirewall_backup', $varValues);
-		$db->setQuery($query);
-		$results = $db->query();
-		
+		$this->db->setQuery($query);
+		$results = $this->db->query();
 		$this->cleanBackUpFilePath();
 		return $results;
 	}

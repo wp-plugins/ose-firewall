@@ -52,11 +52,9 @@ class BaseModel extends CFormModel {
 		}	
 	}
 	public function showHeader () { 
-		$html = '<div id="content-header">'.$this->getCHeader().'</div>';
-		$html .= '<div class="oseseparator"> &nbsp; </div>';
-		$html .= '<div class="content-description"><p>'. $this->getCDescription ();
+		$html = '<div class="oseseparator"> &nbsp; </div>';
+		$html .= '<div class="content-description"><p>'. $this->getCHeader().': '.$this->getCDescription ();
 		$html .= '</p></div>';
-
 		echo $html; 
 	}
 	public function throwAjaxReturn ($result, $status, $msg, $continue) {

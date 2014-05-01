@@ -36,6 +36,7 @@ class oseVersionUpdate {
 		$query = "SELECT `time` FROM `#__osefirewall_updateLog`";
 		$db->setQuery ( $query );
 		$result = $db->loadObjectList ();
+		$db->closeDBO ();
 		if (empty ( $result ) == false) {
 			return false;
 		} else
@@ -48,13 +49,16 @@ class oseVersionUpdate {
 				'time' => $value 
 		);
 		$id = $db->addData ( 'insert', '#__osefirewall_updateLog', '', '', $varValues );
+		$db->closeDBO ();
 		return $id;
 	}
 	public function getLatestLog() {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT `time` FROM `#__osefirewall_updateLog` ORDER BY `id` DESC LIMIT 1";
 		$db->setQuery ( $query );
-		return $db->loadResult ();
+		$result = $db->loadResult ();
+		$db->closeDBO ();
+		return $result; 
 	}
 	public function getCurrentDate() {
 		date_default_timezone_set ( 'Australia/Melbourne' );
@@ -64,7 +68,9 @@ class oseVersionUpdate {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT `version` FROM `#__osefirewall_virusVersion` ORDER BY `version_id` DESC LIMIT 1";
 		$db->setQuery ( $query );
-		return $db->loadResult();
+		$result = $db->loadResult();
+		$db->closeDBO ();
+		return $result; 
 	}
 	public function addPatterns($vsPattern) {
 		$db = oseFirewall::getDBO ();
@@ -75,21 +81,23 @@ class oseVersionUpdate {
 			'confidence' => $vsPattern['confidence']
 		);
 		$id = $db->addData ( 'insert', '#__osefirewall_vspatterns', '', '', $varValues );
+		$db->closeDBO ();
 		return $id;
 	}
 	public function addVersions($vsVersion) {
-		$db = oseFirewall::getDBO ();
 		$result = $this->getVersions($vsVersion);
 		if (($vsVersion['version'] == $result[version]) && ($vsVersion['plugin'] == $result[plugin])){
 			return;
 		}
 		else{
+			$db = oseFirewall::getDBO ();
 			$varValues = array (
 					'version_id' => 'DEFAULT',
 					'version' => $vsVersion['version'],
 					'plugin' => $vsVersion['plugin']
 			);
 			$id = $db->addData ('insert', '#__osefirewall_virusVersion', '', '', $varValues );
+			$db->closeDBO ();
 			return $id;
 		}
 	}
@@ -97,21 +105,25 @@ class oseVersionUpdate {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT `version_id`, `version`, `plugin` FROM `#__osefirewall_virusVersion` ORDER BY `version_id` DESC LIMIT 1";
 		$db->setQuery ( $query );
-		return $db->loadResult();
+		$result = $db->loadResult();
+		$db->closeDBO ();
+		return $result; 
 	}
 	
 	public function getUsername() {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'Name'";
 		$db->setQuery ($query);
-		return $db->loadResult();
+		$result = $db->loadResult();
+		$db->closeDBO ();
+		return $result; 
 	}
 	public function getPassword() {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'Password'";
 		$db->setQuery ($query);
-		return $db->loadResult();
+		$result = $db->loadResult();
+		$db->closeDBO ();
+		return $result; 
 	}
-	
-	
 }

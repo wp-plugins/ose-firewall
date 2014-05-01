@@ -116,6 +116,7 @@ class virusScanner {
 			$total = $this->CountFiles(); 
 			$return['summary'] = OSE_ADDED.' '.OSE_INTOTAL.' '.$total.' '.OSE_FILES.'.';
 		}	
+		$this->db -> closeDBO(); 
 		oseAjax::returnJSON($return);
 	}
 	private function clearTable () {
@@ -273,19 +274,21 @@ class virusScanner {
 			$this->cleanMalwareData (); 
 			$_SESSION['completed'] = 0;
 			$_SESSION['start_time'] = time();  
-			return $this->showCountFilesMsg ();
+			$result = $this->showCountFilesMsg ();
 		}
 		else if ($step==-1)
 		{
 			$this->setPatterns ();
-			return $this->showScanningStatusMsg();
+			$result = $this->showScanningStatusMsg();
 		}
 		else 
 		{
 			oseFirewall::loadFiles(); 
 			$this->setPatterns ();
-			return $this->showScanningResultMsg ();
+			$result = $this->showScanningResultMsg ();
 		}
+		$this->db -> closeDBO(); 
+		return $result;
 	}
 	private function showScanningResultMsg () {
 		$return=array();
@@ -517,6 +520,7 @@ class virusScanner {
 		$query = "SELECT COUNT(`file_id`) AS `count` FROM `".$this->malwaretable."`";
 		$db->setQuery($query);
 		$result = (object)($db->loadResult()); 
+		$db -> closeDBO(); 
 		return $result->count; 
 	}
 	private function logScanning($status)
@@ -539,7 +543,7 @@ class virusScanner {
 		
 		$db->setQuery($query);
 		$result = $db->loadobject();
-		
+		$db -> closeDBO(); 
 		return $result;
 		
 	}

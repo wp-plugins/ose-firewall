@@ -45,7 +45,9 @@ class oseFirewallStat
 		$sql = convertViews::convertAttackTypesum($attrList);
 		$query = $sql."WHERE DATEDIFF( NOW(), datetime ) <= 10 AND `acl`.`status` IN (1,2)  "."GROUP BY DATE(datetime), attacktypeid ";
 		$db->setQuery($query);
-		return $db->loadObjectList();
+		$result = $db->loadObjectList();
+		$db->closeDBO ();
+		return $result;
 	}
 	private function convertAttackSummary($results)
 	{
@@ -88,38 +90,39 @@ class oseFirewallStat
 		$where = $db->implodeWhere($where);
 		$query = "SELECT `id`, `name` FROM `#__osefirewall_attacktype` ".$where;
 		$db->setQuery($query);
-		return $db->loadObjectList();
+		$result = $db->loadObjectList();
+		$db->closeDBO ();
+		return $result;
 	}
 	public function getAttackTypes($ids)
 	{
 		return $this->getAttackTypesDB($ids);
 	}
-	
 	public function getAdvanceRulesVersion()
 	{
-		$db = oseFirewall::getDBO ();
+		$db = oseFirewall::getDBO();
 		$query = "SELECT number, type FROM `#__osefirewall_versions` WHERE `type` = 'ath'";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $this->convertAdvanceRulesStatistic($results);
 	}
-	
 	public function getAdvancePatternsVersion()
 	{
-		$db = oseFirewall::getDBO ();
+		$db = oseFirewall::getDBO();
 		$query = "SELECT number, type FROM `#__osefirewall_versions` WHERE `type` = 'avs'";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $this->convertAdvanceRulesStatistic($results);
 	}
-	
-	
 	public function getAdvanceRulesStatistic()
 	{
 		$db = oseFirewall::getDBO();
 		$query = "SELECT action as status, count(action) as number FROM `#__osefirewall_advancerules` group by action";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $this->convertBasicRulesStatistic($results);
 	}
 	public function convertAdvanceRulesStatistic($results)
@@ -128,10 +131,12 @@ class oseFirewallStat
 		$return = array();
 		foreach ($results as $result)
 		{
-			if(!empty($results[$i]->number)){
+			if (!empty($results[$i]->number))
+			{
 				$return['version'] = $results[$i]->number;
 			}
-			if(!empty($results[$i]->type)){
+			if (!empty($results[$i]->type))
+			{
 				$return['type'] = $results[$i]->type;
 			}
 			$i++;
@@ -144,6 +149,7 @@ class oseFirewallStat
 		$query = "SELECT action as status, count(action) as number FROM `#__osefirewall_basicrules` group by action";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $this->convertBasicRulesStatistic($results);
 	}
 	public function convertBasicRulesStatistic($results)
@@ -167,13 +173,13 @@ class oseFirewallStat
 		}
 		return $return;
 	}
-	
 	public function getVarStatistic()
 	{
 		$db = oseFirewall::getDBO();
 		$query = "SELECT status, count(status) as number FROM `#__osefirewall_vars` group by status;";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $this->convertVarStatistic($results);
 	}
 	public function convertVarStatistic($results)
@@ -201,13 +207,13 @@ class oseFirewallStat
 		}
 		return $return;
 	}
-	
 	public function getACLIPStatistic()
 	{
 		$db = oseFirewall::getDBO();
 		$query = "SELECT status, count(status) as number FROM `#__osefirewall_acl` group by status;";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $this->convertStatistic($results);
 	}
 	public function convertStatistic($results)
@@ -262,13 +268,13 @@ class oseFirewallStat
 		}
 		if (!empty($status))
 		{
-			if($status == 2)
+			if ($status == 2)
 			{
-				$where[] = "`status` = ".(int) $status." or `status` = ".(int)0 ;	
+				$where[] = "`status` = ".(int) $status." or `status` = ".(int) 0;
 			}
 			else
 			{
-				$where[] = "`status` = ".(int) $status;	
+				$where[] = "`status` = ".(int) $status;
 			}
 		}
 		$where = $db->implodeWhere($where);
@@ -276,9 +282,9 @@ class oseFirewallStat
 			"`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`ip`.`ip32_end` AS `ip32_end`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`");
 		$sql = convertViews::convertAclipmap($attrList);
 		$query = $sql.$where." ORDER BY datetime DESC LIMIT ".$start.", ".$limit;
-
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	private function convertACLIPMap($results)
@@ -345,6 +351,7 @@ class oseFirewallStat
 		$query = " UPDATE `#__osefirewall_acl` SET `host` = ".$db->quoteValue($host, true)." WHERE `id` = ".(int) $acl_id;
 		$db->setQuery($query);
 		$result = $db->query();
+		$db->closeDBO ();
 		if ($result == true)
 		{
 			return $host;
@@ -398,6 +405,7 @@ class oseFirewallStat
 			'country_code' => $country_code
 		);
 		$result = $db->addData('update', '#__osefirewall_acl', 'id', (int) $acl_id, $varValues);
+		$db->closeDBO ();
 		if ($result == true)
 		{
 			return $country_code;
@@ -411,6 +419,7 @@ class oseFirewallStat
 	{
 		$db = oseFirewall::getDBO();
 		$result = $db->getTotalNumber('id', '#__osefirewall_acl');
+		$db->closeDBO ();
 		return $result;
 	}
 	public function remvoeACLRule($aclid)
@@ -445,12 +454,16 @@ class oseFirewallStat
 	private function deleteACLID($aclid)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('id' => $aclid), '#__osefirewall_acl');
+		$result = $db->deleteRecord(array('id' => $aclid), '#__osefirewall_acl');
+		$db->closeDBO ();
+		return $result;
 	}
 	private function deleteIPID($aclid, $ipid)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('id' => $ipid, 'acl_id' => $aclid), '#__osefirewall_iptable');
+		$result = $db->deleteRecord(array('id' => $ipid, 'acl_id' => $aclid), '#__osefirewall_iptable');
+		$db->closeDBO ();
+		return $result;
 	}
 	private function deleteAttackTypeID($aclid, $ids)
 	{
@@ -477,6 +490,7 @@ class oseFirewallStat
 				$result = $db->deleteRecord(array('id' => $detattacktype_id), '#__osefirewall_detattacktype');
 			}
 		}
+		$db->closeDBO ();
 		return $result;
 	}
 	private function getIDSOnACLID($aclid)
@@ -495,6 +509,7 @@ class oseFirewallStat
 		$query = $sql."WHERE `acl`.`id` = ".(int) $aclid;
 		$db->setQuery($query);
 		$result = $db->loadResult();
+		$db->closeDBO ();
 		return (isset($result['ipid'])) ? $result['ipid'] : false;
 	}
 	private function getDetAttackIDOnAclidDB($aclid)
@@ -503,7 +518,8 @@ class oseFirewallStat
 		$query = "SELECT `detattacktype_id` FROM `#__osefirewall_detected` WHERE `acl_id` = ".(int) $aclid;
 		$db->setQuery($query);
 		$results = $db->loadArrayList('detattacktype_id');
-		return $results;
+		$db->closeDBO ();
+		return $result;
 	}
 	public function changeACLStatus($aclid, $status)
 	{
@@ -512,6 +528,7 @@ class oseFirewallStat
 			'status' => (int) $status
 		);
 		$result = $db->addData('update', '#__osefirewall_acl', 'id', (int) $aclid, $varValues);
+		$db->closeDBO ();
 		return $result;
 	}
 	public function getAttackDetail($aclid)
@@ -606,6 +623,7 @@ class oseFirewallStat
 		$query = $sql." WHERE `acl`.`id` = ".(int) $id." ORDER BY `detcontdetail`.`var_id` ASC, `detcontdetail`.`detcontent_id` ASC";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	private function getACLIPMapByIDDB($id)
@@ -616,6 +634,7 @@ class oseFirewallStat
 		$query = $sql."WHERE `acl`.`id` = ".(int) $id;
 		$db->setQuery($query);
 		$result = $db->loadObject();
+		$db->closeDBO ();
 		return $result;
 	}
 	private function getRefererByIDDB($id)
@@ -624,6 +643,7 @@ class oseFirewallStat
 		$query = "SELECT `referer_url` FROM `#__osefirewall_referers` WHERE `id` =".(int) $id;
 		$db->setQuery($query);
 		$result = $db->loadResult();
+		$db->closeDBO ();
 		return $result['referer_url'];
 	}
 	private function getPageByIDDB($id)
@@ -632,6 +652,7 @@ class oseFirewallStat
 		$query = "SELECT `page_url` FROM `#__osefirewall_pages` WHERE `id` =".(int) $id;
 		$db->setQuery($query);
 		$result = $db->loadResult();
+		$db->closeDBO ();
 		return $result['page_url'];
 	}
 	private function printAttackType($attackTypeArray)
@@ -671,7 +692,9 @@ class oseFirewallStat
 		$sql = convertViews::convertAttackmap($attrList);
 		$query = $sql." WHERE `detcontdetail`.`rule_id` =".(int) $rule_id." AND `detattacktype`.`attacktypeid` IN ".$attacktypeids;
 		$db->setQuery($query);
-		return $db->loadResultArray();
+		$result = $db->loadResultArray();
+		$db->closeDBO ();
+		return $result;
 	}
 	private function getDetattacktypeIDByVarID($var_id)
 	{
@@ -680,17 +703,23 @@ class oseFirewallStat
 		$sql = convertViews::convertAttackmap($attrList);
 		$query = $sql." WHERE `detcontdetail`.`var_id` =".(int) $var_id;
 		$db->setQuery($query);
-		return $db->loadResultArray();
+		$result = $db->loadResultArray();
+		$db->closeDBO ();
+		return $result;
 	}
 	private function deleteAttackTypeDetailByID($detattacktype_id)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('detattacktype_id' => $detattacktype_id), '#__osefirewall_detcontdetail');
+		$result = $db->deleteRecord(array('detattacktype_id' => $detattacktype_id), '#__osefirewall_detcontdetail');
+		$db->closeDBO ();
+		return $result;
 	}
 	private function deleteAttackTypebyID($detattacktype_id)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('id' => $detattacktype_id), '#__osefirewall_detattacktype');
+		$result = $db->deleteRecord(array('id' => $detattacktype_id), '#__osefirewall_detattacktype');
+		$db->closeDBO ();
+		return $result;
 	}
 	// $attacktype reads as 1,2,3,4,5; return as [1,2,3,4,5]
 	private function attackTypeEncode($attacktype)
@@ -716,75 +745,72 @@ class oseFirewallStat
 		$return = implode(", ", $return);
 		return $return;
 	}
-	
-	public function blacklistvariables($variable_ids){
+	public function blacklistvariables($variable_ids)
+	{
 		foreach ($variable_ids as $variable_id)
 		{
 			$result = $this->blacklistvariablesByID($variable_id);
-			if($result == false)
+			if ($result == false)
 			{
 				return false;
 			}
 		}
 		return true;
 	}
-	
 	private function blacklistvariablesByID($variable_id)
 	{
 		$db = oseFirewall::getDBO();
 		$varValues = array(
 			'status' => (int) 1
 		);
-		return $db->addData('update', '#__osefirewall_vars', 'id', (int) $variable_id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_vars', 'id', (int) $variable_id, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
-	
-	public function whitelistvariables($variable_ids){
+	public function whitelistvariables($variable_ids)
+	{
 		foreach ($variable_ids as $variable_id)
 		{
 			$result = $this->whitelistvariablesByID($variable_id);
-			if($result == false)
+			if ($result == false)
 			{
 				return false;
 			}
 		}
 		return true;
 	}
-	
 	private function whitelistvariablesByID($variable_id)
 	{
 		$db = oseFirewall::getDBO();
 		$varValues = array(
 			'status' => (int) 3
 		);
-		return $db->addData('update', '#__osefirewall_vars', 'id', (int) $variable_id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_vars', 'id', (int) $variable_id, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
-	
-	public function filtervariables($variable_ids){
+	public function filtervariables($variable_ids)
+	{
 		foreach ($variable_ids as $variable_id)
 		{
 			$result = $this->filtervariablesByID($variable_id);
-			if($result == false)
+			if ($result == false)
 			{
 				return false;
 			}
 		}
 		return true;
 	}
-	
 	private function filtervariablesByID($variable_id)
 	{
 		$db = oseFirewall::getDBO();
 		$varValues = array(
 			'status' => (int) 2
 		);
-		return $db->addData('update', '#__osefirewall_vars', 'id', (int) $variable_id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_vars', 'id', (int) $variable_id, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
-	
-	
-	
-	
-	
-	
 	private function deleteDectectedAttacks($detattacktype_ids)
 	{
 		foreach ($detattacktype_ids as $detattacktype_id)
@@ -810,12 +836,16 @@ class oseFirewallStat
 	private function deleteDetectedByID($detattacktype_id)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('detattacktype_id' => $detattacktype_id), '#__osefirewall_detected');
+		$result = $db->deleteRecord(array('detattacktype_id' => $detattacktype_id), '#__osefirewall_detected');
+		$db->closeDBO ();
+		return $result;
 	}
 	private function deleteFilterbyID($id)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('id' => $id), '#__osefirewall_filters');
+		$result = $db->deleteRecord(array('id' => $id), '#__osefirewall_filters');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function getVariables()
 	{
@@ -847,6 +877,7 @@ class oseFirewallStat
 		$query = "SELECT * FROM `#__osefirewall_vars`".$where." ORDER BY id ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	private function convertVariables($results)
@@ -875,7 +906,9 @@ class oseFirewallStat
 	public function getVariablesTotal()
 	{
 		$db = oseFirewall::getDBO();
-		return $db->getTotalNumber('id', '#__osefirewall_vars');
+		$result = $db->getTotalNumber('id', '#__osefirewall_vars');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function changeVarStatus($id, $status)
 	{
@@ -883,7 +916,9 @@ class oseFirewallStat
 		$varValues = array(
 			'status' => (int) $status
 		);
-		return $db->addData('update', '#__osefirewall_vars', 'id', (int) $id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_vars', 'id', (int) $id, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
 	public function addvariables($variable, $status)
 	{
@@ -897,6 +932,7 @@ class oseFirewallStat
 				'status' => (int) $status
 			);
 			$id = $db->addData ('insert', '#__osefirewall_vars', '', '', $varValues);
+			$db->closeDBO ();
 			return $id;
 		}
 		else
@@ -910,6 +946,7 @@ class oseFirewallStat
 		$query = "SELECT * FROM `#__osefirewall_vars`"." WHERE `keyname` = ".$db->quoteValue($variable);
 		$db->setQuery($query);
 		$results = $db->loadObject();
+		$db->closeDBO ();
 		return $results;
 	}
 	public function deletevariable($id)
@@ -925,7 +962,9 @@ class oseFirewallStat
 	private function deleteVariablebyID($id)
 	{
 		$db = oseFirewall::getDBO();
-		return $db->deleteRecord(array('id' => $id), '#__osefirewall_vars');
+		$result = $db->deleteRecord(array('id' => $id), '#__osefirewall_vars');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function loadDefaultRules($type)
 	{
@@ -1025,15 +1064,13 @@ class oseFirewallStat
 		}
 		return true;
 	}
-	
-	
-	
 	public function getConfiguration($type)
 	{
 		$return = array();
 		$db = oseFirewall::getDBO();
 		$query = "SELECT `key`, `value` FROM `#__ose_secConfig` WHERE `type` = ".$db->quoteValue($type);
 		$db->setQuery($query);
+		$db->closeDBO ();
 		$results = $db->loadObjectList();
 		foreach ($results as $result)
 		{
@@ -1049,14 +1086,14 @@ class oseFirewallStat
 		$return['success'] = true;
 		return $return;
 	}
-	
 	public function getConfigurationByName($name)
 	{
 		$db = oseFirewall::getDBO();
 		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = ".$db->quoteValue('devMode');
 		$db->setQuery($query);
 		$results = $db->loadResultList();
-		if($results[0]['value'] == 1)
+		$db->closeDBO ();
+		if ($results[0]['value'] == 1)
 		{
 			return true;
 		}
@@ -1064,9 +1101,7 @@ class oseFirewallStat
 		{
 			return false;
 		}
-		
 	}
-	
 	private function convertValue($key, $value)
 	{
 		if (is_numeric($value))
@@ -1101,6 +1136,7 @@ class oseFirewallStat
 		$query = "SELECT `id` FROM `#__ose_secConfig` WHERE `key` = ".$db->quoteValue($key)." AND `type` = ".$db->quoteValue($type);
 		$db->setQuery($query);
 		$result = $db->loadResult();
+		$db->closeDBO ();
 		return (isset($result['id'])) ? $result['id'] : false;
 	}
 	private function ConfVariableInsert($key, $value, $type)
@@ -1113,6 +1149,7 @@ class oseFirewallStat
 			'type' => $type
 		);
 		$id = $db->addData ('insert', '#__ose_secConfig', '', '', $varValues);
+		$db->closeDBO ();
 		return $id;
 	}
 	private function ConfVariableUpdate($keyID, $value)
@@ -1121,7 +1158,9 @@ class oseFirewallStat
 		$varValues = array(
 			'value' => $value
 		);
-		return $db->addData('update', '#__ose_secConfig', 'id', (int) $keyID, $varValues);
+		$result = $db->addData('update', '#__ose_secConfig', 'id', (int) $keyID, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
 	// OSE Firewall Basic Rulesets
 	public function getRulesets()
@@ -1168,6 +1207,7 @@ class oseFirewallStat
 		$query = "SELECT * FROM `#__osefirewall_basicrules`".$where." ORDER BY id ASC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	private function getAdvanceRulesetsDB($search, $status, $start, $limit)
@@ -1182,6 +1222,7 @@ class oseFirewallStat
 		$query = "SELECT * FROM `#__osefirewall_advancerules`".$where." ORDER BY id ASC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	private function getAdvancePatternsDB($search, $status, $start, $limit)
@@ -1196,6 +1237,7 @@ class oseFirewallStat
 		$query = "SELECT p.*, t.type FROM `#__osefirewall_advancepatterns` as p LEFT JOIN `#__osefirewall_vstypes` as t ON p.type_id = t.id".$where." ORDER BY id ASC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
+		$db->closeDBO ();
 		return $results;
 	}
 	private function convertRulesets($results)
@@ -1242,17 +1284,23 @@ class oseFirewallStat
 	public function getRulesetsTotal()
 	{
 		$db = oseFirewall::getDBO();
-		return $db->getTotalNumber('id', '#__osefirewall_basicrules');
+		$result = $db->getTotalNumber('id', '#__osefirewall_basicrules');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function getAdvanceRulesetsTotal()
 	{
 		$db = oseFirewall::getDBO();
-		return $db->getTotalNumber('id', '#__osefirewall_advancerules');
+		$result = $db->getTotalNumber('id', '#__osefirewall_advancerules');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function getAdvancePatternsTotal()
 	{
 		$db = oseFirewall::getDBO();
-		return $db->getTotalNumber('id', '#__osefirewall_advancepatterns');
+		$result = $db->getTotalNumber('id', '#__osefirewall_advancepatterns');
+		$db->closeDBO ();
+		return $result;
 	}
 	public function changeRulesetStatus($id, $status)
 	{
@@ -1260,7 +1308,9 @@ class oseFirewallStat
 		$varValues = array(
 			'action' => (int) $status
 		);
-		return $db->addData('update', '#__osefirewall_basicrules', 'id', (int) $id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_basicrules', 'id', (int) $id, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
 	public function changeAdvanceRulesetStatus($id, $status)
 	{
@@ -1268,6 +1318,8 @@ class oseFirewallStat
 		$varValues = array(
 			'action' => (int) $status
 		);
-		return $db->addData('update', '#__osefirewall_advancerules', 'id', (int) $id, $varValues);
+		$result = $db->addData('update', '#__osefirewall_advancerules', 'id', (int) $id, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
 }

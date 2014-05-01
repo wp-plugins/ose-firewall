@@ -137,6 +137,7 @@ class oseDownloader
 			);
 			$id = $db->addData('update', '#__osefirewall_versions', 'version_id', $result->version_id, $varValues);
 		}
+		$db->closeDBO ();
 		return $id;
 	}
 }
