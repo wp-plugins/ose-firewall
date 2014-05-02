@@ -31,7 +31,7 @@ class DashboardModel extends BaseModel {
 	public function showStatus() {
 		$dbReady = $this->isDBReady();
 		if ($dbReady['ready'] == false) {
-			echo '<div class ="warning">' . oLang :: _get('DBNOTREADY') . ' &nbsp;&nbsp; <button id ="install-button" name ="install-button" class = "button" onClick = "installDB ();">' . oLang :: _get('INSTALLDB') . '</button></div>';
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('DBNOTREADY') . ' </div> <div class = "warning-buttons"><a id ="install-button" name ="install-button" class = "button-primary" onClick = "installDB ();">' . oLang :: _get('INSTALLDB') . '</a></div></div>';
 		} else {
 			echo '<div class ="ready">' . oLang :: _get('READYTOGO') .' </div>';
 		}
@@ -263,13 +263,14 @@ class DashboardModel extends BaseModel {
 	}
 	public function isDevelopModelEnable(){
 		$dbReady = oseFirewall :: isDBReady();
+		$action = '<div class = "warning-buttons"><a class = "button-primary" href ="admin.php?page=ose_fw_scanconfig" target="_blank">heal me</a></div>';
 		if ($dbReady == true)
 		{
 			$oseFirewallStat = new oseFirewallStat();
 			$isEnable = $oseFirewallStat->getConfigurationByName($type);
 			if($isEnable)
 			{
-				echo '<div class ="warning">' . oLang :: _get('DISDEVELOPMODE')."</div>";
+				echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('DISDEVELOPMODE')."</div>".$action."</div>";
 			}
 			else {
 				echo '<div class ="ready">' . oLang :: _get('DEVELOPMODE_DISABLED') .' </div>';
@@ -279,9 +280,10 @@ class DashboardModel extends BaseModel {
 	public function isAdFirewallReady(){
 		$oseFirewallStat = new oseFirewallStatPro();
 		$isReady = $oseFirewallStat->isAdFirewallReady();
+		$action = '<div class = "warning-buttons"><a class = "button-primary" href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">heal me</a></div>';
 		if(!$isReady)
 		{
-			echo '<div class ="warning">' . oLang :: _get('ADVANCERULESNOTREADY')."</div>";
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADVANCERULESNOTREADY')." </div>". $action." </div>";
 		}
 		else {
 			echo '<div class ="ready">' . oLang :: _get('ADVANCERULES_READY') .' </div>';
@@ -292,7 +294,8 @@ class DashboardModel extends BaseModel {
 		$userID = $oseFirewallStat->isUserAdminExist ();
 		if($userID != false)
 		{
-			echo '<div class ="warning">' . oLang :: _get('ADMINUSER_EXISTS'). " (Solution will be available in Centrora 3.1.1) </div>";
+			$action = '<div class = "warning-buttons"> <a href="user-edit.php?user_id='.$userID.'" class="button-primary">heal me</a> </div>';
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADMINUSER_EXISTS'). " (Solution will be available in Centrora 3.1.2) </div>".$action." </div>";
 		}
 		else {
 			echo '<div class ="ready">' . oLang :: _get('ADMINUSER_REMOVED') .' </div>';
@@ -301,12 +304,13 @@ class DashboardModel extends BaseModel {
 	public function isGAuthenticatorReady(){
 		$oseFirewallStat = new oseFirewallStatPro();
 		$ready = $oseFirewallStat->isGAuthenticatorReady ();
+		$action = '<div class = "warning-buttons"><a class="button-primary" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">heal me</a></div>';
 		if($ready == true)
 		{
 			echo '<div class ="ready">' . oLang :: _get('GAUTHENTICATOR_READY'). "</div>";
 		}
 		else {
-			echo '<div class ="warning">' . oLang :: _get('GAUTHENTICATOR_NOTUSED') .' </div>';
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GAUTHENTICATOR_NOTUSED') ."</div> ". $action. ' </div>';
 		}
 	}
 	public function isWPUpToDate () {
@@ -314,13 +318,13 @@ class DashboardModel extends BaseModel {
 		$updated = $oseFirewallStat->isWPUpToDate ();
 		global $wp_version;
 		$wp_version = htmlspecialchars($wp_version);
-		$action = '<a href="update-core.php" class="button-primary">Update now!</a>';
+		$action = '<div class = "warning-buttons"> <a href="update-core.php" class="button-primary">heal me</a> </div>';
 		if($updated == true)
 		{
 			echo '<div class ="ready">' . oLang :: _get('WORDPRESS_UPTODATE'). $wp_version. "</div>";
 		}
 		else {
-			echo '<div class ="warning">' . oLang :: _get('WORDPRESS_OUTDATED') . $wp_version. ". ". $action. ' </div>';
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('WORDPRESS_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
 		}
 	}
 	
