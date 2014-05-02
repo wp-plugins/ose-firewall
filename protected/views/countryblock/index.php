@@ -43,6 +43,7 @@ $this ->model->loadLocalscript ();
       </div>
       <div id ='text'>
         To turn on the Country Block function, please <a href ="http://www.centrora.com/centrora-tutorial/country-blocking/" target="_blank">read this tutorial</a>.
+        <p>*<b>Note</b>: Country Blocking is only available for Centrora Panel user.</p>
       </div>
     </div>
     

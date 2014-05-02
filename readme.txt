@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
 Tested up to: 3.9.0
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,8 +86,7 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 
 == Screenshots ==
-
-1. Firewall Configuration Setting in Centrora Security Plugin 
+1. Dashboard of the Centrora Security Plugin
 2. IP Management Panel in Centrora Security Plugin 
 3. Variables Management Panel in Centrora Security Plugin
 4. Virus Scanning Panel in Centrora Security Plugin
@@ -95,8 +94,13 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 6. Dashboard Panel in Centrora Control Panel
 7. Country Blocking Management Panel in Centrora Control Panel
 8. Google 2-step authentication activation in Centrora Control Panel
+9. Firewall Configuration Setting in Centrora Security Plugin
 
 == Changelog ==
+
+= 3.1.1 =
+* Enhancement: Change some wording in the dashboard to clarify the meaning of the menus
+* Enhancement: Add ‘fix it’ button at the end of every warning bar.
 
 = 3.1.0 =
 * Enhancement: Enhance dashboard layout

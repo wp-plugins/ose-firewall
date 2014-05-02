@@ -547,6 +547,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 }
 
 .warning {
+	overflow: hidden;
 	background-color: #ffd5d6;
 	border-bottom: 1px solid #ff7377;
 	border-left: 5px solid #ff7377;
@@ -1103,4 +1104,17 @@ ol.browsers li {
 
 .config h4 {
 	margin: 0 0 0 17px;
-} 
+}
+
+.warning-buttons{
+	width: 10%;
+	display:inline;
+	float:right;
+	text-align: center;
+}
+.warning-content{
+	float:left;
+	width: 80%;
+	display:inline; 
+	
+}
