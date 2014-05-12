@@ -927,7 +927,6 @@ class oseFirewallStat
 		{
 			$db = oseFirewall::getDBO();
 			$varValues = array(
-				'id' => 'DEFAULT',
 				'keyname' => $variable,
 				'status' => (int) $status
 			);
@@ -1143,7 +1142,6 @@ class oseFirewallStat
 	{
 		$db = oseFirewall::getDBO();
 		$varValues = array(
-			'id' => 'DEFAULT',
 			'key' => $key,
 			'value' => $value,
 			'type' => $type

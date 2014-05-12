@@ -148,3 +148,5 @@ var O_CONTINUE_SCAN = "Continue Scanning";
 var O_BACKUP_FILE_COMPLETE = "BackUp files complete";
 var O_UNINSTALL_TITLE = "Uninstall Centrora Security";
 var O_UNINSTALL_CONFIRM = "Are you sure you want to uninstall Centrora Security?";
+var O_NEWUSERNAME = "New username";
+var O_NEWUSERNAME_NOTE = "Please mark down the new username for the administrator account as once it is changed, you will need to use the new user account to login in the future.";  

@@ -233,7 +233,6 @@ public function getSignatures()
 	{
 		$db = oseFirewall::getDBO ();
 		$varValues = array(
-					'id' => 'DEFAULT',
 					'filter' => $filter,
 					'action' => (int)$status,
 					'attacktype' => $this->attackTypeEncode($attacktype),
@@ -331,5 +330,15 @@ public function getSignatures()
 	        $current = false;
 	    }
 	    return $current; 
+	}
+	public function changeusername ($username) {
+		$user = get_user_by('login', 'admin');
+		$db = oseFirewall::getDBO ();
+		$varValues = array (
+				'user_login' => $username
+		);
+		$result = $db->addData('update', '#__users', 'ID', (int)$user->ID, $varValues);
+		$db->closeDBO ();
+		return $result;
 	}
 }

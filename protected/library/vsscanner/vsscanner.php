@@ -203,7 +203,6 @@ class virusScanner {
 	}
 	public function insertInDB($filename, $type, $fileext) {
 		$varValues = array(
-						'id' => 'DEFAULT',
 						'filename' => $filename,
 						'type' => $type,
 						'checked' => 0,
@@ -260,6 +259,10 @@ class virusScanner {
 		$query = "SELECT `id`,`patterns` FROM `#__osefirewall_vspatterns`";
 		$this->db->setQuery($query);
 		$_SESSION['patterns'] = $this->db->loadObjectList();
+		//$_SESSION['patterns'][]= (object) array('id'=>'20', 'patterns'=>"[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|'<>.^*()%!-~\s]+\"[\(abcdeos46_]+\w+\'\)+\;");
+		//$_SESSION['patterns'][]= (object) array('id'=>'21', 'patterns'=>"\<\?php\s+[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|'<>.^*()%!-~\s]+\;\?\>");
+		//$_SESSION['patterns'][]= (object) array('id'=>'22', 'patterns'=>"base64\_decode");
+		//$_SESSION['patterns'][]= (object) array('id'=>'23', 'patterns'=>"eval\(");
 	}
 	private function updateAllFileStatus($status = 0)
 	{
@@ -304,11 +307,12 @@ class virusScanner {
 		return $this->returnAjaxMsg($last_file);
 	}
 	private function scanFileLoop ($start_time) {
+		ini_set('display_errors', 'on');
 		$vsInfo = $this->getVsFiles();
 		$_SESSION['oseFileArray'] = $vsInfo['fileset'];
 		$_SESSION['completed'] = $vsInfo['completed'];
 		while (count($_SESSION['oseFileArray'])>0)
-		{
+		{  
 			$since_start = $this->timeDifference($start_time, time());
 			if ($since_start>=2)
 			{
@@ -424,7 +428,14 @@ class virusScanner {
 				$return['status']= oLang:: _get('OSE_THERE_ARE'). ' '. $infectedNum. ' '. oLang :: _get('OSE_INFECTED_FILES');
 			}
 			$memory_usage = $this->getMemoryUsed();
-			$cpuload = sys_getloadavg();
+			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') 
+			{
+				$cpuload = 'N/A in Windows';	
+			}
+			else
+			{
+				$cpuload = sys_getloadavg();	
+			}
 			$timeUsed = $this->timeDifference($_SESSION['start_time'], time());
 			$completed = $_SESSION['completed'];
 			$left = count($_SESSION['oseFileArray']);

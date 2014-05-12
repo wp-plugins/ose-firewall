@@ -45,7 +45,6 @@ class oseVersionUpdate {
 	public function addUpdateLog($value) {
 		$db = oseFirewall::getDBO ();
 		$varValues = array (
-				'id' => 'DEFAULT',
 				'time' => $value 
 		);
 		$id = $db->addData ( 'insert', '#__osefirewall_updateLog', '', '', $varValues );
@@ -75,7 +74,6 @@ class oseVersionUpdate {
 	public function addPatterns($vsPattern) {
 		$db = oseFirewall::getDBO ();
 		$varValues = array (
-			'id' => 'DEFAULT',
 			'patterns' => $vsPattern['patterns'],
 			'type_id' => $vsPattern['type_id'],
 			'confidence' => $vsPattern['confidence']

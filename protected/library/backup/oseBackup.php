@@ -940,7 +940,6 @@ class oseBackupManager
 	public function insertInDB($filename, $type, $fileext)
 	{
 		$varValues = array(
-			'id' => 'DEFAULT',
 			'filename' => $filename,
 			'type' => $type,
 			'checked' => 0,
@@ -1062,14 +1061,12 @@ class oseBackupManager
 	{
 		$db = oseFirewall::getDBO();
 		$varValues = array(
-			'id' => 'DEFAULT',
 			'key' => "dropbox",
 			'value' => $access_username,
 			'type' => "scan"
 		);
 		$id = $db->addData ('insert', '#__ose_secConfig', '', '', $varValues);
 		$varValues = array(
-			'id' => 'DEFAULT',
 			'key' => "dropboxSecret",
 			'value' => $access_password,
 			'type' => "scan"

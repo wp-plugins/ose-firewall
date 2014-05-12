@@ -296,4 +296,7 @@ define('GAUTHENTICATOR_NOTUSED','<b>WARNING</b>: Google 2 Step Authenticator is 
 define('GAUTHENTICATOR_READY','Great! Google Authenticator is available in this website, please ensure all web adminsitrators have enabled the function for their accounts.');
 define('WORDPRESS_OUTDATED','<b>WARNING</b>: Your Wordpress is out dated, please update it ASAP. Current version is ');
 define('WORDPRESS_UPTODATE','Great! Your website is up-to-date with current version of ');
+define('USERNAME_CANNOT_EMPTY','Username cannot be empty');
+define('USERNAME_UPDATE_SUCCESS','Successfully changed the username. The browser will be refreshed soon, if you logged in as \'admin\', please login with your new username then.');
+define('USERNAME_UPDATE_FAILED','Failed to change the username');
 ?>
