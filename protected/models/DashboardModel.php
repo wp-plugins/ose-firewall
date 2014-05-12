@@ -44,8 +44,8 @@ class DashboardModel extends BaseModel {
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
+		$this->loadJSLauguage ($cs, $baseUrl);
 		$cs->registerScriptFile($baseUrl . '/public/js/installer.js', CClientScript::POS_END);
-
 	}
 	public function getCHeader() {
 		return oLang :: _get('DASHBOARD_TITLE');
@@ -294,8 +294,8 @@ class DashboardModel extends BaseModel {
 		$userID = $oseFirewallStat->isUserAdminExist ();
 		if($userID != false)
 		{
-			$action = '<div class = "warning-buttons"> <a href="user-edit.php?user_id='.$userID.'" class="button-primary">heal me</a> </div>';
-			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADMINUSER_EXISTS'). " (Solution will be available in Centrora 3.1.2) </div>".$action." </div>";
+			$action = '<div class = "warning-buttons"> <a href="#" class="button-primary" onClick = "showForm()">heal me</a> </div>';
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADMINUSER_EXISTS'). "</div>".$action." </div>";
 		}
 		else {
 			echo '<div class ="ready">' . oLang :: _get('ADMINUSER_REMOVED') .' </div>';
@@ -326,6 +326,11 @@ class DashboardModel extends BaseModel {
 		else {
 			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('WORDPRESS_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
 		}
+	}
+	public function changeusername ($username) {
+		$oseFirewallStat = new oseFirewallStatPro();
+		$updated = $oseFirewallStat->changeusername ($username);
+		return $updated;
 	}
 	
 	public function showAuditList(){ 

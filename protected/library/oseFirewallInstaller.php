@@ -112,6 +112,7 @@ class oseFirewallInstaller extends oseInstaller {
 		return $result; 
 	}
 	public function createACLIPView($dbFile) {
+		/* Delete later
 		$exists = $this->isViewExists('#__osefirewall_aclipmap');
 		if ($exists == false) {
 			$query = $this->readSQLFile($dbFile);
@@ -120,9 +121,11 @@ class oseFirewallInstaller extends oseInstaller {
 				return false;
 			}
 		}
+		*/
 		return true;
 	}
 	public function createAdminEmailView($dbFile) {
+		/* Delete later
 		$exists = $this->isViewExists('#__ose_app_adminemailmap');
 		if ($exists == false) {
 			$query = $this->readSQLFile($dbFile);
@@ -132,6 +135,7 @@ class oseFirewallInstaller extends oseInstaller {
 				return false;
 			}
 		}
+		*/
 		return true;
 	}
 	public function createCountryDB($dbFile){
@@ -156,6 +160,7 @@ class oseFirewallInstaller extends oseInstaller {
 		return $query;
 	}
 	public function createAttackmapView($dbFile) {
+		/* Delete later
 		$exists = $this->isViewExists('#__osefirewall_attackmap');
 		if ($exists == false) {
 			$query = $this->readSQLFile($dbFile);
@@ -164,9 +169,11 @@ class oseFirewallInstaller extends oseInstaller {
 				return false;
 			}
 		}
+		*/
 		return true;
 	}
 	public function createAttacktypeView($dbFile) {
+		/* Delete later
 		$exists = $this->isViewExists('#__osefirewall_attacktypesum');
 		if ($exists == false) {
 			$query = $this->readSQLFile($dbFile);
@@ -175,9 +182,11 @@ class oseFirewallInstaller extends oseInstaller {
 				return false;
 			}
 		}
+		*/
 		return true;
 	}
 	public function createDetMalwareView($dbFile) {
+		/* Delete later
 		$exists = $this->isViewExists('#__osefirewall_detmalware');
 		if ($exists == false) {
 			$query = $this->readSQLFile($dbFile);
@@ -186,6 +195,7 @@ class oseFirewallInstaller extends oseInstaller {
 				return false;
 			}
 		}
+		*/
 		return true;
 	}
 	public function installGeoIPDB($step, $dbFile) {

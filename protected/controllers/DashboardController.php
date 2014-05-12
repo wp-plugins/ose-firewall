@@ -33,5 +33,25 @@ class DashboardController extends BaseController {
 	public function actionCreateTables() {
 		$this ->model->actionCreateTables();
 	}
+	public function actionChangeusername() {
+		oseFirewall :: loadRequest();
+		$username = oRequest :: getVar('username', null);
+		if (empty($username))
+		{
+			oseAjax::aJaxReturn(true, 'ERROR', oLang::_get('USERNAME_CANNOT_EMPTY'), false);
+		}
+		else
+		{
+			$result = $this ->model->changeusername($username);
+			if ($result == true)
+			{
+				oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get('USERNAME_UPDATE_SUCCESS'), false);
+			}
+			else
+			{
+				oseAjax::aJaxReturn(true, 'ERROR', oLang::_get('USERNAME_UPDATE_FAILED'), false);
+			}
+		}
+	}
 }
 ?>	

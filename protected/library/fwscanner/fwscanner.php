@@ -380,7 +380,6 @@ class oseFirewallScanner {
 		$id = $this->db->loadResult();
 		if (empty ($id)) {
 			$varValues = array (
-				'id' => 'DEFAULT',
 				'keyname' => $varKey,
 				'status' => 1
 			);
@@ -394,7 +393,6 @@ class oseFirewallScanner {
 	}
 	protected function insertDetAttacktype($attacktypeID) {
 		$varValues = array (
-			'id' => 'DEFAULT',
 			'attacktypeid' => (int) $attacktypeID
 		);
 		$detattacktype_id = $this->db->addData('insert', '#__osefirewall_detattacktype', null, null, $varValues);
@@ -438,7 +436,6 @@ class oseFirewallScanner {
 		$id = $this->getDetContentID ($detcontent);
 		if (empty ($id)) {
 			$varValues = array (
-				'id' => 'DEFAULT',
 				'content' => $detcontent
 			);
 			$id = $this->db->addData('insert', '#__osefirewall_detcontent', null, null, $varValues);
@@ -460,7 +457,6 @@ class oseFirewallScanner {
 		$results = $this->db->loadObject();
 		if (empty ($results)) {
 			$varValues = array (
-				'id' => 'DEFAULT',
 				'page_url' => $this->url,
 				'action' => 1,
 				'visits' => 1
@@ -480,7 +476,6 @@ class oseFirewallScanner {
 		$results = $this->db->loadObject();
 		if (empty ($results)) {
 			$varValues = array (
-				'id' => 'DEFAULT',
 				'referer_url' => $this->referer
 			);
 			$id = $this->db->addData('insert', '#__osefirewall_referers', null, null, $varValues);

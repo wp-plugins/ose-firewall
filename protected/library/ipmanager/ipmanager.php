@@ -206,7 +206,6 @@ class oseFirewallIpManager
 		if (empty($result))
 		{
 			$varValues = array(
-				'id' => 'DEFAULT',
 				'ip32_start' => $ipstart,
 				'ip32_end' => $ipend,
 				'acl_id' => $aclid,
