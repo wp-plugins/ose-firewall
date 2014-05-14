@@ -1,0 +1,30 @@
+INSERT INTO `#__osefirewall_vstypes` (`id`, `type`) VALUES
+(1, 'O_SHELL_CODES'),
+(2, 'O_BASE64_CODES'),
+(3, 'O_JS_INJECTION_CODES'),
+(4, 'O_PHP_INJECTION_CODES'),
+(5, 'O_IFRAME_INJECTION_CODES'),
+(6, 'O_SPAMMING_MAILER_CODES'),
+(7, 'O_EXEC_MAILICIOUS_CODES'),
+(8, 'O_OTHER_MAILICIOUS_CODES');
+
+INSERT INTO `#__osefirewall_vspatterns` (`id`, `patterns`, `type_id`, `confidence`) VALUES
+(1, 'preg_replace\\(.*?\\x65\\x76\\x61\\x6C.*?\\)\\;', 1, 65),
+(2, '(r57\\s*sh|c99\\s*sh|fx29\\s*sh|Sq\\s*sh|N3t\\s*she|phpshell|web\\s*shell|Web\\s*shell|Web\\s*Shell|crystal\\s*shell|ijo\\.\\s*shell|Ynx Shell).*?', 1, 100),
+(3, '(H|h)acked\\s+(By|by).*?', 1, 85),
+(4, '<\\?(?s).*?.(x62|142).(x61|141).(x73|163).(x65|145).(x36|066).(x34|064).(x5f|137).(x64|144).(x65|145).(x63|143).(x6f|157).(x64|144).(x65|145).*?eval\\(.*\\).*(;|\\?>)', 1, 100),
+(5, 'eval\\(.*?base64_decode\\((?s).*?\\)\\);', 2, 50),
+(6, 'eval\\(.*?gzinflate\\(.*?\\(base64_decode\\((?s).*?\\);', 2, 65),
+(7, 'eval\\(.*?gzuncompress\\(.*?\\(base64_decode\\((?s).*?\\)\\);', 2, 70),
+(8, '<\\?(?s).*?(e|.x65|.*?145)(v|.x76|.*?166)(a|.x61|.*?141)(l|.x6c|.*?154)(\\(|.x28|.*?050)(b|.x62|.*?142)(a|.x61|.*?141)(s|.x73|.*?163)(e|.x65|.*?145)(6|.x36|.*?066)(4|.x34|.*?064)(_|.x5f|.*?137)(d|.x64|.*?144)(e|.x65|.*?145)(c|.x63|.*?143)(o|.x6f|.*?157)(d|.x64|.*?144)(e|.x65|.*?145).*?\\?>', 2, 80),
+(9, '<(S|s)....(T|t)(?s).*?<\\!--.*?[$][$][$].*?<\\/(S|s)....(T|t)>', 3, 100),
+(10, 'print.*?file_get_contents\\(base64_decode\\(.*?\\)\\).*?;', 4, 100),
+(11, '(Buy|buy)(?s).*?(Cialis|Cheap|viagra).*?(O|o)n-?line.*?', 4, 100),
+(12, '<\\?(?s).*?ini_set\\(.*?max_execution_time.*?set_time_limit.*?get_current_user\\(.*?mail\\(.*?\\?>', 4, 70),
+(13, '<\\?(?s).*?HTTP_HOST.*?HTTP_USER_AGENT.*?preg_replace.*?(ips|ip).(masks|mask).*?preg_match\\(.*?\\).*?header.*?http.*?(cgi|ru|fr|info|org|us|pl|net|php|cfg|pip|txt|\\?).*\\?>', 4, 75),
+(14, '<iframe\\s*src=.*?visibility.*?hidden.*?<\\/iframe>', 5, 50),
+(15, 'document.write.*?<iframe.*?src=.*?(\\.cgi|\\.ru|\\.fr|\\.info|\\.org|\.us|\\.pl|\\.net|\\.php|\\.cfg|\\.pip|\\.txt|\\.html|\\?).*?><\\/iframe>.*?;', 5, 80),
+(16, '<\\!.*?><style>div.*?<iframe.*?src=.*?border=0.*?<\\/iframe>.*?<\\!.*?>', 5, 50),
+(17, '<(S|s)....(T|t)\s+(L|l)........(VB|vb).....(T|t)>(?s).*(DropFileName|dropfilename).*?<\\/(S|s)....(T|t)>', 7, 100),
+(18, 'copy\\(\\"http:\\/\\/.*?\\".*?index.*?\\"\\);', 8, 85),
+(19, 'set_time_limit(?s).*?ignore_user_abort.*?function\\s*send_mail', 6, 100);
