@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,9 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 9. Firewall Configuration Setting in Centrora Security Plugin
 
 == Changelog ==
+
+= 3.1.3 =
+* Fixed: IP cannot be deleted in the IP Management Panel
 
 = 3.1.2 =
 * Removed: Removed the installation of views in the database

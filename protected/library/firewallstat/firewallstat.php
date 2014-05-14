@@ -519,7 +519,7 @@ class oseFirewallStat
 		$db->setQuery($query);
 		$results = $db->loadArrayList('detattacktype_id');
 		$db->closeDBO ();
-		return $result;
+		return $results;
 	}
 	public function changeACLStatus($aclid, $status)
 	{
