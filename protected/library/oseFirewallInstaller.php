@@ -64,7 +64,7 @@ class oseFirewallInstaller extends oseInstaller {
 			$query = "SELECT COUNT(id) as `count` FROM `#__osefirewall_basicrules` WHERE `id` = 11";
 			$this->db->setQuery($query);
 			$result = (object)$this->db->loadResult();
-			if (!empty($result->count))
+			if (empty($result->count))
 			{
 				$query = "INSERT INTO `#__osefirewall_basicrules` ( `id` , `rule` ,	`action` , `attacktype` )
 						  VALUES ('11', 'FILE_UPLOAD_VALIDATION', '1', '[\"13\"]');";

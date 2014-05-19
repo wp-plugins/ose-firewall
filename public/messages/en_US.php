@@ -299,4 +299,15 @@ define('WORDPRESS_UPTODATE','Great! Your website is up-to-date with current vers
 define('USERNAME_CANNOT_EMPTY','Username cannot be empty');
 define('USERNAME_UPDATE_SUCCESS','Successfully changed the username. The browser will be refreshed soon, if you logged in as \'admin\', please login with your new username then.');
 define('USERNAME_UPDATE_FAILED','Failed to change the username');
+define('GOOGLE_IS_SCANNED', '<b>WARNING</b>: Please note that Google bots are being scanned, if your website is not under heavy attack, please disable this function to avoid your SEO being afftected.');
+define('CLAMAV', 'ClamAV Integration');
+define('ACTION_PANEL', 'Action Panel');
+define('CLAMAV_STATUS', 'ClamAV Status');
+define('RELOAD_DB_DESC', 'Reload ClamAV Database');
+define('CLAMAV_DEF_VIRSION', 'ClamAV Virus Definition Version');
+define('CLAMAV_TITLE', '<b>ClamAV Integration</b>');
+define('CLAMAV_DESC', 'ClamAV is an open source anti-virus software for linux server. Centrora security can integrate ClamAV into the virus scanning function to enhance the power for picking malicious files. For server installation instruction, please see <a href ="http://www.centrora.com/blog/install-free-antivirus-clamav-on-linux/" target="_blank">this tutorial</a>. Once installed, please see <a href="http://www.centrora.com/blog/free-antivirus-for-wordpress/" target = "_blank">this tutorial</a> to enable ClamAV scanning in Centrora Security.');
+define('CLAMAV_CONNECT_SUCCESS', 'Successfully connected to Clam Daemon');
+define('CLAMAV_DEF_VERSION','ClamAV Definition Version'); 
+define('CLAMAV_CANNOT_CONNECT','Cannot connect to the ClamAV Daemon');
 ?>

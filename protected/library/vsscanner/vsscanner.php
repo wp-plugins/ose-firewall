@@ -32,6 +32,8 @@ class virusScanner {
 	private $config = '';
 	private $maxfilesize = 0;
 	private $patterns = '';
+	private $type = 0; 
+	private $clamd = null; 
 	public function __construct()
 	{
 		oseFirewall::loadLanguage();
@@ -40,7 +42,15 @@ class virusScanner {
 		$this->setFileExts();
 		$this->setMaxFileSize();
 		$this->optimizePHP (); 
+		$this->setClamd(); 
 		oseFirewall::loadFiles(); 
+	}
+	private function setClamd () {
+		if ($this->config->enable_clamav == 1) 
+		{
+			oseFirewall::callLibClass('clamd', 'clamd');
+			$this->clamd = new Clamd();
+		}
 	}
 	private function setConfiguration() {
 		if (!isset($_SESSION['oseConfig']))
@@ -256,10 +266,10 @@ class virusScanner {
 		return (!empty($result))?$result:false;
 	}
 	private function setPatterns() {
-		$query = "SELECT `id`,`patterns` FROM `#__osefirewall_vspatterns`";
+		$query = "SELECT `id`,`patterns` FROM `#__osefirewall_vspatterns` WHERE `type_id` != 9";
 		$this->db->setQuery($query);
 		$_SESSION['patterns'] = $this->db->loadObjectList();
-		//$_SESSION['patterns'][]= (object) array('id'=>'20', 'patterns'=>"[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|'<>.^*()%!-~\s]+\"[\(abcdeos46_]+\w+\'\)+\;");
+		//$_SESSION['patterns'][]= (object) array('id'=>'20', 'patterns'=>'[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|\'<>.^*()%!-~\s]+\"[\(abcdeos46_]+\w+\'\)+\;');
 		//$_SESSION['patterns'][]= (object) array('id'=>'21', 'patterns'=>"\<\?php\s+[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|'<>.^*()%!-~\s]+\;\?\>");
 		//$_SESSION['patterns'][]= (object) array('id'=>'22', 'patterns'=>"base64\_decode");
 		//$_SESSION['patterns'][]= (object) array('id'=>'23', 'patterns'=>"eval\(");
@@ -494,8 +504,47 @@ class virusScanner {
 				break;
 			}
 		}
+		if ($this->config->enable_clamav == 1 && $virus_found == false) 
+		{
+			$results = $this->clamd->scan($scan_file);
+			if ($results['status'] == 2)
+			{
+				$virus_found= true;
+				$file_id = $this->insertData($scan_file,'f', '');
+				$pattern_id = $this->logClamVirus ($results['msg']);
+				$this->logMalware($file_id, $pattern_id);
+			}
+		}
 		usleep(100);
 		return $virus_found;
+	}
+	private function logClamVirus ($msg)
+	{
+		$detectedMal = $this->getClamMessage($msg);
+		if (empty($detectedMal))
+		{
+			$db = oseFirewall::getDBO ();
+			$varValues = array(
+						'patterns' => $msg,
+						'type_id' => 9,
+						'confidence' => 100,
+					);
+			$id = $db->addData ('insert', '#__osefirewall_vspatterns', '', '', $varValues);
+			return $id;
+		}
+		else
+		{
+			return $varObject->id;
+		}
+	}
+	private function getClamMessage ($msg) {
+		$db = oseFirewall::getDBO ();
+		$query = "SELECT COUNT(`id`) as `count` FROM `#__osefirewall_vspatterns` ".
+				 " WHERE `patterns` = ".$db->QuoteValue($msg);
+		$db->setQuery($query);
+		$result = (object)($db->loadResult()); 
+		$db -> closeDBO(); 
+		return $result->count; 
 	}
 	private function logMalware ($file_id, $pattern_id)
 	{
@@ -523,6 +572,7 @@ class virusScanner {
 				 " AND `pattern_id` = ".(int)$pattern_id;
 		$db->setQuery($query);
 		$result = (object)($db->loadResult()); 
+		$db -> closeDBO(); 
 		return $result->count; 
 	}	
 	public function getNumInfectedFiles ()

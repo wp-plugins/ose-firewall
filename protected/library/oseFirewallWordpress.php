@@ -45,6 +45,26 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_firewall') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_firewall">' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= (in_array($view, array('ose_fw_vsscan', 'ose_fw_vsreport'))) ?'class="current"' : '';
+		$menu .= '><a href="#">' . oLang::_get('ANTI_VIRUS') . '</a>';
+		// SubMenu Anti-Virus Starts; 
+		$menu .= '<ul>';
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_vsscan') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_vsscan">' . oLang::_get('ANTIVIRUS'). '</a></li>';
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_vsreport') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_vsreport">' . oLang::_get('VSREPORT'). '</a></li>';
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_clamav') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_clamav">' . oLang::_get('CLAMAV'). '</a></li>';
+		$menu .= '</ul>';
+	    // SubMenu Anti-Virus Ends;
+		$menu .= '</li>';
+		// Anti-Virus Menu; 
+		
 		// Anti-Hacking Menu; 
 		$menu .= '<li ';
 		$menu .= (in_array($view, array('ose_fw_manageips', 'ose_fw_rulesets', 'ose_fw_adrulesets', 'ose_fw_variables'))) ? 'class="current"' : '';
@@ -58,9 +78,6 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'ose_fw_rulesets') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_rulesets">' . oLang::_get('RULESETS'). '</a></li>';
 		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_adrulesets') ? 'class="current"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_adrulesets">' . oLang::_get('ADRULESETS'). '</a></li>';
-		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_variables') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_variables">' . oLang::_get('VARIABLES'). '</a></li>';
 		$menu .= '<li ';
@@ -69,27 +86,6 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '</ul>';
 		// SubMenu Anti-Hacking Ends;
 		$menu .= '</li>';
-		// Anti-Virus Menu; 
-		$menu .= '<li ';
-		$menu .= (in_array($view, array('ose_fw_vsscan', 'ose_fw_vsreport'))) ?'class="current"' : '';
-		$menu .= '><a href="#">' . oLang::_get('ANTI_VIRUS') . '</a>';
-		// SubMenu Anti-Virus Starts; 
-		$menu .= '<ul>';
-		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_vsscan') ? 'class="current"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_vsscan">' . oLang::_get('ANTIVIRUS'). '</a></li>';
-		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_vsreport') ? 'class="current"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_vsreport">' . oLang::_get('VSREPORT'). '</a></li>';
-		$menu .= '</ul>';
-	    // SubMenu Anti-Virus Ends;
-		$menu .= '</li>';
-		// Premium Feature Menu; 
-		/*$menu .= '<li ';
-		$menu .= ($view == 'antivirus') ? 'class="current"' : '';
-		$menu .= '><a href="#">' . oLang::_get('PREMIUM_FEATURES') . '</a>';
-		// SubMenu Premium Feature Ends;
-		$menu .= '</li>';*/
 		
 		// Backup Feature Menu
 		$menu .= '<li ';
@@ -119,6 +115,7 @@ class oseFirewall extends oseFirewallBase {
     	add_menu_page( OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard',OSE_FWURL.'/public/images/favicon.ico');
     	add_submenu_page( 'ose_firewall', OSE_DASHBOARD_SETTING, OSE_DASHBOARD, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard' );
 		add_submenu_page( 'ose_firewall', ANTIVIRUS, ANTIVIRUS, 'manage_options', 'ose_fw_vsscan', 'oseFirewall::vsscan' );
+		add_submenu_page( 'ose_firewall', CLAMAV, CLAMAV, 'manage_options', 'ose_fw_clamav', 'oseFirewall::clamav' );
 		add_submenu_page( 'ose_firewall', VSREPORT, VSREPORT, 'manage_options', 'ose_fw_vsreport', 'oseFirewall::vsreport' );
 		add_submenu_page( 'ose_firewall', MANAGE_IPS, MANAGE_IPS, 'manage_options', 'ose_fw_manageips', 'oseFirewall::manageips' );
 		add_submenu_page( 'ose_firewall', RULESETS, RULESETS, 'manage_options', 'ose_fw_rulesets', 'oseFirewall::rulesets' );
