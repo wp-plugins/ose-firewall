@@ -58,6 +58,7 @@ class ScanconfigController extends BaseController {
 		$data['privateAPIKey'] = $_POST['privateAPIKey'];
 		$data['adVsPatterns'] = oRequest :: getVar('adVsPatterns', 0);
 		$data['adRules'] = oRequest :: getVar('adRules', 0);
+		$data['scanClamav'] = oRequest :: getInt('scanClamav', 0);
 		$this->model ->saveConfiguration($type, $data);
 	}
 }

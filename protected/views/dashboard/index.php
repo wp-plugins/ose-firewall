@@ -34,17 +34,7 @@ $this ->model->loadLocalscript ();
 	?>
     <div id ="container-left">
 	    <div id ="action-list">
-	        <div class="action-icons firewall">
-				<span class="action-icon">
-				<a href="admin.php?page=ose_fw_manageips">
-                      <img width="80" height="80" src="<?php echo OSE_FWURL; ?>/public/images/firewall.png" alt="">
-                </a>      
-				</span>
-                <a href="admin.php?page=ose_fw_manageips">
-				   <h4><?php echo FIREWALL; ?></h4>
-                </a>
-			</div>
-		   <div class="action-icons vsscan">
+	     <div class="action-icons vsscan">
 			    <span class="action-icon">
 			    <a href="admin.php?page=ose_fw_vsscan">
                      <img width="80" height="80" src="<?php echo OSE_FWURL; ?>/public/images/vsscanner.png" alt="">
@@ -53,7 +43,17 @@ $this ->model->loadLocalscript ();
                 <a href="admin.php?page=ose_fw_vsscan">
 			       <h4><?php echo OSE_VIRUS_SCAN; ?></h4>
                 </a>
-		   </div>
+		 </div>
+	     <div class="action-icons firewall">
+	            <span class="action-icon">
+			    <a href="admin.php?page=ose_fw_manageips">
+			                      <img width="80" height="80" src="<?php echo OSE_FWURL; ?>/public/images/firewall.png" alt="">
+	            </a>      
+	            </span>
+	            <a href="admin.php?page=ose_fw_manageips">
+	               <h4><?php echo FIREWALL; ?></h4>
+	            </a>
+	     </div>
 	     <div class="action-icons backup">
                <span class="action-icon">
 		       <a href="admin.php?page=ose_fw_backup">

@@ -51,15 +51,7 @@ class VsscanModel extends BaseModel {
 	{
 		oseFirewall::callLibClass('vsscanner','vsscanner');
 		$scanner = new virusScanner ();	
-		/*$totalNum = $scanner->countFiles();
-		if ($totalNum)
-		{
-			return oLang::_get('OSE_THERE_ARE').' '.oLang::_get('OSE_INTOTAL').' '.$totalNum.' '.oLang::_get('OSE_FILES').' '.oLang::_get('OSE_IN_DB');
-		}
-		else
-		{*/
-			return oLang::_get('SCAN_READY');
-		/*}*/
+		return oLang::_get('SCAN_READY');
 	}
 	private function assembleArray($result, $status, $msg, $continue, $id)
 	{
@@ -78,7 +70,7 @@ class VsscanModel extends BaseModel {
 		$resultQuery= null;
 		$infectedNum= 0;
 		oseFirewall::callLibClass('vsscanner','vsscanner'); 
-		$scanner = new virusScanner ();
+		$scanner = new virusScanner ($type);
 		$results = $scanner -> vsScan ($step);
 		if($results == false)
 		{

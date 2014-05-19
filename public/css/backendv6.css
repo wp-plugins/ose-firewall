@@ -1116,5 +1116,75 @@ ol.browsers li {
 	float:left;
 	width: 80%;
 	display:inline; 
-	
+}
+
+#vsconf {
+    float: left;
+    width: 100%;
+    background-color: #fff;
+}
+
+
+#virusscanning {
+    background-color: #0F1928;
+    float: left;
+    margin: 15px 1%;
+    min-height: 600px;
+    width: 68%;
+}
+
+#virusscanning .vsitems {
+    float: left;
+    width: 100%;
+}
+
+#virusscanning .vsitems dl {
+    padding: 2px 10px;
+}
+
+#virusscanning .info {
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-top: 10px;
+    float: left;
+}
+
+#virusscanning .content {
+    color: #FFFFFF;
+    float: right;
+    margin-left: 5px;
+    margin-top: 10px;
+    padding: 13px;
+}
+#vssetting .header, .center-content .action_panel {
+    border-bottom: 1px solid #FFFFFF;
+    color: #2F353E;
+    display: block;
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    height: 38px;
+    margin-top: 15px;
+    padding-left: 20px;
+    text-align: left;
+    width: 100%;
+}
+#vssetting .items {
+    color: #2F353E;
+    float: left;
+    padding: 15px 15px 15px 20px;
+    text-align: left;
+    width: 100%;
+}
+
+#clamavcanning {
+    float: left;
+    width: 30%;
+}
+
+.clamAVlogo {
+	background: url(../images/clamav144.jpg) no-repeat 0px 0px #fff;
+	width: 144px; height: 144px;
+	margin: 20px;
 }

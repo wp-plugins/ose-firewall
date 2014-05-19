@@ -296,7 +296,7 @@ public function getSignatures()
 				$db = oseFirewall::getDBO();
 				$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'googleVerification'";
 				$db->setQuery($query);
-				$result = $db->loadResult();
+				$results = $db->loadResult();
 				$db->closeDBO ();
 				if($results['value']== 1)
 				{
@@ -340,5 +340,23 @@ public function getSignatures()
 		$result = $db->addData('update', '#__users', 'ID', (int)$user->ID, $varValues);
 		$db->closeDBO ();
 		return $result;
+	}
+	public function isGoogleScan () {
+		if (oseFirewall::isDBReady())
+			{
+				$db = oseFirewall::getDBO();
+				$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'scanGoogleBots'";
+				$db->setQuery($query);
+				$results = $db->loadResult();
+				$db->closeDBO ();
+				if($results['value']== 1)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
 	}
 }

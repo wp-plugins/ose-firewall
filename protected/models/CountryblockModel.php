@@ -34,7 +34,7 @@ class CountryblockModel extends BaseModel
 	public function showStatus()
 	{
 		$dbReady = $this->isDBReady();
-		$action = ' <a href="http://www.centrora.com/centrora-panel-tutorial/country-blocking/" class="button-primary">heal me</a>';
+		$action = ' <a href="#" class="button-primary" onClick = "downLoadDB()">heal me</a>';
 		if ($dbReady['ready'] == false)
 		{
 			echo '<div class ="warning"> '.oLang::_get('GEONOTREADY').''.$action.'</div>';

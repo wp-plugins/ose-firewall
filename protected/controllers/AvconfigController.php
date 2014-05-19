@@ -46,7 +46,10 @@ class AvconfigController extends BaseController {
 		$data['file_ext'] = $file_exts;
 		$data['maxfilesize'] = oRequest::getInt('maxfilesize', 0);
 		$data['enable_clamav'] = oRequest::getInt('enable_clamav', 0);
+		$data['clamav_activation'] = oRequest :: getVar('clamav_activation', 'socket');
 		$data['clamavsocket'] = oRequest::getVar('clamavsocket','unix:///tmp/clamd.socket');
+		$data['clamavtcpip'] = oRequest :: getVar('clamavtcpip', '127.0.0.1');
+		$data['clamavtcpport'] = oRequest :: getVar('clamavtcpport', '3310');
 		$this->model ->saveConfiguration($type, $data);
 	}
 }

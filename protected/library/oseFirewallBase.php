@@ -180,9 +180,48 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		$oseDB2 = self::getDBO();
 		$data = $oseDB2->isTableExists('#__osefirewall_backupath');
-		$oseDB2->closeDBO();
+		if (!empty($data)) 
+		{
+			self::checkVSTypeTable (); 
+			$data = $oseDB2->isTableExists('#__osefirewall_vspatterns');
+			$oseDB2->closeDBO();
+		}
 		$ready = (!empty($data)) ? true : false;
 		return $ready;
+	}
+	// Version 4.0.0 Table checking; 
+	private static function checkVSTypeTable () {
+		$oseDB2 = self::getDBO();
+		if ( $oseDB2->isTableExists('#__osefirewall_vstypes'))
+		{
+			$query  = "SELECT COUNT(id) AS count FROM `#__osefirewall_vstypes` WHERE `type` = 'O_CLAMAV' ";
+			$oseDB2->setQuery($query);
+			$result = $oseDB2->loadResult();
+			if ($result['count'] == 1)
+			{
+				//$oseDB2->closeDBO();
+				return true;
+			}
+			else
+			{
+				if ( $oseDB2->isTableExists('#__osefirewall_vspatterns'))
+				{
+					$queries = array (); 
+					$queries[] = "SET FOREIGN_KEY_CHECKS = 0";
+					$queries[] = "DROP TABLE IF EXISTS `#__osefirewall_files` ";
+					$queries[] = "DROP TABLE IF EXISTS `#__osefirewall_vstypes` ";
+					$queries[] = "DROP TABLE IF EXISTS `#__osefirewall_vspatterns` ";
+					$queries[] = "DROP TABLE IF EXISTS `#__osefirewall_malware` ";
+					$queries[] = "DROP TABLE IF EXISTS `#__osefirewall_logs` ";
+					foreach ($queries as $query)
+					{
+						$oseDB2->setQuery($query);
+						$oseDB2->query ();
+					}  
+				}
+				return false; 
+			}
+		}	
 	}
 	private static function getGeoIPState()
 	{
@@ -297,6 +336,11 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		self::runYiiApp();
 		Yii::app()->runController('about/index');
+	}
+	public static function clamav () 
+	{
+		self::runYiiApp();
+		Yii::app()->runController('clamav/index');
 	}
 	public static function showLogo()
 	{

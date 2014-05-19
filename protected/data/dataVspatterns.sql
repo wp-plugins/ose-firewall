@@ -6,7 +6,8 @@ INSERT INTO `#__osefirewall_vstypes` (`id`, `type`) VALUES
 (5, 'O_IFRAME_INJECTION_CODES'),
 (6, 'O_SPAMMING_MAILER_CODES'),
 (7, 'O_EXEC_MAILICIOUS_CODES'),
-(8, 'O_OTHER_MAILICIOUS_CODES');
+(8, 'O_OTHER_MAILICIOUS_CODES'),
+(9, 'O_CLAMAV');
 
 INSERT INTO `#__osefirewall_vspatterns` (`id`, `patterns`, `type_id`, `confidence`) VALUES
 (1, 'preg_replace\\(.*?\\x65\\x76\\x61\\x6C.*?\\)\\;', 1, 65),

@@ -36,10 +36,10 @@ class DashboardModel extends BaseModel {
 			echo '<div class ="ready">' . oLang :: _get('READYTOGO') .' </div>';
 		}
 		$this->isDevelopModelEnable();
-		$this->isAdFirewallReady();
 		$this->isAdminExistsReady();
 		$this->isGAuthenticatorReady();
 		$this->isWPUpToDate ();
+		$this->isGoogleScan ();
 	}
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
@@ -325,6 +325,15 @@ class DashboardModel extends BaseModel {
 		}
 		else {
 			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('WORDPRESS_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
+		}
+	}
+	public function isGoogleScan () {
+		$oseFirewallStat = new oseFirewallStatPro();
+		$enabled = $oseFirewallStat->isGoogleScan ();
+		$action = '<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_seoconfig" class="button-primary">heal me</a> </div>';
+		if($enabled == true)
+		{
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GOOGLE_IS_SCANNED'). ".</div> ". $action. "</div>";
 		}
 	}
 	public function changeusername ($username) {

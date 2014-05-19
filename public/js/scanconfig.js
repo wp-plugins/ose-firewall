@@ -15,25 +15,17 @@ oseConfScan.Form = new Ext.FormPanel({
         bodyStyle:'padding:10px',
         autoScroll: false,
         width: '100%',
-        height: 900,
+        height: 480,
         renderTo: 'ConfigScan',
         items: [
         		//oseGetNormalTextField ('secretword', O_SECRET_WORD, 320, 600),
         		oseGetDisplayField(O_ANTI_HACKING_SCANNING_OPTIONS),
 				oseGetCombo('devMode', O_DEVELOPMENT_MODE, oseConfScan.Option, 600, 320, 100, 0),
 				oseGetCombo('debugMode', O_DEBUG_MODE, oseConfScan.Option, 600, 320, 100, 0),
-				{
-        			html: '<table height="30" width="600"><tr><td width="325">'+O_COUNTRY_BLOCKING+'</td><td width="280">(See <a href ="http://www.centrora.com/centrora-tutorial/country-blocking/" target="_blank">Tutorial Here</a>)</td></tr></table>',
-        			height: 40
-				},
+				oseGetCombo('blockCountry', O_COUNTRY_BLOCKING, oseConfScan.Option, 600, 320, 100, 0),
 				oseGetCombo('adRules', O_ADRULESETS, oseConfScan.Option, 600, 320, 100, 0),
-				//oseGetCombo('adVsPatterns', O_ADVS_PATTERNS, oseConfScan.Option, 600, 320, 100, 0),
-				{
-        			html: '<table height="30" width="600"><tr><td width="325">'+O_GOOGLE_2_VERIFICATION+'</td><td width="280">(See <a href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Tutorial Here</a>)</td></tr></table>',
-        			height: 40
-				},
+				oseGetCombo('googleVerification', O_GOOGLE_2_VERIFICATION, oseConfScan.Option, 600, 320, 100, 0),
 				oseGetCombo('blockIP', O_FRONTEND_BLOCKING_MODE, oseConfScan.banOption, 700, 320, 400, 0),
-				
 				oseGetDisplayField(O_ALLOWED_FILE_TYPES),
 				{
 		           xtype:'textfield',
@@ -44,17 +36,8 @@ oseConfScan.Form = new Ext.FormPanel({
 		           anchor:'98%',
 		           emptyText: 'doc,docx,jpg,png,pdf'
 		   		},
-        		oseGetDisplayField(O_APIKEY),
-				{
-		           xtype:'textarea',
-		           labelAlign: 'left',
-		           fieldLabel: '',
-		           name: 'privateAPIKey',
-		           id: 'privateAPIKey',
-		           anchor:'98%',
-		           height: 400,
-		           emptyText: 'Enter your Centrora private API Key'
-		   		}
+		   		oseGetDisplayField('Note: Centrora 3.X API is removed since version 4.0.0.')
+		   		//oseGetCombo('scanClamav', O_SCAN_CLAMAV, oseConfScan.Option, 600, 320, 100, 0)
 		],
         buttons: [{
             text: 'Save',
