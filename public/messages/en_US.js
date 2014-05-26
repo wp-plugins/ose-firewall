@@ -156,3 +156,5 @@ var DOWNLOAD_COUNTRY = "Download Country Database";
 var O_SCAN_CLAMAV = "Scan files with <a href ='http://www.clamav.net' target = '_blank'>ClamAV</a>";
 var CLAMAV_ACTIVATION_METHOD  = "ClamAV Activation Method";
 var CLAMAV_SOCKET_LOCATION = "Clam AV Socket path (if installed)";
+var O_PATTERNS = "Patterns"; 
+var O_PATTERN_ID = "Pattern ID";

@@ -103,7 +103,7 @@ class RemoteLogin
 			{
 				return false;
 			}
-			$info = explode("-", $result);
+			$info = array($result);
 			return $info;
 		}
 		else

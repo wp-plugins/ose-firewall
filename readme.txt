@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,9 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.2.1 =
+* Added: Pattern and Pattern ID in Scanning Report
 
 = 3.2.0 =
 * Removed: Advanced Firewall setting panel
