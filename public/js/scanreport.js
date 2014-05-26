@@ -45,7 +45,7 @@ function viewFiledetail(id)
 oseATHVSREPORT.vstypeFields = new Array('id', 'title');
 oseATHVSREPORT.vstypeStore = oseGetStore('vstypeStore', oseATHVSREPORT.vstypeFields, url, option, controller, 'getTypeList', params = '');
 
-oseATHVSREPORT.fields = new Array('file_id', 'filename', 'type', 'confidence','view');
+oseATHVSREPORT.fields = new Array('file_id', 'filename', 'type', 'confidence','view', 'patterns', 'pattern_id');
 oseATHVSREPORT.store = oseGetStore('attacksum', oseATHVSREPORT.fields, url, option, controller, 'getMalwareMap');
 
 oseATHVSREPORT.panel = Ext.create('Ext.grid.Panel', {
@@ -56,9 +56,11 @@ oseATHVSREPORT.panel = Ext.create('Ext.grid.Panel', {
     multiSelect: true,
     columns: [
         {id: 'file_id', header: O_FILE_ID,  hidden:false, dataIndex: 'file_id', width: 80, sortable: true}
-        ,{id: 'filename', header: O_FILE_NAME,  hidden:false, dataIndex: 'filename',width: '65%', sortable: true}
-        ,{id: 'confidence', header: O_CONFIDENCE,  hidden:false, dataIndex: 'confidence', width: '13%',  sortable: true}
-        ,{id: 'view', header: '',  hidden:false, dataIndex: 'view', width: '12%',  sortable: true}
+        ,{id: 'filename', header: O_FILE_NAME,  hidden:false, dataIndex: 'filename',width: '60%', sortable: true}
+        ,{id: 'patterns', header: O_PATTERNS,  hidden:false, dataIndex: 'patterns',width: '15%', sortable: true}
+        ,{id: 'pattern_id', header: O_PATTERN_ID,  hidden:false, dataIndex: 'pattern_id', width: '5%',  sortable: true}
+        ,{id: 'confidence', header: O_CONFIDENCE,  hidden:false, dataIndex: 'confidence', width: '5%',  sortable: true}
+        ,{id: 'view', header: '',  hidden:false, dataIndex: 'view', width: '5%',  sortable: true}
     ],
     sortInfo:{field: 'filename', direction: "ASC"},
     height: 500,

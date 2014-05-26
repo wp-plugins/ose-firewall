@@ -36,7 +36,7 @@ oseConfScan.Form = new Ext.FormPanel({
 		           anchor:'98%',
 		           emptyText: 'doc,docx,jpg,png,pdf'
 		   		},
-		   		oseGetDisplayField('Note: Centrora 3.X API is removed since version 4.0.0.')
+		   		oseGetDisplayField('Note: Centrora 3.X API is removed since version 3.2.0')
 		   		//oseGetCombo('scanClamav', O_SCAN_CLAMAV, oseConfScan.Option, 600, 320, 100, 0)
 		],
         buttons: [{
