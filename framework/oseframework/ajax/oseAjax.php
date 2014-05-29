@@ -25,7 +25,24 @@
 class oseAjax {
 	public static function runAction() {
 		oseFramework :: runYiiApp();
+		self:: secureCheck(); 
 		Yii :: app()->runController($_REQUEST['controller'].'/'.$_REQUEST['task']);
+	}
+	private static function secureCheck () {
+		oseFramework::loadUsers();
+		$oseUsers = new oseUsers ('oseFirewall'); 
+		$isadmin = $oseUsers -> isAdmin();
+		if ($isadmin)
+		{
+			return; 
+		}
+		else
+		{
+			$centnounce = $_REQUEST['centnounce'];
+			if ( ! wp_verify_nonce( $centnounce, 'centnounce' ) ) {
+			     die( 'Sorry, our software is CSRF proof.' ); 
+			}
+		}
 	}
 	public static function addActions ($func) {
 		if (class_exists('oseWordpress'))

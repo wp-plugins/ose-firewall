@@ -178,7 +178,7 @@ class RemoteLogin
 		{
 			//header('Location: '.OSE_WPURL.'/wp-admin/');
 			//echo "<script type='text/javascript'>window.location='".OSE_WPURL."/wp-admin/'</script>'";
-			}
+		}
 	}
 }
 ?>

@@ -183,4 +183,9 @@ class oseUsers {
 		$current_user = wp_get_current_user();
 		return $current_user->ID; 
 	}
+	public function isAdmin() {
+		$current_user = wp_get_current_user();
+		$adminids =$this->get_super_admins ();
+		return (in_array($current_user->ID, $adminids)); 
+	}
 }

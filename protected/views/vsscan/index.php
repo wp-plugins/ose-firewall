@@ -24,6 +24,7 @@
 */
 $this ->getModel();
 $this ->model->loadLocalscript (); 
+$this ->model->getNounce(); 
 ?>
 
 <div id = "oseappcontainer">

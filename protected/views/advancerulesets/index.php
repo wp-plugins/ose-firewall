@@ -24,7 +24,8 @@
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 $this ->getModel();
-$this ->model->loadLocalscript (); 
+$this ->model->loadLocalscript ();
+$this ->model->getNounce();  
 ?>
 <div id = "oseappcontainer">
   <div class="container">

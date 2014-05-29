@@ -377,12 +377,12 @@ class oseBackupManager
 		{
 			if ($results[$i]->dbBackupPath != null)
 			{
-				$results[$i]->dbBackupPath = "<a href = '".DB_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."'>download<i class='fa fa-cloud-download
+				$results[$i]->dbBackupPath = "<a href = '".DB_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."&centnounce=".urlencode(oseFirewall::loadNounce())."'>Download<i class='fa fa-cloud-download
 				'></i></a>";
 			}
 			if ($results[$i]->fileBackupPath != null)
 			{
-				$results[$i]->fileBackupPath = "<a href = '".FILE_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."'>download<i class='fa fa-cloud-download
+				$results[$i]->fileBackupPath = "<a href = '".FILE_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."&centnounce=".urlencode(oseFirewall::loadNounce())."'>Download<i class='fa fa-cloud-download
 				'></i></a>";
 			}
 			if ($results[$i]->type != null)

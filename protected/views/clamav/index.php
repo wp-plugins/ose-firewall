@@ -24,6 +24,7 @@
 */
 $this ->getModel();
 $this ->model->loadLocalscript ();
+$this ->model->getNounce(); 
 $clamdStatus =  $this ->model-> getClamdStatus();
 ?>
 
