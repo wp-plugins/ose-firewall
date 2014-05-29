@@ -161,7 +161,7 @@ function oseGetCombo(name, fieldlabel, data, width,  labelWidth, ListWidth, defa
   return combo; 
 }
 
-function oseGetStore(name, fields, url, option, controller, task)
+function oseGetStore(name, fields, url, option, controller, task, centnounce)
 {
 	var store = new Ext.data.JsonStore({
 		  storeId: name,
@@ -171,7 +171,7 @@ function oseGetStore(name, fields, url, option, controller, task)
 		  proxy: {
 	        type: 'ajax',
 	        url: url,
-	        extraParams: {option: option, controller:controller, task:task, action:task},
+	        extraParams: {option: option, controller:controller, task:task, action:task, centnounce: Ext.get('centnounce').getValue()},
 	        reader: {
 	            type: 'json',
 	            root: 'results',
@@ -426,7 +426,8 @@ function oseGetConfListener(url, option, controller, task, type)
 							controller: controller,
 							task: task,
 							action: task,
-							type: type					
+							type: type, 
+							centnounce: Ext.get('centnounce').getValue()
 				}
 			});
 		}
@@ -486,7 +487,8 @@ function oseGetEmailEditForm(url, option, controller, task, store, options, rend
             			option : option, 
             			controller: controller, 
             			task: task,
-            			action: task
+            			action: task,
+            			centnounce: Ext.get('centnounce').getValue()
             		},
             		waitMsg: O_PLEASE_WAIT,
             		success: function(response, options){
@@ -524,7 +526,7 @@ function oseGetEmailParamsPanel(url, controller, id, store)
 		  proxy: {
 	        type: 'ajax',
 	        url: url,
-	        extraParams: {controller:controller, task:'getEmailParams', action	:'getEmailParams', id: id},
+	        extraParams: {controller:controller, task:'getEmailParams', action	:'getEmailParams', id: id, centnounce: Ext.get('centnounce').getValue()},
 	        reader: {
 	            type: 'json',
 	            root: 'results',

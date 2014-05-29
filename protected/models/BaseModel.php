@@ -25,6 +25,7 @@
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
 class BaseModel extends CFormModel {
 	protected $db = null;
+	protected $cent_nounce = "";
 	public function __construct() {
 		
 	}
@@ -50,6 +51,9 @@ class BaseModel extends CFormModel {
 		{
 			$cs->registerScriptFile($baseUrl . '/public/messages/en_US.js', CClientScript::POS_HEAD);
 		}	
+	}
+	public function getNounce () {
+		echo '<input type="hidden" id="centnounce" value ="'.oseFirewall::loadNounce().'" />';
 	}
 	public function showHeader () { 
 		$html = '<div class="oseseparator"> &nbsp; </div>';

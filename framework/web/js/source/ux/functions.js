@@ -33,7 +33,8 @@ function uninstallDB(){
 					option : option,
 					controller: uninstallController,
 					task: uninstallTask,
-					action: uninstallTask
+					action: uninstallTask,
+					centnounce: Ext.get('centnounce').getValue()
 				},
 				method: 'POST',
 				success: function ( response, options ) {
@@ -136,7 +137,8 @@ function oseChangeItemStatus(url, option, controller, task, id, status, store)
 					task: task,
 					action: task,
 					id: id,
-					status: status
+					status: status,
+					centnounce: Ext.get('centnounce').getValue()
 				},
 				method: 'POST',
 				success: function ( response, options ) {
@@ -155,6 +157,7 @@ function oseDeleteItem(url, option, controller, task, id, store)
 					task: task,
 					action: task,
 					id: id,
+					centnounce: Ext.get('centnounce').getValue()
 				},
 				method: 'POST',
 				success: function ( response, options ) {
@@ -173,7 +176,8 @@ function oseFormSubmit(form, url, option, controller, task, store, waitMsg)
 			option : option, 
 			controller: controller, 
 			task: task,
-			action: task
+			action: task,
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		waitMsg: waitMsg,
 		success: function(response, options){
@@ -223,7 +227,8 @@ function oseAjaxTaskRequestWithIDS(ns, url, option, controller, task, ids)
 			task:task,
 			action:task,
 			controller:controller,
-			ids: ids
+			ids: ids, 
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function (response, options)
@@ -241,7 +246,8 @@ function oseAjaxTaskRequestWOIDS(ns, url, option, controller, task)
 			option : option,
 			task:task,
 			action:task,
-			controller:controller
+			controller:controller, 
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function (response, options)
@@ -260,7 +266,8 @@ function oseAjaxWinRequestWithID(url, option, controller, task,id, win)
 			controller:controller,
 			task:task,
 			action:task,
-			id: id
+			id: id, 
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function ( response, options ) {
@@ -291,7 +298,8 @@ function oseConfFormSubmit(form, url, option, controller, task, type, waitMsg)
 			controller: controller,
 			task: task,
 			action: task,
-			type: type
+			type: type, 
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		waitMsg: waitMsg,
@@ -332,7 +340,8 @@ function oseAjax(url, option, controller, task)
 					option : option,
 					controller: controller,
 					task: task,
-					action: task
+					action: task,
+					centnounce: Ext.get('centnounce').getValue()
 				},
 				method: 'POST',
 				success: function ( response, options ) {
@@ -350,7 +359,8 @@ function oseLoadForm (form, url, option, controller, renderTask, id) {
 					controller:controller,
 					task:renderTask,
 					action:renderTask,
-					id:id					
+					id:id,
+					centnounce: Ext.get('centnounce').getValue()
 		}
 	});
 }

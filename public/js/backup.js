@@ -63,7 +63,8 @@ function bkFormSubmit(form, url, option, controller, task, store, waitMsg)
 			option : option, 
 			controller: controller, 
 			task: task,
-			action: task
+			action: task,
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		waitMsg: waitMsg,
 		success: function(response, options){
@@ -99,7 +100,8 @@ function backupFilesAjax (step, win, task, backupType, counter) {
 			controller: controller,
 			task: task,
 			action: task,
-			step : step
+			step : step,
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function ( response, options ) {
@@ -154,7 +156,8 @@ function checkAuth(url, option, controller, backup_to)
 			option : option,
 			controller: controller,
 			task: 'checkAuth',
-			action: 'checkAuth'
+			action: 'checkAuth',
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function ( response, options ) {
@@ -304,7 +307,8 @@ function saveAccessInfo(form, url, option, controller, task, store)
 			option : option, 
 			controller: controller, 
 			task: task,
-			action: task
+			action: task,
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		success: function(response, options){
 			Ext.Msg.alert("Success", "Save information success", function(btn, text){

@@ -455,4 +455,7 @@ class oseFirewallBase extends oseFirewallRoot
 		}
 		return $return;
 	}
+	public function loadNounce () {
+		return wp_create_nonce( 'centnounce' ); 
+	}
 }

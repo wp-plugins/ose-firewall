@@ -31,7 +31,8 @@ function createTables (step, win, task) {
 			controller: controller,
 			task: task,
 			action: task,
-			step : step
+			step : step,
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function ( response, options ) {
@@ -62,7 +63,8 @@ function downLoadFile(step, win, task) {
 			controller: controller,
 			task: task,
 			action: task,
-			step : step
+			step : step,
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function (response, options) {

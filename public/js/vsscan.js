@@ -47,7 +47,8 @@ function scanAntivirus (step, task, counter) {
 			controller: controller,
 			task: task,
 			action: task,
-			step : step
+			step : step,
+			centnounce: Ext.get('centnounce').getValue()
 		},
 		method: 'POST',
 		success: function ( response, options ) {
