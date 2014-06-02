@@ -194,17 +194,17 @@ class oseFirewallBase extends oseFirewallRoot
 		$oseDB2 = self::getDBO();
 		if ( $oseDB2->isTableExists('#__osefirewall_vstypes'))
 		{
-			$query  = "SELECT COUNT(id) AS count FROM `#__osefirewall_vstypes` WHERE `type` = 'O_CLAMAV' ";
+			$query  = "SELECT COUNT(id) AS count1, COUNT(*) AS count2 FROM `#__osefirewall_vstypes` WHERE `type` = 'O_CLAMAV' ";
 			$oseDB2->setQuery($query);
 			$result = $oseDB2->loadResult();
-			if ($result['count'] == 1)
+			if ($result['count1'] == 1)
 			{
 				//$oseDB2->closeDBO();
 				return true;
 			}
 			else
 			{
-				if ( $oseDB2->isTableExists('#__osefirewall_vspatterns'))
+				if ( $result['count2']>0 && $oseDB2->isTableExists('#__osefirewall_vspatterns'))
 				{
 					$queries = array (); 
 					$queries[] = "SET FOREIGN_KEY_CHECKS = 0";

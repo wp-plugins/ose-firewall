@@ -24,6 +24,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
+$this ->model->getNounce(); 
 ?>
 <div id = "oseappcontainer">
   <div class="container">
