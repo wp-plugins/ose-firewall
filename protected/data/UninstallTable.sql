@@ -38,6 +38,12 @@ DROP TABLE IF EXISTS `#__osefirewall_advancerules`;
 DROP TABLE IF EXISTS `#__osefirewall_advancerules_bk`;
 DROP TABLE IF EXISTS `#__osefirewall_backupath`;
 DROP TABLE IF EXISTS `#__osefirewall_vsfile`;
+DROP TABLE IF EXISTS `#__osefirewall_country`;
+DROP VIEW IF EXISTS `#__osefirewall_aclipmap`;
+DROP VIEW IF EXISTS `#__ose_app_adminemailmap`;
+DROP VIEW IF EXISTS `#__osefirewall_attackmap`;
+DROP VIEW IF EXISTS `#__osefirewall_attacktypesum`;
+DROP VIEW IF EXISTS `#__osefirewall_detmalware`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
