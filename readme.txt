@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.3.1
+Stable tag: 3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,13 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.4.1 =
+* Updated: Update the Local File Inclusion rule to reduce false alert
+
+= 3.4.0 =
+* Fixed: Removed views from the database that caused the database backup and restore interruption
+* Enhancement: Updated database uninstallation function to clear all Centrora tables
 
 = 3.3.1 =
 * Fixed: On some servers, the virus type table interrupts the installation process

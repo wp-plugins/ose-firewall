@@ -248,7 +248,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 						break;
 					}
 					// If the value starts with a /, ../ or [a-z]{1,2}:, block
-					if (preg_match ( '#^(/|\.\.|[a-z]{1,2}:\\\)#i', $value )) {
+					if (preg_match ( '#^(\.\.)\/(\/|[a-z])+#i', $value, $matches )) {
 						// Fix 2.0.1: Check that the file exists
 						$result = @ file_exists ( $value );
 						return $value;
