@@ -2,10 +2,10 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, 2-step authenticator, country block
+Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.4.0
+Stable tag: 3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,9 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
 Centrora Security is a new plugin that modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities. 
+
+= Are you managing more than one websites? =
+You can now manage all your WordPress sites with Centrora Security features in one place with our panel, Centrora Panel. Centrora Panel aims to provide you the ability to perform websites security management, without accessing your admin sites one by one.<a href="http://www.centrora.com/centrora-features/">Visit Centrora Panel</a>
 
 = New features in v3.0: =
 * Enhancement: Improved Backend User Interface
@@ -95,6 +98,9 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.4.1 =
+* Updated: Update the Local File Inclusion rule to reduce false alert
 
 = 3.4.0 =
 * Fixed: Removed views from the database that caused the database backup and restore interruption
