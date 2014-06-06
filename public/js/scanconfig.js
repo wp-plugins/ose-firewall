@@ -15,7 +15,7 @@ oseConfScan.Form = new Ext.FormPanel({
         bodyStyle:'padding:10px',
         autoScroll: false,
         width: '100%',
-        height: 480,
+        height: 725,
         renderTo: 'ConfigScan',
         items: [
         		//oseGetNormalTextField ('secretword', O_SECRET_WORD, 320, 600),
@@ -36,7 +36,17 @@ oseConfScan.Form = new Ext.FormPanel({
 		           anchor:'98%',
 		           emptyText: 'doc,docx,jpg,png,pdf'
 		   		},
-		   		oseGetDisplayField('Note: Centrora 3.X API is removed since version 3.2.0')
+		   		oseGetDisplayField(O_APIKEY),
+				{
+		           xtype:'textarea',
+		           labelAlign: 'left',
+		           fieldLabel: '',
+		           name: 'privateAPIKey',
+		           id: 'privateAPIKey',
+		           anchor:'98%',
+		           height: 300,
+		           emptyText: 'Enter your Centrora private API Key'
+		   		}
 		   		//oseGetCombo('scanClamav', O_SCAN_CLAMAV, oseConfScan.Option, 600, 320, 100, 0)
 		],
         buttons: [{
