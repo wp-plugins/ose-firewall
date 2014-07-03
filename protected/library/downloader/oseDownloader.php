@@ -32,12 +32,13 @@ class oseDownloader
 	private $type = null;
 	private $key = null;
 	private $url = null; 
+	private $live_url = null; 
 	public function __construct($type, $key = null)
 	{
 		$this->type = $type;
 		$this->key = $key;
-		$live_url = "http://www.centrora.com/?";
-		$this->url = $live_url."download=1&downloadKey=".$this->key;
+		$this->live_url = "http://www.centrora.com/?";
+		$this->url = $this->live_url."download=1&downloadKey=".$this->key;
 		oseFirewall::loadFiles(); 
 	}
 	public function download()
@@ -139,5 +140,54 @@ class oseDownloader
 		}
 		$db->closeDBO ();
 		return $id;
+	}
+	
+	private function mergeString($scanURL, $content)
+	{
+		$url = "";
+		foreach ($content as $key => $value)
+		{
+			$tmp[] = @$key.'='.urlencode(@$value);
+		}
+		$workstring = implode("&", $tmp);
+		$url .= $scanURL."&".$workstring;
+		return $url;
+	}
+	public function sendRequest($content)
+	{
+		$url = $this->mergeString ($this->live_url, $content);
+		// Get cURL resource
+		$curl = curl_init();
+		// Set some options - we are passing in a useragent too here
+		curl_setopt_array($curl, array(
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_URL => $url,
+			CURLOPT_USERAGENT => 'Centrora Security Plugin Request Agent'
+		));
+		// Send the request & save response to $resp
+		$resp = curl_exec($curl);
+		// Close request to clear up some resources
+		curl_close($curl);
+		return $resp;
+	}
+	public function getAPIkey () {
+		$db = oseFirewall::getDBO ();
+		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'privateAPIKey'";	
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		$db->closeDBO ();
+		return $result['value'];
+	}
+	
+	public function getRemoteAPIKey () {
+		oseFirewall::loadUsers ();
+		$users = new oseUsers('wordpress');
+		$content = array (); 
+		$content['url'] = OSE_WPURL; 
+		$content['remoteChecking'] = true;
+		$content['task'] = 'checkSubstatus';
+		$content['admin_email'] = $users->getUserEmail();
+		$response = $this->sendRequest($content);
+		return $response;   
 	}
 }

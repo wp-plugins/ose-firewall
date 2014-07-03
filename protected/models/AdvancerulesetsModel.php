@@ -36,7 +36,26 @@ class AdvancerulesetsModel extends BaseModel
 	}
 	public function getCDescription()
 	{
-		return oLang::_get('MANAGE_AD_RULESETS_DESC');
+		$version = $this->getRuleVersion (); 
+		if (!empty($version))
+		{
+			return oLang::_get('MANAGE_AD_RULESETS_DESC').". Your signature version is: ".$version.".";
+		}
+		else
+		{
+			return oLang::_get('MANAGE_AD_RULESETS_DESC');
+		}
+	}
+	private function getRuleVersion () {
+		$oseFirewallStat = new oseFirewallStat();
+		if (oseFirewall::isDBReady())
+		{
+			return $oseFirewallStat->getCurrentSignatureVersion(); 
+		}
+		else
+		{
+			return "";
+		}
 	}
 	public function loadLocalScript()
 	{
@@ -104,5 +123,12 @@ class AdvancerulesetsModel extends BaseModel
 	public function getVersion(){
 		$oseFirewallStat = new oseFirewallStat();
 		return $oseFirewallStat->getAdvanceRulesVersion();
+	}
+	
+	public function checkAPI () {
+		oseFirewall::callLibClass('downloader', 'oseDownloader');
+		$downloader = new oseDownloader('ath', null);
+		$response = $downloader->getRemoteAPIKey();
+		return $response; 
 	}
 }

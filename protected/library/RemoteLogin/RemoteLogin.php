@@ -180,5 +180,60 @@ class RemoteLogin
 			//echo "<script type='text/javascript'>window.location='".OSE_WPURL."/wp-admin/'</script>'";
 		}
 	}
+	public function updateSignature () {
+		$ip = $this->getRealIP(); 
+		// Centrora server IP List; 
+		$iplist = array ('50.30.47.113', '199.217.116.55');
+		if (in_array($ip, $iplist) == false)
+		{
+			die("Invalid Request"); 
+		}
+		$downloadtype=oRequest :: getInt('downloadtype', 0);
+		$action = ($downloadtype==0)?"actionDownload":"actionUpdate"; 
+		$this->callControllerClass('DownloadRemoteController');
+		$RemoteController = new DownloadRemoteController('download');
+		$RemoteController->$action();
+	}
+	private function getRealIP()
+	{
+		$ip = false;
+		if (!empty($_SERVER['HTTP_CLIENT_IP']))
+		{
+			$ip = $_SERVER['HTTP_CLIENT_IP'];
+		}
+		if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+		{
+			$ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
+			if ($ip)
+			{
+				array_unshift($ips, $ip);
+				$ip = false;
+			}
+			$this->tvar = phpversion();
+			for ($i = 0, $total = count($ips); $i < $total; $i++)
+			{
+				if (!preg_match("/^(10|172\.16|192\.168)\./i", $ips[$i]))
+				{
+					if (version_compare($this->tvar, "5.0.0", ">="))
+					{
+						if (ip2long($ips[$i]) != false)
+						{
+							$ip = $ips[$i];
+							break;
+						}
+					}
+					else
+					{
+						if (ip2long($ips[$i]) != - 1)
+						{
+							$ip = $ips[$i];
+							break;
+						}
+					}
+				}
+			}
+		}
+		return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+	}
 }
 ?>

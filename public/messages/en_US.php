@@ -310,4 +310,7 @@ define('CLAMAV_DESC', 'ClamAV is an open source anti-virus software for linux se
 define('CLAMAV_CONNECT_SUCCESS', 'Successfully connected to Clam Daemon');
 define('CLAMAV_DEF_VERSION','ClamAV Definition Version'); 
 define('CLAMAV_CANNOT_CONNECT','Cannot connect to the ClamAV Daemon');
+define('O_LATEST_SIGNATURE', '20140703');
+define('SIGNATURE_UPTODATE','Your firewall rules are up to date');
+define('SIGNATURE_OUTDATED','<b>WARNING</b>: Your firewall rules are out-dated, please update the rules to enhance protection.');
 ?>

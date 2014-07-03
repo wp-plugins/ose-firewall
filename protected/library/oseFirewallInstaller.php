@@ -310,6 +310,7 @@ class oseFirewallInstaller extends oseInstaller {
 		if ($result['count'] > 0) {
 			$data = $this->readSQLFile($dbFile);
 			$queries = $this->_splitQueries($data);
+			$this->padTable ($result['count'], COUNT($queries));
 			foreach ($queries as $query) 
 			{
 				$this->db->setQuery($query);
@@ -319,5 +320,21 @@ class oseFirewallInstaller extends oseInstaller {
 			}
 		}
 		return true;
+	}
+	private function padTable ($original_count, $new_count) {
+		$diff = $new_count-$original_count;
+		if ($diff>0)
+		{
+			for ($i=0; $i<$diff; $i++)
+			{
+				$id = $original_count+1+$i; 
+				$query = "INSERT INTO `#__osefirewall_advancerules` (`id`, `filter`, `action`, `attacktype`, `impact`, `description`)  VALUES  
+						  (".(int)$id.", '', 1, '', 0, '')";
+				$this->db->setQuery($query);
+				if (!$this->db->query()) {
+					break;
+				}
+			}
+		} 
 	}
 } 

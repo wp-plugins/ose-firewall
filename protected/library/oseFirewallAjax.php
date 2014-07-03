@@ -52,7 +52,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionAdvancerulesets () {
-		$actions = array ('getRulesets', 'changeRuleStatus');
+		$actions = array ('getRulesets', 'changeRuleStatus', 'checkAPI');
 		parent::loadActions($actions);
 	}
 	public static function loadActionSeoconfig () {

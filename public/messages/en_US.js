@@ -158,3 +158,5 @@ var CLAMAV_ACTIVATION_METHOD  = "ClamAV Activation Method";
 var CLAMAV_SOCKET_LOCATION = "Clam AV Socket path (if installed)";
 var O_PATTERNS = "Patterns"; 
 var O_PATTERN_ID = "Pattern ID";
+var O_GET_RULES = "Get Rules";
+var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140703, updated on 3rd July 2014</div>";

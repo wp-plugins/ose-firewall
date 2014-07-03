@@ -4,7 +4,7 @@ Plugin Name: Centrora Security
 Plugin URI: http://wordpress.org/extend/plugins/ose-firewall/
 Description: Centrora Security (previously OSE Firewall) - A WordPress Security Firewall plugin created by Centrora. Protect your WordPress site by identify any malicious codes, spam, virus, SQL injection, and security vulnerabilities. If you are managing multiple sites, try out <a href='www.centrora.com/centrora-features'>Centrora Panel</a> for multiple sites security management.  
 Author: Centrora (Previously ProWeb)
-Version: 3.4.2
+Version: 3.5.0
 Author URI: http://www.centrora.com/
 */
 
@@ -40,6 +40,7 @@ else if ($systemReady[0] == true)
     $ready = oseFirewall::isDBReady(); 
     oseFirewall::loadRequest();	
     $remote = oRequest :: getInt('remoteLogin', 0);
+    $signatureUpdate = oRequest :: getInt('signatureUpdate', 0);
     $userID = null;
     if($remote > 0) {
     	$remoteLogin = new RemoteLogin();
@@ -49,20 +50,28 @@ else if ($systemReady[0] == true)
     {
 		if ($ready == true) 
 		{
-			$isAdvanceFirewallScanner = $oseFirewall->isAdvanceFirewallSettingEnable();
-			if($isAdvanceFirewallScanner == true){
-				oseFirewall::callLibClass('fwscanner','fwscannerbs');
-				oseFirewall::callLibClass('fwscanner','fwscannerad');
-				
-				$oseFirewallScanner = new oseFirewallScannerBasic ();
-		    	$oseFirewallScanner ->hackScan(); 
-		    	
-				$oseFirewallScanner = new oseFirewallScannerAdvance ();
-		    	$oseFirewallScanner ->hackScan(); 
-			}else{
-				oseFirewall::callLibClass('fwscanner','fwscannerbs');
-				$oseFirewallScanner = new oseFirewallScannerBasic ();
-		    	$oseFirewallScanner ->hackScan(); 
+			if ($signatureUpdate == 1)
+			{
+				$remoteLogin = new RemoteLogin();
+				$remoteLogin->updateSignature();
+			}
+			else
+			{
+				$isAdvanceFirewallScanner = $oseFirewall->isAdvanceFirewallSettingEnable();
+				if($isAdvanceFirewallScanner == true){
+					oseFirewall::callLibClass('fwscanner','fwscannerbs');
+					oseFirewall::callLibClass('fwscanner','fwscannerad');
+					
+					$oseFirewallScanner = new oseFirewallScannerBasic ();
+			    	$oseFirewallScanner ->hackScan(); 
+			    	
+					$oseFirewallScanner = new oseFirewallScannerAdvance ();
+			    	$oseFirewallScanner ->hackScan(); 
+				}else{
+					oseFirewall::callLibClass('fwscanner','fwscannerbs');
+					$oseFirewallScanner = new oseFirewallScannerBasic ();
+			    	$oseFirewallScanner ->hackScan(); 
+				}
 			}
 		}
     }

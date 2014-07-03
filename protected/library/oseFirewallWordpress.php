@@ -78,6 +78,9 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'ose_fw_rulesets') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_rulesets">' . oLang::_get('RULESETS'). '</a></li>';
 		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_adrulesets') ? 'class="current"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_adrulesets">' . oLang::_get('ADRULESETS'). '</a></li>';
+		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_variables') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_variables">' . oLang::_get('VARIABLES'). '</a></li>';
 		$menu .= '<li ';

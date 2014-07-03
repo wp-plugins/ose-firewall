@@ -40,6 +40,7 @@ class DashboardModel extends BaseModel {
 		$this->isGAuthenticatorReady();
 		$this->isWPUpToDate ();
 		$this->isGoogleScan ();
+		$this->isSignatureUpToDate(); 
 	}
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
@@ -342,6 +343,18 @@ class DashboardModel extends BaseModel {
 		return $updated;
 	}
 	
+	public function isSignatureUpToDate () {
+		$oseFirewallStat = new oseFirewallStatPro();
+		$version = $oseFirewallStat->getCurrentSignatureVersion(); 
+		$action = '<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_adrulesets" class="button-primary">heal me</a> </div>';
+		if($version>O_LATEST_SIGNATURE)
+		{
+			echo '<div class ="ready">' . oLang :: _get('SIGNATURE_UPTODATE'). $wp_version. "</div>";
+		}
+		else {
+			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('SIGNATURE_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
+		}
+	}
 	public function showAuditList(){ 
 	
 	}

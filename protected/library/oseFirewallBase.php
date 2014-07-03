@@ -189,7 +189,7 @@ class oseFirewallBase extends oseFirewallRoot
 		$ready = (!empty($data)) ? true : false;
 		return $ready;
 	}
-	// Version 4.0.0 Table checking; 
+	// Version 3.4.0 Table checking; 
 	private static function checkVSTypeTable () {
 		$oseDB2 = self::getDBO();
 		if ( $oseDB2->isTableExists('#__osefirewall_vstypes'))
