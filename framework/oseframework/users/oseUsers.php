@@ -188,4 +188,12 @@ class oseUsers {
 		$adminids =$this->get_super_admins ();
 		return (in_array($current_user->ID, $adminids)); 
 	}
+	public static function getUserLogin() {
+		$current_user = wp_get_current_user();
+		return $current_user->user_login; 
+	}
+	public static function getUserEmail() {
+		$current_user = wp_get_current_user();
+		return $current_user->user_email; 
+	}
 }

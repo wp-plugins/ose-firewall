@@ -12,7 +12,7 @@ INSERT INTO `#__osefirewall_vstypes` (`id`, `type`) VALUES
 INSERT INTO `#__osefirewall_vspatterns` (`id`, `patterns`, `type_id`, `confidence`) VALUES
 (1, 'preg_replace\\(.*?\\x65\\x76\\x61\\x6C.*?\\)\\;', 1, 65),
 (2, '(r57\\s*sh|c99\\s*sh|fx29\\s*sh|Sq\\s*sh|N3t\\s*she|phpshell|web\\s*shell|Web\\s*shell|Web\\s*Shell|crystal\\s*shell|ijo\\.\\s*shell|Ynx Shell).*?', 1, 100),
-(3, '(H|h)acked\\s+(By|by).*?', 1, 85),
+(3, '(H|h)acked\\s+(By|by).*?(?!(Lance\\sRushing))', 1, 85),
 (4, '<\\?(?s).*?.(x62|142).(x61|141).(x73|163).(x65|145).(x36|066).(x34|064).(x5f|137).(x64|144).(x65|145).(x63|143).(x6f|157).(x64|144).(x65|145).*?eval\\(.*\\).*(;|\\?>)', 1, 100),
 (5, 'eval\\(.*?base64_decode\\((?s).*?\\)\\);', 2, 50),
 (6, 'eval\\(.*?gzinflate\\(.*?\\(base64_decode\\((?s).*?\\);', 2, 65),

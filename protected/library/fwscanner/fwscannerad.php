@@ -27,6 +27,7 @@ if (! defined ( 'OSE_FRAMEWORK' )) {
 	die ( 'Direct Access Not Allowed' );
 }
 oseFirewall::callLibClass ( 'fwscanner', 'fwscanner' );
+oseFirewall::callLibClass ( 'fwscanner', 'Converter' );
 oseFirewall::loadJSON ();
 class oseFirewallScannerAdvance extends oseFirewallScanner {
 	protected $threshold = 0;
@@ -64,9 +65,10 @@ class oseFirewallScannerAdvance extends oseFirewallScanner {
 		if(!isset($options)){
 			return false;
 		}
+		$request = $this -> convertVariables($request);
 		$request_str = $this ->groupRequest($request);
 		$tmpResults = array();	
-			
+		
 		foreach($options as $option){
 			if(preg_match_all("/".$option["filter"]."/ims",$request_str, $matchs)){
 				foreach($request as $index => $singleRequest){
@@ -88,7 +90,7 @@ class oseFirewallScannerAdvance extends oseFirewallScanner {
 		return $tmpResults;
 	}
 	
-	 private function groupRequest($request){
+	private function groupRequest($request){
 		$request_Str = null;
 		if(isset($request)){
 			$get_Str = implode("\n", $request[0]);
@@ -97,6 +99,16 @@ class oseFirewallScannerAdvance extends oseFirewallScanner {
 		}
 		return $request_Str; 
 	} 
+	private function convertVariables ($requestArray) {
+		foreach ($requestArray as $arrayKey => $request)
+		{
+			foreach ($request as $key=>$value)
+			{
+				$requestArray[$arrayKey][$key]=IDS_Converter::runAll($value);
+			}
+		}
+		return $requestArray;
+	}
 	
 	private function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname){
 		$return = array ();

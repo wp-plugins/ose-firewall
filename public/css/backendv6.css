@@ -1188,3 +1188,39 @@ ol.browsers li {
 	width: 144px; height: 144px;
 	margin: 20px;
 }
+
+#advRulesinstaller-innerCt {
+	padding: 15px; 
+	font-size: 16px; 
+	line-height: 24px;
+	font-family: "arial", "Helvetica", "sans-serif";
+	color: #8a8a8a;
+}
+#advRulesinstaller-innerCt ul {
+	list-style-type: square;
+	color: #8a8a8a;
+	padding-left: 30px;
+}
+
+#advRulesinstaller-innerCt button {
+	background-color: #3049BF;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #fff; 
+    border: 0px solid transparent;
+    padding: 5px 10px;
+    float: right; 
+    cursor: pointer; 
+}
+
+.signatureInfo {
+	padding: 3px 6px;
+	background-color: #B6FFB2;
+    border-bottom: 1px solid #49FF40;
+    border-left: 5px solid #49FF40;
+    border-radius: 5px;
+    color: #444444;
+    font-family: "Open Sans";
+    font-weight: 500;
+    margin: 5px;
+}

@@ -52,6 +52,11 @@ class AdvancerulesetsController extends BaseController {
 			oseAjax::aJaxReturn(true, 'ERROR', oLang::_get('ITEM_STATUS_CHANGED_FAILED'), false);
 		}
 	}
+	public function actionCheckAPI () {
+		$model= $this->getModel();
+		$result = $model -> checkAPI();
+		print_r($result); exit;    
+	}
 }	
 
 ?>
