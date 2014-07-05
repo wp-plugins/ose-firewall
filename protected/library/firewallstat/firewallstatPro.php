@@ -359,4 +359,16 @@ public function getSignatures()
 				}
 			}
 	}
+	public function getTotalBlockWebsites()
+	{
+		if (oseFirewall::isDBReady())
+		{
+			$db = oseFirewall::getDBO();
+			$query = "SELECT COUNT(id) AS count FROM `#__osefirewall_acl` WHERE status = 1"; 
+			$db ->setQuery($query); 
+			$results = $db->loadResult();
+			$db->closeDBO ();
+			return $results['count'];
+		} 
+	}
 }

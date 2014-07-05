@@ -690,16 +690,7 @@ class oseFirewallScanner {
 	}
 	private function getConfigVars()
 	{
-		if (class_exists('SConfig'))
-		{
-			$config = new SConfig();
-			return $config;
-		}
-		elseif (class_exists('JConfig'))
-		{
-			$config = new JConfig();
-			return $config;
-		}
+		oseFirewall::getConfigVars(); 
 	}
 	protected function CheckIsSpambot() {
 		// Initiate and declare spambot/errorDetected as false - as we're just getting started

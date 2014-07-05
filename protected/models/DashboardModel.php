@@ -27,6 +27,7 @@ class DashboardModel extends BaseModel {
 	public function __construct() {
 		$this->loadLibrary ();
 		oseFirewall::callLibClass('firewallstat', 'firewallstatPro');
+		oseFirewall::callLibClass('audit', 'audit');
 	}
 	public function showStatus() {
 		$dbReady = $this->isDBReady();
@@ -40,6 +41,7 @@ class DashboardModel extends BaseModel {
 		$this->isGAuthenticatorReady();
 		$this->isWPUpToDate ();
 		$this->isGoogleScan ();
+		$this->isAdFirewallReady();
 		$this->isSignatureUpToDate(); 
 	}
 	public function loadLocalScript() {
@@ -263,79 +265,28 @@ class DashboardModel extends BaseModel {
 		return $return;
 	}
 	public function isDevelopModelEnable(){
-		$dbReady = oseFirewall :: isDBReady();
-		$action = '<div class = "warning-buttons"><a class = "button-primary" href ="admin.php?page=ose_fw_scanconfig" target="_blank">heal me</a></div>';
-		if ($dbReady == true)
-		{
-			$oseFirewallStat = new oseFirewallStat();
-			$isEnable = $oseFirewallStat->getConfigurationByName($type);
-			if($isEnable)
-			{
-				echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('DISDEVELOPMODE')."</div>".$action."</div>";
-			}
-			else {
-				echo '<div class ="ready">' . oLang :: _get('DEVELOPMODE_DISABLED') .' </div>';
-			}
-		}
+		$audit = new oseFirewallAudit (); 
+		$audit -> isDevelopModelEnable(true);
 	}
 	public function isAdFirewallReady(){
-		$oseFirewallStat = new oseFirewallStatPro();
-		$isReady = $oseFirewallStat->isAdFirewallReady();
-		$action = '<div class = "warning-buttons"><a class = "button-primary" href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">heal me</a></div>';
-		if(!$isReady)
-		{
-			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADVANCERULESNOTREADY')." </div>". $action." </div>";
-		}
-		else {
-			echo '<div class ="ready">' . oLang :: _get('ADVANCERULES_READY') .' </div>';
-		}
+		$audit = new oseFirewallAudit (); 
+		$audit -> isAdFirewallReady(true);
 	}
 	public function isAdminExistsReady(){
-		$oseFirewallStat = new oseFirewallStatPro();
-		$userID = $oseFirewallStat->isUserAdminExist ();
-		if($userID != false)
-		{
-			$action = '<div class = "warning-buttons"> <a href="#" class="button-primary" onClick = "showForm()">heal me</a> </div>';
-			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADMINUSER_EXISTS'). "</div>".$action." </div>";
-		}
-		else {
-			echo '<div class ="ready">' . oLang :: _get('ADMINUSER_REMOVED') .' </div>';
-		}
+		$audit = new oseFirewallAudit (); 
+		$audit -> isAdminExistsReady(true);
 	}
 	public function isGAuthenticatorReady(){
-		$oseFirewallStat = new oseFirewallStatPro();
-		$ready = $oseFirewallStat->isGAuthenticatorReady ();
-		$action = '<div class = "warning-buttons"><a class="button-primary" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">heal me</a></div>';
-		if($ready == true)
-		{
-			echo '<div class ="ready">' . oLang :: _get('GAUTHENTICATOR_READY'). "</div>";
-		}
-		else {
-			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GAUTHENTICATOR_NOTUSED') ."</div> ". $action. ' </div>';
-		}
+		$audit = new oseFirewallAudit (); 
+		$audit -> isGAuthenticatorReady(true);
 	}
 	public function isWPUpToDate () {
-		$oseFirewallStat = new oseFirewallStatPro();
-		$updated = $oseFirewallStat->isWPUpToDate ();
-		global $wp_version;
-		$wp_version = htmlspecialchars($wp_version);
-		$action = '<div class = "warning-buttons"> <a href="update-core.php" class="button-primary">heal me</a> </div>';
-		if($updated == true)
-		{
-			echo '<div class ="ready">' . oLang :: _get('WORDPRESS_UPTODATE'). $wp_version. "</div>";
-		}
-		else {
-			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('WORDPRESS_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
-		}
+		$audit = new oseFirewallAudit (); 
+		$audit -> isWPUpToDate(true);
 	}
 	public function isGoogleScan () {
-		$oseFirewallStat = new oseFirewallStatPro();
-		$enabled = $oseFirewallStat->isGoogleScan ();
-		$action = '<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_seoconfig" class="button-primary">heal me</a> </div>';
-		if($enabled == true)
-		{
-			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GOOGLE_IS_SCANNED'). ".</div> ". $action. "</div>";
-		}
+		$audit = new oseFirewallAudit (); 
+		$audit -> isGoogleScan(true);
 	}
 	public function changeusername ($username) {
 		$oseFirewallStat = new oseFirewallStatPro();
@@ -344,16 +295,8 @@ class DashboardModel extends BaseModel {
 	}
 	
 	public function isSignatureUpToDate () {
-		$oseFirewallStat = new oseFirewallStatPro();
-		$version = $oseFirewallStat->getCurrentSignatureVersion(); 
-		$action = '<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_adrulesets" class="button-primary">heal me</a> </div>';
-		if($version>O_LATEST_SIGNATURE)
-		{
-			echo '<div class ="ready">' . oLang :: _get('SIGNATURE_UPTODATE'). $wp_version. "</div>";
-		}
-		else {
-			echo '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('SIGNATURE_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
-		}
+		$audit = new oseFirewallAudit (); 
+		$audit -> isSignatureUpToDate(true);
 	}
 	public function showAuditList(){ 
 	

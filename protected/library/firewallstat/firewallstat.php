@@ -1321,10 +1321,17 @@ class oseFirewallStat
 		return $result;
 	}
 	public function getCurrentSignatureVersion () {
-		$db = oseFirewall::getDBO(); 
-		$query = "SELECT `number` FROM `#__osefirewall_versions` WHERE `type` = 'ath'";
-		$db->setQuery($query); 
-		$result = $db->loadResult(); 
-		return $result['number'];  
+		if (oseFirewall::isDBReady())
+		{
+			$db = oseFirewall::getDBO(); 
+			$query = "SELECT `number` FROM `#__osefirewall_versions` WHERE `type` = 'ath'";
+			$db->setQuery($query); 
+			$result = $db->loadResult(); 
+			return $result['number'];  
+		}
+		else
+		{
+			return null; 
+		}
 	}
 }
