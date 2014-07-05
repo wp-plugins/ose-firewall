@@ -458,4 +458,35 @@ class oseFirewallBase extends oseFirewallRoot
 	public function loadNounce () {
 		return wp_create_nonce( 'centnounce' ); 
 	}
+	public function runReport () {
+		oseFirewall::callLibClass('audit', 'audit');
+		$audit = new oseFirewallAudit (); 
+		$audit -> runReport();
+	}
+	public static function getConfigVars () {
+		if (class_exists('SConfig'))
+		{
+			$config = new SConfig();
+			return $config;
+		}
+		elseif (class_exists('JConfig'))
+		{
+			$config = new JConfig();
+			return $config;
+		}
+		else {
+			$bloginfo = new stdClass(); 
+			$bloginfo->url = get_bloginfo('url');
+			$bloginfo->fromname = get_bloginfo('name');
+			$bloginfo->mailfrom = get_bloginfo('admin_email');
+			return $bloginfo; 
+		}
+	}
+	public static function getTime () {
+		self::loadDateClass(); 
+		$oseDatetime = new oseDatetime();
+		$oseDatetime->setFormat("Y-m-d H:i:s ");
+		$time = $oseDatetime->getDateTime();
+		return $time;  
+	}
 }
