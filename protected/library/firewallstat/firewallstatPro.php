@@ -370,5 +370,9 @@ public function getSignatures()
 			$db->closeDBO ();
 			return $results['count'];
 		} 
+		else
+		{
+			return null; 
+		}
 	}
 }
