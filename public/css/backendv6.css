@@ -1211,6 +1211,7 @@ ol.browsers li {
     padding: 5px 10px;
     float: right; 
     cursor: pointer; 
+    min-width: 420px;
 }
 
 .signatureInfo {
@@ -1223,4 +1224,14 @@ ol.browsers li {
     font-family: "Open Sans";
     font-weight: 500;
     margin: 5px;
+}
+
+.money-back {
+	font-size: 12px; 
+	width: 100%; 
+	color: #3049BF;
+	font-weight: bold; 
+	float: right; 
+	text-align: right;
+	margin-top: 5px;  
 }

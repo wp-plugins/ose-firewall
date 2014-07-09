@@ -131,7 +131,7 @@ class oseFirewallAudit
 			$return =  '<div class ="ready">' . oLang :: _get('SIGNATURE_UPTODATE'). "</div>";
 		}
 		else {
-			$this->warning[] = $return =  '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('SIGNATURE_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
+			$this->warning[] = $return =  '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('SIGNATURE_OUTDATED') . ".</div> ". $action. ' </div>';
 		}
 		if ($print==true){echo $return;} 
 		else { return $return; }
@@ -243,6 +243,7 @@ class oseFirewallAudit
 		$config = oseFirewall::getConfigVars(); 
 		$template = str_replace ("[report]", $report, $template); 
 		$template = str_replace ("[website]", $config->url, $template);
+		$template = str_replace ("[web_url]", $config->url."/wp-admin/admin.php?page=ose_fw_adrulesets", $template);
 		return $template; 
 	} 
 	private function loadTemplate () {

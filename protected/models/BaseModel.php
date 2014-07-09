@@ -43,7 +43,7 @@ class BaseModel extends CFormModel {
 	}
 	protected function loadJSLauguage ($cs, $baseUrl) {
 		$lang = oseFirewall::getLocale ();
-		if (file_exists (OSE_FWLANGUAGE.DS . $lang.'.js'))
+		if (file_exists (OSE_FWLANGUAGE.ODS.$lang.'.js'))
 		{
 			$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
 		}
