@@ -141,4 +141,7 @@ class oseFirewall extends oseFirewallBase {
     	return "var url = \"".admin_url('admin-ajax.php')."\";".
 			   "var option=\"".self::$option."\";";
     }
+	public function loadNounce () {
+		return wp_create_nonce( 'centnounce' ); 
+	}
 }

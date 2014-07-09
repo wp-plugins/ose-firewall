@@ -10,7 +10,7 @@ function changeItemStatus(id, status) {
 }
 
 function installDB () {
-	var win = oseGetWIn('advRulesinstaller', 'Installer Information', 500, 400); 
+	var win = oseGetWIn('advRulesinstaller', 'Installer Information', 500, 500); 
 	win.show(); 
 	win.update('Checking API status');
 	getRules (win);
@@ -30,7 +30,7 @@ function getRules (win) {
 			var msg  = Ext.decode(response.responseText);
 			if (msg.paid==false)
 			{
-				win.update(msg.message + '<br/>' + msg.form);
+				win.update(msg.message + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3  + '<br/>' + msg.refund);
 			}
 			else
 			{

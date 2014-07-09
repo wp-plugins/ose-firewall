@@ -1088,7 +1088,7 @@ class oseFirewallStat
 	public function getConfigurationByName($name)
 	{
 		$db = oseFirewall::getDBO();
-		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = ".$db->quoteValue('devMode');
+		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = ".$db->quoteValue($name);
 		$db->setQuery($query);
 		$results = $db->loadResultList();
 		$db->closeDBO ();
