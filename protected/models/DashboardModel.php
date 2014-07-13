@@ -304,4 +304,20 @@ class DashboardModel extends BaseModel {
 	public function showActionList() {
 		
 	}
+	public function checkSafebrowsing () {
+		oseFirewall::callLibClass('downloader', 'oseDownloader');
+		$downloader = new oseDownloader('ath', null);
+		$response = $downloader->checkSafebrowsing();
+		return $response; 
+	}
+	public function updateSafebrowsingStatus ($status) {
+		oseFirewall::callLibClass('downloader', 'oseDownloader');
+		$downloader = new oseDownloader('ath', null);
+		$response = $downloader->updateSafebrowsingStatus($status);
+		return $response; 
+	}
+	public function showSafeBrowsingBar () {
+		$audit = new oseFirewallAudit (); 
+		$audit -> showSafeBrowsingBar(true);
+	}
 }

@@ -36,11 +36,11 @@ class oseFirewallAudit
 	}
 	public function isDevelopModelEnable($print = true){
 		$dbReady = oseFirewall :: isDBReady();
-		$action = ($print == true)?'<div class = "warning-buttons"><a class = "button-primary" href ="admin.php?page=ose_fw_scanconfig" target="_blank">heal me</a></div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"><a class = "button-primary" href ="admin.php?page=ose_fw_scanconfig" target="_blank">Fix It</a></div>':'';
 		if ($dbReady == true)
 		{
 			$oseFirewallStat = new oseFirewallStat();
-			$isEnable = $oseFirewallStat->getConfigurationByName($type);
+			$isEnable = $oseFirewallStat->getConfigurationByName('devMode');
 			if($isEnable)
 			{
 				$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('DISDEVELOPMODE')."</div>".$action."</div>";
@@ -56,7 +56,7 @@ class oseFirewallAudit
 	public function isAdFirewallReady($print = true){
 		$oseFirewallStat = new oseFirewallStatPro();
 		$isReady = $oseFirewallStat->isAdFirewallReady();
-		$action = ($print == true)?'<div class = "warning-buttons"><a class = "button-primary" href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">heal me</a></div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"><a class = "button-primary" href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">Fix It</a></div>':'';
 		if(!$isReady)
 		{
 			$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADVANCERULESNOTREADY')." </div>". $action." </div>";
@@ -72,7 +72,7 @@ class oseFirewallAudit
 		$userID = $oseFirewallStat->isUserAdminExist ();
 		if($userID != false)
 		{
-			$action = ($print == true)?'<div class = "warning-buttons"> <a href="#" class="button-primary" onClick = "showForm()">heal me</a> </div>':'';
+			$action = ($print == true)?'<div class = "warning-buttons"> <a href="#" class="button-primary" onClick = "showForm()">Fix It</a> </div>':'';
 			$this->warning[] = $return =  '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('ADMINUSER_EXISTS'). "</div>".$action." </div>";
 		}
 		else {
@@ -84,7 +84,7 @@ class oseFirewallAudit
 	public function isGAuthenticatorReady($print = true){
 		$oseFirewallStat = new oseFirewallStatPro();
 		$ready = $oseFirewallStat->isGAuthenticatorReady ();
-		$action = ($print == true)?'<div class = "warning-buttons"><a class="button-primary" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">heal me</a></div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"><a class="button-primary" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Fix It</a></div>':'';
 		if($ready == true)
 		{
 			$return = '<div class ="ready">' . oLang :: _get('GAUTHENTICATOR_READY'). "</div>";
@@ -100,7 +100,7 @@ class oseFirewallAudit
 		$updated = $oseFirewallStat->isWPUpToDate ();
 		global $wp_version;
 		$wp_version = htmlspecialchars($wp_version);
-		$action = ($print == true)?'<div class = "warning-buttons"> <a href="update-core.php" class="button-primary">heal me</a> </div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"> <a href="update-core.php" class="button-primary">Fix It</a> </div>':'';
 		if($updated == true)
 		{
 			$return = '<div class ="ready">' . oLang :: _get('WORDPRESS_UPTODATE'). $wp_version. "</div>";
@@ -114,7 +114,7 @@ class oseFirewallAudit
 	public function isGoogleScan ($print = true) {
 		$oseFirewallStat = new oseFirewallStatPro();
 		$enabled = $oseFirewallStat->isGoogleScan ();
-		$action = ($print == true)?'<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_seoconfig" class="button-primary">heal me</a> </div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_seoconfig" class="button-primary">Fix It</a> </div>':'';
 		if($enabled == true)
 		{
 			$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GOOGLE_IS_SCANNED'). ".</div> ". $action. "</div>";
@@ -125,7 +125,7 @@ class oseFirewallAudit
 	public function isSignatureUpToDate ($print = true) {
 		$oseFirewallStat = new oseFirewallStatPro();
 		$version = $oseFirewallStat->getCurrentSignatureVersion(); 
-		$action = ($print == true)?'<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_adrulesets" class="button-primary">heal me</a> </div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_adrulesets" class="button-primary">Fix It</a> </div>':'';
 		if($version>O_LATEST_SIGNATURE)
 		{
 			$return =  '<div class ="ready">' . oLang :: _get('SIGNATURE_UPTODATE'). "</div>";
@@ -290,5 +290,62 @@ class oseFirewallAudit
 		require_once(ABSPATH."wp-includes/pluggable.php");
 		require_once(ABSPATH."wp-includes/functions.php");
 		require_once(ABSPATH."wp-admin/includes/update.php");
+	}
+	public function showSafeBrowsingBar ($print = true){
+		$dbReady = oseFirewall :: isDBReady();
+		$action1 = ($print == true)?' <div class="warning-buttons"><a onclick="checkSafebrowsing()" class="button-primary" href="#">Check Now</a></div>':'';
+		$action2 = ($print == true)?' <div class="warning-buttons"><a onclick="checkSafebrowsing()" class="button-primary" href="#">Schedule Now</a></div>':'';
+		if ($dbReady == true)
+		{
+			$safeBrowsingStatus = $this ->getSafeBrowsingStatus ();
+			if (!empty($safeBrowsingStatus))
+			{
+				$isSafeBrowsingStatusUpdated = $this->isSafeBrowsingStatusUpdated ($safeBrowsingStatus);
+				if ($isSafeBrowsingStatusUpdated == true)
+				{
+					$return =  '<div class ="ready">' . oLang :: _get('SAFE_BROWSING_CHECKUP_UPDATED'). $action2."</div>";
+					$return .= $this->getStatusTable ($safeBrowsingStatus) ;
+				}
+				else
+				{
+					$this->warning[] = $return = '<div class ="warning"><div class="warning-content">' . oLang :: _get('SAFE_BROWSING_CHECKUP_OUTDATED') .' </div>'.$action2.'</div>';
+				}
+			}
+			else {
+				$this->warning[] = $return = '<div class ="warning"><div class="warning-content">' . oLang :: _get('CHECK_SAFE_BROWSING') .' </div>'.$action1.'</div>';
+			}
+		}
+		else
+		{
+			$return = '<div class ="warning"><div class="warning-content">' . oLang :: _get('CHECK_SAFE_BROWSING') .' </div>'.$action1.'</div>';
+		}
+		if ($print==true){echo $return;} 
+		else { return $return; }
+	}
+	public function getSafeBrowsingStatus () {
+		oseFirewall::callLibClass('downloader', 'oseDownloader');
+		$downloader = new oseDownloader('ath', null);
+		$status = $downloader->getSafeBrowsingStatus($status);
+		return $status;
+	}
+	private function isSafeBrowsingStatusUpdated ($safeBrowsingStatus) {
+		$datetime1 = new DateTime($safeBrowsingStatus->checkup_date);
+		$datetime2 = new DateTime();
+		$interval = $datetime1->diff($datetime2);
+		return ($interval->days>=2)?false: true; 
+	}
+	private function getStatusTable ($status) {
+		$table = '<table class="statusTable">';
+		$tr1 ='';
+		$tr2 ='';
+		foreach ($status as $key => $value)
+		{
+			$tr1 .= '<th class="status'.$key.'">'.ucfirst($key).'</th>';
+			$tr2 .= '<td class="statusItem">'.$value.'</td>';
+		}
+		$table .= '<tr>'.$tr1.'</tr>';
+		$table .= '<tr>'.$tr2.'</tr>';
+		$table .= '</table>';
+		return $table;
 	}
 }

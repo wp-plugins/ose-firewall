@@ -26,7 +26,7 @@ class oseBadgeWidget extends WP_Widget {
 	public function oseBadgeWidget() {
 		$widget_ops = array (
 				'classname' => 'ose-badge-widget',
-				'description' => 'Show the OSE Firewall Badget' 
+				'description' => 'Show the Centrora Security Badget' 
 		);
 		
 		$control_ops = array (
@@ -34,11 +34,11 @@ class oseBadgeWidget extends WP_Widget {
 				'height' => 250 
 		);
 		
-		$this->WP_Widget ( 'ose_Badge_Widget', 'OSE Badge Widget', $widget_ops, $control_ops );
+		$this->WP_Widget ( 'ose_Badge_Widget', 'Centrora Security Badge Widget', $widget_ops, $control_ops );
 	}
 	public function __construct() {
-		parent::__construct ( 'ose_Badge_Widget', 'OSE Badge Widget', array (
-				'description' => __ ( 'Show the OSE Firewall Badget' ) 
+		parent::__construct ( 'ose_Badge_Widget', 'Centrora Security Badge Widget', array (
+				'description' => __ ( 'Show the Centrora Security Badget' ) 
 		) );
 	}
 	public function widget($args, $instance) {
@@ -51,7 +51,7 @@ class oseBadgeWidget extends WP_Widget {
 			$status = $log->status.': '. date("Y-m-d", $log->date);
 		}
 		$this->register_plugin_styles ();
-		echo '<div id ="osebadge"><div id="osebadge-content"><div class="osestatus">' . $status . '</div></div><div id="osebadge-footer"><a href="https://www.protect-website.com" target="_blank">By OSE Firewall™</a></div></div>';
+		echo '<div id ="osebadge"><div id="osebadge-content"><div class="osestatus">' . $status . '</div></div><div id="osebadge-footer"><a href="https://www.centrora.com" target="_blank">By Centrora Security™</a></div></div>';
 	}
 	public function register_plugin_styles() {
 		wp_register_style ( 'ose-badge-style', plugins_url ( 'ose-firewall/public/css/badge.css' ) );

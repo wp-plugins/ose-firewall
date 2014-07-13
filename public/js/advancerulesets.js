@@ -10,9 +10,9 @@ function changeItemStatus(id, status) {
 }
 
 function installDB () {
-	var win = oseGetWIn('advRulesinstaller', 'Installer Information', 500, 500); 
+	var win = oseGetWIn('advRulesinstaller', 'Checking Subscription Status', 900, 650); 
 	win.show(); 
-	win.update('Checking API status');
+	win.update('Checking Subscription Status');
 	getRules (win);
 }
 

@@ -180,14 +180,43 @@ class oseDownloader
 	}
 	
 	public function getRemoteAPIKey () {
+		$content = $this->getRemoteConnectionContent('checkSubstatus');
+		$response = $this->sendRequest($content);
+		return $response;   
+	}
+	private function getRemoteConnectionContent ($task) {
 		oseFirewall::loadUsers ();
 		$users = new oseUsers('wordpress');
 		$content = array (); 
 		$content['url'] = OSE_WPURL; 
 		$content['remoteChecking'] = true;
-		$content['task'] = 'checkSubstatus';
+		$content['task'] = $task;
 		$content['admin_email'] = $users->getUserEmail();
+		return $content;
+	}
+	public function checkSafebrowsing () {
+		$content = $this->getRemoteConnectionContent('checkSafebrowsing');
 		$response = $this->sendRequest($content);
-		return $response;   
+		return $response;
+	}
+	public function updateSafebrowsingStatus ($status) {
+		oseFirewall::loadFiles(); 
+		$filePath = OSE_FWDATA.ODS."tmp".ODS."safebrowsing.data";
+		$fileContent = stripslashes($status);
+		$result = oseFile::write($filePath, $fileContent);
+		return $result;  
+	}
+	public function getSafeBrowsingStatus () {
+		oseFirewall::loadFiles(); 
+		$filePath = OSE_FWDATA.ODS."tmp".ODS."safebrowsing.data";
+		if (file_exists($filePath))
+		{
+			$result = oseJSON::decode(oseFile::read($filePath, $fileContent));
+			return $result;
+		}  
+		else
+		{
+			return null; 
+		}
 	}
 }
