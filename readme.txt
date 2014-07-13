@@ -2,10 +2,10 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall,plugin, virus cleaning, google, Google authenticator, country block
+Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, woocommerce
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.5.2
+Stable tag: 3.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.5.3 =
+* Fixed: Remove old url and Update url links in the firewall badge 
+* Added: Added safebrowsing checkup function in dashboard
+* Updated: Updated the remote login class to allow automatic status update for premium service users
+* Fixed: Fixed development mode auditing function bug
 
 = 3.5.2 =
 * Fixed: Removed Wordpress version in the signature checking function in the audit class

@@ -53,5 +53,21 @@ class DashboardController extends BaseController {
 			}
 		}
 	}
+	public function actionCheckSafebrowsing () {
+		$model= $this->getModel();
+		$result = $model -> checkSafebrowsing();
+		print_r($result); exit;
+	}
+	public function actionUpdateSafebrowsingStatus() {
+		oseFirewall :: loadRequest();
+		$status = oRequest :: getVar('status', null);
+		if (empty($status))
+		{
+			return; 
+		}
+		$model= $this->getModel();
+		$result = $model -> updateSafebrowsingStatus($status);
+		return $result; 
+	}
 }
 ?>	

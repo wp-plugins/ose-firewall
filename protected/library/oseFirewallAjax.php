@@ -44,7 +44,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionDashboard () {
-		$actions = array ('createTables', 'changeusername');
+		$actions = array ('createTables', 'changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus');
 		parent::loadActions($actions); 
 	}	
 	public static function loadActionRulesets () {

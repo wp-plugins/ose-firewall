@@ -556,7 +556,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	border-radius: 5px;
     font-family: "Open Sans";
     font-weight: 500;
-    margin: 10px;
+    margin: 10px 0px;
     padding: 10px;
 }
 
@@ -569,7 +569,9 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 	font-family: "Open Sans";
 	font-weight: 500;
 	border-radius: 5px;
-	margin: 10px;
+	margin: 10px 0px;
+	width: 100%;
+	float: left; 
 }
 
 .ajax-success {
@@ -1058,6 +1060,7 @@ ol.browsers li {
 #audit-list {
 	width: 100%; 
 	float: left;
+	padding: 10px; 
 }
 
 .action-icons {
@@ -1107,7 +1110,7 @@ ol.browsers li {
 }
 
 .warning-buttons{
-	width: 10%;
+	width: 15%;
 	display:inline;
 	float:right;
 	text-align: center;
@@ -1189,20 +1192,23 @@ ol.browsers li {
 	margin: 20px;
 }
 
-#advRulesinstaller-innerCt {
+#advRulesinstaller-innerCt,
+#safeBrowsing-innerCt {
 	padding: 15px; 
 	font-size: 16px; 
 	line-height: 24px;
 	font-family: "arial", "Helvetica", "sans-serif";
-	color: #8a8a8a;
+	color: #444444;
 }
-#advRulesinstaller-innerCt ul {
+#advRulesinstaller-innerCt ul,
+#safeBrowsing-innerCt ul {
 	list-style-type: square;
-	color: #8a8a8a;
+	color: #444444;
 	padding-left: 30px;
 }
 
-#advRulesinstaller-innerCt button {
+#advRulesinstaller-innerCt button,
+#safeBrowsing-innerCt button {
 	background-color: #3049BF;
     border-radius: 3px;
     font-weight: bold;
@@ -1211,7 +1217,7 @@ ol.browsers li {
     padding: 5px 10px;
     float: right; 
     cursor: pointer; 
-    min-width: 420px;
+    min-width: 620px;
 }
 
 .signatureInfo {
@@ -1234,4 +1240,36 @@ ol.browsers li {
 	float: right; 
 	text-align: right;
 	margin-top: 5px;  
+}
+
+#safe-browsing {
+	padding: 10px;
+	border-bottom: 4px solid #A7A7A7;
+	width: 100%; 
+	float: left; 
+}
+#safe-browsing .warning {
+	margin: 10px 0px;
+}
+
+.statusTable {
+	width: 100%; 
+	float: left; 
+	margin: 30px 10px 10px 0;
+}
+.statusTable td {
+	padding: 5px 10px;
+	text-align: center; 
+	border-top: 1px solid #eaeaea; 
+}
+
+.statusTable th  {
+	padding: 5px 10px;
+	text-align: center; 
+	color: #444; 
+}
+
+.safeBrowsingStatus {
+	width: 100%; 
+	float: left; 
 }

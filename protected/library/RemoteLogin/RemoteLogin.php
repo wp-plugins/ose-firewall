@@ -181,6 +181,14 @@ class RemoteLogin
 		}
 	}
 	public function updateSignature () {
+		$this->validateIP ();
+		$downloadtype=oRequest :: getInt('downloadtype', 0);
+		$action = ($downloadtype==0)?"actionDownload":"actionUpdate"; 
+		$this->callControllerClass('DownloadRemoteController');
+		$RemoteController = new DownloadRemoteController('download');
+		$RemoteController->$action();
+	}
+	private function validateIP () {
 		$ip = $this->getRealIP(); 
 		// Centrora server IP List; 
 		$iplist = array ('50.30.47.113', '199.217.116.55');
@@ -188,11 +196,21 @@ class RemoteLogin
 		{
 			die("Invalid Request"); 
 		}
-		$downloadtype=oRequest :: getInt('downloadtype', 0);
-		$action = ($downloadtype==0)?"actionDownload":"actionUpdate"; 
-		$this->callControllerClass('DownloadRemoteController');
-		$RemoteController = new DownloadRemoteController('download');
-		$RemoteController->$action();
+	}
+	public function updateSafeBrowsing () {
+		//$this->validateIP ();
+		$status=oRequest :: getVar('status', null);
+		if (empty($status)){
+			return;	
+		}
+		else
+		{
+			$status = base64_decode($status);
+			oseFirewall::callLibClass('downloader', 'oseDownloader');
+			$downloader = new oseDownloader('ath', null);
+			$response = $downloader->updateSafebrowsingStatus($status);
+			return $response;
+		}
 	}
 	private function getRealIP()
 	{

@@ -117,7 +117,7 @@ define('OSE_SHOW_BADGE','Show Website Protection Seal <br/>(Please use Virus sca
 define('DBNOTREADY','<b>WARNING</b>: The database is not ready, plesea click the install button to create the database table.');
 define('DBNOTREADY_OTHER','<b>WARNING</b>: The database is not ready, please return to the Dashboard to install the database.');
 define('DASHBOARD_TITLE','<b>Dash</b><span><b>board</b></span>');
-define('INSTALLDB','heal me');
+define('INSTALLDB','Fix it');
 define('UNINSTALLDB', 'Uninstall');
 define('UNINSTALLDB_INTRO', 'Removing the database created by Centrora Security from your website');
 define('UPDATEVERSION', 'Update');
@@ -283,7 +283,7 @@ define('UNINSTALL_SUCCESS', 'Uninstall database table success!');
 define('UNINSTALL_FAILED', 'Uninstall database table failed!');
 define('SCAN_READY','Ready to scan virus');
 define('DISDEVELOPMODE', '<b>WARNING</b>: Please disable the Development Mode in the Scanning Configuration to activate the firewall protection.');
-define('ADVANCERULESNOTREADY', '<b>[Better Protection] </b><b>WARNING</b>: Your website may be at risk. Please follow this tutorial to turn on the advance firewall protection. It\'s free.');
+define('ADVANCERULESNOTREADY', '<b>[Better Protection] </b><b>WARNING</b>: Your website may be at risk. Please follow this tutorial to turn on the advance firewall protection.');
 define('ABOUT', 'Features');
 define('ABOUT_DESC', 'The detailed descriptions of each section of our plugin and what it does');
 define('DEVELOPMODE_DISABLED','<b>[Activation] </b>Great! Your website is now protected by Centrora Security');
@@ -313,4 +313,10 @@ define('CLAMAV_CANNOT_CONNECT','Cannot connect to the ClamAV Daemon');
 define('O_LATEST_SIGNATURE', '20140703');
 define('SIGNATURE_UPTODATE','<b>[Better Protection] </b>Your firewall rules are up to date');
 define('SIGNATURE_OUTDATED','<b>[Better Protection] </b><b>WARNING</b>: Your firewall rules are out-dated, please update the rules to enhance protection.');
+define('IS_MY_WEBSITE_SAFE_BROWSING','Does my website look safe in major anti-virus software blacklist database?');
+define('SAFE_BROWSING_CHECKUP','Centrora Safe Browsing Checkup (Blacklist Monitoring)');
+define('SECURITY_AUDIT','Security Audit');
+define('CHECK_SAFE_BROWSING','Check your website safe browsing status now.');
+define('SAFE_BROWSING_CHECKUP_UPDATED','Your Safe Browsing Checkup is updated');
+define('SAFE_BROWSING_CHECKUP_OUTDATED','Your Safe Browsing Checkup is outdated, schedule the daily checkup now.');
 ?>

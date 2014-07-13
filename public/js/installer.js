@@ -39,7 +39,53 @@ function createTables (step, win) {
 	});	
 }
 
+function checkSafebrowsing () {
+	var win = oseGetWIn('safeBrowsing', 'Checking Safe Browsing Status', 900, 650); 
+	win.show(); 
+	win.update('Checking Safe Browsing Status from our server, please allow a few minutes to complete.');
+	checkSafebrowsingStatus (win);
+}
 
+function checkSafebrowsingStatus (win) {
+	Ext.Ajax.request({
+		url : url,
+		params : {
+			option : option,
+			controller: controller,
+			task: 'checkSafebrowsing',
+			action: 'checkSafebrowsing'
+		},
+		method: 'POST',
+		success: function ( response, options ) {
+			var msg  = Ext.decode(response.responseText);
+			if (msg.paid==false)
+			{
+				win.update('Your safebrowsing status is as follows: <br/>' + msg.safeBrowsingTable + '<br/><br/>' + msg.message + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3  + '<br/>' + msg.refund);
+			}
+			else
+			{
+				win.update('Your safebrowsing status is as follows: <br/>' + msg.safeBrowsingTable + '<br/><br/>' + msg.message);
+			}
+			updateSafebrowsingStatus (Ext.encode(msg.safeBrowsing));
+		}
+	});	
+}
+
+function updateSafebrowsingStatus (status) {
+	Ext.Ajax.request({
+		url : url,
+		params : {
+			option : option,
+			controller: controller,
+			task: 'updateSafebrowsingStatus',
+			action: 'updateSafebrowsingStatus',
+			status: status
+		},
+		method: 'POST',
+		success: function ( response, options ) {
+		}
+	});	
+}	
 //tweet
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 

@@ -75,7 +75,15 @@ $this ->model->loadLocalscript ();
                </a>
 	     </div>          
 	    </div>
+        <div id ="safe-browsing">
+           <h3><?php echo SAFE_BROWSING_CHECKUP; ?></h3>
+           <?php 
+           		echo IS_MY_WEBSITE_SAFE_BROWSING; 
+           		$this ->model->showSafeBrowsingBar (); 
+           ?>
+        </div>
 	    <div id ="audit-list">
+        <h3><?php echo SECURITY_AUDIT; ?></h3>
 	    <?php 
 	    	$this ->model->showStatus (); 
 	    ?>
