@@ -38,7 +38,14 @@ class VariablesModel extends BaseModel {
 		$baseUrl = Yii :: app()->baseUrl;
 		$cs = Yii :: app()->getClientScript();
 		$this->loadJSLauguage ($cs, $baseUrl);
-		$cs->registerScriptFile($baseUrl . '/public/js/variables.js', CClientScript::POS_END);
+		if (OSE_CMS =="joomla")
+		{
+			$cs->registerScriptFile($baseUrl . '/public/js/variablesjoomla.js', CClientScript::POS_END);
+		}
+		else
+		{
+			$cs->registerScriptFile($baseUrl . '/public/js/variables.js', CClientScript::POS_END);
+		}
 	}
 	public function getVariables()
 	{

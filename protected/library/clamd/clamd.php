@@ -62,13 +62,20 @@ class Clamd
 	
 	public function getClamConfig () {
 		$config = $this -> getClamConfigDB () ;
-		if ($config['clamav_activation'] == 'socket')
+		if (isset($config['clamav_activation']))
 		{
-			return array('host' => $config['clamavsocket'], 'port' => '0');
+			if ($config['clamav_activation'] == 'socket')
+			{
+				return array('host' => $config['clamavsocket'], 'port' => '0');
+			}
+			else
+			{
+				return array('host' => $config['clamavtcpip'], 'port' => $config['clamavtcpport']);
+			}
 		}
 		else
 		{
-			return array('host' => $config['clamavtcpip'], 'port' => $config['clamavtcpport']);
+			return array(); 			
 		}
 	}
 	private function getClamConfigDB () {

@@ -70,7 +70,7 @@ class VsscanModel extends BaseModel {
 		$resultQuery= null;
 		$infectedNum= 0;
 		oseFirewall::callLibClass('vsscanner','vsscanner'); 
-		$scanner = new virusScanner ($type);
+		$scanner = new virusScanner ();
 		$results = $scanner -> vsScan ($step);
 		if($results == false)
 		{

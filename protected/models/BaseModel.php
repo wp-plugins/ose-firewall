@@ -38,7 +38,14 @@ class BaseModel extends CFormModel {
 		$this->db = oseFirewall::getDBO();
 	}
 	protected function loadLibrary () {
-		oseFirewall::callLibClass('firewallstat', 'firewallstat');
+		if (OSE_CMS == 'joomla')
+		{
+			oseFirewall::callLibClass('firewallstat', 'firewallstatJoomla');
+		}
+		else
+		{
+			oseFirewall::callLibClass('firewallstat', 'firewallstatWordpress');
+		}
 		oseFirewall::callLibClass('ipmanager', 'ipmanager');
 	}
 	protected function loadJSLauguage ($cs, $baseUrl) {

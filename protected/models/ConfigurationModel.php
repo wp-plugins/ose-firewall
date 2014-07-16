@@ -83,20 +83,20 @@ class ConfigurationModel extends BaseModel {
 	private function isConfigurationDBReady($data)
 	{
 		require_once(OSE_FWFRAMEWORK.ODS.'oseFirewallBase.php');
-		if($data['blockCountry'] == 1)
+		if(isset($data['blockCountry'] ) && $data['blockCountry'] == 1)
 		{
 			if(oseFirewallBase :: isCountryBlockConfigDBReady() == false)
 			{
 				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_SAVECOUNTRYBLOCK_FAILE'), false);
 			}
 		}
-		if($data['adVsPatterns'] == 1){
+		if(isset($data['adVsPatterns'] ) && $data['adVsPatterns'] == 1){
 			if(oseFirewallBase :: isAdvancePatternConfigDBReady() == false)
 			{
 				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_ADPATTERNS_FAILE'), false);
 			}
 		}
-		if($data['adRules'] == 1)
+		if(isset($data['adRules'] ) && $data['adRules'] == 1)
 		{
 			if(oseFirewallBase :: isAdvanceSettingConfigDBReady() == false)
 			{

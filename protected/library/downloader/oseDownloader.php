@@ -207,11 +207,12 @@ class oseDownloader
 		return $result;  
 	}
 	public function getSafeBrowsingStatus () {
-		oseFirewall::loadFiles(); 
+		oseFirewall::loadFiles();
+		oseFirewall::loadJSON();  
 		$filePath = OSE_FWDATA.ODS."tmp".ODS."safebrowsing.data";
 		if (file_exists($filePath))
 		{
-			$result = oseJSON::decode(oseFile::read($filePath, $fileContent));
+			$result = oseJSON::decode(oseFile::read($filePath));
 			return $result;
 		}  
 		else

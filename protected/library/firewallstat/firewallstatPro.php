@@ -26,7 +26,15 @@
 if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH')) {
 	die('Direct Access Not Allowed');
 }
-require_once (OSE_FWFRAMEWORK . ODS. 'firewallstat'. ODS. 'firewallstat.php');
+
+if (class_exists('Sconfig') || class_exists('Jconfig'))
+{
+	require_once (OSE_FWFRAMEWORK . ODS. 'firewallstat'. ODS. 'firewallstatJoomla.php');
+}
+else
+{
+	require_once (OSE_FWFRAMEWORK . ODS. 'firewallstat'. ODS. 'firewallstatWordpress.php');
+}
 class oseFirewallStatPro extends oseFirewallStat {
 public function getSignatures()
 	{
@@ -277,17 +285,6 @@ public function getSignatures()
 			}
 		}
 	}
-	public function isUserAdminExist () {
-		if (username_exists('admin') == true)
-		{
-			$user = get_user_by( 'login', 'admin');
-			return  $user->ID;
-		}
-		else
-		{
-			return false;
-		}
-	}
 	public function isGAuthenticatorReady () {
 		if (class_exists('GoogleAuthenticator', false))
 		{
@@ -317,30 +314,7 @@ public function getSignatures()
 			return false;
 		}
 	}
-	public function isWPUpToDate () {
-	    global $wp_version;
-	    $updates = get_core_updates();
-	    if(!is_array($updates) || empty($updates) || $updates[0]->response == 'latest'){
-	        $current = true;
-	    } else {
-	        $current = false;
-	    }
-	    if(strcmp($wp_version, "3.7") < 0)
-	    {
-	        $current = false;
-	    }
-	    return $current; 
-	}
-	public function changeusername ($username) {
-		$user = get_user_by('login', 'admin');
-		$db = oseFirewall::getDBO ();
-		$varValues = array (
-				'user_login' => $username
-		);
-		$result = $db->addData('update', '#__users', 'ID', (int)$user->ID, $varValues);
-		$db->closeDBO ();
-		return $result;
-	}
+	
 	public function isGoogleScan () {
 		if (oseFirewall::isDBReady())
 			{

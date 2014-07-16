@@ -41,7 +41,7 @@ class CountryBlock
 			}
 			else
 			{
-				$return["result"] = "wp_osefirewall_country.sql downloaded.";
+				$return["result"] = "osefirewall_country.sql downloaded.";
 				$return["status"] = "unfinish";
 			}
 		}
@@ -53,15 +53,23 @@ class CountryBlock
 			}
 			else
 			{
-				$handle = $this->downloadFile("http://www.centrora.com/downloads/geoip/osegeoip".$step.".data");
-				if ($handle == false)
-				{
-					oseAjax::aJaxReturn(false, 'ERROR', DB_COUNTRYBLOCK_FAILED_INCORRECT_PERMISSIONS, $continue = false, $id = null);
-				}
-				else
+				if (file_exists(OSE_FWDATA.ODS."osegeoip".$step.".sql"))
 				{
 					$return["result"] = "osegeoip".$step.".sql downloaded.";
 					$return["status"] = "unfinish";
+				}
+				else
+				{
+					$handle = $this->downloadFile("http://www.centrora.com/downloads/geoip/osegeoip".$step.".data");
+					if ($handle == false)
+					{
+						oseAjax::aJaxReturn(false, 'ERROR', DB_COUNTRYBLOCK_FAILED_INCORRECT_PERMISSIONS, $continue = false, $id = null);
+					}
+					else
+					{
+						$return["result"] = "osegeoip".$step.".sql downloaded.";
+						$return["status"] = "unfinish";
+					}
 				}
 			}
 		return $return;
@@ -94,7 +102,7 @@ class CountryBlock
 			// Close file pointer resource
 			fclose($inputHandle);
 		}
-		return handle;
+		return $handle;
 	}
 	public function getCountryList()
 	{
@@ -125,14 +133,14 @@ class CountryBlock
 			{
 				//TODO: convert country code!
 				//$results[$i]->country_code = $this->updateCountryCode($results[$i]->id, $results[$i]->ip32_start);
-				}
+			}
 			$results[$i]->country_code = $this->getCountryImage($results[$i]->country_code);
-			$results[$i]->ip32_start = long2ip((float) $results[$i]->ip32_start);
-			$results[$i]->ip32_end = long2ip((float) $results[$i]->ip32_end);
+			//$results[$i]->ip32_start = long2ip((float) $results[$i]->ip32_start);
+			//$results[$i]->ip32_end = long2ip((float) $results[$i]->ip32_end);
 			if (empty($results[$i]->host))
 			{
 				//$results[$i]->host = $this->updateIPHost($results[$i]->id, $results[$i]->ip32_start);
-				}
+			}
 			$results[$i]->status = $this->getStatusIcon($results[$i]->id, $results[$i]->status);
 			$i++;
 		}
@@ -189,7 +197,14 @@ class CountryBlock
 		else
 		{
 			$baseUrl = Yii::app()->baseUrl;
-			return "<img src='".$baseUrl."/public/images/flags/".strtolower($country_code).".png' alt='".$country_code."' />";
+			if (file_exists(OSEAPPDIR."/public/images/flags/".strtolower($country_code).".png"))
+			{
+				return "<img src='".$baseUrl."/public/images/flags/".strtolower($country_code).".png' alt='".$country_code."' />";
+			}
+			else 
+			{
+				return strtolower($country_code);
+			}
 		}
 	}
 	public function getCountryTotal()
@@ -239,7 +254,7 @@ class CountryBlock
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		$db->closeDBO ();
-		if ($results[0] != null)
+		if (!empty($results) && $results[0] != null)
 		{
 			return true;
 		}

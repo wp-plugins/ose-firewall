@@ -94,14 +94,14 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 	    selType: 'rowmodel',
 	    multiSelect: true,
 	    columns: [
-	        {id: 'country_code', header: '',  hidden:false, dataIndex: 'country_code', width: 30, sortable: true}
-            ,{id: 'id', header: O_ID,  hidden:false, dataIndex: 'id', width: 40, sortable: true}
-            ,{id: 'datetime', header: O_DATE,  hidden:false, dataIndex: 'datetime',width: 130, sortable: true}
-            ,{id: 'name', header: O_IP_RULE_TITLE,  hidden:false, dataIndex: 'name', width: 130,  sortable: true}
-            ,{id: 'score', header: O_RISK_SCORE,  hidden:false, dataIndex: 'score', width: 80, sortable: true}
-            ,{id: 'ip32_start', header: O_START_IP,  hidden:false, dataIndex: 'ip32_start', width: 130, sortable: true}
-            ,{id: 'ip32_end', header: O_END_IP,  hidden:false, dataIndex: 'ip32_end', width: 130, sortable: true}
-            ,{id: 'iptype', header: O_IP_TYPE,  hidden:false, dataIndex: 'iptype', sortable: true, 
+	        {id: 'country_code', header: '',  hidden:false, dataIndex: 'country_code', width: '3%', sortable: true}
+            ,{id: 'id', header: O_ID,  hidden:false, dataIndex: 'id', width: '3%', sortable: true}
+            ,{id: 'datetime', header: O_DATE,  hidden:false, dataIndex: 'datetime',width: '10%', sortable: true}
+            ,{id: 'name', header: O_IP_RULE_TITLE,  hidden:false, dataIndex: 'name', width: '10%',  sortable: true}
+            ,{id: 'score', header: O_RISK_SCORE,  hidden:false, dataIndex: 'score', width: '8%', sortable: true}
+            ,{id: 'ip32_start', header: O_START_IP,  hidden:false, dataIndex: 'ip32_start', width: '10%', sortable: true}
+            ,{id: 'ip32_end', header: O_END_IP,  hidden:false, dataIndex: 'ip32_end', width: '10%', sortable: true}
+            ,{id: 'iptype', header: O_IP_TYPE,  hidden:false, dataIndex: 'iptype', sortable: true, width: '12%',  
             	renderer : function(val) {
                    if(val==0) {
                    	  return O_SINGLE_IP;
@@ -113,11 +113,11 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
                 }
             }
             ,{
-            	id: 'status', header: O_STATUS,  hidden:false, dataIndex: 'status', sortable: true
+            	id: 'status', header: O_STATUS,  hidden:false, dataIndex: 'status', sortable: true, width: '5%'
              }
-            ,{id: 'host', header: O_HOST,  hidden:false, dataIndex: 'host', width: '12%', sortable: true}
-            ,{id: 'visits', header: O_VISITS,  hidden:false, width: 40, dataIndex: 'visits', width: 60, sortable: false}
-            ,{id: 'view', header: O_VIEWDETAIL,  hidden:false, width: 40, dataIndex: 'view', width: 80, sortable: false}
+            ,{id: 'host', header: O_HOST,  hidden:false, dataIndex: 'host', width: '15%', sortable: true}
+            ,{id: 'visits', header: O_VISITS,  hidden:false, dataIndex: 'visits', width: '8%', sortable: false}
+            ,{id: 'view', header: O_VIEWDETAIL,  hidden:false, dataIndex: 'view', width: '5%', sortable: false}
 	    ],
 	    sortInfo:{field: 'datetime', direction: "DESC"},
 	    height: 500,

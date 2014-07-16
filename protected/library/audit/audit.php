@@ -30,13 +30,16 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH'))
 class oseFirewallAudit
 {	
 	private $warning = array (); 
+	private $urls = array (); 
 	public function __construct()
 	{
 		oseFirewall::callLibClass('firewallstat', 'firewallstatPro');
+		$this->urls = oseFirewall::getDashboardURLs(); 
 	}
 	public function isDevelopModelEnable($print = true){
+		$return = ''; 
 		$dbReady = oseFirewall :: isDBReady();
-		$action = ($print == true)?'<div class = "warning-buttons"><a class = "button-primary" href ="admin.php?page=ose_fw_scanconfig" target="_blank">Fix It</a></div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"><a class = "button-primary" href ="'.$this->urls[4].'" target="_blank">Fix It</a></div>':'';
 		if ($dbReady == true)
 		{
 			$oseFirewallStat = new oseFirewallStat();
@@ -54,6 +57,7 @@ class oseFirewallAudit
 	}
 	
 	public function isAdFirewallReady($print = true){
+		$return = ''; 
 		$oseFirewallStat = new oseFirewallStatPro();
 		$isReady = $oseFirewallStat->isAdFirewallReady();
 		$action = ($print == true)?'<div class = "warning-buttons"><a class = "button-primary" href ="http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/" target="_blank">Fix It</a></div>':'';
@@ -68,6 +72,7 @@ class oseFirewallAudit
 		else { return $return; }
 	}
 	public function isAdminExistsReady($print = true){
+		$return = ''; 
 		$oseFirewallStat = new oseFirewallStatPro();
 		$userID = $oseFirewallStat->isUserAdminExist ();
 		if($userID != false)
@@ -82,39 +87,54 @@ class oseFirewallAudit
 		else { return $return; }
 	}
 	public function isGAuthenticatorReady($print = true){
-		$oseFirewallStat = new oseFirewallStatPro();
-		$ready = $oseFirewallStat->isGAuthenticatorReady ();
-		$action = ($print == true)?'<div class = "warning-buttons"><a class="button-primary" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Fix It</a></div>':'';
-		if($ready == true)
+		if (OSE_CMS=='joomla')
 		{
-			$return = '<div class ="ready">' . oLang :: _get('GAUTHENTICATOR_READY'). "</div>";
+			return ; 
 		}
-		else {
-			$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GAUTHENTICATOR_NOTUSED') ."</div> ". $action. ' </div>';
+		else
+		{
+			$oseFirewallStat = new oseFirewallStatPro();
+			$ready = $oseFirewallStat->isGAuthenticatorReady ();
+			$action = ($print == true)?'<div class = "warning-buttons"><a class="button-primary" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Fix It</a></div>':'';
+			if($ready == true)
+			{
+				$return = '<div class ="ready">' . oLang :: _get('GAUTHENTICATOR_READY'). "</div>";
+			}
+			else {
+				$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GAUTHENTICATOR_NOTUSED') ."</div> ". $action. ' </div>';
+			}
+			if ($print==true){echo $return;} 
+			else { return $return; }
 		}
-		if ($print==true){echo $return;} 
-		else { return $return; }
 	}
 	public function isWPUpToDate ($print = true) {
-		$oseFirewallStat = new oseFirewallStatPro();
-		$updated = $oseFirewallStat->isWPUpToDate ();
-		global $wp_version;
-		$wp_version = htmlspecialchars($wp_version);
-		$action = ($print == true)?'<div class = "warning-buttons"> <a href="update-core.php" class="button-primary">Fix It</a> </div>':'';
-		if($updated == true)
+		if (OSE_CMS=='joomla')
 		{
-			$return = '<div class ="ready">' . oLang :: _get('WORDPRESS_UPTODATE'). $wp_version. "</div>";
+			return ; 
 		}
-		else {
-			$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('WORDPRESS_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
+		else
+		{
+			$oseFirewallStat = new oseFirewallStatPro();
+			$updated = $oseFirewallStat->isWPUpToDate ();
+			global $wp_version;
+			$wp_version = htmlspecialchars($wp_version);
+			$action = ($print == true)?'<div class = "warning-buttons"> <a href="update-core.php" class="button-primary">Fix It</a> </div>':'';
+			if($updated == true)
+			{
+				$return = '<div class ="ready">' . oLang :: _get('WORDPRESS_UPTODATE'). $wp_version. "</div>";
+			}
+			else {
+				$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('WORDPRESS_OUTDATED') . $wp_version. ".</div> ". $action. ' </div>';
+			}
+			if ($print==true){echo $return;} 
+			else { return $return; }
 		}
-		if ($print==true){echo $return;} 
-		else { return $return; }
 	}
 	public function isGoogleScan ($print = true) {
+		$return = ''; 
 		$oseFirewallStat = new oseFirewallStatPro();
 		$enabled = $oseFirewallStat->isGoogleScan ();
-		$action = ($print == true)?'<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_seoconfig" class="button-primary">Fix It</a> </div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"> <a href="'.$this->urls[5].'" class="button-primary">Fix It</a> </div>':'';
 		if($enabled == true)
 		{
 			$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">' . oLang :: _get('GOOGLE_IS_SCANNED'). ".</div> ". $action. "</div>";
@@ -123,9 +143,10 @@ class oseFirewallAudit
 		else { return $return; }
 	}
 	public function isSignatureUpToDate ($print = true) {
+		$return = ''; 
 		$oseFirewallStat = new oseFirewallStatPro();
 		$version = $oseFirewallStat->getCurrentSignatureVersion(); 
-		$action = ($print == true)?'<div class = "warning-buttons"> <a href="admin.php?page=ose_fw_adrulesets" class="button-primary">Fix It</a> </div>':'';
+		$action = ($print == true)?'<div class = "warning-buttons"> <a href="'.$this->urls[6].'" class="button-primary">Fix It</a> </div>':'';
 		if($version>O_LATEST_SIGNATURE)
 		{
 			$return =  '<div class ="ready">' . oLang :: _get('SIGNATURE_UPTODATE'). "</div>";
@@ -194,34 +215,66 @@ class oseFirewallAudit
 		{
 			$time = oseFirewall::getTime(); 
 			$db = oseFirewall::getDBO();
-			$query = "SELECT * FROM `#__osefirewall_logs` AS log WHERE `comp` = 'aud'";
-			$db ->setQuery($query); 
-			$result = $db->loadObject();
-			if (empty($result))
+			$schedule = $this->checkAuditSchedule ($db);
+			if (empty($schedule))
 			{
-				$this->insertLogTime ($db);
-				$db ->closeDBO(); 
-				return true;
+				return false;
 			}
 			else
 			{
-				$query = "SELECT * FROM `#__osefirewall_logs` AS log WHERE `comp` = 'aud' AND DATEDIFF( ".$db->QuoteValue($time).", log.date)>=1";
+				$interval = $this->getInterval ($schedule);
+				$query = "SELECT * FROM `#__osefirewall_logs` AS log WHERE `comp` = 'aud'";
 				$db ->setQuery($query); 
-				$result = $db->loadObject(); 
-				if (!empty($result))	
+				$result = $db->loadObject();
+				if (empty($result))
 				{
-					$this->updateLogTime ($db, '');
+					$this->insertLogTime ($db);
 					$db ->closeDBO(); 
 					return true;
 				}
 				else
 				{
-					$db ->closeDBO(); 
-					return false; 
+					$query = "SELECT * FROM `#__osefirewall_logs` AS log WHERE `comp` = 'aud' AND DATEDIFF( ".$db->QuoteValue($time).", log.date)>=".(int)$interval;
+					$db ->setQuery($query); 
+					$result = $db->loadObject(); 
+					if (!empty($result))	
+					{
+						$this->updateLogTime ($db, '');
+						$db ->closeDBO(); 
+						return true;
+					}
+					else
+					{
+						$db ->closeDBO(); 
+						return false; 
+					}
 				}
 			}
 		}
 	}
+	private function getInterval ($schedule) {
+		$days = 1; 
+		switch ($schedule)
+		{
+			default:
+			case 1:
+				$days = 1; 
+				break; 
+			case 2:
+				$days = 7; 
+				break;
+			case 3:
+				$days = 30; 
+				break;
+		}
+		return $days; 
+	}
+	private function checkAuditSchedule ($db) {
+		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'auditReport'";
+		$db ->setQuery($query); 
+		$result = $db->loadResult();
+		return ($result['value']);
+	}  
 	private function insertLogTime ($db) {
 		$time = oseFirewall::getTime(); 
 		$varValues = array(
@@ -244,8 +297,31 @@ class oseFirewallAudit
 		$template = str_replace ("[report]", $report, $template); 
 		$template = str_replace ("[website]", $config->url, $template);
 		$template = str_replace ("[web_url]", $config->url."/wp-admin/admin.php?page=ose_fw_adrulesets", $template);
+		$status = $this->getSafeBrowsingStatus();
+		if (empty($status))
+		{
+			
+			$status = $this->getStatusObject () ;
+			$status = $this->getStatusTable ($status);
+			$template = str_replace ("[safebrowsing]", "Not checked yet, please access the <a href='".$config->url."/wp-admin/admin.php?page=ose_firewall'> Dashboard </a> to check if your website is clean.<br/>".$status, $template);
+		}
+		else
+		{
+			$status = $this->getStatusTable ($status);
+			$template = str_replace ("[safebrowsing]", $status, $template); 
+		}
+		print_r($template);exit;
 		return $template; 
 	} 
+	private function getStatusObject () {
+		$status = new stdClass ();
+		$status->norton = 'n/a';
+		$status->bitdefender = 'n/a';
+		$status->avg = 'n/a';
+		$status->mcafee= 'n/a';
+		$status->google = 'n/a';
+		return $status; 
+	}
 	private function loadTemplate () {
 		oseFirewall::loadFiles();
 		$oseFile = new oseFile (); 
@@ -325,7 +401,7 @@ class oseFirewallAudit
 	public function getSafeBrowsingStatus () {
 		oseFirewall::callLibClass('downloader', 'oseDownloader');
 		$downloader = new oseDownloader('ath', null);
-		$status = $downloader->getSafeBrowsingStatus($status);
+		$status = $downloader->getSafeBrowsingStatus();
 		return $status;
 	}
 	private function isSafeBrowsingStatusUpdated ($safeBrowsingStatus) {
@@ -335,13 +411,13 @@ class oseFirewallAudit
 		return ($interval->days>=2)?false: true; 
 	}
 	private function getStatusTable ($status) {
-		$table = '<table class="statusTable">';
+		$table = '<table class="statusTable" style="width: 100%;">';
 		$tr1 ='';
 		$tr2 ='';
 		foreach ($status as $key => $value)
 		{
-			$tr1 .= '<th class="status'.$key.'">'.ucfirst($key).'</th>';
-			$tr2 .= '<td class="statusItem">'.$value.'</td>';
+			$tr1 .= '<th class="status'.$key.'"  style="text-align:center;">'.ucfirst($key).'</th>';
+			$tr2 .= '<td class="statusItem" style="text-align:center;">'.$value.'</td>';
 		}
 		$table .= '<tr>'.$tr1.'</tr>';
 		$table .= '<tr>'.$tr2.'</tr>';

@@ -193,7 +193,7 @@ define('ANTIVIRUS_CONFIGURATION_TITLE','<b>Virus Scanner</b> <span><b>Configurat
 define('ANTIVIRUS_CONFIGURATION_DESC','Configure the settings for Virus Scanner, control file extension to be scanned and limit the size of scanning files');
 define('ANTIVIRUS','Virus Scanner');
 define('ANTIVIRUS_TITLE','<b>Virus</b> <span><b>Scanner</b></span>');
-define('ANTIVIRUS_DESC','Virus Scanner is a powerful malware detector, it acts like a antivirus but is more powerful than a antivirus. It scans through every single files on your server or any specific path of files for virus, malware, spam, malicious codes, SQL injection, security vulnerabilities etc');
+define('ANTIVIRUS_DESC','Virus Scanner is a powerful malware detector, it acts like an antivirus but is more powerful than a antivirus. It scans through every single files on your server or any specific path of files for virus, malware, spam, malicious codes, SQL injection, security vulnerabilities etc');
 define('LAST_SCANNED','Last scanned folder: ');
 define('LAST_SCANNED_FILE','Last scanned file: ');
 define('OSE_FOUND',OSE_WORDPRESS_FIREWALL.' found');
@@ -310,7 +310,7 @@ define('CLAMAV_DESC', 'ClamAV is an open source anti-virus software for linux se
 define('CLAMAV_CONNECT_SUCCESS', 'Successfully connected to Clam Daemon');
 define('CLAMAV_DEF_VERSION','ClamAV Definition Version'); 
 define('CLAMAV_CANNOT_CONNECT','Cannot connect to the ClamAV Daemon');
-define('O_LATEST_SIGNATURE', '20140703');
+define('O_LATEST_SIGNATURE', '20140716');
 define('SIGNATURE_UPTODATE','<b>[Better Protection] </b>Your firewall rules are up to date');
 define('SIGNATURE_OUTDATED','<b>[Better Protection] </b><b>WARNING</b>: Your firewall rules are out-dated, please update the rules to enhance protection.');
 define('IS_MY_WEBSITE_SAFE_BROWSING','Does my website look safe in major anti-virus software blacklist database?');

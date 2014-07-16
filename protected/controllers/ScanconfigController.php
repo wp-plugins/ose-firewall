@@ -55,10 +55,10 @@ class ScanconfigController extends BaseController {
 		$data['allowExts'] = oRequest :: getVar('allowExts', null);
 		$data['blockCountry'] = oRequest :: getVar('blockCountry', 0);
 		$data['googleVerification'] = oRequest :: getVar('googleVerification', 0);
-		$data['privateAPIKey'] = $_POST['privateAPIKey'];
 		$data['adVsPatterns'] = oRequest :: getVar('adVsPatterns', 0);
 		$data['adRules'] = oRequest :: getVar('adRules', 0);
 		$data['scanClamav'] = oRequest :: getInt('scanClamav', 0);
+		$data['auditReport'] = oRequest :: getInt('auditReport', 1);
 		$this->model ->saveConfiguration($type, $data);
 	}
 }

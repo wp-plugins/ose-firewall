@@ -106,7 +106,14 @@ class oseEmail {
 		}
 		$where[] = "`email`.`app` = " . $this->db->quoteValue($this->app);
 		$where = $this->db->implodeWhere($where);
-		$attrList = array("`email`.subject AS subject", "`email`.id AS id", "`users`.ID AS user_id", "`users`.display_name AS name", );
+		if (OSE_CMS =='joomla')
+		{
+			$attrList = array("`email`.subject AS subject", "`email`.id AS id", "`users`.id AS user_id", "`users`.name AS name", );
+		}
+		else
+		{
+			$attrList = array("`email`.subject AS subject", "`email`.id AS id", "`users`.ID AS user_id", "`users`.display_name AS name", );
+		}		
 		$sql = convertViews::convertAdminEmail($attrList);
 		$query = $sql.$where;
 		$this->db->setQuery($query);

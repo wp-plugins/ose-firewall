@@ -33,7 +33,8 @@ class virusScanner {
 	private $maxfilesize = 0;
 	private $patterns = '';
 	private $type = 0; 
-	private $clamd = null; 
+	private $clamd = null;
+	private $vsInfo = array(); 
 	public function __construct()
 	{
 		oseFirewall::loadLanguage();
@@ -82,7 +83,7 @@ class virusScanner {
 		if (function_exists('ini_set'))
 		{
 			ini_set('max_execution_time', 300);
-			ini_set('memory_limit', '512M');
+			ini_set('memory_limit', '1024M');
 		}	
 	}
 	public function initDatabase($step, $directory) {
@@ -273,6 +274,8 @@ class virusScanner {
 		//$_SESSION['patterns'][]= (object) array('id'=>'21', 'patterns'=>"\<\?php\s+[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|'<>.^*()%!-~\s]+\;\?\>");
 		//$_SESSION['patterns'][]= (object) array('id'=>'22', 'patterns'=>"base64\_decode");
 		//$_SESSION['patterns'][]= (object) array('id'=>'23', 'patterns'=>"eval\(");
+		$_SESSION['patterns'][]= (object) array('id'=>'23', 'patterns'=>"\<\?php\s*(\$|\w|\s|\=)*.*HTTP_USER_AGENT.*keywordsRegex.*exit\(\)\;\s*\}\s*\?\>");
+		$_SESSION['patterns'][]= (object) array('id'=>'24', 'patterns'=>"\<\?php\s*(\$|\w|\s|\=|\"|\.)*\;eval\(.*\)\;\?>");
 	}
 	private function updateAllFileStatus($status = 0)
 	{
@@ -318,23 +321,21 @@ class virusScanner {
 	}
 	private function scanFileLoop ($start_time) {
 		ini_set('display_errors', 'on');
-		$vsInfo = $this->getVsFiles();
-		$_SESSION['oseFileArray'] = $vsInfo['fileset'];
-		$_SESSION['completed'] = $vsInfo['completed'];
-		while (count($_SESSION['oseFileArray'])>0)
+		$this->vsInfo = $this->getVsFiles();
+		while (count($this->vsInfo['fileset'])>0)
 		{  
 			$since_start = $this->timeDifference($start_time, time());
 			if ($since_start>=2)
 			{
-				$result = $this->saveVsFiles($_SESSION['oseFileArray'], $_SESSION['completed']);
+				$result = $this->saveVsFiles($this->vsInfo['fileset'], $this->vsInfo['completed']);
 				if($result == false)
 				{
 					return false;
 				}
 				break;
 			}
-			$_SESSION['last_scanned'] = array_pop($_SESSION['oseFileArray']);
-			$_SESSION['completed'] ++; 
+			$_SESSION['last_scanned'] = array_pop($this->vsInfo['fileset']);
+			$this->vsInfo['completed'] ++; 
 			if(oseFile::exists($_SESSION['last_scanned'] )==false) {
 				continue;
 			}
@@ -353,8 +354,8 @@ class virusScanner {
 		unset($_SESSION['oseFileArray'][$index]);
 	}
 	private function showScanningStatusMsg () {
-		$_SESSION['oseFileArray'] = $this->getVsFiles();
-		$fileCount = count($_SESSION['oseFileArray']['fileset']);
+		$oseFileArray = $this->getVsFiles();
+		$fileCount = count($oseFileArray['fileset']);
 		$return['completed'] = 0;
 		$return['summary'] = 'There are in total of '.$fileCount.' files in your website, the scanning will start shortly';
 		$return['progress'] = 'Found '.$fileCount.' number of files';
@@ -365,7 +366,7 @@ class virusScanner {
 	}
 	private function showCountFilesMsg () {
 		$first  = new DateTime(date('Y-m-d h:i:s'));
-		$fileCount = $this->getNumberofFiles(OSE_ABSPATH);
+		$fileCount = $this->getNumberofFiles(oseFirewall::getScanPath());
 		$timeUsed = $this->getTimeUsed ($first);  
 		$memUsed = $this->getMemoryUsed (); 
 		$return['completed'] = 0;
@@ -388,7 +389,7 @@ class virusScanner {
 	}
 	private function getNumberofFiles ($path) {
 		$x = 0; 
-		$_SESSION['oseFileArray'] = array (); 
+		$oseFileArray = array (); 
 		if (!empty($path)) {
 			$dir_iterator = new RecursiveDirectoryIterator($path);
 			$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
@@ -396,11 +397,11 @@ class virusScanner {
 			{
 				if ($fileSPLObject->isFile() && in_array($this->getFileExtension($fullFileName), $this->file_ext)) {
 					$x++;
-					$_SESSION['oseFileArray'][] = $fullFileName; 
+					$oseFileArray[] = $fullFileName; 
 				}
 			}
 		}
-		$this->saveVsFiles($_SESSION['oseFileArray'], $_SESSION['completed']);
+		$this->saveVsFiles($oseFileArray, $_SESSION['completed']);
 		return $x; 
 	}
 	private function getFileExtension ($path) {
@@ -423,7 +424,7 @@ class virusScanner {
 		return $return;  
 	}
 	private function returnAjaxMsg ($last_file=null) {
-		if (count($_SESSION['oseFileArray']) == 0)
+		if (count($this->vsInfo['fileset']) == 0)
 		{
 			return $this->returnCompleteMsg();
 		}
@@ -447,9 +448,9 @@ class virusScanner {
 				$cpuload = sys_getloadavg();	
 			}
 			$timeUsed = $this->timeDifference($_SESSION['start_time'], time());
-			$completed = $_SESSION['completed'];
-			$left = count($_SESSION['oseFileArray']);
-			$total = $_SESSION['completed'] + $left;
+			$completed = $this->vsInfo['completed'];
+			$left = count($this->vsInfo['fileset']);
+			$total = $this->vsInfo['completed'] + $left;
 			$progress = ($completed/$total);
 			$return['completed'] = round($progress, 3);
 			$return['summary'] = ($return['completed']*100). '% ' .oLang::_get('COMPLETED');
