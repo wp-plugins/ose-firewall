@@ -30,7 +30,7 @@ function getRules (win) {
 			var msg  = Ext.decode(response.responseText);
 			if (msg.paid==false)
 			{
-				win.update(msg.message + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3  + '<br/>' + msg.refund);
+				win.update(msg.message  + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3);
 			}
 			else
 			{
