@@ -40,6 +40,8 @@ $this ->model->getNounce();
 	?>
 	<div id ='oseantihackerIPManager'></div>
   </div>
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/accept.png"> WhiteList
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/delete.png"> BlackList
+  <div class='explanation'>
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/accept.png"> WhiteList
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/delete.png"> BlackList
+  </div>
 </div>

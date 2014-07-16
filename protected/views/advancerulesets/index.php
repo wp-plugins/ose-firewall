@@ -38,6 +38,8 @@ $this ->model->getNounce();
 	?>
 	<div id ='oseadantihackerRulesets'></div>
   </div>
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/accept.png"> Active
-  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/delete.png"> Inactive
+  <div class='explanation'>
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/accept.png"> Active
+	  <img alt="" src = "<?php echo OSE_FWRELURL;?>/public/images/icons/fam/delete.png"> Inactive
+  </div>
 </div>

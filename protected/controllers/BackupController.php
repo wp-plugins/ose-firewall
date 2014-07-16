@@ -48,13 +48,12 @@ class BackupController extends BaseController
 		$db = oseFirewall::getDBO();
 		$backup_type = oRequest::getInt('backup_type', 3);
 		$backup_to = oRequest::getInt('backup_to', 1);
-		
 		switch ($backup_type)
 		{
-			case 2:
-			case 3:
-				$result = $this->model ->backupDB($backup_type, $backup_to);
-				break;
+		case 2:
+		case 3:
+			$result = $this->model ->backupDB($backup_type, $backup_to);
+			break;
 		}
 		if ($result != false)
 		{
@@ -65,31 +64,29 @@ class BackupController extends BaseController
 			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("BACKUP_FAILED"), false);
 		}
 	}
-	
 	public function actionCheckAuth()
 	{
 		oseFirewall::loadRequest();
 		$backup_to = oRequest::getInt('backup_to', 1);
 		//TODO: check membership permission
-		if($backup_to != 1)
+		if ($backup_to != 1)
 		{
 			$dbReady = $this->model->dbReady($backup_to);
-			if(!$dbReady)
+			if (!$dbReady)
 			{
 				oseAjax::returnJSON(array("dbReady" => false), $mobiledevice);
 			}
-			else 
+			else
 			{
 				$result = $this->model->dropbox_AuthorisedByUser();
 				oseAjax::returnJSON($result, $mobiledevice);
 			}
 		}
-		else 
+		else
 		{
 			oseAjax::returnJSON(array("dbReady" => true), $mobiledevice);
 		}
 	}
-	
 	public function actionSaveAppAccess()
 	{
 		oseFirewall::loadRequest();
@@ -98,7 +95,7 @@ class BackupController extends BaseController
 		$access_username = oRequest::getVar('access_username', null);
 		$access_password = oRequest::getVar('access_password', null);
 		$result = $this->model->saveAppAccess($access_username, $access_password);
-		if($result != 0)
+		if ($result != 0)
 		{
 			oseAjax::aJaxReturn(true, 'SUCCESS', "success", false);
 		}
@@ -107,15 +104,12 @@ class BackupController extends BaseController
 			oseAjax::aJaxReturn(false, 'ERROR', "unsuccess", false);
 		}
 	}
-	
 	public function actionBackupFile()
 	{
 		oseFirewall::loadRequest();
-		
 		$backup_type = oRequest::getInt('backup_type', 3);
 		$backup_to = oRequest::getInt('backup_to', 1);
 		$result = $this->model ->backupFiles($backup_type, $backup_to);
-		
 		if ($result == true)
 		{
 			oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get("DB_DELETE_SUCCESS"), false);
@@ -140,8 +134,8 @@ class BackupController extends BaseController
 			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("DB_DELETE_FAILED"), false);
 		}
 	}
-	
-	public function actionDeleteItemByID(){
+	public function actionDeleteItemByID()
+	{
 		oseFirewall::loadRequest();
 		$ids = oRequest::getVar('id', null);
 		$ids = oseJSON::decode($ids);
@@ -156,18 +150,17 @@ class BackupController extends BaseController
 			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("DB_DELETE_FAILED"), false);
 		}
 	}
-	
-	public function actionDownloadBackupDB(){
+	public function actionDownloadBackupDB()
+	{
 		oseFirewall::loadRequest();
 		$id = oRequest::getVar('ids', null);
 		$this->model ->downloadBackupDB($id);
-		
 	}
-	
-	public function actionDownloadBackupFile(){
+	public function actionDownloadBackupFile()
+	{
 		oseFirewall::loadRequest();
 		$id = oRequest::getVar('ids', null);
 		$this->model ->downloadBackupFile($id);
-	} 
+	}
 }
 ?>	

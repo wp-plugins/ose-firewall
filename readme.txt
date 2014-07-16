@@ -2,10 +2,10 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, woocommerce
+Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.5.3
+Stable tag: 3.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,21 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.5.4 =
+* Added: Added option to turn on and off Daily Audit report
+* Updated: Updated the firewall rules version
+* Fixed: Fixed a minor warning bug in the installer for checking country database
+* Fixed: Fixed a minor warning bug in the getSafeBrowsingStatus function in the Audit class
+* Enhancement: Improved the virus scanning function to reduce overall memory usage
+* Enhancement: Improved Configuration model to avoid warning errors in PHP strict mode
+* Enhancement: Improved CountryBlock model to avoid warning errors in PHP strict mode
+* Enhancement: Improved CountryBlock class to reduce duplicated download of SQL files if it has been downloaded
+* Enhancement: Improved Variable function to work with both Joomla and Wordpress
+* Enhancement: Improved ClamD class to avoid warning errors in PHP strict mode
+* Enhancement: Improved Firewall Statistics class to work with both Joomla and Wordpress
+* Enhancement: Improved getSafeBrowsingStatus function to avoid warning errors in PHP strict mode
+* Removed: API Key in configuration section depreciated since this version.
 
 = 3.5.3 =
 * Fixed: Remove old url and Update url links in the firewall badge 

@@ -124,7 +124,7 @@ class BackupModel extends BaseModel {
 	
 	public function removeBackUp($ids)
 	{
-		$backupManager = new oseBackupManager($this->db, $backup_type);
+		$backupManager = new oseBackupManager($this->db, null);
 		foreach ($ids as $id)
 		{
 			$result = $backupManager->removeBackUp($id);
@@ -141,7 +141,6 @@ class BackupModel extends BaseModel {
 		$result = $backupManager -> getBackupDBByID($id);
 		$file = $result-> dbBackupPath .".gz";
 		$backupManager->downloadBackupFiles($file);
-		
 	}
 	
 	public function downloadBackupFile($id){

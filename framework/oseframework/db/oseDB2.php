@@ -286,21 +286,5 @@ if (!class_exists('oseDB2', false))
 			$result = $this->query();
 			return (boolean) $result;
 		}
-		public function getTableList()
-		{
-			$query = "SHOW TABLES ; ";
-			$this->setQuery($query);
-			$results = $this->loadResultArray();
-			$list = array();
-			foreach ($results as $result)
-			{
-				if (!preg_match("/(ose_app_geoip)|(osefirewall_country)/", $result->Tables_in_wordpress_d))
-				{
-					$tmp = array_values($result);
-					$list[] = $tmp[0];
-				}
-			}
-			return $list;
-		}
 	}
 }

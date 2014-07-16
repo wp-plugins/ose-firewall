@@ -33,6 +33,11 @@ class oseFirewall extends oseFirewallBase {
 	protected function loadViews () {
        
     }
+	public function initSystem()
+	{
+		$this->initYiiConfiguration ();
+		add_action('init', array($this, 'startSession'), 1);
+	}
     protected function addMenuActions () {
     	add_action('admin_menu', 'oseFirewall::showmenus');
     } 
@@ -84,7 +89,7 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'ose_fw_variables') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_variables">' . oLang::_get('VARIABLES'). '</a></li>';
 		$menu .= '<li ';
-		$menu .=(view == 'ose_fw_countryblock') ? 'class="current"' : '';
+		$menu .= ($view == 'ose_fw_countryblock') ? 'class="current"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_countryblock">' . oLang::_get('COUNTRYBLOCK'). '</a></li>';
 		$menu .= '</ul>';
 		// SubMenu Anti-Hacking Ends;
@@ -141,7 +146,42 @@ class oseFirewall extends oseFirewallBase {
     	return "var url = \"".admin_url('admin-ajax.php')."\";".
 			   "var option=\"".self::$option."\";";
     }
-	public function loadNounce () {
+	public static function showLogo()
+	{
+		$url = 'http://www.centrora.com';
+		$appTitle = OSE_WORDPRESS_FIREWALL;
+		$head = '<div id="logo-labels">
+					<div class="text-normal support-center"><span class="help-icons"><a href="http://www.centrora.com/support-center/" target="__blank"><img width="40" height="40" alt="" src="'.OSE_FWRELURL.'/public/images/con05.png"></a></span><h4>Need Help?</h4></div>
+					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/tutorial/" target="__blank"><img width="40" height="40" alt="" src="'.OSE_FWRELURL.'/public/images/con016.png"></a></span><h4>User Manual</h4></div>
+					<div class="text-normal"><span class="help-icons"><a href="http://www.centrora.com/cleaning/" target="__blank"><img width="40" height="40" alt="" src="'.OSE_FWRELURL.'/public/images/con017.png"></a></span><h4>Malware Removal</h4></div>';
+		if (OSE_CMS == 'joomla')
+		{
+			$head .= '<div id="back-to-admin"><a href="index.php" >Back to Admin Panel</a></div>';
+		}
+		$head .= '<div class ="version-normal">'.self::getVersion ().'</div> ';
+		$head .= '</div>';
+		echo $head;
+		echo oseFirewall::getmenus();
+	}
+	private static function getVersion () {
+		$pluginData = get_plugin_data(OSEFWDIR.'/ose_wordpress_firewall.php');
+		return 'Version: '.	$pluginData['Version']; 
+	}
+	public static function loadNounce () {
 		return wp_create_nonce( 'centnounce' ); 
+	}
+	public static function getScanPath () {
+		return OSE_ABSPATH;
+	}
+	public static function getDashboardURLs () {
+		$url = array (); 
+		$url[]= 'admin.php?page=ose_fw_vsscan';
+		$url[]= 'admin.php?page=ose_fw_manageips';
+		$url[]= 'admin.php?page=ose_fw_backup';
+		$url[]= 'admin.php?page=ose_fw_configuration';
+		$url[]= 'admin.php?page=ose_fw_scanconfig';
+		$url[]= 'admin.php?page=ose_fw_seoconfig';
+		$url[]= 'admin.php?page=ose_fw_adrulesets';
+		return $url; 
 	}
 }

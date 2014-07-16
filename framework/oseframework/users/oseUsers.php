@@ -31,6 +31,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH')) {
 class oseUsers {
 	private $cms = null ; 
 	private $db = null ;
+	private static $cmsStatic = null ;
 	public function __construct($app) {
 		$this->app = $app;
 		$this->setCMS();
@@ -42,6 +43,14 @@ class oseUsers {
 			$this->cms = 'joomla';
 		} else if (defined('WPLANG')) {
 			$this->cms = 'wordpress';
+		}
+	}
+	private static function setCMSStatic()
+	{
+		if (defined('_JEXEC')) {
+			self::$cmsStatic = 'joomla';
+		} else if (defined('WPLANG')) {
+			self::$cmsStatic = 'wordpress';
 		}
 	}
 	private function setDB()
@@ -180,20 +189,67 @@ class oseUsers {
 	}
 	
 	public static function getUserID() {
-		$current_user = wp_get_current_user();
-		return $current_user->ID; 
+		self::setCMSStatic();
+		if (self::$cmsStatic=='joomla')
+		{
+			$user = JFactory::getUser (); 
+			return $user->id; 
+		}		
+		else
+		{
+			$current_user = wp_get_current_user();
+			return $current_user->ID; 
+		}
 	}
 	public function isAdmin() {
-		$current_user = wp_get_current_user();
-		$adminids =$this->get_super_admins ();
-		return (in_array($current_user->ID, $adminids)); 
+		self::setCMSStatic();
+		if (self::$cmsStatic=='joomla')
+		{
+			$current_user = JFactory::getUser (); 
+			$adminids = $this->getJoomlaAdminGroups(); 
+			$result = false; 
+
+			foreach ($current_user->groups as $group )
+			{
+			    if (in_array($group, $adminids))
+			    { 
+				$result = true; 
+				break;
+			    }
+			}
+			return $result; 
+		}
+		else 
+		{
+			$current_user = wp_get_current_user();
+			$adminids =$this->get_super_admins ();
+			return (in_array($current_user->ID, $adminids)); 
+		}
 	}
 	public static function getUserLogin() {
-		$current_user = wp_get_current_user();
-		return $current_user->user_login; 
+		self::setCMSStatic();
+		if (self::$cmsStatic=='joomla')
+		{
+			$current_user = JFactory::getUser (); 
+			return $current_user->username; 
+		}
+		else
+		{
+			$current_user = wp_get_current_user();
+			return $current_user->user_login; 
+		}
 	}
 	public static function getUserEmail() {
-		$current_user = wp_get_current_user();
-		return $current_user->user_email; 
+		self::setCMSStatic();
+		if (self::$cmsStatic=='joomla')
+		{
+			$current_user = JFactory::getUser (); 
+			return $current_user->email; 
+		}
+		else
+		{
+			$current_user = wp_get_current_user();
+			return $current_user->user_email; 
+		}
 	}
 }

@@ -40,7 +40,6 @@ class oseBackupManager
 	{
 		require_once 'proWebDropbox.php';
 		$this->db = $db;
-		$this->backup_prefix = $backup_prefix;
 		$this->backup_type = (int) $backup_type;
 		$this->fileBackupName = "";
 		oseFirewall::loadDateClass();
@@ -50,17 +49,7 @@ class oseBackupManager
 	{
 		oseFirewall::loadUsers();
 		$oUser = new oseUsers("ose_firewall");
-		$users = $oUser->get_super_admins();
-		$current_user = wp_get_current_user();
-		$isCurrentUser = in_array($current_user->ID, $users);
-		if ($isCurrentUser == false)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return (boolean) $oUser->isAdmin(); 
 	}
 	
 	private function saveBackUpPath($path, $type)
@@ -350,6 +339,7 @@ class oseBackupManager
 	}
 	public function getBackupDB($search, $start, $limit, $status)
 	{
+		$where = array(); 
 		if (!empty($status))
 		{
 			$where[] = "`type` = ".(int) $status;

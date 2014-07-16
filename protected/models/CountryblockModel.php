@@ -172,7 +172,10 @@ class CountryblockModel extends BaseModel
 		$i = 0;
 		while ($i <= $step)
 		{
-			$return .= $array[$i];
+			if (isset($array[$i]))
+			{
+				$return .= $array[$i];
+			}
 			$i++;
 		}
 		return $return;

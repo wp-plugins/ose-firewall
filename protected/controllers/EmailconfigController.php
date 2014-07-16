@@ -33,7 +33,7 @@ class EmailconfigController extends BaseController {
 	}
 	public function actionGetEmailParams()
 	{
-		oseFirewall::loadRequest (); 
+		oseFirewall::loadRequest ();
 		$id= oRequest::getInt('id', null);
 		if (empty($id))
 		{

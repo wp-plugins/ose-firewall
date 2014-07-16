@@ -8,6 +8,11 @@ oseConfScan.banOption = new Array(
 					    	new Array(0, O_SHOW_A_403_ERROR_PAGE_AND_STOP_THE_ATTACK)
 );
 
+oseConfScan.auditOption = new Array(
+		new Array(1, 'Daily'), 
+    	new Array(0, 'Never')
+);
+
 oseConfScan.Form = new Ext.FormPanel({
         ref: 'form',
         labelAlign: 'top',
@@ -15,7 +20,7 @@ oseConfScan.Form = new Ext.FormPanel({
         bodyStyle:'padding:10px',
         autoScroll: false,
         width: '100%',
-        height: 725,
+        height: 425,
         renderTo: 'ConfigScan',
         items: [
         		//oseGetNormalTextField ('secretword', O_SECRET_WORD, 320, 600),
@@ -36,17 +41,7 @@ oseConfScan.Form = new Ext.FormPanel({
 		           anchor:'98%',
 		           emptyText: 'doc,docx,jpg,png,pdf'
 		   		},
-		   		oseGetDisplayField(O_APIKEY),
-				{
-		           xtype:'textarea',
-		           labelAlign: 'left',
-		           fieldLabel: '',
-		           name: 'privateAPIKey',
-		           id: 'privateAPIKey',
-		           anchor:'98%',
-		           height: 300,
-		           emptyText: 'Enter your Centrora private API Key'
-		   		}
+        		oseGetCombo('auditReport', AUDIT_FREQ, oseConfScan.auditOption, 700, 320, 400, 1)
 		   		//oseGetCombo('scanClamav', O_SCAN_CLAMAV, oseConfScan.Option, 600, 320, 100, 0)
 		],
         buttons: [{

@@ -3,7 +3,9 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
 	margin: 0;
 	padding: 0;
 }
-
+body {	
+	background: url("../images/background.gif") repeat scroll left top #DEDEDE;
+}
 a,a:hover {
 	text-decoration: none !important;
 }
@@ -398,12 +400,11 @@ a,a:hover {
 	margin-left: -16px;
 }
 
-
 #oseappcontainer {
 	background: url("../images/background.gif") repeat scroll left top #DEDEDE;
-	margin: 0 auto;
+	margin: 0px 20px 5px 20px;
 	padding: 0;
-	margin-right: 20px;
+	overflow: hidden;
 }
 
 #ose-footer {
@@ -904,7 +905,9 @@ ol.browsers li {
 }
 
 .text-normal h4 {
-	text-align: center;
+	color: #444444;
+    font-size: 12px;
+    text-align: center;
 }
 
 #menu-btn-list .btns {
@@ -977,7 +980,9 @@ ol.browsers li {
 
 .explanation {
 	padding: 10px;
-	float: right;
+    text-align: right;
+    width: 100%;
+    float: right; 
 }
 
 #scan-window {
@@ -1231,6 +1236,52 @@ ol.browsers li {
     font-weight: 500;
     margin: 5px;
 }
+
+#oseantihackerRulesets,
+#oseadantihackerRulesets, 
+#oseantihackerIPManager,
+#oseATHVARIABLESPanel, 
+#oseantihackerBackupManager,
+#ConfigScan,
+#ConfAntiVirus,
+#ConfigSEO,
+#ConfAddons,
+#oseEmailsList,
+#oseAdminEmail{
+	width: 100%; 
+	float: left; 
+}
+
+#action-list h4 {
+	font-size: 13px; 
+}
+
+.button-primary {
+    background: none repeat scroll 0 0 #2EA2CC;
+    border-color: #0074A2;
+    box-shadow: 0 1px 0 rgba(120, 200, 230, 0.5) inset, 0 1px 0 rgba(0, 0, 0, 0.15);
+    color: #FFFFFF;
+    text-decoration: none;
+    
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    height: 28px;
+    line-height: 26px;
+    margin: 0;
+    padding: 0 10px 1px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.warning-buttons a {
+    color: #FFFFFF;
+}
+
 
 .money-back {
 	font-size: 12px; 
