@@ -60,7 +60,7 @@ function checkSafebrowsingStatus (win) {
 			var msg  = Ext.decode(response.responseText);
 			if (msg.paid==false)
 			{
-				win.update('Your safebrowsing status is as follows: <br/>' + msg.safeBrowsingTable + '<br/><br/>' + msg.message + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3  + '<br/>' + msg.refund);
+				win.update('Your safebrowsing status is as follows: <br/>' + msg.safeBrowsingTable + '<br/><br/>' + msg.message + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3 );
 			}
 			else
 			{

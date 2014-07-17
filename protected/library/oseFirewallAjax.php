@@ -107,4 +107,8 @@ class oseFirewallAjax extends oseAjax{
 		$actions = array ('uninstallTables');
 		parent::loadActions($actions);
 	}	
+	public static function loadactionApiconfig(){
+		$actions = array ('saveConfigScan','getConfiguration');
+		parent::loadActions($actions);
+	}	
 }

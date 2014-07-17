@@ -342,6 +342,11 @@ class oseFirewallBase extends oseFirewallRoot
 		self::runYiiApp();
 		Yii::app()->runController('clamav/index');
 	}
+	public static function apiconfig () 
+	{
+		self::runYiiApp();
+		Yii::app()->runController('apiconfig/index');
+	}
 	public static function showLogo()
 	{
 		$url = 'http://www.centrora.com';
