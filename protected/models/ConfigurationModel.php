@@ -52,6 +52,7 @@ class ConfigurationModel extends BaseModel {
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('spamconfig').'\'">'.ANTISPAM_CONFIGURATION.'</button></td><td>'.ANTISPAMCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('emailconfig').'\'">'.EMAIL_CONFIGURATION.'</button></td><td>'.EMAILCONFIG_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('emailadmin').'\'">'.EMAIL_ADMIN.'</button></td><td>'.ADMINEMAILCONFIG_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "window.location = \''.$this->getURL('apiconfig').'\'">'.API_CONFIGURATION.'</button></td><td>'.API_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "config-btn" onClick = "uninstallDB();">'.UNINSTALLDB.'</button></td><td>'.UNINSTALLDB_INTRO.'</td></tr>';
 		return $html;  
 	}

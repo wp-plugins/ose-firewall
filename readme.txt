@@ -99,6 +99,9 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
+= 3.5.5 =
+* Added: Added API Configuration View in Configuration section.
+
 = 3.5.4 =
 * Added: Added option to turn on and off Daily Audit report
 * Updated: Updated the firewall rules version

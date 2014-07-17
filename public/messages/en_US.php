@@ -263,7 +263,7 @@ define('SCAN_REPORT_INTRO', 'Display the infected files last scanned by the viru
 define('CONFIGURATION_INTRO', 'Configure the default settings of Centrora Security to best suit your personal needs. It includes settings for scanning, virus scanner, SEO, anti-spam, email, and admin email mapping');
 define('BACK_UP_INTRO', 'Backup database into your own server for free');
 define('COUNTRY_BLOCK_INTRO', 'Block the IP range of the entire country that you insist to. Centrora Security will keep the visitors from blocked country out of your website');
-define('SCANCONFIG_INTRO', 'Connect to Centrora with API key and configure Firewall Scanning Settings');
+define('SCANCONFIG_INTRO', 'Configure Firewall Scanning Settings');
 define('VSCONFIG_INTRO', 'Configure the settings for Virus Scanner, control file extension to be scanned and limit the size of scanning files');
 define('SEOCONFIG_INTRO', 'Search Engine settings which protect your rankings even if google bots block your website. Design message to be displayed for blocked IP visitors');
 define('ANTISPAMCONFIG_INTRO', 'Enable/Disable stop forum spam to avoid persistent spammers on message boards and blogs');
@@ -319,4 +319,6 @@ define('SECURITY_AUDIT','Security Audit');
 define('CHECK_SAFE_BROWSING','Check your website safe browsing status now.');
 define('SAFE_BROWSING_CHECKUP_UPDATED','Your Safe Browsing Checkup is updated');
 define('SAFE_BROWSING_CHECKUP_OUTDATED','Your Safe Browsing Checkup is outdated, schedule the daily checkup now.');
+define('API_CONFIGURATION','API Configuration');
+define('API_INTRO','Connect to Centrora with API key'); 
 ?>
