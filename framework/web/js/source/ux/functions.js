@@ -323,8 +323,7 @@ function osePanelAdminEmailAction(msgTitle, msgText, panel, ns, url, option, con
 				ids = new Array();
 				for (i=0; i < selections.length; i++)
 				{
-					ids [i] = {'id':selections[i].data.id, 'email_id': selections[i].data.email_id};
-			      
+					ids [i] = {'id':selections[i].data.id, 'email_id': selections[i].data.email_id, 'user_id': selections[i].data.user_id};
 				}
 				ids = Ext.encode(ids);
 				oseAjaxTaskRequestWithIDS(ns, url, option, controller, task, ids);

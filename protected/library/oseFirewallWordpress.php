@@ -185,4 +185,7 @@ class oseFirewall extends oseFirewallBase {
 		$url[]= 'admin.php?page=ose_fw_adrulesets';
 		return $url; 
 	}
+	public static function getAdminEmail () {
+		return get_option( 'admin_email' );
+	}
 }
