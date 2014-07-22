@@ -50,6 +50,8 @@ class BaseModel extends CFormModel {
 	}
 	protected function loadJSLauguage ($cs, $baseUrl) {
 		$lang = oseFirewall::getLocale ();
+		$cs->registerScriptFile($baseUrl . '/public/messages/en_US.js', CClientScript::POS_HEAD);
+		/*
 		if (file_exists (OSE_FWLANGUAGE.ODS.$lang.'.js'))
 		{
 			$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
@@ -57,7 +59,8 @@ class BaseModel extends CFormModel {
 		else
 		{
 			$cs->registerScriptFile($baseUrl . '/public/messages/en_US.js', CClientScript::POS_HEAD);
-		}	
+		}
+		*/	
 	}
 	public function getNounce () {
 		echo '<input type="hidden" id="centnounce" value ="'.oseFirewall::loadNounce().'" />';

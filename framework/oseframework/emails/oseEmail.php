@@ -108,11 +108,11 @@ class oseEmail {
 		$where = $this->db->implodeWhere($where);
 		if (OSE_CMS =='joomla')
 		{
-			$attrList = array("`email`.subject AS subject", "`email`.id AS id", "`users`.id AS user_id", "`users`.name AS name", );
+			$attrList = array("`email`.subject AS subject", "`email`.id AS id", "`email`.id AS email_id", "`users`.id AS user_id", "`users`.name AS name", );
 		}
 		else
 		{
-			$attrList = array("`email`.subject AS subject", "`email`.id AS id", "`users`.ID AS user_id", "`users`.display_name AS name", );
+			$attrList = array("`email`.subject AS subject", "`email`.id AS id", "`email`.id AS email_id", "`users`.ID AS user_id", "`users`.display_name AS name", );
 		}		
 		$sql = convertViews::convertAdminEmail($attrList);
 		$query = $sql.$where;
