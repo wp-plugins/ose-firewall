@@ -330,7 +330,7 @@ class oseFirewallAudit
 				$return['off'][]= $func;
 			}
 		}
-		if (!empty($return['on']))
+		if (isset($return['on']) && !empty($return['on']))
 		{
 			$return['result'] = true; 
 		}
@@ -338,8 +338,22 @@ class oseFirewallAudit
 		{
 			$return['result'] = false;
 		}
-		$return['on'] = implode(",", $return['on']);
-		$return['off'] = implode(",", $return['off']);
+		if (isset($return['on']) && !empty($return['on']))
+		{
+			$return['on'] = implode(",", $return['on']);
+		}
+		else
+		{
+			$return['on'] = '';
+		}
+		if (isset($return['off']) && !empty($return['off']))
+		{
+			$return['off'] = implode(",", $return['off']);
+		}
+		else
+		{
+			$return['off'] = '';
+		}
 		return $return; 
 	}
 	private function getPHPConfig ($key) {
