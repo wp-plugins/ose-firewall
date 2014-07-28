@@ -20,17 +20,16 @@ oseConfScan.Form = new Ext.FormPanel({
         bodyStyle:'padding:10px',
         autoScroll: false,
         width: '100%',
-        height: 425,
+        height: 630,
         renderTo: 'ConfigScan',
         items: [
         		//oseGetNormalTextField ('secretword', O_SECRET_WORD, 320, 600),
         		oseGetDisplayField(O_ANTI_HACKING_SCANNING_OPTIONS),
-				oseGetCombo('devMode', O_DEVELOPMENT_MODE, oseConfScan.Option, 600, 320, 100, 0),
-				oseGetCombo('debugMode', O_DEBUG_MODE, oseConfScan.Option, 600, 320, 100, 0),
-				oseGetCombo('blockCountry', O_COUNTRY_BLOCKING, oseConfScan.Option, 600, 320, 100, 0),
-				oseGetCombo('adRules', O_ADRULESETS, oseConfScan.Option, 600, 320, 100, 0),
-				oseGetCombo('googleVerification', O_GOOGLE_2_VERIFICATION, oseConfScan.Option, 600, 320, 100, 0),
-				oseGetCombo('blockIP', O_FRONTEND_BLOCKING_MODE, oseConfScan.banOption, 700, 320, 400, 0),
+				oseGetCombo('devMode', O_DEVELOPMENT_MODE, oseConfScan.Option, 600, 450, 100, 0),
+				oseGetCombo('debugMode', O_DEBUG_MODE, oseConfScan.Option, 600, 450, 100, 0),
+				oseGetCombo('blockCountry', O_COUNTRY_BLOCKING, oseConfScan.Option, 600, 450, 100, 0),
+				oseGetCombo('googleVerification', O_GOOGLE_2_VERIFICATION, oseConfScan.Option, 600, 450, 100, 0),
+				oseGetCombo('blockIP', O_FRONTEND_BLOCKING_MODE, oseConfScan.banOption, 750, 450, 400, 0),
 				oseGetDisplayField(O_ALLOWED_FILE_TYPES),
 				{
 		           xtype:'textfield',
@@ -41,8 +40,27 @@ oseConfScan.Form = new Ext.FormPanel({
 		           anchor:'98%',
 		           emptyText: 'doc,docx,jpg,png,pdf'
 		   		},
-        		oseGetCombo('auditReport', AUDIT_FREQ, oseConfScan.auditOption, 700, 320, 400, 1)
+		   		oseGetDisplayField(O_SCHEDULE_AUDITING),
+		   		oseGetCombo('auditReport', AUDIT_FREQ, oseConfScan.auditOption, 600, 450, 400, 1),
 		   		//oseGetCombo('scanClamav', O_SCAN_CLAMAV, oseConfScan.Option, 600, 320, 100, 0)
+        		oseGetDisplayField(O_ADV_ANTI_HACKING_SCANNING_OPTIONS),
+				oseGetCombo('adRules', O_ADRULESETS, oseConfScan.Option, 600, 450, 100, 0),
+				oseGetCombo('silentMode', O_SILENTLY_FILTER_ATTACK, oseConfScan.Option, 600, 450, 100, 0),
+				{
+					fieldLabel: ATTACK_BLOCKING_THRESHOLD,
+					xtype: 'slider',
+				    width: 800,
+				    minValue: 0,
+				    maxValue: 100,
+				    name: 'threshold',
+				    id: 'threshold',
+				    hiddenName: 'threshold',
+				    isFormField: true,
+				    plugins: new Ext.slider.Tip(),
+				    labelWidth: 450
+				},
+				oseGetNormalTextField('slient_max_att', SILENT_MODE_BLOCK_MAX_ATTEMPTS, 450, 600),
+				oseGetCombo('receiveEmail', O_RECEIVE_EMAIL, oseConfScan.Option, 600, 450, 100, 1)
 		],
         buttons: [{
             text: 'Save',

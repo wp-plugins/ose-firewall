@@ -1,13 +1,12 @@
 <?php
 /**
- * @version     6.0 +
+ * @version     2.0 +
  * @package       Open Source Excellence Security Suite
- * @subpackage    Open Source Excellence CPU
+ * @subpackage    Centrora Security Firewall
+ * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
- * @author        Created on 30-Sep-2010
- * @author        Updated on 30-Mar-2013
+ * @author        Created on 01-Jun-2013
  * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
- * @copyright Copyright (C) 2008 - 2010- ... Open Source Excellence
  *
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -22,8 +21,9 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH'))
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
@@ -564,10 +564,10 @@ class oseFirewallStatBase
 					{
 						//$detcontent_id = $item->detcontent_id;
 						}
-					if (!isset($tag) || $item->attacktypeid == 1 || $item->attacktypeid == 11)
+					if (!isset($tag))
 					{
-						//$tag = $item->tag;
-						}
+						$tag = $item->tag;
+					}
 					if (!isset($content) || $item->attacktypeid == 1 || $item->attacktypeid == 11)
 					{
 						$content = $item->content;
@@ -1250,7 +1250,7 @@ class oseFirewallStatBase
 		$attacktypes = $this->getAttackTypeArray();
 		foreach ($results as $result)
 		{
-			$results[$i]->rule = oLang::_get($results[$i]->rule);
+			$results[$i]->rule = oLang::_get($results[$i]->description);
 			$results[$i]->action = $this->getActionIcon($results[$i]->id, $results[$i]->action);
 			$results[$i]->attacktype = $this->attackTypeDecode($attacktypes, $results[$i]->attacktype);
 			$i++;
@@ -1332,7 +1332,7 @@ class oseFirewallStatBase
 			$db = oseFirewall::getDBO(); 
 			$query = "SELECT `number` FROM `#__osefirewall_versions` WHERE `type` = 'ath'";
 			$db->setQuery($query); 
-			$result = $db->loadResult(); 
+			$result = $db->loadResult();
 			return $result['number'];  
 		}
 		else

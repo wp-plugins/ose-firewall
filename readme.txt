@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.5.6
+Stable tag: 3.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,17 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.5.7 =
+* Enhancement: Updated the email fucntion to reduce duplicated emails being sent when an attack is found
+* Enhancement: Updated all files to add 'Direct access denied' function to enhance security
+* Enhancement: Extended the time difference for the safe browsing status checking
+* Fixed: No sender information in the alert email when attack is detected
+* Added: Added the Change All Country function into the Country Block page
+* Added: Added the receive Centrora Firewall email option in the scanning configuration
+* Fixed: Fixed the multiple countries status change function not working correctly in Country Block Page.
+* Enhancement: Improved Scanning Configuration layout
+* Added: Added PHP Configuration Auditing function to enhance overall security
 
 = 3.5.6 =
 * Fixed: Fixed configuration page not showing correctly on non-English websites

@@ -1,13 +1,12 @@
 <?php
 /**
- * @version     6.0 +
+ * @version     2.0 +
  * @package       Open Source Excellence Security Suite
- * @subpackage    Open Source Excellence CPU
+ * @subpackage    Centrora Security Firewall
+ * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
- * @author        Created on 30-Sep-2010
- * @author        Updated on 30-Mar-2013 
+ * @author        Created on 01-Jun-2013
  * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
- * @copyright Copyright (C) 2008 - 2010- ... Open Source Excellence
  *
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -22,17 +21,29 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-if (! defined ( 'OSE_FRAMEWORK' )) {
-	die ( 'Direct Access Not Allowed' );
+ *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
+ */
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
+{
+	die('Direct Access Not Allowed');
 }
-oseFirewall::callLibClass ( 'fwscanner', 'fwscanner' );
+oseFirewall::callLibClass ( 'fwscanner', 'fwscannerbs' );
 oseFirewall::callLibClass ( 'fwscanner', 'Converter' );
 oseFirewall::loadJSON ();
-class oseFirewallScannerAdvance extends oseFirewallScanner {
-	protected $threshold = 0;
+class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 	public function scanAttack() {
-		$scanResult = $this->ScanLayer();
+		$scanResult = $this->checkCountryStatus();
+		if ($scanResult == true)
+		{
+			return; 
+		}
+		else
+		{ 
+			$scanResult = array($this->ScanLayer1());
+			if (empty($scanResult) || empty($scanResult[0])) {
+				$scanResult = $this->ScanLayer2();
+			}
+		}	
 		if (! empty ( $scanResult )) {
 			$status = $this->getBlockIP();
 			$this->addACLRule ( $status, $this -> sumImpact($scanResult) );
@@ -51,24 +62,26 @@ class oseFirewallScannerAdvance extends oseFirewallScanner {
 		unset ( $scanResult );
 	}
 	
-	private function ScanLayer() {
+	private function ScanLayer2() {
 		$impact = 0;
 		$options = $this->getScanOptions ();
 		$request = array (
-				$_GET,
-				$_POST
+				'GET' => $_GET,
+				'POST' => $_POST
 		);
-		
 		if(!isset($request)){
 			return false;
 		}
 		if(!isset($options)){
 			return false;
 		}
+		$request = $this -> clearWhitelistVars($request);
+		if(empty($request['GET']) && empty($request['POST'])){
+			return false;
+		}
 		$request = $this -> convertVariables($request);
 		$request_str = $this ->groupRequest($request);
 		$tmpResults = array();	
-		
 		foreach($options as $option){
 			if(preg_match_all("/".$option["filter"]."/ims",$request_str, $matchs)){
 				foreach($request as $index => $singleRequest){
@@ -89,7 +102,6 @@ class oseFirewallScannerAdvance extends oseFirewallScanner {
 		}
 		return $tmpResults;
 	}
-	
 	private function groupRequest($request){
 		$request_Str = null;
 		if(isset($request)){
@@ -108,16 +120,6 @@ class oseFirewallScannerAdvance extends oseFirewallScanner {
 			}
 		}
 		return $requestArray;
-	}
-	
-	private function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname){
-		$return = array ();
-		$return ['impact'] = $impact;
-		$return ['attackTypeID'] = $attackTypeID;
-		$return ['detcontent_content'] = $content;
-		$return ['keyname'] = $keyname;
-		$return ['rule_id'] = $rule_id;
-		return $return;
 	}
 	
 	private function sumImpact($scanResult){
@@ -157,5 +159,37 @@ class oseFirewallScannerAdvance extends oseFirewallScanner {
 			}
 		}
 		return $detattacktype_id;
+	}
+	protected function controlAttack() 
+	{
+		$visits = $this->getVisits();
+		$blockMode = $this->getblockIP();
+		$score = $this->getScore();
+		$notified = $this->getNotified();
+		if ($score < $this->threshold)
+		{
+			return;
+		}
+		if ($this->silentMode == true && $visits <= $this->slient_max_att)
+		{
+			$this -> updateVisits();
+			$url = $this -> filterAttack(true);
+			$this -> sendEmail('filtered', $notified);
+			$this->redirect($url);
+		}
+		else
+		{		
+			switch ($blockMode)
+			{
+				case 1:
+					$this -> sendEmail('blacklisted', $notified);
+					$this -> showBanPage();
+				break;
+				case 0:
+					$this -> sendEmail('403blocked', $notified);
+					$this -> show403Page();
+				break;
+			}
+		}
 	}
 }

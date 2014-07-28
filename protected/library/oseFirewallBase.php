@@ -2,6 +2,7 @@
 /**
  * @version     2.0 +
  * @package       Open Source Excellence Security Suite
+ * @subpackage    Centrora Security Firewall
  * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
  * @author        Created on 01-Jun-2013
@@ -22,7 +23,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
+{
+	die('Direct Access Not Allowed');
+}
 if (class_exists('Sconfig') || class_exists('Jconfig'))
 {
 	require_once(OSE_FRAMEWORKDIR.ODS.'oseframework'.ODS.'joomla.php');
@@ -226,7 +230,7 @@ class oseFirewallBase extends oseFirewallRoot
 			}
 		}	
 	}
-	private static function getGeoIPState()
+	public static function getGeoIPState()
 	{
 		$oseDB2 = self::getDBO();
 		$query = "SHOW TABLES LIKE '#__ose_app_geoip' ";
@@ -467,25 +471,6 @@ class oseFirewallBase extends oseFirewallRoot
 		oseFirewall::callLibClass('audit', 'audit');
 		$audit = new oseFirewallAudit (); 
 		$audit -> runReport();
-	}
-	public static function getConfigVars () {
-		if (class_exists('SConfig'))
-		{
-			$config = new SConfig();
-			return $config;
-		}
-		elseif (class_exists('JConfig'))
-		{
-			$config = new JConfig();
-			return $config;
-		}
-		else {
-			$bloginfo = new stdClass(); 
-			$bloginfo->url = get_bloginfo('url');
-			$bloginfo->fromname = get_bloginfo('name');
-			$bloginfo->mailfrom = get_bloginfo('admin_email');
-			return $bloginfo; 
-		}
 	}
 	public static function getTime () {
 		self::loadDateClass(); 
