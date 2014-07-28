@@ -1,13 +1,12 @@
 <?php
 /**
- * @version     6.0 +
+ * @version     2.0 +
  * @package       Open Source Excellence Security Suite
- * @subpackage    Open Source Excellence CPU
+ * @subpackage    Centrora Security Firewall
+ * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
- * @author        Created on 30-Sep-2010
- * @author        Updated on 30-Mar-2013
+ * @author        Created on 01-Jun-2013
  * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
- * @copyright Copyright (C) 2008 - 2010- ... Open Source Excellence
  *
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -22,8 +21,9 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH'))
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
@@ -76,6 +76,28 @@ class CountryBlock
 	}
 	private function downloadFile($url, $target = false)
 	{
+		$url_fopen = ini_get('allow_url_fopen'); 
+		if ($url_fopen == true)
+		{
+			$handle = $this->downloadThroughFopen($url, $target);
+		}
+		else
+		{
+			$handle = $this->downloadThroughCURL ($url, $target); 
+		}
+		return $handle;  
+	}
+	private function downloadThroughCURL ($url, $target = false) {
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		$contents = curl_exec($curl);
+		curl_close($curl);
+		$tmp = basename($url, ".data");
+		$target = OSE_FWDATA.ODS.$tmp.".sql";
+		$handle = is_int(file_put_contents($target, $contents)) ? true : false;
+		return $handle;
+	}
+	private function downloadThroughFopen ($url, $target = false) {
 		$inputHandle = fopen($url, "r");
 		// Set the target path to store data
 		$tmp = basename($url, ".data");
@@ -102,7 +124,7 @@ class CountryBlock
 			// Close file pointer resource
 			fclose($inputHandle);
 		}
-		return $handle;
+		return $handle;		
 	}
 	public function getCountryList()
 	{
@@ -155,7 +177,10 @@ class CountryBlock
 		switch ($status)
 		{
 		case '3':
-			return "<a href='#' title = 'Active' onClick= 'changeItemStatus(".urlencode($id).", 1)' ><div class='ose-grid-accept'></div></a>";
+			return "<a href='#' title = 'Active' onClick= 'changeItemStatus(".urlencode($id).", 2)' ><div class='ose-grid-accept'></div></a>";
+			break;
+		case '2':
+			return "<a href='#' title = 'Monitored' onClick= 'changeItemStatus(".urlencode($id).", 1)' ><div class='ose-grid-error'></div></a>";
 			break;
 		case '1':
 			return "<a href='#' title = 'Inactive' onClick= 'changeItemStatus(".urlencode($id).", 3)' ><div class='ose-grid-delete'></div></a>";
@@ -214,13 +239,13 @@ class CountryBlock
 		$db->closeDBO ();
 		return $results;
 	}
-	public function changeCountryStatus($aclid, $status)
+	public function changeCountryStatus($country_id, $status)
 	{
 		$db = oseFirewall::getDBO();
 		$varValues = array(
 			'status' => (int) $status
 		);
-		$result = $db->addData('update', '#__osefirewall_country', 'country_id', (int) $aclid, $varValues);
+		$result = $db->addData('update', '#__osefirewall_country', 'country_id', (int) $country_id, $varValues);
 		$db->closeDBO ();
 		return $result;
 	}
@@ -297,7 +322,7 @@ class CountryBlock
 		$query = "ALTER TABLE `#__osefirewall_country` CHANGE `country_2_code` `country_code` char(2)";
 		$db->setQuery($query);
 		$results = $db->query();
-		$query = "ALTER TABLE `#__osefirewall_country` ADD COLUMN `status` Tinyint DEFAULT 3";
+		$query = "ALTER TABLE `#__osefirewall_country` ADD COLUMN `status` Tinyint DEFAULT 2";
 		$db->setQuery($query);
 		$results = $db->query();
 		$db->closeDBO ();
@@ -337,6 +362,14 @@ class CountryBlock
 			$i++;
 		}
 		return $return;
+	}
+	public function changeAllCountry ($countryStatus) {
+		$db = oseFirewall::getDBO();
+		$query = "UPDATE `#__osefirewall_country` SET `status` = ". (int)$countryStatus;
+		$db->setQuery($query);
+		$result = $db->query();
+		$db->closeDBO ();
+		return $result;		
 	}
 }
 ?>

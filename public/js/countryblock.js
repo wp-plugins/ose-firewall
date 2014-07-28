@@ -16,6 +16,7 @@ function downLoadDB(){
 	oseATHCOUNTRYBLOCKER.downloadDBWin.show();
 	downLoadFile(8, oseATHCOUNTRYBLOCKER.downloadDBWin, "downLoadTables");
 }
+
 function installDB () {
 	var win = oseGetWIn('installer', 'Installer Information', 1024, 500); 
 	win.show(); 
@@ -23,6 +24,12 @@ function installDB () {
 	createTables (0, win, "createTables");
 }
 
+function changeALL () {
+	var win = oseGetWIn('changeAll', 'Change All Countries', 1024, 500); 
+	win.show(); 
+	win.update('Please choose the status you would like to change all countries to in the dropdown box.');
+
+}
 function createTables (step, win, task) {
 	Ext.Ajax.request({
 		url : url,
@@ -90,7 +97,7 @@ function downLoadFile(step, win, task) {
                 msg: 'fail',
                 buttons: Ext.MessageBox.OK
            });
-}
+		}
 	});	
 }
 
@@ -133,9 +140,61 @@ oseATHCOUNTRYBLOCKER.downloadDBForm = Ext.create('Ext.form.Panel', {
 
 oseATHCOUNTRYBLOCKER.blurListener = oseGetIPBlurListener(); 
 oseATHCOUNTRYBLOCKER.statusOption = new Array(
-					   new Array(1, 'Blacklisted'), 
+					   new Array(1, 'Blacklisted'),
+					   new Array(2, 'Monitored'),
 					   new Array(3, 'Whitelisted')
 );
+
+oseATHCOUNTRYBLOCKER.changeCountryForm = Ext.create('Ext.form.Panel', {
+	bodyStyle: 'padding: 10px; padding-left: 20px'
+	,autoScroll: true
+	,autoWidth: true
+    ,border: false
+    ,labelAlign: 'left'
+    ,labelWidth: 150
+    ,buttons: [
+    {
+		text: O_CHANGEALL_COUNTRY,
+		id: 'changeAllCountrybutton'
+		,handler: function(){
+    			oseATHCOUNTRYBLOCKER.changeCountryForm.submit({
+	    		clientValidation: true,
+	    		url : url,
+	    		method: 'post',
+	    		params:{
+	    			option : option, 
+	    			controller: controller, 
+	    			task: 'changeAllCountry',
+	    			action: 'changeAllCountry',
+	    			centnounce: Ext.get('centnounce').getValue()
+	    		},
+	    		waitMsg: O_PLEASE_WAIT,
+	    		success: function(response, options){
+	    			oseAjaxSuccessReload(options.result, 'alert', oseATHCOUNTRYBLOCKER.store, true);
+	    		},
+	    		failure:function(response, options){
+	    			oseAjaxSuccessReload(options.result, 'alert', oseATHCOUNTRYBLOCKER.store, true);
+	    		} 
+	    		
+	    	});
+
+		}
+	},
+	{
+		text: O_CLOSE,
+		id: 'closebutton'
+		,handler: function(){
+			location.reload();  
+		}
+	}
+	]
+    ,items:[
+            oseGetCombo('countryStatus', O_CHANGEALL_COUNTRY_STATUS, oseATHCOUNTRYBLOCKER.statusOption, 600, 450, 100, 2),
+    ]
+});
+
+
+
 oseATHCOUNTRYBLOCKER.fields = new Array('country_code', 'id', 'name', 'status');
 oseATHCOUNTRYBLOCKER.store = oseGetStore('attacksum', oseATHCOUNTRYBLOCKER.fields, url, option, controller, 'getCountryList');
 oseATHCOUNTRYBLOCKER.downloadDBWin = new Ext.Window({
@@ -147,6 +206,18 @@ oseATHCOUNTRYBLOCKER.downloadDBWin = new Ext.Window({
 	,closeAction:'hide'
 	,items: [
 	      oseATHCOUNTRYBLOCKER.downloadDBForm
+	]
+});	
+
+oseATHCOUNTRYBLOCKER.CountryStatusWin = new Ext.Window({
+	title: O_DOWNLOAD_FILES
+	,modal: true
+	,width: 800
+	,border: false
+	,autoHeight: true
+	,closeAction:'hide'
+	,items: [
+	         oseATHCOUNTRYBLOCKER.changeCountryForm
 	]
 });	
 
@@ -183,7 +254,19 @@ oseATHCOUNTRYBLOCKER.panel = Ext.create('Ext.grid.Panel', {
 				             						 'blacklistIP'
 				             	);
 				            }
-				        },{
+				        },
+				        {
+				        	id: 'monSelected',
+				            text: O_MONITOR_COUNTRY,
+				            handler: function(){			
+				            	osePanelButtonAction(O_MONILIST_CONFIRM, 
+				            						 O_MONILIST_CONFIRM_DESC, 
+				             						 oseATHCOUNTRYBLOCKER.panel, oseATHCOUNTRYBLOCKER, url, option, controller,  
+				             						 'monitorIP'
+				             	);
+				            }
+				        },
+				        {
 				        	id: 'whtSelected',
 				            text: O_WHITELIST_COUNTRY,
 				            handler: function(){			
@@ -193,6 +276,13 @@ oseATHCOUNTRYBLOCKER.panel = Ext.create('Ext.grid.Panel', {
 				             						 'whitelistIP'
 				             	);
 				             	
+				            }
+				        },
+				        {
+				        	id: 'changeAll',
+				            text: O_CHANGEALL_COUNTRY,
+				            handler: function(){			
+				        		oseATHCOUNTRYBLOCKER.CountryStatusWin.show();
 				            }
 				        },{
 				        	id: 'downloadDB',

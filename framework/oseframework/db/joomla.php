@@ -2,6 +2,7 @@
 /**
  * @version     2.0 +
  * @package       Open Source Excellence Security Suite
+ * @subpackage    Centrora Security Firewall
  * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
  * @author        Created on 01-Jun-2013
@@ -22,6 +23,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
+if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH') && !defined('_JEXEC'))
+{
+	die('Direct Access Not Allowed');
+}
 require_once(dirname(__FILE__).ODS.'oseDB2.php');
 class oseDB2Joomla extends oseDB2
 {

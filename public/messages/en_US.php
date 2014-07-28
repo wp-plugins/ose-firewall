@@ -1,28 +1,32 @@
 <?php
 /**
-* @version     2.0 +
-* @package       Open Source Excellence Security Suite
-* @subpackage    Open Source Excellence WordPress Firewall
-* @author        Open Source Excellence {@link http://www.opensource-excellence.com}
-* @author        Created on 01-Jun-2013
-* @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
-*
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
-*/
-defined('OSEFWDIR') or die;
+ * @version     2.0 +
+ * @package       Open Source Excellence Security Suite
+ * @subpackage    Centrora Security Firewall
+ * @subpackage    Open Source Excellence WordPress Firewall
+ * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
+ * @author        Created on 01-Jun-2013
+ * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
+ *
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
+ */
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
+{
+ die('Direct Access Not Allowed');
+}
 //Start here;
 define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
 define('OSE_WORDPRESS_FIREWALL_SETTING', 'Centrora Security™ Settings');
@@ -315,10 +319,22 @@ define('SIGNATURE_UPTODATE','<b>[Better Protection] </b>Your firewall rules are 
 define('SIGNATURE_OUTDATED','<b>[Better Protection] </b><b>WARNING</b>: Your firewall rules are out-dated, please update the rules to enhance protection. The updated advance firewall protection offers 45+ detection technique to protect your website from hacking attempts');
 define('IS_MY_WEBSITE_SAFE_BROWSING','Does my website look safe in major anti-virus software blacklist database?');
 define('SAFE_BROWSING_CHECKUP','Centrora Safe Browsing Checkup (Blacklist Monitoring)');
-define('SECURITY_AUDIT','Security Audit');
+define('SECURITY_CONFIG_AUDIT','Security Configuration Audit');
 define('CHECK_SAFE_BROWSING','Check your website safe browsing status now.');
 define('SAFE_BROWSING_CHECKUP_UPDATED','Your Safe Browsing Checkup is updated');
 define('SAFE_BROWSING_CHECKUP_OUTDATED','Your Safe Browsing Checkup is outdated, schedule the daily checkup now.');
 define('API_CONFIGURATION','API Configuration');
-define('API_INTRO','Connect to Centrora with API key'); 
+define('API_INTRO','Connect to Centrora with API key');
+define('SYSTEM_SECURITY_AUDIT','System Security Audit');
+define('REG_GLOBAL_OFF','The PHP Setting register_global is <b>OFF</b>');
+define('REG_GLOBAL_ON','The PHP Setting register_global is <b>ON</b>, please turn if off'); 
+define('SAFEMODE_OFF','The PHP Setting safe_mode is <b>OFF</b>');
+define('SAFEMODE_ON','The PHP Setting safe_mode is <b>ON</b>, please turn if off');  
+define('URL_FOPEN_OFF','The PHP Setting allow_url_fopen is <b>OFF</b>');
+define('URL_FOPEN_ON','The PHP Setting allow_url_fopen is <b>ON</b>, please turn if off');
+define('DISPLAY_ERROR_OFF','The PHP Setting display_errors is <b>OFF</b>');
+define('DISPLAY_ERROR_ON','The PHP Setting display_errors is <b>ON</b>, please turn if off');
+define('DISABLE_FUNCTIONS_READY','The following PHP functions have been disabled: ');
+define('DISABLE_FUNCTIONS_NOTREADY','The following PHP functions need to be disabled: ');
+
 ?>

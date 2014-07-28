@@ -1,4 +1,32 @@
 <?php
+/**
+ * @version     2.0 +
+ * @package       Open Source Excellence Security Suite
+ * @subpackage    Centrora Security Firewall
+ * @subpackage    Open Source Excellence WordPress Firewall
+ * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
+ * @author        Created on 01-Jun-2013
+ * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
+ *
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
+ */
+if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH') && !defined('_JEXEC'))
+{
+	die('Direct Access Not Allowed');
+}
 abstract class oseHTML
 {
 	/**
@@ -13,7 +41,6 @@ abstract class oseHTML
 	 * @since  11.1
 	 */
 	static $formatOptions = array('format.depth' => 0, 'format.eol' => "\n", 'format.indent' => "\t");
-
 	/**
 	 * An array to hold included paths
 	 *
@@ -21,7 +48,6 @@ abstract class oseHTML
 	 * @since  11.1
 	 */
 	protected static $includePaths = array();
-
 	/**
 	 * An array to hold method references
 	 *
@@ -29,7 +55,6 @@ abstract class oseHTML
 	 * @since  11.1
 	 */
 	protected static $registry = array();
-
 	/**
 	 * Method to extract a key
 	 *
@@ -43,17 +68,13 @@ abstract class oseHTML
 	protected static function extract($key)
 	{
 		$key = preg_replace('#[^A-Z0-9_\.]#i', '', $key);
-
 		// Check to see whether we need to load a helper file
 		$parts = explode('.', $key);
-
 		$prefix = (count($parts) == 3 ? array_shift($parts) : 'oseHTML');
 		$file = (count($parts) == 2 ? array_shift($parts) : '');
 		$func = array_shift($parts);
-
-		return array(strtolower($prefix . '.' . $file . '.' . $func), $prefix, $file, $func);
+		return array(strtolower($prefix.'.'.$file.'.'.$func), $prefix, $file, $func);
 	}
-
 	/**
 	 * Class loader method
 	 *
@@ -79,16 +100,13 @@ abstract class oseHTML
 			array_shift($args);
 			return oseHTML::call($function, $args);
 		}
-
-		$className = $prefix . ucfirst($file);
-
+		$className = $prefix.ucfirst($file);
 		if (!class_exists($className))
 		{
 			jimport('joomla.filesystem.path');
-			if ($path = JPath::find(oseHTML::$includePaths, strtolower($file) . '.php'))
+			if ($path = JPath::find(oseHTML::$includePaths, strtolower($file).'.php'))
 			{
 				require_once $path;
-
 				if (!class_exists($className))
 				{
 					JError::raiseError(500, JText::sprintf('JLIB_HTML_ERROR_NOTFOUNDINFILE', $className, $func));
@@ -101,7 +119,6 @@ abstract class oseHTML
 				return false;
 			}
 		}
-
 		$toCall = array($className, $func);
 		if (is_callable($toCall))
 		{
@@ -117,7 +134,6 @@ abstract class oseHTML
 			return false;
 		}
 	}
-
 	/**
 	 * Registers a function to be called with a specific key
 	 *
@@ -138,7 +154,6 @@ abstract class oseHTML
 		}
 		return false;
 	}
-
 	/**
 	 * Removes a key for a method from registry.
 	 *
@@ -156,10 +171,8 @@ abstract class oseHTML
 			unset(self::$registry[$key]);
 			return true;
 		}
-
 		return false;
 	}
-
 	/**
 	 * Test if the key is registered.
 	 *
@@ -174,7 +187,6 @@ abstract class oseHTML
 		list($key) = self::extract($key);
 		return isset(self::$registry[$key]);
 	}
-
 	/**
 	 * Function caller method
 	 *
@@ -192,9 +204,9 @@ abstract class oseHTML
 		{
 			// PHP 5.3 workaround
 			$temp = array();
-			foreach ($args as &$arg)
+			foreach ($args as & $arg)
 			{
-				$temp[] = &$arg;
+				$temp[] =& $arg;
 			}
 			return call_user_func_array($function, $temp);
 		}
@@ -204,7 +216,6 @@ abstract class oseHTML
 			return false;
 		}
 	}
-
 	/**
 	 * Write a <a></a> element
 	 *
@@ -222,10 +233,8 @@ abstract class oseHTML
 		{
 			$attribs = JArrayHelper::toString($attribs);
 		}
-
-		return '<a href="' . $url . '" ' . $attribs . '>' . $text . '</a>';
+		return '<a href="'.$url.'" '.$attribs.'>'.$text.'</a>';
 	}
-
 	/**
 	 * Write a <iframe></iframe> element
 	 *
@@ -244,10 +253,8 @@ abstract class oseHTML
 		{
 			$attribs = JArrayHelper::toString($attribs);
 		}
-
-		return '<iframe src="' . $url . '" ' . $attribs . ' name="' . $name . '">' . $noFrames . '</iframe>';
+		return '<iframe src="'.$url.'" '.$attribs.' name="'.$name.'">'.$noFrames.'</iframe>';
 	}
-
 	/**
 	 * Compute the files to be include
 	 *
@@ -266,10 +273,8 @@ abstract class oseHTML
 	protected static function _includeRelativeFiles($file, $relative, $detect_browser, $folder)
 	{
 		JLog::add('oseHTML::_includeRelativeFiles() is deprecated.  Use oseHTML::includeRelativeFiles().', JLog::WARNING, 'deprecated');
-
 		return self::includeRelativeFiles($folder, $file, $relative, $detect_browser, false);
 	}
-
 	/**
 	 * Compute the files to be include
 	 *
@@ -294,9 +299,8 @@ abstract class oseHTML
 		else
 		{
 			// Extract extension and strip the file
-			$strip		= JFile::stripExt($file);
-			$ext		= JFile::getExt($file);
-
+			$strip = JFile::stripExt($file);
+			$ext = JFile::getExt($file);
 			// Detect browser and compute potential files
 			if ($detect_browser)
 			{
@@ -304,28 +308,23 @@ abstract class oseHTML
 				$browser = $navigator->getBrowser();
 				$major = $navigator->getMajor();
 				$minor = $navigator->getMinor();
-
 				// Try to include files named filename.ext, filename_browser.ext, filename_browser_major.ext, filename_browser_major_minor.ext
 				// where major and minor are the browser version names
-				$potential = array($strip, $strip . '_' . $browser,  $strip . '_' . $browser . '_' . $major,
-					$strip . '_' . $browser . '_' . $major . '_' . $minor);
+				$potential = array($strip, $strip.'_'.$browser, $strip.'_'.$browser.'_'.$major,
+					$strip.'_'.$browser.'_'.$major.'_'.$minor);
 			}
 			else
 			{
 				$potential = array($strip);
 			}
-
 			// If relative search in template directory or media directory
 			if ($relative)
 			{
-
 				// Get the template
 				$app = JFactory::getApplication();
 				$template = $app->getTemplate();
-
 				// Prepare array of files
 				$includes = array();
-
 				// For each potential files
 				foreach ($potential as $strip)
 				{
@@ -333,17 +332,16 @@ abstract class oseHTML
 					// Detect debug mode
 					if ($detect_debug && JFactory::getConfig()->get('debug'))
 					{
-						$files[] = $strip . '-uncompressed.' . $ext;
+						$files[] = $strip.'-uncompressed.'.$ext;
 					}
-					$files[] = $strip . '.' . $ext;
-
+					$files[] = $strip.'.'.$ext;
 					// Loop on 1 or 2 files and break on first found
 					foreach ($files as $file)
 					{
 						// If the file is in the template folder
-						if (file_exists(JPATH_THEMES . "/$template/$folder/$file"))
+						if (file_exists(JPATH_THEMES."/$template/$folder/$file"))
 						{
-							$includes[] = JURI::base(true) . "/templates/$template/$folder/$file";
+							$includes[] = JURI::base(true)."/templates/$template/$folder/$file";
 							break;
 						}
 						else
@@ -353,61 +351,59 @@ abstract class oseHTML
 							{
 								// Divide the file extracting the extension as the first part before /
 								list($extension, $file) = explode('/', $file, 2);
-
 								// If the file yet contains any /: it can be a plugin
 								if (strpos($file, '/'))
 								{
 									// Divide the file extracting the element as the first part before /
 									list($element, $file) = explode('/', $file, 2);
-
 									// Try to deal with plugins group in the media folder
-									if (file_exists(JPATH_ROOT . "/media/$extension/$element/$folder/$file"))
+									if (file_exists(JPATH_ROOT."/media/$extension/$element/$folder/$file"))
 									{
-										$includes[] = JURI::root(true) . "/media/$extension/$element/$folder/$file";
+										$includes[] = JURI::root(true)."/media/$extension/$element/$folder/$file";
 										break;
 									}
 									// Try to deal with classical file in a a media subfolder called element
-									elseif (file_exists(JPATH_ROOT . "/media/$extension/$folder/$element/$file"))
+									elseif (file_exists(JPATH_ROOT."/media/$extension/$folder/$element/$file"))
 									{
-										$includes[] = JURI::root(true) . "/media/$extension/$folder/$element/$file";
+										$includes[] = JURI::root(true)."/media/$extension/$folder/$element/$file";
 										break;
 									}
 									// Try to deal with system files in the template folder
-									elseif (file_exists(JPATH_THEMES . "/$template/$folder/system/$element/$file"))
+									elseif (file_exists(JPATH_THEMES."/$template/$folder/system/$element/$file"))
 									{
-										$includes[] = JURI::root(true) . "/templates/$template/$folder/system/$element/$file";
+										$includes[] = JURI::root(true)."/templates/$template/$folder/system/$element/$file";
 										break;
 									}
 									// Try to deal with system files in the media folder
-									elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$element/$file"))
+									elseif (file_exists(JPATH_ROOT."/media/system/$folder/$element/$file"))
 									{
-										$includes[] = JURI::root(true) . "/media/system/$folder/$element/$file";
+										$includes[] = JURI::root(true)."/media/system/$folder/$element/$file";
 										break;
 									}
 								}
 								// Try to deals in the extension media folder
-								elseif (file_exists(JPATH_ROOT . "/media/$extension/$folder/$file"))
+								elseif (file_exists(JPATH_ROOT."/media/$extension/$folder/$file"))
 								{
-									$includes[] = JURI::root(true) . "/media/$extension/$folder/$file";
+									$includes[] = JURI::root(true)."/media/$extension/$folder/$file";
 									break;
 								}
 								// Try to deal with system files in the template folder
-								elseif (file_exists(JPATH_THEMES . "/$template/$folder/system/$file"))
+								elseif (file_exists(JPATH_THEMES."/$template/$folder/system/$file"))
 								{
-									$includes[] = JURI::root(true) . "/templates/$template/$folder/system/$file";
+									$includes[] = JURI::root(true)."/templates/$template/$folder/system/$file";
 									break;
 								}
 								// Try to deal with system files in the media folder
-								elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$file"))
+								elseif (file_exists(JPATH_ROOT."/media/system/$folder/$file"))
 								{
-									$includes[] = JURI::root(true) . "/media/system/$folder/$file";
+									$includes[] = JURI::root(true)."/media/system/$folder/$file";
 									break;
 								}
 							}
 							// Try to deal with system files in the media folder
-							elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$file"))
+							elseif (file_exists(JPATH_ROOT."/media/system/$folder/$file"))
 							{
-								$includes[] = JURI::root(true) . "/media/system/$folder/$file";
+								$includes[] = JURI::root(true)."/media/system/$folder/$file";
 								break;
 							}
 						}
@@ -421,20 +417,19 @@ abstract class oseHTML
 				foreach ($potential as $strip)
 				{
 					// Detect debug mode
-					if ($detect_debug && JFactory::getConfig()->get('debug') && file_exists(JPATH_ROOT . "/$strip-uncompressed.$ext"))
+					if ($detect_debug && JFactory::getConfig()->get('debug') && file_exists(JPATH_ROOT."/$strip-uncompressed.$ext"))
 					{
-						$includes[] = JURI::root(true) . "/$strip-uncompressed.$ext";
+						$includes[] = JURI::root(true)."/$strip-uncompressed.$ext";
 					}
-					elseif (file_exists(JPATH_ROOT . "/$strip.$ext"))
+					elseif (file_exists(JPATH_ROOT."/$strip.$ext"))
 					{
-						$includes[] = JURI::root(true) . "/$strip.$ext";
+						$includes[] = JURI::root(true)."/$strip.$ext";
 					}
 				}
 			}
 		}
 		return $includes;
 	}
-
 	/**
 	 * Write a <img></img> element
 	 *
@@ -454,9 +449,7 @@ abstract class oseHTML
 		{
 			$attribs = JArrayHelper::toString($attribs);
 		}
-
 		$includes = self::includeRelativeFiles('images', $file, $relative, false, false);
-
 		// If only path is required
 		if ($path_only)
 		{
@@ -471,10 +464,9 @@ abstract class oseHTML
 		}
 		else
 		{
-			return '<img src="' . (count($includes) ? $includes[0] : '') . '" alt="' . $alt . '" ' . $attribs . ' />';
+			return '<img src="'.(count($includes) ? $includes[0] : '').'" alt="'.$alt.'" '.$attribs.' />';
 		}
 	}
-
 	/**
 	 * Write a <link rel="stylesheet" style="text/css" /> element
 	 *
@@ -522,18 +514,15 @@ abstract class oseHTML
 		{
 			JLog::add('The used parameter set in oseHTML::stylesheet() is deprecated.', JLog::WARNING, 'deprecated');
 			// Assume this was the old $path variable.
-			$file = $attribs . $file;
+			$file = $attribs.$file;
 		}
-
 		if (is_array($relative))
 		{
 			// Assume this was the old $attribs variable.
 			$attribs = $relative;
 			$relative = false;
 		}
-
 		$includes = self::includeRelativeFiles('css', $file, $relative, $detect_browser, $detect_debug);
-
 		// If only path is required
 		if ($path_only)
 		{
@@ -560,7 +549,6 @@ abstract class oseHTML
 			}
 		}
 	}
-
 	/**
 	 * Write a <script></script> element
 	 *
@@ -584,18 +572,15 @@ abstract class oseHTML
 		{
 			JLog::add('The used parameter set in oseHTML::script() is deprecated.', JLog::WARNING, 'deprecated');
 			// Assume this was the old $path variable.
-			$file = $framework . $file;
+			$file = $framework.$file;
 			$framework = $relative;
 		}
-
 		// Include MooTools framework
 		if ($framework)
 		{
 			oseHTML::_('behavior.framework');
 		}
-
 		$includes = self::includeRelativeFiles('js', $file, $relative, $detect_browser, $detect_debug);
-
 		// If only path is required
 		if ($path_only)
 		{
@@ -622,7 +607,6 @@ abstract class oseHTML
 			}
 		}
 	}
-
 	/**
 	 * Add the /media/system/js/core Javascript file.
 	 *
@@ -638,7 +622,6 @@ abstract class oseHTML
 		JLog::add('oseHTML::core() is deprecated. Use oseHTML::_(\'behavior.framework\');.', JLog::WARNING, 'deprecated');
 		oseHTML::_('behavior.framework', false, $debug);
 	}
-
 	/**
 	 * Set format related options.
 	 *
@@ -661,7 +644,6 @@ abstract class oseHTML
 			}
 		}
 	}
-
 	/**
 	 * Returns formated date according to a given format and time zone.
 	 *
@@ -681,13 +663,11 @@ abstract class oseHTML
 		// Get some system objects.
 		$config = JFactory::getConfig();
 		$user = JFactory::getUser();
-
 		// UTC date converted to user time zone.
 		if ($tz === true)
 		{
 			// Get a date object based on UTC.
 			$date = JFactory::getDate($input, 'UTC');
-
 			// Set the correct time zone based on the user configuration.
 			$date->setTimeZone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
 		}
@@ -696,7 +676,6 @@ abstract class oseHTML
 		{
 			// Get a date object based on UTC.
 			$date = JFactory::getDate($input, 'UTC');
-
 			// Set the correct time zone based on the server configuration.
 			$date->setTimeZone(new DateTimeZone($config->get('offset')));
 		}
@@ -710,11 +689,9 @@ abstract class oseHTML
 		{
 			// Get a date object based on UTC.
 			$date = JFactory::getDate($input, 'UTC');
-
 			// Set the correct time zone based on the server configuration.
 			$date->setTimeZone(new DateTimeZone($tz));
 		}
-
 		// If no format is given use the default locale based format.
 		if (!$format)
 		{
@@ -725,7 +702,6 @@ abstract class oseHTML
 		{
 			$format = JText::_($format);
 		}
-
 		if ($gregorian)
 		{
 			return $date->format($format, true);
@@ -735,7 +711,6 @@ abstract class oseHTML
 			return $date->calendar($format, true);
 		}
 	}
-
 	/**
 	 * Creates a tooltip with an image as button
 	 *
@@ -785,33 +760,27 @@ abstract class oseHTML
 				$title = '';
 			}
 		}
-
 		$tooltip = htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8');
 		$title = htmlspecialchars($title, ENT_COMPAT, 'UTF-8');
 		$alt = htmlspecialchars($alt, ENT_COMPAT, 'UTF-8');
-
 		if (!$text)
 		{
 			$text = self::image($image, $alt, null, true);
 		}
-
 		if ($href)
 		{
-			$tip = '<a href="' . $href . '">' . $text . '</a>';
+			$tip = '<a href="'.$href.'">'.$text.'</a>';
 		}
 		else
 		{
 			$tip = $text;
 		}
-
 		if ($title)
 		{
-			$tooltip = $title . '::' . $tooltip;
+			$tooltip = $title.'::'.$tooltip;
 		}
-
-		return '<span class="' . $class . '" title="' . $tooltip . '">' . $tip . '</span>';
+		return '<span class="'.$class.'" title="'.$tooltip.'">'.$tip.'</span>';
 	}
-
 	/**
 	 * Displays a calendar control field
 	 *
@@ -828,54 +797,42 @@ abstract class oseHTML
 	public static function calendar($value, $name, $id, $format = '%Y-%m-%d', $attribs = null)
 	{
 		static $done;
-
 		if ($done === null)
 		{
 			$done = array();
 		}
-
 		$readonly = isset($attribs['readonly']) && $attribs['readonly'] == 'readonly';
 		$disabled = isset($attribs['disabled']) && $attribs['disabled'] == 'disabled';
 		if (is_array($attribs))
 		{
 			$attribs = JArrayHelper::toString($attribs);
 		}
-
 		if ((!$readonly) && (!$disabled))
 		{
 			// Load the calendar behavior
 			oseHTML::_('behavior.calendar');
 			oseHTML::_('behavior.tooltip');
-
 			// Only display the triggers once for each control.
 			if (!in_array($id, $done))
 			{
 				$document = JFactory::getDocument();
-				$document
-					->addScriptDeclaration(
-					'window.addEvent(\'domready\', function() {Calendar.setup({
+				$document->addScriptDeclaration('window.addEvent(\'domready\', function() {Calendar.setup({
 				// Id of the input field
-				inputField: "' . $id . '",
+				inputField: "'.$id.'",
 				// Format of the input field
-				ifFormat: "' . $format . '",
+				ifFormat: "'.$format.'",
 				// Trigger for the calendar (button ID)
-				button: "' . $id . '_img",
+				button: "'.$id.'_img",
 				// Alignment (defaults to "Bl")
 				align: "Tl",
 				singleClick: true,
-				firstDay: ' . JFactory::getLanguage()->getFirstDay() . '
-				});});'
-				);
+				firstDay: '.JFactory::getLanguage()->getFirstDay().'
+				});});');
 				$done[] = $id;
 			}
 		}
-
-		return '<input type="text" title="' . (0 !== (int) $value ? oseHTML::_('date', $value) : '') . '" name="' . $name . '" id="' . $id
-			. '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '" ' . $attribs . ' />'
-			. ($readonly ? ''
-			: oseHTML::_('image', 'system/calendar.png', JText::_('JLIB_HTML_CALENDAR'), array('class' => 'calendar', 'id' => $id . '_img'), true));
+		return '<input type="text" title="'.(0 !== (int) $value ? oseHTML::_('date', $value) : '').'" name="'.$name.'" id="'.$id.'" value="'.htmlspecialchars($value, ENT_COMPAT, 'UTF-8').'" '.$attribs.' />'.($readonly ? '' : oseHTML::_('image', 'system/calendar.png', JText::_('JLIB_HTML_CALENDAR'), array('class' => 'calendar', 'id' => $id.'_img'), true));
 	}
-
 	/**
 	 * Add a directory where oseHTML should search for helpers. You may
 	 * either pass a string or an array of directories.
@@ -890,7 +847,6 @@ abstract class oseHTML
 	{
 		// Force path to array
 		settype($path, 'array');
-
 		// Loop through the path directories
 		foreach ($path as $dir)
 		{
@@ -900,7 +856,6 @@ abstract class oseHTML
 				array_unshift(oseHTML::$includePaths, JPath::clean($dir));
 			}
 		}
-
 		return oseHTML::$includePaths;
 	}
 }

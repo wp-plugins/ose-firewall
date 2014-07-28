@@ -1,13 +1,12 @@
 <?php
 /**
- * @version     6.0 +
+ * @version     2.0 +
  * @package       Open Source Excellence Security Suite
- * @subpackage    Open Source Excellence CPU
+ * @subpackage    Centrora Security Firewall
+ * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
- * @author        Created on 30-Sep-2010
- * @author        Updated on 30-Mar-2013
+ * @author        Created on 01-Jun-2013
  * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
- * @copyright Copyright (C) 2008 - 2010- ... Open Source Excellence
  *
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -22,10 +21,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH'))
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
-	die("Direct Access Not Allowed");
+	die('Direct Access Not Allowed');
 }
 class oseBackupManager
 {
@@ -44,26 +44,24 @@ class oseBackupManager
 		$this->fileBackupName = "";
 		oseFirewall::loadDateClass();
 	}
-	
 	private function isCurrentUser()
 	{
 		oseFirewall::loadUsers();
 		$oUser = new oseUsers("ose_firewall");
-		return (boolean) $oUser->isAdmin(); 
+		return (boolean) $oUser->isAdmin();
 	}
-	
 	private function saveBackUpPath($path, $type)
 	{
 		$result = $this->getBackUpPath($type);
 		$result = $result["path"];
-		if(empty($result)){
+		if (empty($result))
+		{
 			$array = array(
-					'path' => $path
-				);
+				'path' => $path
+			);
 			$this->updateBackUpFilePath($array, $type);
 		}
 	}
-
 	private function getBackUpPath($type)
 	{
 		$query = "SELECT `path`, `time` FROM ".$this->db->QuoteTable($this->backupPathTable)." WHERE `id` = ".(int) $type;
@@ -72,21 +70,20 @@ class oseBackupManager
 		$results = $this->db->loadResult();
 		return $results;
 	}
-	
 	public function cleanBackUpFilePath()
 	{
-		for($i = 1; $i <3 ; $i ++){
+		for ($i = 1; $i < 3; $i++)
+		{
 			$array = array(
-					'path' => null,
-					'time' => '',
-					'fileNum' => 0,
-					'fileTotal' => 0
-				);
+				'path' => null,
+				'time' => '',
+				'fileNum' => 0,
+				'fileTotal' => 0
+			);
 			$this->updateBackUpFilePath($array, $i);
 		}
 		$this->db->closeDBO ();
 	}
-	
 	private function checkDBReady($dbName)
 	{
 		$query = "SELECT COUNT(`id`) as `count` FROM ".$this->db->QuoteTable($dbName);
@@ -94,13 +91,12 @@ class oseBackupManager
 		$result = $this->db->loadResult();
 		return ($result['count'] > 0) ? true : false;
 	}
-	
 	private function updateBackUpFilePath($array, $type)
 	{
 		$numItems = count($array);
 		$i = 0;
 		$dbReady = $this->checkDBReady($this->backupPathTable);
-		if(!$dbReady)
+		if (!$dbReady)
 		{
 			$query = "INSERT INTO ".$this->db->QuoteTable($this->backupPathTable)." VALUES(1,NULL,'0000-00-00',0,0)";
 			$this->db->setQuery($query);
@@ -110,19 +106,19 @@ class oseBackupManager
 			$this->db->query();
 		}
 		$query = "UPDATE ".$this->db->QuoteTable($this->backupPathTable)." SET ";
-		foreach($array as $k => $v)
+		foreach ($array as $k => $v)
 		{
 			$query .= $this->db->quoteKey($k);
-			$query .= " = ". $this->db->quoteValue($v);
-			if(++$i < $numItems) {
+			$query .= " = ".$this->db->quoteValue($v);
+			if (++$i < $numItems)
+			{
 				$query .= ", ";
 			}
 		}
-		$query.= " WHERE id = ". (int)$type;
+		$query .= " WHERE id = ".(int) $type;
 		$this->db->setQuery($query);
 		$this->db->query();
 	}
-	
 	public function downloadBackupFiles($file, $name = '', $mime_type = '')
 	{
 		//Check the file premission
@@ -169,8 +165,7 @@ class oseBackupManager
 			// required for IE, otherwise Content-Disposition may be ignored
 			if (ini_get('zlib.output_compression'))
 				ini_set('zlib.output_compression', 'Off');
-			
-			$expireTime = $this->getExpireTime ();	
+			$expireTime = $this->getExpireTime ();
 			header('Content-Type: '.$mime_type);
 			header('Content-Disposition: attachment; filename="'.$file_name.'"');
 			header("Content-Transfer-Encoding: binary");
@@ -240,12 +235,13 @@ class oseBackupManager
 			print("</SCRIPT>");
 		}
 	}
-	private function getExpireTime () {
+	private function getExpireTime()
+	{
 		$oseDatetime = new oseDatetime();
 		$oseDatetime->setFormat("D, d m Y H:i:s ");
 		$timeZone = $oseDatetime->getTimeZonePub ();
 		$time = $oseDatetime->getDateTime()." ".$timeZone;
-		return $time; 	
+		return $time;
 	}
 	public function backupDB()
 	{
@@ -302,7 +298,7 @@ class oseBackupManager
 		$query = "SELECT * FROM `#__osefirewall_backup` WHERE `id` = ".(int) $id;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
-		$db -> closeDBO();
+		$db->closeDBO();
 		$results = $results[0];
 		if (!empty($results->dbBackupPath))
 		{
@@ -333,20 +329,20 @@ class oseBackupManager
 	private function deleteBackupID($id)
 	{
 		$db = oseFirewall::getDBO();
-		$result =  $db->deleteRecord(array('id' => $id), '#__osefirewall_backup');
-		$db -> closeDBO();
+		$result = $db->deleteRecord(array('id' => $id), '#__osefirewall_backup');
+		$db->closeDBO();
 		return $result;
 	}
 	public function getBackupDB($search, $start, $limit, $status)
 	{
-		$where = array(); 
+		$where = array();
 		if (!empty($status))
 		{
 			$where[] = "`type` = ".(int) $status;
 		}
 		$db = oseFirewall::getDBO();
 		$where = $db->implodeWhere($where);
-		$query = "SELECT * FROM `#__osefirewall_backup` ". $where ."ORDER BY date DESC LIMIT ".$start.", ".$limit;
+		$query = "SELECT * FROM `#__osefirewall_backup` ".$where."ORDER BY date DESC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		$db->closeDBO ();
@@ -429,21 +425,21 @@ class oseBackupManager
 			$filePath = $result['path'];
 			$time = $result['time'];
 		}
-		else if ($this->backup_type == 2)
-		{
-			$result = $this->getBackUpPath($this->pathDB);
-			$dbPath = $result['path'];
-			$time = $result['time'];
-		}
-		else 
-		{
-			$result = $this->getBackUpPath($this->pathDB);
-			$dbPath = $result['path'];
-			$time = $result['time'];
-			
-			$result = $this->getBackUpPath($this->pathFile);
-			$filePath = $result['path'];
-		}
+		else
+			if ($this->backup_type == 2)
+			{
+				$result = $this->getBackUpPath($this->pathDB);
+				$dbPath = $result['path'];
+				$time = $result['time'];
+			}
+			else
+			{
+				$result = $this->getBackUpPath($this->pathDB);
+				$dbPath = $result['path'];
+				$time = $result['time'];
+				$result = $this->getBackUpPath($this->pathFile);
+				$filePath = $result['path'];
+			}
 		$varValues = array(
 			0 => array(
 				'date' => $time,
@@ -458,12 +454,10 @@ class oseBackupManager
 		$this->cleanBackUpFilePath();
 		return $results;
 	}
-	
 	private function backupDropBox()
 	{
 		//TODO:
-	}
-
+		}
 	private function backupDatabase()
 	{
 		$backupFile = $this->setDBFilename ();
@@ -640,23 +634,29 @@ class oseBackupManager
 		$return = " (".implode(", ", $k).") ";
 		return $return;
 	}
-
-	private function countFile($path){
-	    $size = 0;
-	    $ignore = array('.','..','cgi-bin','.DS_Store');
-	    $files = scandir($path);
-	    foreach($files as $t) {
-	        if(in_array($t, $ignore)) continue;
-	        if (is_dir(rtrim($path, '/') . '/' . $t)) {
-	            $size += $this->countFile(rtrim($path, '/') . '/' . $t);
-	        } else {
-	            $size++;
-	        }   
-	    }
-	    return $size;
+	private function countFile($path)
+	{
+		$size = 0;
+		$ignore = array('.', '..', 'cgi-bin', '.DS_Store');
+		$files = scandir($path);
+		foreach ($files as $t)
+		{
+			if (in_array($t, $ignore))
+				continue;
+			if (is_dir(rtrim($path, '/').'/'.$t))
+			{
+				$size += $this->countFile(rtrim($path, '/').'/'.$t);
+			}
+			else
+			{
+				$size++;
+			}
+		}
+		return $size;
 	}
-	private function getValues($rows) {
-		$varray = array (); 
+	private function getValues($rows)
+	{
+		$varray = array();
 		foreach ($rows as $row)
 		{
 			$v = array();
@@ -671,7 +671,7 @@ class oseBackupManager
 				{
 					if (is_numeric($value))
 					{
-						$v[$i] = (int)$value;
+						$v[$i] = (int) $value;
 					}
 					else
 					{
@@ -705,15 +705,13 @@ class oseBackupManager
 	{
 		return $this->db->getTableList ();
 	}
-	
 	private function getBackUpFileNum()
 	{
-		$query = "SELECT `fileNum`, `fileTotal` FROM ".$this->db->QuoteTable($this->backupPathTable)." WHERE `id` = ".(int)$this->pathFile;
+		$query = "SELECT `fileNum`, `fileTotal` FROM ".$this->db->QuoteTable($this->backupPathTable)." WHERE `id` = ".(int) $this->pathFile;
 		$this->db->setQuery($query);
 		$result = $this->db->loadResult();
 		return $result;
 	}
-	
 	public function backupFiles()
 	{
 		$fileName = null;
@@ -727,48 +725,47 @@ class oseBackupManager
 		$this->zipDir("/home/josh/c++/eclipse-cpp-helios/about_files", $fileName);
 		return true;
 		/*else
-		{
-			$fileName = $this->getBackUpPath($this->pathFile);
-			$fileName = $fileName['path'];
-			$zip = new ZipArchive();
-			$zip->open($fileName, ZIPARCHIVE::CHECKCONS);
-			$dirs = $this->getFolder(5);
-			if (empty($dirs))
-			{
-				$return['cont']= false;
-				$return['folders']= 0;
-				$return['file']= 0;
-				$return['fileNum'] = 0;
-				$return ['fileTotal'] = 0;
-			}
-			else
-			{
-				$return = array();
-				$return['folder'] = 0;
-				$return['file'] = 0;
-				foreach ($dirs as $dir)
-				{
-					$tmp = $this->getReturn($dir->filename, $zip);
-					$return['folder'] += $tmp['folder'];
-					$return['file'] += $tmp['file'];
-					$return['cont'] = $tmp['cont'];
-					$return['lastscanned'] = LAST_SCANNED.$dir->filename;
-					$return ['fileNum'] = $fileNum;
-					$return ['fileTotal'] = $fileTotal;
-					$this->deletepathDB($dir->filename);
-					unset($tmp);
-				}
-			}
-		}*/
+		 {
+		 $fileName = $this->getBackUpPath($this->pathFile);
+		 $fileName = $fileName['path'];
+		 $zip = new ZipArchive();
+		 $zip->open($fileName, ZIPARCHIVE::CHECKCONS);
+		 $dirs = $this->getFolder(5);
+		 if (empty($dirs))
+		 {
+		 $return['cont']= false;
+		 $return['folders']= 0;
+		 $return['file']= 0;
+		 $return['fileNum'] = 0;
+		 $return ['fileTotal'] = 0;
+		 }
+		 else
+		 {
+		 $return = array();
+		 $return['folder'] = 0;
+		 $return['file'] = 0;
+		 foreach ($dirs as $dir)
+		 {
+		 $tmp = $this->getReturn($dir->filename, $zip);
+		 $return['folder'] += $tmp['folder'];
+		 $return['file'] += $tmp['file'];
+		 $return['cont'] = $tmp['cont'];
+		 $return['lastscanned'] = LAST_SCANNED.$dir->filename;
+		 $return ['fileNum'] = $fileNum;
+		 $return ['fileTotal'] = $fileTotal;
+		 $this->deletepathDB($dir->filename);
+		 unset($tmp);
+		 }
+		 }
+		 }*/
 		/*if ($return['cont'] == true)
-		{
-			$return['summary'] = $fileNum.' '.BACKUP_FILES.' ';
-		}
-		else
-		{
-			$return['summary'] = OSE_ADDED.' '.OSE_INTOTAL.' '.$fileTotal.' '.OSE_FILES.'.';
-		}*/
-		
+		 {
+		 $return['summary'] = $fileNum.' '.BACKUP_FILES.' ';
+		 }
+		 else
+		 {
+		 $return['summary'] = OSE_ADDED.' '.OSE_INTOTAL.' '.$fileTotal.' '.OSE_FILES.'.';
+		 }*/
 	}
 	public function countFiles()
 	{
@@ -803,55 +800,55 @@ class oseBackupManager
 		$this->db->setQuery($query);
 		return $this->db->query();
 	}
-	
-	   /**
-	   * Add files and sub-directories in a folder to zip file.
-	   * @param string $folder
-	   * @param ZipArchive $zipFile
-	   * @param int $exclusiveLength Number of text to be exclusived from the file path.
-	   */
-	private function folderToZip($folder, &$zipFile, $exclusiveLength) 
+	/**
+	 * Add files and sub-directories in a folder to zip file.
+	 * @param string $folder
+	 * @param ZipArchive $zipFile
+	 * @param int $exclusiveLength Number of text to be exclusived from the file path.
+	 */
+	private function folderToZip($folder, &$zipFile, $exclusiveLength)
 	{
 		$handle = opendir($folder);
-	    while (false !== $f = readdir($handle)) 
-	    {
-	      if ($f != '.' && $f != '..') {
-	        $filePath = "$folder/$f";
-	        // Remove prefix from file path before add to zip.
-	        $localPath = substr($filePath, $exclusiveLength);
-	        if (is_file($filePath)) {
-	          $zipFile->addFile($filePath, $localPath);
-	        } elseif (is_dir($filePath)) {
-	          // Add sub-directory.
-	          $zipFile->addEmptyDir($localPath);
-	          self::folderToZip($filePath, $zipFile, $exclusiveLength);
-	        }
-	      }
-	    }
+		while (false !== $f = readdir($handle))
+		{
+			if ($f != '.' && $f != '..')
+			{
+				$filePath = "$folder/$f";
+				// Remove prefix from file path before add to zip.
+				$localPath = substr($filePath, $exclusiveLength);
+				if (is_file($filePath))
+				{
+					$zipFile->addFile($filePath, $localPath);
+				}
+				elseif (is_dir($filePath))
+				{
+					// Add sub-directory.
+					$zipFile->addEmptyDir($localPath);
+					self::folderToZip($filePath, $zipFile, $exclusiveLength);
+				}
+			}
+		}
 		closedir($handle);
-	  }
-
-	  /**
-	   * Zip a folder (include itself).
-	   * Usage:
-	   * zipDir('/path/to/sourceDir', '/path/to/out.zip');
-	   *
-	   * @param string $sourcePath Path of directory to be zip.
-	   * @param string $outZipPath Path of output zip file.
-	   */
-	private  function zipDir($sourcePath, $outZipPath)
+	}
+	/**
+	 * Zip a folder (include itself).
+	 * Usage:
+	 * zipDir('/path/to/sourceDir', '/path/to/out.zip');
+	 *
+	 * @param string $sourcePath Path of directory to be zip.
+	 * @param string $outZipPath Path of output zip file.
+	 */
+	private function zipDir($sourcePath, $outZipPath)
 	{
 		$pathInfo = pathInfo($sourcePath);
-	    $parentPath = $pathInfo['dirname'];
-	    $dirName = $pathInfo['basename'];
-	
-	    $z = new ZipArchive();
-	    $z->open($outZipPath, ZIPARCHIVE::CREATE);
-	    $z->addEmptyDir($dirName);
-	    $this->folderToZip($sourcePath, $z, strlen("$parentPath/"));
-	    $z->close();
-	} 
-	
+		$parentPath = $pathInfo['dirname'];
+		$dirName = $pathInfo['basename'];
+		$z = new ZipArchive();
+		$z->open($outZipPath, ZIPARCHIVE::CREATE);
+		$z->addEmptyDir($dirName);
+		$this->folderToZip($sourcePath, $z, strlen("$parentPath/"));
+		$z->close();
+	}
 	private function getFolderFiles($folder, $zip)
 	{
 		// Initialize variables
@@ -868,7 +865,7 @@ class oseBackupManager
 			return $false;
 		}
 		$fileNum = $this->getBackUpFileNum();
-		$fileNum = $fileNum ['fileNum'];
+		$fileNum = $fileNum['fileNum'];
 		while ((($file = @readdir($handle)) !== false))
 		{
 			if (($file != '.') && ($file != '..'))
@@ -946,107 +943,100 @@ class oseBackupManager
 		$result = (object) $this->db->loadObject();
 		return $result->count;
 	}
-	
 	public function dropbox_AuthorisedByUser()
 	{
-		
 		$userInfo = $this->dropbox_GetUserInfo();
-		if($this->dropbox_TokenReady())
+		if ($this->dropbox_TokenReady())
 		{
 			$result = array('dbReady' => true, 'tokenReady' => true);
 			return $result;
 		}
-		else 
+		else
 		{
-			$result= $this->dropbox_accessToken($userInfo);
+			$result = $this->dropbox_accessToken($userInfo);
 			return $result;
 		}
 	}
-	
 	private function dropbox_accessToken($userInfo)
 	{
 		$dropbox = new PROWEB_Dropbox($userInfo["key"], $userInfo["secret"]);
-		try {
+		try
+		{
 			$au = $dropbox->oAuthAuthorize("http://".OSE_ADMINURL."?page=ose_fw_backup");
-		}catch(Exception $e){
+		}
+		catch (Exception $e)
+		{
 			return array(
 				'dbReady' => true,
 				'error' => true,
-				'message'=> $e->getMessage()
+				'message' => $e->getMessage()
 			);
 		}
 		session_start();
 		$_SESSION['request_token'] = $au["oauth_token"];
 		$_SESSION['request_secret'] = $au["oauth_token_secret"];
-			
 		return array(
 			'dbReady' => true,
 			'tokenReady' => false,
 			'authurl' => $au["authurl"]
 		);
 	}
-	
 	private function dropbox_upload($userInfo)
 	{
 		$result = $this->getBackUpPath($this->pathFile);
 		$backup_file = $result['path'];
 		$dropbox_destination = "";
-		$dropbox_destination .= '/' . basename($backup_file);
+		$dropbox_destination .= '/'.basename($backup_file);
 		$tokenResult = $this->dropbox_GetUserToken();
 		$dropbox = new PROWEB_Dropbox($userInfo["key"], $userInfo["secret"]);
 		$dropbox->setOAuthTokens($tokenResult["token"], $tokenResult["tokensecret"]);
-		try {
+		try
+		{
 			$dropbox->upload($backup_file, $dropbox_destination, true);
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			return array(
-			        'error' => $e->getMessage(),
-			        'partial' => 1
+				'error' => $e->getMessage(),
+				'partial' => 1
 			);
 		}
 	}
-	
 	private function dropbox_GetUserInfo()
 	{
-		$query = "SELECT `value` as dbkey FROM ". "`#__ose_secConfig` WHERE `key` = 'dropbox'"  ;
+		$query = "SELECT `value` as dbkey FROM "."`#__ose_secConfig` WHERE `key` = 'dropbox'";
 		$this->db->setQuery($query);
 		$result = (object) $this->db->loadObject();
 		$key = $result->dbkey;
-		
-		$query = "SELECT `value` as dbsecret FROM ". "`#__ose_secConfig` WHERE `key` = 'dropboxSecret'";
+		$query = "SELECT `value` as dbsecret FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxSecret'";
 		$this->db->setQuery($query);
 		$result = (object) $this->db->loadObject();
 		$secret = $result->dbsecret;
-		
 		$result = array("key" => $key,
-						"secret" => $secret);
-		return $result; 
+			"secret" => $secret);
+		return $result;
 	}
-	
 	private function dropbox_TokenReady()
 	{
-		$query = "SELECT COUNT( * ) as count FROM ". "`#__ose_secConfig` WHERE `key` = 'dropboxtoken'";
+		$query = "SELECT COUNT( * ) as count FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxtoken'";
 		$this->db->setQuery($query);
 		$result = (object) $this->db->loadObject();
-		return ($result-> count >0) ? true : false;
+		return ($result->count > 0) ? true : false;
 	}
-	
 	private function dropbox_GetUserToken()
 	{
-		$query = "SELECT `value` as key FROM ". "`#__ose_secConfig` WHERE `key` = 'dropboxToken'" ;
+		$query = "SELECT `value` as key FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxToken'";
 		$this->db->setQuery($query);
 		$result = (object) $this->db->loadObject();
 		$key = $result->key;
-		
-		$query = "SELECT `value` as result FROM ". "`#__ose_secConfig` WHERE `key` = 'dropboxTokenSecret'" ;
+		$query = "SELECT `value` as result FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxTokenSecret'";
 		$this->db->setQuery($query);
 		$result = (object) $this->db->loadObject();
 		$secret = $result->result;
-		
 		$result = array("token" => $key,
-						"tokensecret" => $secret);
-		return $result; 
+			"tokensecret" => $secret);
+		return $result;
 	}
-	
 	public function dropbox_SaveAppAccess($access_username, $access_password)
 	{
 		$db = oseFirewall::getDBO();
@@ -1062,15 +1052,13 @@ class oseBackupManager
 			'type' => "scan"
 		);
 		$id = $db->addData ('insert', '#__ose_secConfig', '', '', $varValues);
-		
 		return $id;
 	}
-	
 	public function drobox_dbReady($dbname)
 	{
-		$query = "SELECT COUNT( * ) as count FROM ". "`#__ose_secConfig` WHERE `key` = ". $this->db->quoteValue($dbname)  ;
+		$query = "SELECT COUNT( * ) as count FROM "."`#__ose_secConfig` WHERE `key` = ".$this->db->quoteValue($dbname);
 		$this->db->setQuery($query);
 		$result = (object) $this->db->loadObject();
-		return ($result-> count >0) ? true : false;
+		return ($result->count > 0) ? true : false;
 	}
 }

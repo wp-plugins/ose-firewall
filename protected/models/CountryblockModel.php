@@ -2,6 +2,7 @@
 /**
  * @version     2.0 +
  * @package       Open Source Excellence Security Suite
+ * @subpackage    Centrora Security Firewall
  * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
  * @author        Created on 01-Jun-2013
@@ -22,7 +23,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-defined('OSE_FRAMEWORK') or die("Direct Access Not Allowed");
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
+{
+	die('Direct Access Not Allowed');
+}
 class CountryblockModel extends BaseModel
 {
 	public function __construct()
@@ -59,7 +63,7 @@ class CountryblockModel extends BaseModel
 	public function changeCountryStatus($aclids, $status)
 	{
 		$blocker = new CountryBlock();
-		foreach ($aclids as $aclid)
+		foreach ($aclids[0] as $aclid)
 		{
 			$result = $blocker->changeCountryStatus($aclid, $status);
 			if ($result == false)
@@ -250,5 +254,11 @@ class CountryblockModel extends BaseModel
 		$countryblock = new CountryBlock();
 		return $countryblock->getCountryBlockStatistic();
 	}
-
+	
+	public function changeAllCountry($countryStatus = 2) 
+	{
+		oseFirewall::callLibClass('CountryBlock', 'CountryBlock');
+		$countryblock = new CountryBlock();
+		return $countryblock->changeAllCountry($countryStatus);
+	}
 }

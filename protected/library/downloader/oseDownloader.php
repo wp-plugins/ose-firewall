@@ -1,13 +1,12 @@
 <?php
 /**
- * @version     6.0 +
+ * @version     2.0 +
  * @package       Open Source Excellence Security Suite
- * @subpackage    Open Source Excellence CPU
+ * @subpackage    Centrora Security Firewall
+ * @subpackage    Open Source Excellence WordPress Firewall
  * @author        Open Source Excellence {@link http://www.opensource-excellence.com}
- * @author        Created on 30-Sep-2010
- * @author        Updated on 30-Mar-2013
+ * @author        Created on 01-Jun-2013
  * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
- * @copyright Copyright (C) 2008 - 2010- ... Open Source Excellence
  *
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -22,10 +21,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-if (!defined('OSE_FRAMEWORK') && !defined('OSE_ADMINPATH'))
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
-	die("Direct Access Not Allowed");
+	die('Direct Access Not Allowed');
 }
 class oseDownloader
 {
@@ -82,16 +82,28 @@ class oseDownloader
 		{
 			if (ini_get('allow_url_fopen') == 0)
 			{
-				oseAjax::aJaxReturn(false, 'ERROR', 'The PHP function \'allow_url_fopen\' is turned off, please turn it on to allow the task to continue.', FALSE);
+				//oseAjax::aJaxReturn(false, 'ERROR', 'The PHP function \'allow_url_fopen\' is turned off, please turn it on to allow the task to continue.', FALSE);
 			}
 		}
 	}
 	private function downloadFile($url, $key)
 	{
 		$this->setPHPSetting (); 
-		$inputHandle = fopen($url, "r");
 		// Set the target path to store data
 		$target = OSE_FWDATA.ODS.'tmp'.ODS.$key.".data";
+		$url_fopen = ini_get('allow_url_fopen'); 
+		if ($url_fopen == true)
+		{
+			$target = $this->downloadThroughFopen($url, $target);
+		}
+		else
+		{
+			$target = $this->downloadThroughCURL ($url, $target); 
+		}
+		return $target; 
+	}
+	private function downloadThroughFopen ($url, $target = null) {
+		$inputHandle = fopen($url, "r");
 		if (!$inputHandle)
 		{
 			return false;
@@ -114,6 +126,14 @@ class oseDownloader
 			// Close file pointer resource
 			fclose($inputHandle);
 		}
+		return $target;
+	}
+	private function downloadThroughCURL ($url, $target = false) {
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		$contents = curl_exec($curl);
+		curl_close($curl);
+		$handle = is_int(file_put_contents($target, $contents)) ? true : false;
 		return $target;
 	}
 	public function updateVersion ($type, $version) {
@@ -188,7 +208,7 @@ class oseDownloader
 		oseFirewall::loadUsers ();
 		$users = new oseUsers('wordpress');
 		$content = array (); 
-		$content['url'] = OSE_WPURL; 
+		$content['url'] = oseFirewall::getSiteURL();  
 		$content['remoteChecking'] = true;
 		$content['task'] = $task;
 		$content['admin_email'] = $users->getUserEmail();
@@ -219,5 +239,13 @@ class oseDownloader
 		{
 			return null; 
 		}
+	}
+	public function getEmailConfig () {
+		$db = oseFirewall::getDBO ();
+		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'receiveEmail'";	
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		$db->closeDBO ();
+		return $result['value'];
 	}
 }
