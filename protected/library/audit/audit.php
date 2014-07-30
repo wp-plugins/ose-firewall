@@ -214,7 +214,7 @@ class oseFirewallAudit
 	public function checkRegisterGlobals ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('register_globals');
-		$action = '';
+		$action = ($print == true) ? '<div class = "warning-buttons"> <a href="'.$this->urls[4].'" class="button-primary">Fix It</a> </div>' : '';
 		if ($enable == false)
 		{
 			$return = '<div class ="ready">'.oLang::_get('REG_GLOBAL_OFF')."</div>";
@@ -235,7 +235,7 @@ class oseFirewallAudit
 	public function checkSafeMode ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('safe_mode');
-		$action = '';
+		$action = ($print == true) ? '<div class = "warning-buttons"> <a href="'.$this->urls[4].'" class="button-primary">Fix It</a> </div>' : '';
 		if ($enable == false)
 		{
 			$return = '<div class ="ready">'.oLang::_get('SAFEMODE_OFF')."</div>";
@@ -256,7 +256,7 @@ class oseFirewallAudit
 	public function checkURLFopen ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('allow_url_fopen');
-		$action = '';
+		$action = ($print == true) ? '<div class = "warning-buttons"> <a href="'.$this->urls[4].'" class="button-primary">Fix It</a> </div>' : '';
 		if ($enable == false)
 		{
 			$return = '<div class ="ready">'.oLang::_get('URL_FOPEN_OFF')."</div>";
@@ -277,7 +277,7 @@ class oseFirewallAudit
 	public function checkDisplayErrors ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('display_errors');
-		$action = '';
+		$action = ($print == true) ? '<div class = "warning-buttons"> <a href="'.$this->urls[4].'" class="button-primary">Fix It</a> </div>' : '';
 		if ($enable == false)
 		{
 			$return = '<div class ="ready">'.oLang::_get('DISPLAY_ERROR_OFF')."</div>";
@@ -298,7 +298,7 @@ class oseFirewallAudit
 	public function checkDisableFunctions ($print) {
 		$return = '';
 		$result = $this->getDisableFunctions();
-		$action = '';
+		$action = ($print == true) ? '<div class = "warning-buttons"> <a href="'.$this->urls[4].'" class="button-primary">Fix It</a> </div>' : '';
 		if ($result['result'] == false)
 		{
 			$return = '<div class ="ready">'.oLang::_get('DISABLE_FUNCTIONS_READY').$result['off']."</div>";
@@ -558,6 +558,11 @@ class oseFirewallAudit
 		$this->isGoogleScan (false);
 		$this->isAdFirewallReady(false);
 		$this->isSignatureUpToDate(false);
+		$this->checkRegisterGlobals(false);
+		$this->checkSafeMode(false);
+		$this->checkURLFopen(false);
+		$this->checkDisplayErrors(false);
+		$this->checkDisableFunctions(false);
 		$config_var = oseFirewall::getConfigVars();
 		if (!empty($this->warning))
 		{
@@ -665,5 +670,50 @@ class oseFirewallAudit
 		$table .= '<tr>'.$tr2.'</tr>';
 		$table .= '</table>';
 		return $table;
+	}
+	public function enhanceSysSecurity () {
+		$dbReady = oseFirewall::isDBReady();
+		if ($dbReady == true) {
+			$settings = $this->checkSysSecurity(); 
+			foreach ($settings as $setting)
+			{
+				if ($setting->value==1)
+				{
+					$this->changePHPSetting($setting->key);
+				}
+			}
+		}
+	}
+	private function checkSysSecurity()
+	{
+		$db = oseFirewall::getDBO (); 
+		$query = "SELECT `key`, `value` FROM `#__ose_secConfig` WHERE (`key` = 'registerGlobalOff' OR `key` = 'safeModeOff' OR `key` = 'urlFopenOff' OR `key` = 'displayErrorsOff' OR `key` = 'phpFunctionsOff')";
+		$db->setQuery($query);
+		$result = $db->loadObjectList();
+		$db->closeDBO();
+		return ($result);
+	}
+	private function changePHPSetting ($key)
+	{
+		if (function_exists('ini_set'))
+		{
+			switch ($key) {
+				case 'registerGlobalOff':
+					ini_set('register_global', 0);
+				break;
+				case 'safeModeOff':
+					ini_set('safe_mode', 0);
+				break;
+				case 'urlFopenOff':
+					ini_set('allow_url_fopen', 0);
+				break;
+				case 'displayErrorsOff':
+					ini_set('display_errors', 0);
+				break;
+				case 'phpFunctionsOff':
+					ini_set('disable_functions', 'exec,passthru,shell_exec,system,proc_open,curl_multi_exec,show_source');
+				break;
+			}
+		}
 	}
 }

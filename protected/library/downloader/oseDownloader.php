@@ -246,6 +246,13 @@ class oseDownloader
 		$db->setQuery($query);
 		$result = $db->loadResult();
 		$db->closeDBO ();
-		return $result['value'];
+		if ($result['value'] == 0 && $result['value']!=NULL)
+		{
+			return 0; 
+		}
+		else 
+		{
+			return 1; 
+		}
 	}
 }

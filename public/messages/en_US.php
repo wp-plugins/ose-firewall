@@ -326,15 +326,15 @@ define('SAFE_BROWSING_CHECKUP_OUTDATED','Your Safe Browsing Checkup is outdated,
 define('API_CONFIGURATION','API Configuration');
 define('API_INTRO','Connect to Centrora with API key');
 define('SYSTEM_SECURITY_AUDIT','System Security Audit');
-define('REG_GLOBAL_OFF','The PHP Setting register_global is <b>OFF</b>');
-define('REG_GLOBAL_ON','The PHP Setting register_global is <b>ON</b>, please turn if off'); 
+define('CHANGE_PHPINI', 'If this hasb been turned off in the configuration section, please change it in the php.ini');
+define('REG_GLOBAL_OFF','The PHP Setting register_global is <b>OFF</b>.');
+define('REG_GLOBAL_ON','The PHP Setting register_global is <b>ON</b>, please turn if off. '.CHANGE_PHPINI); 
 define('SAFEMODE_OFF','The PHP Setting safe_mode is <b>OFF</b>');
-define('SAFEMODE_ON','The PHP Setting safe_mode is <b>ON</b>, please turn if off');  
+define('SAFEMODE_ON','The PHP Setting safe_mode is <b>ON</b>, please turn if off. '.CHANGE_PHPINI);  
 define('URL_FOPEN_OFF','The PHP Setting allow_url_fopen is <b>OFF</b>');
-define('URL_FOPEN_ON','The PHP Setting allow_url_fopen is <b>ON</b>, please turn if off');
+define('URL_FOPEN_ON','The PHP Setting allow_url_fopen is <b>ON</b>, please turn if off. '.CHANGE_PHPINI);
 define('DISPLAY_ERROR_OFF','The PHP Setting display_errors is <b>OFF</b>');
-define('DISPLAY_ERROR_ON','The PHP Setting display_errors is <b>ON</b>, please turn if off');
+define('DISPLAY_ERROR_ON','The PHP Setting display_errors is <b>ON</b>, please turn if off. '.CHANGE_PHPINI);
 define('DISABLE_FUNCTIONS_READY','The following PHP functions have been disabled: ');
 define('DISABLE_FUNCTIONS_NOTREADY','The following PHP functions need to be disabled: ');
-
 ?>

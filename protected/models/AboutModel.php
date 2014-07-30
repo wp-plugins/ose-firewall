@@ -61,7 +61,7 @@ class AboutModel extends BaseModel {
 		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('variables').'\'">Variables</a></td><td>'.VARIABLES_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('configuration').'\'">Configuration</a></td><td>'.CONFIGURATION_INTRO.'</td></tr>';
 		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('backup').'\'">Back Up</a></td><td>'.BACK_UP_INTRO.'</td></tr>';
-		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('ountryblock').'\'">Country Block</a></td><td>'.COUNTRY_BLOCK_INTRO.'</td></tr>';
+		$html .= '<tr><td class="btns"><button class = "dashboard-btn" onClick = "window.location = \''.$this->getURL('countryblock').'\'">Country Block</a></td><td>'.COUNTRY_BLOCK_INTRO.'</td></tr>';
 		return $html; 
 	}
 	private function getConfButtons () {

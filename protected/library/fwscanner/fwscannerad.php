@@ -105,8 +105,8 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 	private function groupRequest($request){
 		$request_Str = null;
 		if(isset($request)){
-			$get_Str = implode("\n", $request[0]);
-			$post_Str = implode("\n", $request[1]);
+			$get_Str = implode("\n", $request['GET']);
+			$post_Str = implode("\n", $request['POST']);
 			$request_Str = implode("\n", array($get_Str, $post_Str));	
 		}
 		return $request_Str; 
@@ -115,8 +115,18 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		foreach ($requestArray as $arrayKey => $request)
 		{
 			foreach ($request as $key=>$value)
-			{
-				$requestArray[$arrayKey][$key]=IDS_Converter::runAll($value);
+			{ 	if (is_array($value))
+				{
+					foreach ($value as $key2 => $value2)
+					{
+						$requestArray[$arrayKey][$key][$key2]=IDS_Converter::runAll($value2);
+					}
+				}
+				else
+				{
+					$requestArray[$arrayKey][$key]=IDS_Converter::runAll($value);
+				}
+				
 			}
 		}
 		return $requestArray;

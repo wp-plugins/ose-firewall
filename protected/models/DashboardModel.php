@@ -325,30 +325,12 @@ class DashboardModel extends BaseModel {
 		$audit -> showSafeBrowsingBar(true);
 	}
 	public function showSytemStatus () {
-		$this->checkRegisterGlobals();
-		$this->checkSafeMode();  
-		$this->checkURLFopen();
-		$this->checkDisplayErrors();
-		$this->checkDisableFunctions();
-	}
-	public function checkRegisterGlobals () {
-		$audit = new oseFirewallAudit (); 
-		$audit -> checkRegisterGlobals(true);
-	}
-	public function checkSafeMode () {
-		$audit = new oseFirewallAudit (); 
-		$audit -> checkSafeMode(true);
-	}
-	public function checkURLFopen () {
-		$audit = new oseFirewallAudit (); 
-		$audit -> checkURLFopen(true);
-	}
-	public function checkDisplayErrors () {
-		$audit = new oseFirewallAudit (); 
-		$audit -> checkDisplayErrors(true);
-	}
-	public function checkDisableFunctions () {
-		$audit = new oseFirewallAudit (); 
-		$audit -> checkDisableFunctions(true);
+		$audit = new oseFirewallAudit ();
+		$audit->enhanceSysSecurity();
+		$audit->checkRegisterGlobals(true);
+		$audit->checkSafeMode(true);  
+		$audit->checkURLFopen(true);
+		$audit->checkDisplayErrors(true);
+		$audit->checkDisableFunctions(true);
 	}
 }

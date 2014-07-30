@@ -20,10 +20,9 @@ oseConfScan.Form = new Ext.FormPanel({
         bodyStyle:'padding:10px',
         autoScroll: false,
         width: '100%',
-        height: 630,
+        height: 830,
         renderTo: 'ConfigScan',
         items: [
-        		//oseGetNormalTextField ('secretword', O_SECRET_WORD, 320, 600),
         		oseGetDisplayField(O_ANTI_HACKING_SCANNING_OPTIONS),
 				oseGetCombo('devMode', O_DEVELOPMENT_MODE, oseConfScan.Option, 600, 450, 100, 0),
 				oseGetCombo('debugMode', O_DEBUG_MODE, oseConfScan.Option, 600, 450, 100, 0),
@@ -40,6 +39,12 @@ oseConfScan.Form = new Ext.FormPanel({
 		           anchor:'98%',
 		           emptyText: 'doc,docx,jpg,png,pdf'
 		   		},
+		   		oseGetDisplayField(O_SYSTEM_FINETUNING),
+		   		oseGetCombo('registerGlobalOff', O_DISABLE_REGISTER_GLOBAL, oseConfScan.Option, 600, 450, 100, 0),
+		   		oseGetCombo('safeModeOff', O_DISABLE_SAFE_MODE, oseConfScan.Option, 600, 450, 100, 0),
+		   		oseGetCombo('urlFopenOff', O_DISABLE_ALLOW_URL_FOPEN, oseConfScan.Option, 600, 450, 100, 0),
+		   		oseGetCombo('displayErrorsOff', O_DISABLE_DISPLAY_ERRORS, oseConfScan.Option, 600, 450, 100, 0),
+		   		oseGetCombo('phpFunctionsOff', O_DISABLE_PHP_FUNCTIONS, oseConfScan.Option, 600, 450, 100, 0),
 		   		oseGetDisplayField(O_SCHEDULE_AUDITING),
 		   		oseGetCombo('auditReport', AUDIT_FREQ, oseConfScan.auditOption, 600, 450, 400, 1),
 		   		//oseGetCombo('scanClamav', O_SCAN_CLAMAV, oseConfScan.Option, 600, 320, 100, 0)

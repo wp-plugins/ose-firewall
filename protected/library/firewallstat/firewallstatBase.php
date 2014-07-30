@@ -1175,7 +1175,7 @@ class oseFirewallStatBase
 		$search = oRequest::getVar('search', null);
 		$status = oRequest::getInt('status', null);
 		$start = $limit * ($page - 1);
-		return $this->convertRulesets($this->getRulesetsDB($search, $status, $start, $limit));
+		return $this->convertRulesets($this->getRulesetsDB($search, $status, $start, $limit), 'basic');
 	}
 	// OSE Firewall Advance Rulesets
 	public function getAdvanceRulsets()
@@ -1186,7 +1186,7 @@ class oseFirewallStatBase
 		$search = oRequest::getVar('search', null);
 		$status = oRequest::getInt('status', null);
 		$start = $limit * ($page - 1);
-		return $this->convertRulesets($this->getAdvanceRulesetsDB($search, $status, $start, $limit));
+		return $this->convertRulesets($this->getAdvanceRulesetsDB($search, $status, $start, $limit), 'advance');
 	}
 	// OSE Firewall Advance Virus Patterns
 	public function getAdvancePatterns()
@@ -1244,13 +1244,13 @@ class oseFirewallStatBase
 		$db->closeDBO ();
 		return $results;
 	}
-	private function convertRulesets($results)
+	private function convertRulesets($results, $type)
 	{
 		$i = 0;
 		$attacktypes = $this->getAttackTypeArray();
 		foreach ($results as $result)
 		{
-			$results[$i]->rule = oLang::_get($results[$i]->description);
+			$results[$i]->rule = ($type=='basic')?oLang::_get($results[$i]->rule):oLang::_get($results[$i]->description);
 			$results[$i]->action = $this->getActionIcon($results[$i]->id, $results[$i]->action);
 			$results[$i]->attacktype = $this->attackTypeDecode($attacktypes, $results[$i]->attacktype);
 			$i++;
