@@ -479,4 +479,9 @@ class oseFirewallBase extends oseFirewallRoot
 		$time = $oseDatetime->getDateTime();
 		return $time;  
 	}
+	public static function enhanceSysSecurity () {
+		oseFirewall::callLibClass('audit', 'audit');
+		$audit = new oseFirewallAudit (); 
+		$audit -> enhanceSysSecurity();  
+	}
 }

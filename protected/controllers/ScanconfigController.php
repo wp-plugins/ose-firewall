@@ -67,6 +67,13 @@ class ScanconfigController extends BaseController {
 		$data['slient_max_att'] = oRequest :: getInt('slient_max_att', 10);
 		$data['silentMode'] = oRequest :: getInt('silentMode', 1);
 		$data['receiveEmail'] = oRequest :: getInt('receiveEmail', 1);
+		
+		$data['registerGlobalOff'] = oRequest :: getInt('registerGlobalOff', 0);
+		$data['safeModeOff'] = oRequest :: getInt('safeModeOff', 0);
+		$data['urlFopenOff'] = oRequest :: getInt('urlFopenOff', 0);
+		$data['displayErrorsOff'] = oRequest :: getInt('displayErrorsOff', 0);
+		$data['phpFunctionsOff'] = oRequest :: getInt('phpFunctionsOff', 0);
+		
 		$this->model ->saveConfiguration($type, $data);
 	}
 }

@@ -4,7 +4,7 @@ Plugin Name: Centrora Security
 Plugin URI: http://wordpress.org/extend/plugins/ose-firewall/
 Description: Centrora Security (previously OSE Firewall) - A WordPress Security Firewall plugin created by Centrora. Protect your WordPress site by identify any malicious codes, spam, virus, SQL injection, and security vulnerabilities. If you are managing multiple sites, try out <a href='www.centrora.com/centrora-features'>Centrora Panel</a> for multiple sites security management.  
 Author: Centrora (Previously ProWeb)
-Version: 3.5.8
+Version: 3.5.9
 Author URI: http://www.centrora.com/
 */
 
@@ -64,6 +64,7 @@ else if ($systemReady[0] == true)
 			}
 			else
 			{
+				$oseFirewall -> enhanceSysSecurity();
 				$isAdvanceFirewallScanner = $oseFirewall->isAdvanceFirewallSettingEnable();
 				if($isAdvanceFirewallScanner == true){
 					oseFirewall::callLibClass('fwscanner','fwscannerbs');

@@ -42,16 +42,19 @@ class oseBadgeWidget extends WP_Widget {
 		) );
 	}
 	public function widget($args, $instance) {
-		oseFirewall::callLibClass ( 'vsscanner', 'vsscanner' );
-		$scanner = new virusScanner ();
-		$log = $scanner->getScanninglog ();
-		if (empty ( $log )) {
-			$status = 'Protected: '. date ( 'Y-m-d' );
-		} else {
-			$status = $log->status.': '. date("Y-m-d", $log->date);
+		if (oseFirewall::isDBReady())
+		{
+			oseFirewall::callLibClass ( 'vsscanner', 'vsscanner' );
+			$scanner = new virusScanner ();
+			$log = $scanner->getScanninglog ();
+			if (empty ( $log )) {
+				$status = 'Protected: '. date ( 'Y-m-d' );
+			} else {
+				$status = $log->status.': '. date("Y-m-d", $log->date);
+			}
+			$this->register_plugin_styles ();
+			echo '<div id ="osebadge"><div id="osebadge-content"><div class="osestatus">' . $status . '</div></div><div id="osebadge-footer"><a href="https://www.centrora.com" target="_blank">By Centrora Security™</a></div></div>';
 		}
-		$this->register_plugin_styles ();
-		echo '<div id ="osebadge"><div id="osebadge-content"><div class="osestatus">' . $status . '</div></div><div id="osebadge-footer"><a href="https://www.centrora.com" target="_blank">By Centrora Security™</a></div></div>';
 	}
 	public function register_plugin_styles() {
 		wp_register_style ( 'ose-badge-style', plugins_url ( 'ose-firewall/public/css/badge.css' ) );
