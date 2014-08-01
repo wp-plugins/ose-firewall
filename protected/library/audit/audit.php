@@ -528,8 +528,6 @@ class oseFirewallAudit
 			$status = $this->getStatusTable ($status);
 			$template = str_replace("[safebrowsing]", $status, $template);
 		}
-		print_r($template);
-		exit;
 		return $template;
 	}
 	private function getStatusObject()
