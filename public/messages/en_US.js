@@ -1,3 +1,4 @@
+var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140801, updated on 1st Aug 2014</div>";
 var O_IP_RULE_TITLE = "IP Rule Title";
 var O_ID = "ID";
 var O_DATE = "Date";
@@ -159,7 +160,6 @@ var CLAMAV_SOCKET_LOCATION = "Clam AV Socket path (if installed)";
 var O_PATTERNS = "Patterns"; 
 var O_PATTERN_ID = "Pattern ID";
 var O_GET_RULES = "Retrieve Updated Advance Firewall Rules";
-var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140716, updated on 16th July 2014</div>";
 var LOAD_JOOMLA_DATA = "Load Joomla default variables";
 var LOAD_JSOCIAL_DATA = "Load JomSocial default variables";
 var LOAD_JOOMLA_CONFIRMATION = "Please confirm that you would like to load the Joomla whitelisted variable rules";
@@ -179,3 +179,4 @@ var O_DISABLE_SAFE_MODE = "Disable PHP safe_mode directive";
 var O_DISABLE_ALLOW_URL_FOPEN = "Disable PHP allow_url_fopen directive";
 var O_DISABLE_DISPLAY_ERRORS = "Disable PHP display_errors directive";
 var O_DISABLE_PHP_FUNCTIONS = "Disable PHP system functions";
+var O_UPDATE_PATTERN = "Update virus patterns";

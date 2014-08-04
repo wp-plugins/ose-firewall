@@ -1198,7 +1198,8 @@ ol.browsers li {
 }
 
 #advRulesinstaller-innerCt,
-#safeBrowsing-innerCt {
+#safeBrowsing-innerCt,
+#checkSubWin-innerCt {
 	padding: 15px; 
 	font-size: 16px; 
 	line-height: 24px;
@@ -1206,14 +1207,16 @@ ol.browsers li {
 	color: #444444;
 }
 #advRulesinstaller-innerCt ul,
-#safeBrowsing-innerCt ul {
+#safeBrowsing-innerCt ul,
+#checkSubWin-innerCt ul {
 	list-style-type: square;
 	color: #444444;
 	padding-left: 30px;
 }
 
 #advRulesinstaller-innerCt button,
-#safeBrowsing-innerCt button {
+#safeBrowsing-innerCt button,
+#checkSubWin-innerCt button {
 	background-color: #3049BF;
     border-radius: 3px;
     font-weight: bold;
@@ -1323,4 +1326,21 @@ ol.browsers li {
 .safeBrowsingStatus {
 	width: 100%; 
 	float: left; 
+}
+
+.getAdvancePatterns {
+	height: 50px;
+}
+
+.getAdvancePatterns .signatureInfo {
+	width: 550px; 
+	float: left; 
+}
+
+.getAdvancePatterns button {
+	margin: 5px; 
+}
+
+.x-docked-bottom label {
+	margin-top:5px;
 }

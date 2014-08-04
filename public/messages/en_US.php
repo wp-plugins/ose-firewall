@@ -28,6 +28,8 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
  die('Direct Access Not Allowed');
 }
 //Start here;
+define('O_LATEST_SIGNATURE', '20140716');
+define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140730, updated on 30th July 2014');
 define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
 define('OSE_WORDPRESS_FIREWALL_SETTING', 'Centrora Security™ Settings');
 define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', 'Centrora Security™ is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
@@ -314,7 +316,6 @@ define('CLAMAV_DESC', 'ClamAV is an open source anti-virus software for linux se
 define('CLAMAV_CONNECT_SUCCESS', 'Successfully connected to Clam Daemon');
 define('CLAMAV_DEF_VERSION','ClamAV Definition Version'); 
 define('CLAMAV_CANNOT_CONNECT','Cannot connect to the ClamAV Daemon');
-define('O_LATEST_SIGNATURE', '20140716');
 define('SIGNATURE_UPTODATE','<b>[Better Protection] </b>Your firewall rules are up to date');
 define('SIGNATURE_OUTDATED','<b>[Better Protection] </b><b>WARNING</b>: Your firewall rules are out-dated, please update the rules to enhance protection. The updated advance firewall protection offers 45+ detection technique to protect your website from hacking attempts');
 define('IS_MY_WEBSITE_SAFE_BROWSING','Does my website look safe in major anti-virus software blacklist database?');
@@ -337,4 +338,5 @@ define('DISPLAY_ERROR_OFF','The PHP Setting display_errors is <b>OFF</b>');
 define('DISPLAY_ERROR_ON','The PHP Setting display_errors is <b>ON</b>, please turn if off. '.CHANGE_PHPINI);
 define('DISABLE_FUNCTIONS_READY','The following PHP functions have been disabled: ');
 define('DISABLE_FUNCTIONS_NOTREADY','The following PHP functions need to be disabled: ');
+define('RETRIEVE_UPDATED_PATTERNS','Retrieve Updated Virus Patterns');
 ?>

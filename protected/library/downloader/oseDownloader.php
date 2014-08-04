@@ -206,7 +206,7 @@ class oseDownloader
 	}
 	private function getRemoteConnectionContent ($task) {
 		oseFirewall::loadUsers ();
-		$users = new oseUsers('wordpress');
+		$users = new oseUsers('firewall');
 		$content = array (); 
 		$content['url'] = oseFirewall::getSiteURL();  
 		$content['remoteChecking'] = true;
@@ -254,5 +254,11 @@ class oseDownloader
 		{
 			return 1; 
 		}
+	}
+	public function updateVSPattern ($patternType) {
+		$content = $this->getRemoteConnectionContent('updateVSPattern');
+		$content['patternType'] = $patternType; 
+		$response = $this->sendRequest($content);
+		return $response;
 	}
 }

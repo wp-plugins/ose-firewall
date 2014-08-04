@@ -123,12 +123,10 @@ class AdvancerulesetsModel extends BaseModel
 		}
 		return true;
 	}
-	
 	public function getVersion(){
 		$oseFirewallStat = new oseFirewallStat();
 		return $oseFirewallStat->getAdvanceRulesVersion();
 	}
-	
 	public function checkAPI () {
 		oseFirewall::callLibClass('downloader', 'oseDownloader');
 		$downloader = new oseDownloader('ath', null);

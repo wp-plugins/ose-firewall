@@ -432,6 +432,7 @@ class oseFirewallAudit
 			$schedule = $this->checkAuditSchedule ($db);
 			if (empty($schedule))
 			{
+				$db->closeDBO();
 				return false;
 			}
 			else

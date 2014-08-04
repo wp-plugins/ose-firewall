@@ -16,12 +16,69 @@ function viewIPdetail(id)
 }
 oseATHIPMANAGER.blurListener = oseGetIPBlurListener(); 
 oseATHIPMANAGER.statusOption = new Array(
-					   new Array(1, 'Blacklisted'), 
-					   new Array(2, 'Monitored'),
-					   new Array(3, 'Whitelisted')
+		   new Array(1, 'Blacklisted'), 
+		   new Array(2, 'Monitored'),
+		   new Array(3, 'Whitelisted')
 );
+oseATHIPMANAGER.sortOption = new Array(
+		   new Array('id', 'ID'), 
+		   new Array('name', 'IP'),
+		   new Array('datetime', 'Date'),
+		   new Array('score', 'Score'),
+		   new Array('country_code', 'Country'),
+		   new Array('visits', 'Visits')
+);
+oseATHIPMANAGER.orderOption = new Array(
+		   new Array('asc', 'Ascending'), 
+		   new Array('desc', 'Descending')
+);
+
+function reloadStore () {
+	oseATHIPMANAGER.store.load({
+		   params:{
+				sortby:Ext.getCmp('sortby').value,
+				order:Ext.getCmp('order').value,
+				limit:Ext.getCmp('pageSize').value
+		   }
+	});
+}
+oseATHIPMANAGER.comboSortby = oseGetCombo('sortby', 'Sort By', oseATHIPMANAGER.sortOption, 150, 50, 100, 'datetime');
+oseATHIPMANAGER.comboOrder = oseGetCombo('order', '', oseATHIPMANAGER.orderOption, 100, 50, 100, 'asc');
+oseATHIPMANAGER.pageSize = 
+{   
+		xtype:'numberfield',
+        fieldLabel: 'Items / Page',
+        name: 'pageSize',
+        id: 'pageSize',
+        labelWidth: 80,
+        width: 150,
+        value: 15
+}
 oseATHIPMANAGER.fields = new Array('country_code', 'id', 'score', 'name', 'ip32_start', 'ip32_end', 'iptype', 'status', 'host', 'datetime', 'view', 'visits');
-oseATHIPMANAGER.store = oseGetStore('attacksum', oseATHIPMANAGER.fields, url, option, controller, 'getACLIPMap');
+oseATHIPMANAGER.store = new Ext.data.JsonStore({
+	  storeId: 'attacksum',
+	  fields: oseATHIPMANAGER.fields,
+      pageSize:15,
+	  proxy: {
+        type: 'ajax',
+        url: url,
+        extraParams: {
+    	  option: option, 
+    	  controller:controller, 
+    	  task:'getACLIPMap', 
+    	  action:'getACLIPMap',
+    	  centnounce: Ext.get('centnounce').getValue()
+      	},
+        reader: {
+            type: 'json',
+            root: 'results',
+            idProperty: 'id',
+            totalProperty: 'total'
+        },
+        method: 'POST'
+   	 },
+});
+
 oseATHIPMANAGER.form = Ext.create('Ext.form.Panel', {
 		bodyStyle: 'padding: 10px; padding-left: 20px'
 		,autoScroll: true
@@ -187,5 +244,27 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 				        oseGetSearchField (oseATHIPMANAGER)
 				    ]
 		}),
-		bbar: oseGetPaginator(oseATHIPMANAGER)
+		bbar:  ['->',
+		        {
+			        xtype: 'pagingtoolbar',
+			        store: oseATHIPMANAGER.store,
+			        displayInfo: true
+				},
+		        oseATHIPMANAGER.comboSortby, 
+		        oseATHIPMANAGER.comboOrder,
+		        oseATHIPMANAGER.pageSize
+		]
 });
+
+reloadStore(); 
+
+Ext.getCmp('sortby').on ( 
+	"change", function () {
+		reloadStore();
+	}
+)
+Ext.getCmp('pageSize').on ( 
+	"change", function () {
+		reloadStore();
+	}
+)

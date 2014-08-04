@@ -97,11 +97,16 @@ class VsscanModel extends BaseModel {
 			return oLang::_get('YOUR_SYSTEM_IS_CLEAN');
 		}
 	}
-	
 	public function isDBReady(){
 		$return = array ();
 		$return['ready'] = oseFirewall :: isDBReady();
 		$return['type'] = 'base';
 		return $return['ready'];
+	}
+	public function updatePatterns ($patternType) {
+		oseFirewall::callLibClass('downloader', 'oseDownloader');
+		$downloader = new oseDownloader('ath', null);
+		$response = $downloader->updateVSPattern($patternType);
+		return $response; 
 	}
 }
