@@ -508,7 +508,9 @@ class oseFirewallScanner {
 		$metaDescription = (!empty ($this->metaDescription)) ? $this->metaDescription : 'Centrora Security';
 		$metaGenerator = (!empty ($this->metaGenerator)) ? $this->metaGenerator : 'Centrora Security';
 		$banhtml = $this->getBanPage($adminEmail, $pageTitle, $metaKeys, $metaDescription, $metaGenerator, $customBanPage);
-		echo $banhtml; exit;
+		echo $banhtml; 
+		$this->db->closeDBO(); 
+		exit;
 	}
 	protected function getBanPage($adminEmail, $pageTitle, $metaKeys, $metaDescription, $metaGenerator, $customBanPage)
 	{
@@ -556,6 +558,7 @@ class oseFirewallScanner {
 						</body>
 					 </html>";
 		echo $banbody;
+		$this->db->closeDBO();
 		exit;
 	}
 	protected function show403Msg ($msg) {
@@ -581,6 +584,7 @@ class oseFirewallScanner {
 			$email = $oseEmail->getEmailByType($type);
 			$email = $this->convertEmail($email, $config_var);
 			$result = $oseEmail->sendMail($email, $config_var);
+			$oseEmail->closeDBO ();
 			if ($result == true)
 			{
 				$this->updateNotified(1);

@@ -327,4 +327,7 @@ class oseEmail
 		$item = $this->db->loadObject();
 		return $item;
 	}
+	public function closeDBO () {
+		$this->db->closeDBO (); 
+	}
 }

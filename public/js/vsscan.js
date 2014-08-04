@@ -11,6 +11,88 @@ function vsScanButtonUpdate (status) {
 	//Ext.get('init').dom.disabled = status;
 }
 
+oseATHScanner.statusOption = new Array(
+		   new Array(1, 'Basic Version'),
+		   new Array(2, 'Advanced Version')
+);
+
+oseATHScanner.CheckSubWin = oseGetWIn('checkSubWin', 'Checking Subscription Status', 900, 650); 
+
+oseATHScanner.updatePatternForm = Ext.create('Ext.form.Panel', {
+	bodyStyle: 'padding: 10px; padding-left: 20px'
+	,autoScroll: true
+	,autoWidth: true
+    ,border: false
+    ,labelAlign: 'left'
+    ,labelWidth: 150
+    ,buttons: [
+    {
+		text: O_UPDATE_PATTERN,
+		id: 'updatePatterns'
+		,handler: function(){
+    		oseATHScanner.updatePatternForm.submit({
+	    		clientValidation: true,
+	    		url : url,
+	    		method: 'post',
+	    		params:{
+	    			option : option, 
+	    			controller: controller, 
+	    			task: 'updatePatterns',
+	    			action: 'updatePatterns',
+	    			centnounce: Ext.get('centnounce').getValue()
+	    		},
+	    		waitMsg: O_PLEASE_WAIT,
+	    		success: function(response, options){
+	    			var msg  = options.result;
+	    			if (Ext.getCmp('patternType').value == 1)
+	    			{
+	    				oseATHScanner.CheckSubWin.height=300;
+	    			}	
+	    			Ext.getCmp('updatePatternWin').hide();
+	    			
+	    			oseATHScanner.CheckSubWin.show(); 
+	    			oseATHScanner.CheckSubWin.update(msg.message  + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3);
+	    		},
+	    		failure:function(response, options){
+	    			var msg  = options.result;
+	    			Ext.getCmp('updatePatternWin').hide();
+	    			oseATHScanner.CheckSubWin.show(); 
+	    			oseATHScanner.CheckSubWin.update(msg.message  + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3);
+	    		} 
+	    	});
+		}
+	},
+	{
+		text: O_CLOSE,
+		id: 'closebutton'
+		,handler: function(){
+			location.reload();  
+		}
+	}
+	]
+    ,items:[
+            oseGetCombo('patternType', O_UPDATE_PATTERN, oseATHScanner.statusOption, 400, 250, 100, 2)
+    ]
+});
+
+
+oseATHScanner.updatePatternWin = new Ext.Window({
+	title: O_UPDATE_PATTERN
+	,id:'updatePatternWin'
+	,modal: true
+	,width: 500
+	,border: false
+	,autoHeight: true
+	,closeAction:'hide'
+	,items: [
+	         oseATHScanner.updatePatternForm
+	]
+});	
+
+function vsPatternUpdate () {
+	oseATHScanner.updatePatternWin.show();  	
+}
+
 function Countdown(options) {
 	  var timer,
 	  instance = this,
@@ -141,3 +223,7 @@ Ext.get('vscont').on('click', function(){
 	vsScanButtonUpdate (true); 
 	scanAntivirus (1, 'vsscan');
 });
+
+Ext.getCmp('checkSubWin').on('close', function () {
+	location.reload();
+})

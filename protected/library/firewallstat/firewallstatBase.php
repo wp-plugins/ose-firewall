@@ -247,6 +247,8 @@ class oseFirewallStatBase
 		$start = oRequest::getInt('start', 0);
 		$page = oRequest::getInt('page', 1);
 		$search = oRequest::getVar('search', null);
+		$sortby = oRequest::getVar('sortby', 'datetime');
+		$order = oRequest::getVar('order', 'asc');
 		if (isset($_REQUEST['status']))
 		{
 			$status = oRequest::getInt('status', null);
@@ -256,9 +258,9 @@ class oseFirewallStatBase
 			$status = null;
 		}
 		$start = $limit * ($page - 1);
-		return $this->convertACLIPMap($this->getACLIPMapDB($search, $status, $start, $limit));
+		return $this->convertACLIPMap($this->getACLIPMapDB($search, $status, $start, $limit, $sortby, $order));
 	}
-	private function getACLIPMapDB($search, $status, $start, $limit)
+	private function getACLIPMapDB($search, $status, $start, $limit, $sortby, $order)
 	{
 		$db = oseFirewall::getDBO();
 		$where = array();
@@ -277,11 +279,19 @@ class oseFirewallStatBase
 				$where[] = "`status` = ".(int) $status;
 			}
 		}
+		if (in_array($sortby, array('id','name','datetime','score','country_code','visits')))
+		{
+			$sortby= " ORDER BY ".$sortby;
+		}
+		if (!in_array($order, array('asc','desc')))
+		{
+			$order = "DESC";
+		}
 		$where = $db->implodeWhere($where);
 		$attrList = array("`acl`.`id` AS `id`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`",
-			"`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`ip`.`ip32_end` AS `ip32_end`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`");
+			"`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`ip`.`ip32_end` AS `ip32_end`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
 		$sql = convertViews::convertAclipmap($attrList);
-		$query = $sql.$where." ORDER BY datetime DESC LIMIT ".$start.", ".$limit;
+		$query = $sql.$where.$sortby." ".$order." LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		$db->closeDBO ();
@@ -294,7 +304,6 @@ class oseFirewallStatBase
 		{
 			if (!isset($results[$i]->country_code) || empty($results[$i]->country_code))
 			{
-				//TODO: convert country code!
 				$results[$i]->country_code = $this->updateCountryCode($results[$i]->id, $results[$i]->ip32_start);
 			}
 			$results[$i]->country_code = $this->getCountryImage($results[$i]->country_code);
@@ -303,7 +312,7 @@ class oseFirewallStatBase
 			if (empty($results[$i]->host))
 			{
 				//$results[$i]->host = $this->updateIPHost($results[$i]->id, $results[$i]->ip32_start);
-				}
+			}
 			$results[$i]->view = $this->getViewIcon($results[$i]->id);
 			$results[$i]->status = $this->getStatusIcon($results[$i]->id, $results[$i]->status);
 			$i++;

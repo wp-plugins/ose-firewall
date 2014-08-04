@@ -62,5 +62,12 @@ class VsscanController extends BaseController {
 		$results = $this ->model->vsScan($step);
 		oseAjax::returnJSON($results); 
 	}
+	public function actionUpdatePatterns() {
+		oseFirewall::loadRequest (); 
+		$patternType= oRequest::getInt('patternType', 1);
+		$results = $this ->model->updatePatterns($patternType);
+		print_r($results);exit;
+		//oseAjax::returnJSON($results);
+	}
 }
 ?>	

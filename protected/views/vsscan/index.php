@@ -40,7 +40,9 @@ $this ->model->getNounce();
 		if(oseFirewall :: isDBReady()){
 	?>
 		<?php echo '<script type="text/javascript"> var totalFiles = "'. $this->model->getTotalFiles().'"; </script>'; ?>
-		<?php //include (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'help.php')?>
+		<?php 
+			//include (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'advpatterns.php')
+		?>
         <div id = "scan-window"> 
         	<div id = "scanbuttons">
 				<button id="vsstop" class='obtn obtn-small obtn-blue'><?php oLang::_('STOP_VIRUSSCAN') ?></button>
