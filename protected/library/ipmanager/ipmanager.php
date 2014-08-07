@@ -257,7 +257,7 @@ class oseFirewallIpManager
 		}
 		return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
 	}
-	private function isSearchEngineBot($crawlers, $userAgent)
+	public function isSearchEngineBot($crawlers, $userAgent)
 	{
 		$isCrawler = (preg_match("/$crawlers/", $userAgent) > 0);
 		return $isCrawler;

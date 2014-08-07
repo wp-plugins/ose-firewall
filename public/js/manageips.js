@@ -34,6 +34,7 @@ oseATHIPMANAGER.orderOption = new Array(
 );
 
 function reloadStore () {
+	oseATHIPMANAGER.store.pageSize = Ext.getCmp('pageSize').value;
 	oseATHIPMANAGER.store.load({
 		   params:{
 				sortby:Ext.getCmp('sortby').value,
@@ -43,7 +44,7 @@ function reloadStore () {
 	});
 }
 oseATHIPMANAGER.comboSortby = oseGetCombo('sortby', 'Sort By', oseATHIPMANAGER.sortOption, 150, 50, 100, 'datetime');
-oseATHIPMANAGER.comboOrder = oseGetCombo('order', '', oseATHIPMANAGER.orderOption, 100, 50, 100, 'asc');
+oseATHIPMANAGER.comboOrder = oseGetCombo('order', '', oseATHIPMANAGER.orderOption, 100, 50, 100, 'desc');
 oseATHIPMANAGER.pageSize = 
 {   
 		xtype:'numberfield',
@@ -259,6 +260,11 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 reloadStore(); 
 
 Ext.getCmp('sortby').on ( 
+	"change", function () {
+		reloadStore();
+	}
+)
+Ext.getCmp('order').on ( 
 	"change", function () {
 		reloadStore();
 	}

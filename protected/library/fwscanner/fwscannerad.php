@@ -45,6 +45,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			}
 		}	
 		if (! empty ( $scanResult )) {
+			$scannerType = $scanResult['0']['type'];
 			$status = $this->getBlockIP();
 			$this->addACLRule ( $status, $this -> sumImpact($scanResult) );
 			foreach($scanResult as $result){
@@ -57,7 +58,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 					$this->addDetContent ( $attacktypeID, $content, $result ['rule_id'], $result['keyname'] );
 				}
 			}
-			$this->controlAttack ();
+			$this->controlAttack ($scannerType);
 		}
 		unset ( $scanResult );
 	}
@@ -92,7 +93,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 						preg_match_all ( "/".$option["filter"]."/ims", $attackContent, $matched );
 				
 						if(!empty($matched[0])){
-							$tmpResult = $this -> composeResult($option["impact"], $matched[0], $option["id"], $option["attacktype"], $attackVar);
+							$tmpResult = $this -> composeResult($option["impact"], $matched[0], $option["id"], $option["attacktype"], $attackVar, 'ad');
 							$tmpResults[] = $tmpResult;
 							$impact += $option["impact"];
 						}
@@ -170,7 +171,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		}
 		return $detattacktype_id;
 	}
-	protected function controlAttack() 
+	protected function controlAttack($scannerType) 
 	{
 		$visits = $this->getVisits();
 		$blockMode = $this->getblockIP();
@@ -183,9 +184,8 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		if ($this->silentMode == true && $visits <= $this->slient_max_att)
 		{
 			$this -> updateVisits();
-			$url = $this -> filterAttack(true);
+			$url = $this -> filterAttack($scannerType);
 			$this -> sendEmail('filtered', $notified);
-			$this->redirect($url);
 		}
 		else
 		{		

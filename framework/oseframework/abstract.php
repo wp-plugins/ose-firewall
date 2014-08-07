@@ -97,7 +97,7 @@ abstract class oseFramework
 		$cs->registerCssFile($baseUrl.'/public/css/backendv6.css');
 		$cs->registerCssFile($baseUrl.'/public/css/bootmetro-icons.min.css');
 		$cs->registerCssFile($baseUrl.'/public/css/ext-debug.css');
-		$cs->registerCssFile('http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300');
+		$cs->registerCssFile('https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300');
 	}
 	public static function loadFrontendCSS($cs, $baseUrl)
 	{

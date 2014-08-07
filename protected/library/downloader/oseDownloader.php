@@ -212,6 +212,18 @@ class oseDownloader
 		$content['remoteChecking'] = true;
 		$content['task'] = $task;
 		$content['admin_email'] = $users->getUserEmail();
+		if (class_exists('SConfig'))
+		{
+			$content['cms'] = 'st';
+		}
+		else if (class_exists('JConfig'))
+		{
+			$content['cms'] = 'jl';
+		}
+		else if (defined('WPLANG'))
+		{
+			$content['cms'] = 'wp';
+		}  
 		return $content;
 	}
 	public function checkSafebrowsing () {
