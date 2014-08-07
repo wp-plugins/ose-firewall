@@ -197,15 +197,15 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 		unset ( $patterns );
 		$return = array ();
 		if ($detected == true) {
-			$return = $this->composeResult(100, $matches, 3, oseJSON::encode(array(1)), 'server.HTTP_USER_AGENT') ;
+			$return = $this->composeResult(100, $matches, 3, oseJSON::encode(array(1)), 'server.HTTP_USER_AGENT', 'bs') ;
 		}
 		return $return;
 	}
 	// Basic function - Checks Direct Files Inclusion attack
 	private function checkDFI() {
 		$request = array (
-				$_GET,
-				$_POST 
+				'GET' => $_GET,
+				'POST' => $_POST
 		);
 		$return = array ();
 		$whitelistVars = $this->getWhitelistVars ();
@@ -214,7 +214,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				continue;
 			$matches = $this->DFImathched ( $allVars, $whitelistVars );
 			if (! empty ( $matches )) {
-				$return = $this->composeResult(100, $matches['value'], 5, oseJSON::encode(array(6)), $matches['key']) ;
+				$return = $this->composeResult(100, $matches['value'], 5, oseJSON::encode(array(6)), $matches['key'], 'bs') ;
 				break;
 			}
 		}
@@ -264,8 +264,8 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 	// Basic function - Checks Remote Files Inclusion attack
 	private function checkRFI() {
 		$request = array (
-				$_GET,
-				$_POST 
+				'GET' => $_GET,
+				'POST' => $_POST
 		);
 		$whitelistVars = $this->getWhitelistVars ();
 		$regex = array ();
@@ -277,7 +277,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 			foreach ( $regex as $reg ) {
 				$matches = $this->RFImathched ( $reg, $allVars, $whitelistVars );
 				if (! empty ( $matches )) {
-					$return = $this->composeResult(100, $matches['value'], 5, oseJSON::encode(array(5)), $matches['key']) ;
+					$return = $this->composeResult(100, $matches['value'], 5, oseJSON::encode(array(5)), $matches['key'], 'bs') ;
                     break;
 				}
 			}
@@ -357,7 +357,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
         	$totalSessionRequest = (int)($results->total_session_request);
 			if ((time() - $lastSessionRequest) < 10){
 				if($totalSessionRequest > 80){
-					$return = $this->composeResult(100, "dDos Attack", 4, oseJSON::encode(array(9)), 'server.SESSION') ;
+					$return = $this->composeResult(100, "dDos Attack", 4, oseJSON::encode(array(9)), 'server.SESSION', 'bs') ;
 				}
 				else{
 	                $lastSessionRequest = time();
@@ -377,7 +377,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 					$query =" DELETE FROM `#__osefirewall_iptable_tmp` WHERE `ip32_start` = ". $this->db->quoteValue($ip32);
 					$this->db->setQuery($query);
 	                $this->db->query();
-					$return = $this->composeResult(100, "dDos Attack", 4, oseJSON::encode(array(9)), 'server.SESSION') ;
+					$return = $this->composeResult(100, "dDos Attack", 4, oseJSON::encode(array(9)), 'server.SESSION', 'bs') ;
 				}
 				else
 				{
@@ -396,7 +396,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 		$return = array ();
 		$trasversal = "\.\.\/|\.\.\\|%2e%2e%2f|%2e%2e\/|\.\.%2f|%2e%2e%5c";
 		if (preg_match ( "/^.*(" . $trasversal . ").*/i", $_SERVER ['REQUEST_URI'], $matched )) {
-			$return = $this->composeResult(100, $matched [0], 9, oseJSON::encode(array(8)), 'server.REQUEST_URI') ;
+			$return = $this->composeResult(100, $matched [0], 9, oseJSON::encode(array(8)), 'server.REQUEST_URI', 'bs') ;
 		}
 		return $return;
 	}
@@ -404,21 +404,21 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 		$return = array ();
 		/* Method Blacklist */
 		if (preg_match ( "/^(TRACE|DELETE|TRACK)/i", $_SERVER ['REQUEST_METHOD'], $matched )) {
-			$return = $this->composeResult(100, $matched [0], 2, oseJSON::encode(array(1)), 'server.REQUEST_METHOD') ;
+			$return = $this->composeResult(100, $matched [0], 2, oseJSON::encode(array(1)), 'server.REQUEST_METHOD', 'bs') ;
 		}
 		return $return;
 	}
 	private function checkQuerytooLong() {
 		$return = array ();
 		if (strlen ( $_SERVER ['QUERY_STRING'] ) > 255) {
-			$return = $this->composeResult(100, $_SERVER ['QUERY_STRING'], 10, oseJSON::encode(array(1)), 'server.QUERY_STRING') ;
+			$return = $this->composeResult(100, $_SERVER ['QUERY_STRING'], 10, oseJSON::encode(array(1)), 'server.QUERY_STRING', 'bs') ;
 		}
 		return $return;
 	}
 	private function checkJSInjection() {
 		$request = array (
-				$_GET,
-				$_POST 
+				'GET' => $_GET,
+				'POST' => $_POST
 		);
 		$return = array ();
 		$matches = array ();
@@ -432,17 +432,17 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				}
 				if (preg_match ( "/((\%3C)|<)((\%2F)|\/)*(javascript|script)+[a-z0-9\%]+((\%3E)|>)/ix", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
-					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element) ;
+					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element, 'bs') ;
 					break;
 				}
 				if (preg_match ( "/((\%3C)|<)((\%69)|i|(\%49))((\%6D)|m|(\%4D))((\%67)|g|(\%47))[^\n]+((\%3E)|>)/i", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
-					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element) ;
+					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element, 'bs') ;
 					break;
 				}
 				if (preg_match ( "/((\%3C)|<)(javascript|script)+[^\n]+((\%3E)|>)/i", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
-					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element) ;
+					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element, 'bs') ;
 					break;
 				}
 				
@@ -452,8 +452,8 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 	}
 	private function checkSQLInjection() {
 		$request = array (
-				$_GET,
-				$_POST 
+				'GET' => $_GET,
+				'POST' => $_POST
 		);
 		$dbprefix = $this->db->getPrefix ();
 		$return = array ();
@@ -481,26 +481,26 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 					continue;
 				}
 				if (preg_match ( '/((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(;))/i', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element) ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
 					break;
 				}
 				if (preg_match ( '/\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/ix', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element) ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
 					break;
 				}
 				if (preg_match ( '/((\%27)|(\'))union/ix', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element) ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
 					break;
 				}
 				if (preg_match ( '/exec(\s|\+)+(s|x)p\w+/ix', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element) ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
 					break;
 				}
 			}
 		}
 		return $return;
 	}
-	protected function controlAttack() 
+	protected function controlAttack($scannerType) 
 	{
 		$visits = $this->getVisits();
 		$blockMode = $this->getblockIP();

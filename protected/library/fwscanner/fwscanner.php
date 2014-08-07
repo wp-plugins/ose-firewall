@@ -127,7 +127,7 @@ class oseFirewallScanner {
 		}
 		$this->db->closeDBO ();
 	}
-	protected function filterAttack($redirect)
+	protected function filterAttack($type)
 	{
 		$attrList = array("`detattacktype`.`attacktypeid` AS `attacktypeid`", "`detcontdetail`.`rule_id` AS `rule_id`", "`vars`.`keyname` AS `keyname`","`detcontent`.`content` AS `content`");
 		$sql = convertViews::convertAttackmap($attrList);
@@ -136,36 +136,49 @@ class oseFirewallScanner {
 		$results = $this->db->loadObjectList();
 		foreach ($results as $result)
 		{
-			if($result->attacktypeid==1)
-			{
-				//$url = $this->convertL1Attack($result->content);
-				$url = oseFirewall::getSiteURL();
-				if ($redirect==true)
+			if (!empty($result->keyname) && !empty($result->rule_id))
+			{	
+				if ($type == 'ad')
 				{
-					return $url;
+					$this->convertL2Attack($result->rule_id, $result->keyname);
 				}
-			}
-			elseif (!empty($result->keyname) && !empty($result->rule_id))
-			{
-				$this->convertL2Attack($result->rule_id, $result->keyname);
+				else
+				{
+					$this->convertL1Attack($result->keyname, $result->content);
+				}
 			}
 		}
 	}
-	protected function convertL1Attack($content)
+	protected function convertL1Attack($keyname, $content)
 	{
-		$content = $this->cleanVariable($content);
-		$this->replaced['original']['URL'] = ((!empty($_SERVER['HTTPS'])) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		$_SERVER['REQUEST_URI'] = $this->cleanVariable($_SERVER['REQUEST_URI']);
-		$_SERVER['QUERY_STRING'] = $this->cleanVariable($_SERVER['QUERY_STRING']);
-		$_SERVER['REQUEST_URI'] = str_replace($content, '', $_SERVER['REQUEST_URI']);
-		$_SERVER['QUERY_STRING'] = str_replace($content, '', $_SERVER['QUERY_STRING']);
-		$redirect = ((!empty($_SERVER['HTTPS'])) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		$this->replaced['filtered']['URL'] = $redirect;
-		return $redirect;
+		$tmp = array (); 
+		if (isset($_GET[$keyname])) 
+		{
+			$tmp[0] = 'GET';
+			$tmp[1] = $keyname; 
+		}
+		else if (isset($_POST[$keyname]))
+		{
+			$tmp[0]= 'POST';
+			$tmp[1] = $keyname; 
+		}
+		$this->replaced['original']['GET'][$tmp[1]] = $_GET[$tmp[1]];
+		$_GET[$tmp[1]] = NULL;
+		$this->replaced['filtered']['GET'][$tmp[1]] = $_GET[$tmp[1]];
 	}
 	protected function convertL2Attack($rule_id, $keyname)
 	{
-		$tmp = explode('.', $keyname);
+		$tmp = array (); 
+		if (isset($_GET[$keyname])) 
+		{
+			$tmp[0] = 'GET';
+			$tmp[1] = $keyname; 
+		}
+		else if (isset($_POST[$keyname]))
+		{
+			$tmp[0]= 'POST';
+			$tmp[1] = $keyname; 
+		}
 		if (!empty($tmp) && is_array($tmp))
 		{
 			switch($tmp[0])
@@ -443,13 +456,13 @@ class oseFirewallScanner {
 	}
 	protected function getAllowBots() {
 		$bots = array ();
-		if ($this->scanGoogleBots === false) {
+		if ($this->scanGoogleBots == false) {
 			$bots[] = 'Google';
 		}
-		if ($this->scanMsnBots === false) {
+		if ($this->scanMsnBots == false) {
 			$bots[] = 'msnbot';
 		}
-		if ($this->scanYahooBots === false) {
+		if ($this->scanYahooBots == false) {
 			$bots[] = 'Yahoo';
 		}
 		return $bots;
@@ -490,6 +503,7 @@ class oseFirewallScanner {
 					'com_ose_fileman',
 					'com_ose_antihacker',
 					'com_ose_antivirus',
+					'com_ose_firewall',
 					'com_civicrm'
 					)))) {
 						return false;
@@ -910,13 +924,14 @@ class oseFirewallScanner {
 		$results = $this->db->loadArrayList ( 'keyname' );
 		return $results;
 	} 
-	protected function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname) {
+	protected function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname, $type) {
 		$return = array ();
 		$return ['impact'] = $impact;
 		$return ['attackTypeID'] = $attackTypeID;
 		$return ['detcontent_content'] = $content;
 		$return ['keyname'] = $keyname;
 		$return ['rule_id'] = $rule_id;
+		$return ['type'] = $type;
 		return $return;
 	}
 }

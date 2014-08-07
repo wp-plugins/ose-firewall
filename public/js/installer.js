@@ -39,11 +39,12 @@ function createTables (step, win) {
 	});	
 }
 
+var safeBrowsingWin = oseGetWIn('safeBrowsing', 'Checking Safe Browsing Status', 900, 650);
+
 function checkSafebrowsing () {
-	var win = oseGetWIn('safeBrowsing', 'Checking Safe Browsing Status', 900, 650); 
-	win.show(); 
-	win.update('Checking Safe Browsing Status from our server, please allow a few minutes to complete.');
-	checkSafebrowsingStatus (win);
+	safeBrowsingWin.show(); 
+	safeBrowsingWin.update('Checking Safe Browsing Status from our server, please allow a few minutes to complete.');
+	checkSafebrowsingStatus (safeBrowsingWin);
 }
 
 function checkSafebrowsingStatus (win) {
@@ -150,7 +151,7 @@ function updateSafebrowsingStatus (status) {
 	    ]
 });
   
-  oseATHINSTALLER.win = new Ext.Window({
+oseATHINSTALLER.win = new Ext.Window({
 		title: 'Change administrator username'
 		,id: 'changeusername-win'
 		,modal: true
@@ -162,8 +163,14 @@ function updateSafebrowsingStatus (status) {
 		         oseATHINSTALLER.form
 		]
 		,closable: true
- 	});	
+});	
   
-  function showForm () {
-	  oseATHINSTALLER.win.show().alignTo(Ext.getBody(),'t-t', [0, 50]);
-  }
+function showForm () {
+   oseATHINSTALLER.win.show().alignTo(Ext.getBody(),'t-t', [0, 50]);
+}
+  
+Ext.getCmp('safeBrowsing').on ( 
+	"close", function () {
+		location.reload(); 
+	}
+)
