@@ -29,6 +29,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 }
 class VsscanModel extends BaseModel {
 	public function __construct() {	
+		
 	}
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
@@ -108,5 +109,18 @@ class VsscanModel extends BaseModel {
 		$downloader = new oseDownloader('ath', null);
 		$response = $downloader->updateVSPattern($patternType);
 		return $response; 
+	}
+	public function getVersion () {
+		$this->loadLibrary();
+		$oseFirewallStat = new oseFirewallStat();
+		$result = $oseFirewallStat->getAdvancePatternsVersion();
+		if (!empty($return['version']))
+		{
+			return $return['version'];
+		}
+		else
+		{
+			return '1.0.0 - Oudated';
+		}
 	}
 }

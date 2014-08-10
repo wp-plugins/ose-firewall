@@ -28,8 +28,8 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
  die('Direct Access Not Allowed');
 }
 //Start here;
-define('O_LATEST_SIGNATURE', '20140716');
-define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140730, updated on 30th July 2014');
+define('O_LATEST_SIGNATURE', '20140801');
+define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140811, updated on 11th Aug 2014');
 define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
 define('OSE_WORDPRESS_FIREWALL_SETTING', 'Centrora Security™ Settings');
 define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', 'Centrora Security™ is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
@@ -339,4 +339,5 @@ define('DISPLAY_ERROR_ON','The PHP Setting display_errors is <b>ON</b>, please t
 define('DISABLE_FUNCTIONS_READY','The following PHP functions have been disabled: ');
 define('DISABLE_FUNCTIONS_NOTREADY','The following PHP functions need to be disabled: ');
 define('RETRIEVE_UPDATED_PATTERNS','Retrieve Updated Virus Patterns');
+define('YOUR_VERSION', 'Your version: ');
 ?>

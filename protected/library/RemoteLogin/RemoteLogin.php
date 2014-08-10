@@ -212,6 +212,12 @@ class RemoteLogin
 		$RemoteController = new DownloadRemoteController('download');
 		$RemoteController->$action();
 	}
+	public function vsPatternUpdate () {
+		$this->validateIP ();
+		$this->callControllerClass('DownloadRemoteController');
+		$RemoteController = new DownloadRemoteController('download');
+		$RemoteController->actionDownload();
+	}
 	private function validateIP () {
 		$ip = $this->getRealIP(); 
 		// Centrora server IP List; 
