@@ -284,7 +284,8 @@ class oseFirewallInstaller extends oseInstaller {
 				return '#__osefirewall_advancerules';
 				break;
 			case 'avs':
-				return '#__osefirewall_advancepatterns';
+			case 'bsavs':
+				return '#__osefirewall_vspatterns';
 				break;
 		}
 	}

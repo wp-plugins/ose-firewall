@@ -1344,3 +1344,8 @@ ol.browsers li {
 .x-docked-bottom label {
 	margin-top:5px;
 }
+
+#getRules {
+	float: right; 
+	margin-right: 10px;
+}

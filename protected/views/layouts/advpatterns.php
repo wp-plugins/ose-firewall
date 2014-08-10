@@ -32,7 +32,13 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
    <div class="signatureInfo">
    <?php 
    		oLang::_('O_LATEST_PATTERN');
-   ?></div>
+   ?>
+   </div>
+   <div class="signatureInfo">
+   <?php 
+     oLang::_('YOUR_VERSION'); echo $this->model->getVersion();
+   ?>
+   </div>
    <button id ="getRules" class ="x-btn" onClick="vsPatternUpdate()">
    <?php 
    		oLang::_('RETRIEVE_UPDATED_PATTERNS');

@@ -39,9 +39,9 @@ $this ->model->getNounce();
 		$this ->model->showHeader ();
 		if(oseFirewall :: isDBReady()){
 	?>
-		<?php echo '<script type="text/javascript"> var totalFiles = "'. $this->model->getTotalFiles().'"; </script>'; ?>
 		<?php 
-			//include (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'advpatterns.php')
+			  echo '<script type="text/javascript"> var totalFiles = "'. $this->model->getTotalFiles().'"; </script>'; 
+		 	  include_once (OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'advpatterns.php')
 		?>
         <div id = "scan-window"> 
         	<div id = "scanbuttons">
@@ -57,7 +57,9 @@ $this ->model->getNounce();
 	        </div>
 	        <div id ="last_file">&nbsp;</div>
         </div>	
-     <?php }else{
+     <?php 
+	 } 
+	 else {
      	include(OSEAPPDIR.ODS.'protected'.ODS.'views'.ODS.'layouts'.ODS.'error.php');
      }?>
    </div>
