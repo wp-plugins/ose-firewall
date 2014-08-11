@@ -114,9 +114,9 @@ class VsscanModel extends BaseModel {
 		$this->loadLibrary();
 		$oseFirewallStat = new oseFirewallStat();
 		$result = $oseFirewallStat->getAdvancePatternsVersion();
-		if (!empty($return['version']))
+		if (!empty($result['version']))
 		{
-			return $return['version'];
+			return $result['version'];
 		}
 		else
 		{
