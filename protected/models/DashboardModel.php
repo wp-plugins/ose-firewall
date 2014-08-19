@@ -47,6 +47,10 @@ class DashboardModel extends BaseModel {
 		$this->isGoogleScan ();
 		$this->isAdFirewallReady();
 		$this->isSignatureUpToDate(); 
+		if (OSE_CMS =='joomla')
+		{
+			$this->checkSysPlugin();
+		}
 	}
 	public function loadLocalScript() {
 		$baseUrl = Yii :: app()->baseUrl;
@@ -292,12 +296,15 @@ class DashboardModel extends BaseModel {
 		$audit = new oseFirewallAudit (); 
 		$audit -> isGoogleScan(true);
 	}
+	public function checkSysPlugin () {
+		$audit = new oseFirewallAudit (); 
+		$audit -> checkSysPlugin(true);
+	}
 	public function changeusername ($username) {
 		$oseFirewallStat = new oseFirewallStatPro();
 		$updated = $oseFirewallStat->changeusername ($username);
 		return $updated;
 	}
-	
 	public function isSignatureUpToDate () {
 		$audit = new oseFirewallAudit (); 
 		$audit -> isSignatureUpToDate(true);

@@ -93,6 +93,38 @@ function vsPatternUpdate () {
 	oseATHScanner.updatePatternWin.show();  	
 }
 
+var scheduleScanningWin = oseGetWIn('scheduleScanningWin', 'Checking Schedule Scanning Status', 900, 650);
+
+function scheduleScanning () {
+	scheduleScanningWin.show(); 
+	scheduleScanningWin.update('Checking Schedule Scanning Status from our server, please allow a few minutes to complete.');
+	checkScheduleScanningStatus (scheduleScanningWin);	
+}
+
+function checkScheduleScanningStatus (win) {
+	Ext.Ajax.request({
+		url : url,
+		params : {
+			option : option,
+			controller: controller,
+			task: 'checkScheduleScanning',
+			action: 'checkScheduleScanning'
+		},
+		method: 'POST',
+		success: function ( response, options ) {
+			var msg  = Ext.decode(response.responseText);
+			if (msg.paid==false)
+			{
+				win.update(msg.message + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3 );
+			}
+			else
+			{
+				win.update(msg.message);
+			}
+		}
+	});	
+}
+
 function Countdown(options) {
 	  var timer,
 	  instance = this,

@@ -84,7 +84,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVsscan () {
-		$actions = array ('initDatabase', 'vsscan', 'updatePatterns');
+		$actions = array ('initDatabase', 'vsscan', 'updatePatterns', 'checkScheduleScanning');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanreport () {

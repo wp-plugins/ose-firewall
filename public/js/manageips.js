@@ -145,6 +145,10 @@ oseATHIPMANAGER.form = Ext.create('Ext.form.Panel', {
 	        ]
 });
 
+oseATHIPMANAGER.cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
+    clicksToEdit: 1
+});
+
 oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 		id: 'oseATHIPMANAGERPanel',
 		name: 'oseATHIPMANAGERPanel',
@@ -155,10 +159,10 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 	        {id: 'country_code', header: '',  hidden:false, dataIndex: 'country_code', width: '3%', sortable: true}
             ,{id: 'id', header: O_ID,  hidden:false, dataIndex: 'id', width: '3%', sortable: true}
             ,{id: 'datetime', header: O_DATE,  hidden:false, dataIndex: 'datetime',width: '10%', sortable: true}
-            ,{id: 'name', header: O_IP_RULE_TITLE,  hidden:false, dataIndex: 'name', width: '10%',  sortable: true}
+            ,{id: 'name', header: O_IP_RULE_TITLE,  hidden:false, dataIndex: 'name', width: '10%',  sortable: true, editor:{allowBlank:false}}
             ,{id: 'score', header: O_RISK_SCORE,  hidden:false, dataIndex: 'score', width: '8%', sortable: true}
-            ,{id: 'ip32_start', header: O_START_IP,  hidden:false, dataIndex: 'ip32_start', width: '10%', sortable: true}
-            ,{id: 'ip32_end', header: O_END_IP,  hidden:false, dataIndex: 'ip32_end', width: '10%', sortable: true}
+            ,{id: 'ip32_start', header: O_START_IP,  hidden:false, dataIndex: 'ip32_start', width: '10%', sortable: true, editor:{allowBlank:false}}
+            ,{id: 'ip32_end', header: O_END_IP,  hidden:false, dataIndex: 'ip32_end', width: '10%', sortable: true, editor:{allowBlank:false}}
             ,{id: 'iptype', header: O_IP_TYPE,  hidden:false, dataIndex: 'iptype', sortable: true, width: '12%',  
             	renderer : function(val) {
                    if(val==0) {
@@ -181,6 +185,7 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 	    height: 500,
 	    width: '100%',
 	    renderTo: 'oseantihackerIPManager',
+	    plugins: [oseATHIPMANAGER.cellEditing],
 	    tbar: new Ext.Toolbar({
 			defaults: {bodyStyle:'border:0px solid transparent;'},
 			items: [

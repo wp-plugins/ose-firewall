@@ -67,7 +67,11 @@ class VsscanController extends BaseController {
 		$patternType= oRequest::getInt('patternType', 1);
 		$results = $this ->model->updatePatterns($patternType);
 		print_r($results);exit;
-		//oseAjax::returnJSON($results);
+	}
+	public function actionCheckScheduleScanning () {
+		oseFirewall::loadRequest (); 
+		$results = $this ->model->checkScheduleScanning();
+		print_r($results);exit;
 	}
 }
 ?>	

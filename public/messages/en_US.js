@@ -1,4 +1,4 @@
-var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140801, updated on 1st Aug 2014</div>";
+var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140818, updated on 18th Aug 2014</div>";
 var O_IP_RULE_TITLE = "IP Rule Title";
 var O_ID = "ID";
 var O_DATE = "Date";
@@ -167,7 +167,7 @@ var O_MONITOR_COUNTRY = "Monitor Country";
 var AUDIT_FREQ = "Audit Report Schedule";
 var ATTACK_BLOCKING_THRESHOLD = "Attack blocking risk score threshold (default: 35)";
 var O_SILENTLY_FILTER_ATTACK = "Silent Mode (Silently filter hacking values. Recommended for new users)";
-var O_ADV_ANTI_HACKING_SCANNING_OPTIONS = "<b>Advance Firewall Scanning Options</b>";
+var O_ADV_ANTI_HACKING_SCANNING_OPTIONS = "<b>Centrora Premium Service Options</b>";
 var SILENT_MODE_BLOCK_MAX_ATTEMPTS = "Maximum attack attempts allowed for an IP in silent mode (default: 10)"
 var O_SCHEDULE_AUDITING = "<b>Schedule Auditing Options</b>";	
 var O_CHANGEALL_COUNTRY = "Change All Countries";
@@ -180,3 +180,4 @@ var O_DISABLE_ALLOW_URL_FOPEN = "Disable PHP allow_url_fopen directive";
 var O_DISABLE_DISPLAY_ERRORS = "Disable PHP display_errors directive";
 var O_DISABLE_PHP_FUNCTIONS = "Disable PHP system functions";
 var O_UPDATE_PATTERN = "Update virus patterns";
+var O_SCHEDULE_VSSCAN = "Schedule Virus Scanning"

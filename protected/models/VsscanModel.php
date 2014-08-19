@@ -123,4 +123,10 @@ class VsscanModel extends BaseModel {
 			return '1.0.0 - Oudated';
 		}
 	}
+	public function checkScheduleScanning () {
+		oseFirewall::callLibClass('downloader', 'oseDownloader');
+		$downloader = new oseDownloader('ath', null);
+		$response = $downloader->checkScheduleScanning();
+		return $response; 
+	}
 }

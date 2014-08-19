@@ -1199,7 +1199,8 @@ ol.browsers li {
 
 #advRulesinstaller-innerCt,
 #safeBrowsing-innerCt,
-#checkSubWin-innerCt {
+#checkSubWin-innerCt,
+#scheduleScanningWin-innerCt {
 	padding: 15px; 
 	font-size: 16px; 
 	line-height: 24px;
@@ -1208,7 +1209,8 @@ ol.browsers li {
 }
 #advRulesinstaller-innerCt ul,
 #safeBrowsing-innerCt ul,
-#checkSubWin-innerCt ul {
+#checkSubWin-innerCt ul,
+#scheduleScanningWin-innerCt ul {
 	list-style-type: square;
 	color: #444444;
 	padding-left: 30px;
@@ -1216,7 +1218,8 @@ ol.browsers li {
 
 #advRulesinstaller-innerCt button,
 #safeBrowsing-innerCt button,
-#checkSubWin-innerCt button {
+#checkSubWin-innerCt button,
+#scheduleScanningWin-innerCt button {
 	background-color: #3049BF;
     border-radius: 3px;
     font-weight: bold;
@@ -1345,7 +1348,15 @@ ol.browsers li {
 	margin-top:5px;
 }
 
-#getRules {
+#getRules,
+#scheduleScanning {
 	float: right; 
 	margin-right: 10px;
+	background-color: #FFB400;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    float: right;
+    margin-right: 10px;
+    padding: 10px; 
+    font-weight: bold; 
 }

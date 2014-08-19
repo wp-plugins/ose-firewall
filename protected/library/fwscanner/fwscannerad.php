@@ -116,7 +116,8 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		foreach ($requestArray as $arrayKey => $request)
 		{
 			foreach ($request as $key=>$value)
-			{ 	if (is_array($value))
+			{ 	
+				if (is_array($value))
 				{
 					foreach ($value as $key2 => $value2)
 					{
@@ -127,7 +128,6 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 				{
 					$requestArray[$arrayKey][$key]=IDS_Converter::runAll($value);
 				}
-				
 			}
 		}
 		return $requestArray;

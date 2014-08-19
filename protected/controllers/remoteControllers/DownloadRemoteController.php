@@ -90,5 +90,27 @@ class DownloadRemoteController extends BaseRemoteController{
 			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("ADVRULESET_INSTALL_FAILED"), false);
 		}
 	}
+	public function actionVsscan ($step) {
+		$result = $this->model->vsscan($step);
+		if ($result == true)
+		{
+			// Update vsscanning date; 
+			//$this->model->updateVersion ($type, $version); 
+			$receiveEmail = $this->model->getEmailConfig (); 
+			$return = array(
+				'success' => true,
+				'status' => 'SUCCESS',
+				'result' => oLang::_get("VSSCANNING_SUCCESS"),
+				'cont' => false,
+				'receiveEmail' => (int)$receiveEmail 
+			);
+			$tmp = oseJSON::encode($return);
+			print_r($tmp); exit;
+		}
+		else
+		{
+			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("VSSCANNING_FAILED"), false);
+		}
+	}
 }
 ?>
