@@ -138,6 +138,28 @@ class oseFirewallAudit
 			}
 		}
 	}
+	public function isVSScanningReady($print = true)
+	{
+		$oseFirewallStat = new oseFirewallStatPro();
+		$ready = $oseFirewallStat->isGAuthenticatorReady ();
+		$action = ($print == true) ? '<div class = "warning-buttons"><a class="button-primary" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Fix It</a></div>' : '';
+		if ($ready == true)
+		{
+			$return = '<div class ="ready">'.oLang::_get('GAUTHENTICATOR_READY')."</div>";
+		}
+		else
+		{
+			$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">'.oLang::_get('GAUTHENTICATOR_NOTUSED')."</div> ".$action.' </div>';
+		}
+		if ($print == true)
+		{
+			echo $return;
+		}
+		else
+		{
+			return $return;
+		}
+	}
 	public function isWPUpToDate($print = true)
 	{
 		if (OSE_CMS == 'joomla')
@@ -714,5 +736,36 @@ class oseFirewallAudit
 				break;
 			}
 		}
+	}
+	public function checkSysPlugin($print = true)
+	{
+		$return = '';
+		$oseFirewallStat = new oseFirewallStatPro();
+		$plugin = $this->isPluginEnabled ('plugin', 'centrora', 'system');
+		$action = ($print == true) ? '<div class = "warning-buttons"><a class = "button-primary" href ="index.php?option=com_plugins&task=plugin.edit&extension_id='.$plugin->extension_id.'" target="_blank">Fix It</a></div>' : '';
+		if (!$plugin->enabled)
+		{
+			$this->warning[] = $return = '<div class ="warning"> <div class = "warning-content">'.oLang::_get('SYSTEM_PLUGIN_DISABLED')." </div>".$action." </div>";
+		}
+		else
+		{
+			$return = '<div class ="ready">'.oLang::_get('SYSTEM_PLUGIN_READY').' </div>';
+		}
+		if ($print == true)
+		{
+			echo $return;
+		}
+		else
+		{
+			return $return;
+		}
+	}
+	private function isPluginEnabled ($type, $element, $folder) {
+		$db = oseFirewall::getDBO (); 
+		$query = "SELECT `extension_id`, `enabled` FROM `#__extensions` WHERE `type` = ".$db->QuoteValue($type)." AND `element` = ".$db->QuoteValue($element)." AND `folder` = ".$db->QuoteValue($folder);
+		$db->setQuery($query);
+		$result = $db->loadObject();
+		$db->closeDBO();
+		return ($result);
 	}
 }

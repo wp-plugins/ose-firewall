@@ -504,6 +504,7 @@ class oseFirewallScanner {
 					'com_ose_antihacker',
 					'com_ose_antivirus',
 					'com_ose_firewall',
+					'com_akeeba',
 					'com_civicrm'
 					)))) {
 						return false;

@@ -212,6 +212,7 @@ class oseDownloader
 		$content['remoteChecking'] = true;
 		$content['task'] = $task;
 		$content['admin_email'] = $users->getUserEmail();
+		$content['option'] = $_POST['option'];
 		if (class_exists('SConfig'))
 		{
 			$content['cms'] = 'st';
@@ -270,6 +271,11 @@ class oseDownloader
 	public function updateVSPattern ($patternType) {
 		$content = $this->getRemoteConnectionContent('updateVSPattern');
 		$content['patternType'] = $patternType; 
+		$response = $this->sendRequest($content);
+		return $response;
+	}
+	public function checkScheduleScanning () {
+		$content = $this->getRemoteConnectionContent('scheduleScanning');
 		$response = $this->sendRequest($content);
 		return $response;
 	}

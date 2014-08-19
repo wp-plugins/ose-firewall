@@ -327,7 +327,7 @@ class virusScanner {
 		ini_set('display_errors', 'on');
 		$this->vsInfo = $this->getVsFiles();
 		while (count($this->vsInfo['fileset'])>0)
-		{  
+		{
 			$since_start = $this->timeDifference($start_time, time());
 			if ($since_start>=2)
 			{
@@ -339,8 +339,11 @@ class virusScanner {
 				break;
 			}
 			$_SESSION['last_scanned'] = array_pop($this->vsInfo['fileset']);
-			$this->vsInfo['completed'] ++; 
+			$this->vsInfo['completed'] ++;
 			if(oseFile::exists($_SESSION['last_scanned'] )==false) {
+				continue;
+			}
+			if($this->ignoredFiles($_SESSION['last_scanned'] )==true) {
 				continue;
 			}
 			if (filesize($_SESSION['last_scanned'] )>2048000)
@@ -353,6 +356,16 @@ class virusScanner {
 			}
 		}
 		return true; 
+	}
+	private function ignoredFiles ($file) {
+		if (preg_match('/mootree\.gif/ims', $file))
+		{
+			return true;
+		}
+		else
+		{
+			return false; 
+		}
 	}
 	private function clearFileFromArray ($index) {
 		unset($_SESSION['oseFileArray'][$index]);
@@ -625,7 +638,6 @@ class virusScanner {
 				array ('%d','%s', '%s', '%s'));
 		return $this->db->insert_id;
 	}
-	
 	private function updateScanninglog($id, $status)
 	{
 		$result = $this->db->query(
@@ -642,7 +654,6 @@ class virusScanner {
 		$result = $this->db->query(); 
 		return $result;
 	}
-	
 	private function saveVsFiles($fileset, $completed)
 	{
 		$fileContentArray = array("completed" => $completed,
@@ -652,12 +663,62 @@ class virusScanner {
 		$result = oseFile::write($filePath, $fileContent);
 		return $result;
 	}
-	
 	private function getVsFiles()
 	{
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."path.json";
 		$fileContent = oseFile::read($filePath);
 		return unserialize($fileContent);
+	}
+	public function scheduleScanning ($step) {
+		if ($step == 0) 
+		{
+			return;
+		}
+		$model = new ConfigurationModel();
+		$config = $model->getConfiguration('scan');
+		if ($config['data']['scheduleScan'] == false)
+		{
+			oseFirewall::loadRequest();
+			$key = oRequest::getVar('key', NULL);
+			if (!empty($key))
+			{
+				$result = $this->vsscan($step);
+				$url = $this->getCrawbackURL ($key, $result->completed);
+				$this->sendRequestVS($url);
+			}
+			exit;	
+		}
+		else
+		{
+			return; 
+		}
+	}
+	private function getCrawbackURL ($key, $completed) {
+		if ($completed==1)
+		{
+			return "http://www.centrora.com/?runVSScanQueue=1&key=".$key."&completed=".$completed;
+		} 
+		else 
+		{
+			return "http://www.centrora.com/?runVSScanQueue=1&key=".$key."&completed=0";
+		}
+	}
+	private function sendRequestVS($url)
+	{
+		// Get cURL resource
+		$curl = curl_init();
+		// Set some options - we are passing in a useragent too here
+		curl_setopt_array($curl, array(
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_URL => $url,
+			CURLOPT_USERAGENT => 'Centrora Security Download Request Agent',
+			CURLOPT_TIMEOUT => 5
+		));
+		// Send the request & save response to $resp
+		$resp = curl_exec($curl);
+		// Close request to clear up some resources
+		curl_close($curl);
+		return $resp;
 	}
 }
 ?>

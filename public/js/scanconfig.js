@@ -20,7 +20,7 @@ oseConfScan.Form = new Ext.FormPanel({
         bodyStyle:'padding:10px',
         autoScroll: false,
         width: '100%',
-        height: 830,
+        height: 860,
         renderTo: 'ConfigScan',
         items: [
         		oseGetDisplayField(O_ANTI_HACKING_SCANNING_OPTIONS),
@@ -65,7 +65,8 @@ oseConfScan.Form = new Ext.FormPanel({
 				    labelWidth: 450
 				},
 				oseGetNormalTextField('slient_max_att', SILENT_MODE_BLOCK_MAX_ATTEMPTS, 450, 600),
-				oseGetCombo('receiveEmail', O_RECEIVE_EMAIL, oseConfScan.Option, 600, 450, 100, 1)
+				oseGetCombo('receiveEmail', O_RECEIVE_EMAIL, oseConfScan.Option, 600, 450, 100, 1),
+				oseGetCombo('scheduleScan', O_SCHEDULE_VSSCAN, oseConfScan.Option, 600, 450, 100, 0)
 		],
         buttons: [{
             text: 'Save',

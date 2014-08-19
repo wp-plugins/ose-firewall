@@ -40,8 +40,13 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
    ?>
    </div>
    <button id ="getRules" class ="x-btn" onClick="vsPatternUpdate()">
-   <?php 
-   		oLang::_('RETRIEVE_UPDATED_PATTERNS');
-   ?>
+	   <?php 
+	   		oLang::_('RETRIEVE_UPDATED_PATTERNS');
+	   ?>
    </button>
+   <button id ="scheduleScanning" class ="x-btn" onClick="scheduleScanning()">
+	    <?php 
+	      	oLang::_('SCHEDULE_SCANNING');
+	    ?>
+   </button>   
 </div>

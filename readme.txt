@@ -99,6 +99,10 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
+= 3.6.5 =
+* Enhancement: Improve the IP Management Grid so the title and IPs can be copied 
+* Enhancement: Added Schedule Virus Scanning function for Premium service users
+
 = 3.6.4 =
 * Fixed: Fixed virus version not showing correctl issue in the Virus Scanning section
 
