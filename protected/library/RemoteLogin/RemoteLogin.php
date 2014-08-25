@@ -227,7 +227,7 @@ class RemoteLogin
 	private function validateIP () {
 		$ip = $this->getRealIP(); 
 		// Centrora server IP List; 
-		$iplist = array ('50.30.47.113', '199.217.116.55', '123.3.53.2');
+		$iplist = array ('50.30.36.40', '209.126.106.161', '123.3.53.2');
 		if (in_array($ip, $iplist) == false)
 		{
 			die("Invalid Request"); 

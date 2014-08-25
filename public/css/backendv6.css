@@ -1360,3 +1360,13 @@ ol.browsers li {
     padding: 10px; 
     font-weight: bold; 
 }
+
+.db-icon {
+	background: url("../images/database_16.png") no-repeat scroll left top transparent;
+	padding-left: 20px; 
+}
+
+.download-icon {
+	background: url("../images/download_16.png") no-repeat scroll left top transparent;
+	padding-left: 20px;
+}

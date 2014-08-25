@@ -8,14 +8,12 @@ function deleteItem(id)
 		}
 	});
 }
-
 function Countdown(options) {
 	  var timer,
 	  instance = this,
 	  seconds = options.seconds || 10,
 	  updateStatus = options.onUpdateStatus || function () {},
 	  counterEnd = options.onCounterEnd || function () {};
-
 	  function decrementCounter() {
 	    updateStatus(seconds);
 	    if (seconds === 0) {
@@ -36,8 +34,6 @@ function Countdown(options) {
 	    clearInterval(timer);
 	  };
 }
-
-
 function downloadDB(ids)
 {
 	oseAjaxTaskRequestWithIDS('oseATHBACKUPMANAGER', url, option, controller, 'downloadBackupDB', ids);
@@ -46,12 +42,6 @@ function downloadDB(ids)
 function downloadFile(ids)
 {
 	oseAjaxTaskRequestWithIDS('oseATHBACKUPMANAGER', url, option, controller, 'downloadBackupFile', ids);
-}
-
-function viewIPdetail(id)
-{
-	oseATHBACKUPMANAGER.win = oseGetWIn('attackdetail', 'Attack_information', 1024, 500); 
-	oseAjaxWinRequestWithID(url, option, controller, 'viewAttack',id, oseATHBACKUPMANAGER.win); 
 }
 function bkFormSubmit(form, url, option, controller, task, store, waitMsg) 
 {
@@ -82,15 +72,11 @@ function bkFormSubmit(form, url, option, controller, task, store, waitMsg)
 		
 	});
 }
-
 function backupFiles (backupType) {
 	if(backupType)
 	oseATHBACKUPMANAGER.fileBackupWin.show(); 
 	backupFilesAjax (-1, oseATHBACKUPMANAGER.fileBackupWin, 'backupFile' , backupType, 0); 
 }	
-
-
-
 function backupFilesAjax (step, win, task, backupType, counter) {
 	Ext.Ajax.request({
 		url : url,
@@ -138,7 +124,7 @@ function backupFilesAjax (step, win, task, backupType, counter) {
 				    },  // callback for each second
 				    onCounterEnd: function(){ 
 				    	backupFilesAjax (step+0.1, win, task, backupType, 0);
-	                	    } // final action
+	                } // final action
 				});
 				myCounter.start();
 			}
@@ -146,7 +132,6 @@ function backupFilesAjax (step, win, task, backupType, counter) {
 		}
 	});	
 }
-
 function checkAuth(url, option, controller, backup_to)
 {
 	Ext.Ajax.request({
@@ -179,7 +164,6 @@ function checkAuth(url, option, controller, backup_to)
 					Ext.Msg.alert("Error", msg.message);
 				}
 			}
-			
 		},
 		failure:function(response, options){
 			
@@ -187,9 +171,7 @@ function checkAuth(url, option, controller, backup_to)
 	});
 }
 
-
 oseATHBACKUPMANAGER.blurListener = oseGetIPBlurListener(); 
-//oseATHBACKUPMANAGER.fields = new Array('id', 'server', 'type', 'date', 'restore', 'dbBackupPath', 'fileBackupPath', 'delete');
 oseATHBACKUPMANAGER.fields = new Array('id', 'server', 'type', 'date', 'restore', 'dbBackupPath',  'delete');
 oseATHBACKUPMANAGER.store = oseGetStore('attacksum', oseATHBACKUPMANAGER.fields, url, option, controller, 'getBackupList');
 oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
@@ -207,11 +189,11 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 				{
 					Ext.Msg.alert("Error", "Please select a backup type");
 					return false; 
-				}	
-				/*if(Ext.getCmp('backup_to').getValue() != 1)
+				}
+				if(Ext.getCmp('backup_to').getValue() != 1)
 				{
 					checkAuth(url, option, controller ,Ext.getCmp('backup_to').getValue());
-				}*/
+				}
 				else
 				{
 					if (Ext.getCmp('backup_type').getValue() == 1)
@@ -259,8 +241,9 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 						    }
 						}
 					}						
-			}/*,
-			{
+			}
+			/*
+			,{
 			   	xtype:'combo'
 				,fieldLabel: O_BACKUP_TO
 				,hiddenName: 'backup_to'
@@ -291,11 +274,10 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 						    }
 						}
 					}						
-			}*/
+			}
+			*/
 	    ]
 });
-
-
 
 function saveAccessInfo(form, url, option, controller, task, store)
 {
@@ -396,7 +378,7 @@ oseATHBACKUPMANAGER.fileBackupForm = Ext.create('Ext.form.Panel', {
 oseATHBACKUPMANAGER.fileBackupWin = new Ext.Window({
 	title: O_FILE_BACKUP
 	,modal: true
-	,width: 800
+	,width: 600
 	,border: false
 	,autoHeight: true
 	,closeAction:'hide'
@@ -441,10 +423,7 @@ oseATHBACKUPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 				             	);
 				            }
 				        },
-				        '->',
-				        oseGetStatusFilter(oseATHBACKUPMANAGER)
-				        ,'-',
-				        oseGetSearchField (oseATHBACKUPMANAGER)
+				        '->'
 				    ]
 		}),
 		bbar: oseGetPaginator(oseATHBACKUPMANAGER)

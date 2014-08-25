@@ -42,15 +42,19 @@ class oseDB2Joomla extends oseDB2
 	}
 	public function getConnection()
 	{
-		$config = oseJoomla::getConfig();
-		$host = explode(':', $config->host);
-		if (!empty($host[1]))
+		global $connection;
+		if (empty($connection))
 		{
-			$connection = new CDbConnection('mysql:host='.$host[0].';port='.$host[1].';dbname='.$config->db, $config->user, $config->password);
-		}
-		else
-		{
-			$connection = new CDbConnection('mysql:host='.$host[0].';dbname='.$config->db, $config->user, $config->password);
+			$config = oseJoomla::getConfig();
+			$host = explode(':', $config->host);
+			if (!empty($host[1]))
+			{
+				$connection = new CDbConnection('mysql:host='.$host[0].';port='.$host[1].';dbname='.$config->db, $config->user, $config->password);
+			}
+			else
+			{
+				$connection = new CDbConnection('mysql:host='.$host[0].';dbname='.$config->db, $config->user, $config->password);
+			}
 		}
 		return $connection;
 	}

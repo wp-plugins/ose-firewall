@@ -116,7 +116,8 @@ class VsscanModel extends BaseModel {
 		$result = $oseFirewallStat->getAdvancePatternsVersion();
 		if (!empty($result['version']))
 		{
-			return $result['version'];
+			$type = ($result['type'] =='bsav')?" (Basic Version) ":" (Advance Version) ";
+			return $result['version'].$type;
 		}
 		else
 		{

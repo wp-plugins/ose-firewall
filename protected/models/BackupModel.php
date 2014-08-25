@@ -67,19 +67,16 @@ class BackupModel extends BaseModel {
 		}
 		return $return; 
 	}
-	
 	public function dbReady($backup_to)
 	{
 		$backupManager = new oseBackupManager($this->db);
 		$dbReady = $backupManager->drobox_dbReady($this->backUpToArray[$backup_to]);
 		return $dbReady;
 	}
-	
 	public function backupDB($backup_type , $backup_to = 1)
 	{
 		$backupManager = new oseBackupManager($this->db, $backup_type);
 		$backupResult = $backupManager->backupDB(); 
-		
 		$result = null;
 		if($backupResult == false)
 		{	
@@ -88,7 +85,6 @@ class BackupModel extends BaseModel {
 		else if($backupResult == true && $backup_type != 3)
 		{
 			$InsertDBResult = $backupManager->insertbkDB();
-			//$InsertDBResult = $backupManager->insertbkDB($this->backUpToArray[$backup_to]);
 			$result = $this->assembleArray(true, 'SUCCESS', DB_BACKUP_SUCCESS, $continue = false, $id = null);
 		}
 		else
@@ -96,24 +92,7 @@ class BackupModel extends BaseModel {
 			$result = $this->assembleArray (true, 'SUCCESS', DB_BACKUP_SUCCESS, $continue = true, $id = null);
 		} 
 		oseAjax::returnJSON($result);
-		/*$result = null;
-		if($backupResult == false)
-		{	
-			$result = $this->assembleArray (false, 'ERROR', DB_BACKUP_FAILED_INCORRECT_PERMISSIONS, $continue = false, $id = null);
-		}
-		else if($backupResult == true && $backup_type != 3)
-		{
-			$InsertDBResult = $backupManager->insertbkDB();
-			$result = $this->assembleArray(true, 'SUCCESS', DB_BACKUP_SUCCESS, $continue = false, $id = null);
-		}
-		else
-		{
-			$InsertDBResult = $backupManager->insertbkDB();
-			$result = $this->assembleArray (true, 'SUCCESS', DB_BACKUP_SUCCESS, $continue = true, $id = null);
-		} 
-		oseAjax::returnJSON($result);*/
 	}
-	
 	private function assembleArray($result, $status, $msg, $continue, $id)
 	{
 		$return = array(
@@ -125,7 +104,6 @@ class BackupModel extends BaseModel {
 		);
 		return $return;
 	}
-	
 	public function removeBackUp($ids)
 	{
 		$backupManager = new oseBackupManager($this->db, null);
@@ -139,14 +117,12 @@ class BackupModel extends BaseModel {
 		}
 		return true;
 	}
-	
 	public function downloadBackupDB($id){
 		$backupManager = new oseBackupManager($this->db);
 		$result = $backupManager -> getBackupDBByID($id);
 		$file = $result-> dbBackupPath .".gz";
 		$backupManager->downloadBackupFiles($file);
 	}
-	
 	public function downloadBackupFile($id){
 		$backupManager = new oseBackupManager($this->db);
 		$result = $backupManager -> getBackupDBByID($id);
@@ -154,14 +130,11 @@ class BackupModel extends BaseModel {
 		$backupManager->downloadBackupFiles($file);
 	
 	}
-	
 	public function getBackupRecordByID($id){
 		$backupManager = new oseBackupManager($this->db);
 		$result = $backupManager -> getBackupDBByID($id);
 		return $result;
 	}
-	
-	
 	public function backupFiles($backup_type, $backup_to) 
 	{
 		oseFirewall::callLibClass('backup','oseBackup'); 
@@ -178,10 +151,8 @@ class BackupModel extends BaseModel {
 				$result = $this->assembleArray (false, 'ERROR', DB_BACKUP_FAILED_INCORRECT_PERMISSIONS, $continue = false, $id = null);
 			}
 		}
-		
 		oseAjax::returnJSON($result);
 	}
-	
 	public function changeACLStatus($aclids, $status)
 	{
 		$oseFirewallStat = new oseFirewallStat();
@@ -195,8 +166,6 @@ class BackupModel extends BaseModel {
 		}
 		return true; 
 	}
-	
-	
 	public function getAttackDetail($aclid)
 	{
 		$oseFirewallStat = new oseFirewallStat();
@@ -209,7 +178,6 @@ class BackupModel extends BaseModel {
 		$result = $backupManager -> dropbox_SaveAppAccess($access_username, $access_password);
 		return $result;
 	}
-	
 	public function dropbox_AuthorisedByUser()
 	{
 		$backupManager = new oseBackupManager($this->db);
