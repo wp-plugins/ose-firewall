@@ -110,7 +110,7 @@ class oseFirewallStatBase
 	public function getAdvancePatternsVersion()
 	{
 		$db = oseFirewall::getDBO();
-		$query = "SELECT number, type FROM `#__osefirewall_versions` WHERE `type` = 'avs'";
+		$query = "SELECT number, type FROM `#__osefirewall_versions` WHERE (`type` = 'avs' OR `type` = 'bsav') ORDER BY `number` DESC LIMIT 1";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		$db->closeDBO ();

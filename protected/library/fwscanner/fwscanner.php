@@ -563,7 +563,7 @@ class oseFirewallScanner {
 		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail: '';
 		$customBanPage = (!empty ($this->customBanpage)) ? $this->customBanpage: 'Banned';
 		$banbody = $this->getBanPageBody($customBanPage, $adminEmail);
-		header('HTTP/1.1 403 Forbidden');
+		header('HTTP/1.1 200 OK');
 		$banbody  = "<html>
 						<head>
 							<title>403 Forbidden</title>

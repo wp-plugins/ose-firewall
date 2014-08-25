@@ -67,6 +67,7 @@ class oseFirewall extends oseFirewallBase {
 			$db->setQuery($query);
 			$db->query();
 		}
+		$db->closeDBO(); 
 		$extension = 'com_ose_firewall';
 		$view = JRequest :: getVar('view');
 		$menu = '<div class="menu-search">';

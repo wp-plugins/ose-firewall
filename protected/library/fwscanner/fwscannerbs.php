@@ -46,7 +46,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 			$content = oseJSON::encode ( $scanResult ['detcontent_content'] );
 			$attacktypeID = $this->getAttackTypeID ( $scanResult ['rule_id'] );
 			$this->addDetContent ( $attacktypeID, $content, $scanResult ['rule_id'], $scanResult ['keyname']);
-			$this->controlAttack ();
+			$this->controlAttack (0);
 		}
 		unset ( $scanResult );
 	}

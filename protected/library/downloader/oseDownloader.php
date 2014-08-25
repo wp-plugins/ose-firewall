@@ -138,7 +138,7 @@ class oseDownloader
 	}
 	public function updateVersion ($type, $version) {
 		$db = oseFirewall::getDBO ();
-		$query = "SELECT * FROM `#__osefirewall_versions` WHERE `type` = ". $db->QuoteValue($type);
+		$query = "SELECT * FROM `#__osefirewall_versions` WHERE `type` = ". $db->QuoteValue(substr($type, 0, 4));
 		$db->setQuery($query); 
 		$result = $db->loadObject();
 		if (empty($result))

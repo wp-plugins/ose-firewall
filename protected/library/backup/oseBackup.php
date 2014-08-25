@@ -363,13 +363,11 @@ class oseBackupManager
 		{
 			if ($results[$i]->dbBackupPath != null)
 			{
-				$results[$i]->dbBackupPath = "<a href = '".DB_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."&centnounce=".urlencode(oseFirewall::loadNounce())."'>Download<i class='fa fa-cloud-download
-				'></i></a>";
+				$results[$i]->dbBackupPath = "<div class='download-icon'><a href = '".DB_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."&centnounce=".urlencode(oseFirewall::loadNounce())."'>Download<i class='fa fa-cloud-download'></i></a></div>";
 			}
 			if ($results[$i]->fileBackupPath != null)
 			{
-				$results[$i]->fileBackupPath = "<a href = '".FILE_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."&centnounce=".urlencode(oseFirewall::loadNounce())."'>Download<i class='fa fa-cloud-download
-				'></i></a>";
+				$results[$i]->fileBackupPath = "<div class='download-icon'><a href = '".FILE_BACKUP_DOWNLOAD_URL."".urlencode($results[$i]->id)."&centnounce=".urlencode(oseFirewall::loadNounce())."'>Download<i class='fa fa-cloud-download'></i></a></div>";
 			}
 			if ($results[$i]->type != null)
 			{
@@ -387,8 +385,8 @@ class oseBackupManager
 		case 1:
 			return "File ONLY";
 			break;
-		case 2:
-			return "Database ONLY";
+		case 0:
+			return "<div class='db-icon'>Database</div>";
 			break;
 		case 3:
 			return "File & Database";
@@ -400,7 +398,7 @@ class oseBackupManager
 		switch ($type)
 		{
 		case 1:
-			return "Local";
+			return "Local Backup";
 			break;
 		case 2:
 			return "Dropbox";
@@ -457,7 +455,7 @@ class oseBackupManager
 	private function backupDropBox()
 	{
 		//TODO:
-		}
+	}
 	private function backupDatabase()
 	{
 		$backupFile = $this->setDBFilename ();
@@ -722,7 +720,7 @@ class oseBackupManager
 		$this->setFilesFilename();
 		$fileName = $this->getBackUpPath($this->pathFile);
 		$fileName = $fileName['path'];
-		$this->zipDir("/home/josh/c++/eclipse-cpp-helios/about_files", $fileName);
+		$this->zipDir(OSE_ABSPATH, $fileName);
 		return true;
 		/*else
 		 {

@@ -54,9 +54,9 @@ class BackupController extends BaseController
 		$backup_to = oRequest::getInt('backup_to', 1);
 		switch ($backup_type)
 		{
-		case 2:
-		case 3:
-			$result = $this->model ->backupDB($backup_type, $backup_to);
+			case 2:
+			case 3:
+			$result = $this->model->backupDB($backup_type, $backup_to);
 			break;
 		}
 		if ($result != false)
