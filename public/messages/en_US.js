@@ -181,3 +181,7 @@ var O_DISABLE_DISPLAY_ERRORS = "Disable PHP display_errors directive";
 var O_DISABLE_PHP_FUNCTIONS = "Disable PHP system functions";
 var O_UPDATE_PATTERN = "Update virus patterns";
 var O_SCHEDULE_VSSCAN = "Schedule Virus Scanning"
+var O_IMPORT_IP_CSV = "Import IP from CSV";
+var O_EXPORT_IP_CSV = "Export IP to CSV";
+var O_EXPORT_IP_CONFIRM = "Export IP to CSV confirmation";
+var O_EXPORT_IP_CONFIRM_DESC = "Please confirm that you would like to export all IP from the database";

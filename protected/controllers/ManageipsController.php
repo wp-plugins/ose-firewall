@@ -190,5 +190,39 @@ class ManageipsController extends BaseController {
 		$score = $db->loadResult(); 
 		return ($score['score'])?(int)$score['score']:false;   
 	}
+	public function actionImportcsv () {
+		$file = $_FILES['csvfile'];
+		if ($file['type']!='text/csv')
+		{
+			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("Please upload CSV files, file types apart from the CSV is not accepted."), false);
+		}
+		else
+		{
+			$result = $this->model->importcsv($file);
+			if ($result==true)
+			{
+				oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get("The IPs were imported successfully"), false);
+			} 
+			else
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("The IPs were imported unsuccessfully."), false);
+			}
+		}
+	}
+	public function actionExportcsv () {
+		$result = $this->model->exportcsv();
+	}
+	public function actionDownloadcsv () {
+		oseFirewall::loadRequest ();
+		$filename = oRequest::getVar ('filename', null);
+		if (empty($filename))
+		{
+			oseAjax::aJaxReturn(false, 'ERROR', 'Invalid file name', false);
+		}
+		else
+		{
+			$result = $this->model->downloadcsv($filename);	
+		}
+	}
 }
 ?>	

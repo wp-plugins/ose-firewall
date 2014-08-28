@@ -140,10 +140,103 @@ class ManageipsModel extends BaseModel
 		$oseFirewallStat = new oseFirewallStat();
 		return $oseFirewallStat->getAttackDetail($aclid);
 	}
-	
 	public function getStatistics()
 	{
 		$oseFirewallStat = new oseFirewallStat();
 		return $oseFirewallStat->getACLIPStatistic();
 	}
-}
+	public function importcsv ($file) {
+		$row = 1;
+		$result = true; 
+		if (($handle = fopen($file['tmp_name'], "r")) !== FALSE) {
+		    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+		    	if ($row == 1)
+		    	{
+		    		if ($this->array_equal($data, $this->headerArray(), true)==false)
+		    		{
+		    			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("The CSV file format is incorrect. Please follow the instruction to create the CSV file."), false);	
+		    		}
+		    	}
+		    	else 
+		    	{
+		    		$result = $this->addACLRule($data[0], $data[1], $data[2], $data[3], $data[4]);
+		    	}
+		        $row++;
+		    }
+		    fclose($handle);
+		}
+		return $result; 
+	}
+	private function headerArray() {
+		return array ('name','ip_start','ip_end','ip_type','ip_status');
+	}
+	private function array_equal($a, $b, $strict=false) {
+	    if (count($a) !== count($b)) {
+	        return false;
+	    }
+	    sort($a);
+	    sort($b);
+	    return ($strict && $a === $b) || $a == $b;
+	}
+	public function exportcsv () {
+		oseFirewall::loadFiles();
+		$time= date("Y-m-d");
+		$filename = "ip-export-".$time.".csv";
+		$filePath= OSE_FWDATA.ODS."tmp".ODS.$filename;
+		$fileContent = $this->getOutputData ();
+		$result = oseFile::write($filePath, $fileContent);
+		$url = "<div class='download-icon'><a href = '".EXPORT_DOWNLOAD_URL.urlencode($filename)."&centnounce=".urlencode(oseFirewall::loadNounce())."' target='_blank' >Download File</a></div>";
+		$return = array(
+			'success' => (boolean) true,
+			'status' => 'SUCCESS',
+			'result' => 'The CSV File is ready, here is the download link: <br/>'.$url
+		);  
+		$return = oseJSON::encode($return);
+		print_r($return);exit;
+	}
+	private function getOutputData () {
+		$output = implode(",", $this->headerArray())."\n";
+		$oseFirewallStat = new oseFirewallStat();
+		$results = $oseFirewallStat->getACLIPMap();
+		foreach ($results as $data)
+		{
+			$output .= $this->getTmpOutput ($data)."\n";
+		}
+		return $output;
+	}
+	private function getTmpOutput ($data) {
+		$tmp = array ();
+		$tmp[] = $data->name;
+		$tmp[] = $data->ip32_start; 
+		$tmp[] = $data->ip32_end;
+		$tmp[] = $data->iptype;
+		$tmp[] = $data->statusraw;
+		$return = implode(",", $tmp);
+		return $return;
+	}
+	public function downloadcsv ($filename) {
+		oseFirewall::loadFiles();
+		$oseFile = new oseFile();
+		$path = OSE_FWDATA.ODS."tmp".ODS.$filename; 
+		if ($oseFile::exists($path) == false)
+		{
+			print("<SCRIPT type='text/javascript'>");
+			print("alert('The file does not exist or has been deleted, please re-generate the file.');");
+			print("window.location = '".OSE_WPURL."';");
+			print("</SCRIPT>");
+		}
+		else
+		{
+			ob_clean();
+			$content = $oseFile::read($path);
+			$oseFile::delete($path);
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Content-Length: ".strlen($content));
+			// Output to browser with appropriate mime type, you choose ;)
+			header("Content-type: text/csv");
+			header("Content-Disposition: attachment; filename=$filename");
+			print_r($content);
+			exit;
+		}
+	}
+ }

@@ -287,11 +287,19 @@ class oseFirewallStatBase
 		{
 			$order = "DESC";
 		}
+		if (!empty($limit) && !empty($start))
+		{
+			$limit_statement = " LIMIT ".$start.", ".$limit; 
+		}
+		else
+		{
+			$limit_statement = ""; 
+		}
 		$where = $db->implodeWhere($where);
 		$attrList = array("`acl`.`id` AS `id`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`",
 			"`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`ip`.`ip32_end` AS `ip32_end`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
 		$sql = convertViews::convertAclipmap($attrList);
-		$query = $sql.$where.$sortby." ".$order." LIMIT ".$start.", ".$limit;
+		$query = $sql.$where.$sortby." ".$order.$limit_statement;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		$db->closeDBO ();
@@ -314,6 +322,7 @@ class oseFirewallStatBase
 				//$results[$i]->host = $this->updateIPHost($results[$i]->id, $results[$i]->ip32_start);
 			}
 			$results[$i]->view = $this->getViewIcon($results[$i]->id);
+			$results[$i]->statusraw = $results[$i]->status;
 			$results[$i]->status = $this->getStatusIcon($results[$i]->id, $results[$i]->status);
 			$i++;
 		}

@@ -193,7 +193,42 @@ oseATHCOUNTRYBLOCKER.changeCountryForm = Ext.create('Ext.form.Panel', {
     ]
 });
 
+oseATHCOUNTRYBLOCKER.sortOption = new Array(
+		   new Array('id', 'ID'), 
+		   new Array('name', 'IP'),
+		   new Array('datetime', 'Date'),
+		   new Array('score', 'Score'),
+		   new Array('country_code', 'Country'),
+		   new Array('visits', 'Visits')
+);
+oseATHCOUNTRYBLOCKER.orderOption = new Array(
+		   new Array('asc', 'Ascending'), 
+		   new Array('desc', 'Descending')
+);
 
+oseATHCOUNTRYBLOCKER.comboSortby = oseGetCombo('sortby', 'Sort By', oseATHCOUNTRYBLOCKER.sortOption, 150, 50, 100, 'datetime');
+oseATHCOUNTRYBLOCKER.comboOrder = oseGetCombo('order', '', oseATHCOUNTRYBLOCKER.orderOption, 100, 50, 100, 'desc');
+oseATHCOUNTRYBLOCKER.pageSize = 
+{   
+		xtype:'numberfield',
+        fieldLabel: 'Items / Page',
+        name: 'pageSize',
+        id: 'pageSize',
+        labelWidth: 80,
+        width: 150,
+        value: 15
+}
+
+function reloadStore () {
+	oseATHCOUNTRYBLOCKER.store.pageSize = Ext.getCmp('pageSize').value;
+	oseATHCOUNTRYBLOCKER.store.load({
+		   params:{
+				sortby:Ext.getCmp('sortby').value,
+				order:Ext.getCmp('order').value,
+				limit:Ext.getCmp('pageSize').value
+		   }
+	});
+}
 
 oseATHCOUNTRYBLOCKER.fields = new Array('country_code', 'id', 'name', 'status');
 oseATHCOUNTRYBLOCKER.store = oseGetStore('attacksum', oseATHCOUNTRYBLOCKER.fields, url, option, controller, 'getCountryList');
@@ -297,5 +332,32 @@ oseATHCOUNTRYBLOCKER.panel = Ext.create('Ext.grid.Panel', {
 				        oseGetSearchField (oseATHCOUNTRYBLOCKER)
 				    ]
 		}),
-		bbar: oseGetPaginator(oseATHCOUNTRYBLOCKER)
+		bbar: ['->',
+		        {
+			        xtype: 'pagingtoolbar',
+			        store: oseATHCOUNTRYBLOCKER.store,
+			        displayInfo: true
+				},
+				oseATHCOUNTRYBLOCKER.comboSortby, 
+				oseATHCOUNTRYBLOCKER.comboOrder,
+				oseATHCOUNTRYBLOCKER.pageSize
+        ]
 });
+
+reloadStore(); 
+
+Ext.getCmp('sortby').on ( 
+	"change", function () {
+		reloadStore();
+	}
+)
+Ext.getCmp('order').on ( 
+	"change", function () {
+		reloadStore();
+	}
+)
+Ext.getCmp('pageSize').on ( 
+	"change", function () {
+		reloadStore();
+	}
+)

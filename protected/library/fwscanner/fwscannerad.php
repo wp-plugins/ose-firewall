@@ -119,10 +119,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			{ 	
 				if (is_array($value))
 				{
-					foreach ($value as $key2 => $value2)
-					{
-						$requestArray[$arrayKey][$key][$key2]=IDS_Converter::runAll($value2);
-					}
+					$requestArray[$arrayKey][$key] = $this-> convertArrayVariables ($requestArray[$arrayKey][$key], $value) ;
 				}
 				else
 				{
@@ -132,7 +129,20 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		}
 		return $requestArray;
 	}
-	
+	private function convertArrayVariables ($originalArray, $requestArray) {
+		foreach ($requestArray as $key => $value)
+		{
+			if (is_array($value))
+			{
+				$originalArray[$key]= $this->convertArrayVariables ($originalArray[$key], $value);
+			}
+			else
+			{
+				$originalArray[$key]=IDS_Converter::runAll($value);
+			}
+		}
+		return $originalArray; 
+	}
 	private function sumImpact($scanResult){
 		$score = 0;
 		foreach ($scanResult as $result){

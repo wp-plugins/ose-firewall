@@ -190,12 +190,14 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 					Ext.Msg.alert("Error", "Please select a backup type");
 					return false; 
 				}
+				/*
 				if(Ext.getCmp('backup_to').getValue() != 1)
 				{
 					checkAuth(url, option, controller ,Ext.getCmp('backup_to').getValue());
 				}
 				else
 				{
+				*/
 					if (Ext.getCmp('backup_type').getValue() == 1)
 					{
 						backupFiles (Ext.getCmp('backup_type').getValue()); 
@@ -204,7 +206,7 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 					{
 						bkFormSubmit(oseATHBACKUPMANAGER.form, url, option, controller, 'backup', oseATHBACKUPMANAGER.store, 'Please wait, this will take a few seconds ...');
 					}	
-				}
+				//}
 			}
 		}
 		]
