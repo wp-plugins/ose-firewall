@@ -149,6 +149,41 @@ oseATHIPMANAGER.cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
     clicksToEdit: 1
 });
 
+oseATHIPMANAGER.importForm = Ext.create('Ext.form.Panel', {
+    bodyPadding: 10,
+    frame: false,
+    items: [
+	      {
+	        xtype: 'filefield',
+	        name: 'csvfile',
+	        fieldLabel: 'CSV File',
+	        labelWidth: 100,
+	        msgTarget: 'side',
+	        allowBlank: false,
+	        anchor: '100%',
+	        buttonText: 'Select CSV File...'
+	      },
+	      {
+	    	  html: '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>'+
+	    	  		'<ul>'+
+	    	  		'<li>title: the title of the rule for this IP / IP Range<li>'+
+	    	  		'<li>ip_start: the start IP in the IP Range<li>'+
+	    	  		'<li>ip_end: the end IP in the IP Range<li>'+
+	    	  		'<li>ip_type: the type of this record, \'0\' refers to one single IP, whereas \'1\' refers to IP ranges<li>'+
+	    	  		'<li>ip_status: the status of the IP, \'1\' for blocked IP, \'3\' for whitelisted IP, \'2\' for monitored IP <li>'+
+	    	  		'</ul>'
+	      }
+    ],
+    buttons: [{
+        text: 'Upload',
+        handler: function() {
+           oseFormSubmit(oseATHIPMANAGER.importForm, url, option, controller, 'importcsv', oseATHIPMANAGER.store, 'Uploading your file...') 
+        }
+    }]
+});
+
+oseATHIPMANAGER.ImportWinButton = oseGetAddWinButton('importIP', O_IMPORT_IP_CSV, O_IMPORT_IP_CSV, oseATHIPMANAGER.importForm, 600);
+
 oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 		id: 'oseATHIPMANAGERPanel',
 		name: 'oseATHIPMANAGERPanel',
@@ -170,7 +205,7 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 	               }
 	               else
 	               {
-	               	  return 'IP'+ O_RANGE;
+	               	  return 'IP '+ O_RANGE;
 	               }
                 }
             }
@@ -241,6 +276,18 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 				            						 O_UPDATE_HOST_CONFIRM_DESC, 
 				             						 oseATHIPMANAGER.panel, oseATHIPMANAGER, url, option, controller,  
 				             						 'updateHost'
+				             	);
+				            }
+				        },
+				        oseATHIPMANAGER.ImportWinButton,
+				        {
+				        	id: 'exportIP',
+				            text: O_EXPORT_IP_CSV,
+				            handler: function(){
+				            	osePanelButtonAction(O_EXPORT_IP_CONFIRM, 
+				            						 O_EXPORT_IP_CONFIRM_DESC, 
+				             						 oseATHIPMANAGER.panel, oseATHIPMANAGER, url, option, controller,  
+				             						 'exportcsv'
 				             	);
 				            }
 				        },

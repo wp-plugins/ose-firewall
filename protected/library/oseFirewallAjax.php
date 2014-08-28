@@ -44,7 +44,7 @@ class oseFirewallAjax extends oseAjax{
 		}
 	}
 	public static function loadActionManageips () {
-		$actions = array ('getACLIPMap', 'addips', 'removeips', 'blacklistIP', 'whitelistIP', 'monitorIP', 'updateHost', 'changeIPStatus', 'viewAttack');
+		$actions = array ('getACLIPMap', 'addips', 'removeips', 'blacklistIP', 'whitelistIP', 'monitorIP', 'updateHost', 'changeIPStatus', 'viewAttack', 'importcsv', 'exportcsv', 'downloadcsv');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionDashboard () {
