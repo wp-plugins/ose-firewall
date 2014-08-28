@@ -287,7 +287,7 @@ class oseFirewallStatBase
 		{
 			$order = "DESC";
 		}
-		if (!empty($limit) && !empty($start))
+		if (!empty($limit))
 		{
 			$limit_statement = " LIMIT ".$start.", ".$limit; 
 		}
