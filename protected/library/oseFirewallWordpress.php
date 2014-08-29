@@ -176,7 +176,16 @@ class oseFirewall extends oseFirewallBase {
 		return wp_create_nonce( 'centnounce' ); 
 	}
 	public static function getScanPath () {
-		return OSE_ABSPATH;
+		oseFirewall::loadRequest ();
+		$scan_path = oRequest::getVar('scan_path', null);
+		if (!empty($scan_path))
+		{
+			return $scan_path; 
+		}
+		else
+		{
+			return OSE_ABSPATH;
+		}	
 	}
 	public static function getDashboardURLs () {
 		$url = array (); 

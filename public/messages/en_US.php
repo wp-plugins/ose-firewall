@@ -343,4 +343,5 @@ define('YOUR_VERSION', 'Your version: ');
 define('SCHEDULE_SCANNING', 'Schedule Virus Scanning');
 define('SYSTEM_PLUGIN_DISABLED', 'The Centrora system plugin is disabled, please enable it and put it to the first position.');
 define('SYSTEM_PLUGIN_READY', 'The Centrora system plugin is ready.');
+define('SCAN_SPECIFIC_FOLDER', 'Scan specific folder');
 ?>

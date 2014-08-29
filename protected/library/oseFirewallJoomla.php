@@ -173,7 +173,16 @@ class oseFirewall extends oseFirewallBase {
 		return 'test'; 
 	}
 	public static function getScanPath () {
-		return JPATH_SITE;
+		oseFirewall::loadRequest ();
+		$scan_path = oRequest::getVar('scan_path', null);
+		if (!empty($scan_path))
+		{
+			return $scan_path; 
+		}
+		else
+		{
+			return JPATH_SITE;
+		}
 	}
 	public static function getDashboardURLs () {
 		$url = array (); 
