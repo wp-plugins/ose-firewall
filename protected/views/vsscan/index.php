@@ -45,10 +45,11 @@ $this ->model->getNounce();
 		?>
         <div id = "scan-window"> 
         	<div id = "scanbuttons">
-				<button id="vsstop" class='obtn obtn-small obtn-blue'><?php oLang::_('STOP_VIRUSSCAN') ?></button>
+				<button id="customscan" class='obtn obtn-small obtn-blue'><?php oLang::_('SCAN_SPECIFIC_FOLDER') ?></button>			
+			    <button id="vsstop" class='obtn obtn-small obtn-blue'><?php oLang::_('STOP_VIRUSSCAN') ?></button>
 			    <button id="vscont" class='obtn obtn-small obtn-blue'><?php oLang::_('O_CONTINUE_SCAN') ?></button>
 			    <button id="vsscan" class='obtn obtn-small obtn-blue'><?php oLang::_('START_NEW_VIRUSSCAN') ?></button>
-	        </div>
+            </div>
 	        <div id='progress-bar'></div> 
 	        
 	        <div id="p4" style="width:300px;"></div>

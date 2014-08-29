@@ -259,3 +259,90 @@ Ext.get('vscont').on('click', function(){
 Ext.getCmp('checkSubWin').on('close', function () {
 	location.reload();
 })
+
+oseATHScanner.customScanForm = Ext.create('Ext.form.Panel', {
+	bodyStyle: 'padding: 10px; padding-left: 20px'
+		,autoScroll: true
+		,autoWidth: true
+	    ,border: false
+	    ,labelAlign: 'left'
+	    ,labelWidth: 150
+	    ,buttons: [
+	    {
+			text: O_START_SCANNING,
+			id: 'startSpecScanning'
+			,handler: function(){
+	    		var customPath = Ext.getCmp('scan_path').value; 
+	    		if (!customPath)
+	    		{
+	    			Ext.Msg.alert('Error', 'Please enter the scanning path');
+	    		}
+	    		else
+	    		{
+	    			oseATHScanner.customScanWin.close();
+	    			oseATHScanner.customScanForm.submit({
+			    		clientValidation: true,
+			    		url : url,
+			    		method: 'post',
+			    		params : {
+			    			option : option,
+			    			controller: controller,
+			    			task: 'vsscan',
+			    			action: 'vsscan',
+			    			step : -2,
+			    			centnounce: Ext.get('centnounce').getValue()
+			    		},
+			    		waitMsg: O_PLEASE_WAIT,
+			    		success: function(response, options){
+			    			var msg  = options.result;
+			    			if (msg.cont == true)
+			    			{
+			    				scanAntivirus (-1, 'vsscan', 0);
+			    			}
+			    		},
+			    		failure:function(response, options){
+			    			var msg  = options.result;
+			    			if (msg.cont == true)
+			    			{
+			    				scanAntivirus (-1, 'vsscan', 0);
+			    			}
+			    			else
+			    			{	
+			    				Ext.Msg.alert('Error', 'Error');
+			    			}	
+			    		} 
+			    	});
+	    		}
+			}
+		},
+		{
+			text: O_CLOSE,
+			id: 'closebutton'
+			,handler: function(){
+				location.reload();  
+			}
+		}
+		]
+	    ,items:[
+	            oseGetNormalTextField('scan_path', O_SCANNED_PATH, 100, 550, null)
+	    ]
+	});
+
+
+oseATHScanner.customScanWin = new Ext.Window({
+	title: O_SCAN_SPECIFIC_FOLDER
+	,id: 'customScanWin'
+	,modal: true
+	,width: 650
+	,border: false
+	,autoHeight: true
+	,closeAction:'hide'
+	,items: [
+	     oseATHScanner.customScanForm
+	]
+	,closable: true
+});	
+
+Ext.get('customscan').on('click', function () {
+	oseATHScanner.customScanWin.show().alignTo(Ext.getBody(),'t-t', [0, 50]);
+})

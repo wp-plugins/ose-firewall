@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 3.9.1
-Stable tag: 3.7.0
+Stable tag: 3.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,7 +46,6 @@ If you need help in using Centrora Security™ plugin, save time by starting you
 * MySQL 5.0 or above
 * WordPress 3.5 or above
 * PHP Data Objects enabled (it is activated by default as of PHP 5.1.0, please contact your hosting to enable it if it is disabled. <a href ="http://www.php.net/manual/en/pdo.installation.php">reference</a> 
-
 
 == Installation ==
 
@@ -90,6 +89,9 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.7.1 =
+* Added: Added Custom Scanning Path in Virus Scanning section
 
 = 3.7.0 =
 * Added: Added Import IP function in the IP Management Section

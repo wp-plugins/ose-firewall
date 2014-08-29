@@ -665,8 +665,12 @@ class oseFirewallAudit
 	}
 	private function isSafeBrowsingStatusUpdated($safeBrowsingStatus)
 	{
-		if (isset($safeBrowsingStatus->checkup_date))
+		if (isset($safeBrowsingStatus->checkup_date) || isset($safeBrowsingStatus->time))
 		{
+			if (!isset($safeBrowsingStatus->checkup_date))
+			{
+				$safeBrowsingStatus->checkup_date = $safeBrowsingStatus->time; 
+			}
 			$datetime1 = new DateTime($safeBrowsingStatus->checkup_date);
 			$datetime2 = new DateTime();
 			$interval = $datetime1->diff($datetime2);
