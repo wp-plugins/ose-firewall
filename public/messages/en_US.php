@@ -28,8 +28,8 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
  die('Direct Access Not Allowed');
 }
 //Start here;
-define('O_LATEST_SIGNATURE', '20140818');
-define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140818, updated on 18th Aug 2014');
+define('O_LATEST_SIGNATURE', '20140901');
+define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140901, updated on 1st Sep 2014');
 define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
 define('OSE_WORDPRESS_FIREWALL_SETTING', 'Centrora Security™ Settings');
 define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', 'Centrora Security™ is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');

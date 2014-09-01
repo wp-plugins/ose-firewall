@@ -1,4 +1,4 @@
-var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140818, updated on 18th Aug 2014</div>";
+var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140901, updated on 1st Sep 2014</div>";
 var O_IP_RULE_TITLE = "IP Rule Title";
 var O_ID = "ID";
 var O_DATE = "Date";
