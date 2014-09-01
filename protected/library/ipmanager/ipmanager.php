@@ -50,11 +50,11 @@ class oseFirewallIpManager
 	{
 		if ($start == true)
 		{
-			return ip2long($this->ip);
+			return substr("0000000000" .sprintf ('%u',ip2long($this->ip)), -10);
 		}
 		else
 		{
-			return ip2long($this->ipend);
+			return substr("0000000000" .sprintf ('%u',ip2long($this->ipend)), -10);
 		}
 	}
 	public function setIPRange($ipstart, $ipend)

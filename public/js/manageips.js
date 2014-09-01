@@ -45,8 +45,7 @@ function reloadStore () {
 }
 oseATHIPMANAGER.comboSortby = oseGetCombo('sortby', 'Sort By', oseATHIPMANAGER.sortOption, 150, 50, 100, 'datetime');
 oseATHIPMANAGER.comboOrder = oseGetCombo('order', '', oseATHIPMANAGER.orderOption, 100, 50, 100, 'desc');
-oseATHIPMANAGER.pageSize = 
-{   
+oseATHIPMANAGER.pageSize = new Ext.form.field.Number({
 		xtype:'numberfield',
         fieldLabel: 'Items / Page',
         name: 'pageSize',
@@ -54,7 +53,7 @@ oseATHIPMANAGER.pageSize =
         labelWidth: 80,
         width: 150,
         value: 15
-}
+});
 oseATHIPMANAGER.fields = new Array('country_code', 'id', 'score', 'name', 'ip32_start', 'ip32_end', 'iptype', 'status', 'host', 'datetime', 'view', 'visits');
 oseATHIPMANAGER.store = new Ext.data.JsonStore({
 	  storeId: 'attacksum',
@@ -68,6 +67,7 @@ oseATHIPMANAGER.store = new Ext.data.JsonStore({
     	  controller:controller, 
     	  task:'getACLIPMap', 
     	  action:'getACLIPMap',
+		  limit:Ext.getCmp('pageSize').value,
     	  centnounce: Ext.get('centnounce').getValue()
       	},
         reader: {
@@ -217,7 +217,7 @@ oseATHIPMANAGER.panel = Ext.create('Ext.grid.Panel', {
             ,{id: 'view', header: O_VIEWDETAIL,  hidden:false, dataIndex: 'view', width: '5%', sortable: false}
 	    ],
 	    sortInfo:{field: 'datetime', direction: "DESC"},
-	    height: 500,
+	    height: 520,
 	    width: '100%',
 	    renderTo: 'oseantihackerIPManager',
 	    plugins: [oseATHIPMANAGER.cellEditing],

@@ -411,7 +411,6 @@ class oseFirewallStatBase
 	private function getCountryCodebyIP($ip32_start)
 	{
 		$db = oseFirewall::getDBO();
-		$ip32_start = substr("0000000000" . sprintf('%u',$ip32_start), -10);
 		$query = " SELECT `country_code` FROM `#__ose_app_geoip` ".
 				 " WHERE `ip32_start`<= ".$db->QuoteValue($ip32_start)." AND ".$db->QuoteValue($ip32_start)." <= `ip32_end`;";
 		$db->setQuery($query);
