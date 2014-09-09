@@ -4,8 +4,8 @@ Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
-Tested up to: 3.9.1
-Stable tag: 3.7.2
+Tested up to: 4.0.0
+Stable tag: 3.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,7 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 == Frequently asked questions ==
 
 = What to do if i have a problem? =
+* You can disable the plugin by renaming the file /wp-content/plugins/ose-firewall/ose_wordpress_firewall.php to /wp-content/plugins/ose-firewall/ose_wordpress_firewall_bk.php, or 
 * You can always visit our <a href = "https://www.centrora.com/support-center/">support center</a> to raise a ticket, and we will assign an expert to fix your problem immediately.
 
 = I get a Fatal Error: 'Class PDO not found'? =
@@ -89,6 +90,11 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 3.8.0 =
+* Fixed: Fixed session error when the Wordpress is integrating with Magento
+* Enhancement: Improved virus scanner class to avoid multiple process being created
+* Added: Added dropbox backup function in backup section
 
 = 3.7.2 =
 * Fixed: Fixed the ip2long function overflow issue for 32bit servers

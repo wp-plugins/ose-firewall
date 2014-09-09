@@ -35,7 +35,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		$scanResult = $this->checkCountryStatus();
 		if ($scanResult == true)
 		{
-			return; 
+			//return; 
 		}
 		else
 		{ 

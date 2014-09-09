@@ -37,7 +37,10 @@ class oseFirewall extends oseFirewallBase {
 	public function initSystem()
 	{
 		$this->initYiiConfiguration ();
-		$this->startSession (); 
+		if (OFRONTENDSCAN==false)
+		{
+			$this->startSession ();
+		} 
 	}
 	protected function loadViews () {
        	$view = JRequest::getVar('view');

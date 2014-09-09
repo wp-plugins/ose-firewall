@@ -38,7 +38,6 @@ function downloadDB(ids)
 {
 	oseAjaxTaskRequestWithIDS('oseATHBACKUPMANAGER', url, option, controller, 'downloadBackupDB', ids);
 }
-
 function downloadFile(ids)
 {
 	oseAjaxTaskRequestWithIDS('oseATHBACKUPMANAGER', url, option, controller, 'downloadBackupFile', ids);
@@ -64,12 +63,12 @@ function bkFormSubmit(form, url, option, controller, task, store, waitMsg)
 				backupFiles (Ext.getCmp('backup_type').getValue());  
 			}else{
 				oseAjaxSuccessReload(options.result,  'show',  store, true);
+				Ext.getCmp('backupButtonwin').close();
 			}	
 		},
 		failure:function(response, options){
 			oseAjaxSuccessReload(options.result, 'alert', store, true);
-		} 
-		
+		}
 	});
 }
 function backupFiles (backupType) {
@@ -94,7 +93,6 @@ function backupFilesAjax (step, win, task, backupType, counter) {
 				if (msg.status=='Completed')
 				{
 					win.update(msg.result);
-					//win.hide();
 				}
 				else
 				{
@@ -134,6 +132,7 @@ function backupFilesAjax (step, win, task, backupType, counter) {
 }
 function checkAuth(url, option, controller, backup_to)
 {
+	
 	Ext.Ajax.request({
 		url : url,
 		params : {
@@ -147,17 +146,19 @@ function checkAuth(url, option, controller, backup_to)
 		method: 'POST',
 		success: function ( response, options ) {
 			var msg  = Ext.decode(response.responseText);
-			if(msg.dbReady == false)
-			{
-				saveAppAccess();
-			}
-			else
+			if (msg.dbReady == true)
 			{
 				if(msg.tokenReady == false)
 				{
+					Ext.MessageBox.close();
 					var x = screen.width/2 - 700/2;
 				    var y = screen.height/2 - 450/2;
 					window.open(msg.authurl, 'Authorise Dropbox', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=700, height=485, top='+y+', left='+x);
+					Ext.getCmp('dropboxButtonwin').close();
+				}
+				else
+				{
+					bkFormSubmit(oseATHBACKUPMANAGER.form, url, option, controller, 'backup', oseATHBACKUPMANAGER.store, 'Please wait, this will take a few seconds ...');
 				}
 				if(msg.error == true)
 				{
@@ -190,23 +191,7 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 					Ext.Msg.alert("Error", "Please select a backup type");
 					return false; 
 				}
-				/*
-				if(Ext.getCmp('backup_to').getValue() != 1)
-				{
-					checkAuth(url, option, controller ,Ext.getCmp('backup_to').getValue());
-				}
-				else
-				{
-				*/
-					if (Ext.getCmp('backup_type').getValue() == 1)
-					{
-						backupFiles (Ext.getCmp('backup_type').getValue()); 
-					}	
-					else
-					{
-						bkFormSubmit(oseATHBACKUPMANAGER.form, url, option, controller, 'backup', oseATHBACKUPMANAGER.store, 'Please wait, this will take a few seconds ...');
-					}	
-				//}
+				bkFormSubmit(oseATHBACKUPMANAGER.form, url, option, controller, 'backup', oseATHBACKUPMANAGER.store, 'Please wait, this will take a few seconds ...');
 			}
 		}
 		]
@@ -244,7 +229,6 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 						}
 					}						
 			}
-			/*
 			,{
 			   	xtype:'combo'
 				,fieldLabel: O_BACKUP_TO
@@ -263,7 +247,7 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 					       'text'
 					    ],
 					    data: [
-					      	[1, "Local"],
+					      	[1, "Local Server"],
 					      	[2, "Dropbox"]
 						]
 					})
@@ -277,7 +261,6 @@ oseATHBACKUPMANAGER.form = Ext.create('Ext.form.Panel', {
 						}
 					}						
 			}
-			*/
 	    ]
 });
 
@@ -295,21 +278,20 @@ function saveAccessInfo(form, url, option, controller, task, store)
 			centnounce: Ext.get('centnounce').getValue()
 		},
 		success: function(response, options){
-			Ext.Msg.alert("Success", "Save information success", function(btn, text){
+			Ext.Msg.alert("Success", "API information has been successfully saved.", function(btn, text){
 				if (btn == 'ok'){
-					oseATHBACKUPMANAGER.win2.close();
-					Ext.getCmp("backupButtonwin").show();
+					Ext.MessageBox.wait('Connecting to Dropbox, please wait...', 'Please wait...'); 
+					checkAuth(url, option, controller ,2);
 				}
 				else
 				{
-					oseATHBACKUPMANAGER.win2.close();
+					Ext.getCmp('dropboxButton').close();
 				}
 			});
 		},
 		failure:function(response, options){
 			oseAjaxSuccessReload(options.result, 'alert', store, true);
 		} 
-		
 	});
 }
 
@@ -320,20 +302,43 @@ oseATHBACKUPMANAGER.accessBackupInfoForm = Ext.create('Ext.form.Panel', {
 	border : false,
 	labelAlign : 'left',
 	labelWidth : 150,
-	buttons : [ {
-		text : 'Save',
+	buttons : [ 
+	{
+		text : 'Add a new API App',
+		handler : function() {
+			window.open('https://www.dropbox.com/developers/apps/create','_newtab');
+		}
+	},
+	{
+		text : 'Authorize',
 		handler : function() {
 			if(Ext.getCmp('access_username').getValue()== "" || Ext.getCmp('access_password').getValue() == "")
 			{
 				Ext.Msg.alert("Error", "App key or App secret cannot be null");
 				return false; 
 			}
-				saveAccessInfo(oseATHBACKUPMANAGER.accessBackupInfoForm, url, option, controller, 'saveAppAccess', oseATHBACKUPMANAGER.store, 'Please wait, this will take a few seconds ...');
+			saveAccessInfo(oseATHBACKUPMANAGER.accessBackupInfoForm, url, option, controller, 'authorizeAppAccess', oseATHBACKUPMANAGER.store, 'Please wait, this will take a few seconds ...');
 		}
 	} ],
 	items : [ 
 	          oseGetNormalTextField('access_username', 'App key', 100, 450, null, false), 
-	          oseGetNormalPassword('access_password', 'App secret', 100, 450, null, false) ]
+	          oseGetNormalPassword('access_password', 'App secret', 100, 450, null, false) 
+	],
+	listeners: {
+				render: function(p){
+					p.getForm().load(
+					{
+						url: url,
+						params : {
+									option : option,
+									controller: controller,
+									task: 'getDropboxAPI',
+									action: 'getDropboxAPI',
+									centnounce: Ext.get('centnounce').getValue()
+						}
+					});
+				}
+	}	
 });
 
 function saveAppAccess()
@@ -342,7 +347,6 @@ function saveAppAccess()
 	oseATHBACKUPMANAGER.win2 = oseGetWIn('addAccessWin', 'Add your app access');
 	oseATHBACKUPMANAGER.win2.add(oseATHBACKUPMANAGER.accessBackupInfoForm);
 	oseATHBACKUPMANAGER.win2.show().alignTo(Ext.getBody(), 't-t', [ 0, 50 ]);
-	
 }
 
 oseATHBACKUPMANAGER.pbar1 = oseGetProgressbar('pbar1', 'File Backup Ready') ;
@@ -389,6 +393,7 @@ oseATHBACKUPMANAGER.fileBackupWin = new Ext.Window({
 	]
 });	
 
+oseATHBACKUPMANAGER.dropboxButton = oseGetAddWinButton('dropboxButton', O_BACKUP_DROPBOX, O_BACKUP_DROPBOX, oseATHBACKUPMANAGER.accessBackupInfoForm, 600),
 oseATHBACKUPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 		id: 'oseATHBACKUPMANAGERPanel',
 		name: 'oseATHBACKUPMANAGERPanel',
@@ -402,7 +407,6 @@ oseATHBACKUPMANAGER.panel = Ext.create('Ext.grid.Panel', {
             ,{id: 'datetime', header: 'Date',  hidden:false, dataIndex: 'date',width: "20%", sortable: true}
             ,{id: 'dbBackupPath', header: 'DataBase Download',  hidden:false, dataIndex: 'dbBackupPath',width: "25%", sortable: true}
             //,{id: 'restore', header: '',  hidden:false, dataIndex: 'restore', width: 80, sortable: true}
-           
             //,{id: 'fileBackupPath', header: 'File Download',  hidden:false, dataIndex: 'fileBackupPath', width: "20%", sortable: true} 
             ,{id: 'delete', header: 'Delete',  hidden:false, dataIndex: 'delete', width: "9.5%", sortable: true}
 	    ],
@@ -425,6 +429,7 @@ oseATHBACKUPMANAGER.panel = Ext.create('Ext.grid.Panel', {
 				             	);
 				            }
 				        },
+				        oseATHBACKUPMANAGER.dropboxButton,
 				        '->'
 				    ]
 		}),
