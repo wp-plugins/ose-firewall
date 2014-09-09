@@ -27,6 +27,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
+require_once dirname(__FILE__).'/centroraDropbox.php';
 class oseBackupManager
 {
 	private $backup_prefix = null;
@@ -38,7 +39,6 @@ class oseBackupManager
 	private $backupPathTable = '#__osefirewall_backupath';
 	public function __construct($db, $backup_type = null)
 	{
-		require_once 'proWebDropbox.php';
 		$this->db = $db;
 		$this->backup_type = (int) $backup_type;
 		$this->fileBackupName = "";
@@ -243,19 +243,6 @@ class oseBackupManager
 		$time = $oseDatetime->getDateTime()." ".$timeZone;
 		return $time;
 	}
-	public function backupDB()
-	{
-		$dbBackupResult = $this->backupDatabase ($this->backup_type);
-		$this->db->closeDBO ();
-		if ($dbBackupResult == false && $this->backup_type != 3)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
 	private function assembleArray($result, $status, $msg, $continue, $id)
 	{
 		$return = array(
@@ -342,7 +329,7 @@ class oseBackupManager
 		}
 		$db = oseFirewall::getDBO();
 		$where = $db->implodeWhere($where);
-		$query = "SELECT * FROM `#__osefirewall_backup` ".$where."ORDER BY date DESC LIMIT ".$start.", ".$limit;
+		$query = "SELECT * FROM `#__osefirewall_backup` ".$where."ORDER BY id DESC LIMIT ".$start.", ".$limit;
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
 		$db->closeDBO ();
@@ -412,7 +399,7 @@ class oseBackupManager
 	{
 		return "<a href='#' onClick= 'deleteItem(".urlencode($id).")' ><div class='ose-grid-delete'></div></a>";
 	}
-	public function insertbkDB()
+	public function insertbkDB($backup_to)
 	{
 		$dbPath = null;
 		$filePath = null;
@@ -423,38 +410,38 @@ class oseBackupManager
 			$filePath = $result['path'];
 			$time = $result['time'];
 		}
+		else if ($this->backup_type == 2)
+		{
+			$result = $this->getBackUpPath($this->pathDB);
+			$dbPath = $result['path'];
+			$time = $result['time'];
+		}
 		else
-			if ($this->backup_type == 2)
-			{
-				$result = $this->getBackUpPath($this->pathDB);
-				$dbPath = $result['path'];
-				$time = $result['time'];
-			}
-			else
-			{
-				$result = $this->getBackUpPath($this->pathDB);
-				$dbPath = $result['path'];
-				$time = $result['time'];
-				$result = $this->getBackUpPath($this->pathFile);
-				$filePath = $result['path'];
-			}
+		{
+			$result = $this->getBackUpPath($this->pathDB);
+			$dbPath = $result['path'];
+			$time = $result['time'];
+			$result = $this->getBackUpPath($this->pathFile);
+			$filePath = $result['path'];
+		}
+		$results = $this->insertInBackupDB ($time, $backup_to, $dbPath, $filePath);
+		$this->cleanBackUpFilePath();
+		return $results;
+	}
+	private function insertInBackupDB ($time, $backup_to, $dbPath, $filePath) {
 		$varValues = array(
 			0 => array(
 				'date' => $time,
-				'type' => 'local',
+				'type' => 0,
 				'dbBackupPath' => $dbPath,
-				'fileBackupPath' => $filePath
+				'fileBackupPath' => $filePath,
+				'server' => $backup_to
 			)
 		);
 		$query = $this->getInsertTable('#__osefirewall_backup', $varValues);
 		$this->db->setQuery($query);
 		$results = $this->db->query();
-		$this->cleanBackUpFilePath();
 		return $results;
-	}
-	private function backupDropBox()
-	{
-		//TODO:
 	}
 	private function backupDatabase()
 	{
@@ -498,7 +485,7 @@ class oseBackupManager
 		{
 			gzwrite($handle, $sql);
 			gzclose($handle);
-			return true;
+			return $backupFile.'.gz';
 		}
 		else
 		{
@@ -941,9 +928,170 @@ class oseBackupManager
 		$result = (object) $this->db->loadObject();
 		return $result->count;
 	}
-	public function dropbox_AuthorisedByUser()
+	public function backupDB($backup_to)
 	{
-		$userInfo = $this->dropbox_GetUserInfo();
+		$this->pathFile = $this->backupDatabase ();
+		$this->db->closeDBO ();
+		if ($this->pathFile == false && $this->backup_type != 3)
+		{
+			return false;
+		}
+		else
+		{
+			if ($backup_to == 1)
+			{
+				return true;
+			}
+			else if ($backup_to == 2)
+			{
+				return $this->dropboxUploadFile();
+			}
+		}
+	}
+	private function dropboxGetUserInfo()
+	{
+		$result = array();
+		$tmp = $this->getDropboxAPIDB ('dropbox');
+		$result['key'] = $tmp->value;
+		$tmp = $this->getDropboxAPIDB ('dropboxSecret');
+		$result['secret'] = $tmp->value;
+		return $result;
+	}
+	public function dropboxAuthorizeAppAccess($access_username, $access_password)
+	{
+		$result = $this->saveDropboxAPI ('dropbox', $access_username, 'backup');
+		$result = $this->saveDropboxAPI ('dropboxSecret', $access_password, 'backup');
+		return $result;
+	}
+	private function getDropboxAPIDB ($key) {
+		$query = "SELECT * FROM `#__ose_secConfig` WHERE `key` = ". $this->db->QuoteValue($key). " AND (`type` = 'backup' OR `type` = 'dropbox')";
+		$this->db->setQuery($query);
+		$result = $this->db->loadObject();
+		return (isset($result->value))?$result: null;
+	}
+	private function saveDropboxAPI ($key, $value, $type = "backup") {
+		$varValues = array(
+			'key' => $key,
+			'value' => $value,
+			'type' => $type
+		);
+		$result = $this->getDropboxAPIDB ($key);
+		if (empty($result))
+		{
+			$id = $this->db->addData ('insert', '#__ose_secConfig', '', '', $varValues);
+		}
+		else
+		{
+			$id = $this->db->addData ('update', '#__ose_secConfig', 'id', $result->id, $varValues);
+		}
+		return $id;
+	}
+	public function getDropboxAPI() {
+		$tmp =  $this->dropboxGetUserInfo();
+		$return = array (); 
+		$return['access_username'] = $tmp['key'];
+		$return['access_password'] = $tmp['secret'];
+		return $return;
+	}
+	public function dropboxAuthorizeUser () {
+		$userInfo = $this->dropboxGetUserInfo();
+		$token = $this->dropboxRequestToken($userInfo);
+		return $this->getReturnAuthToken (true, false, $token);
+	}
+	private function dropboxRequestToken($userInfo) {
+		$response = array();
+		$dropbox = new centroraDropbox($userInfo["key"], $userInfo["secret"], true);
+		try
+		{
+			$response = $dropbox->oAuthAuthorize();
+		}
+		catch (Exception $e)
+		{
+			return array(
+				'dbReady' => false,
+				'error' => true,
+				'message' => $e->getMessage()
+			);
+		}
+		return $response;
+	}
+	private function getReturnAuthToken ($dbReady, $tokenReady, $token = null) {
+		$authURL = '';
+		if (!empty($token))
+		{
+			$this->saveDropboxAPI ('dropboxToken', $token['oauth_token'], 'backup');
+			$this->saveDropboxAPI ('dropboxTokenSecret', $token['oauth_token_secret'], 'backup');
+			$authURL = $token["authurl"];
+		}
+		return array(
+			'dbReady' => $dbReady,
+			'tokenReady' => $tokenReady,
+			'authurl' => $authURL
+		);
+	}
+	private function dropboxUploadFile() {
+		$userInfo = $this->dropboxGetUserInfo();
+		$tokenInfo = $this->dropboxGetTokenInfo();
+		$backup_file = $this->pathFile;
+		$dropbox_destination = '/'.basename($backup_file);
+		$dropbox = new centroraDropbox($userInfo["key"], $userInfo["secret"], true);
+		try
+		{
+			if ($tokenInfo['type']=='dropbox')
+			{
+				$dropbox->setOAuthTokens($tokenInfo['dropboxToken'], $tokenInfo['dropboxTokenSecret']);
+			}
+			else
+			{
+				$results = $dropbox->oAuthAccessToken($tokenInfo['dropboxToken'], $tokenInfo['dropboxTokenSecret']);
+				if (!empty($results['oauth_token']) && $results['oauth_token'] != $tokenInfo['dropboxToken'])
+				{
+					$this->saveDropboxAPI ('dropboxToken', $results['oauth_token'], 'dropbox');
+					$this->saveDropboxAPI ('dropboxTokenSecret', $results['oauth_token_secret'], 'dropbox');
+				}
+			}
+			$results = $dropbox->upload($backup_file, $dropbox_destination, true);
+		}
+		catch (Exception $e)
+		{
+			return array(
+				'error' => $e->getMessage(),
+				'partial' => 1
+			);
+		}
+		if (!empty($results['path']))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	private function dropboxGetTokenInfo()
+	{
+		$result = array();
+		$tmp = $this->getDropboxAPIDB ('dropboxToken');
+		if ($tmp->type == 'dropbox')
+		{
+			$result['type'] ='dropbox';
+		}
+		else 
+		{
+			$result['type'] ='backup';
+		}
+		$result['dropboxToken'] = $tmp->value;
+		$tmp = $this->getDropboxAPIDB ('dropboxTokenSecret');
+		$result['dropboxTokenSecret'] = $tmp->value;
+		return $result;
+	}
+	
+	
+	
+	
+public function dropbox_AuthorisedByUser()
+	{
+		$userInfo = $this->dropboxGetUserInfo();
 		if ($this->dropbox_TokenReady())
 		{
 			$result = array('dbReady' => true, 'tokenReady' => true);
@@ -956,107 +1104,67 @@ class oseBackupManager
 		}
 	}
 	private function dropbox_accessToken($userInfo)
-	{
+	{ 
 		$dropbox = new PROWEB_Dropbox($userInfo["key"], $userInfo["secret"]);
 		try
 		{
-			$au = $dropbox->oAuthAuthorize("http://".OSE_ADMINURL."?page=ose_fw_backup");
+			if (OSE_CMS == 'wordpress')
+			{
+				$au = $dropbox->oAuthAuthorize(OSE_ADMINURL."?page=ose_fw_backup");
+			}
+			else
+			{
+				$au = $dropbox->oAuthAuthorize(OSE_ADMINURL."&view=backup");
+			}
 		}
 		catch (Exception $e)
 		{
 			return array(
-				'dbReady' => true,
+				'dbReady' => false,
 				'error' => true,
 				'message' => $e->getMessage()
 			);
 		}
-		session_start();
-		$_SESSION['request_token'] = $au["oauth_token"];
-		$_SESSION['request_secret'] = $au["oauth_token_secret"];
-		return array(
-			'dbReady' => true,
-			'tokenReady' => false,
-			'authurl' => $au["authurl"]
-		);
-	}
-	private function dropbox_upload($userInfo)
-	{
-		$result = $this->getBackUpPath($this->pathFile);
-		$backup_file = $result['path'];
-		$dropbox_destination = "";
-		$dropbox_destination .= '/'.basename($backup_file);
-		$tokenResult = $this->dropbox_GetUserToken();
-		$dropbox = new PROWEB_Dropbox($userInfo["key"], $userInfo["secret"]);
-		$dropbox->setOAuthTokens($tokenResult["token"], $tokenResult["tokensecret"]);
-		try
-		{
-			$dropbox->upload($backup_file, $dropbox_destination, true);
-		}
-		catch (Exception $e)
-		{
-			return array(
-				'error' => $e->getMessage(),
-				'partial' => 1
-			);
+		if (!empty($au)){
+			if (!isset($_SESSION['dropboxToken']) && !isset($_SESSION['dropboxTokenSecret']))
+			{
+				$_SESSION['dropboxToken'] = $au['oauth_token'];
+				$_SESSION['dropboxTokenSecret'] = $au['oauth_token_secret'];
+				return array(
+					'dbReady' => true,
+					'tokenReady' => false,
+					'authurl' => $au["authurl"]
+				);
+			}
+			else
+			{
+				return array(
+					'dbReady' => true,
+					'tokenReady' => true,
+					'authurl' => $au["authurl"]
+				);			
+			}
 		}
 	}
-	private function dropbox_GetUserInfo()
-	{
-		$query = "SELECT `value` as dbkey FROM "."`#__ose_secConfig` WHERE `key` = 'dropbox'";
-		$this->db->setQuery($query);
-		$result = (object) $this->db->loadObject();
-		$key = $result->dbkey;
-		$query = "SELECT `value` as dbsecret FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxSecret'";
-		$this->db->setQuery($query);
-		$result = (object) $this->db->loadObject();
-		$secret = $result->dbsecret;
-		$result = array("key" => $key,
-			"secret" => $secret);
-		return $result;
-	}
+	
 	private function dropbox_TokenReady()
 	{
-		$query = "SELECT COUNT( * ) as count FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxtoken'";
-		$this->db->setQuery($query);
-		$result = (object) $this->db->loadObject();
-		return ($result->count > 0) ? true : false;
+		if (isset($_SESSION['dropboxToken']) && isset($_SESSION['dropboxTokenSecret']))
+		{ 
+			return true; 
+		}
+		else {
+			return false;
+		}
 	}
-	private function dropbox_GetUserToken()
-	{
-		$query = "SELECT `value` as key FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxToken'";
-		$this->db->setQuery($query);
-		$result = (object) $this->db->loadObject();
-		$key = $result->key;
-		$query = "SELECT `value` as result FROM "."`#__ose_secConfig` WHERE `key` = 'dropboxTokenSecret'";
-		$this->db->setQuery($query);
-		$result = (object) $this->db->loadObject();
-		$secret = $result->result;
-		$result = array("token" => $key,
-			"tokensecret" => $secret);
-		return $result;
-	}
-	public function dropbox_SaveAppAccess($access_username, $access_password)
-	{
-		$db = oseFirewall::getDBO();
-		$varValues = array(
-			'key' => "dropbox",
-			'value' => $access_username,
-			'type' => "scan"
-		);
-		$id = $db->addData ('insert', '#__ose_secConfig', '', '', $varValues);
-		$varValues = array(
-			'key' => "dropboxSecret",
-			'value' => $access_password,
-			'type' => "scan"
-		);
-		$id = $db->addData ('insert', '#__ose_secConfig', '', '', $varValues);
-		return $id;
-	}
+	
+	
 	public function drobox_dbReady($dbname)
 	{
-		$query = "SELECT COUNT( * ) as count FROM "."`#__ose_secConfig` WHERE `key` = ".$this->db->quoteValue($dbname);
+		$query = "SELECT COUNT( * ) as count FROM `#__ose_secConfig` WHERE `key` = ".$this->db->quoteValue($dbname);
 		$this->db->setQuery($query);
 		$result = (object) $this->db->loadObject();
 		return ($result->count > 0) ? true : false;
 	}
+	
 }

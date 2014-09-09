@@ -104,7 +104,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}
 	public static function loadActionBackup () {
-		$actions = array ('backup', 'getBackupList', 'backupFile' , 'deleteBackup' , 'deleteItemByID', 'downloadBackupDB' , 'downloadBackupFile' , 'saveAppAccess', 'checkAuth');
+		$actions = array ('backup', 'getBackupList', 'backupFile' , 'deleteBackup' , 'deleteItemByID', 'downloadBackupDB' , 'downloadBackupFile' , 'authorizeAppAccess', 'checkAuth', 'getDropboxAPI');
 		parent::loadActions($actions);
 	}
 	public static function loadactionUninstall(){

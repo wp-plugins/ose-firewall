@@ -38,7 +38,7 @@ class ScanconfigController extends BaseController {
 			return; 
 		}
 		$results = $this -> model ->getConfiguration($type);
-		oseAjax::returnJSON($results); 
+		oseAjax::returnJSON($results);
 	}
 	public function actionSaveConfigScan () {
 		oseFirewall::loadRequest (); 

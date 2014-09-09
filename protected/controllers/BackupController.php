@@ -72,6 +72,7 @@ class BackupController extends BaseController
 	{
 		oseFirewall::loadRequest();
 		$backup_to = oRequest::getInt('backup_to', 1);
+		$mobiledevice = false; 
 		//TODO: check membership permission
 		if ($backup_to != 1)
 		{
@@ -82,7 +83,7 @@ class BackupController extends BaseController
 			}
 			else
 			{
-				$result = $this->model->dropbox_AuthorisedByUser();
+				$result = $this->model->dropboxAuthorizeUser();
 				oseAjax::returnJSON($result, $mobiledevice);
 			}
 		}
@@ -91,14 +92,14 @@ class BackupController extends BaseController
 			oseAjax::returnJSON(array("dbReady" => true), $mobiledevice);
 		}
 	}
-	public function actionSaveAppAccess()
+	public function actionAuthorizeAppAccess()
 	{
 		oseFirewall::loadRequest();
 		oseFirewall::loadFiles();
 		$db = oseFirewall::getDBO();
 		$access_username = oRequest::getVar('access_username', null);
 		$access_password = oRequest::getVar('access_password', null);
-		$result = $this->model->saveAppAccess($access_username, $access_password);
+		$result = $this->model->authorizeAppAccess($access_username, $access_password);
 		if ($result != 0)
 		{
 			oseAjax::aJaxReturn(true, 'SUCCESS', "success", false);
@@ -165,6 +166,11 @@ class BackupController extends BaseController
 		oseFirewall::loadRequest();
 		$id = oRequest::getVar('ids', null);
 		$this->model ->downloadBackupFile($id);
+	}
+	public function actionGetDropboxAPI()
+	{
+		$results = $this->model ->getDropboxAPI();
+		oseAjax::returnJSON($results);
 	}
 }
 ?>	

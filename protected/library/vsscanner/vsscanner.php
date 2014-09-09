@@ -329,12 +329,17 @@ class virusScanner {
 		while (count($this->vsInfo['fileset'])>0)
 		{
 			$since_start = $this->timeDifference($start_time, time());
-			if ($since_start>=2)
+			if ($since_start>=1)
 			{
 				$result = $this->saveVsFiles($this->vsInfo['fileset'], $this->vsInfo['completed']);
 				if($result == false)
 				{
 					return false;
+				}
+				else
+				{
+					$return = $this->returnAjaxMsg($_SESSION['last_scanned']);
+					print_r(oseJSON::encode($return)); exit;				
 				}
 				break;
 			}

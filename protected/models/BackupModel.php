@@ -76,15 +76,22 @@ class BackupModel extends BaseModel {
 	public function backupDB($backup_type , $backup_to = 1)
 	{
 		$backupManager = new oseBackupManager($this->db, $backup_type);
-		$backupResult = $backupManager->backupDB(); 
+		$backupResult = $backupManager->backupDB($backup_to);
 		$result = null;
 		if($backupResult == false)
 		{	
-			$result = $this->assembleArray (false, 'ERROR', DB_BACKUP_FAILED_INCORRECT_PERMISSIONS, $continue = false, $id = null);
+			if ($backup_to == 1)
+			{
+				$result = $this->assembleArray (false, 'ERROR', DB_BACKUP_FAILED_INCORRECT_PERMISSIONS, $continue = false, $id = null);
+			}
+			else if($backup_to == 2)
+			{
+				$result = $this->assembleArray (false, 'ERROR', O_DROPBOX_FAILED, $continue = false, $id = null);
+			} 
 		}
 		else if($backupResult == true && $backup_type != 3)
 		{
-			$InsertDBResult = $backupManager->insertbkDB();
+			$InsertDBResult = $backupManager->insertbkDB($backup_to);
 			$result = $this->assembleArray(true, 'SUCCESS', DB_BACKUP_SUCCESS, $continue = false, $id = null);
 		}
 		else
@@ -153,35 +160,24 @@ class BackupModel extends BaseModel {
 		}
 		oseAjax::returnJSON($result);
 	}
-	public function changeACLStatus($aclids, $status)
-	{
-		$oseFirewallStat = new oseFirewallStat();
-		foreach ($aclids as $aclid)
-		{
-			$result = $oseFirewallStat->changeACLStatus($aclid, $status);
-			if ($result == false)
-			{
-				return false;
-			}
-		}
-		return true; 
-	}
-	public function getAttackDetail($aclid)
-	{
-		$oseFirewallStat = new oseFirewallStat();
-		return $oseFirewallStat->getAttackDetail($aclid); 
-	}
-	
-	public function saveAppAccess($access_username, $access_password)
+	public function authorizeAppAccess($access_username, $access_password)
 	{
 		$backupManager = new oseBackupManager($this->db);
-		$result = $backupManager -> dropbox_SaveAppAccess($access_username, $access_password);
+		$result = $backupManager -> dropboxAuthorizeAppAccess($access_username, $access_password);
 		return $result;
 	}
-	public function dropbox_AuthorisedByUser()
+	public function dropboxAuthorizeUser()
 	{
 		$backupManager = new oseBackupManager($this->db);
-		$result = $backupManager->dropbox_AuthorisedByUser();
+		$result = $backupManager->dropboxAuthorizeUser();
+		return $result;
+	}
+	public function getDropboxAPI()
+	{ 
+		$result = array (); 
+		$backupManager = new oseBackupManager($this->db);
+		$result['data'] = $backupManager->getDropboxAPI();
+		$result['success'] = true; 
 		return $result;
 	}
 }

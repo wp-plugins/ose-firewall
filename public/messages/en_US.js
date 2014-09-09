@@ -187,4 +187,5 @@ var O_EXPORT_IP_CONFIRM = "Export IP to CSV confirmation";
 var O_EXPORT_IP_CONFIRM_DESC = "Please confirm that you would like to export all IP from the database";
 var O_SCANNED_PATH = "Scanning Path";
 var O_SCAN_SPECIFIC_FOLDER = "Scan specific folder";
-var O_START_SCANNING = "Start scanning"; 
+var O_START_SCANNING = "Start scanning";
+var O_BACKUP_DROPBOX = "Dropbox API Setting";

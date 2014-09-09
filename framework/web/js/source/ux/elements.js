@@ -225,10 +225,15 @@ function oseGetAddWinButton(id, text, winTitle, winForm, width)
     				winForm
     			]
         		,closable: true
+        		,listeners: {
+            		close: function(){
+                		location.reload();
+                	}
+                }
            	});	
         	win.show().alignTo(Ext.getBody(),'t-t', [0, 50]);
         }
-    }	
+	}
 	return addwin ; 
 }
 
