@@ -45,7 +45,7 @@ class oseUsers
 			$this->cms = 'joomla';
 		}
 		else
-			if (defined('WPLANG'))
+			if (defined('WPLANG') || defined('WPINC'))
 			{
 				$this->cms = 'wordpress';
 			}
@@ -57,7 +57,7 @@ class oseUsers
 			self::$cmsStatic = 'joomla';
 		}
 		else
-			if (defined('WPLANG'))
+			if (defined('WPLANG') || defined('WPINC'))
 			{
 				self::$cmsStatic = 'wordpress';
 			}

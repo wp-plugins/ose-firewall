@@ -48,17 +48,15 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_acl` (
   PRIMARY KEY (`id`) ,
   INDEX `idx1_oseacl` (`referers_id` ASC) ,
   INDEX `idx2_oseacl` (`pages_id` ASC) ,
-  CONSTRAINT `fk1_oseacl`
     FOREIGN KEY (`referers_id` )
     REFERENCES `#__osefirewall_referers` (`id` )
     ON UPDATE CASCADE,
-  CONSTRAINT `fk2_oseacl`
     FOREIGN KEY (`pages_id` )
     REFERENCES `#__osefirewall_pages` (`id` )
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8; 
 
 CREATE  TABLE IF NOT EXISTS `#__osefirewall_attacktype` (
   `id` TINYINT(2) NOT NULL AUTO_INCREMENT ,
@@ -74,7 +72,6 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_detattacktype` (
   `attacktypeid` TINYINT(3) NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `idx1_detattacktype` (`attacktypeid` ASC) ,
-  CONSTRAINT `fk1_detattacktype`
     FOREIGN KEY (`attacktypeid` )
     REFERENCES `#__osefirewall_attacktype` (`id` )
     ON UPDATE CASCADE)
@@ -107,15 +104,12 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_detcontdetail` (
   PRIMARY KEY (`detattacktype_id`) ,
   INDEX `idx1_detcontdetail` (`var_id` ASC) ,
   INDEX `idx2_detcontdetail` (`detcontent_id` ASC) ,
-  CONSTRAINT `fk1_detcontdetail`
     FOREIGN KEY (`var_id` )
     REFERENCES `#__osefirewall_vars` (`id` )
     ON UPDATE CASCADE,
-  CONSTRAINT `fk2__detcontdetail`
     FOREIGN KEY (`detattacktype_id` )
     REFERENCES `#__osefirewall_detattacktype` (`id` )
     ON UPDATE CASCADE,
-  CONSTRAINT `fk3__detcontdetail`
     FOREIGN KEY (`detcontent_id` )
     REFERENCES `#__osefirewall_detcontent` (`id` )
     ON UPDATE CASCADE)
@@ -128,11 +122,9 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_detected` (
   PRIMARY KEY (`acl_id`, `detattacktype_id`) ,
   INDEX `idx1_detected` (`acl_id` ASC) ,
   INDEX `idx2_detected` (`detattacktype_id` ASC) ,
-  CONSTRAINT `fk1__detected`
     FOREIGN KEY (`acl_id` )
     REFERENCES `#__osefirewall_acl` (`id` )
     ON UPDATE CASCADE,
-  CONSTRAINT `fk2__detected`
     FOREIGN KEY (`detattacktype_id` )
     REFERENCES `#__osefirewall_detattacktype` (`id` )
     ON UPDATE CASCADE)
@@ -171,7 +163,6 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_iptable` (
   `iptype` TINYINT(1) NOT NULL DEFAULT '0' ,
   PRIMARY KEY (`id`, `acl_id`) ,
   INDEX `idx1__iptable` (`acl_id` ASC) ,
-  CONSTRAINT `fk1__iptable`
     FOREIGN KEY (`acl_id` )
     REFERENCES `#__osefirewall_acl` (`id` )
     ON UPDATE CASCADE)
@@ -244,11 +235,9 @@ CREATE  TABLE IF NOT EXISTS `#__ose_app_adminrecemail` (
   PRIMARY KEY (`email_id`, `admin_id`) ,
   INDEX `idx1_adminrecemail` (`admin_id` ASC) ,
   INDEX `idx2_adminrecemail` (`email_id` ASC) ,
-  CONSTRAINT `fk1__adminrecemail`
     FOREIGN KEY (`email_id` )
     REFERENCES `#__ose_app_email` (`id` )
     ON UPDATE CASCADE,
-  CONSTRAINT `fk2_adminrecemail`
     FOREIGN KEY (`admin_id` )
     REFERENCES `#__ose_app_admin` (`id` )
     ON UPDATE CASCADE)
@@ -314,7 +303,6 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_vspatterns` (
   `confidence` TINYINT(3) NOT NULL,
   PRIMARY KEY (`id`) ,
   INDEX `osefirewall_vspatterns_idx1` (`type_id` ASC) ,
-  CONSTRAINT `osefirewall_vspatterns_fk1`
     FOREIGN KEY (`type_id` )
     REFERENCES `#__osefirewall_vstypes` (`id` )
     ON DELETE NO ACTION
@@ -330,11 +318,11 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_malware` (
 ENGINE = InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `#__osefirewall_logs` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `date` datetime DEFAULT NULL,
-			  `comp` varchar(3) NOT NULL,
-			  `status` text NOT NULL,
-			  PRIMARY KEY (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `comp` varchar(3) NOT NULL,
+  `status` text NOT NULL,
+  PRIMARY KEY (`id`)
 )
 ENGINE = InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -380,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `#__osefirewall_advancepatterns` (
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   INDEX `osefirewall_vspatterns_idx1` (`type_id`), 
-  CONSTRAINT `#__osefirewall_advancepatterns_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `#__osefirewall_vstypes` (`id`) ON UPDATE CASCADE
+  FOREIGN KEY (`type_id`) REFERENCES `#__osefirewall_vstypes` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `#__osefirewall_backupath` (
@@ -391,7 +379,4 @@ CREATE TABLE IF NOT EXISTS `#__osefirewall_backupath` (
   `fileTotal` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
-
-
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
