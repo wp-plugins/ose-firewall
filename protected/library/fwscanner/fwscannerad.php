@@ -35,7 +35,8 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		$scanResult = $this->checkCountryStatus();
 		if ($scanResult == true)
 		{
-			//return; 
+			// Reset scanning result;
+			$scanResult = null;
 		}
 		else
 		{ 
@@ -43,7 +44,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			if (empty($scanResult) || empty($scanResult[0])) {
 				$scanResult = $this->ScanLayer2();
 			}
-		}	
+		}
 		if (! empty ( $scanResult )) {
 			$scannerType = $scanResult['0']['type'];
 			$status = $this->getBlockIP();
