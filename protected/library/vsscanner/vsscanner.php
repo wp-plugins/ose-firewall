@@ -417,7 +417,7 @@ class virusScanner {
 			$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
 			foreach ($iterator as $fullFileName => $fileSPLObject)
 			{
-				if ($fileSPLObject->isFile() && in_array($this->getFileExtension($fullFileName), $this->file_ext)) {
+				if ($fullFileName != $path."/.." && $fileSPLObject->isFile() && in_array($this->getFileExtension($fullFileName), $this->file_ext)) {
 					$x++;
 					$oseFileArray[] = $fullFileName; 
 				}
