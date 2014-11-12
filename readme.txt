@@ -89,6 +89,9 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
+= 4.0.1 =
+* Fixed: Account action not loaded properly in My Premium Service Panel
+
 = 4.0.0 =
 * Enhancement: Completely rewrite User Interface which is fully responsive
 * Enhancement: Completely rewrite framework to reduce database connection and memory usage
