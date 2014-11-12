@@ -81,13 +81,11 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 1. Dashboard of the Centrora Security Plugin
 2. IP Management Panel in Centrora Security Plugin 
 3. Variables Management Panel in Centrora Security Plugin
-4. Virus Scanning Panel in Centrora Security Plugin
-5. Configuration Panel in Centrora Security Plugin
-6. Dashboard Panel in Centrora Control Panel
-7. Country Blocking Management Panel in Centrora Control Panel
-8. Google 2-step authentication activation in Centrora Control Panel
-9. Firewall Configuration Setting in Centrora Security Plugin
-10. ClamAV Open Source Free Antivirus Integration
+4. Website Security Audit Panel in Centrora Security
+5. Advanced Firewall Configuration Panel
+6. Advanced Virus Scanning Panel
+7. Virus Scanning Report Panel
+8. Country Blocking Management Panel
 
 == Changelog ==
 
