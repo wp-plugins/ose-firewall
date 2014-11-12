@@ -1,0 +1,1 @@
+ajaxurl = 'index.php';
