@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.0.0
-Stable tag: 3.8.4
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 10. ClamAV Open Source Free Antivirus Integration
 
 == Changelog ==
+
+= 4.0.0 =
+* Enhancement: Completely rewrite User Interface which is fully responsive
+* Enhancement: Completely rewrite framework to reduce database connection and memory usage
+* Enhancement: Completely rewrite framework to enhance efficiency in detecting hacking attempts
+* Enhancement: New virus scanning architect to simultaneously scan all types of viruses in the server which makes the scanning faster and consume less CPU sources
 
 = 3.8.4 =
 * Fixed: Fixed incorrect database export download link issue 

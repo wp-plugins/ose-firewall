@@ -143,6 +143,8 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
+DROP TABLE `#__osefirewall_filters`;
+
 CREATE  TABLE IF NOT EXISTS `#__osefirewall_filters_bk` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `filter` TEXT NOT NULL ,
@@ -154,6 +156,8 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_filters_bk` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
+
+DROP TABLE `#__osefirewall_filters_bk`;
 
 CREATE  TABLE IF NOT EXISTS `#__osefirewall_iptable` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
@@ -198,6 +202,8 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
+DROP TABLE `#__osefirewall_signatures`;
+
 CREATE  TABLE IF NOT EXISTS `#__osefirewall_signatures_bk` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `signature` TEXT NOT NULL ,
@@ -207,6 +213,8 @@ CREATE  TABLE IF NOT EXISTS `#__osefirewall_signatures_bk` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
+
+DROP TABLE `#__osefirewall_signatures_bk`;
 
 CREATE  TABLE IF NOT EXISTS `#__ose_app_admin` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,

@@ -1,348 +1,292 @@
+var url = ajaxurl; 
 var controller = "vsscan";
-	   
-Ext.ns('oseATH','oseATHScanner');
-oseATHScanner.pbar1 = oseGetProgressbar('pbar1', 'Database Initialisation Ready') ;
-oseATHScanner.pbar2 = oseGetProgressbar('pbar2', 'Virus Scanning Ready') ;
-oseATHScanner.pbar2.render ('progress-bar');
-oseATHScanner.pbar2.updateProgress(0, totalFiles);
+var option = "com_ose_firewall";
 
-function vsScanButtonUpdate (status) {
-	//Ext.get('vsscan').dom.disabled = status;
-	//Ext.get('init').dom.disabled = status;
-}
-
-oseATHScanner.statusOption = new Array(
-		   new Array(1, 'Basic Version'),
-		   new Array(2, 'Advanced Version')
-);
-
-oseATHScanner.CheckSubWin = oseGetWIn('checkSubWin', 'Checking Subscription Status', 900, 650); 
-
-oseATHScanner.updatePatternForm = Ext.create('Ext.form.Panel', {
-	bodyStyle: 'padding: 10px; padding-left: 20px'
-	,autoScroll: true
-	,autoWidth: true
-    ,border: false
-    ,labelAlign: 'left'
-    ,labelWidth: 150
-    ,buttons: [
-    {
-		text: O_UPDATE_PATTERN,
-		id: 'updatePatterns'
-		,handler: function(){
-    		oseATHScanner.updatePatternForm.submit({
-	    		clientValidation: true,
-	    		url : url,
-	    		method: 'post',
-	    		params:{
-	    			option : option, 
-	    			controller: controller, 
-	    			task: 'updatePatterns',
-	    			action: 'updatePatterns',
-	    			centnounce: Ext.get('centnounce').getValue()
-	    		},
-	    		waitMsg: O_PLEASE_WAIT,
-	    		success: function(response, options){
-	    			var msg  = options.result;
-	    			if (Ext.getCmp('patternType').value == 1)
-	    			{
-	    				oseATHScanner.CheckSubWin.height=300;
-	    			}	
-	    			Ext.getCmp('updatePatternWin').hide();
-	    			
-	    			oseATHScanner.CheckSubWin.show(); 
-	    			oseATHScanner.CheckSubWin.update(msg.message  + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3);
-	    		},
-	    		failure:function(response, options){
-	    			var msg  = options.result;
-	    			Ext.getCmp('updatePatternWin').hide();
-	    			oseATHScanner.CheckSubWin.show(); 
-	    			oseATHScanner.CheckSubWin.update(msg.message  + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3);
-	    		} 
-	    	});
-		}
-	},
-	{
-		text: O_CLOSE,
-		id: 'closebutton'
-		,handler: function(){
-			location.reload();  
-		}
+jQuery(document).ready(function($){
+	//get object with colros from plugin and store it.
+	var objColors = $('body').data('appStart').getColors();
+	var colours = {
+		white: objColors.white,
+		dark: objColors.dark,
+		red : objColors.red,
+		blue: objColors.blue,
+		green : objColors.green,
+		yellow: objColors.yellow,
+		brown: objColors.brown,
+		orange : objColors.orange,
+		purple : objColors.purple,
+		pink : objColors.pink,
+		lime : objColors.lime,
+		magenta: objColors.magenta,
+		teal: objColors.teal,
+		textcolor: '#5a5e63',
+		gray: objColors.gray
 	}
-	]
-    ,items:[
-            oseGetCombo('patternType', O_UPDATE_PATTERN, oseATHScanner.statusOption, 400, 250, 100, 2)
-    ]
-});
-
-
-oseATHScanner.updatePatternWin = new Ext.Window({
-	title: O_UPDATE_PATTERN
-	,id:'updatePatternWin'
-	,modal: true
-	,width: 500
-	,border: false
-	,autoHeight: true
-	,closeAction:'hide'
-	,items: [
-	         oseATHScanner.updatePatternForm
-	]
-});	
-
-function vsPatternUpdate () {
-	oseATHScanner.updatePatternWin.show();  	
-}
-
-var scheduleScanningWin = oseGetWIn('scheduleScanningWin', 'Checking Schedule Scanning Status', 900, 650);
-
-function scheduleScanning () {
-	scheduleScanningWin.show(); 
-	scheduleScanningWin.update('Checking Schedule Scanning Status from our server, please allow a few minutes to complete.');
-	checkScheduleScanningStatus (scheduleScanningWin);	
-}
-
-function checkScheduleScanningStatus (win) {
-	Ext.Ajax.request({
-		url : url,
-		params : {
-			option : option,
-			controller: controller,
-			task: 'checkScheduleScanning',
-			action: 'checkScheduleScanning'
-		},
-		method: 'POST',
-		success: function ( response, options ) {
-			var msg  = Ext.decode(response.responseText);
-			if (msg.paid==false)
-			{
-				win.update(msg.message + '<br/>' + msg.refund + '<br/>' + msg.form + '<br/>' + msg.form2  + '<br/>' + msg.form3 );
-			}
-			else
-			{
-				win.update(msg.message);
-			}
-		}
-	});	
-}
-
-function Countdown(options) {
-	  var timer,
-	  instance = this,
-	  seconds = options.seconds || 10,
-	  updateStatus = options.onUpdateStatus || function () {},
-	  counterEnd = options.onCounterEnd || function () {};
-
-	  function decrementCounter() {
-	    updateStatus(seconds);
-	    if (seconds === 0) {
-	      counterEnd();
-	      instance.stop();
-	    }
-	    seconds--;
-	  }
-
-	  this.start = function () {
-	    clearInterval(timer);
-	    timer = 0;
-	    seconds = options.seconds;
-	    timer = setInterval(decrementCounter, 1000);
-	  };
-
-	  this.stop = function () {
-	    clearInterval(timer);
-	  };
-}
-
-function scanAntivirus (step, task, counter) {
-	Ext.Ajax.request({
-		url : url,
-		params : {
-			option : option,
-			controller: controller,
-			task: task,
-			action: task,
-			step : step,
-			centnounce: Ext.get('centnounce').getValue()
-		},
-		method: 'POST',
-		success: function ( response, options ) {
-			var msg  = Ext.decode(response.responseText);
-			if (msg.showCountFiles == true )
-			{
-				Ext.Msg.show({
-				    title: 'Total Files Count',
-				    msg: msg.summary,
-				    width: 600
-				});    
-				scanAntivirus (-1, task, 0);
-			}	
-			else
-			{
-				Ext.Msg.hide();
-				
-				if(msg.status == 'ERROR')
-				{
-					Ext.Msg.alert("Error", msg.result);
-				}
-
-				if (msg.status=='Completed')
-				{
-					oseATHScanner.pbar2.updateProgress(msg.completed, msg.summary);
-					Ext.Msg.show({
-					    title: msg.status,
-					    msg: O_VSSCAN_COMPLETED,
-					    width: 300,
-					    buttons: Ext.Msg.OK,
-					    fn: function() { location.reload(); }
-					});
-				}
-				else
-				{
-					oseATHScanner.form2
-					oseATHScanner.pbar2.updateProgress(msg.completed, msg.summary);
-					Ext.fly('scan_progress').update(msg.progress);
-					Ext.fly('last_file').update(msg.last_file);
-					if (msg.cont > 0)
-					{	
-						scanAntivirus (1, task, 0);
-					}
-					else
-					{
-						oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_TERMINATED);
-						vsScanButtonUpdate (false); 
-					}	
-				}
-				
-			}	
-			
-			
-		},
-		failure : function ( request, status ) {
-			if (request.timedout==true)
-			{
-				counter = 0;
-				var myCounter = new Countdown({  
-					seconds:1,  // number of seconds to count down
-				    onUpdateStatus: function(sec){
-						//Ext.MessageBox.updateProgress(0.05, sec + ' seconds left...', 'Server respond aborted message, let\'s wait for a while and continue later');							
-				    },  // callback for each second
-				    onCounterEnd: function(){ 
-				    	//Ext.MessageBox.close(); 
-				    	scanAntivirus (1, task, 0); 
-				    } // final action
-				});
-				myCounter.start();
-			}
-			
-		}
-	});	
-}
-
-Ext.get('vsscan').on('click', function(){
-	oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_INPROGRESS);
-	vsScanButtonUpdate (true); 
-	scanAntivirus (-2, 'vsscan');
-});
-
-Ext.get('vsstop').on('click', function(){
-	oseATHScanner.pbar2.updateProgress(0, O_VSSCAN_TERMINATED);
-	vsScanButtonUpdate (false); 
-	Ext.Ajax.abort(); 
-});
-
-Ext.get('vscont').on('click', function(){
-	oseATHScanner.pbar2.updateProgress(0, O_CONTINUE_SCAN);
-	vsScanButtonUpdate (true); 
-	scanAntivirus (1, 'vsscan');
-});
-
-Ext.getCmp('checkSubWin').on('close', function () {
-	location.reload();
-})
-
-oseATHScanner.customScanForm = Ext.create('Ext.form.Panel', {
-	bodyStyle: 'padding: 10px; padding-left: 20px'
-		,autoScroll: true
-		,autoWidth: true
-	    ,border: false
-	    ,labelAlign: 'left'
-	    ,labelWidth: 150
-	    ,buttons: [
-	    {
-			text: O_START_SCANNING,
-			id: 'startSpecScanning'
-			,handler: function(){
-	    		var customPath = Ext.getCmp('scan_path').value; 
-	    		if (!customPath)
-	    		{
-	    			Ext.Msg.alert('Error', 'Please enter the scanning path');
-	    		}
-	    		else
-	    		{
-	    			oseATHScanner.customScanWin.close();
-	    			oseATHScanner.customScanForm.submit({
-			    		clientValidation: true,
-			    		url : url,
-			    		method: 'post',
-			    		params : {
-			    			option : option,
-			    			controller: controller,
-			    			task: 'vsscan',
-			    			action: 'vsscan',
-			    			step : -2,
-			    			centnounce: Ext.get('centnounce').getValue()
-			    		},
-			    		waitMsg: O_PLEASE_WAIT,
-			    		success: function(response, options){
-			    			var msg  = options.result;
-			    			if (msg.cont == true)
-			    			{
-			    				scanAntivirus (-1, 'vsscan', 0);
-			    			}
-			    		},
-			    		failure:function(response, options){
-			    			var msg  = options.result;
-			    			if (msg.cont == true)
-			    			{
-			    				scanAntivirus (-1, 'vsscan', 0);
-			    			}
-			    			else
-			    			{	
-			    				Ext.Msg.alert('Error', 'Error');
-			    			}	
-			    		} 
-			    	});
-	    		}
-			}
-		},
-		{
-			text: O_CLOSE,
-			id: 'closebutton'
-			,handler: function(){
-				location.reload();  
-			}
-		}
-		]
-	    ,items:[
-	            oseGetNormalTextField('scan_path', O_SCANNED_PATH, 100, 550, null)
-	    ]
+	//generate random number for charts
+	randNum = function(){
+		//return Math.floor(Math.random()*101);
+		return (Math.floor( Math.random()* (1+40-20) ) ) + 20;
+	}
+	initPlotChart($, [0,0], true);
+	initPlotChart($, [0,0], false);
+	initPieChartPage($, 20,100,1500, colours);
+	$('#vsscan').on('click', function() { 
+		showLoading ();
+		scanAntivirus (-2, 'vsscan');
 	});
+	$('#vsstop').on('click', function() { 
+		showLoading ();
+		location.reload(); 
+	});
+	$('#vscont').on('click', function() { 
+		runAllScanAntivirus ('vsscan', cpuData=[], memData=[]) 
+	});
+});
 
+var initPlotChart = function ($, data, cpu=true) {
+	//define chart colours
+	var chartColours = ['#3fc3a8', '#ed7a53', '#9FC569', '#bbdce3', '#9a3b1b', '#5a8022', '#2c7282'];
+	var options = {
+			grid: {
+				show: true,
+			    aboveData: true,
+			    color:'#3f3f3f',
+			    labelMargin: 15,
+			    axisMargin: 0, 
+			    borderWidth: 0,
+			    borderColor:null,
+			    minBorderMargin: 0,
+			    clickable: true, 
+			    hoverable: true,
+			    autoHighlight: true,
+			    mouseActiveRadius: 20
+			},
+	        series: {
+	        	grow: {active:false},
+	            lines: {
+            		show: true,
+            		fill: true,
+            		lineWidth: 2,
+            		steps: false
+	            	},
+	            points: {
+	            	show:true,
+	            	radius: 4,
+	            	symbol: "circle",
+	            	fill: true,
+	            	borderColor: "#fff"
+	            }
+	        },
+	        legend: { position: "se" },
+	        colors: chartColours,
+	        shadowSize:1,
+	        tooltip: true, //activate tooltip
+			tooltipOpts: {
+				content: "%s : %y.0",
+				shifts: {
+					x: -30,
+					y: -50
+				}
+			}
+	};  
+	if (cpu == true)
+	{
+		var plot1 = $.plot($("#line-chart-cpu"),
+			    [{
+			    		label: "CPU Load",
+			    		data: data,
+			    		lines: {fillColor: "#f2f7f9"},
+			    		points: {fillColor: "#3fc3a8"}
+			    }], options);
+	}
+	else
+	{
+		var plot2 = $.plot($("#line-chart-memory"),
+			    [{
+			    		label: "Membory Usage",
+			    		data: data,
+			    		lines: {fillColor: "#f2f7f9"},
+			    		points: {fillColor: "#3fc3a8"}
+			    }], options);
+	}
+	
+}
 
-oseATHScanner.customScanWin = new Ext.Window({
-	title: O_SCAN_SPECIFIC_FOLDER
-	,id: 'customScanWin'
-	,modal: true
-	,width: 650
-	,border: false
-	,autoHeight: true
-	,closeAction:'hide'
-	,items: [
-	     oseATHScanner.customScanForm
-	]
-	,closable: true
-});	
+var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
+	$(".easy-pie-chart").easyPieChart({
+        barColor: colours.dark,
+        borderColor: colours.dark,
+        trackColor: colours.gray,
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+    $(".easy-pie-chart-red").easyPieChart({
+        barColor: colours.red,
+        borderColor: colours.red,
+        trackColor: '#fbccbf',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+    $(".easy-pie-chart-green").easyPieChart({
+        barColor: colours.green,
+        borderColor: colours.green,
+        trackColor: '#b1f8b1',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+    $(".easy-pie-chart-blue").easyPieChart({
+        barColor: colours.blue,
+        borderColor: colours.blue,
+        trackColor: '#d2e4fb',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+    $(".easy-pie-chart-teal").easyPieChart({
+        barColor: colours.teal,
+        borderColor: colours.teal,
+        trackColor: '#c3e5e5',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+    $(".easy-pie-chart-purple").easyPieChart({
+        barColor: colours.purple,
+        borderColor: colours.purple,
+        trackColor: '#dec1f5',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+    $(".easy-pie-chart-orange").easyPieChart({
+        barColor: colours.orange,
+        borderColor: colours.orange,
+        trackColor: '#f9d7af',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+    $(".easy-pie-chart-lime").easyPieChart({
+        barColor: colours.lime,
+        borderColor: colours.lime,
+        trackColor: '#cfed93',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+}
 
-Ext.get('customscan').on('click', function () {
-	oseATHScanner.customScanWin.show().alignTo(Ext.getBody(),'t-t', [0, 50]);
-})
+function scanAntivirus (step, action, cpuData=[], memData=[]) {
+	jQuery(document).ready(function($){
+		$.ajax({
+	        type: "POST",
+	        url: url,
+	        dataType: 'json',
+		    data: {
+		    		option : option, 
+		    		controller:controller,
+		    		action:action,
+		    		task:action,
+		    		step : step,
+		    		centnounce:$('#centnounce').val()
+		    },
+	        success: function(data)
+	        {
+	        	hideLoading ();
+	        	cpuData.push([cpuData.length, data.cpuload]);
+	        	memData.push([memData.length, data.memory]);
+	        	initPlotChart($, cpuData, true);
+	        	initPlotChart($, memData, false);
+	        	$('#p4text').html(data.summary);
+	        	$('#last_file').html(data.last_file);
+	        	if (step == -2 && data.cont==true)
+	        	{
+	        		scanAntivirus (-1, action, cpuData, memData);
+	        	}
+	        	else
+	        	{
+	        		runAllScanAntivirus (action, cpuData, memData);
+	        	}
+	        }
+	      });
+	});
+}
+
+function runAllScanAntivirus (action, cpuData=[], memData=[]) {
+	var s1 = scanVirusInd (action, cpuData, memData, 1);
+	var s2 = scanVirusInd (action, cpuData, memData, 2);
+	var s3 = scanVirusInd (action, cpuData, memData, 3);
+	var s4 = scanVirusInd (action, cpuData, memData, 4);
+	var s5 = scanVirusInd (action, cpuData, memData, 5);
+	var s6 = scanVirusInd (action, cpuData, memData, 6);
+	var s7 = scanVirusInd (action, cpuData, memData, 7);
+	var s8 = scanVirusInd (action, cpuData, memData, 8);
+	jQuery(document).ready(function($){
+		$.when(s1, s2, s3, s4, s5, s6, s7, s8).then(
+			function ( v1, v2, v3, v4, v5, v6, v7, v8 ) {
+		});
+	});
+}
+
+function scanVirusInd (action, cpuData=[], memData=[], type) {
+	jQuery(document).ready(function($){
+		$.ajax({
+	        type: "POST",
+	        url: url,
+	        dataType: 'json',
+		    data: {
+		    		option : option, 
+		    		controller:controller,
+		    		action:action,
+		    		task:action,
+		    		step:0,
+		    		type:type,
+		    		centnounce:$('#centnounce').val()
+		    },
+	        success: function(data)
+	        {
+	        	hideLoading ();
+	        	if (type==2)
+	        	{
+	        		cpuData.push([cpuData.length, data.cpuload]);
+		        	memData.push([memData.length, data.memory]);
+		        	initPlotChart($, cpuData, true);
+		        	initPlotChart($, memData, false);
+	        	}	
+	        	$('#p4text').html(data.summary);
+	        	$('#last_file').html(data.last_file);
+	        	$('#easy-pie-chart-'+type).data('easyPieChart').update(data.completed);
+	        	$('#easy-pie-chart-'+type).attr("data-percent",data.completed);
+	        	$('#pie-'+type).html(data.completed+'%');
+	        	if (data.cont==true)
+	        	{
+	        		scanVirusInd (action, cpuData, memData, type);
+	        	}
+	        	else
+	        	{
+	        		return true;
+	        	}
+	        }
+	      });
+	});		
+}
+

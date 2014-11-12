@@ -1,363 +1,155 @@
+var url = ajaxurl; 
 var controller = "countryblock";
-var downloadFinish = false;
+var option = "com_ose_firewall";
 
-Ext.ns('oseATH','oseATHCOUNTRYBLOCKER');
-oseATHCOUNTRYBLOCKER.pbar1 = oseGetProgressbar('pbar1', 'Database Initialisation Ready') ;
+jQuery(document).ready(function($){
+    var rulesetsDataTable = $('#countryTable').dataTable( {
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: url,
+            type: "POST",
+            data: function ( d ) {
+                d.option = option;
+                d.controller = controller;
+                d.action = 'getCountryList';
+                d.task = 'getCountryList';
+                d.centnounce = $('#centnounce').val();
+            }
+        },
+        columns: [
+                { "data": "id", width: '5%'},
+                { "data": "country_code", width: '5%'},
+                { "data": "name"},
+                { "data": "status", width: '5%'},
+                { "data": "checkbox", sortable: false , width: '5%'}
+        ]
+    });
+    $('#countryTable tbody').on( 'click', 'tr', function () {
+        $(this).toggleClass('selected');
+    });
+    $('#checkedAll').on('click', function() {
+    	$('#countryTable').dataTable().api().rows()
+        .nodes()
+        .to$()
+        .toggleClass('selected');
+    })
+    var statusFilter = $('<label>Status: <select name="statusFilter" id="statusFilter"><option value="-1"></option><option value="1">Blacklisted</option><option value="2">Monitored</option><option value="3">Whitelisted</option></select></label>');
+    statusFilter.appendTo($("#countryTable_filter")).on( 'change', function () {
+        var val = $('#statusFilter');
+         rulesetsDataTable.api().column(3)
+            .search( val.val(), false, false )
+            .draw();
+    });
+    $("#download-geoip-form").submit(function() {
+    	downLoadFile($, 8)
+        return false; // avoid to execute the actual submit of the form.
+    });
+    $('.progress-circular-blue').circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});    
+});
+
+
+function downLoadFile($, step) {
+	$('#message-box').waitMe({
+	        effect : 'facebook',
+	        text : 'Please wait...',
+	        bg : 'rgba(255,255,255,0.7)',
+	        color : '#1BBC9B'
+	});
+	$.ajax({
+        type: "POST",
+        url: url,
+        data: {
+        	option:option,
+            controller:controller,
+            action:'downLoadTables',
+            task:'downLoadTables',
+            step:step,
+            centnounce:$('#centnounce').val()
+        }, 
+        success: function(data)
+        {
+           data = jQuery.parseJSON(data);
+           $('#message-box').waitMe("hide");
+           $('#message-box').html(data.result);
+     	   if (data.status == 'unfinish')
+     	   {
+     		  var pct = Math.round((1-(step-1)/8)*100);
+     		  $('.progress-circular-blue').empty().removeData().attr('data-text', pct+'%');
+              $('.progress-circular-blue').empty().removeData().attr('data-percent', pct).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+              downLoadFile($, step-1);
+     	   }
+     	   else
+     	   {
+     		  var pct = 100;
+     		  $('.progress-circular-blue').empty().removeData().attr('data-text', pct+'%');
+              $('.progress-circular-blue').empty().removeData().attr('data-percent', pct).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+     		  createTables ($, 0);
+     	   }
+        }
+      });
+}
+
+function createTables($, step) {
+	$('#message-box').waitMe({
+	        effect : 'facebook',
+	        text : 'Please wait...',
+	        bg : 'rgba(255,255,255,0.7)',
+	        color : '#1BBC9B'
+	});
+	$.ajax({
+        type: "POST",
+        url: url,
+        data: {
+        	option:option,
+            controller:controller,
+            action:'createTables',
+            task:'createTables',
+            step:step,
+            centnounce:$('#centnounce').val()
+        }, 
+        success: function(data)
+        {
+           data = jQuery.parseJSON(data);
+           $('#message-box').waitMe("hide");
+           $('#message-box').html(data.result);
+     	   if (data.cont == 1)
+     	   {
+     		  var pct = Math.round((step/10)*100);
+              $('.progress-circular-blue').empty().removeData().attr('data-text', pct+'%');
+              $('.progress-circular-blue').empty().removeData().attr('data-percent', pct).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+     		  createTables($, step+1);
+     	   }
+     	   else
+     	   {
+     		  $('.progress-circular-blue').empty().removeData().attr('data-text', '100%');
+              $('.progress-circular-blue').empty().removeData().attr('data-percent', 100).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+              $('#message-box').html('Completed');
+              $('#countryTable').dataTable().api().ajax.reload();
+              $('#formModal').modal('hide');
+              showDialogue ('CountryBlock Database Completed', 'Completed', 'OK');
+     	   }
+        }
+      });
+}
+
 function changeItemStatus(id, status)
 {
-	Ext.Msg.confirm(O_CHANGE_IP_STATUS, O_CHANGE_IP_STATUS_DESC, function(btn, text){
-		if (btn == 'yes'){
-			oseChangeItemStatus(url, option, controller, 'changeCountryStatus', id, status , oseATHCOUNTRYBLOCKER.store);
-		}
-	});
+	AppChangeItemStatus(id, status, '#countryTable', 'changeCountryStatus');
 }
 
-function downLoadDB(){
-	oseATHCOUNTRYBLOCKER.downloadDBWin.show();
-	downLoadFile(8, oseATHCOUNTRYBLOCKER.downloadDBWin, "downLoadTables");
+function changeBatchItemStatus (action) {
+	AppChangeBatchItemStatus (action, '#countryTable');
 }
 
-function installDB () {
-	var win = oseGetWIn('installer', 'Installer Information', 1024, 500); 
-	win.show(); 
-	win.update('Database installer preparing in progress');
-	createTables (0, win, "createTables");
+function removeItems () {
+	AppRemoveItems ('deleteCountry');
 }
 
-function changeALL () {
-	var win = oseGetWIn('changeAll', 'Change All Countries', 1024, 500); 
-	win.show(); 
-	win.update('Please choose the status you would like to change all countries to in the dropdown box.');
-
-}
-function createTables (step, win, task) {
-	Ext.Ajax.request({
-		url : url,
-		params : {
-			option : option,
-			controller: controller,
-			task: task,
-			action: task,
-			step : step,
-			centnounce: Ext.get('centnounce').getValue()
-		},
-		method: 'POST',
-		success: function ( response, options ) {
-			var msg  = Ext.decode(response.responseText);
-			if (msg.status=='Completed')
-			{
-				win.update(msg.result);
-				win.hide();
-				location.reload(); 
-			}
-			else
-			{
-				if (msg.cont == 1)
-				{	
-					win.update(msg.result);
-					createTables (msg.step, win, task);
-				}
-			}
-		}
-	});	
+function removeAllItems () {
+	AppRemoveAllItems ('deleteAllCountry', '#countryTable');
 }
 
-function downLoadFile(step, win, task) {
-	Ext.Ajax.request({
-		url : url,
-		params : {
-			option : option,
-			controller: controller,
-			task: task,
-			action: task,
-			step : step,
-			centnounce: Ext.get('centnounce').getValue()
-		},
-		method: 'POST',
-		success: function (response, options) {
-			var msg  = Ext.decode(response.responseText);
-			if (msg.status=='Completed')
-			{
-				downloadFinish = true;
-				oseATHCOUNTRYBLOCKER.pbar1.updateProgress(1, msg.result);
-				win.hide();
-				installDB();
-				//location.reload(); 
-			}
-			else
-			{
-				oseATHCOUNTRYBLOCKER.downloadDBForm
-				oseATHCOUNTRYBLOCKER.pbar1.updateProgress(1.0/step, msg.result);	
-				downLoadFile(step-1, win, task);
-			}
-		},
-		failure: function(response, options) {
-            Ext.MessageBox.show({
-                title: 'Message',
-                msg: 'fail',
-                buttons: Ext.MessageBox.OK
-           });
-		}
-	});	
+function loadData (action) {
+	AppRunAction (action, '#countryTable');	
 }
-
-oseATHCOUNTRYBLOCKER.downloadDBForm = Ext.create('Ext.form.Panel', {
-	bodyStyle: 'padding: 10px; padding-left: 20px'
-	,autoScroll: true
-	,autoWidth: true
-    ,border: false
-    ,labelAlign: 'left'
-    ,labelWidth: 150
-    ,buttons: [
-    {
-		text: O_STOP,
-		id: 'stopvsscanbutton'
-		,handler: function(){
-			oseATHCOUNTRYBLOCKER.pbar1.updateProgress(0, O_DOWNLOAD_TERMINATED);
-			vsScanButtonUpdate (false); 
-			Ext.Ajax.abort(); 
-		}
-	}
-	,
-	{
-		text: O_CLOSE,
-		id: 'closebutton'
-		,handler: function(){
-			location.reload();  
-		}
-	}
-	]
-    ,items:[
-		{
-			html: '<div id ="scan_progress">&nbsp;</div>'
-		},
-		oseATHCOUNTRYBLOCKER.pbar1,
-		{
-			html: '<div id ="last_file">&nbsp;</div>'
-		}
-    ]
-});
-
-oseATHCOUNTRYBLOCKER.blurListener = oseGetIPBlurListener(); 
-oseATHCOUNTRYBLOCKER.statusOption = new Array(
-					   new Array(1, 'Blacklisted'),
-					   new Array(2, 'Monitored'),
-					   new Array(3, 'Whitelisted')
-);
-
-oseATHCOUNTRYBLOCKER.changeCountryForm = Ext.create('Ext.form.Panel', {
-	bodyStyle: 'padding: 10px; padding-left: 20px'
-	,autoScroll: true
-	,autoWidth: true
-    ,border: false
-    ,labelAlign: 'left'
-    ,labelWidth: 150
-    ,buttons: [
-    {
-		text: O_CHANGEALL_COUNTRY,
-		id: 'changeAllCountrybutton'
-		,handler: function(){
-    			oseATHCOUNTRYBLOCKER.changeCountryForm.submit({
-	    		clientValidation: true,
-	    		url : url,
-	    		method: 'post',
-	    		params:{
-	    			option : option, 
-	    			controller: controller, 
-	    			task: 'changeAllCountry',
-	    			action: 'changeAllCountry',
-	    			centnounce: Ext.get('centnounce').getValue()
-	    		},
-	    		waitMsg: O_PLEASE_WAIT,
-	    		success: function(response, options){
-	    			oseAjaxSuccessReload(options.result, 'alert', oseATHCOUNTRYBLOCKER.store, true);
-	    		},
-	    		failure:function(response, options){
-	    			oseAjaxSuccessReload(options.result, 'alert', oseATHCOUNTRYBLOCKER.store, true);
-	    		} 
-	    		
-	    	});
-
-		}
-	},
-	{
-		text: O_CLOSE,
-		id: 'closebutton'
-		,handler: function(){
-			location.reload();  
-		}
-	}
-	]
-    ,items:[
-            oseGetCombo('countryStatus', O_CHANGEALL_COUNTRY_STATUS, oseATHCOUNTRYBLOCKER.statusOption, 600, 450, 100, 2),
-    ]
-});
-
-oseATHCOUNTRYBLOCKER.sortOption = new Array(
-		   new Array('id', 'ID'), 
-		   new Array('name', 'IP'),
-		   new Array('datetime', 'Date'),
-		   new Array('score', 'Score'),
-		   new Array('country_code', 'Country'),
-		   new Array('visits', 'Visits')
-);
-oseATHCOUNTRYBLOCKER.orderOption = new Array(
-		   new Array('asc', 'Ascending'), 
-		   new Array('desc', 'Descending')
-);
-
-oseATHCOUNTRYBLOCKER.comboSortby = oseGetCombo('sortby', 'Sort By', oseATHCOUNTRYBLOCKER.sortOption, 150, 50, 100, 'datetime');
-oseATHCOUNTRYBLOCKER.comboOrder = oseGetCombo('order', '', oseATHCOUNTRYBLOCKER.orderOption, 100, 50, 100, 'desc');
-oseATHCOUNTRYBLOCKER.pageSize = 
-{   
-		xtype:'numberfield',
-        fieldLabel: 'Items / Page',
-        name: 'pageSize',
-        id: 'pageSize',
-        labelWidth: 80,
-        width: 150,
-        value: 15
-}
-
-function reloadStore () {
-	oseATHCOUNTRYBLOCKER.store.pageSize = Ext.getCmp('pageSize').value;
-	oseATHCOUNTRYBLOCKER.store.load({
-		   params:{
-				sortby:Ext.getCmp('sortby').value,
-				order:Ext.getCmp('order').value,
-				limit:Ext.getCmp('pageSize').value
-		   }
-	});
-}
-
-oseATHCOUNTRYBLOCKER.fields = new Array('country_code', 'id', 'name', 'status');
-oseATHCOUNTRYBLOCKER.store = oseGetStore('attacksum', oseATHCOUNTRYBLOCKER.fields, url, option, controller, 'getCountryList');
-oseATHCOUNTRYBLOCKER.downloadDBWin = new Ext.Window({
-	title: O_DOWNLOAD_FILES
-	,modal: true
-	,width: 800
-	,border: false
-	,autoHeight: true
-	,closeAction:'hide'
-	,items: [
-	      oseATHCOUNTRYBLOCKER.downloadDBForm
-	]
-});	
-
-oseATHCOUNTRYBLOCKER.CountryStatusWin = new Ext.Window({
-	title: O_DOWNLOAD_FILES
-	,modal: true
-	,width: 800
-	,border: false
-	,autoHeight: true
-	,closeAction:'hide'
-	,items: [
-	         oseATHCOUNTRYBLOCKER.changeCountryForm
-	]
-});	
-
-oseATHCOUNTRYBLOCKER.downloadDBWin.on ('close', function () {
-	location.reload(); 
-})
-
-oseATHCOUNTRYBLOCKER.panel = Ext.create('Ext.grid.Panel', {
-		id: 'oseATHCOUNTRYBLOCKERPanel',
-		name: 'oseATHCOUNTRYBLOCKERPanel',
-	    store: oseATHCOUNTRYBLOCKER.store,
-	    selType: 'rowmodel',
-	    multiSelect: true,
-	    columns: [
-	        {id: 'country_code', header: '',  hidden:false, dataIndex: 'country_code', width: 30, sortable: true}
-            ,{id: 'id', header: O_ID,  hidden:false, dataIndex: 'id', width: 40, sortable: true}
-            ,{id: 'name', header: O_IP_RULE_TITLE,  hidden:false, dataIndex: 'name', width: '80%',  sortable: true}
-            ,{id: 'status', header: O_STATUS,  hidden:false, dataIndex: 'status', width: '10%', sortable: true}
-	    ],
-	    sortInfo:{field: 'name', direction: "ASC"},
-	    height: 500,
-	    width: '100%',
-	    renderTo: 'oseantihackerIPManager',
-	    tbar: new Ext.Toolbar({
-			defaults: {bodyStyle:'border:0px solid transparent;'},
-			items: [
-				        {
-				        	id: 'blkSelected',
-				            text: O_BLACKLIST_COUNTRY,
-				            handler: function(){			
-				            	osePanelButtonAction(O_BLACKLIST_CONFIRM, 
-				            						 O_BLACKLIST_CONFIRM_DESC, 
-				             						 oseATHCOUNTRYBLOCKER.panel, oseATHCOUNTRYBLOCKER, url, option, controller,  
-				             						 'blacklistIP'
-				             	);
-				            }
-				        },
-				        {
-				        	id: 'monSelected',
-				            text: O_MONITOR_COUNTRY,
-				            handler: function(){			
-				            	osePanelButtonAction(O_MONILIST_CONFIRM, 
-				            						 O_MONILIST_CONFIRM_DESC, 
-				             						 oseATHCOUNTRYBLOCKER.panel, oseATHCOUNTRYBLOCKER, url, option, controller,  
-				             						 'monitorIP'
-				             	);
-				            }
-				        },
-				        {
-				        	id: 'whtSelected',
-				            text: O_WHITELIST_COUNTRY,
-				            handler: function(){			
-				            	osePanelButtonAction(O_WHITELIST_CONFIRM, 
-				            						 O_WHITELIST_CONFIRM_DESC, 
-				             						 oseATHCOUNTRYBLOCKER.panel, oseATHCOUNTRYBLOCKER, url, option, controller, 
-				             						 'whitelistIP'
-				             	);
-				             	
-				            }
-				        },
-				        {
-				        	id: 'changeAll',
-				            text: O_CHANGEALL_COUNTRY,
-				            handler: function(){			
-				        		oseATHCOUNTRYBLOCKER.CountryStatusWin.show();
-				            }
-				        },{
-				        	id: 'downloadDB',
-				            text: DOWNLOAD_COUNTRY,
-				            handler: function(){			
-				        		downLoadDB();
-				            }
-				        },
-				        '->',
-				        oseGetStatusFilter(oseATHCOUNTRYBLOCKER)
-				        ,'-',
-				        oseGetSearchField (oseATHCOUNTRYBLOCKER)
-				    ]
-		}),
-		bbar: ['->',
-		        {
-			        xtype: 'pagingtoolbar',
-			        store: oseATHCOUNTRYBLOCKER.store,
-			        displayInfo: true
-				},
-				oseATHCOUNTRYBLOCKER.comboSortby, 
-				oseATHCOUNTRYBLOCKER.comboOrder,
-				oseATHCOUNTRYBLOCKER.pageSize
-        ]
-});
-
-reloadStore(); 
-
-Ext.getCmp('sortby').on ( 
-	"change", function () {
-		reloadStore();
-	}
-)
-Ext.getCmp('order').on ( 
-	"change", function () {
-		reloadStore();
-	}
-)
-Ext.getCmp('pageSize').on ( 
-	"change", function () {
-		reloadStore();
-	}
-)

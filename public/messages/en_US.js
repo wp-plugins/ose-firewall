@@ -1,26 +1,14 @@
-var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140901, updated on 1st Sep 2014</div>";
-var O_IP_RULE_TITLE = "IP Rule Title";
-var O_ID = "ID";
-var O_DATE = "Date";
-var O_RISK_SCORE = "Risk Score";
-var O_START_IP = "Start IP";
-var O_END_IP = "End IP";
-var O_IP_TYPE = "IP Type";
-var O_ADD_AN_IP = "Add an IP";
-var O_IP_RULE = "IP Rule Title";
-var O_IP_TYPE = "IP Type";
-var O_RANGE = "Range";
-var O_SINGLE_IP = "Single IP";
-var O_STATUS = "Status";
-var O_HOST = "Host";
-var O_VISITS = "VISITS";
-var O_VIEWDETAIL = "View Detail";
-var O_DELETE_ITEMS = "Delete Items";
-var O_STATUS_MONITORED_DESC = "Monitored";
-var O_STATUS_BLACKLIST_DESC = "Blacklist";
-var O_STATUS_WHITELIST_DESC = "Whitelist";
 var O_DELETE_CONFIRM = "Delete Confirmation";
 var O_DELETE_CONFIRM_DESC = "Please confirm that you would like to delete the selected items";
+
+
+
+
+
+
+
+
+var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140901, updated on 1st Sep 2014</div>";
 var O_DOWNLOAD_FILES = "Downloading files";
 var O_DOWNLOAD_TERMINATED = "Downloading terminates";
 var O_APIKEY = "API key";
@@ -42,27 +30,13 @@ var O_DESCRIPTION = "Description";
 var O_ATTACKTYPE = "Attack Type";
 var O_RULE = "Rule";
 var O_FILTER = "Filter";
-var O_SEO_PAGE_TITLE = "SEO Page Title";
-var O_SEO_META_KEY = "SEO Meta Keywords";
-var O_SEO_META_DESC = "SEO Meta Description";
-var O_SEO_META_GENERATOR = "SEO Meta Generator";
-var O_WEBMASTER_EMAIL = "Webmaster Contact Email";
-var O_CUSTOM_BAN_PAGE = "Custom Ban Page";
 var O_CHANGE_IP_STATUS= "Change IP Status";
 var O_CHANGE_IP_STATUS_DESC= "This will change the access control rules for this IP/IP range. Are you sure you want to change the status?";
 var O_CHANGE_VAR_STATUS = "Change Variables Status";
 var O_CHANGE_VAR_STATUS_DESC = "This will change the access control rules for this variables. Are you sure you want to change the status?";
 var O_CHANGE_FIREWALL_STATUS = "Change Firewall Status";
 var O_CHANGE_FIREWALL_STATUS_DESC = "This will change the access control rules for firewall. Are you sure you want to change the status?";
-var O_SCAN_YAHOO_BOTS = "Scan Yahoo Bots";
-var O_SCAN_GOOGLE_BOTS = "Scan Google Bots";
-var O_SCAN_MSN_BOTS = "Scan MSN Bots";
 var O_ANTI_HACKING_SCANNING_OPTIONS = "<b>Anti-Hacking Scanning Options</b>";
-var O_FRONTEND_BLOCKING_MODE = "Frontend Blocking Mode";
-var O_COUNTRY_BLOCKING = "Country Blocking";
-var O_BAN_IP_AND_SHOW_BAN_PAGE_TO_STOP_AN_ATTACK = "Ban IP and show ban page to stop an attack";
-var O_SHOW_A_403_ERROR_PAGE_AND_STOP_THE_ATTACK = "Show a 403 error page and stop the attack";
-var O_SILENTLY_FILTER_HACKING_VALUES_RECOMMENDED_FOR_NEW_USERS = "Silently filter hacking values - Recommended for new users";
 var O_SECRET_WORD = "Secret Word";
 var O_SECRET_WORD_DESC = "Secret Word, please note this down. The secret word allows you to get in OSE Suite when you are blocked.";
 var O_DEVELOPMENT_MODE = "Development Mode";
@@ -78,7 +52,7 @@ var O_USER = "User";
 var O_USER_ID = "User ID";
 var O_EMAIL = "Email";
 var O_ADD_A_LINK = "Add a linkage";
-var O_SCANNED_FILE_EXTENSIONS = "File extensions being scanned";
+
 var O_SCANNED_FILE_EXTENSIONS_DESC = "Only the following file extensions have been tested and supported by OSE Anti-Virus, if you broke the system after changing the file extension field, please revert the file extension value to the following: <br/> <b>htm,html,shtm,shtml,css,js,php,php3,php4,php5,inc,phtml,jpg,jpeg,gif,png,bmp,c,sh,pl,perl,cgi,txt</b>";
 var O_UPDATE_VERSION_DESC = "This will update local anti-virus database";
 var O_CLAMAV_DESC = "To use ClamAV Anti-Virus, please ensure you have installed ClamAV or consult your hosting company on whether ClamAV is installed. If you have a dedicated server, please see this <a href = ' http://www.centrora.com/blog/install-free-antivirus-clamav-on-linux/' target='_blank'>tutorial</a> on how to install ClamAV. Once installed, please see <a href='http://www.centrora.com/blog/free-antivirus-for-wordpress/' target = '_blank'>this tutorial</a> to enable ClamAV scanning in Centrora Security.";
@@ -128,8 +102,6 @@ var O_PLS_ENTER_USERINFO = "Please enter your username/password";
 // Added from 2.1.4
 var O_DEBUG_MODE = "Detect errors in the website?";
 // Added from 2.3.0
-var O_FILE_UPLOAD_SCANNING = "Scan uploaded files in frontend?";
-var O_ALLOWED_FILE_TYPES = "Allowed upload file extensions (Please note: FILEINFO module needs to be installed properly)";
 var O_SERVER_BACKUP_TYPE ="Backup Server";
 var O_BACKUP_TYPE ="Backup Type";
 var O_BACKUP_TO = "Backup To:";
@@ -172,7 +144,6 @@ var SILENT_MODE_BLOCK_MAX_ATTEMPTS = "Maximum attack attempts allowed for an IP 
 var O_SCHEDULE_AUDITING = "<b>Schedule Auditing Options</b>";	
 var O_CHANGEALL_COUNTRY = "Change All Countries";
 var O_CHANGEALL_COUNTRY_STATUS = "What status would you like to change all countries to?";
-var O_RECEIVE_EMAIL = "Receive Centrora Firewall / SafeBrowsing Update Email";
 var O_SYSTEM_FINETUNING = "<b>System Fine Tuning</b>";
 var O_DISABLE_REGISTER_GLOBAL = "Disable PHP register_global directive";
 var O_DISABLE_SAFE_MODE = "Disable PHP safe_mode directive";
