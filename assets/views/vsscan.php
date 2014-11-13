@@ -1,11 +1,13 @@
 <?php 
 oseFirewall::checkDBReady ();
-oseFirewall::checkSubscriptionStatus ();
+$status = oseFirewall::checkSubscriptionStatus (false);
 $confArray = $this->model->getConfiguration('vsscan');
 if (isset($confArray['data']['vsScanExt']) && !isset($confArray['data']['file_ext']))
 {
 	$confArray['data']['file_ext'] = $confArray['data']['vsScanExt'];
 }
+if ($status == true)
+{	
 ?>
 <!-- Configuration Form Modal -->
                 <div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -171,7 +173,27 @@ if (isset($confArray['data']['vsScanExt']) && !isset($confArray['data']['file_ex
 <?php 
 //\PHPBenchmark\Monitor::instance()->snapshot('Finish loading Centrora');
 ?>
-
 <?php 
 include_once(dirname(__FILE__).'/scanpath.php');
+}
+else {
+?>
+<div id = "oseappcontainer" >
+  <div class="container">
+	<?php 
+		$this ->model->showLogo ();
+		$this ->model->showHeader ();
+	?>
+	<div class="row">
+		<div class="panel panel-primary">
+		<div class="col-md-9">
+			<img src ="<?php echo OSE_FWURL.'/public/images/screenshot-6.png'; ?>" />
+		</div>
+		<?php include_once dirname(__FILE__).'/calltoaction.php';?>
+		</div>
+	</div>
+  </div>
+</div>
+<?php 
+}
 ?>

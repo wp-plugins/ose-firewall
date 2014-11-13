@@ -237,7 +237,7 @@ class ManageipsController extends \App\Base {
 		else
 		{	
 			$file = $_FILES['csvfile'];
-			if ($file['type']!='text/csv')
+			if ($file['type']!='text/csv' && $file['type']!='text/comma-separated-values')
 			{
 				$this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("Please upload CSV files, file types apart from the CSV is not accepted."), false);
 			}

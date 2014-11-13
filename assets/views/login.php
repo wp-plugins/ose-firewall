@@ -34,7 +34,7 @@ $urls = oseFirewall::getDashboardURLs ();
 	  				}
 	  			}
             ?>
-			<div class="col-md-12">
+            <div class="col-md-12">
 				<div class="bs-component">
 					<div class="panel panel-teal">
 						<div class="panel-heading">
