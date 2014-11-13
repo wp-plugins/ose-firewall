@@ -430,12 +430,21 @@ class oseFirewallBase extends oseFirewallRoot
 		$return = array();
 		$return[0] = true;
 		$return[1] = null;
+		$phpVersion = $this->comparePHPVersion ();
+		if ($phpVersion == false)
+		{
+			$return[0] = false;
+			$return[1] = 'Centrora Security 4.0.0+ requires PHP version 5.3.0 or above, please contact your hosting company to upgrade the PHP version.';
+		}
 		if (!class_exists('PDO'))
 		{
 			$return[0] = false;
 			$return[1] = 'Class PDO not found in your hosting environment, please follow this <a href="http://www.centrora.com/user-manual/fatal-error-class-pdo-not-found/" target="_blank" >tutorial</a> to enable the PDO class before using the Firewall System.';
 		}
 		return $return;
+	}	
+	public function comparePHPVersion () {
+		return (version_compare(PHP_VERSION, '5.3.0') >= 0)?true:false;
 	}
 	public function runReport () {
 		oseFirewall::callLibClass('audit', 'audit');
@@ -512,7 +521,7 @@ class oseFirewallBase extends oseFirewallRoot
 		$result = $db->loadObject();
 		return (!empty($result))?$result->value:null;
 	}
-	public static function checkSubscriptionStatus () {
+	public static function checkSubscriptionStatus ($redirect= true) {
 		$db = oseFirewall::getDBO();
 		$query = "SELECT * FROM `#__ose_secConfig` WHERE (`key` = 'profileID' OR `key` = 'profileStatus') AND `type` = 'panel'";
 		$db->setQuery($query);
@@ -527,7 +536,14 @@ class oseFirewallBase extends oseFirewallRoot
 		}
 		else
 		{
-			oseFirewall::redirectLogin();
+			if ($redirect == true)
+			{	
+				oseFirewall::redirectLogin();
+			}
+			else 
+			{
+				return false;
+			}
 		}
 	}
 	public static function checkWebkey () {

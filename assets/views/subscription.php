@@ -11,7 +11,7 @@ $this->model->getNounce ();
 	?>
 	<div class="content-inner">
 	<div class="row ">
-                        <div class="col-lg-12 sortable-layout">
+	                        <div class="col-lg-12 sortable-layout">
                             <!-- col-lg-12 start here -->
                             <div class="panel panel-primary plain toggle panelClose panelRefresh">
                                 <!-- Start .panel -->

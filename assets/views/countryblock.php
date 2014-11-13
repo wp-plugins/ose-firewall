@@ -1,8 +1,10 @@
 <?php
 oseFirewall::checkDBReady ();
-oseFirewall::checkSubscriptionStatus ();
+$status = oseFirewall::checkSubscriptionStatus (false);
 $this->model->getNounce ();
 $confArray = $this->model->getConfiguration('country');
+if ($status == true)
+{
 ?>
 <div id="oseappcontainer">
 	<div class="container">
@@ -127,3 +129,26 @@ $confArray = $this->model->getConfiguration('country');
                 </div>
                 
 	<!-- /.modal -->
+<?php
+}
+else {
+?>
+<div id = "oseappcontainer" >
+  <div class="container">
+	<?php 
+		$this ->model->showLogo ();
+		$this ->model->showHeader ();
+	?>
+	<div class="row">
+		<div class="panel panel-primary">
+		<div class="col-md-9">
+			<img src ="<?php echo OSE_FWURL.'/public/images/screenshot-8.png'; ?>" />
+		</div>
+		<?php include_once dirname(__FILE__).'/calltoaction.php';?>
+		</div>
+	</div>
+  </div>
+</div>
+<?php 
+}
+?>
