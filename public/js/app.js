@@ -314,10 +314,12 @@ jQuery(document).ready(function($){
 jQuery(document).ready(function($){
 	$("#configuraton-form").submit(function() {
 		showLoading();
+		var data = $("#configuraton-form").serialize();
+		data += '&centnounce='+$('#centnounce').val();
         $.ajax({
                type: "POST",
                url: url,
-               data: $("#configuraton-form").serialize(), // serializes the form's elements.
+               data: data, // serializes the form's elements.
                success: function(data)
                {
             	   data = jQuery.parseJSON(data);
@@ -337,10 +339,12 @@ jQuery(document).ready(function($){
 	
 	$("#seo-configuraton-form").submit(function() {
 		showLoading();
+		var data = $("#seo-configuraton-form").serialize();
+		data += '&centnounce='+$('#centnounce').val();
         $.ajax({
                type: "POST",
                url: url,
-               data: $("#seo-configuraton-form").serialize(), // serializes the form's elements.
+               data: data, // serializes the form's elements.
                success: function(data)
                {
             	   data = jQuery.parseJSON(data);
@@ -360,10 +364,12 @@ jQuery(document).ready(function($){
 	
 	$("#admin-configuraton-form").submit(function() {
 		showLoading();
+		var data = $("#admin-configuraton-form").serialize();
+		data += '&centnounce='+$('#centnounce').val();
         $.ajax({
                type: "POST",
                url: url,
-               data: $("#admin-configuraton-form").serialize(), // serializes the form's elements.
+               data: data, // serializes the form's elements.
                success: function(data)
                {
             	   data = jQuery.parseJSON(data);
@@ -386,10 +392,12 @@ jQuery(document).ready(function($){
 	
 	$("#scan-form").submit(function() {
 		showLoading();
+		var data = $("#scan-form").serialize();
+		data += '&centnounce='+$('#centnounce').val();
         $.ajax({
                type: "POST",
                url: url,
-               data: $("#scan-form").serialize(), // serializes the form's elements.
+               data: data, // serializes the form's elements.
                success: function(data)
                {
             	   hideLoading();
