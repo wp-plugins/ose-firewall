@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.0.0
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,11 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.0.3 =
+* Enhancement: Improved scanning class to harden protection and avoid IP spoofing
+* Enhancement: Improved dashboard section to avoid CSRF attack
+* Fixed: Fixed error warning for WordPress website with lower version
 
 = 4.0.2 =
 * Added: Added PHP version to check ensure the PHP version (5.3.0) requirement is fulfilled.

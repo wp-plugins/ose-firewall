@@ -174,4 +174,11 @@ class panel
 		$content['task'] = 'getToken';
 		$this->sendRequestNoExit($content);
 	}
+	public function getDomainCount () {
+		$dbo = oseFirewall::getDBO();
+		$query = "SELECT COUNT(id) as count FROM `#__osefirewall_logs` WHERE `comp` = 'dom'";
+		$dbo->setQuery($query);
+		$webkey = $dbo->loadObject()->count;
+		return $webkey;
+	}
 }

@@ -74,13 +74,15 @@ class DownloadRemoteController extends BaseRemoteController{
 		if ($result == true)
 		{
 			$this->model->updateVersion ($type, $version); 
-			$receiveEmail = $this->model->getEmailConfig (); 
+			$receiveEmail = $this->model->getEmailConfig ();
+			$domainCount = $this->model->getDomainCount(); 
 			$return = array(
 				'success' => true,
 				'status' => 'SUCCESS',
 				'result' => $this->model->getLang("ADVRULESET_INSTALL_SUCCESS"),
 				'cont' => false,
-				'receiveEmail' => (int)$receiveEmail 
+				'receiveEmail' => (int)$receiveEmail,
+				'domainCount' => $domainCount
 			);
 			$tmp = $this->model->JSON_encode($return);
 			print_r($tmp); exit;
