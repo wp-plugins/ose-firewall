@@ -926,4 +926,24 @@ class oseFirewallScanner {
 		$return ['type'] = $type;
 		return $return;
 	}
+	protected function logDomain() {
+		$serverName = $_SERVER['SERVER_NAME'];
+		$query ="SELECT * FROM `#__osefirewall_logs` WHERE `comp` = 'dom' AND `status` = ".$this->db->quoteValue($serverName)." LIMIT 1";
+		$this->db->setQuery($query);
+		$this->db->query();
+		$result = $this->db->loadObject();
+		if (!$result) {
+			$time = $this->getDateTime ();
+			$query = "INSERT INTO `#__osefirewall_logs` (
+					`id`,
+					`date`,
+					`comp`,
+					`status`
+					)
+					VALUES(
+					NULL,".$this->db->quoteValue($time).",'dom',".$this->db->quoteValue($serverName).");";
+			$this->db->setQuery($query);
+			$this->db->query();
+		}
+	}
 }

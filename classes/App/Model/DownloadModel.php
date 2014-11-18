@@ -57,4 +57,9 @@ class DownloadModel extends BaseModel {
 		$virusScanner = new virusScanner();
 		$virusScanner->scheduleScanning($step); 
 	}
+	public function getDomainCount () {
+		oseFirewall::callLibClass('panel', 'panel');
+		$panel = new panel();
+		return $panel ->getDomainCount ();
+	}
 }

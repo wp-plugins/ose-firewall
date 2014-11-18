@@ -107,7 +107,14 @@ class oseWordPress extends oseFramework
 		$copy->user = $wpdb->dbuser;
 		$copy->password = $wpdb->dbpassword;
 		$copy->prefix = $wpdb->base_prefix;
-		$copy->use_mysqli = $wpdb->use_mysqli;
+		if (isset($wpdb->use_mysqli))
+		{	
+			$copy->use_mysqli = $wpdb->use_mysqli;
+		}
+		else 
+		{
+			$copy->use_mysqli = false;
+		}
 		$copy->dbtype = ($copy->use_mysqli==true)?'mysqli':'mysql';
 		return $copy;
 	}

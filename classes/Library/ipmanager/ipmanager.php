@@ -220,44 +220,51 @@ class oseFirewallIpManager
 	}
 	private function getRealIP()
 	{
-		$ip = false;
-		if (!empty($_SERVER['HTTP_CLIENT_IP']))
+		$ip = null;
+		if (!empty($_SERVER['REMOTE_ADDR']))
 		{
-			$ip = $_SERVER['HTTP_CLIENT_IP'];
+			$ip = $_SERVER['REMOTE_ADDR'];
 		}
-		if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+		else 
 		{
-			$ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
-			if ($ip)
+			if (!empty($_SERVER['HTTP_CLIENT_IP']))
 			{
-				array_unshift($ips, $ip);
-				$ip = false;
+				$ip = $_SERVER['HTTP_CLIENT_IP'];
 			}
-			$this->tvar = phpversion();
-			for ($i = 0, $total = count($ips); $i < $total; $i++)
+			if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
 			{
-				if (!preg_match("/^(10|172\.16|192\.168)\./i", $ips[$i]))
+				$ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
+				if ($ip)
 				{
-					if (version_compare($this->tvar, "5.0.0", ">="))
+					array_unshift($ips, $ip);
+					$ip = null;
+				}
+				$this->tvar = phpversion();
+				for ($i = 0, $total = count($ips); $i < $total; $i++)
+				{
+					if (!preg_match("/^(10|172\.16|192\.168)\./i", $ips[$i]))
 					{
-						if (ip2long($ips[$i]) != false)
+						if (version_compare($this->tvar, "5.0.0", ">="))
 						{
-							$ip = $ips[$i];
-							break;
+							if (ip2long($ips[$i]) != false)
+							{
+								$ip = $ips[$i];
+								break;
+							}
 						}
-					}
-					else
-					{
-						if (ip2long($ips[$i]) != - 1)
+						else
 						{
-							$ip = $ips[$i];
-							break;
+							if (ip2long($ips[$i]) != - 1)
+							{
+								$ip = $ips[$i];
+								break;
+							}
 						}
 					}
 				}
 			}
-		}
-		return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+		}	
+		return $ip;
 	}
 	public function isSearchEngineBot($crawlers, $userAgent)
 	{

@@ -288,6 +288,8 @@ CREATE TABLE IF NOT EXISTS `#__osefirewall_basicrules_bk` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE `#__osefirewall_basicrules_bk`;
+
 CREATE  TABLE IF NOT EXISTS `#__osefirewall_files` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `filename` TEXT NOT NULL ,

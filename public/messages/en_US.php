@@ -466,7 +466,7 @@ define('OVERVIEW_COUNTRY_MAP','Overview of Hacking Activities By Countries');
 define('OVERVIEW_TRAFFICS','Traffic Overview');
 define('RECENT_HACKING_INFO','Recent Hacking Traffic');
 define('PLEASE_ENTER_REQUIRED_INFO','Please enter the required information.');
-define('MY_PREMIUM_SERVICE','My Premium Service');
+define('MY_PREMIUM_SERVICE','Activate My Premium Service');
 define('FIREWALL_CONFIGURATION','Firewall Configuration');
 define('INSTALLATION','Installation');
 define('INSTALLDB','Install Database Tables');

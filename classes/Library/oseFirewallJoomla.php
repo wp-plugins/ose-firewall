@@ -161,8 +161,46 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="index.php?option=' . $extension . '&view=login">' . oLang::_get('MY_PREMIUM_SERVICE'). '</a></li>';
 		// About Ends
 		
+		
+		$menu .=self::addSuiteMenu ();
+		
 		// Main Feature Ends;
 		$menu .= '</ul></div></div></div>';
+		return $menu;
+	}
+	protected static function addSuiteMenu () {
+		$option = JRequest::getVar('option', null);
+		$menu = '';
+		$menu .= '<li class="dropdown"';
+		$menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator Menu<b class="caret"></b></a>';
+		// SubMenu Anti-Virus Starts;
+		$menu .= '<ul class="dropdown-menu">';
+		$menu .= '<li ';
+		$menu .= ($option == 'com_users') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=com_users&view=users">User Manager</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($option == 'com_installer') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=com_installer">Extension Manager</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($option == 'com_admin') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=com_admin&view=sysinfo">System Information</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($option == 'com_config') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=com_config">Global Configuration</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($option == 'com_plugins') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=com_plugins&view=plugins">Plugin Manager</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($option == 'com_login') ? 'class="active"' : '';
+		
+		$menu .= '><a href="index.php?option=com_login&task=logout&'.JUtility::getToken().'=1">Logout</a></li>';
+		
+		$menu .= '</ul></li>';
 		return $menu;
 	}
 	public static function getAjaxScript() {

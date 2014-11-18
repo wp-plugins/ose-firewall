@@ -217,10 +217,12 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 				case 1:
 					$this -> updateStatus($this->blockIP);
 					$this -> sendEmail('blacklisted', $notified);
+					$this -> logDomain();
 					$this -> showBanPage();
 				break;
 				case 0:
 					$this -> sendEmail('403blocked', $notified);
+					$this -> logDomain();
 					$this -> show403Page();
 				break;
 			}

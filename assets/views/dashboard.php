@@ -1,5 +1,6 @@
 <?php 
 oseFirewall::checkDBReady ();
+$this->model->getNounce ();
 $urls = oseFirewall::getDashboardURLs();
 ?>
 <div id = "oseappcontainer" >
