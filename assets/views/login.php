@@ -1,5 +1,6 @@
 <?php
 oseFirewall::checkSubscription ();
+$this->model->getNounce ();
 $urls = oseFirewall::getDashboardURLs ();
 ?>
 <div id="oseappcontainer">

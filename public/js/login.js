@@ -61,10 +61,13 @@ function updateKey (key, verified) {
 jQuery(document).ready(function($){
     $('#login-form').submit(function() {
     	showLoading ();
+    	var data =[];
+    	data[0]={name:"centnounce", value:$('#centnounce').val()};
     	// submit the form 
         $(this).ajaxSubmit({
         	url:url,
-        	type: "POST",
+        	type:"POST",
+        	data:data,
         	success: function(data) { 
         		data = jQuery.parseJSON(data);
         		if (data.success== true && data.status!='Error' && data.webkey!='')
@@ -85,10 +88,12 @@ jQuery(document).ready(function($){
     
     $('#new-account-form').submit(function() {
     	showLoading ();
-    	// submit the form 
-        $(this).ajaxSubmit({
+    	var data =[];
+    	data[0]={name:"centnounce", value:$('#centnounce').val()};
+    	$(this).ajaxSubmit({
         	url:url,
         	type: "POST",
+        	data: data,
         	success: function(data) { 
         		data = jQuery.parseJSON(data);
         		if (data.success== true)
