@@ -76,7 +76,15 @@ class oseFirewallBase extends oseFirewallRoot
 	}
 	private function isGAuthenticatorEnabled()
 	{
-		return $this->checkOseConfig ('googleVerification', 'advscan'); 
+		$enabled = $this->checkOseConfig ('googleVerification', 'scan');  
+		if ($this->checkOseConfig ('googleVerification', 'scan') == true || $this->checkOseConfig ('googleVerification', 'advscan') == true)
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		} 
 	}
 	public function loadBackendFunctions()
 	{

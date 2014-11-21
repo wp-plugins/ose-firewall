@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.0.0
-Stable tag: 4.0.3
+Stable tag: 4.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,10 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.0.4 =
+* Fixed: Fixed dashboard not Javascript function not correctly in Google Chrome version 39.0.2171.65
+* Fixed: Fixed Google 2-Step Verification Configuration not showing correctly in version 4.0
 
 = 4.0.3 =
 * Enhancement: Improved scanning class to harden protection and avoid IP spoofing

@@ -44,10 +44,11 @@ class ScanconfigController extends ConfigurationController {
 				$data['blockIP'] = $this->model->getInt('blockIP', 0);
 				$data['adminEmail'] = $this->model->getVar('adminEmail', null);
 				$data['receiveEmail'] = $this->model->getInt('receiveEmail', 1);
+				$data['googleVerification'] = $this->model->getVar('googleVerification', 0);
 				break;
 			case 'advscan':
+				$data['adRules'] = $this->model->getInt('adRules', 20);
 				$data['threshold'] = $this->model->getInt('threshold', 20);
-				$data['googleVerification'] = $this->model->getVar('googleVerification', 0);
 				$data['slient_max_att'] = $this->model->getInt('slient_max_att', 10);
 				$data['silentMode'] = $this->model->getInt('silentMode', 1);
 				break;

@@ -74,10 +74,10 @@ if ($status == true)
 										<label for="adRules" class="col-sm-8 control-label"><?php oLang::_('O_ADRULESETS');?></label>
 										<div class="col-sm-4">
 												<label class="radio-inline">
-				                                     <input type="radio" name="adRules" value="1" <?php echo (isset($confArray['data']['adRules']) && $confArray['data']['adRules']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
+				                                     <input type="radio" name="adRules" value="1" <?php echo (!empty($confArray['data']['adRules']) && $confArray['data']['adRules']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="adRules" value="0" <?php echo (isset($confArray['data']['adRules']) && $confArray['data']['adRules']==false)?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                     <input type="radio" name="adRules" value="0" <?php echo (empty($confArray['data']['adRules']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
 				                                </label>
 										</div>
 									</div>
@@ -85,10 +85,10 @@ if ($status == true)
 										<label for="silentMode" class="col-sm-8 control-label"><?php oLang::_('O_SILENTLY_FILTER_ATTACK');?></label>
 										<div class="col-sm-4">
 												<label class="radio-inline">
-				                                     <input type="radio" name="silentMode" value="1" <?php echo (isset($confArray['data']['silentMode']) && $confArray['data']['silentMode']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
+				                                     <input type="radio" name="silentMode" value="1" <?php echo (!empty($confArray['data']['silentMode']) && $confArray['data']['silentMode']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="silentMode" value="0" <?php echo (isset($confArray['data']['silentMode']) && $confArray['data']['silentMode']==false)?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                     <input type="radio" name="silentMode" value="0" <?php echo (empty($confArray['data']['silentMode']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
 				                                </label>
 										</div>
 									</div>

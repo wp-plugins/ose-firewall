@@ -23,7 +23,7 @@
 				                                     <input type="radio" name="receiveEmail" value="1" <?php echo (!empty($confArray['data']['receiveEmail']) && $confArray['data']['receiveEmail']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="receiveEmail" value="0" <?php echo (!empty($confArray['data']['receiveEmail']) && $confArray['data']['receiveEmail']==false)?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                     <input type="radio" name="receiveEmail" value="0" <?php echo (empty($confArray['data']['receiveEmail']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
 				                                </label>
 										</div>
 									</div>
@@ -34,7 +34,7 @@
 				                                     <input type="radio" name="devMode" value="1" <?php echo (!empty($confArray['data']['devMode']) && $confArray['data']['devMode']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="devMode" value="0" <?php echo (!empty($confArray['data']['devMode']) && $confArray['data']['devMode']==false)?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                     <input type="radio" name="devMode" value="0" <?php echo (empty($confArray['data']['devMode']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
 				                                </label>
 										</div>
 									</div>
@@ -45,7 +45,7 @@
 				                                     <input type="radio" name="blockIP" value="1" <?php echo (!empty($confArray['data']['blockIP']) && $confArray['data']['blockIP']==true)?'checked="checked"':''?>><?php oLang::_('O_BAN_IP_AND_SHOW_BAN_PAGE_TO_STOP_AN_ATTACK');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="blockIP" value="0" <?php echo (!empty($confArray['data']['blockIP']) && $confArray['data']['blockIP']==false)?'checked="checked"':''?>><?php oLang::_('O_SHOW_A_403_ERROR_PAGE_AND_STOP_THE_ATTACK');?>
+				                                     <input type="radio" name="blockIP" value="0" <?php echo (empty($confArray['data']['blockIP']))?'checked="checked"':''?>><?php oLang::_('O_SHOW_A_403_ERROR_PAGE_AND_STOP_THE_ATTACK');?>
 				                                </label>
 										</div>
 									</div>
@@ -53,6 +53,17 @@
 										<label for="allowExts" class="col-sm-4 control-label"><?php oLang::_('O_ALLOWED_FILE_TYPES');?></label>
 										<div class="col-sm-8">
 				                               <input type="text" name="allowExts" value="<?php echo (empty($confArray['data']['allowExts']))?'jpg, png, doc':$confArray['data']['allowExts']?>" class="form-control">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="googleVerification" class="col-sm-4 control-label"><?php oLang::_('O_GOOGLE_2_VERIFICATION');?></label>
+										<div class="col-sm-8">
+												<label class="radio-inline">
+				                                     <input type="radio" name="googleVerification" value="1" <?php echo (!empty($confArray['data']['googleVerification']) && $confArray['data']['googleVerification']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
+				                                </label>
+				                                <label class="radio-inline">
+				                                     <input type="radio" name="googleVerification" value="0" <?php echo (empty($confArray['data']['googleVerification']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                </label>
 										</div>
 									</div>
 										<input type="hidden" name="option" value="com_ose_firewall">
@@ -122,7 +133,7 @@
 				                                     <input type="radio" name="scanGoogleBots" value="1" <?php echo (!empty($seoConfArray['data']['scanGoogleBots']) && $seoConfArray['data']['scanGoogleBots']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="scanGoogleBots" value="0" <?php echo (!empty($seoConfArray['data']['scanGoogleBots']) && $seoConfArray['data']['scanGoogleBots']==false)?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                     <input type="radio" name="scanGoogleBots" value="0" <?php echo (empty($seoConfArray['data']['scanGoogleBots']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
 				                                </label>
 										</div>
 									</div>
@@ -133,7 +144,7 @@
 				                                     <input type="radio" name="scanYahooBots" value="1" <?php echo (!empty($seoConfArray['data']['scanYahooBots']) && $seoConfArray['data']['scanYahooBots']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="scanYahooBots" value="0" <?php echo (!empty($seoConfArray['data']['scanYahooBots']) && $seoConfArray['data']['scanYahooBots']==false)?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                     <input type="radio" name="scanYahooBots" value="0" <?php echo (empty($seoConfArray['data']['scanYahooBots']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
 				                                </label>
 										</div>
 									</div>
@@ -144,7 +155,7 @@
 				                                     <input type="radio" name="scanMSNBots" value="1" <?php echo (!empty($seoConfArray['data']['scanMSNBots']) && $seoConfArray['data']['scanMSNBots']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="scanMSNBots" value="0" <?php echo (!empty($seoConfArray['data']['scanMSNBots']) && $seoConfArray['data']['scanMSNBots']==false)?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                     <input type="radio" name="scanMSNBots" value="0" <?php echo (empty($seoConfArray['data']['scanMSNBots']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
 				                                </label>
 										</div>
 									</div>

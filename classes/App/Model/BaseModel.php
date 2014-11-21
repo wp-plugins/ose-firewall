@@ -201,6 +201,7 @@ class BaseModel  {
 		oseFirewall::loadCSSFile ('CentroraIcons', 'icons.css', false);
 		oseFirewall::loadCSSFile ('CentroraBootStrapLess', 'main.css', false);
 		oseFirewall::loadCSSFile ('CentroraV4Style', 'v4.css', false);
+		oseFirewall::loadCSSURL ('CentroraV4Font','https://fonts.googleapis.com/css?family=Open+Sans%3A400italic%2C400%2C600%2C700%7CRoboto+Slab%3A400%2C300%2C700');
 	}
 	protected function getEmptyReturn () {
 		$return  = array();

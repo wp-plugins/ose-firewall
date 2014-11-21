@@ -83,7 +83,11 @@ function encodeAllIDs(selections)
 	return ids; 
 }
 
-function showLoading (text = 'Please wait...') {
+function showLoading (text) {
+	if (text =='')
+	{
+		text = 'Please wait...';
+	}
 	jQuery(document).ready(function($){
 		$('body').waitMe({
 	        effect : 'facebook',

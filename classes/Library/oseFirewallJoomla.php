@@ -83,7 +83,7 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="index.php?option=' . $extension . '&view=dashboard">' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
 		
 		$menu .= '<li ';
-		$menu .= (in_array($view, array('manageips', 'rulesets','variables','audit'))) ?'class="dropdown"' : 'class="dropdown"';
+		$menu .= (in_array($view, array('manageips', 'rulesets','variables','audit'))) ?'class="active dropdown"' : 'class="dropdown"';
 		$menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('SECURITY_MANAGEMENT') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Virus Starts;
 		$menu .= '<ul class="dropdown-menu">';
@@ -142,7 +142,7 @@ class oseFirewall extends oseFirewallBase {
 		// SubMenu Anti-Hacking Ends;
 		$menu .= '</li>';
 		/*
-		 // Backup Feature Menu
+		// Backup Feature Menu
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_backup') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_backup">' . oLang::_get('BACKUP'). '</a></li>';
@@ -157,7 +157,7 @@ class oseFirewall extends oseFirewallBase {
 		
 		// About Menu
 		$menu .= '<li ';
-		$menu .= ($view == 'login') ? 'class="active"' : '';
+		$menu .= (in_array($view, array('login', 'subscription'))) ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=login">' . oLang::_get('MY_PREMIUM_SERVICE'). '</a></li>';
 		// About Ends
 		
@@ -198,7 +198,7 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($option == 'com_login') ? 'class="active"' : '';
 		
-		$menu .= '><a href="index.php?option=com_login&task=logout&'.JUtility::getToken().'=1">Logout</a></li>';
+		$menu .= '><a href="index.php?option=com_login&task=logout&'.self::loadNounce().'=1">Logout</a></li>';
 		
 		$menu .= '</ul></li>';
 		return $menu;
@@ -211,17 +211,32 @@ class oseFirewall extends oseFirewallBase {
 	{
 		$url = 'http://www.centrora.com';
 		$appTitle = OSE_WORDPRESS_FIREWALL;
-		$head = '<div id="logo-labels">';
-		$head .= '<div class ="col-lg-6"><div class ="version-normal">'.self::getVersion ().'</div></div><div class ="col-lg-6">';
-		$head .= '<ul class="nav navbar-nav pull-right">';
+		$head = '<nav class="navbar navbar-default" role="navigation">';
+		$head .= '<div class="navbar-top">
+					<div class="container">
+					 <div class="col-lg-1 col-sm-6 col-xs-6 col-md-6">
+						<div class="pull-left">
+						</div>
+					 </div>
+					<div class="col-lg-11 col-sm-6 col-xs-6 col-md-6">
+					 <div class="pull-right">
+						<ul class="userMenu ">';
+		$head .='<li><a href="//www.centrora.com/store/index.php?route=affiliate/login" title="Affiliate"><i class="fa fa-magnet"></i> <span class="hidden-xs hidden-sm hidden-md">Affiliate</span> </a></li>
+						<li><a href="https://www.centrora.com/store/index.php?route=account/login" title="My Account"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
+						<li><a href="https://www.centrora.com/support-center/" id="support-center" title="Support"><i class="im-support"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
+						<li><a href="http://www.centrora.com/" title="Subscription"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">Subscription</span></a></li>
+						<li><a href="http://www.centrora.com/tutorial/" title="Tutorial"><i class="im-stack-list"></i> <span class="hidden-xs hidden-sm hidden-md">Tutorial</span></a></li>
+						<li><a href="http://www.centrora.com/cleaning" title="Malware Removal"><i class="im-spinner10"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
 		if (OSE_CMS == 'joomla')
 		{
-			$head .= '<li><i class="im-home7"></i><span class="txt"><a href="index.php">Home</a></span></li>';
-		}
-		$head .= '<li><i class="im-support"></i><span class="txt"><a href="http://www.centrora.com/support-center/" target="__blank">Support</a></span></li>
-				  <li><i class="im-stack-list"></i><span class="txt"><a href="http://www.centrora.com/tutorial/" target="__blank">User Manual</a></span></li>
-				  <li><i class="im-spinner10"></i><span class="txt"><a href="http://www.centrora.com/tutorial/" target="__blank">Malware Removal</a></span></li>';
-		$head .= '</ul></div></div>';
+			$head .= '<li><a href="index.php" title="Home"><i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Home</span> </a></li>';
+		}				
+		$head .=	'</ul>
+					 </div>
+					</div>
+				   </div>
+				 </div>';
+		$head .= '<div class="container"><div class ="col-lg-12"><div class="logo"></div><div class ="version-normal">'.self::getVersion ().'</div></div></div></nav>';
 		echo $head;
 		echo oseFirewall::getmenus();
 	}
@@ -309,6 +324,9 @@ class oseFirewall extends oseFirewallBase {
 		{
 			$url = $filename;
 		}
+		JHtml::stylesheet($url);
+	}
+	public static function loadCSSURL ($tag, $url) {
 		JHtml::stylesheet($url);
 	}
 	public static function redirectLogin () {
