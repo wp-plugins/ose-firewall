@@ -18,7 +18,6 @@ function verifyKey (key) {
 	           if (data.status =='SUCCESS')
 	           {
 	        	   updateKey (key, 1);
-	        	   location.reload();
 	           }
 	           hideLoading ();
 	           showDialogue (data.message, data.status, 'OK', null);
@@ -52,6 +51,7 @@ function updateKey (key, verified) {
 	           else
 	           {
 	        	   hideLoading ();
+	        	   location.reload();
 		       }
 	        }
 	     });
