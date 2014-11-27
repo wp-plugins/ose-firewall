@@ -27,6 +27,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
  	die('Direct Access Not Allowed');
 }
+define('CENT_DEBUG_MODE', false);
 require_once(dirname(__FILE__).ODS.'uri.php');
 if (class_exists('JConfig') || class_exists('SConfig') || (defined('OSE_SUITE') && OSE_SUITE == true))
 {

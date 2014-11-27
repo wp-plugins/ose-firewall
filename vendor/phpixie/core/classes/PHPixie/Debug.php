@@ -79,7 +79,14 @@ class Debug
 	 */
 	public function error_handler($errno, $errstr, $errfile, $errline)
 	{
-		throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+		if (CENT_DEBUG_MODE == true)
+		{	
+			throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	/**

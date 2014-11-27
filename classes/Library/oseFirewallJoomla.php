@@ -213,7 +213,6 @@ class oseFirewall extends oseFirewallBase {
 		$appTitle = OSE_WORDPRESS_FIREWALL;
 		$head = '<nav class="navbar navbar-default" role="navigation">';
 		$head .= '<div class="navbar-top">
-					<div class="container">
 					 <div class="col-lg-1 col-sm-6 col-xs-6 col-md-6">
 						<div class="pull-left">
 						</div>
@@ -234,9 +233,8 @@ class oseFirewall extends oseFirewallBase {
 		$head .=	'</ul>
 					 </div>
 					</div>
-				   </div>
 				 </div>';
-		$head .= '<div class="container"><div class ="col-lg-12"><div class="logo"></div><div class ="version-normal">'.self::getVersion ().'</div></div></div></nav>';
+		$head .= '<div class ="col-lg-12"><div class="logo"></div><div class ="version-normal">'.self::getVersion ().'</div></div></nav>';
 		echo $head;
 		echo oseFirewall::getmenus();
 	}
