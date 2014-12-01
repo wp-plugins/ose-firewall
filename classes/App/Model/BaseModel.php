@@ -245,4 +245,7 @@ class BaseModel  {
 		$tokens = $panel->getToken();
 		print_r($tokens);
 	}
+	public function showFooterJs() {
+		oseFirewall::loadJSFile ('CentroraUpdate', 'update.js', false);
+	}
 }	

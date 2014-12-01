@@ -685,3 +685,13 @@ td.dataTables_empty {
 	height: 45px;
     margin-top: 30px;
 }
+
+#numofWebsite {
+	color: #ef4836;
+	font-weight: bold;
+}
+
+#oseappcontainer ul {
+    list-style: outside outside none !important;
+    margin-left: 10px;
+}

@@ -44,6 +44,10 @@ class oseWordPress extends oseFramework
 	{
 		return is_admin();
 	}
+	public static function isBackendStatic()
+	{
+		return is_admin();
+	}
 	public function loadBackendFunctions()
 	{
 	}

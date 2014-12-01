@@ -87,4 +87,9 @@ class LoginController extends \App\Base {
 		$result = $this->model->verifyKey();
 		print_r($result);exit;
 	}
+	public function action_getNumbOfWebsite() {
+		$this->model->loadRequest();
+		$result = $this->model->getNumbOfWebsite();
+		print_r($result);exit;
+	}
 }
