@@ -46,6 +46,11 @@ class oseJoomla extends oseFramework
 		$app = JFactory::getApplication();
 		return $app->isAdmin();
 	}
+	public static function isBackendStatic()
+	{
+		$app = JFactory::getApplication();
+		return $app->isAdmin();
+	}
 	public function loadBackendFunctions()
 	{
 	}

@@ -579,4 +579,10 @@ class oseFirewallBase extends oseFirewallRoot
 		}
 		return $return;
 	}
+	public static function preRequisitiesCheck() {
+		return (version_compare(PHP_VERSION, '5.3.0') < 0)?false:true;
+	}
+	public static function showNotReady() {
+		die('Centrora Security requires PHP 5.3.0 to work properly, please upgrade your PHP version to 5.3.0 or above');
+	}
 }

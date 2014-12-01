@@ -63,4 +63,8 @@ class LoginModel extends ConfigurationModel {
 		$panel = new panel ();
 		return $panel->verifyKey();
 	}
+	public function getNumbOfWebsite () {
+		$panel = new panel ();
+		return $panel->getNumbOfWebsite ();
+	}
 }

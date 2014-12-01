@@ -116,7 +116,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}	
 	public static function loadActionLogin () {
-		$actions = array ('validate','verifyKey','updateKey','createaccount');
+		$actions = array ('validate','verifyKey','updateKey','createaccount', 'getNumbOfWebsite');
 		parent::loadActions($actions);
 	}
 	public static function loadActionAudit () {

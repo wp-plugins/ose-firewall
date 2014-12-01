@@ -181,4 +181,26 @@ class panel
 		$webkey = $dbo->loadObject()->count;
 		return $webkey;
 	}
+	public function getNumbOfWebsite () {
+		$this->live_url = "https://www.centrora.com/accountApi/api/getNumOfWebsite";
+		$content = array ();
+		$content['url'] = oseFirewall::getSiteURL();
+		$content['remoteChecking'] = true;
+		$content['task'] = 'getNumOfWebsite';
+		$content['email'] = oseFirewall::getAdminEmail();
+		if (class_exists('SConfig'))
+		{
+			$content['cms'] = 'st';
+		}
+		else if (class_exists('JConfig'))
+		{
+			$content['cms'] = 'jl';
+		}
+		else if (defined('WPLANG'))
+		{
+			$content['cms'] = 'wp';
+		}
+		$content['ip'] = $this->getMyIP();
+		$this->sendRequestNoExit($content);
+	}
 }

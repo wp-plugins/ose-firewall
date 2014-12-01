@@ -140,15 +140,14 @@ else {
 		$this ->model->showHeader ();
 	?>
 	<div class="row">
-		<div class="panel panel-primary">
-		<div class="col-md-9">
-			<img src ="<?php echo OSE_FWURL.'/public/images/screenshot-8.png'; ?>" />
-		</div>
-		<?php include_once dirname(__FILE__).'/calltoaction.php';?>
-		</div>
+		<?php 
+				$image = OSE_FWURL.'/public/images/screenshot-8.png';
+				include_once dirname(__FILE__).'/calltoaction.php';
+			?>
 	</div>
   </div>
 </div>
 <?php 
+	$this->model->showFooterJs();
 }
 ?>
