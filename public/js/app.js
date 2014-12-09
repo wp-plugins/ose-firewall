@@ -109,6 +109,7 @@ jQuery(document).ready(function($){
 
 function redirectTut (url) {
 	window.open(url, '_blank');
+	return false;
 }
 
 function AppChangeItemStatus(id, status, table, task)
@@ -411,6 +412,35 @@ jQuery(document).ready(function($){
            			scanAntivirus (-1, 'vsscan', [],[]);
            		   }	   
                }
+             });
+        return false; // avoid to execute the actual submit of the form.
+    });
+	
+	$("#affiliate-form").submit(function() {
+		showLoading();
+		var data = $("#affiliate-form").serialize();
+		data += '&centnounce='+$('#centnounce').val();
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: data, // serializes the form's elements.
+               success: function(data)
+               {
+            	   data = jQuery.parseJSON(data);
+	         	   if (data.status == 'SUCCESS')
+	         	   {
+	         		   $("#affiliateFormModal").modal('hide');
+	         		   hideLoading();
+	         		   showDialogue (data.result, data.status, 'OK');   
+	         		   setTimeout(function(){
+		           		   window.location.reload(1);
+		           		}, 6000);
+	                }
+	         	   else
+	         	   {
+	         		   showDialogue (data.result, data.status, 'OK');   
+	         	   }
+	            }
              });
         return false; // avoid to execute the actual submit of the form.
     });

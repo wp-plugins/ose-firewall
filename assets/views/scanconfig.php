@@ -13,7 +13,7 @@
 									<div class="form-group">
 										<label for="adminEmail" class="col-sm-4 control-label"><?php oLang::_('O_WEBMASTER_EMAIL');?></label>
 										<div class="col-sm-8">
-				                               <input type="text" name="adminEmail" value="<?php echo (empty($seoConfArray['data']['adminEmail']))?'info@yourwebsite.com':$seoConfArray['data']['adminEmail']?>" class="form-control">
+				                               <input type="text" name="adminEmail" value="<?php echo (empty($confArray['data']['adminEmail']))?'info@yourwebsite.com':$confArray['data']['adminEmail']?>" class="form-control">
 										</div>
 									</div>
 									<div class="form-group">

@@ -113,6 +113,7 @@ jQuery(document).ready(function($){
     setInterval(function(){retrieveTrafficData(options)}, 10000);
     retrieveHackingTraffic();
     setInterval(function(){$('#IPsTable').dataTable().api().ajax.reload();}, 5000);
+    checkWebBrowsingStatus();
 });
 
 function retrieveCountryData()
@@ -189,5 +190,27 @@ function retrieveHackingTraffic()
 	                { "data": "status" }
 	               ]
 	    });
+	});	
+}
+
+function checkWebBrowsingStatus()
+{
+	jQuery(document).ready(function($){
+		$.ajax({
+	        type: "POST",
+	        url: url,
+	        dataType: 'json',
+		    data: {
+		    		option : option, 
+		    		controller:controller,
+		    		action:'checkWebBrowsingStatus',
+		    		task:'checkWebBrowsingStatus',
+		    		centnounce:$('#centnounce').val()
+		    },
+	        success: function(data)
+	        {
+	        	
+	        }
+	      });
 	});	
 }

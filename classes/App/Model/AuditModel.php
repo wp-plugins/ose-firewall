@@ -315,22 +315,6 @@ class AuditModel extends BaseModel {
 	public function showActionList() {
 		
 	}
-	public function checkSafebrowsing () {
-		oseFirewall::callLibClass('downloader', 'oseDownloader');
-		$downloader = new oseDownloader('ath', null);
-		$response = $downloader->checkSafebrowsing();
-		return $response; 
-	}
-	public function updateSafebrowsingStatus ($status) {
-		oseFirewall::callLibClass('downloader', 'oseDownloader');
-		$downloader = new oseDownloader('ath', null);
-		$response = $downloader->updateSafebrowsingStatus($status);
-		return $response; 
-	}
-	public function showSafeBrowsingBar () {
-		$audit = new oseFirewallAudit (); 
-		$audit -> showSafeBrowsingBar(true);
-	}
 	public function showSytemStatus () {
 		$audit = new oseFirewallAudit ();
 		$audit->enhanceSysSecurity();
@@ -352,5 +336,23 @@ class AuditModel extends BaseModel {
 		$sysguard = new oseSysguard();
 		$setting = $sysguard -> customizePHPsetting();
 		$this->returnJSON($setting);
+	}
+	public function showSafeBrowsingBar () {
+		$audit = new oseFirewallAudit ();
+		$audit -> showSafeBrowsingBar(true);
+	}
+	public function affiliateAccountExists () {
+		$config = $this->getConfiguration('panel');
+		return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;
+	}
+	public function saveTrackingCode ($trackingCode) {
+		$this->loadFirewallStat () ;
+		$oseFirewallStat = new oseFirewallStat();
+		$result = $oseFirewallStat->saveConfiguration('panel', array('trackingCode'=>$trackingCode));
+		return $result;
+	}
+	public function getTrackingCode() {
+		$config = $this->getConfiguration('panel');
+		return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;
 	}
 }

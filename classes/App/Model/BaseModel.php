@@ -218,6 +218,30 @@ class BaseModel  {
 		$results = $oseFirewallStat->getConfiguration($type);
 		return $results;
 	}
+	public function isConfigurationDBReady($data)
+	{
+		require_once(OSE_FWFRAMEWORK.ODS.'oseFirewallBase.php');
+		if(isset($data['blockCountry'] ) && $data['blockCountry'] == 1)
+		{
+			if(oseFirewallBase :: isCountryBlockConfigDBReady() == false)
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_SAVECOUNTRYBLOCK_FAILE'), false);
+			}
+		}
+		if(isset($data['adVsPatterns'] ) && $data['adVsPatterns'] == 1){
+			if(oseFirewallBase :: isAdvancePatternConfigDBReady() == false)
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_ADPATTERNS_FAILE'), false);
+			}
+		}
+		if(isset($data['adRules'] ) && $data['adRules'] == 1)
+		{
+			if(oseFirewallBase :: isAdvanceSettingConfigDBReady() == false)
+			{
+				oseAjax::aJaxReturn(false, 'ERROR', oLang::_get('CONFIG_ADRULES_FAILE'), false);
+			}
+		}
+	}
 	public function saveConfiguration($type, $data)
 	{
 		$this->loadFirewallStat () ;

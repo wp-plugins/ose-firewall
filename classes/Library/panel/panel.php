@@ -49,9 +49,9 @@ class panel
 		));
 		// Send the request & save response to $resp
 		$resp = curl_exec($curl);
-		print_r($resp);exit;
 		// Close request to clear up some resources
 		curl_close($curl);
+		print_r($resp);exit;
 		return $resp;
 	}
 	public function sendRequestNoExit($content)
@@ -70,7 +70,27 @@ class panel
 		));
 		// Send the request & save response to $resp
 		$resp = curl_exec($curl);
+		// Close request to clear up some resources
+		curl_close($curl);
 		print_r($resp);
+		return $resp;
+	}
+	public function sendRequestJson($content)
+	{
+		$query = $this->mergeString ($content);
+		// Get cURL resource
+		$curl = curl_init();
+		// Set some options - we are passing in a useragent too here
+		curl_setopt_array($curl, array(
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_URL => $this->live_url,
+		CURLOPT_POST => 1,
+		CURLOPT_POSTFIELDS =>$query,
+		CURLOPT_USERAGENT => 'Centrora Security Plugin Request Agent',
+		CURLOPT_SSL_VERIFYPEER => false
+		));
+		// Send the request & save response to $resp
+		$resp = curl_exec($curl);
 		// Close request to clear up some resources
 		curl_close($curl);
 		return $resp;
@@ -181,12 +201,11 @@ class panel
 		$webkey = $dbo->loadObject()->count;
 		return $webkey;
 	}
-	public function getNumbOfWebsite () {
-		$this->live_url = "https://www.centrora.com/accountApi/api/getNumOfWebsite";
+	protected function getWebsiteContent ($task) {
 		$content = array ();
 		$content['url'] = oseFirewall::getSiteURL();
 		$content['remoteChecking'] = true;
-		$content['task'] = 'getNumOfWebsite';
+		$content['task'] = $task;
 		$content['email'] = oseFirewall::getAdminEmail();
 		if (class_exists('SConfig'))
 		{
@@ -201,6 +220,39 @@ class panel
 			$content['cms'] = 'wp';
 		}
 		$content['ip'] = $this->getMyIP();
+		return $content;
+	}
+	public function getNumbOfWebsite () {
+		$this->live_url = "https://www.centrora.com/accountApi/api/getNumOfWebsite";
+		$content = $this ->getWebsiteContent ('getNumOfWebsite');
 		$this->sendRequestNoExit($content);
+	}
+	public function checkSafebrowsing () {
+		$this->live_url = 'https://www.centrora.com/accountApi/api/checkSafebrowsing';
+		$content = $this ->getWebsiteContent ('checkSafebrowsing');
+		$response = $this->sendRequestJson($content);
+		$this->updateSafebrowsingStatus($response);
+		return $response;
+	}
+	public function updateSafebrowsingStatus ($status) {
+		oseFirewall::loadFiles();
+		$filePath = OSE_FWDATA.ODS."tmp".ODS."safebrowsing.data";
+		$fileContent = stripslashes($status);
+		$result = oseFile::write($filePath, $fileContent);
+		return $result;
+	}
+	public function getSafeBrowsingStatus () {
+		oseFirewall::loadFiles();
+		oseFirewall::loadJSON();
+		$filePath = OSE_FWDATA.ODS."tmp".ODS."safebrowsing.data";
+		if (file_exists($filePath))
+		{
+			$result = oseJSON::decode(oseFile::read($filePath));
+			return $result;
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

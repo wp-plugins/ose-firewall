@@ -27,41 +27,28 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
-require_once('BaseModel.php');
-class ConfigurationModel extends BaseModel {
+require_once('ConfigurationModel.php');
+class ActivationModel extends ConfigurationModel {
 	public function __construct() {
 		$this->loadLibrary ();
-		$this->loadDatabase ();
+	}
+	protected function loadLibrary () {
+		oseFirewall::callLibClass('sysguard','sysguard');
+	}
+	public function loadLocalScript() {
+		$this->loadAllAssets ();
 	}
 	public function getCHeader() {
-		return oLang :: _get('CONFIGURATION_TITLE');
+		return oLang :: _get('ACTIVATION_CODE_TITLE');
 	}
 	public function getCDescription() {
-		return oLang :: _get('CONFIGURATION_DESC');
+		return oLang :: _get('ACTIVATION_CODE_DESC');
 	}
-	public function loadLocalScript()
-	{
-		$this->loadAllAssets ();
-		oseFirewall::loadJSFile ('CentroraInstaller', 'installer.js', false);
+	public function showHeader () { 
+		
 	}
-	public function showConfigBtnList(){
-		$html = '<div id = "Config-Btn-List" class="form-horizontal group-border stripped">';
-		$html .= $this->getAllBtns ();
-		$html .= '</div>';
-		echo $html; 	
+	public function getActivationCode() {
+		$sysGuard = new oseSysguard();
+		return $sysGuard->getActivationCode();
 	}
-	public function getAllBtns () {
-		$html = '<div class="form-group"><div class="col-sm-3"><button class = "btn btn-success ml10" id ="install-button" name ="install-button" data-target="#formModal" data-toggle="modal">'.INSTALLDB.'</button></div><div class="col-sm-9">'.INSTALLDB_INTRO.'</div></div>';
-		$html .= '<div class="form-group"><div class="col-sm-3"><button class = "btn btn-success ml10" data-target="#formModal2" data-toggle="modal">'.UNINSTALLDB.'</button></div><div class="col-sm-9">'.UNINSTALLDB_INTRO.'</div></div>';
-		return $html;  
-	}
-	public function getURL($view) {
-		if (class_exists('JFactory')) {
-			return OSE_ADMINURL.'&view='.$view; 
-		}
-		else
-		{
-			return OSE_ADMINURL.'?page=ose_fw_'.$view;
-		}
-	}
-}	
+}

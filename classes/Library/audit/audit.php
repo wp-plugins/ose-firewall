@@ -634,32 +634,16 @@ class oseFirewallAudit
 	public function showSafeBrowsingBar($print = true)
 	{
 		$dbReady = oseFirewall::isDBReady();
-		$action1 = ($print == true) ? ' <div class="warning-buttons"><a onclick="checkSafebrowsing()" class="button-primary" href="#">Check Now</a></div>' : '';
-		$action2 = ($print == true) ? ' <div class="warning-buttons"><a onclick="checkSafebrowsing()" class="button-primary" href="#">Schedule Now</a></div>' : '';
 		if ($dbReady == true)
 		{
 			$safeBrowsingStatus = $this->getSafeBrowsingStatus ();
-			if (!empty($safeBrowsingStatus))
-			{
-				$isSafeBrowsingStatusUpdated = $this->isSafeBrowsingStatusUpdated ($safeBrowsingStatus);
-				if ($isSafeBrowsingStatusUpdated == true)
-				{
-					$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('SAFE_BROWSING_CHECKUP_UPDATED').$action2."</li>";
-					$return .= $this->getStatusTable ($safeBrowsingStatus);
-				}
-				else
-				{
-					$this->warning[] = $return = '<div class ="warning"><div class="warning-content">'.oLang::_get('SAFE_BROWSING_CHECKUP_OUTDATED').' </div>'.$action2.'</div>';
-				}
-			}
-			else
-			{
-				$this->warning[] = $return = '<div class ="warning"><div class="warning-content">'.oLang::_get('CHECK_SAFE_BROWSING').' </div>'.$action1.'</div>';
-			}
+			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('SAFE_BROWSING_CHECKUP_UPDATED');
+			$return .= $this->getStatusTable ($safeBrowsingStatus);
+			$return .= "</li>";
 		}
 		else
 		{
-			$return = '<div class ="warning"><div class="warning-content">'.oLang::_get('CHECK_SAFE_BROWSING').' </div>'.$action1.'</div>';
+			$return = '<div class ="warning"><div class="warning-content">'.oLang::_get('CHECK_SAFE_BROWSING').' </div>'.'</div>';
 		}
 		if ($print == true)
 		{
@@ -672,9 +656,9 @@ class oseFirewallAudit
 	}
 	public function getSafeBrowsingStatus()
 	{
-		oseFirewall::callLibClass('downloader', 'oseDownloader');
-		$downloader = new oseDownloader('ath', null);
-		$status = $downloader->getSafeBrowsingStatus();
+		oseFirewall::callLibClass('panel', 'panel');
+		$panel = new panel();
+		$status = $panel->getSafeBrowsingStatus();
 		return $status;
 	}
 	private function isSafeBrowsingStatusUpdated($safeBrowsingStatus)
@@ -697,14 +681,30 @@ class oseFirewallAudit
 	}
 	private function getStatusTable($status)
 	{
-		$table = '<table class="statusTable" style="width: 100%;">';
+		$status = $status->status->safeBrowsing;
+		$table = '<br/><br/><table class="table">';
 		$tr1 = '';
 		$tr2 = '';
-		foreach ($status as $key => $value)
+		if (!empty($status))
 		{
-			$tr1 .= '<th class="status'.$key.'"  style="text-align:center;">'.ucfirst($key).'</th>';
-			$tr2 .= '<td class="statusItem" style="text-align:center;">'.$value.'</td>';
-		}
+			foreach ($status as $key => $value)
+			{
+				$tr1 .= '<th class="status'.$key.'"  style="text-align:center;">'.str_replace("_", " ", ucfirst($key)).'</th>';
+				if ($value =='ok')
+				{
+					$class='success';
+				}
+				else if ($value =='unknown')
+				{
+					$class='warning';
+				}
+				else
+				{
+					$class='danger';
+				}
+				$tr2 .= '<td class="statusItem" style="text-align:center;"><span class="strong text-'.$class.'">'.$value.'</span></td>';
+			}
+		}	
 		$table .= '<tr>'.$tr1.'</tr>';
 		$table .= '<tr>'.$tr2.'</tr>';
 		$table .= '</table>';

@@ -28,33 +28,6 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
-class DashboardController extends \App\Base {
-	public function action_CheckSafebrowsing() {
-		$model = $this->getModel ();
-		$result = $model->checkSafebrowsing ();
-		print_r ( $result );
-		exit ();
-	}
-	public function action_UpdateSafebrowsingStatus() {
-		oseFirewall::loadRequest ();
-		$status = oRequest::getVar ( 'status', null );
-		if (empty ( $status )) {
-			return;
-		}
-		$model = $this->getModel ();
-		$result = $model->updateSafebrowsingStatus ( $status );
-		oseAjax::aJaxReturn ( true, 'SUCCESS', 'Status updated successfully', false );
-	}
-	public function action_getCountryStat() {
-		$data = $this->model->getCountryStat();
-		$this->model->returnJSON($data);
-	}
-	public function action_getTrafficData() {
-		$data = $this->model->getTrafficData();
-		$this->model->returnJSON($data);
-	}
-	public function action_checkWebBrowsingStatus() {
-		$data = $this->model->checkWebBrowsingStatus();
-		$this->model->returnJSON($data);
-	}
+class ActivationController extends \App\Base {
+	
 }

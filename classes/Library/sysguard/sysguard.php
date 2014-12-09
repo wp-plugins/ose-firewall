@@ -28,15 +28,16 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 	die('Direct Access Not Allowed');
 }
 class oseSysguard {
-	function __construct() {
+	private $phpRuntime = '';
+	public function __construct() {
 		oseFirewall::loadFiles();
 	}
 	public function customizePHPsetting($frontend = false) {
 		$return = array ();
-		$phpRuntime = $this->getPHPEnv();
-		if ($phpRuntime == 'mod') {
-			$filename = OSE_ABSPATH.'/.htaccess';
-			$return['config'] = "Please edit the file: .htaccess in your {$filename}<br/>" 
+		$this->phpRuntime = $this->getPHPEnv();
+		if ($this->phpRuntime == 'mod') {
+			$filename = dirname(OSE_ABSPATH).'/.htaccess';
+			$return['config'] = "Please edit the file: .htaccess in your website, for example {$filename}<br/>" 
 								  ."#Parameters added by Centrora Security<br/>" 
 								  ."php_flag register_globals off <br/>" 
 								  ."php_flag safe_mode off <br/>" 
@@ -56,6 +57,17 @@ class oseSysguard {
 								."disable_functions=\"exec,passthru,shell_exec,system,proc_open,curl_multi_exec,show_source\" <br/>";
 		}
 		return $return;
+	}
+	public function getActivationCode () {
+		$code = $this->customizePHPsetting(true);
+		$autoPrependFile = '"'.OSE_ABSPATH.ODS.'administrator'.ODS.'scan.php'.'"';
+		if ($this->phpRuntime == 'mod') { 
+			$code['config'].= "php_value auto_prepend_file = {$autoPrependFile} <br/>";
+		}
+		else {
+			$code['config'].= "auto_prepend_file= {$autoPrependFile} <br/>";
+		}
+		return $code['config'];
 	}
 	private function getPHPEnv() {
 		ob_start();
