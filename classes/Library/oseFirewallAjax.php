@@ -48,7 +48,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionDashboard () {
-		$actions = array ('getCountryStat', 'getTrafficData');
+		$actions = array ('getCountryStat', 'getTrafficData','checkWebBrowsingStatus');
 		parent::loadActions($actions); 
 	}	
 	public static function loadActionRulesets () {
@@ -120,7 +120,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}
 	public static function loadActionAudit () {
-		$actions = array ('createTables','changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables','getPHPConfig');
+		$actions = array ('createTables','changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables','getPHPConfig', 'getTrackingCode', 'saveTrackingCode');
 		parent::loadActions($actions);
 	}
 	public static function loadActionSubscription () {

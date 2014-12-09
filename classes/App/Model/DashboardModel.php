@@ -66,4 +66,10 @@ class DashboardModel extends BaseModel {
 		$oseFirewallStat = new oseFirewallStat();
 		return $oseFirewallStat->getTrafficData();
 	}
+	public function checkWebBrowsingStatus () {
+		oseFirewall::callLibClass('panel','panel');
+		$panel = new panel ();
+		$response = $panel->checkSafebrowsing();
+		return $response;
+	}
 }

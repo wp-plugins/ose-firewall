@@ -46,21 +46,31 @@ class AuditController extends \App\Base {
 			}
 		}
 	}
-	public function actionCheckSafebrowsing() {
-		$model = $this->getModel ();
-		$result = $model->checkSafebrowsing ();
-		print_r ( $result );
-		exit ();
-	}
-	public function actionUpdateSafebrowsingStatus() {
-		oseFirewall::loadRequest ();
-		$status = oRequest::getVar ( 'status', null );
-		if (empty ( $status )) {
-			return;
+	public function action_saveTrackingCode() {
+		$this->model->loadRequest ();
+		$trackingCode = $this->model->getVar ( 'trackingCode', null );
+		if (empty ( $trackingCode )) {
+			$this->model->aJaxReturn ( true, 'ERROR', $this->model->getLang ( 'TRACKINGCODE_CANNOT_EMPTY' ), false );
+		} else {
+			$result = $this->model->saveTrackingCode ( $trackingCode );
+			if ($result == true) {
+				$this->model->aJaxReturn ( true, 'SUCCESS', $this->model->getLang ( 'TRACKINGCODE_UPDATE_SUCCESS' ), false );
+			} else {
+				$this->model->aJaxReturn ( true, 'ERROR', $this->model->getLang ( 'TRACKINGCODE_UPDATE_FAILED' ), false );
+			}
 		}
-		$model = $this->getModel ();
-		$result = $model->updateSafebrowsingStatus ( $status );
-		oseAjax::aJaxReturn ( true, 'SUCCESS', 'Status updated successfully', false );
+	}
+	public function action_getTrackingCode() {
+		$trackingCode = $this->model->getTrackingCode();
+		if (class_exists('SConfig'))
+		{
+			$product = 'st';
+		}
+		else
+		{
+			$product = 'pl';
+		}
+		$this->model->returnJSON(array('trackingCode'=>$trackingCode, 'product'=>$product));
 	}
 	public function action_UninstallTables() {
 		$this->model->loadRequest();

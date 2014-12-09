@@ -492,4 +492,13 @@ define('PASSWORD', 'Password');
 define('PASSWORD_CONFIRM', 'Password Confirm');
 define('TUTORIAL', 'Tutorial');
 define('COUNTRY_CHANGED_SUCCESS','The country status is changed successfully');
+define('ACTIVATION_CODES', 'Firewall Activation Codes');
+define('ACTIVATION_CODE_TITLE', 'Activation Codes');
+define('ACTIVATION_CODE_DESC', 'This Panel shows the activation codes of the firewall in the php.ini or .htaccess for the whole server.');
+
+define('AFFILIATE_ACCOUNT', 'Affiliate Account Information');
+define('ADD_TRACKING_CODE', 'Add Tracking Codes');
+define('TRACKINGCODE_CANNOT_EMPTY', 'Tracking Codes cannot be empty');
+define('TRACKINGCODE_UPDATE_SUCCESS', 'Great! Successfully updated tracking codes. In the future, when the owner of this website subscribes to our subscription plans, the transaction will be logged into your affiliate accounts.');
+define('TRACKINGCODE_UPDATE_FAILED', 'Failed updating Tracking Codes');
 ?>

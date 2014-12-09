@@ -695,3 +695,11 @@ td.dataTables_empty {
     list-style: outside outside none !important;
     margin-left: 10px;
 }
+
+.table {
+    margin-bottom: 5px;
+}
+
+.panel {
+    margin-bottom: 10px;
+}        

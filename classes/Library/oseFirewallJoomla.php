@@ -161,7 +161,14 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="index.php?option=' . $extension . '&view=login">' . oLang::_get('MY_PREMIUM_SERVICE'). '</a></li>';
 		// About Ends
 		
-		
+		if (class_exists('SConfig'))
+		{
+			// About Menu
+			$menu .= '<li ';
+			$menu .= (in_array($view, array('activation'))) ? 'class="active"' : '';
+			$menu .= '><a href="index.php?option=' . $extension . '&view=activation">' . oLang::_get('ACTIVATION_CODES'). '</a></li>';
+			// About Ends
+		}
 		$menu .=self::addSuiteMenu ();
 		
 		// Main Feature Ends;

@@ -232,32 +232,6 @@ class oseDownloader
 		}  
 		return $content;
 	}
-	public function checkSafebrowsing () {
-		$content = $this->getRemoteConnectionContent('checkSafebrowsing');
-		$response = $this->sendRequest($content);
-		return $response;
-	}
-	public function updateSafebrowsingStatus ($status) {
-		oseFirewall::loadFiles(); 
-		$filePath = OSE_FWDATA.ODS."tmp".ODS."safebrowsing.data";
-		$fileContent = stripslashes($status);
-		$result = oseFile::write($filePath, $fileContent);
-		return $result;  
-	}
-	public function getSafeBrowsingStatus () {
-		oseFirewall::loadFiles();
-		oseFirewall::loadJSON();  
-		$filePath = OSE_FWDATA.ODS."tmp".ODS."safebrowsing.data";
-		if (file_exists($filePath))
-		{
-			$result = oseJSON::decode(oseFile::read($filePath));
-			return $result;
-		}  
-		else
-		{
-			return null; 
-		}
-	}
 	public function getEmailConfig () {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'receiveEmail'";	

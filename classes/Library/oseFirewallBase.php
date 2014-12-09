@@ -357,6 +357,10 @@ class oseFirewallBase extends oseFirewallRoot
 		$app = self::runApp();
 		$app->runController('apiconfig', 'index');
 	}
+	public static function activation()
+	{
+		self::runController ('ActivationController', 'index');
+	}
 	public static function showLogo()
 	{}
 	public static function callLibClass($folder, $classname)
