@@ -28,7 +28,7 @@
 				<h2 class="text-danger">Become a partner</h2>
 			</p>
 			<p class="text-left">
-				Why not become our partner and enjoy high commisions for your referrals? Apart from the 35% commissions, by referring Centrora Security to <span class="strong">THREE</span> of your clients, you can get <span class="strong">ONE</span> subscription free.
+				Why not become our partner and enjoy high commisions for your referrals? Apart from the 35% commissions, by referring Centrora Security to <span class="strong">THREE</span> of your clients, you can get <span class="strong">ONE</span> subscription free. Don't miss out the chance to earn at least $14,500 for the 1st year and $338,900 in five years with our affiliate program! <button class="btn btn-primary btn-xs mr5" onClick="location.href='http://www.centrora.com/store/affiliate-program'" >Read More</button>
 				<div class="row">
 					<div class="col-md-4"></div>
 					<div class="col-md-4">
