@@ -1,15 +1,6 @@
-#osebadge
-{
-	background: url('../images/badge.png') no-repeat ;
-	width: 200px;
-	height: 78px;
-	font-family: Arial,sans-serif;
-	
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+#osebadge a {
+	text-decoration: none;
 }
-
 #osebadge #osebadge-content
 {
 	text-shadow: none;	
@@ -18,12 +9,12 @@
 
 #osebadge #osebadge-content
 {
-	padding-top: 38px;
 	font-size: 10px;
 	color: #FFFFFF;
 	text-align:left;
 	line-height: 1.0;
-	margin-left: 16px;
+	margin-left: 40px;
+    padding-top: 28px;
 }
 #osebadge #osebadge-footer
 {

@@ -293,4 +293,25 @@ public static function showLogo()
 	public static function redirectSubscription () {
 		echo '<script type="text/javascript">location.href="admin.php?page=ose_fw_subscription"</script>';
 	}
+	public static function isBadgeEnabled () {
+		$results = wp_get_sidebars_widgets ();
+		$return = false;
+		if (!empty($results)) 
+		{
+			foreach ($results as $result) {
+				if (!empty($result))
+				{	
+					foreach ($result as $widget)
+					{
+						if (strstr($widget, 'ose_badge_widget')!=false)
+						{
+							$return = true;
+							break;
+						}				
+					}
+				}
+			}
+		}
+		return $return;
+	}
 }

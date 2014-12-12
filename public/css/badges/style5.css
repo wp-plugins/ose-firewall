@@ -1,0 +1,10 @@
+#osebadge
+{
+	background: url('../../images/badges/style5.png') no-repeat ;
+	height: 60px;
+    width: 180px;
+	font-family: Arial,sans-serif;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}

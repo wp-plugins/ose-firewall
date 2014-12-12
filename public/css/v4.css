@@ -691,11 +691,6 @@ td.dataTables_empty {
 	font-weight: bold;
 }
 
-#oseappcontainer ul {
-    list-style: outside outside none !important;
-    margin-left: 10px;
-}
-
 .table {
     margin-bottom: 5px;
 }

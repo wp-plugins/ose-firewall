@@ -41,7 +41,27 @@ class oseBadgeWidget extends WP_Widget {
 				'description' => __ ( 'Show the Centrora Security Badget' ) 
 		) );
 	}
+	public function form( $instance ) {
+		$style = ! empty( $instance['style'] ) ? $instance['style'] : __( '1', 'text_domain' );
+		$styleArray = array(1=>'Blue', 3=>'Green', 5=>'Red', 11=>'Grey');
+		$html= '<p>
+			<label for="'.$this->get_field_id( 'style' ).'">'._e( 'Style:' ).'</label> 
+			<select class="widefat" id="'.$this->get_field_id( 'style' ).'" name="'.$this->get_field_name( 'style' ) .'" >';
+				foreach ($styleArray as $key => $value)
+				{
+					$html .= '<option value="'.$key.'" ';
+					if ($key == $style)
+					{
+						$html .= 'selected';
+					}
+					$html .= '>'.$value.'</option>';
+				}
+		$html .= '</select></p>';
+		echo $html; 
+	}
+		
 	public function widget($args, $instance) {
+		$style = $instance['style'];
 		if (oseFirewall::isDBReady())
 		{
 			oseFirewall::callLibClass ( 'vsscanner', 'vsscanner' );
@@ -52,13 +72,37 @@ class oseBadgeWidget extends WP_Widget {
 			} else {
 				$status = $log->status.': '. date("Y-m-d", $log->date);
 			}
-			$this->register_plugin_styles ();
-			echo '<div id ="osebadge"><div id="osebadge-content"><div class="osestatus">' . $status . '</div></div><div id="osebadge-footer"><a href="https://www.centrora.com" target="_blank">By Centrora Security™</a></div></div>';
+			$this->register_plugin_styles ($style);
+			$trackingCode = $this->getTrackingCode();
+			if (!empty($trackingCode))
+			{
+				$url = 'http://www.centrora.com/store/centrora-subscriptions?tracking='.$trackingCode;
+			}
+			else
+			{
+				$url ='http://www.centrora.com/store/centrora-subscriptions';
+			}
+			echo '<div id ="osebadge"><a href="'.$url.'" target="_blank"><div id="osebadge-content"><div class="osestatus">' . $status . '</div></div><div id="osebadge-footer"></div></a></div>';
 		}
 	}
-	public function register_plugin_styles() {
+	protected function getTrackingCode () {
+		global $wpdb;
+		$results = $wpdb->get_results( 'SELECT * FROM `'.$wpdb->prefix.'ose_secConfig` WHERE `key` = "trackingCode"', OBJECT );
+		if (count($results)==1)
+		{
+			$code = $results[0]->value;
+		}
+		else 
+		{
+			$code ='';
+		}
+		return $code;
+	}
+	public function register_plugin_styles($style) {
 		wp_register_style ( 'ose-badge-style', plugins_url ( 'ose-firewall/public/css/badge.css' ) );
+		wp_register_style ( 'ose-badge-style-'.$style, plugins_url ( 'ose-firewall/public/css/badges/style'.$style.'.css' ) );
 		wp_enqueue_style ( 'ose-badge-style' );
+		wp_enqueue_style ( 'ose-badge-style-'.$style );
 	}
 }
 add_action ( 'widgets_init', create_function ( '', 'register_widget( "oseBadgeWidget" );' ) );
