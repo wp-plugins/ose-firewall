@@ -33,6 +33,27 @@ $seoConfArray = $this->model->getConfiguration('seo');
 	  		<?php 		
 	  			}	
 	  		?>
+	  		
+	  		<?php 
+	  			if ($this->model->isBadgeEnabled()==false)
+	  			{
+	  		?>
+	  		<!-- Panels Start -->
+	  		<div class="panel panel-teal">
+			  <div class="panel-heading">
+			    <h3 class="panel-title"><?php echo 'Security Badge Disabled'; ?></h3>
+			  </div>
+			  <div class="panel-body">
+				  <ul class="list-group">
+				    <li class="list-group-item"><span class="label label-warning">Note</span> <b>[Security Badge] </b>: The security badge is disabled now. You can increase sales conversion of your website by enabling it. <a class="btn btn-danger btn-xs fx-button mr5" href="<?php echo OSE_WPURL.'/wp-admin/widgets.php';?>" target="_blank">Fix it</a> </li>
+		          </ul>
+			  </div>
+			</div>
+			<!-- Panels Ends -->
+	  		<?php 		
+	  			}	
+	  		?>
+	  		
 	  		<!-- Panels Start -->
 	  		<div class="panel panel-teal">
 			  <div class="panel-heading">

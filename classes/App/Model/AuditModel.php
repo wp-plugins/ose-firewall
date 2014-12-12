@@ -355,4 +355,7 @@ class AuditModel extends BaseModel {
 		$config = $this->getConfiguration('panel');
 		return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;
 	}
+	public function isBadgeEnabled () {
+		return oseFirewall::isBadgeEnabled();
+	}
 }
