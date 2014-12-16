@@ -273,6 +273,32 @@ jQuery(document).ready(function($){
 });   
 }
 
+function updateSignature(table)
+{
+	jQuery(document).ready(function($){
+		showLoading ();
+		$.ajax({
+	        type: "POST",
+	        url: url,
+	        dataType: 'json',
+		    data: {
+		    		option : option, 
+		    		controller:'audit',
+		    		action:'updateSignature',
+		    		task:'updateSignature',
+		    		centnounce:$('#centnounce').val()
+		    },
+	        success: function(data)
+	        {
+	           showLoading(data.result);  
+	           hideLoading ();
+	           $(table).dataTable().api().ajax.reload();
+	           location.reload();
+	        }
+	      });
+	});
+}
+
 //doc ready function
 jQuery(document).ready(function($){
  	//------------- Init our plugin -------------//

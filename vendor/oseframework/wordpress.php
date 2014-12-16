@@ -44,6 +44,23 @@ class oseWordPress extends oseFramework
 	{
 		return is_admin();
 	}
+	public function isAdminAjax() {
+		if (preg_match("/admin\-ajax\.php/", $_SERVER['PHP_SELF']))
+		{
+			if ($_REQUEST['option'] != 'com_ose_firewall')
+			{
+				return true;
+			}
+			else 
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false; 
+		}
+	}
 	public static function isBackendStatic()
 	{
 		return is_admin();

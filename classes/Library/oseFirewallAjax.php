@@ -120,7 +120,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}
 	public static function loadActionAudit () {
-		$actions = array ('createTables','changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables','getPHPConfig', 'getTrackingCode', 'saveTrackingCode');
+		$actions = array ('createTables','changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables','getPHPConfig', 'getTrackingCode', 'saveTrackingCode', 'updateSignature');
 		parent::loadActions($actions);
 	}
 	public static function loadActionSubscription () {

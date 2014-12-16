@@ -123,6 +123,12 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				return $scanResult;
 			}
 		}
+		if (isset ( $options ['wordpress_admin_ajax_protection'] ) && $options ['wordpress_admin_ajax_protection'] == true) {
+			$scanResult = $this->scanAdminAjax ();
+			if (! empty ( $scanResult )) {
+				return $scanResult;
+			}
+		}
 		return false;
 	}
 	
@@ -501,6 +507,14 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 					break;
 				}
 			}
+		}
+		return $return;
+	}
+	protected function scanAdminAjax () {
+		$return = array ();
+		$trasversal = "admin\-ajax\.php?.*\.\.\/wp\-config\.php";
+		if (preg_match ( "/^.*(" . $trasversal . ").*/i", $_SERVER ['REQUEST_URI'], $matched )) {
+			$return = $this->composeResult(100, $matched [0], 9, oseJSON::encode(array(8)), 'server.REQUEST_URI', 'bs') ;
 		}
 		return $return;
 	}

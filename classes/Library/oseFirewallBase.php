@@ -193,6 +193,25 @@ class oseFirewallBase extends oseFirewallRoot
 		$ready = (!empty($data)) ? true : false;
 		return $ready;
 	}
+	public static function isSigUpdated () {
+		$count = self::getCountSignatures();
+	    if ($count<12)
+	    {
+	    	echo '<span class="label label-warning">Warning: Firewall Outdated</span>&nbsp;&nbsp;<button class="btn btn-danger btn-xs fx-button" id="fixSignature" onClick="updateSignature(\'#rulesetsTable\')">Fix It</button>';
+	    	echo '<script type="text/javascript">jQuery(document).ready(function($){$("#fixSignature").click();});</script>';
+	    }
+	    else
+	   {
+	    	echo '<span class="label label-success">Firewall Updated</span>';
+	    }
+	}
+	private static function getCountSignatures () {
+		$oseDB2 = self::getDBO();
+		$query = "SELECT COUNT(id) AS count FROM `#__osefirewall_basicrules`;";
+		$oseDB2->setQuery($query); 
+		$count = $oseDB2->loadResult();
+		return ($count['count']);
+	}
 	// Version 3.4.0 Table checking; 
 	private static function checkVSTypeTable () {
 		$oseDB2 = self::getDBO();

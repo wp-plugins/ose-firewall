@@ -95,4 +95,15 @@ class AuditController extends \App\Base {
 			$this->model->aJaxReturn(true, 'ERROR', 'Error: Nothing to update in php.ini', false);
 		}
 	}
+	public function action_updateSignature(){
+		$result = $this->model->updateSignature();
+		if(!empty($result))
+		{
+			$this->model->aJaxReturn(true, 'SUCCESS', $result, false);
+		}
+		else
+		{
+			$this->model->aJaxReturn(true, 'ERROR', 'Error: Nothing to update in php.ini', false);
+		}
+	}
 }
