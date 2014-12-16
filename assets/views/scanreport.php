@@ -25,13 +25,11 @@ if ($status == true)
                             <div class="panel panel-primary plain toggle panelClose panelRefresh">
                                 <!-- Start .panel -->
                                 <div class="panel-heading white-bg">
-                                    <h4 class="panel-title">IP Table</h4>
+                                    <h4 class="panel-title">Scanning Report</h4>
                                     
                                 </div>
                                 <div class="panel-controls"></div>
-                                <div class="panel-controls-buttons">
-                                	<button class="btn btn-success btn-sm mr5 mb10" type="button" onClick = "showLoading();"><?php oLang::_('ADD_IPS'); ?></button>
-                                </div>
+                                <div class="panel-controls-buttons"></div>
                                 <div class="panel-body">
                                     <table class="table display" id="scanreportTable">
                                         <thead>
