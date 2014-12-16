@@ -501,4 +501,6 @@ define('ADD_TRACKING_CODE', 'Add Tracking Codes');
 define('TRACKINGCODE_CANNOT_EMPTY', 'Tracking Codes cannot be empty');
 define('TRACKINGCODE_UPDATE_SUCCESS', 'Great! Successfully updated tracking codes. In the future, when the owner of this website subscribes to our subscription plans, the transaction will be logged into your affiliate accounts.');
 define('TRACKINGCODE_UPDATE_FAILED', 'Failed updating Tracking Codes');
+
+define('WORDPRESS_ADMIN_AJAX_PROTECTION', 'WordPress Admin Ajax Protection');
 ?>

@@ -358,4 +358,12 @@ class AuditModel extends BaseModel {
 	public function isBadgeEnabled () {
 		return oseFirewall::isBadgeEnabled();
 	}
+	public function updateSignature () {
+		$db = oseFirewall::getDBO(); 
+		$query = "TRUNCATE TABLE `#__osefirewall_basicrules`;";
+		$db->setQuery($query);
+		$db->query();
+		oseFirewall :: loadInstaller();
+		return $this->insertBasicRules();
+	}
 }
