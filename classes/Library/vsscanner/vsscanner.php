@@ -303,11 +303,42 @@ class virusScanner {
 		return $result;
 	}
 	public function vsScanInd($type) {
-		oseFirewall::loadFiles();
-		$this->setPatterns ($type);
-		$result = $this->showScanningResultMsg ($type);
+		$conn = $this->getCurrentConnection();
+		if ($conn > 20)
+		{	
+			$result = $this->getHoldingStatus ($type);
+		}
+		else {
+			ini_set("display_errors", "on");
+			oseFirewall::loadFiles();
+			$this->setPatterns ($type);
+			$result = $this->showScanningResultMsg ($type);
+		}
 		$this->db -> closeDBO();
 		return $result;
+	}
+	private function getHoldingStatus ($type) {
+		$this->vsInfo = $this->getVsFiles($type);
+		$timeUsed = $this->timeDifference($_SESSION['start_time'], time());
+		$completed = $this->vsInfo['completed'];
+		$left = count($this->vsInfo['fileset']);
+		$total = $this->vsInfo['completed'] + $left;
+		$progress = ($completed/$total);
+		$return['completed'] = 'Queue';
+		$return['summary'] = (round($progress, 3)*100). '% ' .oLang::_get('COMPLETED');
+		$return['progress'] = "<b>Progress: ".($left)." files remaining.</b>. Time Used: ".$timeUsed." seconds<br/><br/>";
+		$return['last_file'] = oLang::_get('LAST_SCANNED_FILE').' '.$last_file;
+		$return['cont'] = ($left > 0 )?true:false;
+		$return['cpuload'] = $this->getCPULoad();;
+		$return['memory'] = $this->getMemoryUsed();
+		return $return;
+	}
+	
+	private function getCurrentConnection () {
+		$query = "SHOW STATUS WHERE `variable_name` = 'Threads_connected'";
+		$this->db->setQuery($query);
+		$result = $this->db->loadResult();
+		return $result['Value'];
 	}
 	private function showScanningResultMsg ($type) {
 		$return=array();
@@ -471,7 +502,6 @@ class virusScanner {
 			} else {
 				$return['status']= oLang:: _get('OSE_THERE_ARE'). ' '. $infectedNum. ' '. oLang :: _get('OSE_INFECTED_FILES');
 			}
-			$cpuload = $this->getCPULoad();
 			$timeUsed = $this->timeDifference($_SESSION['start_time'], time());
 			$completed = $this->vsInfo['completed'];
 			$left = count($this->vsInfo['fileset']);
