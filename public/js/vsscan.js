@@ -285,7 +285,10 @@ function scanVirusInd (action, cpuData=[], memData=[], type) {
 	        	{
 	        		return true;
 	        	}
-	        }
+	        },
+		    error: function(XMLHttpRequest, textStatus, errorThrown) {
+		    	scanVirusInd (action, cpuData, memData, type);
+		    }
 	      });
 	});		
 }

@@ -6,7 +6,7 @@
                                 <button type="button" class="close" data-dismiss="modal">
                                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                                 </button>
-                                <h4 class="modal-title" id="myModalLabel2"><?php oLang::_('SCAN_CONFIGURATION_TITLE'); ?></h4>
+                                <h4 class="modal-title" id="myModalLabel2"><?php oLang::_('PATH'); ?></h4>
                             </div>
                             <div class="modal-body">
 								<form id = 'scan-form' class="form-horizontal group-border stripped" role="form">
@@ -23,7 +23,7 @@
 									    <input type="hidden" name="step" value="-2">
 									<div class="form-group">
 										<div class="col-sm-offset-10 ">
-											<button type="submit" class="btn btn-default" id='save-button'><?php oLang::_('SAVE');?></button>
+											<button type="submit" class="btn btn-default" id='save-button'><?php oLang::_('SCAN');?></button>
 										</div>
 									</div>
 								</form>
