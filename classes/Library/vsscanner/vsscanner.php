@@ -569,8 +569,8 @@ class virusScanner {
 		foreach($_SESSION['patterns'] as $key => $pattern)
 		{
 			$i++;
-			preg_match('/'.trim($pattern->patterns).'/im', $content, $matches);
-			if(!empty($matches))
+			$array = preg_split('/'.trim($pattern->patterns).'/im', $content);
+			if(count($array)>1)
 			{
 				$virus_found= true;
 				$file_id = $this->insertData($scan_file,'f', ''); 
