@@ -340,4 +340,7 @@ class oseFirewall extends oseFirewallBase {
 	public static function redirectSubscription () {
 		echo '<script type="text/javascript">location.href="index.php?option=com_ose_firewall&view=subscription"</script>';
 	}
+	public static function isBadgeEnabled () { 
+		return true;
+	}
 }

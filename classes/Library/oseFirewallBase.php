@@ -197,8 +197,11 @@ class oseFirewallBase extends oseFirewallRoot
 		$count = self::getCountSignatures();
 	    if ($count<12)
 	    {
-	    	echo '<span class="label label-warning">Warning: Firewall Outdated</span>&nbsp;&nbsp;<button class="btn btn-danger btn-xs fx-button" id="fixSignature" onClick="updateSignature(\'#rulesetsTable\')">Fix It</button>';
-	    	echo '<script type="text/javascript">jQuery(document).ready(function($){$("#fixSignature").click();});</script>';
+	    	echo '<span class="label label-warning">Warning: Firewall Outdated</span>&nbsp;&nbsp;<button class="btn btn-danger btn-xs fx-button" id="fixSignature" name="fixSignature" onClick="updateSignature(\'#rulesetsTable\')">Fix It</button>';
+	    	if (OSE_CMS!='joomla')
+	    	{	
+	    		echo '<script type="text/javascript">document.getElementById("fixSignature").click();</script>';
+	    	}
 	    }
 	    else
 	   {
@@ -438,10 +441,17 @@ class oseFirewallBase extends oseFirewallRoot
 		else
 		{
 			$stmt = $dbo->query ("SELECT `value` FROM `".$dbConfig->prefix."ose_secConfig` WHERE `key` = '".$key."' AND `type` = '".$type."'");
-			$stmt->setFetchMode(PDO::FETCH_OBJ);
-			$result = $stmt->fetch();
-			$dbo = null;
-			return (empty($result) || ($result->value == 0)) ? false : true;
+			if (!empty($stmt))
+			{	
+				$stmt->setFetchMode(PDO::FETCH_OBJ);
+				$result = $stmt->fetch();
+				$dbo = null;
+				return (empty($result) || ($result->value == 0)) ? false : true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 	private function splitHost($host)
