@@ -171,7 +171,7 @@ class oseVsscanStat {
 		if (!empty($filename))
 		{
 			$fileContent = oseFile::read($filename);
-			$fileContent = htmlspecialchars($fileContent);
+			$fileContent = htmlspecialchars($fileContent,ENT_QUOTES,'ISO-8859-1' );
 			$fileContent = preg_replace_callback(
 							'/'.$pattern.'/ims',
 							function ($matches) {
