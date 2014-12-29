@@ -101,7 +101,7 @@ class ScanreportModel extends BaseModel
 	{
 		$return = array();
 		$oseVsscanStat = new oseVsscanStat();
-		$return['data'] = $oseVsscanStat->getFileContent($id);
+		$return['data'] = utf8_encode($oseVsscanStat->getFileContent($id));
 		return $return;
 	}
 	public function getStatistics()

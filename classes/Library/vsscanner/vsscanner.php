@@ -87,6 +87,7 @@ class virusScanner {
 		{
 			ini_set('max_execution_time', 300);
 			ini_set('memory_limit', '1024M');
+			ini_set("pcre.recursion_limit", "524");
 		}	
 	}
 	public function initDatabase($step, $directory) {
@@ -569,7 +570,7 @@ class virusScanner {
 		foreach($_SESSION['patterns'] as $key => $pattern)
 		{
 			$i++;
-			$array = preg_split('/'.trim($pattern->patterns).'/im', $content);
+			$array = preg_split('/'.trim($pattern->patterns).'/im', $content, 2);
 			if(count($array)>1)
 			{
 				$virus_found= true;
