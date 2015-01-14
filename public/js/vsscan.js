@@ -32,7 +32,7 @@ jQuery(document).ready(function($){
 	initPieChartPage($, 20,100,1500, colours);
 	$('#vsscan').on('click', function() { 
 		showLoading ();
-		scanAntivirus (-2, 'vsscan');
+		scanAntivirus (-2, 'vsscan', [], []);
 	});
 	$('#vsstop').on('click', function() { 
 		showLoading ();
@@ -43,7 +43,11 @@ jQuery(document).ready(function($){
 	});
 });
 
-var initPlotChart = function ($, data, cpu=true) {
+var initPlotChart = function ($, data, cpu) {
+	if (cpu =='')
+	{
+		cpu = false;
+	}	
 	//define chart colours
 	var chartColours = ['#3fc3a8', '#ed7a53', '#9FC569', '#bbdce3', '#9a3b1b', '#5a8022', '#2c7282'];
 	var options = {
@@ -195,7 +199,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     });
 }
 
-function scanAntivirus (step, action, cpuData=[], memData=[]) {
+function scanAntivirus (step, action, cpuData, memData) {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -231,7 +235,7 @@ function scanAntivirus (step, action, cpuData=[], memData=[]) {
 	});
 }
 
-function runAllScanAntivirus (action, cpuData=[], memData=[]) {
+function runAllScanAntivirus (action, cpuData, memData) {
 	var s1 = scanVirusInd (action, cpuData, memData, 1);
 	var s2 = scanVirusInd (action, cpuData, memData, 2);
 	var s3 = scanVirusInd (action, cpuData, memData, 3);
@@ -247,7 +251,7 @@ function runAllScanAntivirus (action, cpuData=[], memData=[]) {
 	});
 }
 
-function scanVirusInd (action, cpuData=[], memData=[], type) {
+function scanVirusInd (action, cpuData, memData, type) {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",

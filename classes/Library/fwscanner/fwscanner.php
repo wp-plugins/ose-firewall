@@ -584,11 +584,11 @@ class oseFirewallScanner {
 			$config_var = $this->getConfigVars();
 			oseFirewall::loadEmails();
 			$oseEmail = new oseEmail('firewall');
-			$email = $oseEmail->getEmailByType($type);
+			$email = $this->getEmailByType($type);
 			$email = $this->convertEmail($email, $config_var);
 			$receiptient = new stdClass();
 			$receiptient->name = "Administrator";
-			$receiptient->email = $this->adminEmail;
+			$receiptient->email = ($this->adminEmail=="info@opensource-excellence.com")?oseFirewall::getAdminEmail():$this->adminEmail;
 			$result = $oseEmail->sendMailTo($email, $config_var, array($receiptient));
 			$oseEmail->closeDBO ();
 			if ($result == true)
@@ -596,6 +596,22 @@ class oseFirewallScanner {
 				$this->updateNotified(1);
 			}
 		}
+	}
+	protected function getEmailByType ($type) {
+		$email = new stdClass();
+		switch ($type) {
+			case 'blacklisted':
+				$email->subject = 'Centrora Security Alert For a Blacklisted Entry';
+				break;
+			case 'filtered':
+				$email->subject = 'Centrora Security Alert For a Filtered Entry';
+				break;
+			case '403blocked':
+				$email->subject = 'Centrora Security Alert For an Access Denied Entry';
+				break;
+		}
+		$email->body = file_get_contents(dirname(__FILE__).'/email.tpl');
+		return $email;
 	}
 	protected function updateNotified($status)
 	{
@@ -614,16 +630,18 @@ class oseFirewallScanner {
 		}
 		$ipURL = $this ->getIPURL($config_var);
 		$violation = $this->getViolation();
-		$totalImpact = $this->getScore();
-		$email->subject = $email->emailSubject." for [".$_SERVER['HTTP_HOST']."]";
-		$email->body = str_replace('[attackType]', $attackType, $email->emailBody);
-		$email->body = str_replace('[violation]', $violation, $email->body);
-		$email->body = str_replace('[logtime]', $this->logtime, $email->body);
-		$email->body = str_replace('[ip]', $this->ip, $email->body);
-		$email->body = str_replace('[target]', $this->target, $email->body);
-		$email->body = str_replace(array('[referrer]', '[referer]'), $this->referer, $email->body);
-		$email->body = str_replace('[aclid]', $ipURL, $email->body);
-		$email->body = str_replace('[score]', $totalImpact, $email->body);
+		$score = $this->getScore();
+		$email->subject = $email->subject." for [".$_SERVER['HTTP_HOST']."]";
+		$email->body = str_replace('{name}', 'Administrator', $email->body);
+		$email->body = str_replace('{header}', $email->subject, $email->body);
+		$email->body = str_replace('{attackType}', $attackType, $email->body);
+		$email->body = str_replace('{violation}', $violation, $email->body);
+		$email->body = str_replace('{logtime}', $this->logtime, $email->body);
+		$email->body = str_replace('{ip}', $this->ip, $email->body);
+		$email->body = str_replace('{ip_id}', $this->aclid, $email->body);
+		$email->body = str_replace('{target}', $this->target, $email->body);
+		$email->body = str_replace(array('{referrer}', '{referer}'), $this->referer, $email->body);
+		$email->body = str_replace('{score}', $score, $email->body);
 		return $email;
 	}
 	protected function getViolation()
