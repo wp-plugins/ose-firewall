@@ -52,7 +52,8 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			$status = $this->getBlockIP();
 			$this->addACLRule ( $status, $this -> sumImpact($scanResult) );
 			foreach($scanResult as $result){
-				$content = oseJSON::encode ($result['detcontent_content']);
+				$this->detected .= implode(",", $result ['detcontent_content']);
+				$content = oseJSON::encode ( $result ['detcontent_content'] );
 				//each 'get' or 'post' request may triggers more than one kind of attack type
 				//record each attack type individually
 				$attacktypes = oseJSON::decode($result ['attackTypeID']);

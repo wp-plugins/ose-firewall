@@ -107,7 +107,7 @@ var initPlotChart = function ($, data, cpu) {
 	{
 		var plot2 = $.plot($("#line-chart-memory"),
 			    [{
-			    		label: "Membory Usage",
+			    		label: "Memory Usage",
 			    		data: data,
 			    		lines: {fillColor: "#f2f7f9"},
 			    		points: {fillColor: "#3fc3a8"}

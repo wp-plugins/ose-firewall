@@ -34,9 +34,13 @@ class VsscanModel extends BaseModel {
 	}
 	public function loadLocalScript() {
 		$this->loadAllAssets ();
-		oseFirewall::loadJSFile ('CentroraManageJQPlot', 'plugins/pie-chart/jquery.flot.custom.js', false);
-		oseFirewall::loadJSFile ('CentroraManageJQPieChart', 'plugins/pie-chart/jquery.easy-pie-chart.js', false);
-		oseFirewall::loadJSFile ('CentroraManageIPs', 'vsscan.js', false);
+		$status = oseFirewall::checkSubscriptionStatus (false);
+		if ($status == true)
+		{	
+			oseFirewall::loadJSFile ('CentroraManageJQPlot', 'plugins/pie-chart/jquery.flot.custom.js', false);
+			oseFirewall::loadJSFile ('CentroraManageJQPieChart', 'plugins/pie-chart/jquery.easy-pie-chart.js', false);
+			oseFirewall::loadJSFile ('CentroraManageIPs', 'vsscan.js', false);
+		}
 	}
 	private function getAVScanScript () {
 		return "var path = \"".addslashes(OSE_DEFAULT_SCANPATH)."\";";

@@ -62,7 +62,7 @@ class oseSysguard {
 		$code = $this->customizePHPsetting(true);
 		$autoPrependFile = '"'.OSE_ABSPATH.ODS.'administrator'.ODS.'scan.php'.'"';
 		if ($this->phpRuntime == 'mod') { 
-			$code['config'].= "php_value auto_prepend_file = {$autoPrependFile} <br/>";
+			$code['config'].= "php_value auto_prepend_file {$autoPrependFile} <br/>";
 		}
 		else {
 			$code['config'].= "auto_prepend_file= {$autoPrependFile} <br/>";

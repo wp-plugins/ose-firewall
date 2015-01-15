@@ -56,6 +56,7 @@ class oseFirewallScanner {
 	protected $blockMode = 1;
 	protected $replaced  = array();
 	protected $silentMode = 1;
+	protected $detected = '';
 	public function __construct() {
 		$this->initSetting();
 	}
@@ -639,7 +640,7 @@ class oseFirewallScanner {
 		$email->body = str_replace('{logtime}', $this->logtime, $email->body);
 		$email->body = str_replace('{ip}', $this->ip, $email->body);
 		$email->body = str_replace('{ip_id}', $this->aclid, $email->body);
-		$email->body = str_replace('{target}', $this->target, $email->body);
+		$email->body = str_replace('{target}', $this->url, $email->body);
 		$email->body = str_replace(array('{referrer}', '{referer}'), $this->referer, $email->body);
 		$email->body = str_replace('{score}', $score, $email->body);
 		return $email;
@@ -663,6 +664,10 @@ class oseFirewallScanner {
 					}
 				}
 			}
+		}
+		else
+		{
+			$return = $this->detected; 
 		}
 		return $return;
 	}
