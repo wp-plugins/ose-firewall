@@ -473,6 +473,9 @@ class oseFirewallScanner {
 		if ($this->ipStatus == 3) {
 			return false;
 		}
+		if (isset($_GET['action']) && $_GET['action'] =='register') {
+			return true;
+		}
 		if (preg_match("/wp-login/", $_SERVER['SCRIPT_NAME'])) {
 			return false;
 		}
@@ -689,18 +692,59 @@ class oseFirewallScanner {
 	{
 		return oseFirewall::getConfigVars(); 
 	}
+	protected function CheckSpambotEmail() {
+		// Initiate and declare spambot/errorDetected as false - as we're just getting started
+		$isspamcheck = $this ->isspamcheck();
+		$scanReturn = array ();
+		$spambot = false;
+		if ($spambot != true && $this->ip != "" && (int)$isspamcheck <3) {
+			$email = '';
+			if (isset($_POST['jform']['email1']) && !empty($_POST['jform']['email1']))
+			{
+				$email = $_POST['jform']['email1'];
+			}
+			if (isset($_POST['user_email']) && !empty($_POST['user_email']))
+			{
+				$email = $_POST['user_email'];
+			}
+			if (!empty($email))
+			{
+				$data = array ();
+				$data["email"] = $_POST['jform']['email1'];
+				$data["f"] = 'json';
+				$json_return = $this->posttoSFS($data);
+				$result = oseJSON :: decode($json_return);
+				$this->updatespamcheck(2);
+				if (!isset($result->email->confidence)) {
+					return false;
+				}
+				elseif ($result->email->appears == 1 && $result->email->confidence >= (int)$this->sfs_confidence) // Was the result was registered
+				{
+					$spambot = true; // Check failed. Result indicates dangerous.
+					$return = $this->composeResult(100, oseJSON::encode($data["email"]), 1, 11, 'server.HTTP_CLIENT_IP') ;
+					return $return;
+				} else {
+					return false; // Check passed. Result returned safe.
+				}
+				unset ($data);
+				unset ($json_return);
+				unset ($result);
+			}
+		}
+		return $spambot; // Return test results as either true/false or 1/0
+	}
 	protected function CheckIsSpambot() {
 		// Initiate and declare spambot/errorDetected as false - as we're just getting started
 		$isspamcheck = $this ->isspamcheck();
 		$scanReturn = array ();
 		$spambot = false;
-		if ($spambot != true && $this->ip != "" && $isspamcheck == false) {
+		if ($spambot != true && $this->ip != "" && (int)$isspamcheck < 1) {
 			$data = array ();
 			$data["ip"] = $this->ip;
 			$data["f"] = 'json';
 			$json_return = $this->posttoSFS($data);
 			$result = oseJSON :: decode($json_return);
-			$this->updatespamcheck(true);
+			$this->updatespamcheck(1);
 			if (!isset($result->ip->confidence)) {
 				return false;
 			}
@@ -726,11 +770,11 @@ class oseFirewallScanner {
 		$result = (object)($this->db->loadResult());
 		return ($result->ischecked == 1) ? true : false;
 	}
-	protected function updatespamcheck($ischeck)
+	protected function updatespamcheck($type)
 	{
 		$varValues = array (
 				'ip32_start' => $this->ip32,
-				'ischecked' => 1
+				'ischecked' => (int)$type
 		);
 		$this->db->addData('insert', '#__osefirewall_sfschecked', '', '', $varValues);
 	}

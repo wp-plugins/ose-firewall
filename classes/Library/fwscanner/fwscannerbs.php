@@ -57,8 +57,12 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 	}
 	protected function ScanLayer1() {
 		$options = $this->getScanOptions ();
-		if (isset ( $options ['sfspam'] ) && $options ['sfspam'] == true && function_exists('curl_exec')==true) {
+		if ((isset ( $options ['sfspam'] ) || isset ( $options ['ose_enable_sfspam'])) && ($options ['sfspam'] == true || $options ['ose_enable_sfspam'] == true) && function_exists('curl_exec')==true) {
 			$scanResult = $this->CheckIsSpambot ();
+			if (! empty ( $scanResult )) {
+				return $scanResult;
+			}
+			$scanResult = $this->CheckSpambotEmail ();
 			if (! empty ( $scanResult )) {
 				return $scanResult;
 			}

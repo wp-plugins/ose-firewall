@@ -43,26 +43,36 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		else
 		{ 
 			$scanResult = array($this->ScanLayer1());
-			if (empty($scanResult) || empty($scanResult[0])) {
-				$scanResult = $this->ScanLayer2();
+			if (! empty ( $scanResult )) {
+				$status = $this->getBlockIP();
+				$this->addACLRule ( $status, $scanResult ['impact'] );
+				$this->detected = implode(",", $scanResult ['detcontent_content']);
+				$content = oseJSON::encode ( $scanResult ['detcontent_content'] );
+				$attacktypeID = $this->getAttackTypeID ( $scanResult ['rule_id'] );
+				$this->addDetContent ( $attacktypeID, $content, $scanResult ['rule_id'], $scanResult ['keyname']);
+				$this->controlAttack (0);
 			}
-		}
-		if (! empty ( $scanResult )) {
-			$scannerType = $scanResult['0']['type'];
-			$status = $this->getBlockIP();
-			$this->addACLRule ( $status, $this -> sumImpact($scanResult) );
-			foreach($scanResult as $result){
-				$this->detected .= implode(",", $result ['detcontent_content']);
-				$content = oseJSON::encode ( $result ['detcontent_content'] );
-				//each 'get' or 'post' request may triggers more than one kind of attack type
-				//record each attack type individually
-				$attacktypes = oseJSON::decode($result ['attackTypeID']);
-				foreach($attacktypes as $attacktype){	
-					$attacktypeID = $attacktype;
-					$this->addDetContent ( $attacktypeID, $content, $result ['rule_id'], $result['keyname'] );
+			else
+			{
+				$scanResult = $this->ScanLayer2();
+				if (! empty ( $scanResult )) {
+					$scannerType = $scanResult['0']['type'];
+					$status = $this->getBlockIP();
+					$this->addACLRule ( $status, $this -> sumImpact($scanResult) );
+					foreach($scanResult as $result){
+						$this->detected .= implode(",", $result ['detcontent_content']);
+						$content = oseJSON::encode ( $result ['detcontent_content'] );
+						//each 'get' or 'post' request may triggers more than one kind of attack type
+						//record each attack type individually
+						$attacktypes = oseJSON::decode($result ['attackTypeID']);
+						foreach($attacktypes as $attacktype){
+							$attacktypeID = $attacktype;
+							$this->addDetContent ( $attacktypeID, $content, $result ['rule_id'], $result['keyname'] );
+						}
+					}
+					$this->controlAttack ($scannerType);
 				}
 			}
-			$this->controlAttack ($scannerType);
 		}
 		unset ( $scanResult );
 	}
