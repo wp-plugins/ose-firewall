@@ -697,4 +697,8 @@ td.dataTables_empty {
 
 .panel {
     margin-bottom: 10px;
-}        
+}
+.nav {
+    background: none repeat scroll 0 0 transparent !important;
+    border: 0px solid #fff !important;
+}

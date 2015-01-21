@@ -722,6 +722,7 @@ class oseFirewallScanner {
 				{
 					$spambot = true; // Check failed. Result indicates dangerous.
 					$return = $this->composeResult(100, oseJSON::encode($data["email"]), 1, 11, 'server.HTTP_CLIENT_IP') ;
+					$return['spamtype'] = 'email';
 					return $return;
 				} else {
 					return false; // Check passed. Result returned safe.

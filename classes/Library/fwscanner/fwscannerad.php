@@ -42,12 +42,20 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		}
 		else
 		{ 
-			$scanResult = array($this->ScanLayer1());
+			$scanResult = $this->ScanLayer1();
 			if (! empty ( $scanResult )) {
 				$status = $this->getBlockIP();
 				$this->addACLRule ( $status, $scanResult ['impact'] );
 				$this->detected = implode(",", $scanResult ['detcontent_content']);
-				$content = oseJSON::encode ( $scanResult ['detcontent_content'] );
+				if (!empty($scanResult['spamtype']) && $scanResult['spamtype'] =='email')
+				{	
+					$this->blockIP = 1 ;
+					$content = oseJSON::encode ( array('email'=>$scanResult ['detcontent_content'] ));
+				}
+				else
+				{
+					$content = oseJSON::encode ( $scanResult ['detcontent_content'] );
+				}
 				$attacktypeID = $this->getAttackTypeID ( $scanResult ['rule_id'] );
 				$this->addDetContent ( $attacktypeID, $content, $scanResult ['rule_id'], $scanResult ['keyname']);
 				$this->controlAttack (0);
@@ -222,7 +230,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			$this -> sendEmail('filtered', $notified);
 		}
 		else
-		{		
+		{	
 			switch ($this->blockIP)
 			{
 				case 1:

@@ -45,7 +45,15 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 			$status = $this->getBlockIP();
 			$this->addACLRule ( $status, $scanResult ['impact'] );
 			$this->detected = implode(",", $scanResult ['detcontent_content']); 
-			$content = oseJSON::encode ( $scanResult ['detcontent_content'] );
+			if (!empty($scanResult['spamtype']) && $scanResult['spamtype'] =='email')
+			{	
+				$content = oseJSON::encode ( array('email'=>$scanResult ['detcontent_content'] ));
+				$this->blockIP = 1 ; 
+			}
+			else
+			{
+				$content = oseJSON::encode ( $scanResult ['detcontent_content'] );
+			}
 			$attacktypeID = $this->getAttackTypeID ( $scanResult ['rule_id'] );
 			$this->addDetContent ( $attacktypeID, $content, $scanResult ['rule_id'], $scanResult ['keyname']);
 			$this->controlAttack (0);
