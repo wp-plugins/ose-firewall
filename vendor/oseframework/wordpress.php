@@ -47,7 +47,7 @@ class oseWordPress extends oseFramework
 	public function isAdminAjax() {
 		if (preg_match("/admin\-ajax\.php/", $_SERVER['PHP_SELF']))
 		{
-			if ($_REQUEST['option'] != 'com_ose_firewall')
+			if (!empty($_REQUEST['option']) && $_REQUEST['option'] != 'com_ose_firewall')
 			{
 				return true;
 			}
