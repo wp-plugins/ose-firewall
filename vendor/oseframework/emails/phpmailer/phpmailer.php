@@ -406,7 +406,15 @@ class PHPMailer {
       $this->ContentType = 'text/plain';
     }
   }
-
+  public function useSMTP ($smtpauth, $smtphost, $smtpuser, $smtppass, $smtpsecure, $smtpport) {
+  	$this->Host          = $smtphost;
+  	$this->Port          = $smtpport;
+  	$this->SMTPSecure    = $smtpsecure;
+  	$this->SMTPAuth      = $smtpauth;
+  	$this->Username      = $smtpuser;
+  	$this->Password      = $smtppass;
+  	$this->IsSMTP() ;
+  }
   /**
    * Sets Mailer to send message using SMTP.
    * @return void

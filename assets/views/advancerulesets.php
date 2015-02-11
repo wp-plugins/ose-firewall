@@ -104,6 +104,17 @@ if ($status == true)
 				                               <input type="text" name="slient_max_att" value="<?php echo (empty($confArray['data']['slient_max_att']))?10:$confArray['data']['slient_max_att']?>" class="form-control">
 										</div>
 									</div>
+									<div class="form-group">
+										<label for="blockCountry" class="col-sm-8 control-label"><?php oLang::_('COUNTRYBLOCK');?></label>
+										<div class="col-sm-4">
+												<label class="radio-inline">
+				                                     <input type="radio" name="blockCountry" value="1" <?php echo (!empty($confArray['data']['blockCountry']) && $confArray['data']['blockCountry']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
+				                                </label>
+				                                <label class="radio-inline">
+				                                     <input type="radio" name="blockCountry" value="0" <?php echo (empty($confArray['data']['blockCountry']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
+				                                </label>
+										</div>
+									</div>
 										<input type="hidden" name="option" value="com_ose_firewall">
 									 	<input type="hidden" name="controller" value="scanconfig"> 
 									    <input type="hidden" name="action" value="saveConfigScan">

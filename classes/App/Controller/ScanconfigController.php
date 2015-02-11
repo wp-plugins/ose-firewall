@@ -51,6 +51,7 @@ class ScanconfigController extends ConfigurationController {
 				$data['threshold'] = $this->model->getInt('threshold', 20);
 				$data['slient_max_att'] = $this->model->getInt('slient_max_att', 10);
 				$data['silentMode'] = $this->model->getInt('silentMode', 1);
+				$data['blockCountry'] = $this->model->getInt('blockCountry', 0);
 				break;
 			case 'communicate':
 				$data['auditReport'] = $this->model->getInt('auditReport', 1);

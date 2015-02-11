@@ -44,11 +44,16 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 		if (! empty ( $scanResult )) {
 			$status = $this->getBlockIP();
 			$this->addACLRule ( $status, $scanResult ['impact'] );
+			if (!is_array($scanResult ['detcontent_content']))
+			{	
+				$scanResult ['detcontent_content'] = array($scanResult ['detcontent_content']);
+			}
 			$this->detected = implode(",", $scanResult ['detcontent_content']); 
 			if (!empty($scanResult['spamtype']) && $scanResult['spamtype'] =='email')
 			{	
 				$content = oseJSON::encode ( array('email'=>$scanResult ['detcontent_content'] ));
 				$this->blockIP = 1 ; 
+				$this->spamEmail = true; 
 			}
 			else
 			{
@@ -65,7 +70,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 	}
 	protected function ScanLayer1() {
 		$options = $this->getScanOptions ();
-		if ((isset ( $options ['sfspam'] ) || isset ( $options ['ose_enable_sfspam'])) && ($options ['sfspam'] == true || $options ['ose_enable_sfspam'] == true) && function_exists('curl_exec')==true) {
+		if ((!empty ( $options ['sfspam'] ) && $options ['sfspam'] == true) || ( !empty ( $options ['ose_enable_sfspam']) && $options ['ose_enable_sfspam'] == true) && function_exists('curl_exec')==true) {
 			$scanResult = $this->CheckIsSpambot ();
 			if (! empty ( $scanResult )) {
 				return $scanResult;

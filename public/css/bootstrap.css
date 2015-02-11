@@ -5559,7 +5559,7 @@ button.close {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 99999;
+  z-index: 99998;
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }
@@ -9723,6 +9723,10 @@ fieldset[disabled] .btn-white.btn-alt.active {
   padding-right: 20px;
   /* margin-top: 5px; */
   margin-top: 0;
+}
+.modal-body .form-group {
+	padding-bottom: 2px !important;
+	padding-top:2px !important;
 }
 /* -----------------------------------------
    Page header

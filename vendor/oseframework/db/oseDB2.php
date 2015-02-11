@@ -75,6 +75,10 @@ if (!class_exists('oseDB2', false))
 		{
 			//$this->dbo = null;
 		}
+		public function closeDBOFinal()
+		{
+			$this->dbo = null;
+		}
 		public function loadResult()
 		{
 			$stm = $this->dbo->prepare($this->query);
@@ -101,18 +105,21 @@ if (!class_exists('oseDB2', false))
 			$results = $query->fetchAll(PDO::FETCH_NUM);
 			return $results;
 		}
-		public function loadArrayList($var)
+		public function loadArrayList()
 		{
 			$query = $this->dbo->prepare($this->query);
 			$query->execute();
 			$results = $query->fetchAll(PDO::FETCH_ASSOC);
+			$query->closeCursor();
 			return $results;
 		}
+		
 		public function loadObjectList()
 		{
 			$query = $this->dbo->prepare($this->query);
 			$query->execute();
 			$results = $query->fetchAll(PDO::FETCH_CLASS);
+			$query->closeCursor();
 			return $results;
 		}
 		public function loadResultList()

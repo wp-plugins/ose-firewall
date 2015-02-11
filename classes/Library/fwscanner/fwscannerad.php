@@ -41,7 +41,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			$scanResult = null;
 		}
 		else
-		{ 
+		{
 			$scanResult = $this->ScanLayer1();
 			if (! empty ( $scanResult )) {
 				$status = $this->getBlockIP();
@@ -50,6 +50,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 				if (!empty($scanResult['spamtype']) && $scanResult['spamtype'] =='email')
 				{	
 					$this->blockIP = 1 ;
+					$this->spamEmail = true;
 					$content = oseJSON::encode ( array('email'=>$scanResult ['detcontent_content'] ));
 				}
 				else
@@ -121,18 +122,18 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		$request_str = $this ->groupRequest($request);
 		$tmpResults = array();	
 		foreach($options as $option){
-			if(preg_match_all("/".$option->filter."/ims",$request_str, $matchs)){
+			if(preg_match_all("/".$option['filter']."/ims",$request_str, $matchs)){
 				foreach($request as $index => $singleRequest){
 					//scan each content of a sigle get or post
 					foreach($singleRequest AS $key =>$value){	
 						$attackContent = $value;
 						$attackVar = ($index==0)?"get.".$key:"post.".$key;
-						preg_match_all ( "/".$option->filter."/ims", $attackContent, $matched );
+						preg_match_all ( "/".$option['filter']."/ims", $attackContent, $matched );
 				
 						if(!empty($matched[0])){
-							$tmpResult = $this -> composeResult($option->impact, $matched[0], $option->id, $option->attacktype, $attackVar, 'ad');
+							$tmpResult = $this -> composeResult($option['impact'], $matched[0], $option['id'], $option['attacktype'], $attackVar, 'ad');
 							$tmpResults[] = $tmpResult;
-							$impact += $option->impact;
+							$impact += $option['impact'];
 						}
 					}
 				} 
@@ -191,7 +192,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 	private function getScanOptions() {
 		$query = "SELECT * FROM `#__osefirewall_advancerules` WHERE `action` = 1";
 		$this->db->setQuery ( $query );
-		$results = $this->db->loadObjectList ();
+		$results = $this->db->loadArrayList ();
 		return $results;
 	}
 	
@@ -223,7 +224,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		$visits = $this->getVisits();
 		$score = $this->getScore();
 		$notified = $this->getNotified();
-		if (($this->silentMode == false && $score < $this->threshold) || ($this->silentMode == true && $visits <= $this->slient_max_att))
+		if (($this->silentMode == false && $score < $this->threshold) || ($this->silentMode == true && $visits <= $this->slient_max_att) && $this->spamEmail == false)
 		{
 			$this -> updateVisits();
 			$url = $this -> filterAttack($scannerType);

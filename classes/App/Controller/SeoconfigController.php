@@ -39,6 +39,7 @@ class SeoconfigController extends ConfigurationController {
 		$data['metaDescription'] = $this->model->getVar('metaDescription', null);
 		$data['metaGenerator'] = $this->model->getVar('metaGenerator', null);
 		$data['customBanpage'] = $_POST['customBanpage'];	
+		$data['customBanURL'] = $this->model->getVar('customBanURL',null);
 		$data['scanGoogleBots'] = $this->model->getInt('scanGoogleBots', 0);	
 		$data['scanMsnBots'] = $this->model->getInt('scanMsnBots', 0);	
 		$data['scanYahooBots'] = $this->model->getInt('scanYahooBots', 0);

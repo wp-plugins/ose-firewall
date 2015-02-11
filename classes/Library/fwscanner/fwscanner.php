@@ -57,6 +57,8 @@ class oseFirewallScanner {
 	protected $replaced  = array();
 	protected $silentMode = 1;
 	protected $detected = '';
+	protected $blockCountry = '';
+	protected $spamEmail = false;
 	public function __construct() {
 		$this->initSetting();
 	}
@@ -71,13 +73,13 @@ class oseFirewallScanner {
 	protected function setConfig() {
 		$query = 'SELECT `key`, `value` FROM `#__ose_secConfig` WHERE `type` IN ("seo", "scan", "addons", "advscan", "country")';
 		$this->db->setQuery($query);
-		$results = $this->db->loadObjectList();
+		$results = $this->db->loadArrayList();
 		foreach ($results as $result)
 		{
-			$key = $result->key;
+			$key = $result['key'];
 			if (in_array($key, array('threshold', 'slient_max_att', 'sfs_confidence')))
 			{
-				$this->$key = (int) $result->value;
+				$this->$key = (int) $result['value'];
 				if ($this->threshold == 0 )
 				{
 					$this->threshold = 35; 
@@ -85,7 +87,7 @@ class oseFirewallScanner {
 			}
 			else
 			{
-				$this->$key = $result->value;
+				$this->$key = $result['value'];
 			}
 		}
 	}
@@ -504,7 +506,14 @@ class oseFirewallScanner {
 			return true;
 		}
 	}
+	protected function customRedirect () {
+		if (!empty($this->customBanURL))
+		{
+			header( 'Location: '.$this->customBanURL ) ;
+		}	
+	}
 	protected function showBanPage() {
+		$this->customRedirect ();
 		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail: '';
 		$customBanPage = (!empty ($this->customBanpage)) ? $this->customBanpage: 'Banned';
 		$pageTitle = (!empty ($this->pageTitle)) ? $this->pageTitle : 'Centrora Security';
@@ -583,7 +592,7 @@ class oseFirewallScanner {
 	}
 	protected function sendEmail($type, $notified)
 	{
-		if ($notified == 0)
+		if ($this->receiveEmail == true && $notified == 0)
 		{
 			$config_var = $this->getConfigVars();
 			oseFirewall::loadEmails();

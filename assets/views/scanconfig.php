@@ -127,6 +127,12 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="customBanURL" class="col-sm-4 control-label"><?php oLang::_('O_CUSTOM_BAN_PAGE_URL');?> <i class="fa fa-info-circle" rel="tooltip" title="When this function is enabled, the attacker will be redirected to the URL as defined which replaces the Custom Ban Page as defined above." id="customURLtip"></i></label>
+										<div class="col-sm-8">
+											 <input type="text" name="customBanURL" id="customBanURL" value="<?php echo (empty($seoConfArray['data']['customBanURL']))?'':$seoConfArray['data']['customBanURL']?>" class="form-control">
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="scanGoogleBots" class="col-sm-4 control-label"><?php oLang::_('O_SCAN_GOOGLE_BOTS');?></label>
 										<div class="col-sm-8">
 												<label class="radio-inline">

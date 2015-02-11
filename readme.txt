@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.0.1
-Stable tag: 4.1.8
+Stable tag: 4.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,9 +89,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
-= Upcoming 4.2.0 = 
+= 4.2.0 = 
 * Fixed: Mailer not sending email correctly when SMTP is on
 * Fixed: Login panel not working when in Security Suite mode for Joomla websites
+* Added: Added Custom Redirection function for users who has a custom ban page
+* Fixed: Fixed Warning Errors in Anti-Spamming function 
+* Fixed: Fixed the email notification being sent even the Configuraiton Option 'Receive Centrora Firewall / SafeBrowsing Update Email' is set to Off
 
 = 4.1.8 =
 * Fixed: Fixed warning error reported by AlanP57: Undefined index: option in wp-content/plugins/ose-firewall/vendor/oseframework/wordpress.php on line 50

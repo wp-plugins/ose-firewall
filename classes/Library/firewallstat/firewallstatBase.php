@@ -650,23 +650,39 @@ class oseFirewallStatBase
 							$html .= $this->printAttackType($attackTypeArray);
 							$attackTypeArray = array();
 						}
-						$html .= "<div class='form-group'>";
 						if ($item->attacktypeid == 1 || $item->attacktypeid == 11)
 						{
-							$detcontent_id == $item->detcontent_id;
-							$html .= "<label class='col-sm-3 control-label'>".$item->name."</label>";
+							if ( $item->rule_id == 10 || $item->rule_id == 1 )  {
+								$detcontent_id == $item->detcontent_id;
+								$html .= "<div class='form-group'><label class='col-sm-3 control-label'>".$item->name."</label><div class='col-sm-9'><span style='color:red;'></span></div></div>";
+								if (!isset($var) || $var != $item->var_id)
+								{
+									$html .= "<div class='form-group'><label class='col-sm-3 control-label'>Detected Variable:</label><div class='col-sm-9'><span style='color:red;'>".$item->keyname."</span></div></div>";
+								}
+								$detcontent_id = $item->detcontent_id;
+								$content = $item->content;
+								$var = $item->var_id;
+								$html .= "<div class='form-group'>";
+								$html .= "<label class='col-sm-3 control-label'>Detected Content: </label><div class='col-sm-9'><span style='color:red;'>".htmlentities($item->content)."</span></div></div>";
+							}
+							else
+							{
+								$detcontent_id == $item->detcontent_id;
+								$html .= "<label class='col-sm-3 control-label'>".$item->name."</label>";
+							}
 						}
 						else
 						{
 							if (!isset($var) || $var != $item->var_id)
 							{
+								$html .= "<div class='form-group'>";
 								$html .= "<label class='col-sm-3 control-label'>Detected Variable:</label><div class='col-sm-9'><span style='color:red;'>".$item->keyname."</span></div></div>";
 							}
 							$detcontent_id = $item->detcontent_id;
 							$content = $item->content;
 							$var = $item->var_id;
 							$html .= "<div class='form-group'>";
-							$html .= "<label class='col-sm-3 control-label'>Detected Content: </label><div class='col-sm-9'><span style='color:red;'>".$item->content."</span></div></div>";
+							$html .= "<label class='col-sm-3 control-label'>Detected Content: </label><div class='col-sm-9'><span style='color:red;'>".htmlentities($item->content)."</span></div></div>";
 						}
 						if (!isset($item->tag) || ($tag != $item->tag))
 						{
@@ -680,7 +696,7 @@ class oseFirewallStatBase
 					}
 					else
 					{
-						$html .= "</div>";	
+						//$html .= "</div>";	
 					}
 				}
 				$html .= $this->printAttackType($attackTypeArray);
