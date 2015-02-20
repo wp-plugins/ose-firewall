@@ -124,7 +124,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}
 	public static function loadActionSubscription () {
-		$actions = array ('getSubscription', 'getToken','linkSubscription','updateProfileID');
+		$actions = array ('getSubscription', 'getToken','linkSubscription','updateProfileID', 'logout');
 		parent::loadActions($actions);
 	}
 }

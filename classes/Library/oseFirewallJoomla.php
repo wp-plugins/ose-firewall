@@ -241,9 +241,55 @@ class oseFirewall extends oseFirewallBase {
 					 </div>
 					</div>
 				 </div>';
-		$head .= '<div class ="col-lg-12"><div class="logo"></div><div class ="version-normal">'.self::getVersion ().'</div></div></nav>';
+		$head .= '<div class ="everythingOnOneLine">
+					<div class ="col-lg-12">
+						<div class="logo"></div>
+					<div class ="version-normal">'.self::getVersion ().'</div>';
+		
+		$serverversion = self::getServerVersion(); 
+						#"4.2.6"; #Hardcoded for testing purposes
+		
+		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
+		self::getAjaxScript();
+		if (self::getVersionCompare($serverversion) > 0) { #server version: -1 Old, 0 Same, +1 New	
+			$head .= '<input class="version-update" type="button" value="Update to : '.$serverversion.'" 
+						onclick="showAutoUpdateDialogue(\'Are you sure you want to update to:  '.$serverversion.'\', \'Update Confirmation\', \'UPDATE\')"/>
+					  </div></div></nav>';
+		} 
+		else 
+		{
+				$head .= '</div></div></nav>';
+		}
+
+		#take care of ajax js to run unpdate		
+		if(isset($_POST['action']) && !empty($_POST['action'])) {
+		    $action .= $_POST['action'];
+		    switch($action) {
+		        case 'upgrade-plugin' : self::runUpdate() ;break;
+		    }
+		}
+		
 		echo $head;
 		echo oseFirewall::getmenus();
+	}
+	# Run the automatic update procedures
+	private static function runUpdate(){
+		oseFirewall::callLibClass('panel','panel');
+		$panel2 = new panel ();
+		return $panel2->runAutomaticUpdate();	
+	}
+	#Check for version updates	
+	private static function getServerVersion(){
+		oseFirewall::callLibClass('panel','panel');
+		$panel = new panel ();
+		return $panel->getLatestVersion();	
+	}
+	#Compare local version with the update server version
+	private static function getVersionCompare($serverversion){
+		$xml = JFactory::getXML(JPATH_ADMINISTRATOR .'/components/com_ose_firewall/ose_firewall.xml');
+		$localversion = (string)$xml->version;
+		$compareversions = version_compare($serverversion, $localversion) ;
+		return $compareversions;
 	}
 	private static function getVersion () {
 		$xml = JFactory::getXML(JPATH_ADMINISTRATOR .'/components/com_ose_firewall/ose_firewall.xml');

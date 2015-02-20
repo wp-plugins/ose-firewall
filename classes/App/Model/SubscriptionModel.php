@@ -50,4 +50,8 @@ class SubscriptionModel extends LoginModel {
 	public function updateProfileID($profileID, $profileStatus) {
 		$this->saveConfiguration('panel', array('profileID'=>$profileID, 'profileStatus'=>$profileStatus));
 	}
+	public function logout () {
+		$panel = new panel ();
+		return $panel->logout();
+	}
 }

@@ -506,4 +506,7 @@ define('WORDPRESS_ADMIN_AJAX_PROTECTION', 'WordPress Admin Ajax Protection');
 define('SCAN', 'Scan');
 define('FILE_CONTENT', 'File Content');
 define('O_CUSTOM_BAN_PAGE_URL', 'Custom Ban Page URL');
+
+define('SUCCESS', 'Successful');
+define('SUCCESS_LOGOUT', 'Successful logged out');
 ?>

@@ -258,8 +258,12 @@ body {
 	text-align: center;
 }
 
+.everythingOnOneLine {
+ white-space: nowrap;
+}
+
 .version-normal {
-	background-color: #ffb400;
+	background-color: #009933;
     border-radius: 5px;
     color: #ffffff;
     float: left;
@@ -269,6 +273,27 @@ body {
     padding: 0 6px;
 }
 
+.version-update {
+	background-color: #ff7a00;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #ff7a00;
+    color: #ffffff;
+    float: left;
+    font-size: 10px;
+    margin-left: 40px;
+    margin-bottom: 5px;
+    padding: 0 6px;
+}
+.version-update:hover,
+.version-update:focus,
+.version-update:active,
+.version-update.active,
+.open > .dropdown-toggle.version-update {
+  color: #ffffff;
+  background-color: #a52a2a;
+  border-color: #a52a2a;
+}
 .jumbotron {
 	overflow:hidden;
 	

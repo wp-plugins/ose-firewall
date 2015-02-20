@@ -255,4 +255,78 @@ class panel
 			return null;
 		}
 	}
+	Public function getLatestVersion () {
+		$url = "http://www.centrora.com/accountApi/version/getLastestVersion";
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$json = curl_exec($ch);
+		curl_close($ch);
+		$json_data = json_decode($json, true);		
+		return  $json_data["version"][0];
+	}
+	public function runAutomaticUpdate () {
+		$package = $this->runUpdatebyUrl();
+	
+		if (!$package) {
+			JError::raiseWarning('', JText::_('Automatic Update: Something went wrong while unpacking the download'));
+			return false;
+		}
+	
+		// Get an installer instance
+		$installer = JInstaller::getInstance();
+	
+		if (!$installer->install($package['dir'])) {
+			JError::raiseWarning('', JText::_('Automatic Update: There was an error installing the package'));
+			$result = false;
+		} else {
+			// Package installed sucessfully
+			$msg = JText::sprintf('COM_INSTALLER_INSTALL_SUCCESS', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($package['type'])));
+			$result = true;
+		}
+	
+		// Cleanup the install files
+		if (!is_file($package['packagefile'])) {
+			$config = JFactory::getConfig();
+			$package['packagefile'] = $config->get('tmp_path') . '/' . $package['packagefile'];
+		}
+	
+		JInstallerHelper::cleanupInstall($package['packagefile'], $package['extractdir']);
+	
+	
+		return $result;
+	}
+	public function runUpdatebyUrl () {
+	
+		// Get a database connector
+		$db = JFactory::getDbo();
+		$url = "http://www.centrora.com/software/pkg_centrora.zip";
+		// Download the zip package
+		$updatefile = JInstallerHelper::downloadPackage($url);
+	
+		// Was the package downloaded?
+		if (!$updatefile) {
+			JError::raiseWarning('', JText::_('Automatic Update: Something went wrong with the download'));
+			return false;
+		}
+		$config		= JFactory::getConfig();
+		$tmp_dest	= $config->get('tmp_path');
+	
+		// Unpack the downloaded package file
+		$package = JInstallerHelper::unpack($tmp_dest . '/' . $updatefile);
+	
+		return $package;
+	}
+	public function logout () {
+		$query1 = "DELETE FROM `#__ose_secConfig` WHERE `key` = 'webkey' AND `type` ='panel'";
+		$query2 = "DELETE FROM `#__ose_secConfig` WHERE `key` = 'verified' AND `type` ='panel'";
+		$result = $this->runDbQuery($query1);
+		$result = $this->runDbQuery($query2);
+		return $result;
+	}
+	protected function runDbQuery($query) {
+		$dbo = oseFirewall::getDBO();
+		$dbo->setQuery($query);
+		return $dbo->query();
+	}
 }

@@ -204,9 +204,51 @@ public static function showLogo()
 					 </div>
 				   </div>
 				 </div>';
-		$head .= '<div class ="col-lg-12"><div class="logo"></div><div class ="version-normal">'.self::getVersion ().'</div></div></nav>';
+		$head .= '<div class ="everythingOnOneLine">
+					<div class ="col-lg-12">
+						<div class="logo"></div>
+					<div class ="version-normal">'.self::getVersion ().'</div>';
+		
+		#Get update server version
+		$plugins = get_plugin_updates();
+		foreach ( (array) $plugins as $plugin_file => $plugin_data) {
+			if ($plugin_data->update->slug  == "ose-firewall"){
+				$serverversion = $plugin_data->update->new_version;}
+		}
+		
+		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
+				
+		#pass update url to js to run through ajax. Update handled by url function.
+		$file ='ose-firewall/ose_wordpress_firewall.php';
+		$updateurl = wp_nonce_url( self_admin_url('update.php?action=upgrade-plugin&plugin=') . $file, 'upgrade-plugin_' . $file);
+		$activateurl = esc_url(wp_nonce_url(admin_url('plugins.php?action=activate&plugin=' . $file), 'activate-plugin_' . $file));
+
+		#Check user, Compare versions then run bootbox js and ajax calls for confirmation
+		if (current_user_can('update_plugins') && self::getVersionCompare($serverversion) > 0) { #server version: -1 Old, 0 Same, +1 New	
+			$head .= '<input class="version-update" type="button" value="Update to : '.$serverversion.'" 
+						onclick="showAutoUpdateDialogue(\'Are you sure you want to update to: '.$serverversion.'?\', 
+														\'Update Confirmation\', 
+														\'UPDATE\', 
+														\''.$updateurl.'\', 
+														\''.$file.'\', 
+														\''.$activateurl.'\'	)"/>
+					  </div></div></nav>';
+		} 
+		else 
+		{
+				$head .= '</div></div></nav>';
+		}
+				
 		echo $head;
 		echo oseFirewall::getmenus();
+	}
+	
+	#Compare local version with the update server version
+	private static function getVersionCompare($serverversion){
+	$pluginData = get_plugin_data(OSEFWDIR.'/ose_wordpress_firewall.php');
+			$localversion = $pluginData['Version'];
+			$compareversions = version_compare($serverversion, $localversion) ;
+			return $compareversions;
 	}
 	private static function getVersion () {
 		$pluginData = get_plugin_data(OSEFWDIR.'/ose_wordpress_firewall.php');

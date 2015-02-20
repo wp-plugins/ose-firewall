@@ -149,10 +149,17 @@ class BaseModel  {
 		$this->loadDatabase();
 		return new oseFirewallIpManager($this->db);
 	}
+	protected function loadJSON () {
+		if (!class_exists('oseJSON')) {
+			oseFirewall::loadJSON();
+		}
+	}
 	public function JSON_encode ($var) {
+		$this->loadJSON ();
 		return oseJSON::encode($var); 
 	}
 	public function JSON_decode ($var) {
+		$this->loadJSON ();
 		return oseJSON::decode($var);
 	}
 	public function showSelectionRequired () {

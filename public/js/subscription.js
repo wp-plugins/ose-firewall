@@ -57,6 +57,30 @@ function updateProfileID (profileID, profileStatus) {
    });
 }
 
+function centLogout () {
+	jQuery(document).ready(function($){ 
+		showLoading ();
+		$.ajax({
+		        type: "POST",
+		        url: url,
+		        dataType: 'json',
+			    data: {
+			    		option : option, 
+			    		controller:controller,
+			    		action:'logout',
+			    		task:'logout',
+			    		centnounce:$('#centnounce').val()
+			    },
+		        success: function(data)
+		        {
+		           hideLoading ();
+		           showDialogue (data.message, data.status, 'OK');
+		           location.reload(); 
+		        }
+		});
+	});
+}
+
 function linkSub(profileID) {
 	jQuery(document).ready(function($){ 
 		showLoading ();

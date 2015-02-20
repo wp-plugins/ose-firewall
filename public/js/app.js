@@ -370,15 +370,16 @@ jQuery(document).ready(function($){
 	
 	$("#seo-configuraton-form").submit(function() {
 		showLoading();
-		var data = $("#seo-configuraton-form").serialize();
-		data += '&centnounce='+$('#centnounce').val();
-        $.ajax({
+		$('#customBanpage').html(tinymce.get('customBanpage').getContent());
+		var postdata = $("#seo-configuraton-form").serialize();
+		postdata += '&centnounce='+$('#centnounce').val();
+		$.ajax({
                type: "POST",
                url: url,
-               data: data, // serializes the form's elements.
+               dataType: 'json',
+	   		   data: postdata,
                success: function(data)
                {
-            	   data = jQuery.parseJSON(data);
             	   if (data.status == 'SUCCESS')
             	   {
             		   showLoading(data.result);

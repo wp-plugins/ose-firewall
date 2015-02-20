@@ -57,4 +57,12 @@ class SubscriptionController extends LoginController {
 			$this->model->updateProfileID($profileID, $profileStatus);
 		}
 	}
+	public function action_logout () {
+		$result = $this ->model->logout();
+		$return = array ();
+		$return['success'] = $result;
+		$return['status'] = oLang :: _get('SUCCESS');
+		$return['message'] = oLang :: _get('SUCCESS_LOGOUT');
+		$this->model->returnJSON($return, false);
+	}
 }
