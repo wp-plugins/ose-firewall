@@ -66,8 +66,12 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="admin.php?page=ose_fw_manageips">' . oLang::_get('MANAGE_IPS') . '</a></li>';
 		
 		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_bsconfig') ? 'class="active"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_bsconfig">' . oLang::_get('FIREWALL_CONFIGURATION'). '</a></li>';
+		
+		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_rulesets') ? 'class="active"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_rulesets">' . oLang::_get('RULESETS'). '</a></li>';
+		$menu .= '><a href="admin.php?page=ose_fw_rulesets">' . oLang::_get('FIREWALL_RULES'). '</a></li>';
 		
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_variables') ? 'class="active"' : '';
@@ -150,11 +154,12 @@ class oseFirewall extends oseFirewallBase {
 		//add_submenu_page( 'ose_firewall', ADD_IPS, ADD_IPS, 'manage_options', 'ose_fw_addips', 'oseFirewall::ipform' );
 		add_submenu_page( 'ose_firewall', AUDIT_WEBSITE, AUDIT_WEBSITE, 'manage_options', 'ose_fw_audit', 'oseFirewall::audit' );
 		
-		add_submenu_page( 'ose_firewall', RULESETS, RULESETS, 'manage_options', 'ose_fw_rulesets', 'oseFirewall::rulesets' );
+		add_submenu_page( 'ose_firewall', FIREWALL_RULES, FIREWALL_RULES, 'manage_options', 'ose_fw_rulesets', 'oseFirewall::rulesets' );
+		add_submenu_page( 'ose_firewall', FIREWALL_CONFIGURATION, FIREWALL_CONFIGURATION, 'manage_options', 'ose_fw_bsconfig', 'oseFirewall::bsconfig' );
 		add_submenu_page( 'ose_firewall', ADRULESETS, ADRULESETS, 'manage_options', 'ose_fw_adrulesets', 'oseFirewall::advancerulesets' );
 		add_submenu_page( 'ose_firewall', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables' );
 		add_submenu_page( 'ose_firewall', CONFIGURATION, CONFIGURATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration' );
-		add_submenu_page( 'ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup' );
+		//add_submenu_page( 'ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup' );
 		add_submenu_page( 'ose_firewall', COUNTRYBLOCK, COUNTRYBLOCK, 'manage_options', 'ose_fw_countryblock', 'oseFirewall::countryblock' );
 		add_submenu_page( 'ose_firewall', LOGIN, LOGIN, 'manage_options', 'ose_fw_login', 'oseFirewall::login' );
 		add_submenu_page( 'ose_firewall', SUBSCRIPTION, SUBSCRIPTION, 'manage_options', 'ose_fw_subscription', 'oseFirewall::subscription' );
@@ -355,5 +360,8 @@ public static function showLogo()
 			}
 		}
 		return $return;
+	}
+	public static function getConfigurationURL () {
+		return 'admin.php?page=ose_fw_bsconfig';
 	}
 }

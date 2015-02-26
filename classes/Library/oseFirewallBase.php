@@ -168,17 +168,6 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		require_once(OSE_FRAMEWORKDIR.ODS.'oseframework'.ODS.'language'.ODS.'oseLanguage.php');
 		require_once(OSE_FWLANGUAGE.ODS.'en_US.php');
-		/*
-		$lang = self::getLocale();
-		if (file_exists(OSE_FWLANGUAGE.ODS.$lang.'.php'))
-		{
-			require_once(OSE_FWLANGUAGE.ODS.$lang.'.php');
-		}
-		else
-		{
-			require_once(OSE_FWLANGUAGE.ODS.'en_US.php');
-		}
-		*/
 	}
 	public static function isDBReady()
 	{
@@ -342,6 +331,10 @@ class oseFirewallBase extends oseFirewallRoot
 	public static function variables()
 	{
 		self::runController ('VariablesController', 'index');
+	}
+	public static function bsconfig()
+	{
+		self::runController ('BsconfigController', 'index');
 	}
 	public static function versionupdate()
 	{

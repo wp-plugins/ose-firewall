@@ -23,8 +23,7 @@ $seoConfArray = $this->model->getConfiguration('seo');
                                 </div>
                                  <div class="panel-controls-buttons">
                                     <button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="redirectTut('http://www.centrora.com/centrora-joomla-component-tutorial/firewall-settings-3/');"><?php oLang::_('TUTORIAL'); ?></button>
-                                	<button data-target="#configModal" data-toggle="modal" class="btn btn-success btn-sm mr5 mb10" type="button"><?php oLang::_('FIREWALL_CONFIGURATION'); ?></button>
-                                	<button data-target="#seoConfigModal" data-toggle="modal" class="btn btn-success btn-sm mr5 mb10" type="button"><?php oLang::_('SEO_CONFIGURATION'); ?></button>
+                                	<button data-target="#configModal" onClick="location.href='<?php echo oseFirewall::getConfigurationURL();;?>'" class="btn btn-success btn-sm mr5 mb10" type="button"><?php oLang::_('FIREWALL_CONFIGURATION'); ?></button>
                                 </div>
                                 <div class="panel-body">
                                     <table class="table display" id="rulesetsTable">
@@ -55,6 +54,3 @@ $seoConfArray = $this->model->getConfiguration('seo');
 	   </div>
 	</div>
 </div>
-<?php 
-include_once(dirname(__FILE__).'/scanconfig.php');
-?>

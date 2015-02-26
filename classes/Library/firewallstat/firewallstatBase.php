@@ -1383,15 +1383,31 @@ class oseFirewallStatBase
 	{
 		$i = 0;
 		$attacktypes = $this->getAttackTypeArray();
+		$anchors =$this->getAllTutorialLinks (); 
 		foreach ($results as $result)
 		{
-			$results[$i]->rule = ($type=='basic')?oLang::_get($results[$i]->rule):oLang::_get($results[$i]->description);
+			$link='<a href="http://www.centrora.com/centrora-security-tutorial/centrora-security-basic-firewall-explanations/#'.$anchors[$results[$i]->id].'" target="_blank"><i class="fa fa-info-circle ruletips"></i></a>';
+			$results[$i]->rule = ($type=='basic')?oLang::_get($results[$i]->rule).'&nbsp;'.$link:oLang::_get($results[$i]->description);
 			$results[$i]->action = $this->getActionIcon($results[$i]->id, $results[$i]->action);
 			$results[$i]->attacktype = $this->attackTypeDecode($attacktypes, $results[$i]->attacktype);
 			$results[$i]->checkbox ='';
 			$i++;
 		}
 		return $results;
+	}
+	private function getAllTutorialLinks () {
+		$links = array (); 
+		$links[1]="stopforumspam";
+		$links[2]="blacklistedmethods";
+		$links[3]="maluseragent";
+		$links[4]="ddos";
+		$links[5]="RFI";
+		$links[6]="DFI";
+		$links[7]="JSInjection";
+		$links[8]="SQLInjection";
+		$links[9]="dirtraveral";
+		$links[10]="longquery";
+		return $links;
 	}
 	private function convertPatterns($results)
 	{

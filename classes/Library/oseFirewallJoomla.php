@@ -92,8 +92,12 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="index.php?option=' . $extension . '&view=manageips">' . oLang::_get('MANAGE_IPS') . '</a></li>';
 		
 		$menu .= '<li ';
+		$menu .= ($view == 'bsconfig') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=' . $extension . '&view=bsconfig">' . oLang::_get('RULESETS'). '</a></li>';
+		
+		$menu .= '<li ';
 		$menu .= ($view == 'rulesets') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=rulesets">' . oLang::_get('RULESETS'). '</a></li>';
+		$menu .= '><a href="index.php?option=' . $extension . '&view=rulesets">' . oLang::_get('FIREWALL_RULES'). '</a></li>';
 		
 		$menu .= '<li ';
 		$menu .= ($view == 'variables') ? 'class="active"' : '';
@@ -388,5 +392,8 @@ class oseFirewall extends oseFirewallBase {
 	}
 	public static function isBadgeEnabled () { 
 		return true;
+	}
+	public static function getConfigurationURL () {
+		return 'index.php?option=com_ose_firewall&view=bsconfig';
 	}
 }

@@ -3598,10 +3598,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #ecf0f1;
-  background-color: #f2f1ef;
-  border: 1px solid #95a5a6;
-  border-bottom-color: transparent;
+  color: #ffffff;
+  background-color: #60b9e7;
+  border: 1px solid #60b9e7;
+  border-color: #60b9e7 #60b9e7 transparent;
   cursor: default;
 }
 .nav-tabs.nav-justified {

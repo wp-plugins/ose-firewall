@@ -41,7 +41,7 @@ define('EMAIL_ADDRESS', 'Email Address');
 define('FIREWALL_SCANNING_OPTIONS', 'Firewall Scanning Options');
 define('BLOCKBL_METHOD', 'Block blacklisted methods (Trace / Delete / Track)');
 define('CHECK_MUA', 'Checks Malicious User Agent');
-define('checkDOS', 'Checks Basic DoS Attacks');
+define('checkDOS', 'Checks Basic DoS / Web Application Flooding Attacks');
 define('checkDFI', 'Checks Basic Direct File Inclusion');
 define('checkRFI', 'Checks Basic Remote File Inclusion');
 define('checkJSInjection', 'Checks Basic Javascript Injection');
@@ -160,9 +160,9 @@ define('IP_RULE_DELETE_FAILED','The Access Control Rules for this IP / IP Range 
 define('IP_RULE_CHANGED_SUCCESS','The Access Control Rules for this IP / IP Range has been changed successfully.');
 define('IP_RULE_CHANGED_FAILED','The Access Control Rules for this IP / IP Range has been changed unsuccessfully.');
 define('MANAGE_IPS','IP Management');
-define('RULESETS','Firewall Settings');
-define('MANAGERULESETS_TITLE','<b>Firewall</b> <span><b>Settings</b></span>');
-define('MANAGERULESETS_DESC','Activate or Deactivate the firewall function. You can limit the security features of Centrora Plugin by deactivating any security function. We highly recommend to activate all of the security functions to carry the best out of Centrora Plugin');
+define('RULESETS','Firewall Configuration');
+define('MANAGERULESETS_TITLE','<b>Firewall</b> <span><b>Rules Fine-tuning</b></span>');
+define('MANAGERULESETS_DESC','Activate or deactivate specific firewall rules. You can change the security features of Centrora Plugin by deactivating specific security function. We highly recommend to activate all of the security functions to carry the best out of Centrora Security');
 define('ADRULESETS','Advance Firewall Settings');
 define('MANAGE_AD_RULESETS_TITLE','<b>Advance Firewall Settings</b>');
 define('MANAGE_AD_RULESETS_DESC','The Panel to Manage your Advance Rules');
@@ -171,7 +171,7 @@ define('ITEM_STATUS_CHANGED_FAILED','The status of the item was changed unsucces
 define('CONFIGURATION','Configuration');
 define('CONFIGURATION_TITLE','<b>Installation</b>');
 define('CONFIGURATION_DESC','You can install or uninstall the database tables here');
-define('SEO_CONFIGURATION','SEO Configuration');
+define('SEO_CONFIGURATION','Search Engine Optimization Configuration');
 define('SEO_CONFIGURATION_TITLE','<b>Search Engine</b> <span><b>Configuration</b></span>');
 define('SEO_CONFIGURATION_DESC','Search Engine settings which protect your rankings even if google bots block your website. Design message to be displayed for blocked IP visitors');
 define('CONFIG_SAVE_SUCCESS','The configuration was saved successfully.');
@@ -467,7 +467,6 @@ define('OVERVIEW_TRAFFICS','Traffic Overview');
 define('RECENT_HACKING_INFO','Recent Hacking Traffic');
 define('PLEASE_ENTER_REQUIRED_INFO','Please enter the required information.');
 define('MY_PREMIUM_SERVICE','Activate My Premium Service');
-define('FIREWALL_CONFIGURATION','Firewall Configuration');
 define('INSTALLATION','Installation');
 define('INSTALLDB','Install Database Tables');
 define('INSTALLDB_INTRO','Install the database created by Centrora Security from your website');
@@ -495,18 +494,21 @@ define('COUNTRY_CHANGED_SUCCESS','The country status is changed successfully');
 define('ACTIVATION_CODES', 'Firewall Activation Codes');
 define('ACTIVATION_CODE_TITLE', 'Activation Codes');
 define('ACTIVATION_CODE_DESC', 'This Panel shows the activation codes of the firewall in the php.ini or .htaccess for the whole server.');
-
 define('AFFILIATE_ACCOUNT', 'Affiliate Account Information');
 define('ADD_TRACKING_CODE', 'Add Tracking Codes');
 define('TRACKINGCODE_CANNOT_EMPTY', 'Tracking Codes cannot be empty');
 define('TRACKINGCODE_UPDATE_SUCCESS', 'Great! Successfully updated tracking codes. In the future, when the owner of this website subscribes to our subscription plans, the transaction will be logged into your affiliate accounts.');
 define('TRACKINGCODE_UPDATE_FAILED', 'Failed updating Tracking Codes');
-
 define('WORDPRESS_ADMIN_AJAX_PROTECTION', 'WordPress Admin Ajax Protection');
 define('SCAN', 'Scan');
 define('FILE_CONTENT', 'File Content');
 define('O_CUSTOM_BAN_PAGE_URL', 'Custom Ban Page URL');
-
 define('SUCCESS', 'Successful');
 define('SUCCESS_LOGOUT', 'Successful logged out');
+define('FIREWALL_RULES','Firewall Rules Fine-tuning');
+
+define('FIREWALL_CONFIGURATION','Firewall Configuration');
+define('FIREWALL_CONFIGURATION_DESC','This is the page that you can change the settings of Centrora Firewall.');
+//define('FIREWALL_RULES','Firewall Rules Fine-tuning');
+//define('FIREWALL_RULES','Firewall Rules Fine-tuning');
 ?>
