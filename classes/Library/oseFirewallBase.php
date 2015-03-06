@@ -362,6 +362,10 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		self::runController ('SubscriptionController', 'index');
 	}
+	public static function cronjobs () 
+	{
+		self::runController ('CronjobsController', 'index');
+	}
 	public static function clamav () 
 	{
 		$app = self::runApp();

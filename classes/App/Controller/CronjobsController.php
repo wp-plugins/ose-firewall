@@ -28,38 +28,20 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
  die('Direct Access Not Allowed');
 }
-class VsscanController extends \App\Base {
-	public function action_InitDatabase() {
+class CronjobsController extends \App\Base {
+	public function action_saveCronConfig() {
 		$this->model->loadRequest();
-		$step= $this->model->getInt('step');
-		$path= $this->model->getVar('path', null);
-		if (empty($path))
+		$custhours = $this->model->getInt('custhours', null);
+		$custweekdays =  $this->model->getVar('custweekdays', array());
+		if (empty($custhours) || empty($custweekdays))
 		{
-			$this->model->aJaxReturn(false, 'ERROR', oLang::_get("SCANNED_PATH_EMPTY"), false);
-		}  
+			$this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("CRON_SETTING_EMPTY"), false);
+		}
 		else
 		{
-			$path = $this->model->fileClean ($path);
-			$this ->model->initDatabase($step, $path);
+			$custweekdays = base64_encode($this->model->JSON_encode($custweekdays));
+			$result = $this->model->saveCronConfig($custhours, $custweekdays);
 		}
-	}
-	public function action_Vsscan() {
-		$this->model->loadRequest();
-		$step= $this->model->getInt('step');
-		$type= $this->model->getInt('type', null);
-		$results = $this ->model->vsScan($step, $type);
-		$this->model->returnJSON($results);
-	}
-	public function action_UpdatePatterns() {
-		$this->model->loadRequest();
-		$patternType= $this->model->getInt('patternType', 1);
-		$results = $this ->model->updatePatterns($patternType);
-		print_r($results);exit;
-	}
-	public function action_CheckScheduleScanning () {
-		$this->model->loadRequest();
-		$results = $this ->model->checkScheduleScanning();
-		print_r($results);exit;
 	}
 }
 ?>	

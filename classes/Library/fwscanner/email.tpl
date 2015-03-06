@@ -819,7 +819,7 @@ table.wrapper {
   <meta name="robots" content="noindex,nofollow" />
 <meta property="og:title" content="Centrora Security Alert" />
 </head>
-  <body style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;min-width: 100%;background-color: #1bbc9b"><style type="text/css">
+  <body style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;min-width: 100%;background-color: #fafafa"><style type="text/css">
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic);@import url(https://fonts.googleapis.com/css?family=Bitter:400,700,400italic);@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic);@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic);@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic);@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic);body.noop{border-width:0px}body,.wrapper,.emb-editor-canvas{background-color:#1bbc9b}h1{color:#3e5771}.wrapper h1{}.wrapper h1{font-family:Tahoma,sans-serif}@media only screen{.wrapper h1{font-family:Roboto,Tahoma,sans-serif !important}}h1{}.one-col h1{line-height:44px}.two-col h1{line-height:40px}.three-col h1{line-height:32px}@media only screen and (max-width: 
 620px){h1{line-height:44px !important}}h2{color:#555}.wrapper h2{}.wrapper h2{font-family:Georgia,serif}@media only screen{.wrapper h2{font-family:Bitter,Georgia,serif !important}}h2{}.one-col h2{line-height:32px}.two-col h2{line-height:26px}.three-col h2{line-height:24px}@media only screen and (max-width: 620px){h2{line-height:32px !important}}h3{color:#555}.wrapper h3{}.wrapper h3{font-family:Tahoma,sans-serif}@media only screen{.wrapper h3{font-family:Roboto,Tahoma,sans-serif !important}}h3{}.one-col h3{line-height:21px}.two-col h3{line-height:22px}.three-col h3{line-height:19px}@media only screen and (max-width: 620px){h3{line-height:21px !important}}p,ol,ul{color:#61606c}.wrapper p,.wrapper ol,.wrapper ul{}.wrapper p,.wrapper ol,.wrapper ul{font-family:Tahoma,sans-serif}@media only screen{.wrapper p,.wrapper ol,.wrapper ul{font-family:Roboto,Tahoma,sans-serif 
 !important}}p,ol,ul{}.one-col p,.one-col ol,.one-col ul{line-height:24px;Margin-bottom:24px}.two-col p,.two-col ol,.two-col ul{line-height:22px;Margin-bottom:22px}.three-col p,.three-col ol,.three-col ul{line-height:20px;Margin-bottom:20px}@media only screen and (max-width: 620px){p,ol,ul{line-height:24px !important;Margin-bottom:24px !important}}.wrapper a{color:#41637e}.wrapper a:hover{color:#30495c !important}.wrapper p a,.wrapper ol a,.wrapper ul a{border-bottom:1px dotted #41637e}.wrapper p a:hover,.wrapper ol a:hover,.wrapper ul a:hover{border-bottom-color:#30495c !important}.wrapper .logo{color:#555}.wrapper .logo{font-family:Tahoma,sans-serif}@media only screen{.wrapper .logo{font-family:Roboto,Tahoma,sans-serif !important}}.wrapper .logo a{color:#555}.wrapper .logo a:hover{color:#555 !important}.btn a{}.wrapper .btn a{}.wrapper .btn a{font-family:Tahoma,sans-serif}@media only 
@@ -827,17 +827,17 @@ screen{.wrapper .btn a{font-family:Roboto,Tahoma,sans-serif !important}}.wrapper
 .twitter{color:#fff}.wrapper .footer .forward,.wrapper .footer .facebook,.wrapper .footer .twitter{}.wrapper .footer .forward,.wrapper .footer .facebook,.wrapper .footer .twitter{font-family:Tahoma,sans-serif}@media only screen{.wrapper .footer .forward,.wrapper .footer .facebook,.wrapper .footer .twitter{font-family:Roboto,Tahoma,sans-serif !important}}.footer .forward,.footer .facebook,.footer .twitter{}.footer .forward:hover,.footer .facebook:hover,.footer .twitter:hover{color:#fff !important}.address,.campaign,.preheader .title,.preheader .webversion{color:#fff}.address,.campaign,.preheader .title,.preheader .webversion{font-family:Tahoma,sans-serif}@media only screen{.address,.campaign,.preheader .title,.preheader .webversion{font-family:Roboto,Tahoma,sans-serif !important}}.wrapper .address a,.wrapper .campaign a,.wrapper .preheader .title a,.wrapper .preheader .webversion 
 a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preheader .title a:hover,.wrapper .preheader .webversion a:hover{color:#fff !important}.footer .campaign a{}.wrapper .footer .campaign a{}.wrapper .footer .campaign a{font-family:Tahoma,sans-serif}@media only screen{.wrapper .footer .campaign a{font-family:Roboto,Tahoma,sans-serif !important}}.footer .campaign a{}.footer .campaign a{letter-spacing:0.03em}.footer .divider{border-top:1px dashed #fff}.forward,.facebook,.twitter{}.wrapper .forward,.wrapper .facebook,.wrapper .twitter{}.wrapper .forward,.wrapper .facebook,.wrapper .twitter{font-family:Tahoma,sans-serif}@media only screen{.wrapper .forward,.wrapper .facebook,.wrapper .twitter{font-family:Roboto,Tahoma,sans-serif !important}}.forward,.facebook,.twitter{}
 </style>
-    <table class="wrapper" style="border-collapse: collapse;border-spacing: 0;display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;text-rendering: optimizeLegibility;background-color: #1bbc9b">
+    <table class="wrapper" style="border-collapse: collapse;border-spacing: 0;display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;text-rendering: optimizeLegibility; background-color: #fafafa; ">
       <tbody><tr>
         <td style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top">
           <center>
-            <table class="preheader" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 600px">
+            <table class="preheader" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 600px; background-color: #fff; color: #2ea2cc; border-left: 1px solid #efefef; border-right: 1px solid #efefef;">
               <tbody><tr>
                 <td class="inner" style="padding-top: 11px;padding-bottom: 12px;padding-left: 0;padding-right: 0;vertical-align: top">
                   <table style="border-collapse: collapse;border-spacing: 0;width: 540px;Margin-left: auto;Margin-right: auto" align="center">
                     <tbody><tr>
-                      <td class="title" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #fff;font-family: Roboto,Tahoma,sans-serif !important;text-align: left">Centrally protecting your websites</td>
-                      <td class="webversion" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #fff;font-family: Roboto,Tahoma,sans-serif !important;text-align: right;width: 240px">
+                      <td class="title" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #2ea2cc;font-family: Roboto,Tahoma,sans-serif !important;text-align: left">Centrally protecting your websites</td>
+                      <td class="webversion" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #2ea2cc;font-family: Roboto,Tahoma,sans-serif !important;text-align: right;width: 240px">
                         No Images? &nbsp;<webversion>Click here</webversion>
                       </td>
                     </tr>
@@ -845,7 +845,7 @@ a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preh
                 </td>
               </tr>
             </tbody></table>
-            <table class="header" style="border-collapse: collapse;border-spacing: 0;width: 600px;border-top-color: #fff;border-top-style: dashed;border-top-width: 1px;Margin-left: auto;Margin-right: auto">
+            <table class="header" style="border-collapse: collapse;border-spacing: 0;width: 600px;border-top-color: #fff;border-top-style: solid;border-top-width: 1px;Margin-left: auto;Margin-right: auto; background-color: #2ea2cc; color: #fafafa;">
               <tbody><tr>
                 <td class="logo" style="padding-top: 40px;padding-bottom: 37px;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 42px;line-height: 50px;text-align: center;color: #555;font-family: Roboto,Tahoma,sans-serif !important" align="center"><center><div id="emb-email-header"><img style="border-left-width: 0;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;-ms-interpolation-mode: bicubic;display: block;Margin-left: auto;Margin-right: auto;max-width: 321px" src="https://www.centrora.com/store/image/email/mail_logo.png" alt="Centrora" width="300" height="47" /></div></center></td>
               </tr>
@@ -855,11 +855,11 @@ a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preh
       </tr>
     </tbody></table>
     
-        <table class="wrapper" style="border-collapse: collapse;border-spacing: 0;display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;text-rendering: optimizeLegibility;background-color: #1bbc9b">
+        <table class="wrapper" style="border-collapse: collapse;border-spacing: 0;display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;text-rendering: optimizeLegibility;background-color: #fafafa">
           <tbody><tr>
             <td style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top">
               <center>
-                <table class="one-col" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 600px;background-color: #ffffff;border-radius: 4px;box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1)">
+                <table class="one-col" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 600px;background-color: #ffffff;border-radius: 0px;box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); border: 1px solid #efefef;">
                   <tbody><tr>
                     <td class="column" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;text-align: left">
                       <div><div class="column-top" style="font-size: 60px;line-height: 60px">&nbsp;</div></div>
@@ -891,31 +891,30 @@ a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preh
               </center>
             </td>
           </tr>
-        </tbody></table>
-      
-        <div class="spacer" style="font-size: 1px;line-height: 40px;width: 100%">&nbsp;</div>
-      
-    <table class="wrapper" style="border-collapse: collapse;border-spacing: 0;display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;text-rendering: optimizeLegibility;background-color: #1bbc9b">
+        </tbody>
+    </table>
+    <table class="wrapper" style="border-collapse: collapse;border-spacing: 0;display: table;table-layout: fixed;width: 100%;min-width: 620px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;text-rendering: optimizeLegibility;background-color: #fafafa">
       <tbody><tr>
         <td style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top">
           <center>
-            <table class="footer" style="border-collapse: collapse;border-spacing: 0;width: 600px;Margin-left: auto;Margin-right: auto">
+            <table class="footer" style="border-collapse: collapse;border-spacing: 0;width: 600px;Margin-left: auto;Margin-right: auto;background-color: #313233;padding-top:10px;">
               <tbody><tr>
                 <td style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top">
                   <table class="social" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto" align="center">
                     <tbody><tr>
-                      <td style="padding-top: 0;padding-bottom: 40px;padding-left: 13px;padding-right: 13px;vertical-align: middle">
+                      <td style="padding-top: 10px;padding-bottom: 20px;padding-left: 13px;padding-right: 13px;vertical-align: middle">
                         <fblike class="facebook" style="display: inline-block;font-size: 12px;font-weight: 400;line-height: 12px;text-decoration: none;text-transform: uppercase;color: #fff;font-family: Roboto,Tahoma,sans-serif !important"><img style="border-left-width: 0;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;-ms-interpolation-mode: bicubic;vertical-align: middle" src="https://www.centrora.com/store/image/email/facebook-dark.png" alt="" width="20" height="20" />&nbsp; <span style="mso-text-raise: 6px"><a href="https://www.facebook.com/centrora" target="_blank" style="text-decoration: none;color: #FFFFFF;">Like</a></span></fblike>
                       </td>
-                      <td style="padding-top: 0;padding-bottom: 40px;padding-left: 13px;padding-right: 13px;vertical-align: middle">
+                      <td style="padding-top: 10px;padding-bottom: 20px;padding-left: 13px;padding-right: 13px;vertical-align: middle">
                         <tweet class="twitter" style="display: inline-block;font-size: 12px;font-weight: 400;line-height: 12px;text-decoration: none;text-transform: uppercase;color: #fff;font-family: Roboto,Tahoma,sans-serif !important"><img style="border-left-width: 0;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;-ms-interpolation-mode: bicubic;vertical-align: middle" src="https://www.centrora.com/store/image/email/twitter-dark.png" alt="" width="20" height="20" />&nbsp; <span style="mso-text-raise: 6px"><a href="https://twitter.com/loveCentrora" target="_blank" style="text-decoration: none;color: #FFFFFF;">Tweet</a></span></tweet>
                       </td>
-                      <td style="padding-top: 0;padding-bottom: 40px;padding-left: 13px;padding-right: 13px;vertical-align: middle">
+                      <td style="padding-top: 10px;padding-bottom: 20px;padding-left: 13px;padding-right: 13px;vertical-align: middle">
                         <forwardtoafriend class="forward" style="display: inline-block;font-size: 12px;font-weight: 400;line-height: 12px;text-decoration: none;text-transform: uppercase;color: #fff;font-family: Roboto,Tahoma,sans-serif !important"><img style="border-left-width: 0;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;-ms-interpolation-mode: bicubic;vertical-align: middle" src="https://www.centrora.com/store/image/email/forward-dark.png" alt="" width="20" height="20" />&nbsp; <span style="mso-text-raise: 6px"><a href="#" style="text-decoration: none;color: #FFFFFF;">Forward</a></span></forwardtoafriend>
                       </td>
                     </tr>
-                  </tbody></table>
-                  <table class="divider" style="border-collapse: collapse;border-spacing: 0;line-height: 11px;width: 100%;border-top-color: #fff;border-top-style: dashed;border-top-width: 1px"><tbody><tr><td style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top">&nbsp;</td></tr></tbody></table>
+                  </tbody>
+                  </table>
+                  <table class="divider" style="border-collapse: collapse;border-spacing: 0;line-height: 11px;width: 100%;border-top-color: #f1f1f1;border-top-style: solid;border-top-width: 1px"><tbody><tr><td style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top">&nbsp;</td></tr></tbody></table>
                   <table class="contents" style="border-collapse: collapse;border-spacing: 0;width: 600px">
                     <tbody><tr>
                       <td class="address" style="padding-top: 0;padding-bottom: 40px;padding-left: 30px;padding-right: 10px;vertical-align: top;font-size: 11px;font-weight: 400;line-height: 19px;-webkit-font-smoothing: antialiased;text-align: left;width: 45%;color: #fff;font-family: Roboto,Tahoma,sans-serif !important">

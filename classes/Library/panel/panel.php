@@ -75,6 +75,26 @@ class panel
 		print_r($resp);
 		return $resp;
 	}
+	public function sendRequestReturnRes($content)
+	{
+		$query = $this->mergeString ($content);
+		// Get cURL resource
+		$curl = curl_init();
+		// Set some options - we are passing in a useragent too here
+		curl_setopt_array($curl, array(
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_URL => $this->live_url,
+		CURLOPT_POST => 1,
+		CURLOPT_POSTFIELDS =>$query,
+		CURLOPT_USERAGENT => 'Centrora Security Plugin Request Agent',
+		CURLOPT_SSL_VERIFYPEER => false
+		));
+		// Send the request & save response to $resp
+		$resp = curl_exec($curl);
+		// Close request to clear up some resources
+		curl_close($curl);
+		return $resp;
+	}
 	public function sendRequestJson($content)
 	{
 		$query = $this->mergeString ($content);
@@ -328,5 +348,23 @@ class panel
 		$dbo = oseFirewall::getDBO();
 		$dbo->setQuery($query);
 		return $dbo->query();
+	}
+	public function saveCronConfig($custhours, $custweekdays) {
+		$this->live_url = "https://www.centrora.com/accountApi/cronjobs/saveCronSetting";
+		$content = array ();
+		$content['custhours'] = $custhours;
+		$content['custweekdays'] = $custweekdays;
+		$content['webKey'] = $this->getWebKey();
+		$content['remoteChecking'] = true;
+		$content['task'] = 'saveCronSetting';
+		$this->sendRequest($content);
+	}
+	public function getCronSettings () {
+		$this->live_url = "https://www.centrora.com/accountApi/cronjobs/getCronSettings";
+		$content = array ();
+		$content['webKey'] = $this->getWebKey();
+		$content['remoteChecking'] = true;
+		$content['task'] = 'getCronSettings';
+		return $this->sendRequestReturnRes($content);
 	}
 }

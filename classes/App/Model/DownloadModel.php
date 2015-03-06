@@ -52,10 +52,10 @@ class DownloadModel extends BaseModel {
 		$downloader = new oseDownloader('ath', null);
 		return $downloader ->getEmailConfig ();
 	}
-	public function vsscan ($step) {
+	public function vsscan ($step, $type) {
 		oseFirewall::callLibClass('vsscanner', 'vsscanner');
 		$virusScanner = new virusScanner();
-		$virusScanner->scheduleScanning($step); 
+		$virusScanner->scheduleScanning($step, $type); 
 	}
 	public function getDomainCount () {
 		oseFirewall::callLibClass('panel', 'panel');

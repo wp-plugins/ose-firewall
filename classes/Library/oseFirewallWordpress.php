@@ -112,10 +112,14 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="admin.php?page=ose_fw_clamav">' . oLang::_get('CLAMAV'). '</a></li>';
 		*/
 		
-		
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_countryblock') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_countryblock">' . oLang::_get('COUNTRYBLOCK'). '</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($view == 'ose_fw_cronjobs') ? 'class="active"' : '';
+		$menu .= '><a href="admin.php?page=ose_fw_cronjobs">' . oLang::_get('CRONJOBS'). '</a></li>';
+		
 		$menu .= '</ul>';
 		// SubMenu Anti-Hacking Ends;
 		$menu .= '</li>';
@@ -161,6 +165,7 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_firewall', CONFIGURATION, CONFIGURATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration' );
 		//add_submenu_page( 'ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup' );
 		add_submenu_page( 'ose_firewall', COUNTRYBLOCK, COUNTRYBLOCK, 'manage_options', 'ose_fw_countryblock', 'oseFirewall::countryblock' );
+		add_submenu_page( 'ose_firewall', CRONJOBS, CRONJOBS, 'manage_options', 'ose_fw_cronjobs', 'oseFirewall::cronjobs' );
 		add_submenu_page( 'ose_firewall', LOGIN, LOGIN, 'manage_options', 'ose_fw_login', 'oseFirewall::login' );
 		add_submenu_page( 'ose_firewall', SUBSCRIPTION, SUBSCRIPTION, 'manage_options', 'ose_fw_subscription', 'oseFirewall::subscription' );
 		//add_submenu_page( 'ose_firewall', VERSION_UPDATE, VERSION_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::versionupdate' );

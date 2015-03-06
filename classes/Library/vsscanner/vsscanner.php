@@ -303,7 +303,8 @@ class virusScanner {
 		$this->db -> closeDBO(); 
 		return $result;
 	}
-	public function vsScanInd($type) {
+	public function vsScanInd($type, $remote=false) {
+		oseFirewall::loadJSON();
 		$conn = $this->getCurrentConnection();
 		if ($conn > 20)
 		{	
@@ -313,7 +314,7 @@ class virusScanner {
 			ini_set("display_errors", "on");
 			oseFirewall::loadFiles();
 			$this->setPatterns ($type);
-			$result = $this->showScanningResultMsg ($type);
+			$result = $this->showScanningResultMsg ($type, $remote);
 		}
 		$this->db -> closeDBO();
 		return $result;
@@ -341,12 +342,12 @@ class virusScanner {
 		$result = $this->db->loadResult();
 		return $result['Value'];
 	}
-	private function showScanningResultMsg ($type) {
+	private function showScanningResultMsg ($type, $remote) {
 		$return=array();
 		$return['summary'] = null;
 		$return['found'] = 0;
 		$start_time = time();
-		$result = $this->scanFileLoop ($start_time, $type);
+		$result = $this->scanFileLoop ($start_time, $type, $remote);
 		if($result == false)
 		{
 			return false;
@@ -354,7 +355,7 @@ class virusScanner {
 		$last_file = $_SESSION['last_scanned'];
 		return $this->returnAjaxMsg($last_file, $type);
 	}
-	private function scanFileLoop ($start_time, $type) {
+	private function scanFileLoop ($start_time, $type, $remote) {
 		ini_set('display_errors', 'on');
 		$this->vsInfo = $this->getVsFiles($type);
 		while (count($this->vsInfo['fileset'])>0)
@@ -370,7 +371,14 @@ class virusScanner {
 				else
 				{
 					$return = $this->returnAjaxMsg($_SESSION['last_scanned'], $type);
-					print_r(oseJSON::encode($return)); exit;				
+					if ($remote == false)
+					{
+						print_r(oseJSON::encode($return)); exit;
+					}
+					else
+					{
+						return $return;
+					}		
 				}
 				break;
 			}
@@ -390,6 +398,11 @@ class virusScanner {
 			{
 				$this->scanFile($_SESSION['last_scanned']);
 			}
+		}
+		if (count($this->vsInfo['fileset']) == 0)
+		{
+			$this->clearFile ($type);
+			return $this->returnCompleteMsg($last_file, $type);
 		}
 		return true; 
 	}
@@ -472,13 +485,14 @@ class virusScanner {
 		$ext = pathinfo($path, PATHINFO_EXTENSION);
 		return $ext;
 	}
-	private function returnCompleteMsg ($last_file=null) {
+	private function returnCompleteMsg ($last_file=null, $type) {
 		$return['completed'] = 100;
 		$return['summary'] = ($return['completed']). '% ' .oLang::_get('COMPLETED');
 		$return['progress'] = '';
 		$return['last_file'] = '';
 		$return['status']='Completed';
 		$return['cont'] = false;
+		$return['type'] = $type; 
 		$infectedNum= $this->getNumInfectedFiles();
 		if($infectedNum < 1) {
 				$return['result']= oLang :: _get('WEBSITE_CLEAN');
@@ -491,7 +505,7 @@ class virusScanner {
 		if (count($this->vsInfo['fileset']) == 0)
 		{
 			$this->clearFile ($type);
-			return $this->returnCompleteMsg();
+			return $this->returnCompleteMsg($last_file, $type);
 		}
 		else
 		{
@@ -515,10 +529,7 @@ class virusScanner {
 			$return['cont'] = ($left > 0 )?true:false;
 			$return['cpuload'] = $this->getCPULoad();;
 			$return['memory'] = $this->getMemoryUsed();
-			if ($progress == 1)
-			{
-				$this->clearFile ($type);
-			}
+			$return['type'] = $type;
 			return $return;  
 		}
 	}
@@ -754,46 +765,82 @@ class virusScanner {
 		$fileContent = oseFile::read($filePath);
 		return unserialize($fileContent);
 	}
-	public function scheduleScanning ($step) {
+	public function scheduleScanning ($step, $type) {
 		if ($step == 0) 
 		{
 			return;
 		}
-		$model = new ConfigurationModel();
-		$config = $model->getConfiguration('scan');
-		if ($config['data']['scheduleScan'] == false)
+		oseFirewall::loadRequest();
+		$key = oRequest::getVar('key', NULL);
+		if (!empty($key))
 		{
-			oseFirewall::loadRequest();
-			$key = oRequest::getVar('key', NULL);
-			if (!empty($key))
-			{
+			if ($step < 0)
+			{	
 				$result = $this->vsscan($step);
-				$url = $this->getCrawbackURL ($key, $result->completed);
-				$this->sendRequestVS($url);
+				$result ['step'] = $step ++;
 			}
-			exit;	
+			else
+			{
+				$type = ($type == 0)?1:$type;
+				$result = $this->vsScanInd($type, true);
+				$result ['step'] = $step;
+			}
+			$url = $this->getCrawbackURL ($key, $result->completed, $result ['step'], $type);
+			$this->sendRequestVS($url);
 		}
-		else
-		{
-			return; 
-		}
+		exit;	
 	}
-	private function getCrawbackURL ($key, $completed) {
+	private function getWebsiteStatus () {
+		$infected = $this->getNumInfectedFiles();
+		return ($infected>0)?1:0;
+	}
+	private function getCrawbackURL ($key, $completed, $step, $type) {
+		$webkey= $this->getWebKey ();
 		if ($completed==1)
 		{
-			return "http://www.centrora.com/?runVSScanQueue=1&key=".$key."&completed=".$completed;
+			$status = $this->getWebsiteStatus ();
+			return "http://www.centrora.com/accountApi/cronjobs/completeVSScan?webkey=".$webkey."&key=".$key."&completed=1&status=".(int)$status;
 		} 
 		else 
 		{
-			return "http://www.centrora.com/?runVSScanQueue=1&key=".$key."&completed=0";
+			$filePath = $this->getScanFilePath ($type);
+			if (!file_exists($filePath)) {
+				if ($type<=8) {
+					$type++; 
+				}
+			}
+			$filePath = $this->getScanFilePath ($type);
+			if ($type >= 8 && !file_exists($filePath)) {
+				$status = $this->getWebsiteStatus ();
+				return "http://www.centrora.com/accountApi/cronjobs/completeVSScan?webkey=".$webkey."&key=".$key."&completed=1&status=".(int)$status;
+			}
+			else
+			{
+				return "http://www.centrora.com/accountApi/cronjobs/continueVSScan?webkey=".$webkey."&key=".$key."&completed=0&step=".$step."&type=".$type;
+			}
 		}
+	}
+	protected function getScanFilePath ($type) {
+		return OSE_FWDATA.ODS."vsscanPath".ODS."path_".$type.".json";;
+	}
+	protected function getWebKey () {
+		$dbo = oseFirewall::getDBO();
+		$query = "SELECT * FROM `#__ose_secConfig` WHERE `key` = 'webkey'";
+		$dbo->setQuery($query);
+		$webkey = $dbo->loadObject()->value;
+		return $webkey;
 	}
 	private function sendRequestVS($url)
 	{
+		$User_Agent = 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31';
+		$request_headers = array();
+		$request_headers[] = 'User-Agent: '. $User_Agent;
+		$request_headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
 		// Get cURL resource
 		$curl = curl_init();
 		// Set some options - we are passing in a useragent too here
 		curl_setopt_array($curl, array(
+			CURLOPT_HTTPHEADER => $request_headers, 
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_URL => $url,
 			CURLOPT_USERAGENT => 'Centrora Security Download Request Agent',

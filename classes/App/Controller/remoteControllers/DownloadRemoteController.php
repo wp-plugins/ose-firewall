@@ -92,8 +92,8 @@ class DownloadRemoteController extends BaseRemoteController{
 			$this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("ADVRULESET_INSTALL_FAILED"), false);
 		}
 	}
-	public function actionVsscan ($step) {
-		$result = $this->model->vsscan($step);
+	public function actionVsscan ($step, $type) {
+		$result = $this->model->vsscan($step, $type);
 		if ($result == true)
 		{
 			// Update vsscanning date; 

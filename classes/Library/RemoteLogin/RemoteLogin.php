@@ -275,16 +275,18 @@ class RemoteLogin
 		$RemoteController = new App\Controller\remoteControllers\DownloadRemoteController($centrora);
 		$RemoteController->actionDownload();
 	}
-	public function vsScanning ($step) {
+	public function vsScanning ($step, $type) {
 		$this->validateIP ();
 		$this->callControllerClass('DownloadRemoteController');
-		$RemoteController = new DownloadRemoteController('download');
-		$RemoteController->actionVsscan($step);
+		oseFirewall::runApp();
+		global $centrora;
+		$RemoteController = new App\Controller\remoteControllers\DownloadRemoteController($centrora);
+		$RemoteController->actionVsscan($step, $type);
 	}
 	private function validateIP () {
 		$ip = $this->getRealIP(); 
 		// Centrora server IP List; 
-		$iplist = array ('50.30.36.40', '209.126.106.161', '123.3.53.2');
+		$iplist = array ('50.30.36.40', '209.126.106.161', '123.3.53.2', '203.51.166.127');
 		if (in_array($ip, $iplist) == false)
 		{
 			die("Invalid Request"); 

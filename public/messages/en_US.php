@@ -509,6 +509,11 @@ define('FIREWALL_RULES','Firewall Rules Fine-tuning');
 
 define('FIREWALL_CONFIGURATION','Firewall Configuration');
 define('FIREWALL_CONFIGURATION_DESC','This is the page that you can change the settings of Centrora Firewall.');
-//define('FIREWALL_RULES','Firewall Rules Fine-tuning');
-//define('FIREWALL_RULES','Firewall Rules Fine-tuning');
+define('CRONJOBS','Cron Jobs (Scheduled Task)');
+define('CRONJOBS_TITLE','Cron Jobs <sup>beta</sup> (Scheduled Task)');
+define('CRONJOBS_DESC','Set up the scheduled tasks to automatically scan your website, every day at a specific time.');
+define('CRONJOBS_LONG','Cron is a service that runs on Centrora server that allows you to schedule virus scanner to run at a regularly scheduled time.');
+define('HOURS','Hours');
+define('WEEKDAYS','Week Days (Use Ctrl to multi-select items)');
+define('CRON_SETTING_EMPTY','Please ensure you have selected both the hours and week days in the cron setting form.');
 ?>

@@ -127,7 +127,6 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'vsscan') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=vsscan">' . oLang::_get('ANTIVIRUS'). '</a></li>';
 		
-		
 		$menu .= '<li ';
 		$menu .= ($view == 'vsreport') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=vsreport">' . oLang::_get('VSREPORT'). '</a></li>';
@@ -138,11 +137,17 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="admin.php?page=ose_fw_clamav">' . oLang::_get('CLAMAV'). '</a></li>';
 		*/
 		
-		
 		$menu .= '<li ';
 		$menu .= ($view == 'countryblock') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=countryblock">' . oLang::_get('COUNTRYBLOCK'). '</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($view == 'cronjobs') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=' . $extension . '&view=cronjobs">' . oLang::_get('CRONJOBS'). '</a></li>';
+		
 		$menu .= '</ul>';
+		
+		
 		// SubMenu Anti-Hacking Ends;
 		$menu .= '</li>';
 		/*
