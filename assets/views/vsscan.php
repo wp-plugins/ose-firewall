@@ -6,6 +6,7 @@ if (isset($confArray['data']['vsScanExt']) && !isset($confArray['data']['file_ex
 {
 	$confArray['data']['file_ext'] = $confArray['data']['vsScanExt'];
 }
+$status = true;
 if ($status == true)
 {	
 ?>

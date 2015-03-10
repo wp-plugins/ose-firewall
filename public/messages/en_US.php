@@ -516,4 +516,5 @@ define('CRONJOBS_LONG','Cron is a service that runs on Centrora server that allo
 define('HOURS','Hours');
 define('WEEKDAYS','Week Days (Use Ctrl to multi-select items)');
 define('CRON_SETTING_EMPTY','Please ensure you have selected both the hours and week days in the cron setting form.');
+define('LAST_DETECTED_FILE','Folder of the files being added into the scanned queue in the last scan');
 ?>

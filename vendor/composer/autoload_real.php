@@ -8,7 +8,7 @@ class ComposerAutoloaderInit01b88def4858bed523bcc89408d88ef6
 
     public static function loadClassLoader($class)
     {
-        if ('Composer\Autoload\ClassLoader' === $class) {
+        if ('CentComposer\Autoload\ClassLoader' === $class) {
             require __DIR__ . '/ClassLoader.php';
         }
     }
@@ -20,7 +20,7 @@ class ComposerAutoloaderInit01b88def4858bed523bcc89408d88ef6
         }
 
         spl_autoload_register(array('ComposerAutoloaderInit01b88def4858bed523bcc89408d88ef6', 'loadClassLoader'), true, true);
-        self::$loader = $loader = new \Composer\Autoload\ClassLoader();
+        self::$loader = $loader = new \CentComposer\Autoload\ClassLoader();
         spl_autoload_unregister(array('ComposerAutoloaderInit01b88def4858bed523bcc89408d88ef6', 'loadClassLoader'));
 
         $vendorDir = dirname(__DIR__);

@@ -149,7 +149,7 @@ class oseFile
 		@umask($origmask);
 		return true;
 	}
-	public static function write($file, &$buffer, $use_streams = false)
+	public static function write($file, &$buffer, $use_streams = false, $append = false)
 	{
 		@set_time_limit(ini_get('max_execution_time'));
 		// If the destination directory doesn't exist we need to create it
@@ -158,7 +158,14 @@ class oseFile
 			self::createFolder(dirname($file));
 		}
 		$file = self::clean($file);
-		$ret = is_int(file_put_contents($file, $buffer)) ? true : false;
+		if ($append==false)
+		{
+			$ret = is_int(file_put_contents($file, $buffer)) ? true : false;			
+		}
+		else
+		{
+			$ret = is_int(file_put_contents($file, $buffer, FILE_APPEND)) ? true : false;			
+		}
 		return $ret;
 	}
 	public static function exists($file)

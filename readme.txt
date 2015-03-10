@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 4.3.0
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,14 +16,12 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
 Centrora Security is a new plugin that modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities. 
 
-= New features in v3.0: =
+= New features in v4.3: =
 * Enhancement: Improved Backend User Interface
 * Enhancement: Re-designed Virus Scanning Engine, virus scanner is now 20x faster
-* Enhancement: Improved Backend User Interface
-* New: Added Database Backup function
-* New: Central Security Management Integration with Centrora Panel
-* New: Added File Upload Scanning function
 * New: Added Google Authenticator (2 step authentication) function
+* New: Added MainWP Support
+* New: Added Daily Automatic Virus Scanning
 
 = Customer Support =
 If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here for help.</a>
@@ -88,6 +86,13 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.3.1 = 
+* Improved: Improved virus scanner so it can scan a larger amount of files in the system
+* Improved: Improved virus scanner for cronjob virus scanning functions
+* Fixed: Fixed the Composer class has been declared in some Joomla websites
+* Added: Added MainWP Extensions Support
+* Improved: Minor CSS style improvement to enhance the UI
 
 = 4.3.0 = 
 * Added: Cron job for virus scanning (automatic daily virus scanning)

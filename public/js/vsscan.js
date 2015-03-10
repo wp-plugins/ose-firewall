@@ -36,7 +36,7 @@ jQuery(document).ready(function($){
 	});
 	$('#vsstop').on('click', function() { 
 		showLoading ();
-		location.reload(); 
+		//location.reload(); 
 	});
 	$('#vscont').on('click', function() { 
 		runAllScanAntivirus ('vsscan', cpuData=[], memData=[]) 
@@ -222,9 +222,12 @@ function scanAntivirus (step, action, cpuData, memData) {
 	        	initPlotChart($, memData, false);
 	        	$('#p4text').html(data.summary);
 	        	$('#last_file').html(data.last_file);
-	        	if (step == -2 && data.cont==true)
+	        	if (step == -2 && data.contFileScan==true)
 	        	{
-	        		scanAntivirus (-1, action, cpuData, memData);
+	        		scanAntivirus (-2, action, cpuData, memData);
+	        	}
+	        	else if (step == -2 && data.cont==true) {
+	        		scanAntivirus (-1, action, cpuData, memData);	
 	        	}
 	        	else
 	        	{
@@ -296,4 +299,3 @@ function scanVirusInd (action, cpuData, memData, type) {
 	      });
 	});		
 }
-
