@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 4.3.2
+Stable tag: 4.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,8 +87,11 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
+= 4.3.3 = 
+* Improved: Improved MainWP Extension so it checks if the extension is enabled in the Child websites
+
 = 4.3.2 = 
-* Improved: changes MainWP Class loaded inside wordpress backend
+* Improved: Changed MainWP Class loaded inside wordpress backend
 
 = 4.3.1 = 
 * Improved: Improved virus scanner so it can scan a larger amount of files in the system

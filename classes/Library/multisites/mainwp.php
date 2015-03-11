@@ -58,9 +58,6 @@ class CentroraMainWP {
         
         if (function_exists("mainwp_current_user_can")&& !mainwp_current_user_can("extension", "mainwp-sucuri-extension"))
             return;
-        
-       // new oseFirewall();
-         
     }
     public function get_ose_Firewall_extension($extensions) {
         $extensions[] = array('plugin' =>  $this->childFile, 'callback' => array($this,'ose_Firewall_extension_settings'));
@@ -79,17 +76,27 @@ class CentroraMainWP {
             $siteID = $_GET['scanid'];
         
         if ($siteID != 0){
-            add_filter( 'mainwp-getsubpages-sites', array($this,'add_ose_Firewall_config_page'));
-            add_filter( 'mainwp-getsubpages-sites', array($this,'add_ose_Firewall_finetune_page'));
-            add_filter( 'mainwp-getsubpages-sites', array($this,'add_ose_Firewall_manageIP_page'));
-        }
+			//check if ose-firewall is installed and active on the child site before loading subpages
+	        $oseFirewallChildWebsite = MainWPDB::Instance()->getWebsiteById($siteID);
+			$allPlugins = json_decode($oseFirewallChildWebsite->plugins, true);
+			for ($i = 0; $i < count($allPlugins); $i++) {
+                $plugin = $allPlugins[$i];
+                if ($plugin['active'] != 0) {
+                	if (stristr($plugin['slug'], 'ose-firewall/ose_wordpress_firewall.php')) {		        				            
+		        		add_filter( 'mainwp-getsubpages-sites', array($this,'add_ose_Firewall_config_page'));
+			            add_filter( 'mainwp-getsubpages-sites', array($this,'add_ose_Firewall_finetune_page'));
+			            add_filter( 'mainwp-getsubpages-sites', array($this,'add_ose_Firewall_manageIP_page'));
+                	}
+                }
+            }
+	    }
     }
     /*
      * Hide admin panels if using Centrora called from MainWP
      */
     public function hide_wpadmin_panels () {
-        if (isset($_GET['ControllPanel']) && !empty($_GET['ControllPanel']) && $_GET['ControllPanel'] = 'MainWP'){
-            if(stripos($this->childFile, 'ose-firewall')>0) {
+    	if (isset($_GET['ControllPanel']) && !empty($_GET['ControllPanel']) && $_GET['ControllPanel'] = 'MainWP'){
+    		if(stripos($this->childFile, 'ose-firewall')>0) {
                 echo <<<HTML
 				<style type="text/css">
 					#adminmenu, #adminmenu .wp-submenu, #adminmenuback, #wpadminbar, #adminmenuwrap {
