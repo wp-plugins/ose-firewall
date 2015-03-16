@@ -32,36 +32,54 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
  * Attach plugin to MainWP as an extension and render settings and site pages.
  */
 class CentroraMainWP {
-    protected  $childFile ='';
+    protected $childFile ='';
     protected $childKey  = false;
+    protected $mainWPActivated = true;
+    protected $childEnabled = true;
+    protected $plugin_handle = "mainwp-oseFirewall";
     
     public function __construct($childfilepassed){
         $this->childFile = $childfilepassed;
-        add_filter('mainwp-getextensions', array($this,'get_ose_Firewall_extension'));
-        $mainWPActivated = apply_filters('mainwp-activated-check', false);
         
-        if ($mainWPActivated !== false) {
+        add_filter('mainwp-getextensions', array($this,'get_ose_Firewall_extension'));
+        
+        $this->mainWPActivated = apply_filters('mainwp-activated-check', false);
+        
+        if ($this->mainWPActivated !== false) {
             self::activate_ose_Firewall_plugin();
         } else {
             add_action('mainwp-activated', array($this,'activate_ose_Firewall_plugin'));
-        }
-        
-        self::load_subpages();
-        
-        self::hide_wpadmin_panels();
+        }       
     }
     
-    public function activate_ose_Firewall_plugin($childEnabled) {
-        $childEnabled = apply_filters('mainwp-extension-enabled-check', $this->childFile);
-        if (!$childEnabled) return;
-        $this->childKey = $childEnabled['key'];
+    public function activate_ose_Firewall_plugin() {
+    	
+    	$this->mainWPActivated = apply_filters('mainwp-activated-check', $this->mainWPActivated);
+    	
+        $this->childEnabled = apply_filters('mainwp-extension-enabled-check', $this->childFile);
+        if (!$this->childEnabled) return;
         
-        if (function_exists("mainwp_current_user_can")&& !mainwp_current_user_can("extension", "mainwp-sucuri-extension"))
-            return;
+        $this->childKey = $this->childEnabled['key'];
+        
+        if (function_exists("mainwp_current_user_can")&& !mainwp_current_user_can("extension", "mainwp-oseFirewall"))
+        	return;
+        if ($this->childEnabled) {
+        	 
+        	self::load_subpages(); //load subpages
+        	 
+        	self::hide_wpadmin_panels(); // hide admin panels for child sites rendered in mainwp
+        }
+        
     }
     public function get_ose_Firewall_extension($extensions) {
-        $extensions[] = array('plugin' =>  $this->childFile, 'callback' => array($this,'ose_Firewall_extension_settings'));
-        return $extensions;
+        
+    	$extensions[] = array(	'plugin' => $this->childFile, 
+    							'api' => $this->plugin_handle, 
+    							'mainwp' => false, //disable mainwp 'enable button' check based on activation. @todo change this to true when uploading to the MainWP extensions store.
+    							'callback' => array(&$this, 'ose_Firewall_extension_settings'), 
+    							'apiManager' => false); //disable api key check for testing. @todo change this to true when uploading to the MainWP extensions store. 
+        
+    	return $extensions;
     }    
     public function load_subpages() {
         // only show Firewall Configuration on individual site pages
@@ -121,12 +139,17 @@ HTML;
     * Call the General 'all sites' settings page -> Shown under Extension settings.
     */
    public function ose_Firewall_extension_settings() {
-       do_action('mainwp-pageheader-extensions', $this->childFile);
-       echo '<h1>Centrora Security</h1>
-			<blockquote>
-			<p>Please manage the local instance of Centrora Security from the WordPress plugin <a href="'. admin_url('admin.php?page=ose_firewall') .'">settings</a> page.</p>
-			<p>To mange Centrora for a specific site select the site under <a href="'.admin_url('admin.php?page=managesites').'">Sites</a></p>
-			<blockquote>';   
+   		do_action('mainwp-pageheader-extensions', $this->childFile);
+       
+		if ($this->childEnabled) {
+			echo '<h1>Centrora Security</h1>
+				<blockquote>
+				<p>Please manage the local instance of Centrora Security from the WordPress plugin <a href="'. admin_url('admin.php?page=ose_firewall') .'">settings</a> page.</p>
+				<p>To mange Centrora for a specific site select the site under <a href="'.admin_url('admin.php?page=managesites').'">Sites</a></p>
+				<blockquote>';
+       } else {
+			echo '<div class="mainwp_info-box-yellow"><strong>The Extension has to be <a href="'.admin_url('admin.php?page=Extensions').'">enabled</a> to change the settings.</strong></div>';
+       }   
        do_action('mainwp-pagefooter-extensions', $this->childFile);
    }   
    /*

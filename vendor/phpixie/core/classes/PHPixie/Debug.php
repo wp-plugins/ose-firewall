@@ -25,7 +25,7 @@ class Debug
 	 * Flag that determines if the errors are displayed
 	 * @var boolean
 	 */
-	public $display_errors = true;
+	public $display_errors = false;
 	
 	/**
 	 * Constructs a debugger

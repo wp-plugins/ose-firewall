@@ -4,7 +4,7 @@ Plugin Name: Centrora Security
 Plugin URI: http://wordpress.org/extend/plugins/ose-firewall/
 Description: Centrora Security (previously OSE Firewall) - A WordPress Security Firewall plugin created by Centrora. Protect your WordPress site by identify any malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 Author: Centrora (Previously ProWeb)
-Version: 4.3.3
+Version: 4.3.4
 Author URI: http://www.centrora.com/
 //@todo change Icon URI
 Icon URI: https://secure.gravatar.com/avatar/26d6eb39bd2613b318ad7a64f3641480?d=mm&s=300&r=G
@@ -12,7 +12,20 @@ Icon URI: https://secure.gravatar.com/avatar/26d6eb39bd2613b318ad7a64f3641480?d=
 
 if (version_compare(PHP_VERSION, '5.3.0') < 0)
 {	
-	die("Centrora requires PHP 5.3.0, please contact your hosting company to update your PHP version. It will take them 5 seconds to do so.");
+	
+	die("<div style='background-color: #fff;
+				    border-left: 4px solid #ffba00;
+				    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+				    display: inline-block;
+				    font-size: 14px;
+				    line-height: 19px;
+				    margin: 25px auto 0 300px;
+				    padding: 11px 15px;
+    				text-align: left; 
+					width: 800px;'>Centrora requires PHP 5.3.0, please contact your hosting company to update your PHP version. It will take them 5 seconds to do so.</div>");
+}
+if (function_exists("ini_set")) {
+	ini_set("display_errors", "off");
 }
 // Basic configuration; 
 define('ODS', DIRECTORY_SEPARATOR);
