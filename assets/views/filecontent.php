@@ -11,6 +11,11 @@
                             <div class="modal-body">
 								<div id="codeareaDiv"></div>
                               </div>
+                            <div class="modal-footer">
+                                <div id="buttonDiv">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

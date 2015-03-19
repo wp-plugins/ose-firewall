@@ -360,26 +360,25 @@ class virusScanner {
 		return $result;
 	}
 	protected function getdirList () {
-		$path = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json"; 
+		$path = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json";
 		$content = oseFile::read($path);
 		$dirArray = oseJSON::decode($content);
 		$this->saveDirFile (array(), true) ;
 		$start_time = time();
 		while (COUNT($dirArray)>0)
 		{
-			$since_start = $this->timeDifference($start_time, time());
-			if ($since_start>10) {
-				$this->saveDirFile ($dirArray, false);
-				return $dirArray[COUNT($dirArray)-1];				
-				break;
-			}
-			else
-			{
-				$SESSION['scanPath'] = array_pop($dirArray);
-				$this->saveFilesFromPath ($SESSION['scanPath'], $baseScanPath);
-			}
+				$since_start = $this->timeDifference($start_time, time());
+				if ($since_start>10) {
+					$this->saveDirFile ($dirArray, false);
+					break;
+				}
+				$scanPath = array_pop($dirArray);
+				while (empty($scanPath)) {
+					$scanPath = array_pop($dirArray);
+				}
+				$this->saveFilesFromPath ($scanPath, $baseScanPath);
 		}
-		return $SESSION['scanPath'];
+		return $scanPath;
 	}
 	protected function saveBaseScanPath($scanPath) {
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."basePath.json";
@@ -415,8 +414,18 @@ class virusScanner {
 				$files[] = str_replace($rootPath[0], '', $path);
 			}
 		}
-		$this->saveDirFile ($dirs);
-		$this->saveFilesFile ($files);
+		if (!empty($dirs))
+		{	
+			$this->saveDirFile ($dirs);
+		}
+		if (!empty($files)) 
+		{
+			$this->saveFilesFile ($files);
+		}
+	}
+	protected function emptyDirFile () {
+		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json";
+		$result = oseFile::write($filePath, '');
 	}
 	protected function saveDirFile ($dirs, $update=false) {
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json";
@@ -451,7 +460,7 @@ class virusScanner {
 		}
 		else
 		{
-			$fileContent = oseJSON::encode(array("completed" => 0,
+		 	$fileContent = oseJSON::encode(array("completed" => 0,
 					"fileset" => $files));
 			$result = oseFile::write($filePath, $fileContent, false, true);
 		}
@@ -554,6 +563,7 @@ class virusScanner {
 		if (count($this->vsInfo->fileset) == 0)
 		{
 			$this->clearFile ($type);
+			$this->clearDirFile();
 			return $this->returnCompleteMsg($last_file, $type);
 		}
 		return true; 
@@ -745,7 +755,9 @@ class virusScanner {
 		usleep(100);
 		return $virus_found;
 	}
-	private function scanWithClamAV2 () {
+
+    private function scanWithClamAV2()
+    {
 		$this->config->enable_clamav = false;
 		if ($this->config->enable_clamav == 1 && $virus_found == false)
 		{
@@ -901,6 +913,10 @@ class virusScanner {
 	private function clearDirFile () {
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json";
 		unlink($filePath);
+		/*
+		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."basePath.json";
+		unlink($filePath);
+		*/
 	}
 	private function saveVsFilesLoop()
 	{

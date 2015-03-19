@@ -88,7 +88,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanreport () {
-		$actions = array ('getTypeList','getMalwareMap','viewfile');
+        $actions = array('getTypeList', 'getMalwareMap', 'viewfile', 'backupvs', 'bkcleanvs', 'deletevs');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVariables () {

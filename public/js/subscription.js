@@ -1,5 +1,32 @@
 var controller ='subscription';
 		    
+function activateCode () {
+	jQuery(document).ready(function($){	
+		$('#activationFormModal').modal();
+	});
+}
+
+jQuery(document).ready(function($){	
+	$("#activation-form").submit(function() {
+		showLoading();
+		var data = $("#activation-form").serialize();
+		data += '&centnounce='+$('#centnounce').val();
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: data, // serializes the form's elements.
+               success: function(data)
+               {
+            	   data = jQuery.parseJSON(data);
+            	   hideLoading();
+            	   $('#activationFormModal').modal('hide');
+            	   showDialogue (data.message, data.status, 'OK');
+               }
+             });
+        return false; // avoid to execute the actual submit of the form.
+    });
+});
+
 function goSubscribe () {
  jQuery(document).ready(function($){	
 	$.ajax({

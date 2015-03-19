@@ -125,21 +125,27 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			if(preg_match_all("/".$option['filter']."/ims",$request_str, $matchs)){
 				foreach($request as $index => $singleRequest){
 					//scan each content of a sigle get or post
-					foreach($singleRequest AS $key =>$value){	
-						$attackContent = $value;
-						$attackVar = ($index==0)?"get.".$key:"post.".$key;
-						preg_match_all ( "/".$option['filter']."/ims", $attackContent, $matched );
-				
-						if(!empty($matched[0])){
-							$tmpResult = $this -> composeResult($option['impact'], $matched[0], $option['id'], $option['attacktype'], $attackVar, 'ad');
-							$tmpResults[] = $tmpResult;
-							$impact += $option['impact'];
-						}
+					foreach($singleRequest AS $key =>$value){
+						$isJson = $this->is_json($value); 
+						if ($isJson == false) {
+							$attackContent = $value;
+							$attackVar = ($index==0)?"get.".$key:"post.".$key;
+							preg_match_all ( "/".$option['filter']."/ims", $attackContent, $matched );
+							if(!empty($matched[0])){
+								$tmpResult = $this -> composeResult($option['impact'], $matched[0], $option['id'], $option['attacktype'], $attackVar, 'ad');
+								$tmpResults[] = $tmpResult;
+								$impact += $option['impact'];
+							}
+						}	
 					}
 				} 
 			}
 		}
 		return $tmpResults;
+	}
+	private function is_json($string)
+	{
+		return !empty($string) && is_string($string) && preg_match('/^("(\\.|[^"\\\n\r])*?"|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/',$string);
 	}
 	private function groupRequest($request){
 		$request_Str = null;

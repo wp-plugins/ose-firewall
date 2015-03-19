@@ -42,13 +42,13 @@ class ScanreportModel extends BaseModel
 	public function loadLocalScript()
 	{
 		$this->loadAllAssets ();
-		oseFirewall::loadCSSFile ('CentroraCodeMirrorCSS', 'codemirror.css', false);
-		oseFirewall::loadJSFile ('CentroraCodeMirror', 'plugins/codemirror/codemirror.js', false);
-		oseFirewall::loadJSFile ('CentroraCodeMirrorXML', 'plugins/codemirror/xml.js', false);
-		oseFirewall::loadJSFile ('CentroraCodeMirrorJavascript', 'plugins/codemirror/javascript.js', false);
-		oseFirewall::loadJSFile ('CentroraCodeMirrorCSS', 'plugins/codemirror/css.js', false);
-		oseFirewall::loadJSFile ('CentroraCodeMirrorClike', 'plugins/codemirror/clike.js', false);
-		oseFirewall::loadJSFile ('CentroraCodeMirrorPHP', 'plugins/codemirror/php.js', false);
+// 		oseFirewall::loadCSSFile ('CentroraCodeMirrorCSS', 'codemirror.css', false);
+// 		oseFirewall::loadJSFile ('CentroraCodeMirror', 'plugins/codemirror/codemirror.js', false);
+// 		oseFirewall::loadJSFile ('CentroraCodeMirrorXML', 'plugins/codemirror/xml.js', false);
+// 		oseFirewall::loadJSFile ('CentroraCodeMirrorJavascript', 'plugins/codemirror/javascript.js', false);
+// 		oseFirewall::loadJSFile ('CentroraCodeMirrorCSS', 'plugins/codemirror/css.js', false);
+// 		oseFirewall::loadJSFile ('CentroraCodeMirrorClike', 'plugins/codemirror/clike.js', false);
+// 		oseFirewall::loadJSFile ('CentroraCodeMirrorPHP', 'plugins/codemirror/php.js', false);
 		oseFirewall::loadJSFile ('CentroraManageIPs', 'scanreport.js', false);
 	}
 	public function getCHeader()
@@ -104,9 +104,35 @@ class ScanreportModel extends BaseModel
 		$return['data'] = utf8_encode($oseVsscanStat->getFileContent($id));
 		return $return;
 	}
+
+    public function backupvs($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->vsbackup($id));
+        return $return;
+    }
+
+    public function bkcleanvs($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->vsbkclean($id));
+
+        return $return;
+    }
+
+    public function deletevs($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->vsdelete($id));
+        return $return;
+    }
 	public function getStatistics()
 	{
 		$oseFirewallStat = new oseFirewallStat();
 		return $oseFirewallStat->getACLIPStatistic();
 	}
+
 }

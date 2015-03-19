@@ -560,7 +560,8 @@ class oseFirewallBase extends oseFirewallRoot
 		return (!empty($result))?$result->value:null;
 	}
 	public static function checkSubscriptionStatus ($redirect= true) {
-		$db = oseFirewall::getDBO();
+
+        $db = oseFirewall::getDBO();
 		$query = "SELECT * FROM `#__ose_secConfig` WHERE (`key` = 'profileID' OR `key` = 'profileStatus') AND `type` = 'panel'";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();

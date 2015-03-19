@@ -316,26 +316,47 @@ class panel
 	
 		return $result;
 	}
+	protected function enableFURLOpen () {
+		if (function_exists('ini_set'))
+		{
+			ini_set('allow_url_fopen', on); 
+		}
+	}
 	public function runUpdatebyUrl () {
-	
+		$this->enableFURLOpen ();
 		// Get a database connector
 		$db = JFactory::getDbo();
 		$url = "http://www.centrora.com/software/pkg_centrora.zip";
+		// Define Temp Folder;
+		$config		= JFactory::getConfig();
+		$tmp_dest	= $config->get('tmp_path');
 		// Download the zip package
-		$updatefile = JInstallerHelper::downloadPackage($url);
-	
+		$url_fopen = ini_get('allow_url_fopen');
+		if ($url_fopen == true)
+		{
+			$updatefile = JInstallerHelper::downloadPackage($url);
+		}
+		else
+		{
+			$updatefile = $this->downloadThroughCURL ($url, $tmp_dest, 'plg_centrora.zip');
+		}
 		// Was the package downloaded?
 		if (!$updatefile) {
 			JError::raiseWarning('', JText::_('Automatic Update: Something went wrong with the download'));
 			return false;
 		}
-		$config		= JFactory::getConfig();
-		$tmp_dest	= $config->get('tmp_path');
-	
 		// Unpack the downloaded package file
 		$package = JInstallerHelper::unpack($tmp_dest . '/' . $updatefile);
-	
 		return $package;
+	}
+	private function downloadThroughCURL ($url, $tmp_dest, $file) {
+		$target = $tmp_dest .'/'. $file;
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		$contents = curl_exec($curl);
+		curl_close($curl);
+		$handle = is_int(file_put_contents($target, $contents)) ? true : false;
+		return $file;
 	}
 	public function logout () {
 		$query1 = "DELETE FROM `#__ose_secConfig` WHERE `key` = 'webkey' AND `type` ='panel'";
@@ -366,5 +387,14 @@ class panel
 		$content['remoteChecking'] = true;
 		$content['task'] = 'getCronSettings';
 		return $this->sendRequestReturnRes($content);
+	}
+	public function activateCode($code) {
+		$this->live_url = "https://www.centrora.com/accountApi/jvzoo/activateCode";
+		$content = array ();
+		$content['webKey'] = $this->getWebKey();
+		$content['remoteChecking'] = true;
+		$content['task'] = 'activateCode';
+		$content['code'] = $code;
+		$this->sendRequest($content);
 	}
 }

@@ -31,12 +31,13 @@ jQuery(document).ready(function($){
 	initPlotChart($, [0,0], false);
 	initPieChartPage($, 20,100,1500, colours);
 	$('#vsscan').on('click', function() { 
+		initPieChartPage($, 20,100,1500, colours);
 		showLoading ();
 		scanAntivirus (-2, 'vsscan', [], []);
 	});
 	$('#vsstop').on('click', function() { 
 		showLoading ();
-		//location.reload(); 
+		location.reload(); 
 	});
 	$('#vscont').on('click', function() { 
 		runAllScanAntivirus ('vsscan', cpuData=[], memData=[]) 
@@ -227,7 +228,7 @@ function scanAntivirus (step, action, cpuData, memData) {
 	        		scanAntivirus (-2, action, cpuData, memData);
 	        	}
 	        	else if (step == -2 && data.cont==true) {
-	        		scanAntivirus (-1, action, cpuData, memData);	
+	        		scanAntivirus (-1, action, cpuData, memData);
 	        	}
 	        	else
 	        	{

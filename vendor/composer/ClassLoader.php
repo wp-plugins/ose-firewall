@@ -160,7 +160,10 @@ class ClassLoader
      */
     public function register($prepend = false)
     {
-        spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+    	if (OFRONTENDSCAN == false)
+    	{	
+        	spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+    	}
     }
 
     /**
@@ -168,7 +171,10 @@ class ClassLoader
      */
     public function unregister()
     {
-        spl_autoload_unregister(array($this, 'loadClass'));
+    	if (OFRONTENDSCAN == false)
+    	{
+        	spl_autoload_unregister(array($this, 'loadClass'));
+    	}
     }
 
     /**

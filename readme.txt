@@ -87,6 +87,16 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
+= 4.3.6 = 
+* Improved: Improved virus scanner 
+* Added: Added CURL method to download the update package
+* Added: Added Backup, Clean, Backup Clean function for virus scanning report
+* Added: Added Activation with Activation code function for premium services
+
+= 4.3.5 = 
+* Added: Added highlight of the virus scanner report
+* Improved: Enhance the firewall function to ignore json format request variables
+
 = 4.3.4 = 
 * Improved: Forced display_errors to be disabled when running the Centrora Firewall for all instances
 * Improved: MainWP Extension to support some commercial MainWP addons

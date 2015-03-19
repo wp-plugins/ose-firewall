@@ -517,4 +517,12 @@ define('HOURS','Hours');
 define('WEEKDAYS','Week Days (Use Ctrl to multi-select items)');
 define('CRON_SETTING_EMPTY','Please ensure you have selected both the hours and week days in the cron setting form.');
 define('LAST_DETECTED_FILE','Folder of the files being added into the scanned queue in the last scan');
+
+define('ENTER_ACTIVATION_CODE', 'Enter Activation Code');
+define('ACTIVATION_CODE', 'Activation Code');
+define('ACTIVATE', 'Activate');
+
+define('ERROR', 'Error');
+define('ACTIVATION_CODE_EMPTY', 'Activation code cannot be empty');
+
 ?>

@@ -26,7 +26,6 @@ if ($status == true)
                                 <!-- Start .panel -->
                                 <div class="panel-heading white-bg">
                                     <h4 class="panel-title">Scanning Report</h4>
-                                    
                                 </div>
                                 <div class="panel-controls"></div>
                                 <div class="panel-controls-buttons"></div>

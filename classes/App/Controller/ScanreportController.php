@@ -47,5 +47,40 @@ class ScanreportController extends \App\Base {
 		$results = $this ->model->viewfile($id);
 		$this->model->returnJSON($results);
 	}
+
+    public function action_Backupvs()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getInt('id', null);
+        if (empty($id)) {
+            $this->model->showSelectionRequired();
+        }
+        $returns = $this->model->backupvs($id);
+        $this->model->returnJSON($returns);
+    }
+
+    public function action_Bkcleanvs()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getInt('id', null);
+
+        if (empty($id)) {
+            $this->model->showSelectionRequired();
+        }
+        $returns = $this->model->bkcleanvs($id);
+        $this->model->returnJSON($returns);
+    }
+
+    public function action_Deletevs()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getInt('id', null);
+
+        if (empty($id)) {
+            $this->model->showSelectionRequired();
+        }
+        $returns = $this->model->deletevs($id);
+        $this->model->returnJSON($returns);
+    }
 }
 ?>	

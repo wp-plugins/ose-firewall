@@ -54,4 +54,8 @@ class SubscriptionModel extends LoginModel {
 		$panel = new panel ();
 		return $panel->logout();
 	}
+	public function activateCode ($code) {
+		$panel = new panel ();
+		return $panel->activateCode($code);
+	}
 }

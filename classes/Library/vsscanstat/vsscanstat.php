@@ -160,34 +160,40 @@ class oseVsscanStat {
 	}
 	public function getFileContent($id)
 	{
-		$filename = $this->getFilePath ($id); 
-		$pattern = $this->getPattern ($id);
-		$fileType = $this->getFileType($filename);
-		if (!in_array($fileType, array('php, javascript')))
-		{
-			$fileType = 'htmlmixed';
-		}
-		$content = '<textarea class="'.$fileType.'" style="width:100%;" name="codearea" id="codearea" rows="15" cols="120" wrap="off" >';
+		$filename = $this->getFilePath($id); 
+ 		$pattern = $this->getPattern($id);
+ 		$pattern = str_replace(' ', '', $pattern);
 		if (!empty($filename))
 		{
 			$fileContent = oseFile::read($filename);
-			$fileContent = htmlspecialchars($fileContent,ENT_QUOTES,'ISO-8859-1' );
-			$fileContent = preg_replace_callback(
-							'/'.$pattern.'/ims',
+		$fileContent = preg_replace_callback(
+ 						   "/".$pattern."/ims",
 							function ($matches) {
-								return "\n\n//**************************** MALWARE FOUND ****************************\n\n\t".$matches[0]."\n\n//**************************** MALWARE FOUND ****************************\n\n";
-							},
-							$fileContent
-			);
-			$content .= ($fileContent);
+								return "<span class='bg-warning'>".$matches[0]."</span>";
+ 							},
+								$fileContent
+ 			);
+
+ 			$fileContent = htmlspecialchars($fileContent,ENT_QUOTES,'ISO-8859-1' );
+
 		}
 		else
 		{
-			$content .='Cannot read the file'; 
+			$fileContent .='Cannot read the file'; 
 		}
-		$content .= '</textarea>';
-		return $content; 
+		return $fileContent; 
 	}
+
+    private function deletevsDB($id)
+    {
+        $query = "DELETE FROM `#__osefirewall_files` WHERE `#__osefirewall_files`.`id` = $id";
+        $query1 = $this->db->setQuery($query);
+        $this->db->query($query1);
+
+        $sql = "DELETE FROM `#__osefirewall_malware` WHERE `#__osefirewall_malware`.`file_id` = $id";
+        $sql1 = $this->db->setQuery($sql);
+        $this->db->query($sql1);
+    }
 	private function getFilePath ($id) 
 	{
 		$query = "SELECT `filename` FROM `#__osefirewall_files` WHERE `id` =".(int)$id;
@@ -196,7 +202,7 @@ class oseVsscanStat {
 		$this->db->closeDBO ();
 		return $result ->filename; 
 	}
-	private function getPattern ($file_id)
+	public function getPattern ($file_id)
 	{
 		$query = "SELECT patterns FROM `#__osefirewall_vspatterns` WHERE `id` = ".
 				 "(SELECT `pattern_id` FROM `#__osefirewall_malware` WHERE `file_id` = ".(int)$file_id.")";
@@ -205,6 +211,73 @@ class oseVsscanStat {
 		$this->db->closeDBO ();
 		return $result ->patterns;
 	}
+
+    public function vsdelete($id)
+    {
+        $filename = $this->getFilePath($id);
+        $flag = unlink($filename);
+        $this->deletevsDB($id);
+        return $flag;
+    }
+
+    public function vsbkclean($id)
+    {
+        $return = $this->vsbackup($id);
+        if ($return == "success") {
+            $filecontent = $this->vsclean($id);
+            return $filecontent;
+        } else {
+            return "back up fail!";
+        }
+    }
+
+    public function vsclean($id)
+    {
+        $filename = $this->getFilePath($id);
+        $pattern = $this->getPattern($id);
+        $pattern = str_replace(' ', '', $pattern);
+        if (!empty($filename)) {
+            $fileContent = oseFile::read($filename);
+            $fileContent = preg_replace_callback(
+                "/" . $pattern . "/ims",
+                function ($matches) {
+                    return "";
+                },
+                $fileContent
+            );
+            file_put_contents($filename, $fileContent, LOCK_EX);
+            $fileContent = htmlspecialchars($fileContent, ENT_QUOTES, 'ISO-8859-1');
+        } else {
+            $fileContent .= 'Cannot read the file';
+        }
+        return $fileContent;
+
+    }
+
+    public function vsbackup($id)
+    {
+        $scan_file = $this->getFilePath($id);
+        $return = $this->copyvsfile($scan_file);
+        return $return;
+    }
+
+    private function copyvsfile($scan_file)
+    {
+        $re = "/^(.*\\/)(.*\\..*)$/ims";
+        preg_match($re, $scan_file, $matches);
+        $re1 = "/(\\w+)$/";
+        $subst = "pbk";
+        $result = preg_replace($re1, $subst, $matches[2], 1);
+        $dest = OSE_FWDATABACKUP . ODS . $result;
+        $flag = copy($scan_file, $dest);
+
+        if ($flag) {
+            $return = "success";
+        } else {
+            $return = "fail";
+        }
+        return $return;
+    }
 	private function getFileType($filepath)
 	{
 		$s_info = pathinfo( $filepath );
