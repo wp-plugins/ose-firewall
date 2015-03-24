@@ -1,4 +1,5 @@
 <?php
+namespace App\Controller;
 /**
  * @version     2.0 +
  * @package       Open Source Excellence Security Suite
@@ -25,10 +26,10 @@
  */
 if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
- die('Direct Access Not Allowed');
+    die('Direct Access Not Allowed');
 }
-require_once(OSE_FWCONTROLLERS.ODS.'BaseController.php');
-class BackupController extends BaseController
+
+class BackupController extends \App\Base
 {
 	public $layout = '//layouts/grids';
 	public function actionGetBackupList()

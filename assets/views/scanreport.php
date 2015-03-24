@@ -28,7 +28,21 @@ if ($status == true)
                                     <h4 class="panel-title">Scanning Report</h4>
                                 </div>
                                 <div class="panel-controls"></div>
-                                <div class="panel-controls-buttons"></div>
+                                <div class="panel-controls-buttons">
+                                    <button class="btn btn-success btn-sm mr5 mb10" type="button"
+                                            onClick="batchbk()"><?php oLang::_('O_SCANREPORT_BACKUP'); ?></button>
+                                    <button class="btn btn-success btn-sm mr5 mb10" type="button"
+                                            onClick="batchbkcl()"><?php oLang::_('O_SCANREPORT_BKCLEAN'); ?></button>
+                                    <button class="btn btn-success btn-sm mr5 mb10" type="button"
+                                            onClick="batchrs()"><?php oLang::_('O_SCANREPORT_RESTORE'); ?></button>
+                                    <button class="btn btn-danger btn-sm mr5 mb10" type="button"
+                                            onClick="confirmbatchdl()"><?php oLang::_('O_SCANREPORT_DELETE'); ?></button>
+                                    <!--                                    <button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="confirmalldl()">-->
+                                    <?php //oLang::_('O_SCANREPORT_DELETEALL');
+                                    ?><!--</button>-->
+
+                                </div>
+
                                 <div class="panel-body">
                                     <table class="table display" id="scanreportTable">
                                         <thead>
@@ -39,7 +53,7 @@ if ($status == true)
 								                <th><?php oLang::_('O_PATTERN_ID'); ?></th>
 								                <th><?php oLang::_('O_CONFIDENCE'); ?></th>
 								                <th><?php oLang::_('VIEW'); ?></th>
-												<th><input type="checkbox" name="checkedAll" id="checkedAll"></input></th>
+                                                <th><input id='checkbox' type='checkbox'></th>
                                             </tr>
                                         </thead>
                                         <tfoot>

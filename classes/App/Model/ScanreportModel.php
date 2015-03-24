@@ -129,6 +129,46 @@ class ScanreportModel extends BaseModel
         $return['data'] = utf8_encode($oseVsscanStat->vsdelete($id));
         return $return;
     }
+
+    public function restorevs($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->vsrestore($id));
+        return $return;
+    }
+
+    public function batchbk($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->batchbk($id));
+        return $return;
+    }
+
+    public function batchbkcl($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->batchbkcl($id));
+        return $return;
+    }
+
+    public function batchrs($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->batchrs($id));
+        return $return;
+    }
+
+    public function batchdl($id)
+    {
+        $return = array();
+        $oseVsscanStat = new oseVsscanStat();
+        $return['data'] = utf8_encode($oseVsscanStat->batchdl($id));
+        return $return;
+    }
 	public function getStatistics()
 	{
 		$oseFirewallStat = new oseFirewallStat();

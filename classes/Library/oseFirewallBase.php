@@ -351,8 +351,9 @@ class oseFirewallBase extends oseFirewallRoot
 	}
 	public static function backup()
 	{
-		$app = self::runApp();
-		$app->runController('backup', 'index');
+        self::runController('BackupController', 'index');
+//		$app = self::runApp();
+//		$app->runController('backup', 'index');
 	}
 	public static function login()
 	{
@@ -560,7 +561,6 @@ class oseFirewallBase extends oseFirewallRoot
 		return (!empty($result))?$result->value:null;
 	}
 	public static function checkSubscriptionStatus ($redirect= true) {
-
         $db = oseFirewall::getDBO();
 		$query = "SELECT * FROM `#__ose_secConfig` WHERE (`key` = 'profileID' OR `key` = 'profileStatus') AND `type` = 'panel'";
 		$db->setQuery($query);

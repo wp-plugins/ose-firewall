@@ -230,7 +230,7 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 		$visits = $this->getVisits();
 		$score = $this->getScore();
 		$notified = $this->getNotified();
-		if (($this->silentMode == false && $score < $this->threshold) || ($this->silentMode == true && $visits <= $this->slient_max_att) && $this->spamEmail == false)
+		if (($this->silentMode == false && $score < $this->threshold) || ($this->silentMode == true && $visits < $this->slient_max_att) && $this->spamEmail == false)
 		{
 			$this -> updateVisits();
 			$url = $this -> filterAttack($scannerType);

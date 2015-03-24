@@ -35,7 +35,6 @@ class VsscanModel extends BaseModel {
 	public function loadLocalScript() {
 		$this->loadAllAssets ();
 		$status = oseFirewall::checkSubscriptionStatus (false);
-		$status = true;
 		if ($status == true)
 		{	
 			oseFirewall::loadJSFile ('CentroraManageJQPlot', 'plugins/pie-chart/jquery.flot.custom.js', false);

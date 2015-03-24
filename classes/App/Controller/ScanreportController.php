@@ -82,5 +82,49 @@ class ScanreportController extends \App\Base {
         $returns = $this->model->deletevs($id);
         $this->model->returnJSON($returns);
     }
+
+    public function action_Restorevs()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getInt('id', null);
+
+        if (empty($id)) {
+            $this->model->showSelectionRequired();
+        }
+        $returns = $this->model->restorevs($id);
+        $this->model->returnJSON($returns);
+    }
+
+    public function action_Batchbk()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+        $returns = $this->model->batchbk($id);
+        $this->model->returnJSON($returns);
+    }
+
+    public function action_Batchbkcl()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+        $returns = $this->model->batchbkcl($id);
+        $this->model->returnJSON($returns);
+    }
+
+    public function action_Batchrs()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+        $returns = $this->model->batchrs($id);
+        $this->model->returnJSON($returns);
+    }
+
+    public function action_Batchdl()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+        $returns = $this->model->batchdl($id);
+        $this->model->returnJSON($returns);
+    }
 }
 ?>	

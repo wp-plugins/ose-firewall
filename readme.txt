@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 4.3.4
+Stable tag: 4.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,13 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.3.7 = 
+* Improved: adjusted maximum threshold function to block an IP address so it will block the IP once it exceeds the threshold instead of blocking the IP in the next time
+* Fixed: Fixed Autoloader not working when the firewall is activated globally in the php environment where local php configuration is not allowed  
+* Added: Added single thread scanning function so the scanning can be performed on some servers with strict database connection requirements. 
+* Added: Backup, Clean, Delete function in scanning report
+* Fixed: Scanning specific path not working properly on some servers
 
 = 4.3.6 = 
 * Improved: Improved virus scanner 

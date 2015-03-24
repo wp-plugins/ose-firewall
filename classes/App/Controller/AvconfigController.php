@@ -38,6 +38,7 @@ class AvconfigController extends ConfigurationController {
         $file_exts = str_replace(array("[","]","\""," "), "", $file_exts);
 		$data['file_ext'] = $file_exts;
 		$data['maxfilesize'] = $this->model->getInt('maxfilesize', 0);
+		$data['maxdbconn'] = $this->model->getInt('maxdbconn', 20);
 		$this->model ->saveConfiguration($type, $data);
 	}
 }

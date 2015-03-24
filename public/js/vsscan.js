@@ -35,6 +35,11 @@ jQuery(document).ready(function($){
 		showLoading ();
 		scanAntivirus (-2, 'vsscan', [], []);
 	});
+	$('#vsscanSing').on('click', function() { 
+		initPieChartPage($, 20,100,1500, colours);
+		showLoading ();
+		scanAntivirusSing (-2, 'vsscan', [], []);
+	});
 	$('#vsstop').on('click', function() { 
 		showLoading ();
 		location.reload(); 
@@ -228,7 +233,7 @@ function scanAntivirus (step, action, cpuData, memData) {
 	        		scanAntivirus (-2, action, cpuData, memData);
 	        	}
 	        	else if (step == -2 && data.cont==true) {
-	        		scanAntivirus (-1, action, cpuData, memData);
+                    scanAntivirus(-1, action, cpuData, memData);
 	        	}
 	        	else
 	        	{
@@ -296,6 +301,99 @@ function scanVirusInd (action, cpuData, memData, type) {
 	        },
 		    error: function(XMLHttpRequest, textStatus, errorThrown) {
 		    	scanVirusInd (action, cpuData, memData, type);
+		    }
+	      });
+	});		
+}
+
+function scanAntivirusSing (step, action, cpuData, memData) {
+	jQuery(document).ready(function($){
+		$.ajax({
+	        type: "POST",
+	        url: url,
+	        dataType: 'json',
+		    data: {
+		    		option : option, 
+		    		controller:controller,
+		    		action:action,
+		    		task:action,
+		    		step : step,
+		    		centnounce:$('#centnounce').val()
+		    },
+	        success: function(data)
+	        {
+	        	hideLoading ();
+	        	cpuData.push([cpuData.length, data.cpuload]);
+	        	memData.push([memData.length, data.memory]);
+	        	initPlotChart($, cpuData, true);
+	        	initPlotChart($, memData, false);
+	        	$('#p4text').html(data.summary);
+	        	$('#last_file').html(data.last_file);
+	        	if (step == -2 && data.contFileScan==true)
+	        	{
+	        		scanAntivirusSing (-2, action, cpuData, memData);
+	        	}
+	        	else if (step == -2 && data.cont==true) {
+	        		scanAntivirusSing (-1, action, cpuData, memData);
+	        	}
+	        	else
+	        	{
+	        		scanVirusSingInd (action, cpuData, memData, 1);
+	        	}
+	        }
+	      });
+	});
+}
+
+function scanVirusSingInd (action, cpuData, memData, type) {
+	jQuery(document).ready(function($){
+		$.ajax({
+	        type: "POST",
+	        url: url,
+	        dataType: 'json',
+		    data: {
+		    		option : option, 
+		    		controller:controller,
+		    		action:action,
+		    		task:action,
+		    		step:0,
+		    		type:type,
+		    		centnounce:$('#centnounce').val()
+		    },
+	        success: function(data)
+	        {
+	        	hideLoading ();
+	        	if (type==2)
+	        	{
+	        		cpuData.push([cpuData.length, data.cpuload]);
+		        	memData.push([memData.length, data.memory]);
+		        	initPlotChart($, cpuData, true);
+		        	initPlotChart($, memData, false);
+	        	}	
+	        	$('#p4text').html(data.summary);
+	        	$('#last_file').html(data.last_file);
+	        	$('#easy-pie-chart-'+type).data('easyPieChart').update(data.completed);
+	        	$('#easy-pie-chart-'+type).attr("data-percent",data.completed);
+	        	$('#pie-'+type).html(data.completed+'%');
+	        	if (data.cont==true)
+	        	{
+	        		scanVirusSingInd (action, cpuData, memData, type);
+	        	}
+	        	else
+	        	{
+	        		if (type<8) {
+	        			type = type +1;
+	        			scanVirusSingInd (action, cpuData, memData, type);
+	        		}
+	        		else
+	        		{
+	        			showLoading ('Scanning completed');
+	        			hideLoading ();
+	        		}
+	        	}
+	        },
+		    error: function(XMLHttpRequest, textStatus, errorThrown) {
+		    	scanVirusSingInd (action, cpuData, memData, type);
 		    }
 	      });
 	});		

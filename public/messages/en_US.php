@@ -78,8 +78,9 @@ define('OSE_WORDPRESS_VIRUSSCAN_CONFIG','Virus Scanner Configuration');
 define('OSE_WORDPRESS_VIRUSSCAN_CONFIG_DESC','Please configure your virus scanning parameters here.');
 define('START_DB_INIT','Initialise Database');
 define('STOP_DB_INIT','Stop Action');
-define('START_NEW_VIRUSSCAN','Start New Scan');
-define('CONT_VIRUSSCAN','Continue Previous Scan');
+define('START_NEW_VIRUSSCAN','Start New Multi-Threads Scan');
+define('CONT_VIRUSSCAN','Continue Multi-Threads Scan');
+define('START_NEW_SING_VIRUSSCAN','Start New Single-Thread Scan');
 define('OSE_SCANNED','Centrora Security has scanned');
 define('OSE_FOLDERS','folders');
 define('OSE_AND','and');
@@ -432,6 +433,13 @@ define('COUNTRY_STATUS_CHANGED_FAILED', 'The country status was changed unsucces
 define('COUNTRY_DATA_DELETE_SUCCESS', 'Country data has been deleted successfully.');
 define('COUNTRY_DATA_DELETE_FAILED', 'Country data was changed unsuccessfully.');
 
+define('O_SCANREPORT_BACKUP', 'Back Up');
+define('O_SCANREPORT_BKCLEAN', 'Backup and Clean');
+define('O_SCANREPORT_RESTORE', 'Restore');
+define('O_SCANREPORT_DELETE', 'Delete');
+define('O_SCANREPORT_DELETEALL', 'Delete All');
+
+
 define('SECURITY_MANAGEMENT','Security Management');
 define('VARIABLES_MANAGEMENT','Variables Management');
 define('PREMIUM_SERVICE','Premium Service');
@@ -506,7 +514,6 @@ define('O_CUSTOM_BAN_PAGE_URL', 'Custom Ban Page URL');
 define('SUCCESS', 'Successful');
 define('SUCCESS_LOGOUT', 'Successful logged out');
 define('FIREWALL_RULES','Firewall Rules Fine-tuning');
-
 define('FIREWALL_CONFIGURATION','Firewall Configuration');
 define('FIREWALL_CONFIGURATION_DESC','This is the page that you can change the settings of Centrora Firewall.');
 define('CRONJOBS','Cron Jobs (Scheduled Task)');
@@ -517,12 +524,10 @@ define('HOURS','Hours');
 define('WEEKDAYS','Week Days (Use Ctrl to multi-select items)');
 define('CRON_SETTING_EMPTY','Please ensure you have selected both the hours and week days in the cron setting form.');
 define('LAST_DETECTED_FILE','Folder of the files being added into the scanned queue in the last scan');
-
 define('ENTER_ACTIVATION_CODE', 'Enter Activation Code');
 define('ACTIVATION_CODE', 'Activation Code');
 define('ACTIVATE', 'Activate');
-
 define('ERROR', 'Error');
 define('ACTIVATION_CODE_EMPTY', 'Activation code cannot be empty');
-
+define('MAX_DB_CONN', 'Maximum Database Connection');
 ?>

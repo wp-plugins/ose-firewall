@@ -447,7 +447,7 @@ jQuery(document).ready(function($){
             	   data = jQuery.parseJSON(data);
            		   if (data.cont)
            		   {
-           			scanAntivirus (-1, 'vsscan', [],[]);
+                       scanAntivirus(-2, 'vsscan', [], []);
            		   }	   
                }
              });

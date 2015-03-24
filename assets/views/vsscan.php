@@ -2,6 +2,7 @@
 oseFirewall::checkDBReady ();
 $status = oseFirewall::checkSubscriptionStatus (false);
 $confArray = $this->model->getConfiguration('vsscan');
+$this->model->getNounce ();
 if (isset($confArray['data']['vsScanExt']) && !isset($confArray['data']['file_ext']))
 {
 	$confArray['data']['file_ext'] = $confArray['data']['vsScanExt'];
@@ -31,6 +32,12 @@ if ($status == true)
 										<label for="maxfilesize" class="col-sm-4 control-label"><?php oLang::_('MAX_FILE_SIZE');?></label>
 										<div class="col-sm-8">
 				                               <input type="text" name="maxfilesize" value="<?php echo (isset($confArray['data']['maxfilesize']) && empty($confArray['data']['maxfilesize']))?'3':$confArray['data']['maxfilesize']?>" class="form-control">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="maxdbconn" class="col-sm-4 control-label"><?php oLang::_('MAX_DB_CONN');?></label>
+										<div class="col-sm-8">
+				                               <input type="text" name="maxdbconn" value="<?php echo (isset($confArray['data']['maxdbconn']) && empty($confArray['data']['maxdbconn']))?'3':$confArray['data']['maxdbconn']?>" class="form-control">
 										</div>
 									</div>
 									<input type="hidden" name="option" value="com_ose_firewall"> 
@@ -161,6 +168,7 @@ if ($status == true)
 						<button id="vsstop" class='btn btn-primary mr5 mb10'><?php oLang::_('STOP_VIRUSSCAN') ?></button>
 					    <button id="vscont" class='btn btn-primary mr5 mb10'><?php oLang::_('O_CONTINUE_SCAN') ?></button>
 					    <button id="vsscan" class='btn btn-primary mr5 mb10'><?php oLang::_('START_NEW_VIRUSSCAN') ?></button>
+					    <button id="vsscanSing" class='btn btn-primary mr5 mb10'><?php oLang::_('START_NEW_SING_VIRUSSCAN') ?></button>
 		            </div>
 			    </div>
 			 </div>    

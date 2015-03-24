@@ -37,7 +37,7 @@ function runAutoUpdate(url, plugin, activateurl) {
 	        		activateWordpressPlugin(activateurl);
 	        	} else {
 	        		hideLoadingStatus ();
-	        		//location.reload();
+	        		location.reload();
 	        	}
 	        }
 		});

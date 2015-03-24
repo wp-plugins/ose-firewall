@@ -46,6 +46,7 @@ class virusScanner {
 		$this->setConfiguration();
 		$this->setFileExts();
 		$this->setMaxFileSize();
+		$this->setDBConn();
 		$this->optimizePHP (); 
 		$this->setClamd(); 
 		oseFirewall::loadFiles(); 
@@ -77,9 +78,15 @@ class virusScanner {
 		$this->file_ext = explode(',', trim($this->config->file_ext));
 	}
 	private function setMaxFileSize () {
-		if ($this->maxfilesize>0)
+		if ($this->config->maxfilesize>0)
 		{
-			$this->maxfilesize = $this->maxfilesize * 1024 * 1024; 
+			$this->config->maxfilesize = $this->config->maxfilesize * 1024 * 1024; 
+		}
+	}
+	private function setDBConn () {
+		if (empty($this->config->maxdbconn))
+		{
+			$this->config->maxdbconn = 20;
 		}
 	}
 	private function optimizePHP () {
@@ -174,9 +181,9 @@ class virusScanner {
 					$filesize= filesize($dir);
 					if (in_array($fileext, $this->file_ext))
 					{
-						if (!empty($this->maxfilesize))
+						if (!empty($this->config->maxfilesize))
 						{
-							if(filesize($dir) < $this->maxfilesize)
+							if(filesize($dir) < $this->config->maxfilesize)
 							{
 								$arr['file'] ++;
 								$this->insertData($dir, 'f', $fileext);
@@ -306,7 +313,7 @@ class virusScanner {
 	}
 	protected function scanFiles () {
 		ini_set("display_errors", "on");
-		$baseScanPath= $this->getBaseScanPath (); 
+        $baseScanPath = $this->getBaseScanPath();
 		if (!empty($baseScanPath)) {
 			#TODO: Add scanning path to all the remaining paths;
 			if (file_exists(OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json")) {
@@ -322,7 +329,9 @@ class virusScanner {
 		{
 			$scanPath = $_POST['scanPath'];
 			$this->saveFilesFromPath ($scanPath, $baseScanPath);
-		}
+        } else if (file_exists(OSE_FWDATA . ODS . "vsscanPath" . ODS . "dirList.json")) {
+            $scanPath = $this->getdirList();
+        }
 		else
 		{
 			$scanPath = oseFirewall::getScanPath();
@@ -390,6 +399,7 @@ class virusScanner {
 		oseFirewall::loadJSON();
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."basePath.json";
 		if (file_exists($filePath)) {
+
 			$content = oseFile::read($filePath);
 			return oseJSON::decode($content);
 		}
@@ -414,8 +424,7 @@ class virusScanner {
 				$files[] = str_replace($rootPath[0], '', $path);
 			}
 		}
-		if (!empty($dirs))
-		{	
+        if (!empty($dirs)) {
 			$this->saveDirFile ($dirs);
 		}
 		if (!empty($files)) 
@@ -468,7 +477,7 @@ class virusScanner {
 	public function vsScanInd($type, $remote=false) {
 		oseFirewall::loadJSON();
 		$conn = $this->getCurrentConnection();
-		if ($conn > 20)
+		if ($conn > $this->config->maxdbconn)
 		{	
 			$result = $this->getHoldingStatus ($type);
 		}

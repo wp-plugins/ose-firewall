@@ -184,6 +184,63 @@ class oseVsscanStat {
 		return $fileContent; 
 	}
 
+    public function batchbk($id)
+    {
+        foreach ($id as $single) {
+            $return = $this->vsbackup($single);
+        }
+        return $return;
+    }
+
+    public function batchbkcl($id)
+    {
+        foreach ($id as $single) {
+            $return = $this->vsbackup($single);
+            if ($return == "success") {
+                $this->vsclean($single);
+                $re = "success";
+            } else {
+                $re = "fail";
+            }
+
+        }
+        return $re;
+    }
+
+    public function batchrs($id)
+    {
+        foreach ($id as $single) {
+            $return = $this->vsrestore($single);
+        }
+        return $return;
+    }
+
+    public function vsrestore($id)
+    {
+        $flag = $this->copyback($id);
+        if ($flag == 1) {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
+    private function copyback($id)
+    {
+        $filename = $this->getFilePath($id);
+        $re = "/^(.*\\/)(.*\\..*)$/ims";
+        preg_match($re, $filename, $matches);
+        $re1 = "/(\\w+)$/";
+        $subst = "pbk";
+        $result = preg_replace($re1, $subst, $matches[2], 1);
+        $result = $id . "_" . $result;
+        $dest = OSE_FWDATABACKUP . ODS . $result;
+        $flag = copy($dest, $filename);
+        if ($flag) {
+            $return = unlink($dest);
+        }
+        return $return;
+    }
     private function deletevsDB($id)
     {
         $query = "DELETE FROM `#__osefirewall_files` WHERE `#__osefirewall_files`.`id` = $id";
@@ -212,6 +269,13 @@ class oseVsscanStat {
 		return $result ->patterns;
 	}
 
+    public function batchdl($id)
+    {
+        foreach ($id as $single) {
+            $return = $this->vsdelete($single);
+        }
+        return $return;
+    }
     public function vsdelete($id)
     {
         $filename = $this->getFilePath($id);
@@ -219,7 +283,6 @@ class oseVsscanStat {
         $this->deletevsDB($id);
         return $flag;
     }
-
     public function vsbkclean($id)
     {
         $return = $this->vsbackup($id);
@@ -227,7 +290,7 @@ class oseVsscanStat {
             $filecontent = $this->vsclean($id);
             return $filecontent;
         } else {
-            return "back up fail!";
+            return "fail";
         }
     }
 
@@ -257,17 +320,18 @@ class oseVsscanStat {
     public function vsbackup($id)
     {
         $scan_file = $this->getFilePath($id);
-        $return = $this->copyvsfile($scan_file);
+        $return = $this->copyvsfile($scan_file, $id);
         return $return;
     }
 
-    private function copyvsfile($scan_file)
+    private function copyvsfile($scan_file, $id)
     {
         $re = "/^(.*\\/)(.*\\..*)$/ims";
         preg_match($re, $scan_file, $matches);
         $re1 = "/(\\w+)$/";
         $subst = "pbk";
         $result = preg_replace($re1, $subst, $matches[2], 1);
+        $result = $id . "_" . $result;
         $dest = OSE_FWDATABACKUP . ODS . $result;
         $flag = copy($scan_file, $dest);
 
