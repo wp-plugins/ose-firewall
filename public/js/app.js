@@ -434,6 +434,7 @@ jQuery(document).ready(function($){
     });
 	
 	$("#scan-form").submit(function() {
+		$('#scanModal').modal('hide');
 		showLoading();
 		var data = $("#scan-form").serialize();
 		data += '&centnounce='+$('#centnounce').val();

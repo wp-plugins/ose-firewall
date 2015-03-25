@@ -296,13 +296,19 @@ class virusScanner {
 		return $result;
 	}
 	public function vsScan($step) {
-		if ($step==-2)
+		if ($step==-3)
+		{
+			$this->cleanMalwareData ();
+			$this->clearDirFile ();
+			$_SESSION['completed'] = 0;
+			$_SESSION['start_time'] = time();
+			$result = $this->scanFiles();
+		}
+		else if ($step==-2)
 		{ 
-			$this->cleanMalwareData (); 
 			$_SESSION['completed'] = 0;
 			$_SESSION['start_time'] = time();  
 			$result = $this->scanFiles();
-			//$result = $this->showCountFilesMsg ();
 		}
 		else if ($step==-1)
 		{
@@ -328,8 +334,11 @@ class virusScanner {
 		else if (!empty($_POST['scanPath']))
 		{
 			$scanPath = $_POST['scanPath'];
+			$baseScanPath = array ($scanPath);
+			$this->saveBaseScanPath($scanPath);
 			$this->saveFilesFromPath ($scanPath, $baseScanPath);
-        } else if (file_exists(OSE_FWDATA . ODS . "vsscanPath" . ODS . "dirList.json")) {
+        } 
+        else if (file_exists(OSE_FWDATA . ODS . "vsscanPath" . ODS . "dirList.json")) {
             $scanPath = $this->getdirList();
         }
 		else
@@ -399,7 +408,6 @@ class virusScanner {
 		oseFirewall::loadJSON();
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."basePath.json";
 		if (file_exists($filePath)) {
-
 			$content = oseFile::read($filePath);
 			return oseJSON::decode($content);
 		}
@@ -922,10 +930,8 @@ class virusScanner {
 	private function clearDirFile () {
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json";
 		unlink($filePath);
-		/*
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."basePath.json";
 		unlink($filePath);
-		*/
 	}
 	private function saveVsFilesLoop()
 	{

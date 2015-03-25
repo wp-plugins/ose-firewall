@@ -33,12 +33,12 @@ jQuery(document).ready(function($){
 	$('#vsscan').on('click', function() { 
 		initPieChartPage($, 20,100,1500, colours);
 		showLoading ();
-		scanAntivirus (-2, 'vsscan', [], []);
+		scanAntivirus (-3, 'vsscan', [], []);
 	});
 	$('#vsscanSing').on('click', function() { 
 		initPieChartPage($, 20,100,1500, colours);
 		showLoading ();
-		scanAntivirusSing (-2, 'vsscan', [], []);
+		scanAntivirusSing (-3, 'vsscan', [], []);
 	});
 	$('#vsstop').on('click', function() { 
 		showLoading ();
@@ -228,7 +228,7 @@ function scanAntivirus (step, action, cpuData, memData) {
 	        	initPlotChart($, memData, false);
 	        	$('#p4text').html(data.summary);
 	        	$('#last_file').html(data.last_file);
-	        	if (step == -2 && data.contFileScan==true)
+	        	if ((step == -3 && data.contFileScan==true) || (step == -2 && data.contFileScan==true))
 	        	{
 	        		scanAntivirus (-2, action, cpuData, memData);
 	        	}
@@ -329,7 +329,7 @@ function scanAntivirusSing (step, action, cpuData, memData) {
 	        	initPlotChart($, memData, false);
 	        	$('#p4text').html(data.summary);
 	        	$('#last_file').html(data.last_file);
-	        	if (step == -2 && data.contFileScan==true)
+	        	if ((step == -2 && data.contFileScan==true)|| (step == -3 && data.contFileScan==true))
 	        	{
 	        		scanAntivirusSing (-2, action, cpuData, memData);
 	        	}

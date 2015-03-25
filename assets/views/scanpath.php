@@ -20,7 +20,7 @@
 									 	<input type="hidden" name="controller" value="vsscan"> 
 									    <input type="hidden" name="action" value="vsscan">
 									    <input type="hidden" name="task" value="vsscan">
-									    <input type="hidden" name="step" value="-2">
+									    <input type="hidden" name="step" value="-3">
 									<div class="form-group">
 										<div class="col-sm-offset-10 ">
 											<button type="submit" class="btn btn-default" id='save-button'><?php oLang::_('SCAN');?></button>

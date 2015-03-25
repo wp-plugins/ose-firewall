@@ -96,7 +96,11 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_adrulesets') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_adrulesets">' . oLang::_get('ADRULESETS'). '</a></li>';
-		
+
+        $menu .= '<li ';
+        $menu .= ($view == 'ose_fw_backup') ? 'class="active"' : '';
+        $menu .= '><a href="admin.php?page=ose_fw_backup">' . oLang::_get('BACKUP') . '</a></li>';
+
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_vsscan') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_vsscan">' . oLang::_get('ANTIVIRUS'). '</a></li>';
@@ -123,13 +127,11 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '</ul>';
 		// SubMenu Anti-Hacking Ends;
 		$menu .= '</li>';
-		/*
+
 		// Backup Feature Menu
-		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_backup') ? 'class="active"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_backup">' . oLang::_get('BACKUP'). '</a></li>';
-		*/
-		// BackUp Feature Ends
+
+
+        // BackUp Feature Ends
 		
 		// Configuration Menu;
 		$menu .= '<li ';
@@ -151,7 +153,8 @@ class oseFirewall extends oseFirewallBase {
 	public static function showmenus(){
     	add_menu_page( OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard',OSE_FWURL.'/public/images/favicon.ico');
     	add_submenu_page( 'ose_firewall', OSE_DASHBOARD_SETTING, OSE_DASHBOARD, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard' );
-		add_submenu_page( 'ose_firewall', ANTIVIRUS, ANTIVIRUS, 'manage_options', 'ose_fw_vsscan', 'oseFirewall::vsscan' );
+
+        add_submenu_page('ose_firewall', ANTIVIRUS, ANTIVIRUS, 'manage_options', 'ose_fw_vsscan', 'oseFirewall::vsscan');
 		//add_submenu_page( 'ose_firewall', CLAMAV, CLAMAV, 'manage_options', 'ose_fw_clamav', 'oseFirewall::clamav' );
 		add_submenu_page( 'ose_firewall', VSREPORT, VSREPORT, 'manage_options', 'ose_fw_vsreport', 'oseFirewall::vsreport' );
 		add_submenu_page( 'ose_firewall', MANAGE_IPS, MANAGE_IPS, 'manage_options', 'ose_fw_manageips', 'oseFirewall::manageips' );
@@ -163,7 +166,7 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_firewall', ADRULESETS, ADRULESETS, 'manage_options', 'ose_fw_adrulesets', 'oseFirewall::advancerulesets' );
 		add_submenu_page( 'ose_firewall', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables' );
 		add_submenu_page( 'ose_firewall', CONFIGURATION, CONFIGURATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration' );
-		//add_submenu_page( 'ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup' );
+        add_submenu_page('ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup');
 		add_submenu_page( 'ose_firewall', COUNTRYBLOCK, COUNTRYBLOCK, 'manage_options', 'ose_fw_countryblock', 'oseFirewall::countryblock' );
 		add_submenu_page( 'ose_firewall', CRONJOBS, CRONJOBS, 'manage_options', 'ose_fw_cronjobs', 'oseFirewall::cronjobs' );
 		add_submenu_page( 'ose_firewall', LOGIN, LOGIN, 'manage_options', 'ose_fw_login', 'oseFirewall::login' );
