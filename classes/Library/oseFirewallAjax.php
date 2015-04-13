@@ -103,8 +103,19 @@ class oseFirewallAjax extends oseAjax{
 		$actions = array ('downLoadTables' , 'createTables' , 'getCountryList' , 'changeCountryStatus' , 'blacklistCountry' , 'whitelistCountry', 'monitorCountry', 'changeAllCountry', 'deleteCountry', 'deleteAllCountry');
 		parent::loadActions($actions);
 	}
+    public static function loadActionAdvancedbackup()
+    {
+        $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropbox_upload');
+        parent::loadActions($actions);
+    }
+
+    public static function loadActionAuthentication()
+    {
+        $actions = array('oauth');
+        parent::loadActions($actions);
+    }
 	public static function loadActionBackup () {
-		$actions = array ('backup', 'getBackupList', 'backupFile' , 'deleteBackup' , 'deleteItemByID', 'downloadBackupDB' , 'downloadBackupFile' , 'authorizeAppAccess', 'checkAuth', 'getDropboxAPI');
+        $actions = array('backup', 'getBackupList', 'deleteBackup');
 		parent::loadActions($actions);
 	}
 	public static function loadactionUninstall(){
@@ -129,6 +140,10 @@ class oseFirewallAjax extends oseAjax{
 	}
 	public static function loadActionCronjobs () {
 		$actions = array ('saveCronConfig');
+		parent::loadActions($actions);
+	}
+	public static function loadActionPermConfig () {
+		$actions = array ('getDirFileList','getFileTree','editperms');
 		parent::loadActions($actions);
 	}
 }

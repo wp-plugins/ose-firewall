@@ -99,7 +99,7 @@ public function getSignatures()
 	{
 		$db = oseFirewall::getDBO ();
 		$varValues = array(
-					'id' => 'DEFAULT',
+					'id' => '',
 					'signature' => $signature,
 					'action' => (int)$status,
 					'attacktype' => '["1"]'

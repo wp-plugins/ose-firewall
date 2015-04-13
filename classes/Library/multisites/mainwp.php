@@ -27,7 +27,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
-
+require_once(ABSPATH . 'wp-includes/pluggable.php');
 /*
  * Attach plugin to MainWP as an extension and render settings and site pages.
  */
@@ -40,6 +40,8 @@ class CentroraMainWP {
     
     public function __construct($childfilepassed){
         $this->childFile = $childfilepassed;
+        
+        self::hide_wpadmin_panels(); // hide admin panels for child sites rendered in mainwp
         
         add_filter('mainwp-getextensions', array($this,'get_ose_Firewall_extension'));
         
@@ -67,7 +69,7 @@ class CentroraMainWP {
         	 
         	self::load_subpages(); //load subpages
         	 
-        	self::hide_wpadmin_panels(); // hide admin panels for child sites rendered in mainwp
+        	
         }
         
     }
@@ -113,6 +115,7 @@ class CentroraMainWP {
      * Hide admin panels if using Centrora called from MainWP
      */
     public function hide_wpadmin_panels () {
+    	
     	if (isset($_GET['ControllPanel']) && !empty($_GET['ControllPanel']) && $_GET['ControllPanel'] = 'MainWP'){
     		if(stripos($this->childFile, 'ose-firewall')>0) {
                 echo <<<HTML

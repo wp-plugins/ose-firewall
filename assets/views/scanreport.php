@@ -14,12 +14,19 @@ if ($status == true)
 	
 	<div class="content-inner">
 	<div class="row ">
-						<div class ="col-md-12">
-							<div class="alert alert-dismissable alert-danger">
-							  <button type="button" class="close" data-dismiss="alert">×</button>
-							  <strong>Need Help Cleaning?</strong> We can help you clean the infected files. <button class="btn btn-danger" onClick ="window.location='http://www.centrora.com/cleaning/';">Contact us here</button>
-							</div>
-						</div>
+						<?php 
+						$isOEMCustomer = CentroraOEM::hasOEMCustomer();
+						if ($isOEMCustomer  == false) {
+							?>
+								<div class ="col-md-12">
+									<div class="alert alert-dismissable alert-danger">
+									  <button type="button" class="close" data-dismiss="alert">×</button>
+									  <strong>Need Help Cleaning?</strong> We can help you clean the infected files. <button class="btn btn-danger" onClick ="window.location='http://www.centrora.com/cleaning/';">Contact us here</button>
+									</div>
+								</div>
+							<?php 
+						}
+						?>
                         <div class="col-lg-12 sortable-layout">
                             <!-- col-lg-12 start here -->
                             <div class="panel panel-primary plain toggle panelClose panelRefresh">
@@ -73,6 +80,9 @@ if ($status == true)
                             <!-- End .panel -->
                         </div>
 	   </div>
+	   <?php 
+			CentroraOEM::showProducts();
+	   ?>
 	   </div>
 	</div>
 </div>

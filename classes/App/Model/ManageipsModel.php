@@ -84,7 +84,7 @@ class ManageipsModel extends BaseModel
 		$page_id = $this->addPages($url, 0);
 		$referer_id = $this->addReferer();
 		$varValues = array(
-			'id' => 'DEFAULT',
+			'id' => '',
 			'name' => $name,
 			'datetime' => date('Y-m-d h:i:s'),
 			'score' => 0,

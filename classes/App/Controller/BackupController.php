@@ -32,9 +32,10 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 class BackupController extends \App\Base
 {
 	public $layout = '//layouts/grids';
-	public function actionGetBackupList()
+
+    public function action_GetBackupList()
 	{
-		oseFirewall::loadRequest();
+        $this->model->loadRequest();
 		if (isset($_REQUEST['mobiledevice']))
 		{
 			$mobiledevice = oRequest::getInt('mobiledevice', 0);
@@ -44,134 +45,34 @@ class BackupController extends \App\Base
 			$mobiledevice = 0;
 		}
 		$results = $this->model->getBackupList();
-		oseAjax::returnJSON($results, $mobiledevice);
+
+        $this->model->returnJSON($results, $mobiledevice);
 	}
-	public function actionBackup()
+
+    public function action_Backup()
 	{
-		oseFirewall::loadRequest();
-		oseFirewall::loadFiles();
-		$db = oseFirewall::getDBO();
-		$backup_type = oRequest::getInt('backup_type', 3);
-		$backup_to = oRequest::getInt('backup_to', 1);
-		switch ($backup_type)
-		{
-			case 2:
-			case 3:
-			$result = $this->model->backupDB($backup_type, $backup_to);
-			break;
-		}
-		if ($result != false)
-		{
-			oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get("BACKUP_SUCCESS"), false);
-		}
-		else
-		{
-			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("BACKUP_FAILED"), false);
-		}
+        $this->model->loadRequest();
+        $backup_type = $this->model->getInt('backup_type', null);
+        $backup_to = $this->model->getInt('backup_to', null);
+        $result = $this->model->backup($backup_type, $backup_to);
+        $this->model->returnJSON($result);
 	}
-	public function actionCheckAuth()
-	{
-		oseFirewall::loadRequest();
-		$backup_to = oRequest::getInt('backup_to', 1);
-		$mobiledevice = false; 
-		//TODO: check membership permission
-		if ($backup_to != 1)
-		{
-			$dbReady = $this->model->dbReady($backup_to);
-			if (!$dbReady)
-			{
-				oseAjax::returnJSON(array("dbReady" => false), $mobiledevice);
-			}
-			else
-			{
-				$result = $this->model->dropboxAuthorizeUser();
-				oseAjax::returnJSON($result, $mobiledevice);
-			}
-		}
-		else
-		{
-			oseAjax::returnJSON(array("dbReady" => true), $mobiledevice);
-		}
-	}
-	public function actionAuthorizeAppAccess()
-	{
-		oseFirewall::loadRequest();
-		oseFirewall::loadFiles();
-		$db = oseFirewall::getDBO();
-		$access_username = oRequest::getVar('access_username', null);
-		$access_password = oRequest::getVar('access_password', null);
-		$result = $this->model->authorizeAppAccess($access_username, $access_password);
-		if ($result != 0)
-		{
-			oseAjax::aJaxReturn(true, 'SUCCESS', "success", false);
-		}
-		else
-		{
-			oseAjax::aJaxReturn(false, 'ERROR', "unsuccess", false);
-		}
-	}
-	public function actionBackupFile()
-	{
-		oseFirewall::loadRequest();
-		$backup_type = oRequest::getInt('backup_type', 3);
-		$backup_to = oRequest::getInt('backup_to', 1);
-		$result = $this->model ->backupFiles($backup_type, $backup_to);
-		if ($result == true)
-		{
-			oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get("DB_DELETE_SUCCESS"), false);
-		}
-		else
-		{
-			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("DB_DELETE_FAILED"), false);
-		}
-	}
-	public function actionDeleteBackup()
-	{
-		oseFirewall::loadRequest();
-		$ids = oRequest::getVar('ids', null);
-		$ids = oseJSON::decode($ids);
-		$result = $this->model ->removeBackUp($ids);
-		if ($result == true)
-		{
-			oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get("DB_DELETE_SUCCESS"), false);
-		}
-		else
-		{
-			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("DB_DELETE_FAILED"), false);
-		}
-	}
-	public function actionDeleteItemByID()
-	{
-		oseFirewall::loadRequest();
-		$ids = oRequest::getVar('id', null);
-		$ids = oseJSON::decode($ids);
-		$ids = array($ids);
-		$result = $this->model ->removeBackUp($ids);
-		if ($result == true)
-		{
-			oseAjax::aJaxReturn(true, 'SUCCESS', oLang::_get("DB_DELETE_SUCCESS"), false);
-		}
-		else
-		{
-			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("DB_DELETE_FAILED"), false);
-		}
-	}
-	public function actionDownloadBackupDB()
-	{
-		oseFirewall::loadRequest();
-		$id = oRequest::getVar('ids', null);
-		$this->model ->downloadBackupDB($id);
-	}
-	public function actionDownloadBackupFile()
-	{
-		oseFirewall::loadRequest();
-		$id = oRequest::getVar('ids', null);
-		$this->model ->downloadBackupFile($id);
-	}
-	public function actionGetDropboxAPI()
-	{
-		$results = $this->model ->getDropboxAPI();
-		oseAjax::returnJSON($results);
-	}
+    public function action_DeleteBackup()
+    {
+        $this->model->loadRequest();
+        $ids = $this->model->getVar('id', null);
+        $result = $this->model->deleteBackUp($ids);
+        $this->model->returnJSON($result);
+    }
+
+    public function action_DownloadBackupFile()
+    {
+
+        $this->model->loadRequest();
+        $task = $this->model->getVar('task', null);
+        if ($task == 'downloadBackupFile') {
+            $this->model->downloadBackupFile();
+        }
+    }
 }
 ?>	

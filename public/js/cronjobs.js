@@ -14,6 +14,7 @@ jQuery(document).ready(function($){
         		{
         			if (data.status =='Error')
         			{
+        				hideLoading ();
         				showDialogue (data.message, data.status, 'OK');
         			}
         			else

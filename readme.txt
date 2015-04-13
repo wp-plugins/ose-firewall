@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 4.3.8
+Stable tag: 4.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,13 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.4.0 = 
+* Added: Backup function for database and files for the whole WordPress and Joomla website
+* Added: File permission function to change the file permissions of the system
+* Fixed: Virus Cronjob cannot be completed in some servers
+* Added: Added email for the virus scanning cronjob when the scanning is completed
+* Fixed: In Windows server, the IP cannot be added into the database
 
 = 4.3.8 = 
 * Fixed: Scanning specific path not working properly on some servers

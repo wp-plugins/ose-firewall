@@ -1,6 +1,6 @@
 body {
     font-size: 14px !important;
-    background: none repeat scroll 0 0 #eee !important;
+    background: none repeat scroll 0 0 #eee ;
 }
 .list-group a,
 .list-group a:link {
@@ -764,4 +764,63 @@ select.cron {
 
 .panelRefresh .nav li {
 	border-bottom: 0px solid #fff;
+}
+
+#selected_file
+{
+    width: 500px;
+    margin: 2px auto;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+UL.filetree
+{
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 33px;
+    padding: 0px;
+    margin: 0px;
+}
+UL.filetree LI
+{
+    list-style: none;
+    padding: 0px 0px 0px 20px;
+    margin: 0px 0px 0px 10px;
+    white-space: nowrap;
+}
+UL.filetree A
+{
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 0px 2px 0px 5px;
+    margin-left: 15px;
+}
+UL.filetree A:focus
+{
+    background: #BDF;
+}
+UL.filetree A:hover
+{
+    background: #DDE4FF;
+}
+/*folder styles*/
+.filetree LI.folder{    background: url(../images/filetree/directory.png) no-repeat left top;}
+.filetree LI.expanded{    background: url(../images/filetree/directory_open.png) no-repeat left top;}
+.filetree LI.file{    background: url(../images/filetree/file.png) no-repeat left top;}
+.filetree LI.wait{    background: url(../images/filetree/spinner.gif) no-repeat left top;}
+.filetree UL
+{
+    border-left: 1px solid #D9DADB;
+    padding-left: 10px;
+}
+.filetree LI UL LI:before
+{
+    margin-left: -40px;
+    content: "\2014";
+    position: absolute;
+}
+.filetree LI UL LI
+{
+    position: relative;
 }

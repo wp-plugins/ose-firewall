@@ -12,7 +12,7 @@
 								<form id = 'php-configuraton-form' class="form-horizontal group-border stripped" role="form">
 									<div class="form-group">
 										<div class="col-sm-12">
-				                               <div id="message-box>Checking Status</div>
+				                               <div id="message-box">Checking Status</div>
 										</div>
 									</div>
 										<input type="hidden" name="token" value="">

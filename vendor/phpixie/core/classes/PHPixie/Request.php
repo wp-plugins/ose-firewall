@@ -187,8 +187,13 @@ class Request
 		$class = $this->param('namespace',$this->pixie->app_namespace).'Controller\\'.ucfirst($this->param('controller'));
 		$controller = $this->pixie->controller($class);
 		$controller->request = $this;
-		$controller->run($this->param('action'));
-		return $controller->response;
+        if (isset($_GET['action'])) {
+            $controller->run($_GET['action']);
+            return $controller->response;
+        } else {
+            $controller->run($this->param('action'));
+            return $controller->response;
+        }
 	}
 
 	/**

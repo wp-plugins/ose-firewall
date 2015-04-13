@@ -352,10 +352,18 @@ class oseFirewallBase extends oseFirewallRoot
 	public static function backup()
 	{
         self::runController('BackupController', 'index');
-//		$app = self::runApp();
-//		$app->runController('backup', 'index');
 	}
-	public static function login()
+
+    public static function authentication()
+    {
+        self::runController('AuthenticationController', 'index');
+    }
+    public static function advancedbackup()
+    {
+        self::runController('AdvancedbackupController', 'index');
+    }
+
+    public static function login()
 	{
 		self::runController ('LoginController', 'index');
 	}
@@ -366,6 +374,10 @@ class oseFirewallBase extends oseFirewallRoot
 	public static function cronjobs () 
 	{
 		self::runController ('CronjobsController', 'index');
+	}
+	public static function permconfig ()
+	{
+		self::runController ('PermconfigController', 'index');
 	}
 	public static function clamav () 
 	{

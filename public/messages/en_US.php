@@ -248,7 +248,15 @@ define('COUNTRYBLOCK_TITLE', '<b>Country</b> <span><b>Blocking</b></span>');
 define('COUNTRYBLOCK_DESC','The Panel to Block IPs from countries');
 define('COUNTRYBLOCK', 'Country Blocking');
 define('BACKUP', 'Backup');
+define('AUTHENTICATION', 'Authentication');
+define('ADVANCEDBACKUP', 'Advanced Backup');
+define('ADMINEMAILS_TITLE', '<b>Administrator Management</b>');
+define('ADMINEMAILS_DESC', 'You can centrally manage your administrator and domain address here');
+define('ADMINEMAILS', 'Administrator Management');
+define('BACKUP_MANAGER', 'Backup Management');
 define('BACKUP_TITLE', '<b>Backup Management</b>');
+define('AUTHENTICATION_TITLE', '<b>Third Party Authentication</b>');
+define('AUTHENTICATION_DESC', 'By authentication, you are authorising centrora security to get access to your account, you personal information will not be disclosed');
 define('BACKUP_DESC', 'You can centrally backup your database here');
 define('BACKUP_FILES', 'files have been backed up');
 define('PREFIX_EMPTY', 'Please enter a prefix');
@@ -355,6 +363,14 @@ define('O_CONFIDENCE', 'Confidence');
 define('O_PATTERNS', 'Patterns');
 define('O_PATTERN_ID', 'Pattern ID');
 
+define('O_BACKUPFILE_ID', 'ID');
+define('O_BACKUPFILE_DATE', 'Time');
+define('O_BACKUPFILE_NAME', 'File Name');
+define('O_BACKUPFILE_TYPE', 'Backup Type');
+define('O_BACKUP_DROPBOX', 'Dropbox');
+define('O_BACKUP_LOCAL', 'Local');
+
+
 define('O_IP_RULE_TITLE', 'IP Rule Title');
 define('O_ID', 'ID');
 define('O_DATE', 'Date');
@@ -439,6 +455,14 @@ define('O_SCANREPORT_RESTORE', 'Restore');
 define('O_SCANREPORT_DELETE', 'Delete');
 define('O_SCANREPORT_DELETEALL', 'Delete All');
 
+define('O_BACKUP_BACKUPDB', 'Back Up Database');
+define('O_BACKUP_BACKUPFILE', 'Back Up Files');
+define('O_BACKUP_DELETEBACKUPFILE', 'Delete');
+
+define('O_AUTHENTICATION_DROPBOX', 'Dropbox Authentication');
+define('O_AUTHENTICATION_GOOGLEDRIVE', 'GoogleDrive Authentication');
+define('O_AUTHENTICATION_CONTINUE', 'Continue');
+
 
 define('SECURITY_MANAGEMENT','Security Management');
 define('VARIABLES_MANAGEMENT','Variables Management');
@@ -508,6 +532,7 @@ define('TRACKINGCODE_CANNOT_EMPTY', 'Tracking Codes cannot be empty');
 define('TRACKINGCODE_UPDATE_SUCCESS', 'Great! Successfully updated tracking codes. In the future, when the owner of this website subscribes to our subscription plans, the transaction will be logged into your affiliate accounts.');
 define('TRACKINGCODE_UPDATE_FAILED', 'Failed updating Tracking Codes');
 define('WORDPRESS_ADMIN_AJAX_PROTECTION', 'WordPress Admin Ajax Protection');
+define('ADD_DOMAIN_ADDRESS', 'Add domain address');
 define('SCAN', 'Scan');
 define('FILE_CONTENT', 'File Content');
 define('O_CUSTOM_BAN_PAGE_URL', 'Custom Ban Page URL');
@@ -530,4 +555,19 @@ define('ACTIVATE', 'Activate');
 define('ERROR', 'Error');
 define('ACTIVATION_CODE_EMPTY', 'Activation code cannot be empty');
 define('MAX_DB_CONN', 'Maximum Database Connection');
+
+define('PERMCONFIG', 'File/Folder Permissions Configuration');
+define('PERMCONFIG_DESC', 'Manage your server\'s  files & folders permissions configuration');
+define('PERMCONFIGFORM_DESC', 'Please select the new attributes for the selected.');
+define('PERMCONFIGFORM_NB', '<h5><small><b>NB: </b>Generally used permissions: Files 0644 (drw-r--r--) and Folders 0755 (drwxr-xr-x) </small></h5>');
+define('PERMCONFIG_SAVE', 'Apply & Save Configuration');
+define('PERMCONFIG_EDITOR', 'Edit Permissions');
+define('PERMCONFIG_CHANGE', 'Change Permissions');
+define('PERMCONFIG_SHORT', 'Permissions Configuration');
+define('PERMCONFIG_NAME', 'Name');
+define('PERMCONFIG_TYPE', 'Type');
+define('PERMCONFIG_OWNER', 'Owner/Group');
+define('PERMCONFIG_PERM', 'Permissions');
+
+define('O_DOWNLOAD', 'Download');
 ?>

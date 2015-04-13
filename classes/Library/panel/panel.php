@@ -280,6 +280,7 @@ class panel
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 		$json = curl_exec($ch);
 		curl_close($ch);
 		$json_data = json_decode($json, true);		
@@ -396,5 +397,56 @@ class panel
 		$content['task'] = 'activateCode';
 		$content['code'] = $code;
 		$this->sendRequest($content);
+	}
+	/*
+	 * Used in permconfig to return directory/file list of a given path
+	 * */
+	public function getDirFileList($path){
+	
+		$filearray = array();
+
+		// Create recursive dir iterator which skips dot folders and Flatten the recursive iterator, folders come before their files
+		$it  = 	new RecursiveIteratorIterator(
+				new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+				RecursiveIteratorIterator::SELF_FIRST
+				//,RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
+		);
+	
+		// keep to the base folder
+		$it->setMaxDepth(0);
+        //$filearray['pluginroot'] = array('path'	=>OSE_ABSPATH);
+        if (!$it->valid()){
+            $filearray['data'][] = array('path'	=> '','name' => '','type' => '','groupowner' => '','perm' => '','icon' => '','dirsort' => 3);
+        }
+		foreach ($it as $fileinfo) {
+			if ($fileinfo->isDir()) {
+				$filearray['data'][] = array('path'	=> str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+                    'name'	=> $fileinfo->getfilename(),
+					'type' 	=> $fileinfo->getType(),
+					'groupowner'=> $fileinfo->getOwner() .":". $fileinfo->getGroup(),
+					'perm' 	=> substr(sprintf('%o', $fileinfo->getPerms()), -4),
+                    'icon'  => "<img src='".OSE_FWPUBLICURL."/images/filetree/folder.png' alt='dir' />",
+                    'dirsort' => 1
+				);
+
+			} elseif ($fileinfo->isFile()) {
+                $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));
+                if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip',$ext_code) == false) {
+                    $ext_code = 'file';
+                }
+				$filearray['data'][] = array('path'	=> str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+					'name'	=> $fileinfo->getfilename(),
+					'type' 	=> pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
+					'groupowner'=> $fileinfo->getOwner() .":". $fileinfo->getGroup(),
+					'perm' 	=> substr(sprintf('%o', $fileinfo->getPerms()), -4) ,
+                    'icon'  => "<img src='".OSE_FWPUBLICURL."/images/filetree/".$ext_code.".png' alt='".$ext_code."' />",
+                    'dirsort' => 2
+				);
+			}
+		}
+
+        array_multisort($filearray['data'], SORT_ASC);
+
+		return $filearray;
 	}
 }

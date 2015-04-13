@@ -233,10 +233,17 @@ class oseUsers
 		}
 		else
 		{
+			if (!function_exists('wp_get_current_user')) {
+				$this->loadUserClass ();
+			}
 			$current_user = wp_get_current_user();
 			$adminids = $this->get_super_admins ();
 			return (in_array($current_user->ID, $adminids));
 		}
+	}
+	protected function loadUserClass () {
+		require_once(ABSPATH."wp-includes/pluggable.php");
+		require_once(ABSPATH."wp-includes/functions.php");
 	}
 	public static function getUserLogin()
 	{

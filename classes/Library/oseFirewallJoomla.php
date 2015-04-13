@@ -106,6 +106,14 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'audit') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=audit">' . oLang::_get('AUDIT_WEBSITE'). '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'permconfig') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=permconfig">' . oLang::_get('PERMCONFIG'). '</a></li>';
+		
+		$menu .= '<li ';
+		$menu .= ($view == 'backup') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=' . $extension . '&view=backup">' . oLang::_get('BACKUP_MANAGER') . '</a></li>';
 		
 		$menu .= '</ul>';
 		// SubMenu Anti-Virus Ends;
@@ -144,6 +152,10 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'cronjobs') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=cronjobs">' . oLang::_get('CRONJOBS'). '</a></li>';
+		
+		/*$menu .= '<li ';
+		$menu .= ($view == 'advancedbackup') ? 'class="active"' : '';
+		$menu .= '><a href="index.php?option=' . $extension . '&view=advancedbackup">' . oLang::_get('ADVANCEDBACKUP') . '</a></li>';*/
 		
 		$menu .= '</ul>';
 		
@@ -236,12 +248,8 @@ class oseFirewall extends oseFirewallBase {
 					<div class="col-lg-11 col-sm-6 col-xs-6 col-md-6">
 					 <div class="pull-right">
 						<ul class="userMenu ">';
-		$head .='<li><a href="//www.centrora.com/store/index.php?route=affiliate/login" title="Affiliate"><i class="fa fa-magnet"></i> <span class="hidden-xs hidden-sm hidden-md">Affiliate</span> </a></li>
-						<li><a href="https://www.centrora.com/store/index.php?route=account/login" title="My Account"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
-						<li><a href="https://www.centrora.com/support-center/" id="support-center" title="Support"><i class="im-support"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
-						<li><a href="http://www.centrora.com/" title="Subscription"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">Subscription</span></a></li>
-						<li><a href="http://www.centrora.com/tutorial/" title="Tutorial"><i class="im-stack-list"></i> <span class="hidden-xs hidden-sm hidden-md">Tutorial</span></a></li>
-						<li><a href="http://www.centrora.com/cleaning" title="Malware Removal"><i class="im-spinner10"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
+		$oem = new CentroraOEM() ;
+		$head .= $oem->getTopBarURL ();
 		if (OSE_CMS == 'joomla')
 		{
 			$head .= '<li><a href="index.php" title="Home"><i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Home</span> </a></li>';
@@ -252,7 +260,7 @@ class oseFirewall extends oseFirewallBase {
 				 </div>';
 		$head .= '<div class ="everythingOnOneLine">
 					<div class ="col-lg-12">
-						<div class="logo"></div>
+						<div class="logo"></div>'.$oem->showOEMName ().'
 					<div class ="version-normal">'.self::getVersion ().'</div>';
 		
 		$serverversion = self::getServerVersion(); 

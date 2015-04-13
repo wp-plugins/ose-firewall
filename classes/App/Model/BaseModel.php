@@ -189,6 +189,7 @@ class BaseModel  {
 		{
 			oseFirewall::loadJSFile ('CentroraBootStrapJS', 'bootstrap.min.js', false);
 		}
+//        oseFirewall::loadJSFile ('CentroraDropboxJS', 'dropins.js', false);
 		oseFirewall::loadJSFile ('CentroraDataTableJS', 'jquery.dataTables.min.js', false);
 		oseFirewall::loadJSFile ('CentroraMaskInput','plugins/maskedinput/jquery.maskedinput.js', false);
 		oseFirewall::loadJSFile ('CentroraMaskIP','plugins/maskedinput/jquery.input-ip-address-control-1.0.min.js', false);
@@ -209,6 +210,12 @@ class BaseModel  {
 		oseFirewall::loadCSSFile ('CentroraBootStrapLess', 'main.css', false);
 		oseFirewall::loadCSSFile ('CentroraV4Style', 'v4.css', false);
 		oseFirewall::loadCSSURL ('CentroraV4Font','https://fonts.googleapis.com/css?family=Open+Sans%3A400italic%2C400%2C600%2C700%7CRoboto+Slab%3A400%2C300%2C700');
+		$this->getOEMCss();
+	}
+	protected function getOEMCss () {
+		oseFirewall::callLibClass('oem', 'oem');
+		$oem = new CentroraOEM(); 
+		$oem->loadCSS (); 
 	}
 	protected function getEmptyReturn () {
 		$return  = array();
