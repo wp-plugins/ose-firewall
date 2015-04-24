@@ -283,8 +283,8 @@ class oseFirewall extends oseFirewallBase {
 		}
 
 		#take care of ajax js to run unpdate		
-		if(isset($_POST['action']) && !empty($_POST['action'])) {
-		    $action = $_POST['action'];
+		if(isset($_POST['updateaction']) && !empty($_POST['updateaction'])) {
+		    $action = $_POST['updateaction'];
 		    switch($action) {
 		        case 'upgrade-plugin' : self::runUpdate() ;break;
 		    }

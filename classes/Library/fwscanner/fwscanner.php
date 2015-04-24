@@ -599,15 +599,10 @@ class oseFirewallScanner {
 			$oseEmail = new oseEmail('firewall');
 			$email = $this->getEmailByType($type);
 			$email = $this->convertEmail($email, $config_var);
-//			$receiptient = new stdClass();
-//			$receiptient->name = "Administrator";
-//			$receiptient->email = ($this->adminEmail=="info@opensource-excellence.com")?oseFirewall::getAdminEmail():$this->adminEmail;
             $receiptient = oseFirewall::getActiveReceivers();
-            foreach ($receiptient as $flyer) {
-                $result = $oseEmail->sendMailTo($email, $config_var, array($flyer));
-                if ($result == true) {
-                    $this->updateNotified(1);
-                }
+            $result = $oseEmail->sendMailTo($email, $config_var, $receiptient);
+            if ($result == true) {
+                 $this->updateNotified(1);
             }
             $oseEmail->closeDBO();
 		}

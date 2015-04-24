@@ -1092,13 +1092,8 @@ class oseBackupManager {
         $oseEmail = new oseEmail('firewall');
         $email = $this->getEmailByType($type);
         $email = $this->convertEmail($email, $id, $type);
-//            $receiptient = new stdClass();
-//            $receiptient->name = "Administrator";
-//            $receiptient->email = (empty($this->adminEmail) && $this->adminEmail=="info@opensource-excellence.com")?$this->adminEmail:oseFirewall::getAdminEmail();
         $receiptient = oseFirewall::getActiveReceivers();
-        foreach ($receiptient as $flyer) {
-            $result = $oseEmail->sendMailTo($email, $config_var, array($flyer));
-        }
+        $result = $oseEmail->sendMailTo($email, $config_var, $receiptient);
         $oseEmail->closeDBO();
         return $result;
     }

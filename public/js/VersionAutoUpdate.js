@@ -29,7 +29,7 @@ function runAutoUpdate(url, plugin, activateurl) {
 	        	option : option,
 	        	controller:controller, 
 	        	plugin: plugin,
-	        	action :'upgrade-plugin'	        			
+	        	updateaction :'upgrade-plugin'
 	        },
 	        success: function(output) {
 	        	if (activateurl != null && document.readyState === "complete"){ //only run this part in the wordpress version where we have to activate the plugin after updating
