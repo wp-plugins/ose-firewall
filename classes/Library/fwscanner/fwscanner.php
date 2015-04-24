@@ -599,15 +599,17 @@ class oseFirewallScanner {
 			$oseEmail = new oseEmail('firewall');
 			$email = $this->getEmailByType($type);
 			$email = $this->convertEmail($email, $config_var);
-			$receiptient = new stdClass();
-			$receiptient->name = "Administrator";
-			$receiptient->email = ($this->adminEmail=="info@opensource-excellence.com")?oseFirewall::getAdminEmail():$this->adminEmail;
-			$result = $oseEmail->sendMailTo($email, $config_var, array($receiptient));
-			$oseEmail->closeDBO ();
-			if ($result == true)
-			{
-				$this->updateNotified(1);
-			}
+//			$receiptient = new stdClass();
+//			$receiptient->name = "Administrator";
+//			$receiptient->email = ($this->adminEmail=="info@opensource-excellence.com")?oseFirewall::getAdminEmail():$this->adminEmail;
+            $receiptient = oseFirewall::getActiveReceivers();
+            foreach ($receiptient as $flyer) {
+                $result = $oseEmail->sendMailTo($email, $config_var, array($flyer));
+                if ($result == true) {
+                    $this->updateNotified(1);
+                }
+            }
+            $oseEmail->closeDBO();
 		}
 	}
 	protected function getEmailByType ($type) {
@@ -979,7 +981,7 @@ class oseFirewallScanner {
 		{
 			foreach ($array as $key => $value)
 			{
-				if (in_array($method.'.'.$key, $varArray))
+				if (in_array(strtolower($method.'.'.$key), $varArray))
 				{
 					unset($request[$method][$key]);	
 				}
@@ -991,7 +993,11 @@ class oseFirewallScanner {
 		$query = "SELECT `keyname` FROM `#__osefirewall_vars` WHERE `status`  = 3 ";
 		$this->db->setQuery ( $query );
 		$results = $this->db->loadArrayList ( 'keyname' );
-		return $results;
+		$return = array(); 
+		foreach ($results as $result) {
+			$return[]=strtolower($result['keyname']);
+		}
+		return $return;
 	} 
 	protected function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname, $type) {
 		$return = array ();

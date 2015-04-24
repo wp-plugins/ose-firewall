@@ -58,4 +58,71 @@ class SubscriptionModel extends LoginModel {
 		$panel = new panel ();
 		return $panel->activateCode($code);
 	}
+	public function getAllSubscriptionPlansHTML () {
+		$plans = $this->getAllSubscriptionPlans();
+		$html = '<select id="subscriptionPlan" name="subscriptionPlan" class="form-control">'; 
+		foreach ($plans as $plan) {
+			$html .= '<option value="'.$plan->product_id.'">'.$plan->title.' at $'.$plan->price.'</option>'; 
+		}
+		$html .= '</select>';
+		return $html;
+	}
+	protected function getAllSubscriptionPlans () {
+		$titles = $this->getPlanTitles();
+		$type= $this->getProductType ();
+		$planInfo = $this->getAllSubscriptionPrices ($type);
+		$return = array (); 
+		for ($i=0; $i<4; $i++) {
+			$return[$i] = new stdClass();
+			$return[$i]->title = $titles[$i];
+			$return[$i]->price = $planInfo["price"][$i];
+			$return[$i]->product_id = $planInfo["produceIds"][$i];
+		}
+		return $return;
+	}
+	protected function getPlanTitles () {
+		$titles[]='Monthly Subscription';
+		$titles[]='Quaterly Subscription';
+		$titles[]='Semi-Annual Subscription';
+		$titles[]='Annual Subscription';
+		return $titles; 
+	}
+	protected function getAllSubscriptionPrices ($type) {
+		if ($type != 'st') {
+			$price[] = 5.88;
+			$price[] = 13.88;
+			$price[] = 18.88;
+			$price[] = 28.88;
+			$productIds [] = 51;
+			$productIds [] = 52;
+			$productIds [] = 53;
+			$productIds [] = 50;
+		}
+		else
+		{
+			$price[] = 29.99;
+			$price[] = 68.88;
+			$price[] = 128.88;
+			$price[] = 168.88;
+			$productIds [] = 59;
+			$productIds [] = 60;
+			$productIds [] = 61;
+			$productIds [] = 54;
+		}
+		return array("price"=>$price, "produceIds"=>$productIds);
+	}
+	public function addOrder($subscriptionPlan, $payment_method, $country_id, $firstname, $lastname) {
+		$panel = new panel ();
+		$trackingCode = $this->getTrackingCode();
+		return $panel->addOrder($subscriptionPlan, $payment_method, $country_id, $firstname, $lastname, $trackingCode);
+	}
+	public function getPaymentAddress () {
+		$panel = new panel ();
+		$return= $panel->getPaymentAddress();
+		return $return;
+	}
+	public function getTrackingCode() {
+		$config = $this->getConfiguration('panel');
+		return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;
+	}
 }

@@ -59,8 +59,8 @@ class BaseModel  {
 		}
 	}
 	protected function loadJSLauguage ($cs, $baseUrl) {
-		$lang = oseFirewall::getLocale ();
-		$cs->registerScriptFile($baseUrl . '/public/messages/en_US.js', CClientScript::POS_HEAD);
+        $lang = oseFirewallBase::getLocaleString();
+		$cs->registerScriptFile($baseUrl . '/public/messages/'.$lang.'.js', CClientScript::POS_HEAD);
 	}
 	public function getNounce () {
 		echo '<input type="hidden" id="centnounce" value ="'.oseFirewall::loadNounce().'" />';
@@ -171,6 +171,7 @@ class BaseModel  {
 	}
 	protected function loadAllAssets () {
 		// JS
+        $lang = oseFirewallBase::getLocaleString();
 		if (OSE_CMS =='joomla')
 		{
 			$version = new JVersion();
@@ -201,7 +202,7 @@ class BaseModel  {
 		oseFirewall::loadJSFile ('CentroraSlimscrolHor', 'plugins/slimscroll/jquery.slimscroll.horizontal.min.js', false);
 		oseFirewall::loadJSFile ('CentroraAppstart', 'jquery.appStart.js', false);
 		oseFirewall::loadJSFile ('CentroraApp', 'app.js', false);
-		oseFirewall::loadLanguageJSFile ('CentroraLanguage', 'en_US.js', false);
+		oseFirewall::loadLanguageJSFile ('CentroraLanguage', ''.$lang.'.js', false);
 		// CSS
 		oseFirewall::loadCSSFile ('CentroraDataTable', 'jquery.dataTables.min.css', false);
 		oseFirewall::loadCSSFile ('CentroraBootStrap', 'bootstrap.css', false);
@@ -285,5 +286,16 @@ class BaseModel  {
 	}
 	public function showFooterJs() {
 		oseFirewall::loadJSFile ('CentroraUpdate', 'update.js', false);
+	}
+	protected function getProductType () {
+		if (class_exists('SConfig'))
+		{
+			$product = 'st';
+		}
+		else
+		{
+			$product = 'pl';
+		}
+		return $product; 
 	}
 }	

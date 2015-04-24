@@ -24,17 +24,10 @@ $this->model->getNounce();
                                     onClick="backup(2,1)"><?php oLang::_('O_BACKUP_BACKUPDB'); ?></button>
                             <button class="btn btn-success btn-sm mr5 mb10" type="button"
                                     onClick="backup(1,1)"><?php oLang::_('O_BACKUP_BACKUPFILE'); ?></button>
-                            <!--  Will be added into 4.5.0 
-                            <button class="btn btn-success btn-sm mr5 mb10" type="button" onClick="batchrs()">
-                            	<?php 
-                            		//oLang::_('O_SCANREPORT_RESTORE'); 
-                            	?></button>
-                            -->        
+
                             <button class="btn btn-danger btn-sm mr5 mb10" type="button"
                                     onClick="deletebackup()"><?php oLang::_('O_BACKUP_DELETEBACKUPFILE'); ?></button>
-                            <!--                                    <button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="confirmalldl()">-->
-                            <?php //oLang::_('O_SCANREPORT_DELETEALL');
-                            ?><!--</button>-->
+
                         </div>
                         <div class="panel-body">
                             <table class="table display" id="backupTable">

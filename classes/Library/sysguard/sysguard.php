@@ -53,7 +53,9 @@ class oseSysguard {
 								."safe_mode=off <br/>" 
 								."allow_url_fopen=off <br/>" 
 								."display_errors=off <br/>"
-								."session.save_path='/tmp' <br/>"  
+								."session.save_path='/tmp' <br/>" 
+								."extension=pdo.so <br/>" 
+								."extension=pdo_mysql.so <br/>" 
 								."disable_functions=\"exec,passthru,shell_exec,system,proc_open,curl_multi_exec,show_source\" <br/>";
 		}
 		return $return;

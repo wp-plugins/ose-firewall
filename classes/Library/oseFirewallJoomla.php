@@ -90,8 +90,12 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'manageips') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=manageips">' . oLang::_get('MANAGE_IPS') . '</a></li>';
-		
-		$menu .= '<li ';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'adminemails') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=adminemails">' . oLang::_get('ADMINEMAILS') . '</a></li>';
+
+        $menu .= '<li ';
 		$menu .= ($view == 'bsconfig') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=bsconfig">' . oLang::_get('RULESETS'). '</a></li>';
 		
@@ -269,18 +273,18 @@ class oseFirewall extends oseFirewallBase {
 		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
 		self::getAjaxScript();
 		if (self::getVersionCompare($serverversion) > 0) { #server version: -1 Old, 0 Same, +1 New	
-			$head .= '<input class="version-update" type="button" value="Update to : '.$serverversion.'" 
+			$head .= '<input class="version-update" type="button" value="Update to : '.$serverversion.'"
 						onclick="showAutoUpdateDialogue(\'Are you sure you want to update to:  '.$serverversion.'\', \'Update Confirmation\', \'UPDATE\')"/>
 					  </div></div></nav>';
 		} 
-		else 
+		else
 		{
 				$head .= '</div></div></nav>';
 		}
 
 		#take care of ajax js to run unpdate		
 		if(isset($_POST['action']) && !empty($_POST['action'])) {
-		    $action .= $_POST['action'];
+		    $action = $_POST['action'];
 		    switch($action) {
 		        case 'upgrade-plugin' : self::runUpdate() ;break;
 		    }

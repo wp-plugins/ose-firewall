@@ -55,6 +55,7 @@ $this->model->getNounce ();
                                 	<input type="hidden" name="controller" value="variables"> 
 								    <input type="hidden" name="action" value="addvariables">
 								    <input type="hidden" name="task" value="addvariables">
+								    <input type="hidden" name="option" value="com_ose_firewall">
                               </form>
                             </div>
                         </div>

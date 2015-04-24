@@ -49,4 +49,11 @@ class AdvancedbackupModel extends BackupModel
         $return = $backupManager->dropbox_upload($id);
         return $return;
     }
+
+    public function sendemail($id, $type)
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->sendemail($id, $type);
+        return $return;
+    }
 }

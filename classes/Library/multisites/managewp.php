@@ -25,26 +25,12 @@
  */
 if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
-	die('Direct Access Not Allowed');
+    die('Direct Access Not Allowed');
 }
-$this->model->loadRequest();
-$rubbish = oRequest::getVar('rubbish');
-if (!empty($rubbish)) {
-    echo "<script>window.close();</script>";
-}
-$flag = get_class($this->model);
-if ($flag == "AdvancedbackupModel") {
-    $condition = $this->model->is_authorized();
+require_once(ABSPATH . 'wp-includes/pluggable.php');
+/*
+ * Attach plugin to ManageWP as an extension and render settings and site pages.
+ */
+class CentroraManageWP {
 
-    if ($condition == "fail") {
-        oseFirewall::authentication();
-    } else {
-
-        $this->model->loadLocalscript();
-        include(dirname(__FILE__) . '/' . $subview . '.php');
-    }
-} else {
-    $this->model->loadLocalscript();
-    include(dirname(__FILE__) . '/' . $subview . '.php');
 }
-?>

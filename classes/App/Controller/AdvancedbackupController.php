@@ -38,6 +38,15 @@ class AdvancedbackupController extends BackupController
         $result = $this->model->dropbox_upload($id);
         $this->model->returnJSON($result);
     }
+
+    public function action_sendemail()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+        $type = $this->model->getVar('type', null);
+        $result = $this->model->sendemail($id, $type);
+        $this->model->returnJSON($result);
+    }
 }
 
 ?>

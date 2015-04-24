@@ -27,7 +27,7 @@ jQuery(document).ready(function($){
     });
 });
 
-function goSubscribe () {
+function goSubscribe2 () {
  jQuery(document).ready(function($){	
 	$.ajax({
         type: "POST",
@@ -63,6 +63,87 @@ function goSubscribe () {
  });  
 }
 
+function getPaymentAddress () {
+	 showLoading ('Please wait, generating a new order...');
+	 jQuery(document).ready(function($){	
+			$.ajax({
+		        type: "POST",
+		        url: url,
+		        dataType: 'json',
+			    data: {
+			    		option : option, 
+			    		controller:'subscription',
+			    		action:'getPaymentAddress',
+			    		task:'getPaymentAddress',
+			    		centnounce:$('#centnounce').val()
+			    },
+		        success: function(data)
+		        { 
+		        	if (data.status =='Error')
+		        	{
+		        		hideLoading();
+		        		showDialogue (data.message, data.status, 'OK');
+		        	}
+		        	else
+		        	{
+		        		var html = '<select id="country_id" name="country_id">';
+			    		for (index = 0, len = data.list.length; index < len; ++index)
+			    		{
+			    			var selected = '';
+			    			if (data.selected == data.list[index].country_id) {
+			    				var selected = ' selected ';
+			    			}
+			    			html += '<option value="'+data.list[index].country_id+'" '+selected+'>'+data.list[index].name+'</option>';
+			    		}
+			    	 	html += '</select>';
+			    		$('#country_field').html(html);
+			    		
+			    		var firstname = '<input id="firstname" name="firstname" value="'+data.firstname+'" />';
+			    		var lastname = '<input id="lastname" name="lastname" value="'+data.lastname+'" />';
+			    		$('#firstname_field').html(firstname);
+			    		$('#lastname_field').html(lastname);
+			    		
+			    		$('#subscriptionFormModal').modal();
+			    		hideLoading();
+		        	}
+		        	
+		        },
+		        failure: function (data)
+		        {}
+			}); 
+	 });		
+}
+function goSubscribe () {
+	 jQuery(document).ready(function($){	
+     	getPaymentAddress ();
+ 		$('#subscription-form').on("submit", function () {
+			showLoading();
+			var data = $("#subscription-form").serialize();
+			data += '&centnounce='+$('#centnounce').val();
+	        $.ajax({
+	               type: "POST",
+	               url: url,
+	               data: data, // serializes the form's elements.
+	               success: function(data)
+	               {
+	            	   $('#address-group').hide();
+	            	   data = jQuery.parseJSON(data);
+	            	   hideLoading();
+	            	   $('#next-button').hide();
+	            	   var button = data.paymentlink;
+	            	   $('#orderInfo').html('<div class="orderInfo">Your order has been successfully placed. <br/>'+data.orderInfo+'<br/>'+button+'</div>');
+	               }
+	             });
+			return false;
+		})
+		return false;
+	 });  
+	}
+
+function redirectLink () {
+	showLoading ('Please wait, redirecting to Paypal...');
+	$('#payment-form').submit();
+}
 function updateProfileID (profileID, profileStatus) {
  jQuery(document).ready(function($){
 	$.ajax({

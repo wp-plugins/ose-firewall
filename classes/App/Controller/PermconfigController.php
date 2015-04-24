@@ -47,15 +47,38 @@ class PermconfigController extends \App\Base {
         exit;
     }
     public function action_editPerms(){
+        $errorlist = '';
         $result = $this ->model->editPerms();
 
-        if ($result==true)
+        if ($result['result']==1)
         {
             $this->model->aJaxReturn(true, 'SUCCESS', $this->model->getLang("Successfully changed File/Folder permissions."), false);
         }
         else
         {
-            $this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("The change permission operation was unsuccessful."), false);
+            foreach($result['errors'] as $error) {  $errorlist .= $error . "\n";}
+            $this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("The change permission operation was unsuccessful. Please try again.
+                                                                            <br /><h5><small>If you keep getting this, it may be as a result of irregular webserver owner/group permissions.
+                                                                            Please contact your Web Admin for more info.</small></h5>
+                                                                            The following failed: <br /> ". ("<pre>". $errorlist ."</pre>") .""), false);
+        }
+    }
+
+    public function action_oneClickFixPerm(){
+        $errorlist = '';
+        $result = $this ->model->oneClickFixPerm();
+
+        if ($result['result']==1)
+        {
+            $this->model->aJaxReturn(true, 'SUCCESS', $this->model->getLang("Successfully fixed your File/Folder permissions."), false);
+        }
+        else
+        {
+            foreach($result['errors'] as $error) {  $errorlist .= $error . "\n";}
+            $this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("The Fix permission operation was unsuccessful. Please try again.
+                                                                            <br /><h5><small>If you keep getting this, it may be as a result of irregular webserver owner/group permissions.
+                                                                            Please contact your Web Admin for more info.</small></h5>
+                                                                            The following failed: <br /> ". ("<pre>". $errorlist ."</pre>") .""), false);
         }
     }
 

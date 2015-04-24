@@ -133,7 +133,7 @@ function backup(backup_type, backup_to) {
 					success : function(data) {
 						hideLoading();
 						if (data.data == true) {
-							showDialogue("Backup successful", "Success", "OK");
+                            showDialogue("Backup successfully", "Success", "OK");
 							$('#backupTable').dataTable().api().ajax.reload();
 						} else {
 							showDialogue("Backup failed, please try again",
@@ -142,15 +142,4 @@ function backup(backup_type, backup_to) {
 					}
 				})
 			})
-}
-function showDialogue(message, title, buttonLabel) {
-	bootbox.dialog({
-		message : message,
-		title : title,
-		buttons : {
-			success : {
-				label : buttonLabel
-			}
-		}
-	});
 }

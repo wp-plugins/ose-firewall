@@ -105,17 +105,22 @@ class oseFirewallAjax extends oseAjax{
 	}
     public static function loadActionAdvancedbackup()
     {
-        $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropbox_upload');
+        $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropbox_upload', 'sendemail');
         parent::loadActions($actions);
     }
 
+    public static function loadActionAdminemails()
+    {
+        $actions = array('saveDomain', 'saveAdmin', 'getAdminList', 'getDomain', 'changeStatus', 'deleteAdmin');
+        parent::loadActions($actions);
+    }
     public static function loadActionAuthentication()
     {
         $actions = array('oauth');
         parent::loadActions($actions);
     }
 	public static function loadActionBackup () {
-        $actions = array('backup', 'getBackupList', 'deleteBackup');
+        $actions = array('backup', 'getBackupList', 'deleteBackup', 'sendemail');
 		parent::loadActions($actions);
 	}
 	public static function loadactionUninstall(){

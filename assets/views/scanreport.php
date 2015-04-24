@@ -81,7 +81,7 @@ if ($status == true)
                         </div>
 	   </div>
 	   <?php 
-			CentroraOEM::showProducts();
+//			CentroraOEM::showProducts();
 	   ?>
 	   </div>
 	</div>

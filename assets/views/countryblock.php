@@ -3,6 +3,7 @@ oseFirewall::checkDBReady ();
 $status = oseFirewall::checkSubscriptionStatus (false);
 $this->model->getNounce ();
 $confArray = $this->model->getConfiguration('country');
+$status = true;
 if ($status == true)
 {
 ?>

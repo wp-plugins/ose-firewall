@@ -21,6 +21,7 @@ $this->model->getNounce ();
 						</div>
 						<div class="panel-controls"></div>
 						<div class="panel-controls-buttons">
+							<button class="btn btn-primary btn-sm mr5 mb10" type="button" onClick="goSubscribe();"><?php oLang::_('SUBSCRIBE'); ?></button>
 							<button onclick="activateCode();" type="button" class="btn btn-danger btn-sm mr5 mb10"><?php oLang::_('ENTER_ACTIVATION_CODE'); ?></button>
 							<button onclick="redirectTut('http://www.centrora.com/store/index.php?route=affiliate/login');" type="button"
 								class="btn btn-yellow btn-sm mr5 mb10">Get Your Premium Service For FREE</button>
@@ -94,5 +95,75 @@ $this->model->getNounce ();
 		</div>
 	</div>
 </div>
+<!-- /.modal -->
 
+<!-- Subscription Form Modal -->
+<div class="modal fade" id="subscriptionFormModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel2"><?php oLang::_('CHOOSE_A_PLAN'); ?></h4>
+			</div>
+			<div class="modal-body">
+				<form id='subscription-form' class="form-horizontal group-border stripped" role="form">
+					<div class="form-group">
+						<label for="subscriptionPlan" class="col-sm-4 control-label"><?php oLang::_('SUBSCRIPTION_PLAN');?></label>
+						<div class="col-sm-8">
+							<?php 
+								$plans = $this->model->getAllSubscriptionPlansHTML ();
+								echo $plans;  
+							?>
+						</div>
+					</div>
+					<div id="address-group">
+						<div class="form-group">
+							<label for="payment_method" class="col-sm-4 control-label"><?php oLang::_('PAYMENT_METHOD');?></label>
+							<div class="col-sm-8">
+								<i class="fa im-paypal">&nbsp;</i>Paypal <input type="radio" name="payment_method" id="payment_method" value="paypal" checked=true > &nbsp; 
+								<!-- 
+									<i class="fa fa-credit-card">&nbsp;</i>Credit Card <input type="radio" name="payment_method" id="payment_method" value="creditcard">
+								 -->
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="firstname_field" class="col-sm-4 control-label"><?php oLang::_('FIRST_NAME');?></label>
+							<div class="col-sm-8">
+								<div id='firstname_field'></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname_field" class="col-sm-4 control-label"><?php oLang::_('LAST_NAME');?></label>
+							<div class="col-sm-8">
+								<div id='lastname_field'></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="country_field" class="col-sm-4 control-label"><?php oLang::_('COUNTRY');?></label>
+							<div class="col-sm-8">
+								<div id='country_field'></div>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="option" value="com_ose_firewall">
+					<input type="hidden" name="controller" value="subscription"> 
+					<input type="hidden" name="action" value="addOrder">
+					<input type="hidden" name="task" value="addOrder">
+					<div class="form-group">
+						<div class="col-sm-offset-9" id ="next-button">
+							<button type="submit" class="btn btn-default" id='save-button'><?php oLang::_('O_NEXT');?></button>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+						<div class="col-sm-12">
+							<div id="orderInfo"></div>
+						</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
 <!-- /.modal -->

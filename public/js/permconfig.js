@@ -45,7 +45,7 @@ jQuery(document).ready(function($){
         });
     }
     $('#permconfigTable tbody').on( 'click', 'tr', function () {
-        if (permconfigDataTable.fnGetData( this )['path'] !=='') {
+        if (permconfigDataTable.fnGetData( this ) !==null) {
             $(this).toggleClass('selected');
 
             var path = permconfigDataTable.fnGetData(this)['path'];
@@ -184,8 +184,8 @@ function getselecteditemslist (){
     var selectedvalues = [];
 
     calcperm();
-    //@todo disabled untill ver4.0.1
-    //disableradios();
+
+    disableradios();
 
     selectedids.forEach(function(entry) {
 
@@ -199,7 +199,7 @@ function getselecteditemslist (){
 
     });
 
-    document.editpermform.chmodpaths.value = selectedvalues.join([separator = '{/@^}']); /*set dir value for ajax chmod call*/
+    document.editpermform.chmodpaths.value = selectedids.join([separator = '{/@^}']); /*set dir value for ajax chmod call*/
 
     jQuery( '#SelectedItemsList').html( "<h5>Folder(s): <small>"+ folders +"</small></h5> <h5>File(s): <small>"+ files +"</small></h5>");
 }
@@ -238,19 +238,70 @@ function calcperm() {
 }
 
 function disableradios() {
-	$('input:radio').attr('disabled', !recur.checked);
-	$('input:radio').attr('checked', recur.checked);
-	if (!recur.checked) {
-		$('label[for=recurall]').css({color:'#A4A4A4'});
-		$('label[for=recurfiles]').css({color:'#A4A4A4'});
-		$('label[for=recurfolders]').css({color:'#A4A4A4'});
+    if ( !!document.getElementById("recur")) {
+        jQuery('input:radio').attr('disabled', !recur.checked);
+        jQuery('input:radio').attr('checked', recur.checked);
+        if (!recur.checked) {
+            jQuery('label[for=recurall]').css({color: '#A4A4A4'});
+            jQuery('label[for=recurfiles]').css({color: '#A4A4A4'});
+            jQuery('label[for=recurfolders]').css({color: '#A4A4A4'});
 
-	}
-	else {
-		$('label[for=recurall]').css({color:'#000000'});
-		$('label[for=recurfiles]').css({color:'#000000'});
-		$('label[for=recurfolders]').css({color:'#000000'});
-        document.getElementById("recurall").checked = true;
-	}
-	
-	}
+        }
+        else {
+            jQuery('label[for=recurall]').css({color: '#000000'});
+            jQuery('label[for=recurfiles]').css({color: '#000000'});
+            jQuery('label[for=recurfolders]').css({color: '#000000'});
+            document.getElementById("recurall").checked = true;
+        }
+    }
+}
+
+function oneClickPermFix (){
+    bootbox.dialog({
+            title: O_FIXPERMISSIONS_LONG,
+            message: O_FIXPERMISSIONS_DESC,
+            buttons: {
+                success: {
+                    label: O_FIXPERMISSIONS,
+                    className: "btn-success",
+                    callback: function () {
+                        showLoading('Fixing...');
+                        AppRunAction('oneClickFixPerm', '#permconfigTable');
+                        hideLoading();
+                    }
+                },
+                main: {
+                    label: O_CANCEL,
+                    className: "btn-alt",
+                    callback: function(result) {
+                        this.close();
+                    }
+                }
+            }
+        }
+    );
+
+}
+
+function callToSubscribe(loginurl){
+    bootbox.dialog({
+        message: O_CALLTOSUBSCRIBE_DESC,
+        title: O_CALLTOSUBSCRIBE,
+        buttons: {
+            success: {
+                label: O_SUBSCRIBE,
+                className: "btn-success",
+                callback: function(result) {
+                    redirectTut(loginurl);
+                }
+            },
+            main: {
+                label: O_CANCEL,
+                className: "btn-alt",
+                callback: function(result) {
+                    this.close();
+                }
+            }
+        }
+    });
+}

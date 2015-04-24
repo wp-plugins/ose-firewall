@@ -411,8 +411,10 @@ class oseBackupManager {
 			/* Figure out the MIME type | Check in array */
 			$mime_type = self::getMimeType($file_extension);
 			$expireTime = self::getExpireTime ();
+
 			// Download Now
 			self::downloadFileAction ($file, $file_name, $mime_type, $expireTime, $size);
+
 			die ();
 		}
 		else {
@@ -421,7 +423,7 @@ class oseBackupManager {
 			print ("window.location = '" . OSE_WPURL . "';") ;
 			print ("</SCRIPT>") ;
 		}
-	}
+    }
 	protected function downloadFileAction ($tar_path, $file_name, $mime_type, $expireTime, $size) {
 		// turn off output buffering to decrease cpu usage
 		// required for IE, otherwise Content-Disposition may be ignored
@@ -435,16 +437,20 @@ class oseBackupManager {
 		header ( "Cache-control: private" );
 		header ( 'Pragma: private' );
 		header ( "Expires: " . $expireTime );
-		ob_clean();
+
+        ob_clean();
 		flush();
 		// multipart-download and download resuming support
-		$r_fh = fopen($tar_path,'r');
+
+        $r_fh = fopen($tar_path,'r');
 		while(feof($r_fh) === false) {
 			$s_part = fread($r_fh,10240);
 			echo $s_part;
 		}
-		fclose($r_fh);
-		exit;
+
+        fclose($r_fh);
+
+        exit;
 	}
 	private static function getExpireTime() {
 		oseFirewall::loadDateClass();
@@ -1078,4 +1084,59 @@ class oseBackupManager {
 			}
 		}
 	}
+
+    public function sendEmail($id, $type)
+    {
+        $config_var = $this->getConfigVars();
+        oseFirewall::loadEmails();
+        $oseEmail = new oseEmail('firewall');
+        $email = $this->getEmailByType($type);
+        $email = $this->convertEmail($email, $id, $type);
+//            $receiptient = new stdClass();
+//            $receiptient->name = "Administrator";
+//            $receiptient->email = (empty($this->adminEmail) && $this->adminEmail=="info@opensource-excellence.com")?$this->adminEmail:oseFirewall::getAdminEmail();
+        $receiptient = oseFirewall::getActiveReceivers();
+        foreach ($receiptient as $flyer) {
+            $result = $oseEmail->sendMailTo($email, $config_var, array($flyer));
+        }
+        $oseEmail->closeDBO();
+        return $result;
+    }
+
+    protected function getConfigVars()
+    {
+        return oseFirewall::getConfigVars();
+    }
+
+    protected function getEmailByType($type)
+    {
+        $email = new stdClass();
+        switch ($type) {
+            case 'local':
+                $email->subject = 'Centrora backup file was downloaded to your local directory';
+                break;
+            case 'dropbox':
+                $email->subject = 'Centrora backup file was uploaded to your dropbox';
+                break;
+        }
+        $email->body = file_get_contents(dirname(__FILE__) . '/email.tpl');
+        return $email;
+    }
+
+    protected function convertEmail($email, $id, $type)
+    {
+        $backupfile = $this->getBackupDBByID($id);
+        $basename = basename($backupfile);
+        if ($type == "local") {
+            $backuplocation = 'downloaded to local directory';
+        } else {
+            $backuplocation = "uploaded to dropbox";
+        }
+        $email->subject = $email->subject . " for [" . $_SERVER['HTTP_HOST'] . "]";
+        $email->body = str_replace('{name}', 'Administrator', $email->body);
+        $email->body = str_replace('{header}', $email->subject, $email->body);
+        $email->body = str_replace('{backupfile}', $basename, $email->body);
+        $email->body = str_replace('{download to address}', $backuplocation, $email->body);
+        return $email;
+    }
 }

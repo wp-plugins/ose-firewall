@@ -39,7 +39,6 @@ jQuery(document).ready(function ($) {
         }]
     });
     $('#advancedbackupTable tbody').on('click', 'div.clickdropbox', function () {
-        alert("hehe");
         var data = $('#advancedbackupTable').dataTable().api().row($(this).parents('tr')).data();
         var id = data["ID"];
         showLoading();
@@ -58,7 +57,8 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 hideLoading();
                 if (data == true) {
-                    showDialogue("backup file has been uploaded to your dropbox", "Success", "OK");
+                    //   showDialogue("backup file has been uploaded to your dropbox", "Success", "OK");
+                    sendemail(id);
                 }
                 else {
                     showDialogue(data, "fail", "OK");
@@ -79,6 +79,34 @@ jQuery(document).ready(function ($) {
         }
     });
 });
+function sendemail(id) {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'sendemail',
+                task: 'sendemail',
+                type: 'dropbox',
+                id: id,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                hideLoading();
+                console.log(data);
+                if (data == true) {
+                    showDialogue("Email has been sent to you", "Success", "OK");
+                }
+                else {
+                    showDialogue("System occurs some errors", "fail", "OK");
+                }
+            }
+        })
+    })
+}
 function ajaxdeletebackup() {
     jQuery(document).ready(function ($) {
         ids = $('#advancedbackupTable').dataTable().api().rows('.selected').data();

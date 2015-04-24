@@ -80,4 +80,27 @@ class SubscriptionController extends LoginController {
 		}
 		$this->model->returnJSON($return, false);
 	}
+	public function action_addOrder () {
+		$subscriptionPlan = $this->model->getInt('subscriptionPlan', null);
+		$payment_method = $this->model->getVar('payment_method', null);
+		$country_id = $this->model->getVar('country_id', null);
+		$firstname = $this->model->getVar('firstname', null);
+		$lastname = $this->model->getVar('lastname', null);
+		if (!empty($subscriptionPlan) && !empty($payment_method) && !empty($country_id))
+		{
+			$return = $this->model->addOrder($subscriptionPlan, $payment_method, $country_id, $firstname, $lastname);
+		}
+		else
+		{
+			$return = array ();
+			$return['success'] = true;
+			$return['status'] = oLang :: _get('ERROR');
+			$return['message'] = oLang :: _get('SUBSCRIPTION_PLAN_EMPTY');
+		}
+		$this->model->returnJSON($return, false);
+	}
+	public function action_getPaymentAddress() {
+		$address = $this->model->getPaymentAddress();
+		print_r($address);exit;
+	}
 }

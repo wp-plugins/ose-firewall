@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 4.4.0
+Stable tag: 4.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,22 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.5.0= 
+* Fixed: Bugs #15: IP management some flags are missing for some websites
+* Fixed: Bugs #53: Fix variable cannot be added to suite / joomla in some websites
+* Fixed: Bugs #55: In a specific website website, the variable Whitelist not working
+* Fixed: Bugs #56: In a specific website, the OSE Security Suite cannot upgrade to Centrora Security Suite
+* Fixed: Bugs#57: In a specific website, user cannot login premium service
+* Fixed: Bugs#63: In a specific website, Virus scanner cannot complete virus sccanning
+* Added: Feature Requests #16: Add an email notification when the backup is completed
+* Added: Feature Requests #24: Add One Click fix for file permissions functions
+* Added: Feature Requests #44: Add multiple email alert receivers facilities
+* Added: Feature Requests #49: Add landing page to show all features for the premium service
+* Added: Feature Requests #72: Add database versioning to ensure smooth database updates
+* Added: PDO class activation codes in the php.ini activation section for suite version
+* Imppovement: UI #50: Change the one column login UI to two columns UI
+* Imppovement: UI #51: Add a button to the activate my premium page to smooth premium service activation
 
 = 4.4.0 = 
 * Added: Backup function for database and files for the whole WordPress and Joomla website

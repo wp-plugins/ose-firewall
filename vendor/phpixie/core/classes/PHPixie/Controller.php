@@ -96,7 +96,6 @@ class Controller
 	public function run($action)
 	{
 		$action = 'action_'.$action;
-		
 		if (!method_exists($this, $action))
 			throw new \PHPixie\Exception\PageNotFound("Method {$action} doesn't exist in ".get_class($this));
 			

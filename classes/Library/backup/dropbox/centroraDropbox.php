@@ -67,14 +67,25 @@ class centroraDropbox extends Dropbox_API
     public function getAuthoriseUrl()
     {
         // Prepare request parameters
-        $params = array(
-            'oauth_token' => $this->token->oauth_token,
-            'oauth_token_secret' => $this->token->oauth_token_secret,
-            'oauth_callback' => "http://" . $_SERVER['HTTP_HOST'] . "/wpdev2013/wp-admin/admin.php?page=ose_fw_advancedbackup&rubbish=yes"
-        );
-        // Build the URL and redirect the user
-        $query = '?' . http_build_query($params, '', '&');
-        $url = self::WEB_URL . self::AUTHORISE_METHOD . $query;
+        if (OSE_CMS == "wordpress") {
+            $params = array(
+                'oauth_token' => $this->token->oauth_token,
+                'oauth_token_secret' => $this->token->oauth_token_secret,
+                'oauth_callback' => OSE_ADMINURL . "?page=ose_fw_advancedbackup&rubbish=yes"
+            );
+            // Build the URL and redirect the user
+            $query = '?' . http_build_query($params, '', '&');
+            $url = self::WEB_URL . self::AUTHORISE_METHOD . $query;
+        } else {
+            $params = array(
+                'oauth_token' => $this->token->oauth_token,
+                'oauth_token_secret' => $this->token->oauth_token_secret,
+                'oauth_callback' => OSE_ADMINURL . "&view=advancedbackup&rubbish=yes"
+            );
+            // Build the URL and redirect the user
+            $query = '?' . http_build_query($params, '', '&');
+            $url = self::WEB_URL . self::AUTHORISE_METHOD . $query;
+        }
 
         return $url;
     }

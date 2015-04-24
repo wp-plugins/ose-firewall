@@ -64,6 +64,10 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'manageips') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_manageips">' . oLang::_get('MANAGE_IPS') . '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'ose_fw_adminemails') ? 'class="active"' : '';
+        $menu .= '><a href="admin.php?page=ose_fw_adminemails">' . oLang::_get('ADMINEMAILS') . '</a></li>';
 		
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_bsconfig') ? 'class="active"' : '';
@@ -177,7 +181,8 @@ class oseFirewall extends oseFirewallBase {
 
         add_submenu_page('ose_firewall', ADVANCEDBACKUP, ADVANCEDBACKUP, 'manage_options', 'ose_fw_advancedbackup', 'oseFirewall::advancedbackup');
         add_submenu_page('ose_firewall', PERMCONFIG, PERMCONFIG, 'manage_options', 'ose_fw_permconfig', 'oseFirewall::permconfig');
-        
+        add_submenu_page('ose_firewall', ADMINEMAILS, ADMINEMAILS, 'manage_options', 'ose_fw_adminemails', 'oseFirewall::adminemails');
+
         add_submenu_page('ose_firewall', COUNTRYBLOCK, COUNTRYBLOCK, 'manage_options', 'ose_fw_countryblock', 'oseFirewall::countryblock');
 		add_submenu_page( 'ose_firewall', CRONJOBS, CRONJOBS, 'manage_options', 'ose_fw_cronjobs', 'oseFirewall::cronjobs' );
 		add_submenu_page( 'ose_firewall', LOGIN, LOGIN, 'manage_options', 'ose_fw_login', 'oseFirewall::login' );

@@ -164,10 +164,19 @@ class oseFirewallBase extends oseFirewallRoot
 	private function  isAdvanceSettingConfigEnable(){
 		return $this->checkOseConfig ('adRules', 'advscan'); 
 	}
-	public static function loadLanguage()
+	public static function getLocaleString(){
+        $lang = oseFirewall::getLocale();
+        $lang = str_replace("-", "_",$lang);
+        if (strpos('da_DK', $lang) === false) {
+            $lang = 'en_US';
+        }
+        return $lang;
+    }
+    public static function loadLanguage()
 	{
-		require_once(OSE_FRAMEWORKDIR.ODS.'oseframework'.ODS.'language'.ODS.'oseLanguage.php');
-		require_once(OSE_FWLANGUAGE.ODS.'en_US.php');
+        $lang = self::getLocaleString();
+        require_once(OSE_FRAMEWORKDIR.ODS.'oseframework'.ODS.'language'.ODS.'oseLanguage.php');
+		require_once(OSE_FWLANGUAGE.ODS.$lang.'.php');
 	}
 	public static function isDBReady()
 	{
@@ -179,6 +188,8 @@ class oseFirewallBase extends oseFirewallRoot
 			$data = $oseDB2->isTableExists('#__osefirewall_vspatterns');
 			$oseDB2->closeDBO();
 		}
+        //@todo add db version checker here
+        self::checkNewDBTables();
 		$ready = (!empty($data)) ? true : false;
 		return $ready;
 	}
@@ -300,6 +311,11 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		self::runController ('AuditController', 'index');
 	}
+
+    public static function adminemails()
+    {
+        self::runController('AdminemailsController', 'index');
+    }
 	public static function spamconfig()
 	{
 		$app = self::runApp();
@@ -573,7 +589,7 @@ class oseFirewallBase extends oseFirewallRoot
 		return (!empty($result))?$result->value:null;
 	}
 	public static function checkSubscriptionStatus ($redirect= true) {
-        $db = oseFirewall::getDBO();
+		$db = oseFirewall::getDBO();
 		$query = "SELECT * FROM `#__ose_secConfig` WHERE (`key` = 'profileID' OR `key` = 'profileStatus') AND `type` = 'panel'";
 		$db->setQuery($query);
 		$results = $db->loadObjectList();
@@ -628,4 +644,57 @@ class oseFirewallBase extends oseFirewallRoot
 	public static function showNotReady() {
 		die('Centrora Security requires PHP 5.3.0 to work properly, please upgrade your PHP version to 5.3.0 or above');
 	}
+
+    public static function getActiveReceivers()
+    {
+        $db = oseFirewall::getDBO();
+        $query = "SELECT `A_email` FROM `#__osefirewall_adminemails` WHERE (`A_status` = 'active')";
+        $db->setQuery($query);
+        $results = $db->loadObjectList();
+        $i = 0;
+        $return = array();
+        foreach ($results as $result) {
+            $return[$i]->name = 'Administrator';
+            $return[$i]->email = $result->A_email;
+            $i++;
+        }
+        return $return;
+    }
+    public static function checkNewDBTables (){
+        $oseDB2 = self::getDBO();
+        $datadomains = $oseDB2->isTableExists('#__osefirewall_domains');
+        if(!$datadomains)
+        {
+            $query = "CREATE TABLE IF NOT EXISTS `#__osefirewall_domains` (
+                          `D_id`      INT(11)      NOT NULL AUTO_INCREMENT,
+                          `D_address` VARCHAR(200) NOT NULL,
+                          PRIMARY KEY (`D_id`),
+                          UNIQUE KEY `D_address` (`D_address`)
+                        )
+                          ENGINE = InnoDB  DEFAULT CHARSET = utf8  AUTO_INCREMENT = 1; ";
+            $oseDB2->setQuery($query);
+            $oseDB2->loadResult();
+        }
+
+        $dataadminemails = $oseDB2->isTableExists('#__osefirewall_adminemails');
+        if(!$dataadminemails)
+        {
+            $query = "CREATE TABLE IF NOT EXISTS `#__osefirewall_adminemails` (
+                          `A_id`     INT(11)     NOT NULL AUTO_INCREMENT,
+                          `A_name`   TEXT        NOT NULL,
+                          `A_email`  TEXT        NOT NULL,
+                          `A_status` VARCHAR(10) NOT NULL,
+                          `D_id`     INT(11),
+                          PRIMARY KEY (`A_id`),
+                          INDEX `wp_osefirewall_adminemails_idx1` (`D_id`),
+                          FOREIGN KEY (`D_id`) REFERENCES `#__osefirewall_domains` (`D_id`)
+                            ON UPDATE CASCADE
+                        )
+                          ENGINE = InnoDB  DEFAULT CHARSET = utf8  AUTO_INCREMENT = 1; ";
+            $oseDB2->setQuery($query);
+            $oseDB2->loadResult();
+        }
+
+
+    }
 }

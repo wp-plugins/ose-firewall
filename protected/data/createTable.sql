@@ -390,3 +390,28 @@ CREATE TABLE IF NOT EXISTS `#__osefirewall_backupath` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `#__osefirewall_domains` (
+  `D_id`      INT(11)      NOT NULL AUTO_INCREMENT,
+  `D_address` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`D_id`),
+  UNIQUE KEY `D_address` (`D_address`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `#__osefirewall_adminemails` (
+  `A_id`     INT(11)     NOT NULL AUTO_INCREMENT,
+  `A_name`   TEXT        NOT NULL,
+  `A_email`  TEXT        NOT NULL,
+  `A_status` VARCHAR(10) NOT NULL,
+  `D_id`     INT(11),
+  PRIMARY KEY (`A_id`),
+  INDEX `wp_osefirewall_adminemails_idx1` (`D_id`),
+  FOREIGN KEY (`D_id`) REFERENCES `#__osefirewall_domains` (`D_id`)
+    ON UPDATE CASCADE
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;

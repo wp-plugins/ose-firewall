@@ -398,6 +398,31 @@ class panel
 		$content['code'] = $code;
 		$this->sendRequest($content);
 	}
+	// Add order into Centrora Store; 
+	public function addOrder($subscriptionPlan, $payment_method, $country_id, $firstname, $lastname, $trackingCode)
+	{
+		$this->live_url = "https://www.centrora.com/accountApi/orders/addOrder";
+		$content = array ();
+		$content['webKey'] = $this->getWebKey();
+		$content['remoteChecking'] = true;
+		$content['task'] = 'addOrder';
+		$content['product_id'] = $subscriptionPlan;
+		$content['payment_method'] = $payment_method;
+		$content['country_id'] = $country_id;
+		$content['firstname'] = $firstname;
+		$content['lastname'] = $lastname;
+		$content['trackingCode'] = $trackingCode;
+		$this->sendRequest($content);
+	}
+	// Get Payment Address; 
+	public function getPaymentAddress () {
+		$this->live_url = "https://www.centrora.com/accountApi/orders/getPaymentAddress";
+		$content = array ();
+		$content['webKey'] = $this->getWebKey();
+		$content['remoteChecking'] = true;
+		$content['task'] = 'getPaymentAddress';
+		return $this->sendRequestReturnRes($content);
+	}
 	/*
 	 * Used in permconfig to return directory/file list of a given path
 	 * */
@@ -414,39 +439,38 @@ class panel
 	
 		// keep to the base folder
 		$it->setMaxDepth(0);
-        //$filearray['pluginroot'] = array('path'	=>OSE_ABSPATH);
-        if (!$it->valid()){
-            $filearray['data'][] = array('path'	=> '','name' => '','type' => '','groupowner' => '','perm' => '','icon' => '','dirsort' => 3);
-        }
-		foreach ($it as $fileinfo) {
-			if ($fileinfo->isDir()) {
-				$filearray['data'][] = array('path'	=> str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
-                    'name'	=> $fileinfo->getfilename(),
-					'type' 	=> $fileinfo->getType(),
-					'groupowner'=> $fileinfo->getOwner() .":". $fileinfo->getGroup(),
-					'perm' 	=> substr(sprintf('%o', $fileinfo->getPerms()), -4),
-                    'icon'  => "<img src='".OSE_FWPUBLICURL."/images/filetree/folder.png' alt='dir' />",
-                    'dirsort' => 1
-				);
-
-			} elseif ($fileinfo->isFile()) {
-                $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));
-                if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip',$ext_code) == false) {
-                    $ext_code = 'file';
+        if ($it->valid()) {
+            foreach ($it as $fileinfo) {
+                if ($fileinfo->isDir()) {
+                    $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+                        'name' => $fileinfo->getfilename(),
+                        'type' => $fileinfo->getType(),
+                        'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
+                        'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
+                        'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/folder.png' alt='dir' />",
+                        'dirsort' => 1);
+                } elseif ($fileinfo->isFile()) {
+                    $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));
+                    if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip', $ext_code) == false) {
+                        $ext_code = 'file';
+                    }
+                    $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+                        'name' => $fileinfo->getfilename(),
+                        'type' => pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
+                        'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
+                        'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
+                        'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/" . $ext_code . ".png' alt='" . $ext_code . "' />",
+                        'dirsort' => 2);
                 }
-				$filearray['data'][] = array('path'	=> str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
-					'name'	=> $fileinfo->getfilename(),
-					'type' 	=> pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
-					'groupowner'=> $fileinfo->getOwner() .":". $fileinfo->getGroup(),
-					'perm' 	=> substr(sprintf('%o', $fileinfo->getPerms()), -4) ,
-                    'icon'  => "<img src='".OSE_FWPUBLICURL."/images/filetree/".$ext_code.".png' alt='".$ext_code."' />",
-                    'dirsort' => 2
-				);
-			}
-		}
-
-        array_multisort($filearray['data'], SORT_ASC);
-
+            }
+            array_multisort($filearray['data'], SORT_ASC);
+        }
+        else {
+            $filearray= array(  "draw" => 1,
+                "recordsTotal" => "0",
+                "recordsFiltered" =>"0",
+                "data" =>array() );
+        }
 		return $filearray;
 	}
 }

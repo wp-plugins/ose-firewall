@@ -30,15 +30,6 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 require_once('BaseModel.php');
 class PermconfigModel extends BaseModel 
 {
-	/** @var int Default directory permissions */
-	private $dirperms = 0755;
-
-	/** @var int Default file permissions */
-	private $fileperms = 0644;
-		
-	/** @var array Skip subdirectories and files of these directories */
-	private $skipDirslist = array();
-
 	public function __construct(){
 		//$this->loadDatabase ();
 		oseFirewall::callLibClass('panel','panel');
@@ -106,21 +97,16 @@ class PermconfigModel extends BaseModel
         echo ($list);
     }
 
-    /**
-     * @param array $chmodpaths
-     * @param string $chmodbinary
-     * @param string $recuroption
-     * @return bool
-     */
-    public function editPerms($chmodpaths, $chmodbinary, $recuroption = 'notset'){
-
+    public function editPerms(){
         if ((isset($_REQUEST['chmodpaths']) && !empty($_REQUEST['chmodpaths'])) && (isset($_REQUEST['chmodbinary']) && !empty($_REQUEST['chmodbinary']))) {
             $chmodpathstringarray = $_REQUEST['chmodpaths'];
             $chmodpaths = explode('{/@^}', $chmodpathstringarray); //create array of files from post: delimiter = {/@^}
             $chmodbinary = $_REQUEST['chmodbinary'];
-            if (isset($_REQUEST['recuroption']) && !empty($_REQUEST['recuroption'])){
+            if (isset($_REQUEST['recuroption']) && !empty($_REQUEST['recuroption'])) {
                 $recuroption = $_REQUEST['recuroption'];
-            } else {$recuroption ='notset';}
+            } else {
+                $recuroption = 'notset';
+            }
         }
         /*fix $chmodbinary if string*/
         if (is_string($chmodbinary)) {
@@ -129,56 +115,89 @@ class PermconfigModel extends BaseModel
                 $chmodbinary = 0755;
             }
         }
-        //@todo will be replaced by code below for ver4.0.1
-        foreach ($chmodpaths as $chmodpath) {
-            $chmodpath = OSE_ABSPATH . $chmodpath;
-            $ret = @chmod($chmodpath, $chmodbinary);
-            if (!$ret) {
-                return false;
-            }
-        }
-
-        /*for each item in $chmodpaths run the appropriate chmod*/ //@todo disabled untill ver4.0.1
-        /*foreach ($chmodpaths as $chmodpath){
-            $chmodpath = OSE_ABSPATH.$chmodpath;
+        return $this->recurseeditPerms($chmodpaths, $chmodbinary, $recuroption);
+    }
+    /**
+     * @param array $chmodpaths
+     * @param string $chmodbinary
+     * @param string $recuroption
+     * @return array
+     */
+    public function recurseeditPerms ($chmodpaths, $chmodbinary, $recuroption){
+        $resultarray = array();
+        $resultarray['errors'] = '';
+        /*for each item in $chmodpaths run the appropriate chmod*/
+        foreach ($chmodpaths as $chmodpath){
             switch ($recuroption) {
                 case "recurall":
-                    if (strpos($chmodpath, 'dir:')){
-                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace($chmodpath, "", "dir:")));
+                    if (strpos($chmodpath, 'dir:') !== false){
+                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace("dir:", "",OSE_ABSPATH.$chmodpath)));
                         foreach($it as $fileinfo) {
                             $ret = @chmod($fileinfo->getRealPath(), $chmodbinary);
-                            if(!$ret) {return false;}
+                            if(!$ret) {$resultarray['errors'][] = str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath());}
                         }
                     } else {
-                        $ret = @chmod(str_replace($chmodpath, "", "dir:"), $chmodbinary);
-                        if(!$ret) {return false;}}
+                        $ret = @chmod(str_replace("dir:", "",OSE_ABSPATH.$chmodpath), $chmodbinary);
+                        if(!$ret) {$resultarray['errors'][] = $chmodpath;}
+                    }
                     break;
                 case "recurfiles":
-                    if (!strpos($chmodpath, 'dir:')){
-                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace($chmodpath, "", "dir:")));
+                    if (strpos($chmodpath, 'dir:') !== false){
+                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace("dir:", "",OSE_ABSPATH.$chmodpath)));
                         foreach($it as $fileinfo) {
                             if ($fileinfo->isFile()) {
                                 $ret = @chmod($fileinfo->getRealPath(), $chmodbinary);
-                                if(!$ret) {return false;}
+                                if(!$ret) {$resultarray['errors'][] = str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath());}
+                            }
+                        }
+                    } else {
+                        $ret = @chmod(str_replace("dir:", "",OSE_ABSPATH.$chmodpath), $chmodbinary);
+                        if(!$ret) {$resultarray['errors'][] = $chmodpath;}
+                    }
+                    break;
+                case "recurfolders":
+                    if (strpos($chmodpath, 'dir:') !== false){
+                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace("dir:", "", OSE_ABSPATH.$chmodpath)));
+                        foreach ($it as $fileinfo) {
+                            if ($fileinfo->isDir()) {
+                                $ret = @chmod($fileinfo->getRealPath(), $chmodbinary);
+                                if (!$ret) {$resultarray['errors'][] = str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath());}
                             }
                         }
                     }
                     break;
-                case "recurfolders":
-                    $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace($chmodpath, "", "dir:")));
-                    foreach($it as $fileinfo) {
-                        if ($fileinfo->isDir()) {
-                            $ret = @chmod($fileinfo->getRealPath(), $chmodbinary);
-                            if(!$ret) {return false;}
-                        }
-                    }
-                    break;
                 case "notset":
-                    $ret = (@chmod(str_replace($chmodpath, "", "dir:"), $chmodbinary));
-                    if(!$ret) {return false;}
+                    $ret = (@chmod(str_replace("dir:", "",OSE_ABSPATH.$chmodpath), $chmodbinary));
+                    if(!$ret) {$resultarray['errors'][] = $chmodpath;}
                     break;
             }
-        }*/
-        return true;
+            //set all selected files/folders regardless of recursivity omit when recurfiles
+            if ($recuroption !== "recurfiles" && $recuroption !== "notset") {
+                $ret = (@chmod(str_replace("dir:", "", OSE_ABSPATH . $chmodpath), $chmodbinary));
+                if (!$ret) { $resultarray['errors'][] = $chmodpath; }
+            }
+        }
+
+        if ($resultarray['errors'] == '') {
+            $resultarray['result'] = 1;
+        }else{
+            $resultarray['result'] = 0;
+        }
+        //print_r($resultarray); exit;
+        return $resultarray;
 	}
+
+    public function oneClickFixPerm (){
+        if (OSE_CMS == 'wordpress') {
+            $Filesarraylist = array('/wp-config.php');
+        }
+        elseif (OSE_CMS == 'joomla') {
+            $Filesarraylist = array('/configuration.php');
+        }
+
+        //$dirperms = 0755;
+        $fileperms = 0644;
+
+        return $this->recurseeditPerms($Filesarraylist, $fileperms, 'noCase');
+    }
 }

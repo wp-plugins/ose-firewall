@@ -2,7 +2,13 @@
 oseFirewall::checkDBReady ();
 $status = oseFirewall::checkSubscriptionStatus (false);
 $this->model->getNounce ();
-if (true) {// @todo switch to true to check for subscription status
+
+if (OSE_CMS == 'wordpress') {
+    $loginurl =  "admin.php?page=ose_fw_login";
+}
+elseif (OSE_CMS == 'joomla') {
+    $loginurl =  "index.php?option=com_ose_firewall&view=login";
+}
 
 ?>
 <div id="oseappcontainer">
@@ -68,25 +74,34 @@ if (true) {// @todo switch to true to check for subscription status
                                 </tbody>
                             </table>
                             <span class="mb15"> <?php oLang::_('PERMCONFIGFORM_NB');?> </span>
+                            <?php //Check subscription
+                            if ($status == true) {?>
 
-                            <!--                                @todo disabled untill ver4.0.1-->
-                            <!--<input type="checkbox" onchange="disableradios()" value="recur" id="recur"> Recurse into subdirectories
+                            <input type = "checkbox" onchange = "disableradios()" value = "recur" id = "recur" > Recurse into subdirectories
 
-                            <div class="radio" style="padding-left:2em">
-                              <label for="recurall">
-                                <input type="radio" name="recuroption" id="recurall" value="recurall"> Apply to all Files and Folders
-                              </label>
-                            </div>
-                            <div class="radio" style="padding-left:2em">
-                              <label for="recurfiles">
-                                <input type="radio" name="recuroption" id="recurfiles" value="recurfiles"> Apply to Files only
-                              </label>
-                            </div>
-                            <div class="radio" style="padding-left:2em">
-                              <label for="recurfolders">
-                                <input type="radio" name="recuroption" id="recurfolders" value="recurfolders"> Apply to Folders only
-                              </label>
-                            </div>	-->
+                            <div class="radio" style = "padding-left:2em" >
+                              <label for="recurall" >
+                                <input type = "radio" name = "recuroption" id = "recurall" value = "recurall" > Apply to all Files and Folders
+                              </label >
+                            </div >
+                            <div class="radio" style = "padding-left:2em" >
+                              <label for="recurfiles" >
+                                <input type = "radio" name = "recuroption" id = "recurfiles" value = "recurfiles" > Apply to Files only
+                              </label >
+                            </div >
+                            <div class="radio" style = "padding-left:2em" >
+                              <label for="recurfolders" >
+                                <input type = "radio" name = "recuroption" id = "recurfolders" value = "recurfolders" > Apply to Folders only
+                              </label >
+                            </div >
+                            <?php } else {/*if not subscribed show call to subscribe*/?>
+                                <div class="permpicpremium">
+                                    <div class="text">
+                                        <button type="button" class="btn btn-success btn-xs" onclick="redirectTut('<?php echo $loginurl ?>')"> Click here </button>
+                                        to activate your subscription and use this feature.
+                                    </div>
+                                </div>
+                            <?php } ?>
                             <br>
                             <input type="hidden" name="chmodpaths" value="">
                             <input type="hidden" name="chmodbinary" value="">
@@ -118,18 +133,25 @@ if (true) {// @todo switch to true to check for subscription status
                             <div class="panel-heading white-bg">
                                 <h4 class="panel-title"><?php oLang::_('PERMCONFIG_SHORT'); ?></h4>
                             </div>
-                            <div align="left" style="display:inline-block; width: 80%" id="selected_file">Current Folder:
+                            <div align="left" style="display:inline-block; width: 60%" id="selected_file">Current Folder:
                                 ROOT
                             </div>
-                            <div align="right" style="display:inline-block; width: 15%;" id="buttondiv" class="panel-controls-buttons">
+                            <div align="right" style="display:inline-block; width: 35%;" id="buttondiv" class="panel-controls-buttons">
                                 <button data-target="#editpermModal" data-toggle="modal"
                                         class="btn btn-success btn-sm mr5 mb10" type="button"
                                         onclick="getselecteditemslist ()"><?php oLang::_('PERMCONFIG_EDITOR'); ?></button>
+                                <?php //Check subscription
+                                if ($status == true) {?>
+                                    <button class="btn btn-warning btn-sm mr5 mb10" type="button" onClick="oneClickPermFix()"><?php oLang::_('PERMCONFIG_ONECLICKPERMFIX'); ?></button>
+                                <?php } else {/*if not subscribed show call to subscribe*/?>
+
+                                    <button class="btn btn-warning btn-sm mr5 mb10" type="button" onclick="callToSubscribe('<?php echo $loginurl?>')"><?php oLang::_('PERMCONFIG_ONECLICKPERMFIX'); ?></button>
+                                <?php } ?>
                             </div>
                             <div style="width: 85%; display: table;">
                                 <div style="display: table-row">
 
-                                    <div class="panel-body" style="display: table-cell;" id="FileTreeDisplay"></div>
+                                    <div class="panel-body" style="display: table-cell;vertical-align: top;padding-top: 100px;" id="FileTreeDisplay"></div>
                                     <div class="panel-body" style="display: table-cell;">
                                         <table class="table display" id="permconfigTable" style="display: table-cell;">
                                             <thead>
@@ -153,27 +175,5 @@ if (true) {// @todo switch to true to check for subscription status
                 </div>
             </div>
         </div>
-        <?php
-        }
-        else {
-            ?>
-            <div id = "oseappcontainer" >
-                <div class="container">
-                    <?php
-                    $this ->model->showLogo ();
-                    ?>
-                    <div class="row">
-                        <div class="panel panel-primary">
-                            <?php
-                            $image = OSE_FWURL.'/public/images/screenshot-5.png';
-                            include_once dirname(__FILE__).'/calltoaction.php';
-                            ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php	$this->model->showFooterJs();
-        }
-        ?>
     </div>
 </div>

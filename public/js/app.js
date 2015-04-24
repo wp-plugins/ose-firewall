@@ -483,4 +483,56 @@ jQuery(document).ready(function($){
              });
         return false; // avoid to execute the actual submit of the form.
     });
+
+    $("#domains-form").submit(function () {
+        showLoading();
+        var data = $("#domains-form").serialize();
+        data += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: data, // serializes the form's elements.
+            success: function (data) {
+                hideLoading();
+                if (data === parseInt(data, 10)) {
+                    document.getElementById("domain-warning-label").style.display = 'none';
+                    getDomain();
+                    $('#addDomainModal').modal('hide');
+                    $('#addAdminModal').modal();
+
+                }
+                else {
+                    document.getElementById("domain-warning-label").style.display = 'inline';
+                    document.getElementById("domain-warning-message").innerHTML = data;
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+    $("#adminemails-form").submit(function () {
+        showLoading();
+        var data = $("#adminemails-form").serialize();
+        data += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: data, // serializes the form's elements.
+            success: function (data) {
+                hideLoading();
+                if (data === parseInt(data, 10)) {
+                    document.getElementById("admin-warning-label").style.display = 'none';
+                    $('#addAdminModal').modal('hide');
+                    $('#adminTable').dataTable().api().ajax.reload();
+
+                }
+                else {
+                    document.getElementById("admin-warning-label").style.display = 'inline';
+                    document.getElementById("admin-warning-message").innerHTML = data;
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
 });
