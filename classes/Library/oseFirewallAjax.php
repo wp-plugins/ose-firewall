@@ -48,7 +48,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionDashboard () {
-		$actions = array ('getCountryStat', 'getTrafficData','checkWebBrowsingStatus');
+        $actions = array('getCountryStat', 'getTrafficData', 'checkWebBrowsingStatus', 'getMalwareMap', 'getBackupList');
 		parent::loadActions($actions); 
 	}	
 	public static function loadActionRulesets () {
@@ -88,7 +88,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanreport () {
-        $actions = array('getTypeList', 'getMalwareMap', 'viewfile', 'backupvs', 'bkcleanvs', 'deletevs', 'restorevs', 'batchbk', 'batchbkcl', 'batchrs', 'batchdl');
+        $actions = array('getTypeList', 'getMalwareMap', 'viewfile', 'quarantinevs', 'bkcleanvs', 'deletevs', 'restorevs', 'batchqt', 'batchbkcl', 'batchrs', 'batchdl');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVariables () {
@@ -140,7 +140,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}
 	public static function loadActionSubscription () {
-		$actions = array ('getSubscription', 'getToken','linkSubscription','updateProfileID', 'logout');
+		$actions = array ('getSubscription', 'getToken','linkSubscription','updateProfileID', 'logout', 'getPaymentAddress', 'addOrder');
 		parent::loadActions($actions);
 	}
 	public static function loadActionCronjobs () {
