@@ -48,17 +48,17 @@ class ScanreportController extends \App\Base {
 		$this->model->returnJSON($results);
 	}
 
-    public function action_Backupvs()
+    public function action_Quarantinevs()
     {
         $this->model->loadRequest();
         $id = $this->model->getInt('id', null);
+
         if (empty($id)) {
             $this->model->showSelectionRequired();
         }
-        $returns = $this->model->backupvs($id);
+        $returns = $this->model->batchqt($id);
         $this->model->returnJSON($returns);
     }
-
     public function action_Bkcleanvs()
     {
         $this->model->loadRequest();
@@ -95,11 +95,11 @@ class ScanreportController extends \App\Base {
         $this->model->returnJSON($returns);
     }
 
-    public function action_Batchbk()
+    public function action_Batchqt()
     {
         $this->model->loadRequest();
         $id = $this->model->getVar('id', null);
-        $returns = $this->model->batchbk($id);
+        $returns = $this->model->batchqt($id);
         $this->model->returnJSON($returns);
     }
 

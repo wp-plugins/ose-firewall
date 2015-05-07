@@ -48,53 +48,75 @@ class PermconfigModel extends BaseModel
 		return oLang::_get('PERMCONFIG_DESC');
 	}
 
-	public function getDirFileList(){
-		$panel = new panel ();
-
-        if (isset($_REQUEST['dir']) && !empty($_REQUEST['dir'])){
-            $path = urldecode( OSE_ABSPATH ) . urldecode( $_REQUEST['dir'] );
-        } else {$path = urldecode( OSE_ABSPATH );}
-
-		$return = $panel->getDirFileList($path);
-
-		return $return;
-	}
-    public function  getFileTree(){
-        $path = urldecode( OSE_ABSPATH ) .  urldecode( $_REQUEST['dir'] );
-
-        // Create recursive dir iterator which skips dot folders and Flatten the recursive iterator
-        $it  = 	new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
-                    RecursiveIteratorIterator::SELF_FIRST
-                );
-        // keep to the base folder
-        $it->setMaxDepth(0);
-
-        $files_array = array();
-        //array to sort by folder
-        foreach ($it as $fileinfo) {
-            if ($fileinfo->isDir()) {
-                $key = $fileinfo->getRealPath();
-                $data = $fileinfo->getFilename();
-                $files_array[$key] = $data;
+    public function getDirFileList(){
+        $filearray = array();
+        if (class_exists('SConfig')) {
+            $rootpath = dirname(OSE_ABSPATH);
+        } else {
+            $rootpath = OSE_ABSPATH;
+        }
+        if (isset($_REQUEST['dir']) && !empty($_REQUEST['dir'])) {
+            $path = $rootpath . urldecode($_REQUEST['dir']);
+        } else {
+            $path = $rootpath;
+        }
+        try{
+            // Create recursive dir iterator which skips dot folders and Flatten the recursive iterator, folders come before their files
+            $it = new RecursiveIteratorIterator
+                    ( new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+                        RecursiveIteratorIterator::SELF_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
+                    );
+            // keep to the base folder
+            $it->setMaxDepth(0);
+            if ($it->valid()) {
+                foreach ($it as $fileinfo) {
+                    if ($fileinfo->isDir()) {
+                        $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+                            'name' => $fileinfo->getfilename(),
+                            'type' => $fileinfo->getType(),
+                            'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
+                            'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
+                            'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/folder.png' alt='dir' />",
+                            'dirsort' => 1);
+                    } elseif ($fileinfo->isFile()) {
+                        $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));
+                        if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip', $ext_code) == false) {
+                            $ext_code = 'file';
+                        }
+                        $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+                            'name' => $fileinfo->getfilename(),
+                            'type' => pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
+                            'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
+                            'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
+                            'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/" . $ext_code . ".png' alt='" . $ext_code . "' />",
+                            'dirsort' => 2);
+                    }
+                }
+                array_multisort($filearray['data'], SORT_ASC);
+            } else {
+                $filearray = array("draw" => 1,
+                    "recordsTotal" => "0",
+                    "recordsFiltered" => "0",
+                    "data" => array());
             }
+            return $filearray;
+        } catch (Exception $e) {
+            return $filearray = array("draw" => 1,
+                "recordsTotal" => "0",
+                "recordsFiltered" => "0",
+                "data" => array());
         }
-        ksort($files_array);
-
-        $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
-
-        if (($_REQUEST['dir']) == '/') {
-            $list .= '<li class="folder collapsed" id="/"><a href="#" rel="/">ROOT</a></li>';
+    }
+    public function  getFileTree(){
+        if (class_exists('SConfig')){
+            $rootpath = dirname(OSE_ABSPATH );
+        }else {
+            $rootpath = OSE_ABSPATH;
         }
+        $path = $rootpath .  urldecode( $_REQUEST['dir'] );
 
-        foreach($files_array as $key => $fileinfo){
-            $rel = htmlentities( str_replace(OSE_ABSPATH, "", $key ));
-            //if ($fileinfo->isDir()) {
-                $list .= '<li class="folder collapsed" id="' . $rel . '"><a href="#" rel="' . $rel . '/">' . htmlentities( $fileinfo ) . '</a></li>';
-            //}
-        }
-        $list .= '</ul>';
-        echo ($list);
+        $panel = new panel();
+        $panel->getFileTree($rootpath, $path);
     }
 
     public function editPerms(){

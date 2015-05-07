@@ -48,7 +48,6 @@ define('OSE_FWLANGUAGE', OSE_FWPUBLIC . ODS.'messages');
 define('OSE_FWDATA', OSEFWDIR . 'protected' . ODS.'data'); 
 define('OSE_FWDATABACKUP',OSEFWDIR . 'protected' . ODS.'data'.ODS.'backup');
 define('OSE_DEFAULT_SCANPATH', ABSPATH);
-define('DB_BACKUP_DOWNLOAD_URL', OSE_WPURL . '/wp-admin/admin-ajax.php?option=ose_firewall&task=downloadBackupDB&action=downloadBackupDB&controller=backup&ids=');
-define('FILE_BACKUP_DOWNLOAD_URL', OSE_WPURL . '/wp-admin/admin-ajax.php?option=ose_firewall&task=downloadBackupFile&action=downloadBackupFile&controller=backup&ids=');
-define('EXPORT_DOWNLOAD_URL', OSE_WPURL . '/wp-admin/admin-ajax.php?option=ose_firewall&task=downloadCSV&action=downloadCSV&controller=manageips&filename=');
+define('BACKUP_DOWNLOAD_URL', '?page=ose_fw_backup&option=ose_firewall&task=downloadBackupFile&action=downloadBackupFile&controller=backup&id=');
+define('EXPORT_DOWNLOAD_URL', '?page=ose_fw_manageips&option=ose_firewall&task=downloadCSV&action=downloadCSV&controller=manageips&filename=');
 ?>

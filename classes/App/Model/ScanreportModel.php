@@ -105,19 +105,19 @@ class ScanreportModel extends BaseModel
 		return $return;
 	}
 
-    public function backupvs($id)
+    public function quarantinevs($id)
     {
         $return = array();
         $oseVsscanStat = new oseVsscanStat();
-        $return['data'] = utf8_encode($oseVsscanStat->vsbackup($id));
+        $return['data'] = utf8_encode($oseVsscanStat->batchqt($id));
+
         return $return;
     }
-
     public function bkcleanvs($id)
     {
         $return = array();
         $oseVsscanStat = new oseVsscanStat();
-        $return['data'] = utf8_encode($oseVsscanStat->vsbkclean($id));
+        $return['data'] = utf8_encode($oseVsscanStat->batchbkcl($id));
 
         return $return;
     }
@@ -126,7 +126,7 @@ class ScanreportModel extends BaseModel
     {
         $return = array();
         $oseVsscanStat = new oseVsscanStat();
-        $return['data'] = utf8_encode($oseVsscanStat->vsdelete($id));
+        $return['data'] = utf8_encode($oseVsscanStat->batchdl($id));
         return $return;
     }
 
@@ -134,15 +134,15 @@ class ScanreportModel extends BaseModel
     {
         $return = array();
         $oseVsscanStat = new oseVsscanStat();
-        $return['data'] = utf8_encode($oseVsscanStat->vsrestore($id));
+        $return['data'] = utf8_encode($oseVsscanStat->batchrs($id));
         return $return;
     }
 
-    public function batchbk($id)
+    public function batchqt($id)
     {
         $return = array();
         $oseVsscanStat = new oseVsscanStat();
-        $return['data'] = utf8_encode($oseVsscanStat->batchbk($id));
+        $return['data'] = utf8_encode($oseVsscanStat->batchqt($id));
         return $return;
     }
 

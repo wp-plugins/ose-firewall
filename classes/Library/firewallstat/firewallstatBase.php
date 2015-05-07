@@ -261,12 +261,17 @@ class oseFirewallStatBase
 		{
 			$status = null;
 		}
+        if (!empty($columns[6]['search']['value'])) {
+            $variable = $columns[6]['search']['value'];
+        } else {
+            $variable = null;
+        }
 		if (!empty($orderArr[0]['column'])) 
 		{
 			$sortby = $columns[$orderArr[0]['column']]['data'];
 			$orderDir = $orderArr[0]['dir'];
 		}
-		$return = $this->getACLIPMapDB($search['value'], $status, $start, $limit, $sortby, $orderDir);
+        $return = $this->getACLIPMapDB($search['value'], $status, $variable, $start, $limit, $sortby, $orderDir);
 		$return['data'] = $this->convertACLIPMap($return['data']);
 		return $return;
 	}
@@ -276,7 +281,7 @@ class oseFirewallStatBase
 		$sortby = null;
 		$orderDir = 'asc';
 		$status = -1;
-		$return = $this->getACLIPMapDB(null, null, 0, 5, 'datetime', 'desc');
+		$return = $this->getACLIPMapDB(null, null, null, 0, 5, 'datetime', 'desc');
 		$return['data'] = $this->convertACLIPMap($return['data']);
 		return $return;
 	}
@@ -286,13 +291,22 @@ class oseFirewallStatBase
 	protected function getWhereStatus ($status) {
 		if ($status == 2)
 		{
-			$this->where[] = "`status` = ".(int) $status." or `status` = ".(int) 0;
+            $this->where[] = "`acl`.`status` = " . (int)$status . " or `status` = " . (int)0;
 		}
 		else
 		{
-			$this->where[] = "`status` = ".(int) $status;
+            $this->where[] = "`acl`.`status` = " . (int)$status;
 		}
 	}
+
+    protected function getWhereVarible($variable)
+    {
+        if ($variable !== 'null') {
+            $this->where[] = "`vars`.`keyname` = '" . $variable . "'";
+        } else {
+            $this->where[] = "`vars`.`keyname` IS NULL";
+        }
+    }
 	protected function getOrderBy ($sortby, $orderDir) {
 		if (empty($sortby))
 		{	
@@ -311,10 +325,11 @@ class oseFirewallStatBase
 	}
 	private function getAllRecords ($where) {
 		$attrList = array("`acl`.`id` AS `id`","`acl`.`country_code` AS `country_code`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`",
-				"`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`ip`.`ip32_end` AS `ip32_end`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
+            "`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`vars`.`keyname` AS `keyname`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
 		$sql = convertViews::convertAclipmap($attrList);
 		$query = $sql.$where.$this->orderBy." ".$this->limitStm;
 		$this->db->setQuery($query);
+
 		$results = $this->db->loadObjectList();
 		return $results;		
 	}
@@ -332,11 +347,15 @@ class oseFirewallStatBase
 		$return['recordsFiltered'] = $result->count;
 		return $return;
 	}
-	private function getACLIPMapDB($search, $status, $start, $limit, $sortby, $orderDir)
+
+    private function getACLIPMapDB($search, $status, $variable, $start, $limit, $sortby, $orderDir)
 	{
 		$return = array (); 
 		if (!empty($search)) {$this->getWhereName ($search);}
 		if (!empty($status)) {$this->getWhereStatus ($status);}
+        if (!empty($variable)) {
+            $this->getWhereVarible($variable);
+        }
 		$this->getOrderBy ($sortby, $orderDir);
 		if (!empty($limit)) {$this->getLimitStm ($start, $limit);}
 		$where = $this->db->implodeWhere($this->where);
@@ -368,7 +387,7 @@ class oseFirewallStatBase
 				$return[$i]->country_code ='';
 			}
 			$return[$i]->ip32_start = long2ip((float) $result->ip32_start);
-			$return[$i]->ip32_end = long2ip((float) $result->ip32_end);
+            $return[$i]->keyname = $result->keyname;
 			if (empty($result->host))
 			{
 				//$return[$i]->host = $this->updateIPHost($result->id, $result->ip32_start);
@@ -654,21 +673,35 @@ class oseFirewallStatBase
 						{
 							if ( $item->rule_id == 10 || $item->rule_id == 1 )  {
 								$detcontent_id == $item->detcontent_id;
-								$html .= "<div class='form-group'><label class='col-sm-3 control-label'>".$item->name."</label><div class='col-sm-9'><span style='color:red;'></span></div></div>";
+								$html .= "<div class='form-group'><label class='col-sm-3 control-label'>Attack Type ".$item->attacktypeid.' '.$item->name."</label><div class='col-sm-9'><span style='color:red;'></span></div></div>";
 								if (!isset($var) || $var != $item->var_id)
 								{
-									$html .= "<div class='form-group'><label class='col-sm-3 control-label'>Detected Variable:</label><div class='col-sm-9'><span style='color:red;'>".$item->keyname."</span></div></div>";
+									if ($item->keyname=='server.HTTP_CLIENT_IP') {
+										$keyname = 'IP Address';
+									}
+									else
+									{
+										$keyname = $item->keyname;
+									}
+									$html .= "<div class='form-group'><label class='col-sm-3 control-label'>Detected Variable:</label><div class='col-sm-9'><span style='color:red;'>".$keyname."</span></div></div>";
 								}
 								$detcontent_id = $item->detcontent_id;
-								$content = $item->content;
+								if ($item->attacktypeid == 11) {
+									$tmp = json_decode(stripcslashes($item->content));
+									$content = 'IP is found on <a href ="http://stopforumspam.com/ipcheck/'.$aclrule->name.'" target="_blank">StopForumSpam</a>';
+								}
+								else
+								{
+									$content = htmlentities($item->content);
+								}
 								$var = $item->var_id;
 								$html .= "<div class='form-group'>";
-								$html .= "<label class='col-sm-3 control-label'>Detected Content: </label><div class='col-sm-9'><span style='color:red;'>".htmlentities($item->content)."</span></div></div>";
+								$html .= "<label class='col-sm-3 control-label'>Detected Content: </label><div class='col-sm-9'><span style='color:red;'>".$content."</span></div></div>";
 							}
 							else
 							{
 								$detcontent_id == $item->detcontent_id;
-								$html .= "<label class='col-sm-3 control-label'>".$item->name."</label>";
+								$html .= "<label class='col-sm-3 control-label'>Attack Type ".$item->attacktypeid.' '.$item->name."</label>";
 							}
 						}
 						else
@@ -676,6 +709,7 @@ class oseFirewallStatBase
 							if (!isset($var) || $var != $item->var_id)
 							{
 								$html .= "<div class='form-group'>";
+								
 								$html .= "<label class='col-sm-3 control-label'>Detected Variable:</label><div class='col-sm-9'><span style='color:red;'>".$item->keyname."</span></div></div>";
 							}
 							$detcontent_id = $item->detcontent_id;
@@ -1502,8 +1536,56 @@ class oseFirewallStatBase
 		$query = "SELECT HOUR(`datetime`) as hour, COUNT(id) AS count FROM `#__osefirewall_acl` ". 
 				 "WHERE (`status` = 1) AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 1 DAY) GROUP BY HOUR(`datetime`) ORDER BY `datetime` ASC";
 		$this->db->setQuery($query);
-		$results = $this->db->loadObjectList();
-		
-		return $results;
+        $return[0] = $this->db->loadObjectList();
+        $query = "SELECT HOUR(`datetime`) as hour, COUNT(id) AS count FROM `#__osefirewall_acl` " .
+            "WHERE (`status` = 2) AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 1 DAY) GROUP BY HOUR(`datetime`) ORDER BY `datetime` ASC";
+        $this->db->setQuery($query);
+        $return[1] = $this->db->loadObjectList();
+        $query = "SELECT HOUR(`datetime`) as hour, COUNT(id) AS count FROM `#__osefirewall_acl` " .
+            "WHERE (`status` = 3) AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 1 DAY) GROUP BY HOUR(`datetime`) ORDER BY `datetime` ASC";
+        $this->db->setQuery($query);
+        $return[2] = $this->db->loadObjectList();
+        return $return;
 	}
+
+    private function headerArray()
+    {
+        return array('name', 'ip_start', 'ip_end', 'ip_type', 'ip_status');
+    }
+
+    private function getOutputData()
+    {
+        $output = implode(",", $this->headerArray()) . "\n";
+        $results = $this->getACLIPMap();
+        foreach ($results['data'] as $data) {
+            $output .= $this->getTmpOutput($data) . "\n";
+        }
+        return $output;
+    }
+
+    private function getTmpOutput($data)
+    {
+        $tmp = array();
+        $tmp[] = $data->name;
+        $tmp[] = $data->ip32_start;
+        $tmp[] = $data->ip32_end;
+        $tmp[] = $data->iptype;
+        $tmp[] = $data->statusraw;
+        $return = implode(",", $tmp);
+        return $return;
+    }
+
+    public function downloadcsv($filename)
+    {
+        $fileContent = $this->getOutputData();
+
+        ob_clean();
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-Length: " . strlen($fileContent));
+        // Output to browser with appropriate mime type, you choose ;)
+        header("Content-type: text/csv");
+        header("Content-Disposition: attachment; filename=$filename");
+        print_r($fileContent);
+        exit;
+    }
 }

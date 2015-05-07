@@ -1,40 +1,92 @@
 @CHARSET "UTF-8";
+/*  Background */
 
 #wpcontent {
-	background: url(imgs/background.jpg) repeat-y 0px 0px transparent !important;
+    background: white;
 }
 
+/**********************************************************************/
+/*  Page Title */
+
+/** vendorname **/
+.vendorname {
+    float: left;
+    margin-top: 38px;
+    width: 90px;
+    font-size: 42px;
+    height: 90px;
+    color: #000000;
+}
+
+/** version icon **/
+.version-normal {
+    padding: 07px;
+    margin-top: 70px;
+    margin-left: 310px;
+    background-color: #89bb30;
+}
+
+/** vendor logo **/
 .logo {
     background: url("imgs/logo-header.png") no-repeat scroll 0 0 transparent;
     height: 75px;
+    margin-right: -150px;
     margin-top: 30px;
     width: 250px;
-}
-.navbar.navbar-default {
-	background-color: transparent; 
-}
-.bs-component .navbar.navbar-default {
-    background-color: transparent;
+    float: left;
 }
 
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-	opacity: 0.4;
+/** navbar top **/
+.navbar-top {
+    background: none repeat scroll 0 0 #89bb30;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0px 7px 45px #888888;
+
 }
+
+/**********************************************************************/
+
+/*  Navigation Bar */
+.navbar-default .navbar-nav > li > a {
+    color: #89bb30;
+}
+
+.navbar.navbar-default {
+    background-color: white;
+    margin-bottom: -1px;
+}
+.bs-component .navbar.navbar-default {
+    background-color: #d7d8d9;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: white;
+    background-color: #89bb30;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    background-color: #89bb30;
+    color: white;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: #89bb30;
+    color: white;
+    opacity: 0.4;
+}
+
 .nav li.active {
-    border-bottom: 0 solid #fff;
+    color: #89bb30;
+    border-bottom: 0 solid #89bb30;
 }
 
 .nav li {
+    color: #89bb30;
     border-bottom: 0px solid #6e6e6e;
     border-right: 0 solid #fff;
     margin-bottom: 0;
     margin-right: 5px;
 }
-.navbar-top {
-    background: none repeat scroll 0 0 transparent;
-    border-bottom: 1px solid #e5e5e5;
-}
+
 
 .navbar {
     border: 1px solid #e5e5e5;
@@ -42,7 +94,7 @@
 }
 
 .userMenu li a {
-    color: #fff; 
+    color: #000000;
 }
 
 .panel, .dataTables_wrapper{ 
@@ -50,53 +102,49 @@
 }
 
 .panel-teal > .panel-heading {
-	background-color : transparent; 
-	border-color: #fff;
+	background-color : transparent;
+    border-color: #000000;
 }
 
+.table > thead > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tfoot > tr > td {
+    line-height: 0;
+    width: 90px;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #89bb30;
+}
 .panel-body th,
 .panel-heading h3 {
     color: #fff;
 }
 
+.panel-primary > .panel-body {
+    border: 1px solid #fff;
+}
 .tickLabel {
-	color: #fff;
-}
-.logo {
-	float: left; 
-	width: 80px;
-}
-.vendorname {
-	float: left; 
-	margin-top: 38px;
-    width: 90px;
-    font-size: 35px;
-    height: 90px;
-    color: #fff; 
+    color: #000000;
 }
 
-.version-normal {
-	margin-top: 85px;
-}
 
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
-	color: #fff;
+    color: #000000;
 }
 
 .bs-callout-info {
     background-color: transparent;
-    border-bottom: 3px solid #fefefe;
+    border-bottom: 1px solid #000000;
     border-left: 0px solid #fefefe;
 }
 
 .bs-callout-info h1, .bs-callout-info h2, .bs-callout-info h3, .bs-callout-info h4, .bs-callout-info h5, .bs-callout-info h6 {
-	color: #fff;
+    color: #000000;
 }
 
 .panel.plain.panel-primary .panel-heading {
     background-color: transparent;
-    border-bottom: 1px solid #fefefe;
-    color: #fff;
+    border-bottom: 1px solid #000000;
+    color: #000000;
 }
 .panel-heading,
 .panel-body {
@@ -108,7 +156,7 @@
 }
 
 .alert-info {
-    background-color: #fff;
+    background-color: #cecece;
     opacity: 0.6;
     border-color: #cecece;
     color: #222;
@@ -118,26 +166,17 @@
 	opacity: 0.6;
 }
 
-.btn-primary, 
-.btn-success,
-.btn-danger,
-.btn-yellow {
-    background-color: #fff;
-    border-color: #fff;
-    opacity: 0.6;
-    color: #222;
-    box-shadow: 0 2px 0 #666;
-}
+
 
 .product-list {
 	background-color: #dcdcdc;
-    border-color: #fff;
+    border-color: #000000;
     opacity: 0.7;
     margin: 5px 0px !important;
 }
 .product-title {
 	margin: 20px 3%;
-	border: 5px solid #fff;
+    border: 5px solid #000000;
 	padding: 20px;
 	width: 10%;
 	float: left; 
@@ -152,29 +191,29 @@
 	background: none repeat scroll 0 0 transparent;
 }
 .form-horizontal.group-border .form-group:first-child, .form-inline.group-border .form-group:first-child {
-	border-top: 0px solid #fff;
+    border-top: 0px solid #000000;
 }
 .form-horizontal.group-border .form-group, .form-inline.group-border .form-group {
-	border-bottom: 0px solid #fff;	
+    border-bottom: 0px solid #000000;
 }
 .form-group label {
-	padding-top: 0px; 
-	color: #fff;
+	padding-top: 0px;
+    color: #000000;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-	background-color: #fff;
+    background-color: #89bb30;
 	opacity: 0.4;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
 	color: #444;
 }
 .nav-tabs > li > a {
-	color: #fff;
+    color: #000000;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-	background-color: transparent;
-	opacity: 0.4;
+
+    opacity: 0.75;
 }
 .paginate_button.disabled:hover, .paginate_button.disabled:active {
 	background-color: #fff !important;
@@ -190,22 +229,124 @@
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background: none repeat scroll 0 0 #666 !important;
     border-color: #777 !important;
-    color: #fff;
+    color: #000000;
     opacity: 0.8;
 }
 
 .dataTables_paginate a.paginate_disabled_previous, .dataTables_paginate a.paginate_disabled_next, .dataTables_paginate a.paginate_button, .paginate_enabled_next, .paginate_active, .paginate_enabled_previous {
-	opacity: 0.8;
+    opacity: 0.8;
+    background: #89bb30;
+
 }
 
+.dataTables_length {
+    padding: 10px 5px;
+}
+
+.dataTables_filter {
+    padding: 10px 5px 11px;
+}
+#oseappcontainer .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: white !important;
+}
 .list-group-item {
 	background-color: transparent;
-	border-bottom: 0px solid #fff;
+    border-bottom: 0px solid #000000;
 }
 
 .list-group a, .list-group a:link {
 	color: #444 !important;
 }
 .list-group-item {
-	color: #fff;
+    color: #000000;
 }
+
+/**********************************************************************/
+/*  DataTable  */
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    background-color: #89bb30;
+    border-color: initial;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #89bb30;
+    border: none;
+}
+
+table.dataTable {
+    background-color: #89bb30;
+}
+
+/**********************************************************************/
+/*  Modal  */
+.modal .modal-content .modal-header {
+    background: #89bb30;
+}
+
+/**********************************************************************/
+/*  Button  */
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-yellow,
+.btn-default,
+.btn-primary.btn-alt {
+    color: white;
+    background-color: #89bb30;
+    border-color: initial;
+    box-shadow: none;
+    border-radius: 7px;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-danger:hover,
+.btn-yellow:hover,
+.btn-default:hover,
+.btn-primary.btn-alt:hover {
+    color: white;
+    background-color: #89bb30;
+    border-color: initial;
+    box-shadow: none;
+    border-radius: 7px;
+}
+
+.btn-primary:visited,
+.btn-success:visited,
+.btn-danger:visited,
+.btn-yellow:visited,
+.btn-default:visited,
+.btn-primary.btn-alt:visited {
+    color: white;
+    background-color: #89bb30;
+    border-color: initial;
+    box-shadow: none;
+    border-radius: 7px;
+}
+
+.btn-primary:focus,
+.btn-success:focus,
+.btn-danger:focus,
+.btn-yellow:focus,
+.btn-default:focus,
+.btn-primary.btn-alt:focus {
+    color: white;
+    background-color: #89bb30;
+    border-color: initial;
+    box-shadow: none;
+    border-radius: 7px;
+}
+
+/**********************************************************************/
+/*  Pie Charts  */
+.pie-charts div.label {
+    color: #000000 !important;
+}
+
+.pie-charts .easyPieChart {
+    color: #89bb30 !important;
+}
+
+/*#wpcontent {*/
+/*background: url(imgs/background.jpg) repeat-y 0px 0px white !important;*/
+/*}*/

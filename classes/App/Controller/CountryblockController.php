@@ -113,15 +113,6 @@ class CountryblockController extends \App\Base {
 	public function action_CreateTables() {
 		$this ->model->createTables();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public function actionChangeAllCountry() {
 		$this->model->loadRequest ();
 		$mobiledevice = 0 ; 

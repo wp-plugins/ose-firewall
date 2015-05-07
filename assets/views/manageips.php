@@ -52,16 +52,9 @@ $this->model->getNounce ();
                                 <h4 class="modal-title" id="myModalLabel2"><?php oLang::_('O_EXPORT_IP_CSV'); ?></h4>
                             </div>
                             <div class="modal-body">
-                              <form id = 'export-ip-form' class="form-horizontal group-border stripped" role="form" enctype="multipart/form-data" method="POST">                            
-                                    <div class="col-lg-8 col-md-8"></div>
-                                    <div class="col-lg-4 col-md-4">
-                                     	<button type="submit" class="btn btn-primary btn-sm" id='export-ip-button'><?php oLang::_('GENERATE_CSV_NOW');?></button>
+                                <div class="col-lg-8 col-md-7">
+                                    <?php $this->model->exportcsv(); ?>
                                 	</div>
-                                	<input type="hidden" name="option" value="com_ose_firewall">
-                                	<input type="hidden" name="controller" value="manageips"> 
-								    <input type="hidden" name="action" value="exportcsv">
-								    <input type="hidden" name="task" value="exportcsv">
-                              </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -96,10 +89,14 @@ $this->model->getNounce ();
 										<label for="ip_type" class="col-sm-2 control-label"><?php oLang::_('O_IP_TYPE');?></label>
 										<div class="col-sm-10">
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="ip_type" value="ip" checked="checked"><?php oLang::_('O_SINGLE_IP');?>
+                                                    <input id="single_ip" type="radio" name="ip_type" value="ip"
+                                                           onchange="changeView()"
+                                                           checked="checked"><?php oLang::_('O_SINGLE_IP'); ?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="ip_type" value="ips" ><?php oLang::_('O_RANGE');?>
+                                                    <input id="range_ip" type="radio" name="ip_type"
+                                                           onchange="changeView()"
+                                                           value="ips"><?php oLang::_('O_RANGE'); ?>
 				                                </label>
 										</div>
 									</div>
@@ -109,8 +106,9 @@ $this->model->getNounce ();
 											<input type="text" class="form-control" id="ip_start" name="ip_start">
 										</div>
 									</div>
-									<div class="form-group">
-										<label for="ip_start" class="col-sm-2 control-label"><?php oLang::_('O_END_IP');?></label>
+                                    <div id="hidden_ip_end" class="form-group" style="display: none">
+                                        <label for="ip_end"
+                                               class="col-sm-2 control-label"><?php oLang::_('O_END_IP'); ?></label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" id="ip_end" name="ip_end">
 										</div>
@@ -177,11 +175,11 @@ $this->model->getNounce ();
 												<th><?php oLang::_('O_IP_RULE_TITLE'); ?></th>
 												<th><?php oLang::_('O_RISK_SCORE'); ?></th>
 												<th><?php oLang::_('O_START_IP'); ?></th>
-												<th><?php oLang::_('O_END_IP'); ?></th>
+                                                <th><?php oLang::_('O_VARIABLE'); ?></th>
 												<th><?php oLang::_('O_STATUS'); ?></th>
 												<th><?php oLang::_('O_VISITS'); ?></th>
 												<th><?php oLang::_('O_VIEWDETAIL'); ?></th>
-												<th><input type="checkbox" name="checkedAll" id="checkedAll"></input></th>
+                                                <th><input type="checkbox" name="checkedAll" id="checkedAll"></th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -192,7 +190,7 @@ $this->model->getNounce ();
 												<th><?php oLang::_('O_IP_RULE_TITLE'); ?></th>
 												<th><?php oLang::_('O_RISK_SCORE'); ?></th>
 												<th><?php oLang::_('O_START_IP'); ?></th>
-												<th><?php oLang::_('O_END_IP'); ?></th>
+                                                <th><?php oLang::_('O_VARIABLE'); ?></th>
 												<th><?php oLang::_('O_STATUS'); ?></th>
 												<th><?php oLang::_('O_VISITS'); ?></th>
 												<th><?php oLang::_('O_VIEWDETAIL'); ?></th>

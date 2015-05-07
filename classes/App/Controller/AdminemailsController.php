@@ -42,7 +42,7 @@ class AdminemailsController extends \App\Base
             $result = $this->model->saveDomain($domain);
             $this->model->returnJSON($result);
         } else {
-            $error = "please provide valid domain address";
+            $error = "please provide valid domain address, for example, www.domain.com";
             $this->model->returnJSON($error);
         }
     }

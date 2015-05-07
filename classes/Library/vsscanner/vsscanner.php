@@ -378,6 +378,7 @@ class virusScanner {
 		return $result;
 	}
 	protected function getdirList () {
+        $baseScanPath = $this->getBaseScanPath();
 		$path = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json";
 		$content = oseFile::read($path);
 		$dirArray = oseJSON::decode($content);
@@ -400,6 +401,7 @@ class virusScanner {
 	}
 	protected function saveBaseScanPath($scanPath) {
 		$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."basePath.json";
+        $scanPath = str_replace(' ', '', $scanPath);
 		$fileContent = oseJSON::encode(array($scanPath));
 		$result = oseFile::write($filePath, $fileContent);
 		return $result;
@@ -561,7 +563,10 @@ class virusScanner {
 				break;
 			}
 			$_SESSION['last_scanned'] = array_pop($this->vsInfo->fileset);
-			$this->vsInfo->completed ++;
+            $rootpath = $this->getBaseScanPath();
+            $_SESSION['last_scanned'] = $rootpath[0] . $_SESSION['last_scanned'];
+            $this->vsInfo->completed++;
+
 			if(oseFile::exists($_SESSION['last_scanned'] )==false) {
 				continue;
 			}
@@ -581,7 +586,7 @@ class virusScanner {
 		{
 			$this->clearFile ($type);
 			$this->clearDirFile();
-			return $this->returnCompleteMsg($last_file, $type);
+            return $this->returnCompleteMsg($_SESSION['last_scanned'], $type);
 		}
 		return true; 
 	}
@@ -681,6 +686,7 @@ class virusScanner {
 		return $return;  
 	}
 	private function returnAjaxMsg ($last_file=null, $type) {
+
 		if (count($this->vsInfo->fileset) == 0)
 		{
 			$this->clearFile ($type);
@@ -756,12 +762,14 @@ class virusScanner {
 		$virus_found= false;
 		$content = oseFile::read ($scan_file);
 		$matches = array ();
-		$i=0; 
+        $i = 0;
+
 		foreach($_SESSION['patterns'] as $key => $pattern)
 		{
 			$i++;
 			$array = preg_split('/'.trim($pattern->patterns).'/im', $content, 2);
-			if(count($array)>1)
+
+            if(count($array)>1)
 			{
 				$virus_found= true;
 				$file_id = $this->insertData($scan_file,'f', ''); 

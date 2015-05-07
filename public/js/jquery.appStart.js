@@ -33,6 +33,7 @@
                 graylight: '#EEEEEE',
                 graylighter: '#F2F1EF'
             },
+            sizes: {},
             customScroll: {
                 color: '#fff', //color of custom scroll
                 rscolor: '#fff', //color of right sidebar
@@ -51,7 +52,7 @@
                 showControlsOnHover: true,//Show controls only on hover.
                 loadingEffect: 'facebook',//loading effect for panels. bounce, none, rotateplane, stretch, orbit, roundBounce, win8, win8_linear, ios, facebook, rotation.
                 rememberSortablePosition: true //remember panel position
-            },
+            }
         }
 
         // current instance of the object
@@ -455,7 +456,10 @@
         plugin.getColors = function () {
             return plugin.settings.colors;
         }
-
+        //get sizes
+        plugin.getSizes = function () {
+            return plugin.settings.sizes;
+        }
         //back to top
         plugin.backToTop = function () {
             //GoUP 0.1.2 - Developed by Roger Vila (@_rogervila)

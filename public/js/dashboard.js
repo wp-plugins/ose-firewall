@@ -1,24 +1,7 @@
 var controller ='dashboard';
 		    		
 jQuery(document).ready(function($){
-	var objColors = $('body').data('appStart').getColors();
-	var colours = {
-		white : objColors.white,
-		dark : objColors.dark,
-		red : objColors.red,
-		blue : objColors.blue,
-		green : objColors.green,
-		yellow : objColors.yellow,
-		brown : objColors.brown,
-		orange : objColors.orange,
-		purple : objColors.purple,
-		pink : objColors.pink,
-		lime : objColors.lime,
-		magenta : objColors.magenta,
-		teal : objColors.teal,
-		textcolor : '#5a5e63',
-		gray : objColors.gray
-	}
+    var colours = $('body').data('appStart').getColors();
 	var seriesData = {};
 	$('#world-map').vectorMap({
 		map : 'world_mill_en',
@@ -65,7 +48,7 @@ jQuery(document).ready(function($){
 			}
 		}
 	});
-	var chartColours = ['#3fc3a8', '#ed7a53', '#9FC569', '#bbdce3', '#9a3b1b', '#5a8022', '#2c7282'];
+    var chartColours = [colours.linechart1, colours.linechart2, colours.linechart3, colours.linechart4, colours.linechart5, colours.linechart6, colours.linechart7];
 	var totalPoints = 24;
     // Update interval
     var updateInterval = 200;
@@ -76,7 +59,7 @@ jQuery(document).ready(function($){
         	shadowSize: 0, // drawing is faster without shadows
         	lines: {
         		show: true,
-        		fill: true,
+                fill: false,
         		lineWidth: 2,
         		steps: false
             }
@@ -84,7 +67,7 @@ jQuery(document).ready(function($){
         grid: {
 			show: true,
 		    aboveData: false,
-		    color: "#3f3f3f" ,
+            color: colours.black,
 		    labelMargin: 5,
 		    axisMargin: 0, 
 		    borderWidth: 0,
@@ -113,11 +96,18 @@ jQuery(document).ready(function($){
     setInterval(function(){retrieveTrafficData(options)}, 10000);
     retrieveHackingTraffic();
     setInterval(function(){$('#IPsTable').dataTable().api().ajax.reload();}, 5000);
+    retrieveScanningResult();
+    setInterval(function () {
+        $('#scanRecentResultTable').dataTable().api().ajax.reload();
+    }, 5000);
+    retrieveBackupResult();
+    setInterval(function () {
+        $('#backupTable').dataTable().api().ajax.reload();
+    }, 5000);
     checkWebBrowsingStatus();
 });
 
-function retrieveCountryData()
-{
+function retrieveCountryData() {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -139,8 +129,7 @@ function retrieveCountryData()
 	});
 }
 
-function retrieveTrafficData(options)
-{
+function retrieveTrafficData(options) {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -155,21 +144,32 @@ function retrieveTrafficData(options)
 		    },
 	        success: function(data)
 	        {
-	        	var arr = [];
-	        	$.each(data, function(i, item) {
-	        		arr[i] = [parseInt(item.hour), parseInt(item.count)];
+                var arr0 = [];
+                $.each(data[0], function (i, item) {
+                    arr0[i] = [parseInt(item.hour), parseInt(item.count)];
 	        	});
-	            var plot = $.plot($("#traffic-overview"), [ arr], options);
+                var arr1 = [];
+                $.each(data[1], function (i, item) {
+                    arr1[i] = [parseInt(item.hour), parseInt(item.count)];
+                });
+                var arr2 = [];
+                $.each(data[2], function (i, item) {
+                    arr2[i] = [parseInt(item.hour), parseInt(item.count)];
+                });
+                var plot = $.plot($("#traffic-overview"),
+                    [{data: arr0, label: "blacklist", lines: {show: true}}
+                        , {data: arr1, label: "monitor", lines: {show: true}}
+                        , {data: arr2, label: "whitelist", lines: {show: true}}]
+                    , options);
 	        }
 	      });
 	});
 }
 
-function retrieveHackingTraffic()
-{
+function retrieveHackingTraffic() {
 	jQuery(document).ready(function($){
 		var manageIPsDataTable = $('#IPsTable').dataTable( {
-		 	bFilter: false, bInfo: false, bPaginate: false,
+		 	bFilter: false, bInfo: false, bPaginate: false, "bLengthChange": false,  bProcessing: false, iDisplayLength: 5, "order": [[ 0, "desc" ]],
 		 	processing: true,
 	        serverSide: true,
 	        ajax: {
@@ -192,9 +192,59 @@ function retrieveHackingTraffic()
 	    });
 	});	
 }
-
-function checkWebBrowsingStatus()
-{
+function retrieveScanningResult() {
+    jQuery(document).ready(function ($) {
+        var scanRecentResultTable = $('#scanRecentResultTable').dataTable({
+            bFilter: false, bInfo: false, bPaginate: true,  "bLengthChange": false,  bProcessing: false, iDisplayLength: 5, "order": [[ 0, "desc" ]],
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: url,
+                type: "POST",
+                data: function (d) {
+                    d.option = option;
+                    d.controller = controller;
+                    d.action = 'getMalwareMap';
+                    d.task = 'getMalwareMap';
+                    d.centnounce = $('#centnounce').val();
+                }
+            },
+            columns: [
+                {"data": "file_id"},
+                {"data": "filename"},
+                {"data": "checked"},
+                {"data": "confidence"},
+            ]
+        });
+    });
+}
+function retrieveBackupResult() {
+    jQuery(document).ready(function ($) {
+        var backupTable = $('#backupTable').dataTable({
+            bFilter: false, bInfo: false, bPaginate: true, "bLengthChange": false,  bProcessing: false, iDisplayLength: 5, "order": [[ 0, "desc" ]],
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: url,
+                type: "POST",
+                data: function (d) {
+                    d.option = option;
+                    d.controller = controller;
+                    d.action = 'getBackupList';
+                    d.task = 'getBackupList';
+                    d.centnounce = $('#centnounce').val();
+                }
+            },
+            columns: [
+                {"data": "ID"},
+                {"data": "time"},
+                {"data": "fileName"},
+                {"data": "fileType"}
+            ]
+        });
+    });
+}
+function checkWebBrowsingStatus() {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",

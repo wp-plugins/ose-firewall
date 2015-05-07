@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 4.5.2
+Stable tag: 4.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,14 +14,14 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 == Description ==
 
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
-Centrora Security is a new plugin that modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities. 
+Centrora Security is a new plugin that's modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 
-= New features in v4.3: =
-* Enhancement: Improved Backend User Interface
-* Enhancement: Re-designed Virus Scanning Engine, virus scanner is now 20x faster
-* New: Added Google Authenticator (2 step authentication) function
-* New: Added MainWP Support
-* New: Added Daily Automatic Virus Scanning
+= New features in v4.6: =
+* New: Added OEM Partner Support
+* New: Added Backup to Cloud Storage
+* Enhancement: Improved Frontend User Interface
+* Enhancement: Improved Scan Report
+* Enhancement: Improved Virus Scanner - Scan Specific Folders
 
 = Customer Support =
 If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here for help.</a>
@@ -87,12 +87,28 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
-= 4.5.2 = 
+= 4.6.0 =
+* Added: Feature Requests #7: Dropbox Backup
+* Added: Feature Requests #14: More functions in Scan Report
+* Added: Feature Requests #71: Add a filter into the IP management section to filter IPs for specific type of variable
+* Added: Feature Requests #84: Add directory tree map into the virus scanner
+* Added: Feature Requests #86: Add a function to insert the oem customer id into the Configuraiton table
+* Added: Feature Requests #90: OEM user access control
+* Enhancement: Added the direct access link to the IP address that is reported as spammers by the spammer detection function.
+* Enhancement: Improvements #76: Add Subscription modal to the premium service
+* Fixed: Bugs #45: Export IP to CSV
+* Fixed: Bugs #46: Geo Data progress bar goes beyond 100%
+* Fixed: Bugs #69: Foreign Language not showing properly
+* Fixed: Bugs #73: Virus scanner cannot complete virus sccanning
+* Fixed: Bugs #88: Suite Administrator Menu Visual Bug
+* Fixed: Bugs #95: Cannot add domains in Administrator Management
+
+= 4.5.2 =
 * Fixed: fixed ajax action 'addorder' and 'getPaymentAddress' not added into the ajax library for the subscriptipn controller
 
 = 4.5.1 = 
-* Minor Imppovement: improve new email notification function to increase efficiency
-* Minor Imppovement: improve updater to update to 4.5.0
+* Minor Enhancement: improve new email notification function to increase efficiency
+* Minor Enhancement: improve updater to update to 4.5.0
 
 = 4.5.0= 
 * Fixed: Bugs #15: IP management some flags are missing for some websites
@@ -107,60 +123,66 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 * Added: Feature Requests #49: Add landing page to show all features for the premium service
 * Added: Feature Requests #72: Add database versioning to ensure smooth database updates
 * Added: PDO class activation codes in the php.ini activation section for suite version
-* Imppovement: UI #50: Change the one column login UI to two columns UI
-* Imppovement: UI #51: Add a button to the activate my premium page to smooth premium service activation
+* Enhancement: UI #50: Change the one column login UI to two columns UI
+* Enhancement: UI #51: Add a button to the activate my premium page to smooth premium service activation
+* Fixed: Bugs #15: IP management some flags are missing for some websites
+* Fixed: Bugs #53: Fix variable cannot be added to suite / joomla in some websites
+* Fixed: Bugs #55: In a specific website website, the variable Whitelist not working
+* Fixed: Bugs #56: In a specific website, the OSE Security Suite cannot upgrade to Centrora Security Suite
+* Fixed: Bugs#57: In a specific website, user cannot login premium service
+* Fixed: Bugs#63: In a specific website, Virus scanner cannot complete virus sccanning
 
 = 4.4.0 = 
 * Added: Backup function for database and files for the whole WordPress and Joomla website
 * Added: File permission function to change the file permissions of the system
-* Fixed: Virus Cronjob cannot be completed in some servers
 * Added: Added email for the virus scanning cronjob when the scanning is completed
 * Fixed: In Windows server, the IP cannot be added into the database
+* Fixed: Virus Cronjob cannot be completed in some servers
 
 = 4.3.8 = 
 * Fixed: Scanning specific path not working properly on some servers
 
 = 4.3.7 = 
-* Improved: adjusted maximum threshold function to block an IP address so it will block the IP once it exceeds the threshold instead of blocking the IP in the next time
-* Fixed: Fixed Autoloader not working when the firewall is activated globally in the php environment where local php configuration is not allowed  
+* Enhancement: adjusted maximum threshold function to block an IP address so it will block the IP once it exceeds the threshold instead of blocking the IP in the next time
 * Added: Added single thread scanning function so the scanning can be performed on some servers with strict database connection requirements. 
 * Added: Backup, Clean, Delete function in scanning report
 * Fixed: Scanning specific path not working properly on some servers
+* Fixed: Fixed Autoloader not working when the firewall is activated globally in the php environment where local php configuration is not allowed
 
 = 4.3.6 = 
-* Improved: Improved virus scanner 
+* Enhancement: Improved virus scanner
 * Added: Added CURL method to download the update package
 * Added: Added Backup, Clean, Backup Clean function for virus scanning report
 * Added: Added Activation with Activation code function for premium services
 
 = 4.3.5 = 
 * Added: Added highlight of the virus scanner report
-* Improved: Enhance the firewall function to ignore json format request variables
+* Enhancement: Enhance the firewall function to ignore json format request variables
 
 = 4.3.4 = 
-* Improved: Forced display_errors to be disabled when running the Centrora Firewall for all instances
-* Improved: MainWP Extension to support some commercial MainWP addons
+* Enhancement: Forced display_errors to be disabled when running the Centrora Firewall for all instances
+* Enhancement: MainWP Extension to support some commercial MainWP addons
 
 = 4.3.3 = 
-* Improved: Improved MainWP Extension so it checks if the extension is enabled in the Child websites
+* Enhancement: Improved MainWP Extension so it checks if the extension is enabled in the Child websites
 
 = 4.3.2 = 
-* Improved: Changed MainWP Class loaded inside wordpress backend
+* Enhancement: Changed MainWP Class loaded inside wordpress backend
 
 = 4.3.1 = 
-* Improved: Improved virus scanner so it can scan a larger amount of files in the system
-* Improved: Improved virus scanner for cronjob virus scanning functions
-* Fixed: Fixed the Composer class has been declared in some Joomla websites
+* Enhancement: Improved virus scanner so it can scan a larger amount of files in the system
+* Enhancement: Improved virus scanner for cronjob virus scanning functions
+* Enhancement: Minor CSS style improvement to enhance the UI
 * Added: Added MainWP Extensions Support
-* Improved: Minor CSS style improvement to enhance the UI
+* Fixed: Fixed the Composer class has been declared in some Joomla websites
 
 = 4.3.0 = 
+* Enhancement: Improved user interface
 * Added: Cron job for virus scanning (automatic daily virus scanning)
-* Improved: Improved user interface
 
 = 4.2.2 = 
-* Improved: Separate the Firewall Configuration Page and the Firewall Rules Fine-tuning page
-* Improved: Added explanations of each ruleset in the basic firewall to let customers know more about the how Centrora Security 
+* Enhancement: Separate the Firewall Configuration Page and the Firewall Rules Fine-tuning page
+* Enhancement: Added explanations of each ruleset in the basic firewall to let customers know more about the how Centrora Security
 
 = 4.2.1 = 
 * Fixed: Custom Ban Page cannot be saved successfully on some servers.
@@ -177,7 +199,7 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 * Fixed: Fixed warning error reported by AlanP57: Undefined index: option in wp-content/plugins/ose-firewall/vendor/oseframework/wordpress.php on line 50
 
 = 4.1.7 =
-* Improve: Further Improved Anti-Spam function for registration form which blocks the spammer directly
+* Enhancement: Further Improved Anti-Spam function for registration form which blocks the spammer directly
 
 = 4.1.6 =
 * Added: Added Anti-Spam function for registration form
@@ -186,7 +208,7 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 * Fixed: Fixed Configuration Window being covered by the left administrator menu in WordPress CMS - Credits to Tina Granzo (www.citybeautifuldesign.com)
 * Fixed: Fixed typo error in Virus Scanner panel - Credits to Tina Granzo (www.citybeautifuldesign.com)
 * Fixed: Fixed typo error in .htaccess activation codes 
-* Improved: Further Improved Alert Email 
+* Enhancement: Further Improved Alert Email
 
 = 4.1.4 =
 * Improved: Improved Alert Email 

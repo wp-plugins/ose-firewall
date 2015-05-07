@@ -11,8 +11,8 @@ $hasOEMCustomer = CentroraOEM::hasOEMCustomer();
 		$this ->model->showHeader ();
 	?>
 	<div class="row">
-	<div class="<?php 
-		$numCol = ($hasOEMCustomer == true )?12:9;
+	<div class="<?php
+    $numCol = ($hasOEMCustomer == false) ? 9 : 12;
 		echo 'col-md-'.$numCol;
 	?>">
 		<div class="row">
@@ -61,6 +61,48 @@ $hasOEMCustomer = CentroraOEM::hasOEMCustomer();
 					</div>
 			    </div>	
 			</div>
+            <div class="col-md-7">
+                <div class="bs-component">
+                    <div class="panel panel-teal">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php oLang::_('RECENT_SCANNING_RESULT'); ?></h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table display" id="scanRecentResultTable">
+                                <thead>
+                                <tr>
+                                    <th><?php oLang::_('O_FILE_ID'); ?></th>
+                                    <th><?php oLang::_('O_FILE_NAME'); ?></th>
+                                    <th><?php oLang::_('O_CHECKSTATUS'); ?></th>
+                                    <th><?php oLang::_('O_CONFIDENCE'); ?></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="bs-component">
+                    <div class="panel panel-teal">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php oLang::_('RECENT_BACKUP'); ?></h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table display" id="backupTable">
+                                <thead>
+                                <tr>
+                                    <th><?php oLang::_('O_BACKUPFILE_ID'); ?></th>
+                                    <th><?php oLang::_('O_BACKUPFILE_DATE'); ?></th>
+                                    <th><?php oLang::_('O_BACKUPFILE_NAME'); ?></th>
+                                    <th><?php oLang::_('O_BACKUPFILE_TYPE'); ?></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</div>
 	  </div>
 	  <?php 

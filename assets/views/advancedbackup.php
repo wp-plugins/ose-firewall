@@ -48,6 +48,7 @@ $this->model->getNounce();
                                     <th><?php oLang::_('O_BACKUPFILE_NAME'); ?></th>
                                     <th><?php oLang::_('O_BACKUPFILE_TYPE'); ?></th>
                                     <th><?php oLang::_('O_BACKUP_DROPBOX'); ?></th>
+                                    <th></th>
                                 </tr>
                                 </tfoot>
                             </table>

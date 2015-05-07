@@ -47,7 +47,7 @@ class CountryblockModel extends BaseModel
 	public function loadLocalScript()
 	{
 		$this->loadAllAssets ();
-		oseFirewall::loadJSFile ('CentroraManageCircliful', 'plugins/progressbar/jquery.circliful.js', false);
+        oseFirewall::loadJSFile('CentroraManageJQPieChart', 'plugins/pie-chart/jquery.easy-pie-chart.js', false);
 		oseFirewall::loadJSFile ('CentroraManageIPs', 'countryblock.js', false);
 	}	
 	public function getCountryList()
@@ -131,24 +131,24 @@ class CountryblockModel extends BaseModel
 				$step++;
 				$this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);
 				break;
+//			case 8:
+//			case 9:
+//			case 10:
+//			case 11:
+//			case 12:
+//			case 13:
 			case 8:
-			case 9:
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-			case 14:
 				//$result = $this->installGeoIPDB($step -9);
-				$result = $this->cleanGeoIPDB($step - 7);
+                $result = $this->cleanGeoIPDB($step - 1);
 				$step++;
 				$this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);
 				break;
-			case 15:
+            case 9:
 				$result = $this->createDetMalwareView();
 				$step++;
 				$this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);
 				break;
-			case 16:
+            case 10:
 				$result = $this->cleanCountryDB();
 				$step++;
 				$this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);

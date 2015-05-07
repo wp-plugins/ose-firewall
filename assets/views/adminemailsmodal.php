@@ -14,8 +14,9 @@
                         <label class="col-sm-3 control-label"><?php oLang::_('ADD_DOMAIN'); ?></label>
 
                         <div class="col-sm-5">
-                            <input type="text" name="domain-address" value="" class="form-control"
-                                   pattern="^(?!:\/\/)([a-zA-Z0-9]+\.)?[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}?$"
+                            <input title="For example, www.domain.com" type="text" name="domain-address" value=""
+                                   class="form-control"
+                                   pattern="^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$"
                                    required>
                         </div>
                     </div>

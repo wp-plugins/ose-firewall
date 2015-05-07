@@ -57,8 +57,35 @@ function updateKey (key, verified) {
 	     });
   });	
 }
-		    		
+function addOEM(oem) {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'addOEM',
+                task: 'addOEM',
+                oem: oem,
+                verified: verified,
+                centnounce: $('#centnounce').val()
+            }
+        });
+    });
+}
+function getInstapage (id) {
+	$('#featureListModal').modal();
+}
+
+window.closeModal = function(){
+    $('#featureListModal').modal('hide');
+};
+
 jQuery(document).ready(function($){
+	getInstapage ('306979');
+	
     $('#login-form').submit(function() {
     	showLoading ();
     	var data =[];
@@ -74,6 +101,9 @@ jQuery(document).ready(function($){
         		{
         			showLoading(data.message);
         			updateKey (data.webkey, 0);
+                    if (data.oem !== 0) {
+                        addOEM(data.oem);
+                    }
         		}
         		else
         		{

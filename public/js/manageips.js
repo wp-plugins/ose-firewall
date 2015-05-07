@@ -1,13 +1,14 @@
 var controller = "manageips";
 
-jQuery(document).ready(function($){
-    var manageIPsDataTable = $('#manageIPsTable').dataTable( {
+jQuery(document).ready(function ($) {
+
+    var manageIPsDataTable = $('#manageIPsTable').dataTable({
         processing: true,
         serverSide: true,
         ajax: {
             url: url,
             type: "POST",
-            data: function ( d ) {
+            data: function (d) {
                 d.option = option;
                 d.controller = controller;
                 d.action = 'getACLIPMap';
@@ -16,111 +17,128 @@ jQuery(document).ready(function($){
             }
         },
         columns: [
-                { "data": "country_code"},
-                { "data": "id" },
-                { "data": "datetime" },
-                { "data": "name" },
-                { "data": "score" },
-                { "data": "ip32_start" },
-                { "data": "ip32_end" },
-                { "data": "status" },
-                { "data": "visits" },
-                { "data": "view" },
-                { "data": "checkbox", sortable: false }
+            {"data": "country_code"},
+            {"data": "id"},
+            {"data": "datetime"},
+            {"data": "name"},
+            {"data": "score"},
+            {"data": "ip32_start"},
+            {"data": "keyname"},
+            {"data": "status"},
+            {"data": "visits"},
+            {"data": "view"},
+            {"data": "checkbox", sortable: false}
         ]
     });
-    $('#manageIPsTable tbody').on( 'click', 'tr', function () {
+    $('#manageIPsTable tbody').on('click', 'tr', function () {
         $(this).toggleClass('selected');
     });
-    
-    $('#checkedAll').on('click', function() {
-    	$('#manageIPsTable').dataTable().api().rows()
-        .nodes()
-        .to$()
-        .toggleClass('selected');
+
+    $('#checkedAll').on('click', function () {
+        $('#manageIPsTable').dataTable().api().rows()
+            .nodes()
+            .to$()
+            .toggleClass('selected');
     })
-    
+
+    var font = {
+        onChange: function (cep, event, currentField, options) {
+            if (cep) {
+                var ipArray = cep.split(".");
+                for (i in ipArray) {
+                    if (ipArray[i] != "" && parseInt(ipArray[i]) > 255) {
+                        ipArray[i] = '255';
+                    }
+                }
+                var resultingValue = ipArray.join(".");
+                $(currentField).val(resultingValue);
+            }
+        }
+    };
+
+    $('#ip_start').mask("000.000.000.000", font);
+    $('#ip_end').mask("000.000.000.000", font);
     var statusFilter = $('<label>Status: <select name="statusFilter" id="statusFilter"><option value="0"></option><option value="1">Blacklisted</option><option value="2">Monitored</option><option value="3">Whitelisted</option></select></label>');
-    statusFilter.appendTo($("#manageIPsTable_filter")).on( 'change', function () {
+    statusFilter.appendTo($("#manageIPsTable_filter")).on('change', function () {
         var val = $('#statusFilter');
-         manageIPsDataTable.api().column(7)
-            .search( val.val(), false, false )
+        manageIPsDataTable.api().column(7)
+            .search(val.val(), false, false)
             .draw();
     });
-    $('#ip_start').ipAddress();
-    $('#ip_end').ipAddress();
-    $("#add-ip-form").submit(function() {
+
+    $('#manageIPsTable').on('init.dt', function () {
+        var flag = manageIPsDataTable.api().column(6).data().unique();
+        var text = "";
+        for (i = 0; i < flag.length; i++) {
+            text += '<option value="' + flag[i] + '">' + flag[i] + '</option>';
+        }
+        var varFilter = $('<label>Variable: <select name="varFilter" id="varFilter"><option value="0"></option>' + text + '</option></select></label>');
+        varFilter.appendTo($("#manageIPsTable_filter")).on('change', function () {
+            var val2 = $('#varFilter');
+            manageIPsDataTable.api().column(6)
+                .search(val2.val(), false, false)
+                .draw();
+        });
+    });
+    $("#add-ip-form").submit(function () {
         $.ajax({
-               type: "POST",
-               url: url,
-               data: $("#add-ip-form").serialize(), // serializes the form's elements.
-               success: function(data)
-               {
-            	   data = jQuery.parseJSON(data);
-            	   $('#addIPModal').modal('hide');
-       			   showDialogue (data.result, data.status, 'OK');
-           	       $('#manageIPsTable').dataTable().api().ajax.reload();
-               }
-             });
+            type: "POST",
+            url: url,
+            data: $("#add-ip-form").serialize(), // serializes the form's elements.
+            success: function (data) {
+                data = jQuery.parseJSON(data);
+                $('#addIPModal').modal('hide');
+                showDialogue(data.result, data.status, 'OK');
+                $('#manageIPsTable').dataTable().api().ajax.reload();
+            }
+        });
         return false; // avoid to execute the actual submit of the form.
     });
-    var correctFormat = '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>'+
-		'<ul>'+
-  		'<li>title: the title of the rule for this IP / IP Range<li>'+
-  		'<li>ip_start: the start IP in the IP Range<li>'+
-  		'<li>ip_end: the end IP in the IP Range<li>'+
-  		'<li>ip_type: the type of this record, \'0\' refers to one single IP, whereas \'1\' refers to IP ranges<li>'+
-  		'<li>ip_status: the status of the IP, \'1\' for blocked IP, \'3\' for whitelisted IP, \'2\' for monitored IP <li>'+
-  		'</ul>';
-    $('#import-ip-form').submit(function() {
-    	showLoading ();
-    	// submit the form 
+    var correctFormat = '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>' +
+        '<ul>' +
+        '<li>title: the title of the rule for this IP / IP Range<li>' +
+        '<li>ip_start: the start IP in the IP Range<li>' +
+        '<li>ip_end: the end IP in the IP Range<li>' +
+        '<li>ip_type: the type of this record, \'0\' refers to one single IP, whereas \'1\' refers to IP ranges<li>' +
+        '<li>ip_status: the status of the IP, \'1\' for blocked IP, \'3\' for whitelisted IP, \'2\' for monitored IP <li>' +
+        '</ul>';
+    $('#import-ip-form').submit(function () {
+        showLoading();
+        // submit the form
         $(this).ajaxSubmit({
-        	url:url,
-        	success: function(data) { 
-        		data = jQuery.parseJSON(data);
-        		if (data.success== true)
-        		{
-        			hideLoading ();
-        			$('#importModal').modal('hide');
-        			$('#manageIPsTable').dataTable().api().ajax.reload();
-        			showDialogue (data.result, data.status, 'OK');
-        		}
-        		else
-        		{
-        			hideLoading ();
-        			showDialogue (data.result+correctFormat, data.status, 'OK');
-        		}	
-            } 
-        }); 
+            url: url,
+            success: function (data) {
+                data = jQuery.parseJSON(data);
+                if (data.success == true) {
+                    hideLoading();
+                    $('#importModal').modal('hide');
+                    $('#manageIPsTable').dataTable().api().ajax.reload();
+                    showDialogue(data.result, data.status, 'OK');
+                }
+                else {
+                    hideLoading();
+                    showDialogue(data.result + correctFormat, data.status, 'OK');
+                }
+            }
+        });
         // return false to prevent normal browser submit and page navigation 
-        return false; 
+        return false;
     });
-    
-    $('#export-ip-form').submit(function() {
-    	showLoading ();
-    	// submit the form 
-        $(this).ajaxSubmit({
-        	url:url,
-        	success: function(data) { 
-        		data = jQuery.parseJSON(data);
-        		if (data.success== true)
-        		{
-        			hideLoading ();
-        			$('#exportModal').modal('hide');
-        			window.open(data.result,'_blank');
-        		}
-        		else
-        		{
-        			hideLoading ();
-        			showDialogue (data.result+correctFormat, data.status, 'OK');
-        		}	
-            } 
-        }); 
-        return false; 
-    });
-});
 
+    $('#export-ip-button').click(function () {
+
+        $('#exportModal').modal('hide');
+
+    })
+})
+function changeView() {
+    if (document.getElementById("single_ip").checked == false) {
+        document.getElementById("hidden_ip_end").style.display = "block";
+    } else {
+        document.getElementById("hidden_ip_end").style.display = "none";
+    }
+    ;
+}
 function changeItemStatus(id, status)
 {
 	AppChangeItemStatus(id, status, '#manageIPsTable', 'changeIPStatus');
@@ -131,7 +149,14 @@ function changeBatchItemStatus (action) {
 }
 
 function removeItems () {
-	AppRemoveItems ('removeips');
+    jQuery(document).ready(function ($) {
+        ids = $('#manageIPsTable').dataTable().api().rows('.selected').data();
+        if (ids.length > 0) {
+            AppRemoveItems ('removeips');
+        } else {
+            showDialogue("Please select files first!", "Notice!", 'OK');
+        }
+    })
 }
 
 function removeAllItems () {

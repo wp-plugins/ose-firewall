@@ -27,9 +27,12 @@ if ($status == true)
                               <form id = 'download-geoip-form' class="form-horizontal group-border stripped" role="form" enctype="multipart/form-data" method="POST">                            
                                    	<div class="form-group">
                                            <div class="col-sm-12">
-                                                <div id = "progressbar" class="progress-circular-blue" data-dimension="100" data-text="0%" data-width="12" data-percent="0"></div>
-                                                <div class="download-message" id='message-box'>Ready</div>
+                                               <div class="easy-pie-chart" data-percent="0" id='easy-pie-chart-1'><span
+                                                       id='pie-1'>0%</span></div>
                                            </div>
+                                        <div class="col-sm-9">
+                                            <div class="download-message" id='message-box'>Ready</div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                            <label class="col-sm-9 control-label" for="textfield"></label>

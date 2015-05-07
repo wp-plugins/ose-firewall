@@ -153,7 +153,6 @@ class oseFirewallInstaller extends oseInstaller {
 			}
 		}
 		return true;
-		
 	}
 	private function replaceVars($query) {
 		if (OSE_CMS =='wordpress') 
@@ -204,7 +203,7 @@ class oseFirewallInstaller extends oseInstaller {
 	}
 	public function installGeoIPDB($step, $dbFile) {
 		$stage = $this->getGeoIPStage();
-		if ($step == $stage || $stage > 6) {
+        if ($stage > 6) {
 			return true;
 		} else {
 			$dbFile = str_replace('{num}', $stage, $dbFile);
@@ -227,13 +226,15 @@ class oseFirewallInstaller extends oseInstaller {
 		return $return;
 	}
 	public function cleanGeoIPDB ($step) {
-		$stage = $step-1; 
-		$dbFile = OSE_FWDATA . ODS . 'osegeoip{num}.sql';
-		$dbFile = str_replace('{num}', $stage, $dbFile);
-		if (file_exists($dbFile))
-		{
-			oseFile::delete($dbFile); 
-		}	
+//		$stage = $step-1;
+//		$dbFile = OSE_FWDATA . ODS . 'osegeoip{num}.sql';
+//		$dbFile = str_replace('{num}', $stage, $dbFile);
+        for ($i = 0; $i < $step; $i++) {
+            $dbFile = OSE_FWDATA . ODS . 'osegeoip' . $i . '.sql';
+            if (file_exists($dbFile)) {
+                oseFile::delete($dbFile);
+            }
+        }
 		return true;
 	}
 	public function cleanCountryDB(){

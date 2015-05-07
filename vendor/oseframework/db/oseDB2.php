@@ -124,7 +124,6 @@ if (!class_exists('oseDB2', false))
 		}
 		public function loadResultList()
 		{
-			$i = 0;
 			$query = $this->dbo->prepare($this->query);
 			$query->execute();
 			$results = $query->fetchAll(PDO::FETCH_ASSOC);

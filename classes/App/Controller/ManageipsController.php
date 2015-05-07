@@ -255,20 +255,12 @@ class ManageipsController extends \App\Base {
 			}
 		}
 	}
-	public function action_Exportcsv () {
-		$result = $this->model->exportcsv();
-	}
-	public function action_Downloadcsv () {
-		$this->model->loadRequest();
-		$filename = $this->model->getVar ('filename', null);
-		if (empty($filename))
-		{
-			$this->model->aJaxReturn(false, 'ERROR', 'Invalid file name', false);
-		}
-		else
-		{
-			$result = $this->model->downloadcsv($filename);	
-		}
-	}
+
+    public function action_downloadCSV()
+    {
+        $this->model->loadRequest();
+        $filename = $this->model->getVar('filename', null);
+        $this->model->downloadCSV($filename);
+    }
 }
 ?>	

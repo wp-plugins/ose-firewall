@@ -35,9 +35,8 @@ class VsscanModel extends BaseModel {
 	public function loadLocalScript() {
 		$this->loadAllAssets ();
 		$status = oseFirewall::checkSubscriptionStatus (false);
-		if ($status == true)
-		{	
-			oseFirewall::loadJSFile ('CentroraManageJQPlot', 'plugins/pie-chart/jquery.flot.custom.js', false);
+		if ($status == true) {
+            oseFirewall::loadJSFile('CentroraManageJQPlot', 'plugins/pie-chart/jquery.flot.custom.js', false);
 			oseFirewall::loadJSFile ('CentroraManageJQPieChart', 'plugins/pie-chart/jquery.easy-pie-chart.js', false);
 			oseFirewall::loadJSFile ('CentroraManageIPs', 'vsscan.js', false);
 		}
@@ -141,4 +140,16 @@ class VsscanModel extends BaseModel {
 		$response = $downloader->checkScheduleScanning();
 		return $response; 
 	}
+    public function  getFileTree(){
+        if (class_exists('SConfig')){
+            $rootpath = dirname(OSE_ABSPATH );
+        }else {
+            $rootpath = OSE_ABSPATH;
+        }
+        $path = $rootpath .  urldecode( $_REQUEST['dir'] );
+
+        oseFirewall::callLibClass('panel','panel');
+        $panel = new panel();
+        $panel->getFileTree($rootpath, $path);
+    }
 }

@@ -251,13 +251,13 @@ define('BACKUP', 'Backup');
 define('AUTHENTICATION', 'Authentication');
 define('ADVANCEDBACKUP', 'Advanced Backup');
 define('ADMINEMAILS_TITLE', '<b>Administrator Management</b>');
-define('ADMINEMAILS_DESC', 'You can centrally manage your administrator and domain address here');
+define('ADMINEMAILS_DESC', 'You can centrally manage your administrator and domain addresses here');
 define('ADMINEMAILS', 'Administrator Management');
 define('BACKUP_MANAGER', 'Backup Management');
 define('BACKUP_TITLE', '<b>Backup Management</b>');
 define('AUTHENTICATION_TITLE', '<b>Third Party Authentication</b>');
 define('AUTHENTICATION_DESC', 'By authentication, you are authorising centrora security to get access to your account, you personal information will not be disclosed');
-define('BACKUP_DESC', 'You can centrally backup your database here');
+define('BACKUP_DESC', 'You can centrally manage your database and files backup here');
 define('BACKUP_FILES', 'files have been backed up');
 define('PREFIX_EMPTY', 'Please enter a prefix');
 define('BACKUP_TYPE_EMPTY', 'Please select a backup type' );
@@ -354,7 +354,7 @@ define('YOUR_VERSION', 'Your version: ');
 define('SCHEDULE_SCANNING', 'Schedule Virus Scanning');
 define('SYSTEM_PLUGIN_DISABLED', 'The Centrora system plugin is disabled, please enable it and put it to the first position.');
 define('SYSTEM_PLUGIN_READY', 'The Centrora system plugin is ready.');
-define('SCAN_SPECIFIC_FOLDER', 'Scan specific folder');
+define('SCAN_SPECIFIC_FOLDER', 'Scan Specific Folder');
 define('O_DROPBOX_FAILED', 'Uploading the backup file to Dropbox has been failed. Please re-authorize the Dropbox API again.');
 
 define('O_FILE_ID', 'File ID');
@@ -362,6 +362,7 @@ define('O_FILE_NAME', 'File Name');
 define('O_CONFIDENCE', 'Confidence');
 define('O_PATTERNS', 'Patterns');
 define('O_PATTERN_ID', 'Pattern ID');
+define('O_CHECKSTATUS', 'Status');
 
 define('O_BACKUPFILE_ID', 'ID');
 define('O_BACKUPFILE_DATE', 'Time');
@@ -377,6 +378,7 @@ define('O_DATE', 'Date');
 define('O_RISK_SCORE', 'Score');
 define('O_START_IP', 'Start IP');
 define('O_END_IP', 'End IP');
+define('O_VARIABLE', 'Variable');
 define('O_ADD_AN_IP', 'Add an IP');
 define('O_IP_RULE', 'IP Rule Title');
 define('O_IP_TYPE', 'IP Type');
@@ -449,11 +451,10 @@ define('COUNTRY_STATUS_CHANGED_FAILED', 'The country status was changed unsucces
 define('COUNTRY_DATA_DELETE_SUCCESS', 'Country data has been deleted successfully.');
 define('COUNTRY_DATA_DELETE_FAILED', 'Country data was changed unsuccessfully.');
 
-define('O_SCANREPORT_BACKUP', 'Back Up');
-define('O_SCANREPORT_BKCLEAN', 'Backup and Clean');
+define('O_SCANREPORT_CLEAN', 'Clean');
+define('O_SCANREPORT_QUARANTINE', 'Quarantine');
 define('O_SCANREPORT_RESTORE', 'Restore');
 define('O_SCANREPORT_DELETE', 'Delete');
-define('O_SCANREPORT_DELETEALL', 'Delete All');
 
 define('O_BACKUP_BACKUPDB', 'Back Up Database');
 define('O_BACKUP_BACKUPFILE', 'Back Up Files');
@@ -497,6 +498,8 @@ define('AUDIT_WEBSITE','Audit My Website');
 define('OVERVIEW_COUNTRY_MAP','Overview of Hacking Activities By Countries');
 define('OVERVIEW_TRAFFICS','Traffic Overview');
 define('RECENT_HACKING_INFO','Recent Hacking Traffic');
+define('RECENT_SCANNING_RESULT', 'Recent scanning result');
+define('RECENT_BACKUP', 'Recent backup');
 define('PLEASE_ENTER_REQUIRED_INFO','Please enter the required information.');
 define('MY_PREMIUM_SERVICE','Activate My Premium Service');
 define('INSTALLATION','Installation');
@@ -589,4 +592,9 @@ define('FIRST_NAME', 'First Name');
 define('LAST_NAME', 'Last Name');
 define('O_NEXT', 'Place Order');
 define('PERMCONFIG_ONECLICKPERMFIX', 'One Click Permisions Fix');
+
+// Version 4.6.0
+define('SCANPATH', 'Select Path');
+define('PATH', 'Path');
+define('FILETREENAVIGATOR', 'Directory Navigator');
 ?>

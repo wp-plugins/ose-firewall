@@ -47,16 +47,13 @@ jQuery(document).ready(function($){
     $('#permconfigTable tbody').on( 'click', 'tr', function () {
         if (permconfigDataTable.fnGetData( this ) !==null) {
             $(this).toggleClass('selected');
-
             var path = permconfigDataTable.fnGetData(this)['path'];
             var type = permconfigDataTable.fnGetData(this)['type'];
-
             if (type === 'dir') {
                 var index = $.inArray('dir:' + path, selectedids);
             } else {
                 var index = $.inArray(path, selectedids);
             }
-
             /* Update the data array and return the value */
             if (index === -1) {
                 if (type === 'dir') {
@@ -64,92 +61,39 @@ jQuery(document).ready(function($){
                 } else {
                     selectedids.push(path);
                 }
-
-                //$(this).toggleClass('selected');
             } else {
                 selectedids.splice(index, 1);
-                //$(this).toggleClass('selected');
             }
             console.log(selectedids);
         }
     });
-
     $( '#FileTreeDisplay' ).html( '<ul class="filetree start"><li class="wait">' + 'Generating Tree...' + '<li></ul>' );
-
-    getfilelist( $('#FileTreeDisplay') , '/' );
-
-    function getfilelist( cont, root ) {
-
-        $( cont ).addClass( 'wait' );
-
-        $.ajax ({
-            url: url,
-            type: "POST",
-            data: {
-                option : option,
-                controller:controller,
-                action : 'getFileTree',
-                task : 'getFileTree',
-                centnounce : $('#centnounce').val(),
-                dir: root
-                //,view: view
-            },
-            success: function(data) {
-                $( cont ).find( '.start' ).html( '' );
-                $( cont ).removeClass( 'wait' ).append(data);
-                if( '/' == root )
-                    $( cont ).find('UL:hidden').show();
-                else{
-                    $( cont ).find('UL:hidden').slideDown({ duration: 500, easing: null });
-                }
-            }
-        });
-    }
+    getfilelist( $('#FileTreeDisplay') , '' );
     function clickfiletreedisplay (entry, current, rel_id, refreshtable){
-        /*Don't expand Root*/
-        if (escape( current.attr(rel_id) ) === '/'){
-            entry.find('UL').slideUp({ duration: 1, easing: null }); /* collapse it */
-            entry.removeClass('collapsed').addClass('expanded');
+        var currentfolder;
+        currentfolder = getfiletreedisplay (entry, current, rel_id);
+        if(typeof currentfolder == 'undefined'){
+            currentfolder = '';
         }
-        if( entry.hasClass('folder') ) { /* check if it has folder as class name */
-            if( entry.hasClass('collapsed') ) { /* check if it is collapsed */
-
-                entry.find('UL').remove(); /* if there is any UL remove it */
-                getfilelist( entry, escape( current.attr(rel_id) )); /* initiate Ajax request */
-                entry.removeClass('collapsed').addClass('expanded'); /* mark it as expanded */
-            }
-            else { /* if it is expanded already */
-                entry.find('UL').slideUp({ duration: 500, easing: null }); /* collapse it */
-                entry.removeClass('expanded').addClass('collapsed'); /* mark it as collapsed */
-            }
-            var currentfolder = '';
-            if (escape( current.attr(rel_id) ) !== '/'){ currentfolder = current.attr( rel_id )};
-
-            if (refreshtable){
-                $( '#selected_file' ).text( "Current Folder: ROOT" + currentfolder);
-                getcurrentdirectory(escape( current.attr(rel_id) ));
-            }
-
-        } else { /* clicked on file */
-            $( '#selected_file' ).text( "File:  " + current.attr( rel_id ));
+        if (refreshtable){
+            $( '#selected_file' ).text( "Current Folder: ROOT" + currentfolder);
+            getcurrentdirectory(escape( current.attr(rel_id) ));
         }
     }
     $( '#FileTreeDisplay' ).on('click', 'LI', function() { /* monitor the click event on foldericon */
-        var entry = $(this); /* get the parent element of the link */
-        var current = $(this); /* get the parent element of the link */
+        var entry = $(this);
+        var current = $(this);
         var id = 'id';
         clickfiletreedisplay(entry, current, id, false);
         return false;
     });
-
     $( '#FileTreeDisplay' ).on('click', 'LI A', function() { /* monitor the click event on links */
-        var entry = $(this).parent(); /* get the parent element of the link */
-        var current = $(this); /* get the parent element of the link */
+        var entry = $(this).parent();
+        var current = $(this);
         var rel = 'rel';
         clickfiletreedisplay(entry,current,rel, true);
         return false;
     });
-
     $("#edit-perm-form").submit(function() {
         var binary = 0+document.editpermform.u.value + document.editpermform.g.value + document.editpermform.w.value;
         document.editpermform.chmodbinary.value = binary;
@@ -182,13 +126,9 @@ function getselecteditemslist (){
     var files = '';
     var folders = '';
     var selectedvalues = [];
-
     calcperm();
-
     disableradios();
-
     selectedids.forEach(function(entry) {
-
         if (entry.indexOf('dir:') === -1) {
             files += entry + ',  ';
             selectedvalues.push(entry);
@@ -196,11 +136,8 @@ function getselecteditemslist (){
             folders += entry.replace('dir:', '') + ',  ';
             selectedvalues.push(entry.replace('dir:', ''));
         }
-
     });
-
     document.editpermform.chmodpaths.value = selectedids.join([separator = '{/@^}']); /*set dir value for ajax chmod call*/
-
     jQuery( '#SelectedItemsList').html( "<h5>Folder(s): <small>"+ folders +"</small></h5> <h5>File(s): <small>"+ files +"</small></h5>");
 }
 
@@ -245,7 +182,6 @@ function disableradios() {
             jQuery('label[for=recurall]').css({color: '#A4A4A4'});
             jQuery('label[for=recurfiles]').css({color: '#A4A4A4'});
             jQuery('label[for=recurfolders]').css({color: '#A4A4A4'});
-
         }
         else {
             jQuery('label[for=recurall]').css({color: '#000000'});

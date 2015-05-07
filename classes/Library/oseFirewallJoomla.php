@@ -60,6 +60,7 @@ class oseFirewall extends oseFirewallBase {
     	//add_action('admin_menu', 'oseFirewall::showmenus');
     } 
     public static function getmenus(){
+
     	$db = JFactory :: getDBO();
 		$query = "SELECT * FROM `#__menu` WHERE `alias` =  'Centrora Security'";
 		$db->setQuery($query);
@@ -69,7 +70,8 @@ class oseFirewall extends oseFirewallBase {
 			$db->setQuery($query);
 			$db->query();
 		}
-		$db->closeDBO(); 
+        $db->closeDBO();
+
 		$extension = 'com_ose_firewall';
 		$view = JRequest :: getVar('view');
 		
@@ -157,9 +159,9 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'cronjobs') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=cronjobs">' . oLang::_get('CRONJOBS'). '</a></li>';
 		
-		/*$menu .= '<li ';
+		$menu .= '<li ';
 		$menu .= ($view == 'advancedbackup') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=advancedbackup">' . oLang::_get('ADVANCEDBACKUP') . '</a></li>';*/
+		$menu .= '><a href="index.php?option=' . $extension . '&view=advancedbackup">' . oLang::_get('ADVANCEDBACKUP') . '</a></li>';
 		
 		$menu .= '</ul>';
 		
@@ -198,7 +200,7 @@ class oseFirewall extends oseFirewallBase {
 		
 		// Main Feature Ends;
 		$menu .= '</ul></div></div></div>';
-		return $menu;
+        echo $menu;
 	}
 	protected static function addSuiteMenu () {
 		$option = JRequest::getVar('option', null);
@@ -210,29 +212,29 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($option == 'com_users') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=com_users&view=users">User Manager</a></li>';
-		
-		$menu .= '<li ';
+
+        $menu .= '<li ';
 		$menu .= ($option == 'com_installer') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=com_installer">Extension Manager</a></li>';
-		
-		$menu .= '<li ';
+
+        $menu .= '<li ';
 		$menu .= ($option == 'com_admin') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=com_admin&view=sysinfo">System Information</a></li>';
-		
-		$menu .= '<li ';
+
+        $menu .= '<li ';
 		$menu .= ($option == 'com_config') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=com_config">Global Configuration</a></li>';
-		
-		$menu .= '<li ';
+
+        $menu .= '<li ';
 		$menu .= ($option == 'com_plugins') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=com_plugins&view=plugins">Plugin Manager</a></li>';
-		
-		$menu .= '<li ';
+
+        $menu .= '<li ';
 		$menu .= ($option == 'com_login') ? 'class="active"' : '';
-		
-		$menu .= '><a href="index.php?option=com_login&task=logout&'.self::loadNounce().'=1">Logout</a></li>';
-		
-		$menu .= '</ul></li>';
+
+        $menu .= '><a href="index.php?option=com_login&task=logout&'.self::loadNounce().'=1">Logout</a></li>';
+
+        $menu .= '</ul></li>';
 		return $menu;
 	}
 	public static function getAjaxScript() {
@@ -241,8 +243,6 @@ class oseFirewall extends oseFirewallBase {
     }
 	public static function showLogo()
 	{
-		$url = 'http://www.centrora.com';
-		$appTitle = OSE_WORDPRESS_FIREWALL;
 		$head = '<nav class="navbar navbar-default" role="navigation">';
 		$head .= '<div class="navbar-top">
 					 <div class="col-lg-1 col-sm-6 col-xs-6 col-md-6">
@@ -266,8 +266,8 @@ class oseFirewall extends oseFirewallBase {
 					<div class ="col-lg-12">
 						<div class="logo"></div>'.$oem->showOEMName ().'
 					<div class ="version-normal">'.self::getVersion ().'</div>';
-		
-		$serverversion = self::getServerVersion(); 
+
+		$serverversion = self::getServerVersion();
 						#"4.2.6"; #Hardcoded for testing purposes
 		
 		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);

@@ -56,14 +56,14 @@ class oseVsscanStat {
 		$columns = oRequest::getVar('columns', null);
 		$limit = oRequest::getInt('length', 15);
 		$start = oRequest::getInt('start', 0);
-		$type_id = oRequest::getInt('type_id', 0);
+        //$type_id = oRequest::getInt('type_id', 0);
 		$search = oRequest::getVar('search', null);
 		$orderArr = oRequest::getVar('order', null);
 		$sortby = null;
 		$orderDir = 'asc';
-		if (!empty($columns[7]['search']['value']))
+        if (!empty($columns[3]['search']['value']))
 		{
-			$status = $columns[7]['search']['value'];
+            $status = $columns[3]['search']['value'];
 		}
 		else
 		{
@@ -74,7 +74,7 @@ class oseVsscanStat {
 			$sortby = $columns[$orderArr[0]['column']]['data'];
 			$orderDir = $orderArr[0]['dir'];
 		}
-		$return = $this->getMalwareMapDB($search['value'], $type_id, $start, $limit, $sortby, $orderDir);
+        $return = $this->getMalwareMapDB($search['value'], $status, $start, $limit, $sortby, $orderDir);
 		$return['data'] = $this->convertMalwareMap($return['data']);
 		return $return;
 	}
@@ -85,8 +85,15 @@ class oseVsscanStat {
 		{
 			$return[$i] = $result;
 			$return[$i] ->checkbox = '';
-			$return[$i] ->view = "<a href='#' title = 'View detail' onClick= 'viewFiledetail(".$result->file_id.")' ><i class='im-dashboard'></i></a>";
-			$i++;
+            $return[$i]->view = "<a href='#' title = 'View detail' onClick= 'viewFiledetail(" . $result->file_id . ", " . $result->checked . ")' ><i class='im-dashboard'></i></a>";
+            if ($result->checked == 0) {
+                $return[$i]->checked = "No action";
+            } elseif ($result->checked == 1) {
+                $return[$i]->checked = "Cleaned";
+            } else {
+                $return[$i]->checked = "Quarantined";
+            }
+            $i++;
 		}
 		return $return;
 	}
@@ -94,7 +101,7 @@ class oseVsscanStat {
 		$this->where[] = "`f`.`filename` LIKE ".$this->db->quoteValue($search.'%', true) ;
 	}
 	protected function getWhereStatus ($status) {
-		$this->where[] = "`v`.`type_id` = ".(int)$type_id;
+        $this->where[] = "`f`.`checked` = " . (int)$status;
 	}
 	protected function getOrderBy ($sortby, $orderDir) {
 		if (empty($sortby))
@@ -134,10 +141,14 @@ class oseVsscanStat {
 		$return['recordsFiltered'] = $result->count;
 		return $return;
 	}
-	public function getMalwareMapDB ($search, $type_id, $start, $limit, $sortby, $orderDir) {
+
+    public function getMalwareMapDB($search, $status, $start, $limit, $sortby, $orderDir)
+    {
 		$return = array ();
 		if (!empty($search)) {$this->getWhereName ($search);}
-		if (!empty($type_id)) {$this->getWhereStatus ($type_id);}
+        if (!empty($status)) {
+            $this->getWhereStatus($status);
+        }
 		$this->getOrderBy ($sortby, $orderDir);
 		if (!empty($limit)) {$this->getLimitStm ($start, $limit);}
 		$where = $this->db->implodeWhere($this->where);
@@ -184,37 +195,77 @@ class oseVsscanStat {
 		return $fileContent; 
 	}
 
-    public function batchbk($id)
+    public function batchqt($id)
     {
-        foreach ($id as $single) {
-            $return = $this->vsbackup($single);
+        if (is_array($id)) {
+            $cleanID = $this->pickupID(1, $id);
+            $noActionID = $this->pickupID(0, $id);
+            foreach ($noActionID as $noActionSingle) {
+                $return = $this->vsbackup($noActionSingle->id);
+                if ($return == "success") {
+                    $flag = $this->qtDelete($noActionSingle->id);
+                    $this->changeStatus($noActionSingle->id, 2);
+                }
         }
-        return $return;
+            foreach ($cleanID as $cleanSingle) {
+                $flag = $this->qtDelete($cleanSingle->id);
+                $this->changeStatus($cleanSingle->id, 2);
+            }
+        } else {
+            $status = $this->getStatus($id);
+            if ($status == 1) {
+                $flag = $this->qtDelete($id);
+                $this->changeStatus($id, 2);
+            } else {
+                $return = $this->vsbackup($id);
+                if ($return == "success") {
+                    $flag = $this->qtDelete($id);
+                    $this->changeStatus($id, 2);
+                }
+            }
+        }
+        return $flag;
     }
-
     public function batchbkcl($id)
     {
-        foreach ($id as $single) {
-            $return = $this->vsbackup($single);
+        if (is_array($id)) {
+            $newid = $this->pickupID(0, $id);
+
+            foreach ($newid as $single) {
+                $return = $this->vsbackup($single->id);
             if ($return == "success") {
-                $this->vsclean($single);
+                $this->vsclean($single->id);
+                $this->changeStatus($single->id, 1);
                 $re = "success";
             } else {
                 $re = "fail";
             }
-
+            }
+        } else {
+            $return = $this->vsbackup($id);
+            if ($return == "success") {
+                $this->vsclean($id);
+                $this->changeStatus($id, 1);
+                $re = "success";
+            } else {
+                $re = "fail";
+            }
         }
         return $re;
     }
-
     public function batchrs($id)
     {
+        if (is_array($id)) {
         foreach ($id as $single) {
             $return = $this->vsrestore($single);
+            $this->changeStatus($single, 0);
+        }
+        } else {
+            $return = $this->vsrestore($id);
+            $this->changeStatus($id, 0);
         }
         return $return;
     }
-
     public function vsrestore($id)
     {
         $flag = $this->copyback($id);
@@ -224,7 +275,6 @@ class oseVsscanStat {
             return "fail";
         }
     }
-
     private function copyback($id)
     {
         $filename = $this->getFilePath($id);
@@ -271,10 +321,36 @@ class oseVsscanStat {
 
     public function batchdl($id)
     {
+        if (is_array($id)) {
         foreach ($id as $single) {
-            $return = $this->vsdelete($single);
+            $return = $this->vsLocalDelete($single);
+        }
+        } else {
+            $return = $this->vsLocalDelete($id);
         }
         return $return;
+    }
+
+    private function vsLocalDelete($id)
+    {
+        $filename = $this->getFilePath($id);
+        $re = "/^(.*\\/)(.*\\..*)$/ims";
+        preg_match($re, $filename, $matches);
+        $re1 = "/(\\w+)$/";
+        $subst = "pbk";
+        $result = preg_replace($re1, $subst, $matches[2], 1);
+        $result = $id . "_" . $result;
+        $dest = OSE_FWDATABACKUP . ODS . $result;
+        $return = unlink($dest);
+        $this->deletevsDB($id);
+        return $return;
+    }
+
+    public function qtDelete($id)
+    {
+        $filename = $this->getFilePath($id);
+        $flag = unlink($filename);
+        return $flag;
     }
     public function vsdelete($id)
     {
@@ -287,6 +363,7 @@ class oseVsscanStat {
     {
         $return = $this->vsbackup($id);
         if ($return == "success") {
+            $this->changeStatus($id, 1);
             $filecontent = $this->vsclean($id);
             return $filecontent;
         } else {
@@ -379,4 +456,49 @@ class oseVsscanStat {
 		}
 		return $cp_lang; 
 	}
+
+    public function pickupID($status, $id)
+    {
+        $stringID = " AND `id` IN (" . implode(", ", $id) . ")";
+        $query = "SELECT `id` FROM `#__osefirewall_files` WHERE `checked` =" . (int)$status . $stringID;
+        $this->db->setQuery($query);
+        $result = (array)$this->db->loadObjectList();
+        $this->db->closeDBO();
+        return $result;
+    }
+
+    public function getStatus($id)
+    {
+        $query = "SELECT `checked` FROM `#__osefirewall_files` WHERE `id` =" . (int)$id;
+        $this->db->setQuery($query);
+        $result = $this->db->loadObjectList();
+        $this->db->closeDBO();
+        return $result->checked;
+    }
+
+    public function changeStatus($id, $changeTo)
+    {
+        if ($changeTo == 1) {
+            $statusArray = array(
+                'checked' => $changeTo
+            );
+            $db = oseFirewall::getDBO();
+            $db->addData('update', $this->filestable, 'id', $id, $statusArray);
+            $db->closeDBO();
+        } elseif ($changeTo == 2) {
+            $statusArray = array(
+                'checked' => $changeTo
+            );
+            $db = oseFirewall::getDBO();
+            $db->addData('update', $this->filestable, 'id', $id, $statusArray);
+            $db->closeDBO();
+        } elseif ($changeTo == 0) {
+            $statusArray = array(
+                'checked' => $changeTo
+            );
+            $db = oseFirewall::getDBO();
+            $db->addData('update', $this->filestable, 'id', $id, $statusArray);
+            $db->closeDBO();
+        }
+    }
 }	

@@ -132,9 +132,9 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'ose_fw_cronjobs') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_cronjobs">' . oLang::_get('CRONJOBS'). '</a></li>';
 		
-		/*$menu .= '<li ';
+		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_advancedbackup') ? 'class="active"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_advancedbackup">' . oLang::_get('ADVANCEDBACKUP') . '</a></li>';*/
+		$menu .= '><a href="admin.php?page=ose_fw_advancedbackup">' . oLang::_get('ADVANCEDBACKUP') . '</a></li>';
 		
 		$menu .= '</ul>';
 		// SubMenu Anti-Hacking Ends;
@@ -176,7 +176,7 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_firewall', FIREWALL_CONFIGURATION, FIREWALL_CONFIGURATION, 'manage_options', 'ose_fw_bsconfig', 'oseFirewall::bsconfig' );
 		add_submenu_page( 'ose_firewall', ADRULESETS, ADRULESETS, 'manage_options', 'ose_fw_adrulesets', 'oseFirewall::advancerulesets' );
 		add_submenu_page( 'ose_firewall', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables' );
-		add_submenu_page( 'ose_firewall', CONFIGURATION, CONFIGURATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration' );
+        add_submenu_page('ose_firewall', INSTALLATION, INSTALLATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration');
         add_submenu_page('ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup');
 
         add_submenu_page('ose_firewall', ADVANCEDBACKUP, ADVANCEDBACKUP, 'manage_options', 'ose_fw_advancedbackup', 'oseFirewall::advancedbackup');

@@ -66,6 +66,22 @@ class DashboardModel extends BaseModel {
 		$oseFirewallStat = new oseFirewallStat();
 		return $oseFirewallStat->getTrafficData();
 	}
+
+    public function getMalwareMap()
+    {
+        oseFirewall::callLibClass('vsscanstat', 'vsscanstat');
+        $scanReport = new oseVsscanStat ();
+        $response = $scanReport->getMalwareMap();
+        return $response;
+    }
+
+    public function getBackupList()
+    {
+        oseFirewall::callLibClass('backup', 'oseBackup');
+        $backupResult = new oseBackupManager ();
+        $response = $backupResult->getBackupList();
+        return $response;
+    }
 	public function checkWebBrowsingStatus () {
 		oseFirewall::callLibClass('panel','panel');
 		$panel = new panel ();

@@ -4,15 +4,13 @@ Plugin Name: Centrora Security
 Plugin URI: http://wordpress.org/extend/plugins/ose-firewall/
 Description: Centrora Security (previously OSE Firewall) - A WordPress Security Firewall plugin created by Centrora. Protect your WordPress site by identify any malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 Author: Centrora (Previously ProWeb)
-Version: 4.5.2
+Version: 4.6.0
 Author URI: http://www.centrora.com/
 //@todo change Icon URI
 Icon URI: https://secure.gravatar.com/avatar/26d6eb39bd2613b318ad7a64f3641480?d=mm&s=300&r=G
 */
 
-if (version_compare(PHP_VERSION, '5.3.0') < 0)
-{	
-	
+if (version_compare(PHP_VERSION, '5.3.0') < 0) {
 	die("<div style='background-color: #fff;
 				    border-left: 4px solid #ffba00;
 				    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
@@ -79,10 +77,16 @@ if ($oseFirewall -> isBackend () && $oseFirewall -> isAdminAjax () == false)
 		}
         oseFirewall::loadRequest();
 		$task = oRequest :: getVar('task', null);
+        $filename = oRequest:: getVar('filename', null);
+
 		if ($task == 'downloadBackupFile') {
 			oseFirewall::callLibClass('backup', 'oseBackup');
 			oseBackupManager::downloadBackupFile();
-		}
+        } elseif ($task == 'downloadCSV') {
+            oseFirewall::callLibClass('firewallstat', 'firewallstatBase');
+            $oseFirewallStat = new oseFirewallStatBase();
+            $oseFirewallStat->downloadcsv($filename);
+        }
  	}
 }
 else if ($systemReady[0] == true)

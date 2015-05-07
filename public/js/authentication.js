@@ -40,8 +40,13 @@ function dropbox_oauth() {
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
+                if (data == "wordpress") {
                 window.location = 'admin.php?page=ose_fw_advancedbackup';
                 window.location.reload;
+                } else {
+                    window.location = 'index.php?option=com_ose_firewall&view=advancedbackup';
+                    window.location.reload;
+                }
             }
         })
     })

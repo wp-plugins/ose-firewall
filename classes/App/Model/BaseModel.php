@@ -171,7 +171,6 @@ class BaseModel  {
 	}
 	protected function loadAllAssets () {
 		// JS
-        $lang = oseFirewallBase::getLocaleString();
 		if (OSE_CMS =='joomla')
 		{
 			$version = new JVersion();
@@ -201,7 +200,18 @@ class BaseModel  {
 		oseFirewall::loadJSFile ('CentroraSlimscroll', 'plugins/slimscroll/jquery.slimscroll.min.js', false);
 		oseFirewall::loadJSFile ('CentroraSlimscrolHor', 'plugins/slimscroll/jquery.slimscroll.horizontal.min.js', false);
 		oseFirewall::loadJSFile ('CentroraAppstart', 'jquery.appStart.js', false);
+        oseFirewall::loadJSFile('CentroraInputMask', 'plugins/inputmask/jquery.mask.js', false);
+
+        oseFirewall::callLibClass('oem', 'oem');
+        $oem = new CentroraOEM();
+        $oemCustomer = $oem->hasOEMCustomer();
+        if ($oemCustomer) {
+            oseFirewall::loadJSFile('oemJS', 'oem/' . $oemCustomer['data']['customer_id'] . '/custom.js', false);
+        } else {
+            oseFirewall::loadJSFile('CentroraColors', 'colors.js', false);
+        };
 		oseFirewall::loadJSFile ('CentroraApp', 'app.js', false);
+        $lang = oseFirewallBase::getLocaleString();
 		oseFirewall::loadLanguageJSFile ('CentroraLanguage', ''.$lang.'.js', false);
 		// CSS
 		oseFirewall::loadCSSFile ('CentroraDataTable', 'jquery.dataTables.min.css', false);
@@ -257,6 +267,17 @@ class BaseModel  {
 			}
 		}
 	}
+//    public function showGoogleSecret() {
+//        require_once(OSE_FWFRAMEWORK.ODS.'googleAuthenticator'.ODS.'class_gauthenticator.php');
+//        $gauthenticator = new GoogleAuthenticator();
+//        $secret = $gauthenticator->create_secret();
+//        $QRcode = $gauthenticator->get_qrcode();
+//        $result = array(
+//            'secret' => $secret,
+//            'QRcode' => $QRcode
+//        );
+//        return $result;
+//    }
 	public function saveConfiguration($type, $data)
 	{
 		$this->loadFirewallStat () ;

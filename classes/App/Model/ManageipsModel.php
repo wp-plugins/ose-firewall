@@ -152,7 +152,7 @@ class ManageipsModel extends BaseModel
 		return $oseFirewallStat->getACLIPStatistic();
 	}
 	public function importcsv ($file) {
-		$row = 1;
+        $row = 2;
 		$result = true; 
 		if (($handle = fopen($file['tmp_name'], "r")) !== FALSE) {
 		    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -173,9 +173,6 @@ class ManageipsModel extends BaseModel
 		}
 		return $result; 
 	}
-	private function headerArray() {
-		return array ('name','ip_start','ip_end','ip_type','ip_status');
-	}
 	private function array_equal($a, $b, $strict=false) {
 	    if (count($a) !== count($b)) {
 	        return false;
@@ -184,48 +181,21 @@ class ManageipsModel extends BaseModel
 	    sort($b);
 	    return ($strict && $a === $b) || $a == $b;
 	}
-	public function exportcsv () {
-		oseFirewall::loadFiles();
-		$time= date("Y-m-d");
-		$filename = "ip-export-".$time.".csv";
-		$url = EXPORT_DOWNLOAD_URL.urlencode($filename)."&centnounce=".urlencode(oseFirewall::loadNounce());
-		$return = array(
-			'success' => (boolean) true,
-			'status' => 'SUCCESS',
-			'result' => $url
-		);  
-		$return = oseJSON::encode($return);
-		print_r($return);exit;
-	}
-	private function getOutputData () {
-		$output = implode(",", $this->headerArray())."\n";
-		$oseFirewallStat = new oseFirewallStat();
-		$results = $oseFirewallStat->getACLIPMap();
-		foreach ($results['data'] as $data)
-		{
-			$output .= $this->getTmpOutput ($data)."\n";
-		}
-		return $output;
-	}
-	private function getTmpOutput ($data) {
-		$tmp = array ();
-		$tmp[] = $data->name;
-		$tmp[] = $data->ip32_start; 
-		$tmp[] = $data->ip32_end;
-		$tmp[] = $data->iptype;
-		$tmp[] = $data->statusraw;
-		$return = implode(",", $tmp);
-		return $return;
-	}
-	public function downloadcsv ($filename) {
-		$fileContent = $this->getOutputData ();
-		ob_clean();
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("Content-Length: ".strlen($fileContent));
-		// Output to browser with appropriate mime type, you choose ;)
-		header("Content-type: text/csv");
-		header("Content-Disposition: attachment; filename=$filename");
-		print_r($fileContent);
-		exit;
-	}
+
+    public function exportcsv()
+    {
+        oseFirewall::loadFiles();
+        $time = date("Y-m-d");
+        $filename = "ip-export-" . $time . ".csv";
+        $url = EXPORT_DOWNLOAD_URL . urlencode($filename) . "&centnounce=" . urlencode(oseFirewall::loadNounce());
+        $exportButton = '<a href="' . $url . '"  id="export-ip-button" target="_blank"><div>' . oLang::_("GENERATE_CSV_NOW") . '</div><i class="fa fa-file-excel-o fa-2x"></i></a>';
+        print_r($exportButton);
+
+    }
+
+    public function downloadCSV($filename)
+    {
+        $oseFirewallStat = new oseFirewallStat();
+        $oseFirewallStat->downloadcsv($filename);
+    }
  }

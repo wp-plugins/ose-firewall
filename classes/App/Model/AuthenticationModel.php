@@ -35,23 +35,19 @@ class AuthenticationModel extends BaseModel
         $this->loadLibrary();
         $this->loadDatabase();
     }
-
     protected function loadLibrary()
     {
         oseFirewall::callLibClass('backup', 'oseBackup');
     }
-
     public function loadLocalScript()
     {
         $this->loadAllAssets();
         oseFirewall::loadJSFile('CentroraManageIPs', 'authentication.js', false);
     }
-
     public function getCHeader()
     {
         return oLang::_get('AUTHENTICATION_TITLE');
     }
-
     public function getCDescription()
     {
         return oLang::_get('AUTHENTICATION_DESC');

@@ -13,7 +13,7 @@ if ($status == true)
 	?>
 	
 	<div class="content-inner">
-	<div class="row ">
+        <div class="row">
 						<?php 
 						$isOEMCustomer = CentroraOEM::hasOEMCustomer();
 						if ($isOEMCustomer  == false) {
@@ -37,12 +37,13 @@ if ($status == true)
                                 <div class="panel-controls"></div>
                                 <div class="panel-controls-buttons">
                                     <button class="btn btn-success btn-sm mr5 mb10" type="button"
-                                            onClick="batchbk()"><?php oLang::_('O_SCANREPORT_BACKUP'); ?></button>
+                                            onClick="batchbkcl()"><?php oLang::_('O_SCANREPORT_CLEAN'); ?></button>
                                     <button class="btn btn-success btn-sm mr5 mb10" type="button"
-                                            onClick="batchbkcl()"><?php oLang::_('O_SCANREPORT_BKCLEAN'); ?></button>
+                                            onClick="batchquarantine()"><?php oLang::_('O_SCANREPORT_QUARANTINE'); ?></button>
                                     <button class="btn btn-success btn-sm mr5 mb10" type="button"
                                             onClick="batchrs()"><?php oLang::_('O_SCANREPORT_RESTORE'); ?></button>
-                                    <button class="btn btn-danger btn-sm mr5 mb10" type="button"
+                                    <button id="delete-button" class="btn btn-danger btn-sm mr5 mb10" type="button"
+                                            style="display: none"
                                             onClick="confirmbatchdl()"><?php oLang::_('O_SCANREPORT_DELETE'); ?></button>
                                     <!--                                    <button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="confirmalldl()">-->
                                     <?php //oLang::_('O_SCANREPORT_DELETEALL');
@@ -57,6 +58,7 @@ if ($status == true)
                                                 <th><?php oLang::_('O_FILE_ID'); ?></th>
 								                <th><?php oLang::_('O_FILE_NAME'); ?></th>
 								                <th><?php oLang::_('O_PATTERNS'); ?></th>
+                                                <th><?php oLang::_('O_CHECKSTATUS'); ?></th>
 								                <th><?php oLang::_('O_PATTERN_ID'); ?></th>
 								                <th><?php oLang::_('O_CONFIDENCE'); ?></th>
 								                <th><?php oLang::_('VIEW'); ?></th>
@@ -68,6 +70,7 @@ if ($status == true)
                                                 <th><?php oLang::_('O_FILE_ID'); ?></th>
 								                <th><?php oLang::_('O_FILE_NAME'); ?></th>
 								                <th><?php oLang::_('O_PATTERNS'); ?></th>
+                                                <th><?php oLang::_('O_CHECKSTATUS'); ?></th>
 								                <th><?php oLang::_('O_PATTERN_ID'); ?></th>
 								                <th><?php oLang::_('O_CONFIDENCE'); ?></th>
 								                <th><?php oLang::_('VIEW'); ?></th>

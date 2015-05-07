@@ -136,10 +136,15 @@ function backup(backup_type, backup_to) {
                             showDialogue("Backup successfully", "Success", "OK");
 							$('#backupTable').dataTable().api().ajax.reload();
 						} else {
-							showDialogue("Backup failed, please try again",
+							showDialogue("Backup failed, please try again.",
 									"Notice", "OK");
 						}
-					}
+					},
+                    error : function(request, textStatus, thrownError){
+                        hideLoading();
+                        showDialogue("Operational error during backup<br /> Error Code: <pre>"+thrownError+"<br />"+request.responseText+"</pre>",
+                            "Error", "OK");
+                    }
 				})
 			})
 }

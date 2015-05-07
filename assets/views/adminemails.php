@@ -44,6 +44,7 @@ $this->model->getNounce();
                                         <th><?php oLang::_('ADD_ADMIN_EMAIL'); ?></th>
                                         <th><?php oLang::_('ADD_ADMIN_STATUS'); ?></th>
                                         <th><?php oLang::_('TABLE_DOMAIN'); ?></th>
+                                        <th></th>
                                     </tr>
                                     </tfoot>
                                 </table>

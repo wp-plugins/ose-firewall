@@ -36,6 +36,6 @@ class CentroraOEM236 {
 		
 	}
 	public function showOEMName () {
-		return '<div class="vendorname"> Gabemedia - Security </div>';
+        return '<div class="vendorname"> Gabemedia Security </div>';
 	}
 }

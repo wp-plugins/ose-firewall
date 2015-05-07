@@ -4,63 +4,67 @@ var option = "com_ose_firewall";
 
 jQuery(document).ready(function($){
 	//get object with colros from plugin and store it.
-	var objColors = $('body').data('appStart').getColors();
-	var colours = {
-		white: objColors.white,
-		dark: objColors.dark,
-		red : objColors.red,
-		blue: objColors.blue,
-		green : objColors.green,
-		yellow: objColors.yellow,
-		brown: objColors.brown,
-		orange : objColors.orange,
-		purple : objColors.purple,
-		pink : objColors.pink,
-		lime : objColors.lime,
-		magenta: objColors.magenta,
-		teal: objColors.teal,
-		textcolor: '#5a5e63',
-		gray: objColors.gray
-	}
-	//generate random number for charts
-	randNum = function(){
-		//return Math.floor(Math.random()*101);
-		return (Math.floor( Math.random()* (1+40-20) ) ) + 20;
-	}
-	initPlotChart($, [0,0], true);
-	initPlotChart($, [0,0], false);
-	initPieChartPage($, 20,100,1500, colours);
-	$('#vsscan').on('click', function() { 
-		initPieChartPage($, 20,100,1500, colours);
+    colours = $('body').data('appStart').getColors();
+    var sizes = $('body').data('appStart').getSizes();
+    ////generate random number for charts
+    //randNum = function(){
+    //	//return Math.floor(Math.random()*101);
+    //	return (Math.floor( Math.random()* (1+40-20) ) ) + 20;
+    //}
+    initPlotChart($, [0, 0], true, colours);
+    initPlotChart($, [0, 0], false, colours);
+    initPieChartPage($, sizes.pielinewidth, sizes.piesize, 1500, colours);
+	$('#vsscan').on('click', function() {
+        initPieChartPage($, sizes.pielinewidth, sizes.piesize, 1500, colours);
 		showLoading ();
-		scanAntivirus (-3, 'vsscan', [], []);
+        scanAntivirus(-3, 'vsscan', [], [], colours);
 	});
-	$('#vsscanSing').on('click', function() { 
-		initPieChartPage($, 20,100,1500, colours);
+	$('#vsscanSing').on('click', function() {
+        initPieChartPage($, sizes.pielinewidth, sizes.piesize, 1500, colours);
 		showLoading ();
-		scanAntivirusSing (-3, 'vsscan', [], []);
+        scanAntivirusSing(-3, 'vsscan', [], [], colours);
 	});
 	$('#vsstop').on('click', function() { 
 		showLoading ();
 		location.reload(); 
 	});
 	$('#vscont').on('click', function() { 
-		runAllScanAntivirus ('vsscan', cpuData=[], memData=[]) 
+		scanAntivirus (-2, 'vsscan', [], [], colours);
 	});
 });
-
-var initPlotChart = function ($, data, cpu) {
+jQuery(document).ready(function ($) {
+    $("#scan-form").submit(function () {
+        $('#scanModal').modal('hide');
+        showLoading();
+        var data = $("#scan-form").serialize();
+        data += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data, // serializes the form's elements.
+            success: function (data) {
+                hideLoading();
+                data = jQuery.parseJSON(data);
+                if (data.cont) {
+                    scanAntivirus(-2, 'vsscan', [], [], colours);
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+})
+var initPlotChart = function ($, data, cpu, colours) {
 	if (cpu =='')
 	{
 		cpu = false;
-	}	
+	}
 	//define chart colours
-	var chartColours = ['#3fc3a8', '#ed7a53', '#9FC569', '#bbdce3', '#9a3b1b', '#5a8022', '#2c7282'];
+    var chartColours = [colours.linechart1, colours.linechart2, colours.linechart3, colours.linechart4, colours.linechart5, colours.linechart6, colours.linechart7];
 	var options = {
 			grid: {
 				show: true,
 			    aboveData: true,
-			    color:'#3f3f3f',
+                color: colours.black,
 			    labelMargin: 15,
 			    axisMargin: 0, 
 			    borderWidth: 0,
@@ -84,7 +88,7 @@ var initPlotChart = function ($, data, cpu) {
 	            	radius: 4,
 	            	symbol: "circle",
 	            	fill: true,
-	            	borderColor: "#fff"
+                    borderColor: colours.white
 	            }
 	        },
 	        legend: { position: "se" },
@@ -105,8 +109,8 @@ var initPlotChart = function ($, data, cpu) {
 			    [{
 			    		label: "CPU Load",
 			    		data: data,
-			    		lines: {fillColor: "#f2f7f9"},
-			    		points: {fillColor: "#3fc3a8"}
+                    lines: {fillColor: colours.cream},
+                    points: {fillColor: colours.linechart1}
 			    }], options);
 	}
 	else
@@ -115,8 +119,8 @@ var initPlotChart = function ($, data, cpu) {
 			    [{
 			    		label: "Memory Usage",
 			    		data: data,
-			    		lines: {fillColor: "#f2f7f9"},
-			    		points: {fillColor: "#3fc3a8"}
+                    lines: {fillColor: colours.cream},
+                    points: {fillColor: colours.linechart1}
 			    }], options);
 	}
 	
@@ -126,7 +130,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
 	$(".easy-pie-chart").easyPieChart({
         barColor: colours.dark,
         borderColor: colours.dark,
-        trackColor: colours.gray,
+        trackColor: colours.piedark,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -136,7 +140,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     $(".easy-pie-chart-red").easyPieChart({
         barColor: colours.red,
         borderColor: colours.red,
-        trackColor: '#fbccbf',
+        trackColor: colours.piered,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -146,7 +150,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     $(".easy-pie-chart-green").easyPieChart({
         barColor: colours.green,
         borderColor: colours.green,
-        trackColor: '#b1f8b1',
+        trackColor: colours.piegreen,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -156,7 +160,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     $(".easy-pie-chart-blue").easyPieChart({
         barColor: colours.blue,
         borderColor: colours.blue,
-        trackColor: '#d2e4fb',
+        trackColor: colours.pieblue,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -166,7 +170,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     $(".easy-pie-chart-teal").easyPieChart({
         barColor: colours.teal,
         borderColor: colours.teal,
-        trackColor: '#c3e5e5',
+        trackColor: colours.pieteal,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -176,7 +180,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     $(".easy-pie-chart-purple").easyPieChart({
         barColor: colours.purple,
         borderColor: colours.purple,
-        trackColor: '#dec1f5',
+        trackColor: colours.piepurple,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -186,7 +190,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     $(".easy-pie-chart-orange").easyPieChart({
         barColor: colours.orange,
         borderColor: colours.orange,
-        trackColor: '#f9d7af',
+        trackColor: colours.pieorange,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -196,7 +200,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     $(".easy-pie-chart-lime").easyPieChart({
         barColor: colours.lime,
         borderColor: colours.lime,
-        trackColor: '#cfed93',
+        trackColor: colours.pielime,
         scaleColor: false,
         lineCap: 'butt',
         lineWidth: lineWidth,
@@ -205,7 +209,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
     });
 }
 
-function scanAntivirus (step, action, cpuData, memData) {
+function scanAntivirus(step, action, cpuData, memData, colours) {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -224,35 +228,35 @@ function scanAntivirus (step, action, cpuData, memData) {
 	        	hideLoading ();
 	        	cpuData.push([cpuData.length, data.cpuload]);
 	        	memData.push([memData.length, data.memory]);
-	        	initPlotChart($, cpuData, true);
-	        	initPlotChart($, memData, false);
+                initPlotChart($, cpuData, true, colours);
+                initPlotChart($, memData, false, colours);
 	        	$('#p4text').html(data.summary);
 	        	$('#last_file').html(data.last_file);
 	        	if ((step == -3 && data.contFileScan==true) || (step == -2 && data.contFileScan==true))
 	        	{
-	        		scanAntivirus (-2, action, cpuData, memData);
+                    scanAntivirus(-2, action, cpuData, memData, colours);
 	        	}
 	        	else if (step == -2 && data.cont==true) {
-                    scanAntivirus(-1, action, cpuData, memData);
+                    scanAntivirus(-1, action, cpuData, memData, colours);
 	        	}
 	        	else
 	        	{
-	        		runAllScanAntivirus (action, cpuData, memData);
+                    runAllScanAntivirus(action, cpuData, memData, colours);
 	        	}
 	        }
 	      });
 	});
 }
 
-function runAllScanAntivirus (action, cpuData, memData) {
-	var s1 = scanVirusInd (action, cpuData, memData, 1);
-	var s2 = scanVirusInd (action, cpuData, memData, 2);
-	var s3 = scanVirusInd (action, cpuData, memData, 3);
-	var s4 = scanVirusInd (action, cpuData, memData, 4);
-	var s5 = scanVirusInd (action, cpuData, memData, 5);
-	var s6 = scanVirusInd (action, cpuData, memData, 6);
-	var s7 = scanVirusInd (action, cpuData, memData, 7);
-	var s8 = scanVirusInd (action, cpuData, memData, 8);
+function runAllScanAntivirus(action, cpuData, memData, colours) {
+    var s1 = scanVirusInd(action, cpuData, memData, 1, colours);
+    var s2 = scanVirusInd(action, cpuData, memData, 2, colours);
+    var s3 = scanVirusInd(action, cpuData, memData, 3, colours);
+    var s4 = scanVirusInd(action, cpuData, memData, 4, colours);
+    var s5 = scanVirusInd(action, cpuData, memData, 5, colours);
+    var s6 = scanVirusInd(action, cpuData, memData, 6, colours);
+    var s7 = scanVirusInd(action, cpuData, memData, 7, colours);
+    var s8 = scanVirusInd(action, cpuData, memData, 8, colours);
 	jQuery(document).ready(function($){
 		$.when(s1, s2, s3, s4, s5, s6, s7, s8).then(
 			function ( v1, v2, v3, v4, v5, v6, v7, v8 ) {
@@ -260,7 +264,7 @@ function runAllScanAntivirus (action, cpuData, memData) {
 	});
 }
 
-function scanVirusInd (action, cpuData, memData, type) {
+function scanVirusInd(action, cpuData, memData, type, colours) {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -282,8 +286,8 @@ function scanVirusInd (action, cpuData, memData, type) {
 	        	{
 	        		cpuData.push([cpuData.length, data.cpuload]);
 		        	memData.push([memData.length, data.memory]);
-		        	initPlotChart($, cpuData, true);
-		        	initPlotChart($, memData, false);
+                    initPlotChart($, cpuData, true, colours);
+                    initPlotChart($, memData, false, colours);
 	        	}	
 	        	$('#p4text').html(data.summary);
 	        	$('#last_file').html(data.last_file);
@@ -292,21 +296,22 @@ function scanVirusInd (action, cpuData, memData, type) {
 	        	$('#pie-'+type).html(data.completed+'%');
 	        	if (data.cont==true)
 	        	{
-	        		scanVirusInd (action, cpuData, memData, type);
-	        	}
+                    scanVirusInd(action, cpuData, memData, type, colours);
+
+                }
 	        	else
 	        	{
 	        		return true;
 	        	}
 	        },
 		    error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    	scanVirusInd (action, cpuData, memData, type);
+                scanVirusInd(action, cpuData, memData, type, colours);
 		    }
 	      });
 	});		
 }
 
-function scanAntivirusSing (step, action, cpuData, memData) {
+function scanAntivirusSing(step, action, cpuData, memData, colours) {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -325,27 +330,27 @@ function scanAntivirusSing (step, action, cpuData, memData) {
 	        	hideLoading ();
 	        	cpuData.push([cpuData.length, data.cpuload]);
 	        	memData.push([memData.length, data.memory]);
-	        	initPlotChart($, cpuData, true);
-	        	initPlotChart($, memData, false);
+                initPlotChart($, cpuData, true, colours);
+                initPlotChart($, memData, false, colours);
 	        	$('#p4text').html(data.summary);
 	        	$('#last_file').html(data.last_file);
 	        	if ((step == -2 && data.contFileScan==true)|| (step == -3 && data.contFileScan==true))
 	        	{
-	        		scanAntivirusSing (-2, action, cpuData, memData);
+                    scanAntivirusSing(-2, action, cpuData, memData, colours);
 	        	}
 	        	else if (step == -2 && data.cont==true) {
-	        		scanAntivirusSing (-1, action, cpuData, memData);
+                    scanAntivirusSing(-1, action, cpuData, memData, colours);
 	        	}
 	        	else
 	        	{
-	        		scanVirusSingInd (action, cpuData, memData, 1);
+                    scanVirusSingInd(action, cpuData, memData, 1, colours);
 	        	}
 	        }
 	      });
 	});
 }
 
-function scanVirusSingInd (action, cpuData, memData, type) {
+function scanVirusSingInd(action, cpuData, memData, type, colours) {
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -367,8 +372,8 @@ function scanVirusSingInd (action, cpuData, memData, type) {
 	        	{
 	        		cpuData.push([cpuData.length, data.cpuload]);
 		        	memData.push([memData.length, data.memory]);
-		        	initPlotChart($, cpuData, true);
-		        	initPlotChart($, memData, false);
+                    initPlotChart($, cpuData, true, colours);
+                    initPlotChart($, memData, false, colours);
 	        	}	
 	        	$('#p4text').html(data.summary);
 	        	$('#last_file').html(data.last_file);
@@ -377,13 +382,13 @@ function scanVirusSingInd (action, cpuData, memData, type) {
 	        	$('#pie-'+type).html(data.completed+'%');
 	        	if (data.cont==true)
 	        	{
-	        		scanVirusSingInd (action, cpuData, memData, type);
+                    scanVirusSingInd(action, cpuData, memData, type, colours);
 	        	}
 	        	else
 	        	{
 	        		if (type<8) {
 	        			type = type +1;
-	        			scanVirusSingInd (action, cpuData, memData, type);
+                        scanVirusSingInd(action, cpuData, memData, type, colours);
 	        		}
 	        		else
 	        		{
@@ -393,8 +398,28 @@ function scanVirusSingInd (action, cpuData, memData, type) {
 	        	}
 	        },
 		    error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    	scanVirusSingInd (action, cpuData, memData, type);
+                scanVirusSingInd(action, cpuData, memData, type, colours);
 		    }
 	      });
 	});		
 }
+jQuery(document).ready(function($){
+    $('#customscan').click(function(){
+        $( '#FileTreeDisplay' ).html( '<ul class="filetree start"><li class="wait">' + 'Generating Tree...' + '<li></ul>' );
+        getfilelist( $('#FileTreeDisplay') , '' );
+        $( '#FileTreeDisplay' ).on('click', 'LI', function() { /* monitor the click event on foldericon */
+            var entry = $(this);
+            var current = $(this);
+            var id = 'id';
+            getfiletreedisplay (entry, current, id);
+            return false;
+        });
+        $( '#FileTreeDisplay' ).on('click', 'LI A', function() { /* monitor the click event on links */
+            var currentfolder;
+            var current = $(this);
+            currentfolder = current.attr('id')
+            $("#selected_file").val(currentfolder) ;
+            return false;
+        });
+    });
+});

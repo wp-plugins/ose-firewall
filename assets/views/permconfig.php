@@ -28,76 +28,80 @@ elseif (OSE_CMS == 'joomla') {
                         </button>
                         <h4 class="modal-title" id="myModalLabel2"><?php oLang::_('PERMCONFIG_SHORT'); ?></h4>
                     </div>
-                    <div class="modal-body">
-                        <p class="mb15"><?php oLang::_('PERMCONFIGFORM_DESC');?></p>
-                        <form id = 'edit-perm-form' class="form-horizontal group-border stripped" role="form" name="editpermform">
+                    <form id='edit-perm-form' class="form-horizontal group-border stripped" role="form" name="editpermform">
+                        <div class="modal-body">
+                            <p class="mb15"><?php oLang::_('PERMCONFIGFORM_DESC'); ?></p>
                             <div id="SelectedItemsList" class="form-group"></div>
-                            <table id="chmodtbl" class="table display">
+                            <table id="chmodtbl" class="table display table-condensed">
                                 <tbody>
                                 <tr>
-                                    <td><b>Mode</b></td>
+                                    <td align="center"><b>Mode</b></td>
                                     <td></td>
-                                    <td>Owner</td>
-                                    <td>Group</td>
-                                    <td>Public</td>
+                                    <td align="center">Owner</td>
+                                    <td align="center">Group</td>
+                                    <td align="center">Public</td>
                                 </tr>
                                 <tr>
-                                    <td>Read</td>
+                                    <td align="right">Read</td>
                                     <td></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="4" id="ur"></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="4" id="gr"></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="4" id="wr"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="4" id="ur"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="4" id="gr"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="4" id="wr"></td>
                                 </tr>
                                 <tr>
-                                    <td>Write</td>
+                                    <td align="right">Write</td>
                                     <td></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="2" id="uw"></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="2" id="gw"></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="2" id="ww"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="2" id="uw"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="2" id="gw"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="2" id="ww"></td>
                                 </tr>
                                 <tr>
-                                    <td>Execute</td>
-                                    <td></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="1" id="ux"></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="1" id="gx"></td>
-                                    <td><input type="checkbox" onclick="calcperm();" value="1" id="wx"></td>
+                                    <td align="right">Execute</td>
+                                    <td align="center"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="1" id="ux"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="1" id="gx"></td>
+                                    <td align="center"><input type="checkbox" onclick="calcperm();" value="1" id="wx"></td>
                                 </tr>
                                 <tr>
-                                    <td>Permission</td>
-                                    <td>
-                                        <div class="input-group-addon">0</div>
-                                    </td>
-                                    <td><input type="text" readonly="readonly" id ="u" class="form-control"></td>
-                                    <td><input type="text" readonly="readonly" id ="g" class="form-control"></td>
-                                    <td><input type="text" readonly="readonly" id ="w" class="form-control"></td>
+                                    <td align="right">Permission</td>
+                                    <td><input class="form-control" size="2" type="text" readonly="readonly" value="0"></td>
+                                    <td><input style="text-align: center;" type="text" readonly="readonly" id="u" class="form-control"></td>
+                                    <td><input style="text-align: center;" type="text" readonly="readonly" id="g" class="form-control"></td>
+                                    <td><input style="text-align: center;" type="text" readonly="readonly" id="w" class="form-control"></td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <span class="mb15"> <?php oLang::_('PERMCONFIGFORM_NB');?> </span>
+                            <span class="mb15"> <?php oLang::_('PERMCONFIGFORM_NB'); ?> </span>
                             <?php //Check subscription
-                            if ($status == true) {?>
+                            if ($status == true) { ?>
 
-                            <input type = "checkbox" onchange = "disableradios()" value = "recur" id = "recur" > Recurse into subdirectories
+                                <input type="checkbox" onchange="disableradios()" value="recur"
+                                       id="recur"> Recurse into subdirectories
 
-                            <div class="radio" style = "padding-left:2em" >
-                              <label for="recurall" >
-                                <input type = "radio" name = "recuroption" id = "recurall" value = "recurall" > Apply to all Files and Folders
-                              </label >
-                            </div >
-                            <div class="radio" style = "padding-left:2em" >
-                              <label for="recurfiles" >
-                                <input type = "radio" name = "recuroption" id = "recurfiles" value = "recurfiles" > Apply to Files only
-                              </label >
-                            </div >
-                            <div class="radio" style = "padding-left:2em" >
-                              <label for="recurfolders" >
-                                <input type = "radio" name = "recuroption" id = "recurfolders" value = "recurfolders" > Apply to Folders only
-                              </label >
-                            </div >
-                            <?php } else {/*if not subscribed show call to subscribe*/?>
+                                <div class="radio" style="padding-left:2em">
+                                    <label for="recurall">
+                                        <input type="radio" name="recuroption" id="recurall" value="recurall"> Apply to
+                                        all Files and Folders
+                                    </label>
+                                </div>
+                                <div class="radio" style="padding-left:2em">
+                                    <label for="recurfiles">
+                                        <input type="radio" name="recuroption" id="recurfiles" value="recurfiles"> Apply
+                                        to Files only
+                                    </label>
+                                </div>
+                                <div class="radio" style="padding-left:2em">
+                                    <label for="recurfolders">
+                                        <input type="radio" name="recuroption" id="recurfolders" value="recurfolders">
+                                        Apply to Folders only
+                                    </label>
+                                </div>
+                            <?php } else {/*if not subscribed show call to subscribe*/ ?>
                                 <div class="permpicpremium">
                                     <div class="text">
-                                        <button type="button" class="btn btn-success btn-xs" onclick="redirectTut('<?php echo $loginurl ?>')"> Click here </button>
+                                        <button type="button" class="btn btn-success btn-xs"
+                                                onclick="redirectTut('<?php echo $loginurl ?>')"> Click here
+                                        </button>
                                         to activate your subscription and use this feature.
                                     </div>
                                 </div>
@@ -109,15 +113,14 @@ elseif (OSE_CMS == 'joomla') {
                             <input type="hidden" name="controller" value="permconfig">
                             <input type="hidden" name="action" value="editperms">
                             <input type="hidden" name="task" value="editperms">
-                            <?php echo '<input type="hidden" name="centnounce" value ="'.oseFirewall::loadNounce().'">';?>
+                            <?php echo '<input type="hidden" name="centnounce" value ="' . oseFirewall::loadNounce() . '">'; ?>
                             <input style="display: none;">
-                            <div class="form-group">
-                                <div class="col-sm-offset-8">
-                                    <button type="submit" class="btn btn-default" id='ChangePermBut'><?php oLang::_('PERMCONFIG_CHANGE');?></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default"
+                                    id='ChangePermBut'><?php oLang::_('PERMCONFIG_CHANGE'); ?></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -136,7 +139,7 @@ elseif (OSE_CMS == 'joomla') {
                             <div align="left" style="display:inline-block; width: 60%" id="selected_file">Current Folder:
                                 ROOT
                             </div>
-                            <div align="right" style="display:inline-block; width: 35%;" id="buttondiv" class="panel-controls-buttons">
+                            <div align="right" style="display:inline-block; width: 39%;" id="buttondiv" class="panel-controls-buttons">
                                 <button data-target="#editpermModal" data-toggle="modal"
                                         class="btn btn-success btn-sm mr5 mb10" type="button"
                                         onclick="getselecteditemslist ()"><?php oLang::_('PERMCONFIG_EDITOR'); ?></button>
@@ -148,23 +151,36 @@ elseif (OSE_CMS == 'joomla') {
                                     <button class="btn btn-warning btn-sm mr5 mb10" type="button" onclick="callToSubscribe('<?php echo $loginurl?>')"><?php oLang::_('PERMCONFIG_ONECLICKPERMFIX'); ?></button>
                                 <?php } ?>
                             </div>
-                            <div style="width: 85%; display: table;">
+                            <div style="width: 100%; display: table;">
                                 <div style="display: table-row">
-
-                                    <div class="panel-body" style="display: table-cell;vertical-align: top;padding-top: 100px;" id="FileTreeDisplay"></div>
-                                    <div class="panel-body" style="display: table-cell;">
-                                        <table class="table display" id="permconfigTable" style="display: table-cell;">
+                                    <div class="panel-body" style="display: table-cell;vertical-align: top;padding-top: 70px;">
+                                        <label style="vertical-align: top;"><?php oLang::_('FILETREENAVIGATOR'); ?></label>
+                                        <div id="FileTreeDisplay"></div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table display" id="permconfigTable" cellspacing="0" width="100%">
                                             <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th><?php oLang::_('PERMCONFIG_NAME'); ?></th>
-                                                <th><?php oLang::_('PERMCONFIG_TYPE'); ?></th>
-                                                <th><?php oLang::_('PERMCONFIG_OWNER'); ?></th>
-                                                <th><?php oLang::_('PERMCONFIG_PERM'); ?></th>
-                                                <th></th>
-                                            </tr>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th><?php oLang::_('PERMCONFIG_NAME'); ?></th>
+                                                    <th><?php oLang::_('PERMCONFIG_TYPE'); ?></th>
+                                                    <th><?php oLang::_('PERMCONFIG_OWNER'); ?></th>
+                                                    <th><?php oLang::_('PERMCONFIG_PERM'); ?></th>
+                                                    <th></th>
+                                                </tr>
                                             </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th><?php oLang::_('PERMCONFIG_NAME'); ?></th>
+                                                    <th><?php oLang::_('PERMCONFIG_TYPE'); ?></th>
+                                                    <th><?php oLang::_('PERMCONFIG_OWNER'); ?></th>
+                                                    <th><?php oLang::_('PERMCONFIG_PERM'); ?></th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

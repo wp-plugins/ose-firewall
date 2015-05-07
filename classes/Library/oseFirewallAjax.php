@@ -84,7 +84,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVsscan () {
-		$actions = array ('initDatabase', 'vsscan', 'updatePatterns', 'checkScheduleScanning');
+		$actions = array ('initDatabase', 'vsscan', 'updatePatterns', 'checkScheduleScanning', 'getFileTree');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanreport () {
@@ -132,7 +132,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}	
 	public static function loadActionLogin () {
-		$actions = array ('validate','verifyKey','updateKey','createaccount', 'getNumbOfWebsite');
+        $actions = array('validate', 'verifyKey', 'updateKey', 'createaccount', 'getNumbOfWebsite', 'addOEM');
 		parent::loadActions($actions);
 	}
 	public static function loadActionAudit () {

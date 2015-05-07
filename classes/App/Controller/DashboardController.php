@@ -57,4 +57,16 @@ class DashboardController extends \App\Base {
 		$data = $this->model->checkWebBrowsingStatus();
 		$this->model->returnJSON($data);
 	}
+
+    public function action_getMalwareMap()
+    {
+        $data = $this->model->getMalwareMap();
+        $this->model->returnJSON($data);
+    }
+
+    public function action_getBackupList()
+    {
+        $data = $this->model->getBackupList();
+        $this->model->returnJSON($data);
+    }
 }

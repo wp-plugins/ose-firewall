@@ -47,7 +47,6 @@ define('OSE_FWPUBLICURL', OSE_FWURL . ODS . 'public');
 define('OSE_FWLANGUAGE', OSE_FWPUBLIC . ODS.'messages');
 define('OSE_FWDATA', OSEFWDIR . ODS . 'protected' . ODS.'data'); 
 define('OSE_DEFAULT_SCANPATH', dirname(dirname(dirname(OSEFWDIR))));
-define('DB_BACKUP_DOWNLOAD_URL', OSE_WPURL . '/index.php?option=com_ose_firewall&task=downloadBackupDB&action=downloadBackupDB&controller=backup&ids=');
-define('FILE_BACKUP_DOWNLOAD_URL', OSE_WPURL . '/index.php?option=com_ose_firewall&task=downloadBackupFile&action=downloadBackupFile&controller=backup&ids=');
-define('EXPORT_DOWNLOAD_URL', OSE_WPURL . '/index.php?option=com_ose_firewall&task=downloadCSV&action=exportCSV&controller=manageips&filename=');
+define('BACKUP_DOWNLOAD_URL', '?option=com_ose_firewall&view=backup&task=downloadBackupFile&action=downloadBackupFile&controller=backup&id=');
+define('EXPORT_DOWNLOAD_URL', '?option=com_ose_firewall&view=manageips&task=downloadCSV&action=downloadCSV&controller=manageips&filename=');
 ?>

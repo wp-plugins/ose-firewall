@@ -3,6 +3,8 @@ var controller = "countryblock";
 var option = "com_ose_firewall";
 
 jQuery(document).ready(function($){
+    colours = $('body').data('appStart').getColors();
+    var sizes = $('body').data('appStart').getSizes();
     var rulesetsDataTable = $('#countryTable').dataTable( {
         processing: true,
         serverSide: true,
@@ -41,14 +43,25 @@ jQuery(document).ready(function($){
             .search( val.val(), false, false )
             .draw();
     });
+    plotDownloadPieChart($, sizes.pielinewidth, sizes.piesize, 1500, colours);
     $("#download-geoip-form").submit(function() {
     	downLoadFile($, 8)
         return false; // avoid to execute the actual submit of the form.
     });
-    $('.progress-circular-blue').circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});    
 });
 
-
+var plotDownloadPieChart = function ($, lineWidth, size, animateTime, colours) {
+    $(".easy-pie-chart").easyPieChart({
+        barColor: colours.blue,
+        borderColor: colours.blue,
+        trackColor: colours.gray,
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: lineWidth,
+        size: size,
+        animate: animateTime
+    });
+}
 function downLoadFile($, step) {
 	$('#message-box').waitMe({
 	        effect : 'facebook',
@@ -74,16 +87,18 @@ function downLoadFile($, step) {
            $('#message-box').html(data.result);
      	   if (data.status == 'unfinish')
      	   {
-     		  var pct = Math.round((1-(step-1)/8)*100);
-     		  $('.progress-circular-blue').empty().removeData().attr('data-text', pct+'%');
-              $('.progress-circular-blue').empty().removeData().attr('data-percent', pct).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+               var pct = Math.round((1 - (step - 1) / 8) * 100);
+               $('#easy-pie-chart-1').data('easyPieChart').update(pct);
+               $('#easy-pie-chart-1').attr("data-percent", pct);
+               $('#pie-1').html(pct + '%');
               downLoadFile($, step-1);
      	   }
      	   else
      	   {
      		  var pct = 100;
-     		  $('.progress-circular-blue').empty().removeData().attr('data-text', pct+'%');
-              $('.progress-circular-blue').empty().removeData().attr('data-percent', pct).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+               $('#easy-pie-chart-1').data('easyPieChart').update(pct);
+               $('#easy-pie-chart-1').attr("data-percent", pct);
+               $('#pie-1').html(pct + '%');
      		  createTables ($, 0);
      	   }
         }
@@ -115,15 +130,18 @@ function createTables($, step) {
            $('#message-box').html(data.result);
      	   if (data.cont == 1)
      	   {
-     		  var pct = Math.round((step/10)*100);
-              $('.progress-circular-blue').empty().removeData().attr('data-text', pct+'%');
-              $('.progress-circular-blue').empty().removeData().attr('data-percent', pct).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+               var pct = Math.round((step / 10) * 100);
+               $('#easy-pie-chart-1').data('easyPieChart').update(pct);
+               $('#easy-pie-chart-1').attr("data-percent", pct);
+               $('#pie-1').html(pct + '%');
      		  createTables($, step+1);
      	   }
      	   else
      	   {
-     		  $('.progress-circular-blue').empty().removeData().attr('data-text', '100%');
-              $('.progress-circular-blue').empty().removeData().attr('data-percent', 100).circliful({backgroundColor: '#ECF0F1',  foregroundColor: '#1E8BC3'});
+               var pct = 100;
+               $('#easy-pie-chart-1').data('easyPieChart').update(pct);
+               $('#easy-pie-chart-1').attr("data-percent", pct);
+               $('#pie-1').html(pct + '%');
               $('#message-box').html('Completed');
               $('#countryTable').dataTable().api().ajax.reload();
               $('#formModal').modal('hide');

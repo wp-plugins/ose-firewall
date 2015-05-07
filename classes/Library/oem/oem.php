@@ -65,12 +65,14 @@ class CentroraOEM {
 		{
 			return $this->newInstance-> showOEMName () ;
 		}
+        return false;
 	}
 	public static function hasOEMCustomer () {
 		$config = self::getConfiguration('oem');
 		if (!empty($config['data']['customer_id'])) {
-			return true;
+            return $config;
 		}
+        return false;
 	}
 	protected static function loadFirewallStat () {
 		if (OSE_CMS == 'joomla')
@@ -95,6 +97,14 @@ class CentroraOEM {
 			oseFirewall::loadCSSFile ('OEMCss', 'oem/'.$config['data']['customer_id'].'/custom.css', false);
 		}
 	}
+
+    public function loadJS()
+    {
+        $config = $this->getConfiguration('oem');
+        if (!empty($config['data']['customer_id'])) {
+            oseFirewall::loadJSFile('oemJS', 'oem/' . $config['data']['customer_id'] . '/custom.js', false);
+        }
+    }
 	public static function showProducts () {
 		$products = self::getProducts();
 		$i = 0; 

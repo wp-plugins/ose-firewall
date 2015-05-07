@@ -92,4 +92,13 @@ class LoginController extends \App\Base {
 		$result = $this->model->getNumbOfWebsite();
 		print_r($result);exit;
 	}
+
+    public function action_addOEM()
+    {
+        $this->model->loadRequest();
+        $oem = $this->model->getVar('oem', null);
+        $result = $this->model->addOEM($oem);
+        print_r($result);
+        exit;
+    }
 }

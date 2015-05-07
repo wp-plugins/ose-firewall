@@ -61,5 +61,10 @@ class VsscanController extends \App\Base {
 		$results = $this ->model->checkScheduleScanning();
 		print_r($results);exit;
 	}
+    public function action_getFileTree() {
+
+        $results = $this ->model->getFileTree();
+        exit;
+    }
 }
 ?>	

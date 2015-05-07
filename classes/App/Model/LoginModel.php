@@ -67,4 +67,10 @@ class LoginModel extends ConfigurationModel {
 		$panel = new panel ();
 		return $panel->getNumbOfWebsite ();
 	}
+
+    public function addOEM($oem)
+    {
+        $panel = new panel ();
+        return $panel->addOEM($oem);
+    }
 }

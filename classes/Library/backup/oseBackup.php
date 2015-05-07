@@ -29,8 +29,8 @@ if (! defined ( 'OSE_FRAMEWORK' ) && ! defined ( 'OSEFWDIR' ) && ! defined ( '_J
 class oseBackupManager {
     const REQUEST_TOKEN_METHOD = 'oauth/request_token';
     const API_URL = 'https://api.dropbox.com/1/';
-    const CONSUMER_KEY = 'wjnqpd9j9m23pu1';
-    const CONSUMER_SECRET = 'gdzfs7gpgynxd7c';
+    const CONSUMER_KEY = 'ub6h6xc37diailz';
+    const CONSUMER_SECRET = 'ra0tr51rah59vjf';
     private
         $dropbox,
         $request_token,
@@ -71,6 +71,7 @@ class oseBackupManager {
 	public function __construct() {
 		set_time_limit ( 60 );
 		$this->setDBO ();
+        $this->optimizePHP();
 		oseFirewall::loadRequest ();
 		oseFirewall::loadFiles ();
 		$this->fileBackupName = "";
@@ -111,6 +112,7 @@ class oseBackupManager {
                     $this->oauth_state = 'access';
                     $this->oauth->setToken($this->access_token);
                     $this->save_tokens();
+                    return OSE_CMS;
                 } catch (Exception $e) {
                 }
             } else {
@@ -127,7 +129,6 @@ class oseBackupManager {
 
     public function get_authorize_url()
     {
-
         return $this->oauth->getAuthoriseUrl();
     }
 
@@ -269,37 +270,41 @@ class oseBackupManager {
 
     }
 	public function backup($backup_type, $backup_to) {
-		if ($backup_type == 1) {
-			$backupResult = $this->backupFiles ( $backup_type, $backup_to );
-			if ($backup_type == 3 || $backup_type == 1) {
-				if ($backupResult == true) {
-					$this->insertbkDB ( $backup_type, $backup_to );
-					$result = true;
-				}
-				else {
-					$result = false;
-				}
-			}
-		}
-		else {
-			$backupResult = $this->backupDB ( $backup_type, $backup_to );
-			if ($backupResult == false) {
-				if ($backup_to == 1) {
-					$result = false;
-				}
-				else if ($backup_to == 2) {
-					$result = false;
-				}
-			}
-			else if ($backupResult == true && $backup_type != 3) {
-				$this->insertbkDB ( $backup_type, $backup_to );
-				$result = true;
-			}
-			else {
-				$result = true;
-			}
-		}
-		return $result;
+        try {
+            if ($backup_type == 1) {
+                $backupResult = $this->backupFiles ( $backup_type, $backup_to );
+                if ($backup_type == 3 || $backup_type == 1) {
+                    if ($backupResult == true) {
+                        $this->insertbkDB ( $backup_type, $backup_to );
+                        $result = true;
+                    }
+                    else {
+                        $result = false;
+                    }
+                }
+            }
+            else {
+                $backupResult = $this->backupDB ( $backup_type, $backup_to );
+                if ($backupResult == false) {
+                    if ($backup_to == 1) {
+                        $result = false;
+                    }
+                    else if ($backup_to == 2) {
+                        $result = false;
+                    }
+                }
+                else if ($backupResult == true && $backup_type != 3) {
+                    $this->insertbkDB ( $backup_type, $backup_to );
+                    $result = true;
+                }
+                else {
+                    $result = true;
+                }
+            }
+            return $result;
+        } catch (Exception $e) {
+            return $e;
+        }
 	}
 	private static function isCurrentUser() {
 		oseFirewall::loadUsers ();
@@ -565,7 +570,7 @@ class oseBackupManager {
 		$result = false;
 		foreach ( $results as $token ) {
 			if (! empty ( $token->dbBackupPath )) {
-				$result = osefile::delete ( $token->dbBackupPath . ".gz" );
+				$result = osefile::delete ( $token->dbBackupPath );
 			}
 			if (! empty ( $token->fileBackupPath )) {
 				$result = osefile::delete ( $token->fileBackupPath );
@@ -599,9 +604,10 @@ class oseBackupManager {
 		$return = array ();
 		$i = 0;
         $controller = oRequest:: getVar('controller');
+        $url = BACKUP_DOWNLOAD_URL;
         if ($controller == "backup") {
             foreach ($results as $file) {
-                $local = "<a href='?page=ose_fw_backup&action=downloadBackupFile&option=com_ose_firewall&task=downloadBackupFile&controller=backup&id=" . $file->id . "' target ='_blank'><div class='fa fa-cloud-download'></div></a>";
+                $local = "<a href='." . $url . $file->id . "' target ='_blank'><div class='fa fa-cloud-download'></div></a>";
                 $filePath = (!empty($file->fileBackupPath)) ? $file->fileBackupPath : $file->dbBackupPath;
                 $fileType = (!empty($file->fileBackupPath)) ? "<div class='fa fa-file-archive-o'></div>" : "<div class='fa fa-database'></div>";
                 $filename = self::getDownloadFilename($filePath);
@@ -622,7 +628,7 @@ class oseBackupManager {
                 $return [$i] = array(
                     "ID" => $file->id,
                     "fileType" => $fileType,
-                    "fileName" => $filePath,
+                    "fileName" => $filename,
                     "time" => $file->date,
                 );
                 $i++;
@@ -684,6 +690,15 @@ class oseBackupManager {
 		$results = $this->db->query ();
 		return $results;
 	}
+
+    private function optimizePHP()
+    {
+        if (function_exists('ini_set')) {
+            ini_set('max_execution_time', 300);
+            ini_set('memory_limit', '1024M');
+            ini_set("pcre.recursion_limit", "524");
+        }
+    }
 	private function backupDatabase() {
 		$backupFile = $this->setDBFilename ();
 		$tables = $this->getTablesList ();
@@ -941,33 +956,6 @@ class oseBackupManager {
 		return $this->db->query ();
 	}
 	/**
-	 * Add files and sub-directories in a folder to zip file.
-	 *
-	 * @param string $folder        	
-	 * @param ZipArchive $zipFile        	
-	 * @param int $exclusiveLength
-	 *        	Number of text to be exclusived from the file path.
-	 */
-	private function folderToZip($folder, &$zipFile, $exclusiveLength) {
-		$handle = opendir ( $folder );
-		while ( false !== ($f = readdir ( $handle )) ) {
-			if ($f != '.' && $f != '..') {
-				$filePath = "$folder/$f";
-				// Remove prefix from file path before add to zip.
-				$localPath = substr ( $filePath, $exclusiveLength );
-				if (is_file ( $filePath )) {
-					$zipFile->addFile ( $filePath, $localPath );
-				}
-				elseif (is_dir ( $filePath )) {
-					// Add sub-directory.
-					$zipFile->addEmptyDir ( $localPath );
-					self::folderToZip ( $filePath, $zipFile, $exclusiveLength );
-				}
-			}
-		}
-		closedir ( $handle );
-	}
-	/**
 	 * Zip a folder (include itself).
 	 * Usage:
 	 * zipDir('/path/to/sourceDir', '/path/to/out.zip');
@@ -979,14 +967,80 @@ class oseBackupManager {
 	 */
 	private function zipDir($sourcePath, $outZipPath) {
 		$pathInfo = pathInfo ( $sourcePath );
+        $excludearray = array(
+            'folders' => array(str_replace(ODS . ODS, ODS, OSE_FWDATA . ODS . "backup")),
+            'files' => array(str_replace(ODS . ODS, ODS, OSE_FWDATA . ODS . 'atest.sql'))
+        );
+		ini_set("display_errors", 'on');
+		if (function_exists('ini_set')) {
+			$this->enableSystemFunction ();
+		}
+		if(!file_exists ($outZipPath)) {
+            if (function_exists('system')) {
+                $this->zipWithSystemZip($pathInfo, $outZipPath, $sourcePath, $excludearray);
+            } else {
+                $this->zipPHPArchive($pathInfo, $outZipPath, $sourcePath, $excludearray);
+            }
+        }
+	}
+	private function enableSystemFunction () {
+		$disabled = ini_get('disable_functions');
+		$disabledArray = explode(",", $disabled);
+		foreach ($disabledArray as $key => $val) {
+			if (empty($val) || $val == 'system')
+			{
+				unset($disabledArray[$key]);	
+			}
+		}
+		$disabled = implode(",", $disabledArray); 
+		ini_set('disable_functions', $disabled);
+	}
+	private function zipWithSystemZip ($pathInfo, $outZipPath, $sourcePath, $excludearray) {
+        $excludefiles = implode(' ', $excludearray['files']);
+        foreach ($excludearray['folders'] as $tmp) {
+            $excludefolders .= $tmp . '**\* ';
+        }
+        ob_start();
+        system('zip -r ' . $outZipPath . ' ' . $sourcePath . ' -x ' . $excludefolders . ' ' . $excludefiles);
+        $result = ob_get_contents();
+        //Check that Zip is installed otherwise run zipPHPArchive
+        If (empty($result)) {
+            $this->zipPHPArchive($pathInfo, $outZipPath, $sourcePath, $excludearray);
+        }
+        ob_end_clean();
+	}
+	private function zipPHPArchive($pathInfo, $outZipPath, $sourcePath, $excludearray) {
 		$parentPath = $pathInfo ['dirname'];
-		$dirName = $pathInfo ['basename'];
+        $dirName = $pathInfo ['basename'];
+        $exclusiveLength = strlen ( "$parentPath/" );
+		ini_set("memory_limit", "1024M");
+		ini_set("max_execution_time", "60");
+		ini_set("realpath_cache_size", "1024k");
 		$z = new ZipArchive ();
 		$z->open ( $outZipPath, ZIPARCHIVE::CREATE );
-		$z->addEmptyDir ( $dirName );
-		$this->folderToZip ( $sourcePath, $z, strlen ( "$parentPath/" ) );
-		$z->close ();
+        $z->addEmptyDir ( $dirName );
+        $this->folderToZip ( $sourcePath, $z, $exclusiveLength, $excludearray );
+		$z->close();
 	}
+    private function folderToZip($folder, &$zipFile, $exclusiveLength, $excludearray) {
+        $handle = opendir ( $folder );
+        while ( false !== ($f = readdir ( $handle )) ) {
+            if ($f != '.' && $f != '..') {
+                $filePath = "$folder/$f";
+                // Remove prefix from file path before add to zip.
+                $localPath = substr ( $filePath, $exclusiveLength );
+                if (is_file ( $filePath ) && (!in_array($filePath, $excludearray['files']))) {
+                    $zipFile->addFile ( $filePath, $localPath );
+                }
+                elseif (is_dir ( $filePath ) && (!in_array($filePath, $excludearray['folders']))) {
+                    // Add sub-directory.
+                    $zipFile->addEmptyDir ( $localPath );
+                    self::folderToZip ( $filePath, $zipFile, $exclusiveLength, $excludearray);
+                }
+            }
+        }
+        closedir ( $handle );
+    }
 
     private function getFolderFiles($folder, $zip, $backup_type)
     {
@@ -1084,7 +1138,6 @@ class oseBackupManager {
 			}
 		}
 	}
-
     public function sendEmail($id, $type)
     {
         $config_var = $this->getConfigVars();
@@ -1097,7 +1150,6 @@ class oseBackupManager {
         $oseEmail->closeDBO();
         return $result;
     }
-
     protected function getConfigVars()
     {
         return oseFirewall::getConfigVars();

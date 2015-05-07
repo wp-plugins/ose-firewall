@@ -310,48 +310,7 @@ function removejscssfile(filename, filetype){
 }  
 
 //doc ready function
-jQuery(document).ready(function($){
- 	//------------- Init our plugin -------------//
- 	$('body').appStart({
-        //main color scheme for template
-        //be sure to be same as colors on main.css or custom-variables.less
-        colors : {
-            white: '#fff',
-            dark: '#2C3E50',
-            red: '#EF4836',
-            blue: '#1E8BC3',
-            green: '#3FC380',
-            yellow: '#F39C12',
-            orange: '#E87E04',
-            purple: '#9A12B3',
-            pink: '#f78db8',
-            lime: '#a8db43',
-            mageta: '#e65097',
-            teal: '#1BBC9B',
-            black: '#000',
-            brown: '#EB974E',
-            gray: '#ECF0F1',
-            graydarker: '#95A5A6',
-            graydark: '#D2D7D3',
-            graylight: '#EEEEEE',
-            graylighter: '#F2F1EF'
-        },
-        header: {
-            fixed: true //fixed header
-        },
-        panels: {
-            refreshIcon: 'im-spinner12',//refresh icon for panels
-            toggleIcon: 'im-minus',//toggle icon for panels
-            collapseIcon: 'im-plus',//colapse icon for panels
-            closeIcon: 'im-close', //close icon
-            showControlsOnHover: false,//Show controls only on hover.
-            loadingEffect: 'facebook',//loading effect for panels. bounce, none, rotateplane, stretch, orbit, roundBounce, win8, win8_linear, ios, facebook, rotation.
-            rememberSortablePosition: true //remember panel position
-        }
- 	});
- 	removejscssfile("template.css", "css");
- 	//$('link[rel=stylesheet][href~="templates/isis/css/template.css"]').remove();
-});	
+
 
 jQuery(document).ready(function($){
 	$("#configuraton-form").submit(function() {
@@ -432,30 +391,8 @@ jQuery(document).ready(function($){
              });
         return false; // avoid to execute the actual submit of the form.
     });
-	
-	$("#scan-form").submit(function() {
-		$('#scanModal').modal('hide');
-		showLoading();
-		var data = $("#scan-form").serialize();
-		data += '&centnounce='+$('#centnounce').val();
-        $.ajax({
-               type: "POST",
-               url: url,
-               data: data, // serializes the form's elements.
-               success: function(data)
-               {
-            	   hideLoading();
-            	   data = jQuery.parseJSON(data);
-           		   if (data.cont)
-           		   {
-                       scanAntivirus(-2, 'vsscan', [], []);
-           		   }	   
-               }
-             });
-        return false; // avoid to execute the actual submit of the form.
-    });
-	
-	$("#affiliate-form").submit(function() {
+
+    $("#affiliate-form").submit(function () {
 		showLoading();
 		var data = $("#affiliate-form").serialize();
 		data += '&centnounce='+$('#centnounce').val();
@@ -525,7 +462,6 @@ jQuery(document).ready(function($){
                     document.getElementById("admin-warning-label").style.display = 'none';
                     $('#addAdminModal').modal('hide');
                     $('#adminTable').dataTable().api().ajax.reload();
-
                 }
                 else {
                     document.getElementById("admin-warning-label").style.display = 'inline';
@@ -536,3 +472,55 @@ jQuery(document).ready(function($){
         return false; // avoid to execute the actual submit of the form.
     });
 });
+function getfilelist( cont, root ) {
+    jQuery( cont ).addClass( 'wait' );
+    jQuery.ajax ({
+        url: url,
+        type: "POST",
+        data: {
+            option : option,
+            controller:controller,
+            action : 'getFileTree',
+            task : 'getFileTree',
+            centnounce : jQuery('#centnounce').val(),
+            dir: root
+        },
+        success: function(data) {
+            jQuery( cont ).find( '.start' ).html( '' );
+            jQuery( cont ).removeClass( 'wait' ).append(data);
+            if( '/' == root )
+                jQuery( cont ).find('UL:hidden').show();
+            else{
+                jQuery( cont ).find('UL:hidden').slideDown({ duration: 500, easing: null });
+            }
+        }
+    }).done(function() {
+        var entry = jQuery("[name='filetreeroot']");
+        var current = jQuery("[name='filetreeroot']");
+        var id = 'id';
+        if (root === ''){getfiletreedisplay (entry, current, id);}
+        return false;
+    });
+}
+function getfiletreedisplay (entry, current, rel_id){
+    /*expand Root*/
+   /* if (escape( current.attr(rel_id) ) === '/'){
+        entry.find('UL').slideUp({ duration: 1, easing: null }); *//* collapse it *//*
+        entry.removeClass('collapsed').addClass('expanded');
+    }*/
+    if( entry.hasClass('folder') ) { /* check if it has folder as class name */
+        if( entry.hasClass('collapsed') ) { /* check if it is collapsed */
+
+            entry.find('UL').remove(); /* if there is any UL remove it */
+            getfilelist( entry, escape( current.attr(rel_id) )); /* initiate Ajax request */
+            entry.removeClass('collapsed').addClass('expanded'); /* mark it as expanded */
+        }
+        else { /* if it is expanded already */
+            entry.find('UL').slideUp({ duration: 500, easing: null }); /* collapse it */
+            entry.removeClass('expanded').addClass('collapsed'); /* mark it as collapsed */
+        }
+        if (escape( current.attr(rel_id) ) !== '/'){
+            return current.attr( rel_id );
+        } else {return '';}
+    }
+}

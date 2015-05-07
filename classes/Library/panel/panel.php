@@ -29,6 +29,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 }
 class panel
 {
+    private $configTable = '#__ose_secConfig';
 	private $live_url = "";
 	public function __construct() {
 		
@@ -190,6 +191,18 @@ class panel
 		$webkey = $dbo->loadObject()->value;
 		return $webkey;
 	}
+
+    public function addOEM($oem)
+    {
+        $updateArray = array(
+            'key' => 'customer_id',
+            'value' => $oem,
+            'type' => 'oem'
+        );
+        $db = oseFirewall::getDBO();
+        $db->addData('insert', $this->configTable, '', '', $updateArray);
+        $db->closeDBO();
+    }
 	public function getSubscriptions() {
 		$this->live_url = "https://www.centrora.com/accountApi/api/getSubscriptions";
 		$content = array ();
@@ -275,7 +288,37 @@ class panel
 			return null;
 		}
 	}
-	Public function getLatestVersion () {
+    public function returnValueDBQuery($query){
+        $dbo = oseFirewall::getDBO();
+        $dbo->setQuery($query);
+        return $dbo->loadObject()->value;
+    }
+    public function getLatestVersion (){
+
+        $query1 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LastUpdateCheck'";
+        $query2 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LatestVersion'";
+
+        $LastUpdateCheck = $this->returnValueDBQuery($query1);
+        $LatestVersion = $this->returnValueDBQuery($query2);
+        $elapsedtime = round(abs(time() - $LastUpdateCheck) / 60,2); //elapsedtime in minutes
+        $timeinterval = 30; // Time delay Interval in minutes
+
+        if (empty ($LastUpdateCheck)) {
+            $LatestVersion = self::getUpdateCheck();
+            $query3 = "INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LastUpdateCheck','" . time() . "','UpdateCheck')";
+            $query4 = " INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LatestVersion','" . $LatestVersion . "','UpdateCheck')";
+            $this->runDbQuery($query3);
+            $this->runDbQuery($query4);
+        } elseif ( $elapsedtime >= $timeinterval) {
+            $LatestVersion = self::getUpdateCheck();
+            $query5 = "UPDATE `#__ose_secConfig` SET `value`='" . time() . "' WHERE `key` LIKE 'LastUpdateCheck'";
+            $query6 = " UPDATE `#__ose_secConfig` SET `value`='" . $LatestVersion . "' WHERE `key` LIKE 'LatestVersion'";
+            $this->runDbQuery($query5);
+            $this->runDbQuery($query6);
+        }
+        return $LatestVersion;
+    }
+	private function getUpdateCheck () {
 		$url = "http://www.centrora.com/accountApi/version/getLastestVersion";
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -423,54 +466,47 @@ class panel
 		$content['task'] = 'getPaymentAddress';
 		return $this->sendRequestReturnRes($content);
 	}
-	/*
-	 * Used in permconfig to return directory/file list of a given path
-	 * */
-	public function getDirFileList($path){
-	
-		$filearray = array();
 
-		// Create recursive dir iterator which skips dot folders and Flatten the recursive iterator, folders come before their files
-		$it  = 	new RecursiveIteratorIterator(
-				new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
-				RecursiveIteratorIterator::SELF_FIRST
-				//,RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
-		);
-	
-		// keep to the base folder
-		$it->setMaxDepth(0);
-        if ($it->valid()) {
+    /**
+     * This function returns a hidden list of directory folders based on the $path.
+     * @param $path Directory path to return list of child directories.
+     */
+    public function  getFileTree($rootpath,$path){
+        // Create recursive dir iterator which skips dot folders and Flatten the recursive iterator
+        try {
+            $it = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST,
+                RecursiveIteratorIterator::CATCH_GET_CHILD
+            );
+            // keep to the base folder
+            $it->setMaxDepth(0);
+            $files_array = array();
+            //array to sort by folder
             foreach ($it as $fileinfo) {
                 if ($fileinfo->isDir()) {
-                    $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
-                        'name' => $fileinfo->getfilename(),
-                        'type' => $fileinfo->getType(),
-                        'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
-                        'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
-                        'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/folder.png' alt='dir' />",
-                        'dirsort' => 1);
-                } elseif ($fileinfo->isFile()) {
-                    $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));
-                    if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip', $ext_code) == false) {
-                        $ext_code = 'file';
-                    }
-                    $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
-                        'name' => $fileinfo->getfilename(),
-                        'type' => pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
-                        'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
-                        'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
-                        'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/" . $ext_code . ".png' alt='" . $ext_code . "' />",
-                        'dirsort' => 2);
+                    $key = $fileinfo->getRealPath();
+                    $data = $fileinfo->getFilename();
+                    $files_array[$key] = $data;
                 }
             }
-            array_multisort($filearray['data'], SORT_ASC);
+            ksort($files_array);
+            $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
+            if (($_REQUEST['dir']) == '') {
+                $list .= '<li class="folder collapsed" name="filetreeroot" id="/"><a href="#" id="' . $path . '" rel="/">ROOT</a></li>';
+            } else {
+                foreach ($files_array as $key => $fileinfo) {
+                    $rel = htmlentities(str_replace($rootpath, "", $key));
+                    $list .= '<li class="folder collapsed" id="' . $rel . '"><a href="#" id="' . $key . '/"rel="' . $rel . '/">' . htmlentities($fileinfo) . '</a></li>';
+                }
+            }
+            $list .= '</ul>';
+                echo($list);
+        } catch (Exception $e) {
+            $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
+            $list .= '<li class="" name="filetreeroot" id="/"><a>{Restricted Permissions}</a></li>';
+            $list .= '</ul>';
+            echo $list;
         }
-        else {
-            $filearray= array(  "draw" => 1,
-                "recordsTotal" => "0",
-                "recordsFiltered" =>"0",
-                "data" =>array() );
-        }
-		return $filearray;
-	}
+    }
 }
