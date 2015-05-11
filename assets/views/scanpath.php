@@ -18,7 +18,7 @@
                                         <div class="form-group">
                                             <label for="scanPath" class="col-sm-1 control-label"><?php oLang::_('PATH');?></label>
                                             <div class="col-sm-11">
-                                                <input type="text" name="scanPath" id="selected_file" class="form-control" readonly="readonly">
+                                                <input type="text" name="scanPath" id="selected_file" class="form-control">
                                             </div>
                                         </div>
                                         <input type="hidden" name="option" value="com_ose_firewall">

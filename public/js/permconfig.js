@@ -6,7 +6,7 @@ var permconfigDataTable;
 var selectedids =  [];
 
 jQuery(document).ready(function($){
-    getcurrentdirectory();
+    getcurrentdirectory('/');
 	function getcurrentdirectory (dir) {
         permconfigDataTable = $('#permconfigTable').dataTable({
             processing: true,
@@ -27,14 +27,14 @@ jQuery(document).ready(function($){
             columns: [
                 {"data": "dirsort", width: '5%', visible: false},
                 {"data": "icon", width: '1%', sortable: false},
-                {"data": "name", width: '15%'/*, order: 'asc'*/},
+                {"data": "name", width: '15%'},
                 {"data": "type", width: '5%'},
                 {"data": "groupowner", width: '5%'},
                 {"data": "perm", width: '5%'},
                 {"data": "path", width: '5%', visible: false}
             ],
             lengthMenu: [[-1, 10, 25, 50], ["All", 10, 25, 50]],
-           /* order: [[0, 'asc'], [2, 'asc']],*/
+            order: [[0, 'asc'], [2, 'asc']],
             "createdRow": function ( row, data, index ) {
                 selectedids.forEach(function(entry) {
                     if (data['path'] === entry.replace('dir:', '')) {

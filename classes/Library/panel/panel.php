@@ -472,40 +472,62 @@ class panel
      * @param $path Directory path to return list of child directories.
      */
     public function  getFileTree($rootpath,$path){
-        // Create recursive dir iterator which skips dot folders and Flatten the recursive iterator
         try {
-            $it = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::SELF_FIRST,
-                RecursiveIteratorIterator::CATCH_GET_CHILD
-            );
-            // keep to the base folder
-            $it->setMaxDepth(0);
-            $files_array = array();
-            //array to sort by folder
-            foreach ($it as $fileinfo) {
-                if ($fileinfo->isDir()) {
-                    $key = $fileinfo->getRealPath();
-                    $data = $fileinfo->getFilename();
-                    $files_array[$key] = $data;
+            if(is_readable($path)) {
+                // Create recursive dir iterator which skips dot folders and Flatten the recursive iterator
+                $it = new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::SELF_FIRST,
+                    RecursiveIteratorIterator::CATCH_GET_CHILD
+                );
+                // keep to the base folder
+                $it->setMaxDepth(0);
+                $files_array = array();
+                //array to sort by folder
+                foreach ($it as $fileinfo) {
+                    if ($fileinfo->isDir()) {
+                        $key = $fileinfo->getRealPath();
+                        $data = $fileinfo->getFilename();
+                        $files_array[$key] = $data;
+                    }
                 }
-            }
-            ksort($files_array);
-            $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
-            if (($_REQUEST['dir']) == '') {
-                $list .= '<li class="folder collapsed" name="filetreeroot" id="/"><a href="#" id="' . $path . '" rel="/">ROOT</a></li>';
-            } else {
-                foreach ($files_array as $key => $fileinfo) {
-                    $rel = htmlentities(str_replace($rootpath, "", $key));
-                    $list .= '<li class="folder collapsed" id="' . $rel . '"><a href="#" id="' . $key . '/"rel="' . $rel . '/">' . htmlentities($fileinfo) . '</a></li>';
+                ksort($files_array);
+                $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
+                if (($_REQUEST['dir']) == '') {
+                    $list .= '<li class="folder collapsed" name="filetreeroot" id="/"><a href="#" id="' . $path . '" rel="/">ROOT</a></li>';
+                } else {
+                    foreach ($files_array as $key => $fileinfo) {
+                        if (class_exists('SConfig')){
+                            $newkey = $key . ODS.'public_html';
+                            $newfileinfo = $fileinfo . ODS.'public_html';
+                            $newrel = htmlentities(str_replace($rootpath, "", $newkey));
+                             if ((urldecode($_REQUEST['dir']) == '/') || (urldecode($_REQUEST['dir']) == ' ')){
+                                 $isrootfolder = true;
+                             } else {
+                                 $isrootfolder = false;
+                             }
+                            if (is_readable($newkey) && $isrootfolder){
+                                $list .= '<li class="folder collapsed" id="' . $newrel . '"><a href="#" id="' . $newkey . '/"rel="' . $newrel . '/">' . htmlentities($newfileinfo) . '</a></li>';
+                            } elseif (is_readable($key) && !$isrootfolder) {
+                                $rel = htmlentities(str_replace($rootpath, "", $key));
+                                $list .= '<li class="folder collapsed" id="' . $rel . '"><a href="#" id="' . $key . '/"rel="' . $rel . '/">' . htmlentities($fileinfo) . '</a></li>';
+                            }
+                        } elseif(!class_exists('SConfig')){
+                            $rel = htmlentities(str_replace($rootpath, "", $key));
+                            $list .= '<li class="folder collapsed" id="' . $rel . '"><a href="#" id="' . $key . '/"rel="' . $rel . '/">' . htmlentities($fileinfo) . '</a></li>';
+                        }
+                    }
                 }
+                $list .= '</ul>';
+            } else{
+                $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
+                $list .= '<li class="" name="" id=""><a href="http://www.centrora.com/centrora-security-suite-tutorial/installing-centrora-suite-dedicated-server/#special"
+                            target="_blank" title="Please follow this guide If you would like Centrora to scan all website folders under the /home/ directory">{Restricted Permissions}</a></li>';
+                $list .= '</ul>';
             }
-            $list .= '</ul>';
-                echo($list);
+            echo($list);
         } catch (Exception $e) {
-            $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
-            $list .= '<li class="" name="filetreeroot" id="/"><a>{Restricted Permissions}</a></li>';
-            $list .= '</ul>';
+            $list = '<pre>'.$e.'</pre>';
             echo $list;
         }
     }

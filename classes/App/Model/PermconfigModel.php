@@ -70,42 +70,49 @@ class PermconfigModel extends BaseModel
             $it->setMaxDepth(0);
             if ($it->valid()) {
                 foreach ($it as $fileinfo) {
-                    if ($fileinfo->isDir()) {
-                        $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
-                            'name' => $fileinfo->getfilename(),
-                            'type' => $fileinfo->getType(),
-                            'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
-                            'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
-                            'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/folder.png' alt='dir' />",
-                            'dirsort' => 1);
-                    } elseif ($fileinfo->isFile()) {
-                        $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));
-                        if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip', $ext_code) == false) {
-                            $ext_code = 'file';
+                    if (class_exists('SConfig')){
+                        $newfileinfo = new SplFileInfo($fileinfo-> getRealPath() . ODS.'public_html');
+                        if (is_readable($newfileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) == '/')) {
+                            $parentfolder = $fileinfo->getfilename() .'/';
+                            $filearray['data'][] = self::getfileinfo($newfileinfo, $parentfolder);
+                        } elseif(!is_readable($newfileinfo-> getRealPath()) && is_readable($fileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) != '/')) {
+                            $filearray['data'][] = self::getfileinfo($fileinfo);
                         }
-                        $filearray['data'][] = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
-                            'name' => $fileinfo->getfilename(),
-                            'type' => pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
-                            'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
-                            'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
-                            'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/" . $ext_code . ".png' alt='" . $ext_code . "' />",
-                            'dirsort' => 2);
+                    } else{
+                        $filearray['data'][] = self::getfileinfo($fileinfo);
                     }
                 }
-                array_multisort($filearray['data'], SORT_ASC);
             } else {
-                $filearray = array("draw" => 1,
-                    "recordsTotal" => "0",
-                    "recordsFiltered" => "0",
-                    "data" => array());
+                $filearray = array("draw" => 1, "recordsTotal" => "0", "recordsFiltered" => "0", "data" => array());
             }
             return $filearray;
         } catch (Exception $e) {
-            return $filearray = array("draw" => 1,
-                "recordsTotal" => "0",
-                "recordsFiltered" => "0",
-                "data" => array());
+            return $filearray = array("draw" => 1, "recordsTotal" => "0", "recordsFiltered" => "0", "data" => array());
         }
+    }
+    private function  getfileinfo ($fileinfo, $parentfolder = null){
+        if ($fileinfo->isDir()) {
+            $filearray = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+                'name' => $parentfolder . $fileinfo->getfilename(),
+                'type' => $fileinfo->getType(),
+                'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
+                'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
+                'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/folder.png' alt='dir' />",
+                'dirsort' => 1);
+        } elseif ($fileinfo->isFile()) {
+            $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));
+            if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip', $ext_code) == false) {
+                $ext_code = 'file';
+            }
+            $filearray = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+                'name' => $parentfolder . $fileinfo->getfilename(),
+                'type' => pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
+                'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
+                'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
+                'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/" . $ext_code . ".png' alt='" . $ext_code . "' />",
+                'dirsort' => 2);
+        }
+        return $filearray;
     }
     public function  getFileTree(){
         if (class_exists('SConfig')){

@@ -76,11 +76,15 @@ function addOEM(oem) {
     });
 }
 function getInstapage (id) {
-	$('#featureListModal').modal();
+    jQuery(document).ready(function ($) {
+    	$('#featureListModal').modal();
+    });
 }
 
 window.closeModal = function(){
-    $('#featureListModal').modal('hide');
+    jQuery(document).ready(function ($) {	
+    	$('#featureListModal').modal('hide');
+    });
 };
 
 jQuery(document).ready(function($){
