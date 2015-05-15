@@ -90,7 +90,6 @@ class BaseModel  {
 		$results = $this->db->loadObject();
 		if (empty ($results)) {
 			$varValues = array (
-				'id' => 'DEFAULT',
 				'page_url' => $url,
 				'action' => $action,
 				'visits' => 1
@@ -100,7 +99,8 @@ class BaseModel  {
 			$varValues = array (
 				'visits' => $results->visits + 1
 			);
-			$id = $this->db->addData('update', '#__osefirewall_pages', 'id', $results->id, $varValues);
+			$this->db->addData('update', '#__osefirewall_pages', 'id', $results->id, $varValues);
+			$id = $results->id;
 		}
 		return $id;
 	}
@@ -110,7 +110,6 @@ class BaseModel  {
 		$results = $this->db->loadObject();
 		if (empty ($results)) {
 			$varValues = array (
-				'id' => 'DEFAULT',
 				'referer_url' => $referer
 			);
 			$id = $this->db->addData('insert', '#__osefirewall_referers', null, null, $varValues);

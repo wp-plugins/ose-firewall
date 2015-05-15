@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.1.1
-Stable tag: 4.6.1
+Stable tag: 4.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,10 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.6.2 =
+* Fixed: Fixed Windows server cannot add IP into the database issue - Credits to Scott Berry (www.processingpoint.com) to report this issue
+* Fixed: Fixed IP cannot be added into the IP Management panel when there is a 0 on the left side of each part of the IP address
 
 = 4.6.1 =
 * Enhancement: Improve file permissions and virus scanner custom scanning directory function

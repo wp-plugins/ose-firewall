@@ -80,17 +80,17 @@ class ManageipsModel extends BaseModel
 	}
 	public function addACLRule($name, $ip_start, $ip_end, $ip_type, $ip_status)
 	{
-		$url = 'http://'.str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+		$url = ((!empty($_SERVER['HTTPS']))?'http://':'https').str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 		$page_id = $this->addPages($url, 0);
 		$referer_id = $this->addReferer();
 		$varValues = array(
-			'id' => '',
 			'name' => $name,
 			'datetime' => date('Y-m-d h:i:s'),
 			'score' => 0,
 			'status' => (int) $ip_status,
 			'referers_id' => $referer_id,
-			'pages_id' => $page_id
+			'pages_id' => $page_id,
+			'visits' => 0
 		);
 		$aclid = $this->db->addData('insert', '#__osefirewall_acl', null, null, $varValues);
 		if (!empty($aclid) && is_int($aclid))

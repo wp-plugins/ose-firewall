@@ -264,7 +264,6 @@ class oseFirewallScanner {
 		$referer_id = $this->addReferer();
 		if (empty ($this->aclid)) {
 			$varValues = array (
-				'id' => '',
 				'name' => $this->ip,
 				'datetime' => $this -> getDateTime (),
 				'score' => (int)$score,

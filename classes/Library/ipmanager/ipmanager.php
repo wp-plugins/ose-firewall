@@ -61,8 +61,15 @@ class oseFirewallIpManager
 	}
 	public function setIPRange($ipstart, $ipend)
 	{
-		$this->ip = $ipstart;
-		$this->ipend = $ipend;
+		$this->ip = $this->clearIPAddress($ipstart);
+		$this->ipend = $this->clearIPAddress($ipend);
+	}
+	private function clearIPAddress ($ip) {
+		$tmp= explode('.', $ip);
+		foreach ($tmp as $key => $val)  {
+			$tmp[$key] = ltrim($val, '0');
+		}
+		return implode('.',$tmp);
 	}
 	private function setIP()
 	{
