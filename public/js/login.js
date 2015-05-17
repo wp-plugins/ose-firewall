@@ -88,7 +88,7 @@ window.closeModal = function(){
 };
 
 jQuery(document).ready(function($){
-	getInstapage ('306979');
+	//getInstapage ('306979');
 	
     $('#login-form').submit(function() {
     	showLoading ();

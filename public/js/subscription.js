@@ -142,7 +142,9 @@ function goSubscribe () {
 
 function redirectLink () {
 	showLoading ('Please wait, redirecting to Paypal...');
-	$('#payment-form').submit();
+	 jQuery(document).ready(function($){
+		 	$('#payment-form').submit();
+	 });
 }
 function updateProfileID (profileID, profileStatus) {
  jQuery(document).ready(function($){
