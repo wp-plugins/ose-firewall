@@ -34,10 +34,10 @@ class BsconfigModel extends BaseModel {
 		$this->loadDatabase ();
 	}
 	public function getCHeader() {
-		return oLang :: _get('FIREWALL_CONFIGURATION');
+        return oLang::_get('FIREWALL_CONFIGURATION');
 	}
 	public function getCDescription() {
-		return oLang :: _get('FIREWALL_CONFIGURATION_DESC');
+        return oLang::_get('FIREWALL_CONFIGURATION_DESC');
 	}
 	public function loadLocalScript() {
 		$this->loadAllAssets ();

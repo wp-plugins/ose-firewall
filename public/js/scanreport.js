@@ -86,17 +86,17 @@ function batchquarantine() {
                 success: function (data) {
                     hideLoading();
                     if (data.data == 1) {
-                        showDialogue("Quarantine success", "Success", "OK");
+                        showDialogue(O_QUARANTINE_SUCCESS_DESC, O_SUCCESS, O_OK);
                         $('#scanreportTable').dataTable().api().ajax.reload();
                     } else {
-                        showDialogue("Quarantine failed, please try again", "Notice", "OK");
+                        showDialogue(O_QUARANTINE_FAIL_DESC, O_NOTICE, O_OK);
                     }
                     $('#checkbox').prop('checked', false);
                 }
             });
         } else {
             hideLoading();
-            showDialogue("Please select files first!", "Notice!", 'OK');
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
         }
     })
 }
@@ -124,18 +124,18 @@ function batchbkcl() {
                 },
                 success: function (data) {
                     hideLoading();
-                    if (data.data == "success") {
-                        showDialogue("Clean success", "Success", "OK");
+                    if (data.data == O_SUCCESS) {
+                        showDialogue(O_CLEAN_SUCCESS, O_SUCCESS, O_OK);
                         $('#scanreportTable').dataTable().api().ajax.reload();
                     } else {
-                        showDialogue("Clean failed, please try again", "Notice", "OK");
+                        showDialogue(O_CLEAN_FAIL, O_NOTICE, O_OK);
                     }
                     $('#checkbox').prop('checked', false);
                 }
             });
         } else {
             hideLoading();
-            showDialogue("Please select files first!", "Notice!", 'OK');
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
         }
     })
 }
@@ -163,18 +163,18 @@ function batchrs() {
                 },
                 success: function (data) {
                     hideLoading();
-                    if (data.data == "success") {
-                        showDialogue("Restore success", "Success", "OK");
+                    if (data.data == O_SUCCESS) {
+                        showDialogue(O_RESTORE_SUCCESS, O_SUCCESS, O_OK);
                         $('#scanreportTable').dataTable().api().ajax.reload();
                     } else {
-                        showDialogue("Restore failed, please try again", "Notice", "OK");
+                        showDialogue(O_RESTORE_FAIL, O_NOTICE, O_OK);
                     }
                     $('#checkbox').prop('checked', false);
                 }
             });
         } else {
             hideLoading();
-            showDialogue("Please select files first!", "Notice!", 'OK');
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
         }
     })
 }
@@ -184,17 +184,17 @@ function confirmbatchdl() {
         if (ids.length > 0) {
             bootbox
                 .dialog({
-                    message: "Are you sure to delete selected files, this operation can not backward, press yes to proceed",
-                    title: "Confirm",
+                    message: O_DELETE_CONFIRM_DESC,
+                    title: O_CONFIRM,
                     buttons: {
                         success: {
-                            label: "Yes",
+                            label: O_YES,
                             callback: function () {
                                 batchdl();
                             }
                         },
                         main: {
-                            label: "No",
+                            label: O_NO,
                             callback: function () {
                                 this.close();
                             }
@@ -202,7 +202,7 @@ function confirmbatchdl() {
                     }
                 });
         } else {
-            showDialogue("Please select files first!", "Notice!", 'OK');
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
         }
     })
 }
@@ -230,9 +230,9 @@ function batchdl() {
             success: function (data) {
                 hideLoading();
                 if (data.data == 1) {
-                    showDialogue("Delete success", "Success", "OK");
+                    showDialogue(O_DELE_SUCCESS_DESC, O_SUCCESS, O_OK);
                 } else {
-                    showDialogue("Delete failed, please try again", "Notice", "OK");
+                    showDialogue(O_DELE_FAIL_DESC, O_NOTICE, O_OK);
                 }
                 $('#checkbox').prop('checked', false);
                 $('#scanreportTable').dataTable().api().ajax.reload();
@@ -269,20 +269,20 @@ function viewFiledetail(id, status) {
                 var result1 = result.replace(re1, subst1);
                 if (status == 0) {
                     var buttons =
-                        "<button type='button' class='btn btn-primary' onclick='bkcleanvs(" + id + ", 1" + ")'>Clean</button>" +
-                        "<button type='button' class='btn btn-primary' onclick='quarantinevs(" + id + ", 2" + ")'>Quarantine</button>" +
-                        "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
+                        "<button type='button' class='btn btn-primary' onclick='bkcleanvs(" + id + ", 1" + ")'>" + O_CLEAN + "</button>" +
+                        "<button type='button' class='btn btn-primary' onclick='quarantinevs(" + id + ", 2" + ")'>" + O_QUARANTINE + "</button>" +
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>" + O_CLOSE + "</button>";
                 } else if (status == 1) {
                     var buttons =
-                        "<button type='button' class='btn btn-primary' onclick='restorevs(" + id + ", 0" + ")'>Restore</button>" +
-                        "<button type='button' class='btn btn-primary' onclick='quarantinevs(" + id + ", 2" + ")'>Quarantine</button>" +
-                        "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
+                        "<button type='button' class='btn btn-primary' onclick='restorevs(" + id + ", 0" + ")'>" + O_RESTORE + "</button>" +
+                        "<button type='button' class='btn btn-primary' onclick='quarantinevs(" + id + ", 2" + ")'>" + O_QUARANTINE + "</button>" +
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>" + O_CLOSE + "</button>";
                 }
                 else {
                     var buttons =
-                        "<button type='button' class='btn btn-primary' onclick='restorevs(" + id + ", 0" + ")'>Restore</button>" +
-                        "<button type='button' class='btn btn-primary' onclick='confirmdeletevs(" + id + ")'>Delete</button>" +
-                        "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>";
+                        "<button type='button' class='btn btn-primary' onclick='restorevs(" + id + ", 0" + ")'>" + O_RESTORE + "</button>" +
+                        "<button type='button' class='btn btn-primary' onclick='confirmdeletevs(" + id + ")'>" + O_DELETE + "</button>" +
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>" + O_CLOSE + "</button>";
                 }
                 $('#codeareaDiv').html(result1);
                 $('#buttonDiv').html(buttons);
@@ -308,12 +308,12 @@ function restorevs(id, status) {
             },
             success: function (data) {
                 hideLoading();
-                if (data.data == "success") {
-                    showDialogue("Restore success", "Success", "OK");
+                if (data.data == O_SUCCESS) {
+                    showDialogue(O_RESTORE_SUCCESS, O_SUCCESS, O_OK);
                     viewFiledetail(id, status);
                 }
                 else {
-                    showDialogue("Restore failed, please try again", "Notice", "OK");
+                    showDialogue(O_RESTORE_FAIL, O_NOTICE, O_OK);
                 }
             }
         })
@@ -337,11 +337,11 @@ function deletevs(id) {
             success: function (data) {
                 hideLoading();
                 if (data.data == 1) {
-                    showDialogue("Delete success", "Success", "OK");
+                    showDialogue(O_DELE_SUCCESS_DESC, O_SUCCESS, O_OK);
                     $('#filecontentModal').modal('hide');
                 }
                 else {
-                    showDialogue("Delete failed, please try again", "Notice", "OK");
+                    showDialogue(O_DELE_FAIL_DESC, O_NOTICE, O_OK);
                 }
             }
         })
@@ -365,10 +365,10 @@ function quarantinevs(id, status) {
             success: function (data) {
                 hideLoading();
                 if (data.data == 1) {
-                    showDialogue("Quarantine success", "Success", "OK");
+                    showDialogue(O_QUARANTINE_SUCCESS_DESC, O_SUCCESS, O_OK);
                     viewFiledetail(id, status);
                 } else {
-                    showDialogue("Quarantine failed, please try again", "Notice", "OK");
+                    showDialogue(O_QUARANTINE_FAIL_DESC, O_NOTICE, O_OK);
                 }
             }
         })
@@ -391,15 +391,11 @@ function bkcleanvs(id, status) {
             },
             success: function (data) {
                 hideLoading();
-                if (data.data == "success") {
-                    showDialogue("Clean success", "Success", "OK");
-                    //  $('#filecontentModal').modal('hide');
-                    //   $('#scanreportTable').dataTable().api().ajax.reload();
+                if (data.data == O_SUCCESS) {
+                    showDialogue(O_CLEAN_SUCCESS, O_SUCCESS, O_OK);
                     viewFiledetail(id, status);
                 } else {
-                    showDialogue("Clean failed, please try again", "Notice", "OK");
-                    //var content = data.data;
-                    //$('#codeareaDiv').html(content);
+                    showDialogue(O_CLEAN_FAIL, O_NOTICE, O_OK);
                 }
             }
         })
@@ -408,17 +404,17 @@ function bkcleanvs(id, status) {
 function confirmdeletevs(id, status) {
     bootbox
         .dialog({
-            message: "This will delete virus compeletely and can not be restored later, press yes to proceed",
-            title: "Notice",
+            message: O_DELETE_CONFIRM_DESC,
+            title: O_NOTICE,
             buttons: {
                 success: {
-                    label: "Yes",
+                    label: O_YES,
                     callback: function () {
                         deletevs(id, status);
                     }
                 },
                 main: {
-                    label: "No",
+                    label: O_NO,
                     callback: function () {
                         this.close();
                     }

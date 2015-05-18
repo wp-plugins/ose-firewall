@@ -61,8 +61,8 @@ class SubscriptionController extends LoginController {
 		$result = $this ->model->logout();
 		$return = array ();
 		$return['success'] = $result;
-		$return['status'] = oLang :: _get('SUCCESS');
-		$return['message'] = oLang :: _get('SUCCESS_LOGOUT');
+        $return['status'] = $this->model->getLang("SUCCESS");
+        $return['message'] = $this->model->getLang("SUCCESS_LOGOUT");
 		$this->model->returnJSON($return, false);
 	}
 	public function action_activateCode() {
@@ -75,8 +75,8 @@ class SubscriptionController extends LoginController {
 		{
 			$return = array ();
 			$return['success'] = true;
-			$return['status'] = oLang :: _get('ERROR');
-			$return['message'] = oLang :: _get('ACTIVATION_CODE_EMPTY');
+            $return['status'] = $this->model->getLang("ERROR");
+            $return['message'] = $this->model->getLang("ACTIVATION_CODE_EMPTY");
 		}
 		$this->model->returnJSON($return, false);
 	}
@@ -94,8 +94,8 @@ class SubscriptionController extends LoginController {
 		{
 			$return = array ();
 			$return['success'] = true;
-			$return['status'] = oLang :: _get('ERROR');
-			$return['message'] = oLang :: _get('SUBSCRIPTION_PLAN_EMPTY');
+            $return['status'] = $this->model->getLang("ERROR");
+            $return['message'] = $this->model->getLang("SUBSCRIPTION_PLAN_EMPTY");
 		}
 		$this->model->returnJSON($return, false);
 	}

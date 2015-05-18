@@ -71,7 +71,7 @@ if ($status == true)
 												<th></th>
 												<th><?php oLang::_('O_COUNTRY'); ?></th>
 												<th><?php oLang::_('O_STATUS'); ?></th>
-												<th><input type="checkbox" name="checkedAll" id="checkedAll"></input></th>
+                                                <th><input type="checkbox" name="checkedAll" id="checkedAll"></th>
                                             </tr>
                                         </thead>
                                         <tfoot>

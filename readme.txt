@@ -4,8 +4,8 @@ Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
-Tested up to: 4.1.1
-Stable tag: 4.6.2
+Tested up to: 4.2.2
+Stable tag: 4.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,12 +16,15 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
 Centrora Security is a new plugin that's modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 
-= New features in v4.6: =
-* New: Added OEM Partner Support
-* New: Added Backup to Cloud Storage
-* Enhancement: Improved Frontend User Interface
-* Enhancement: Improved Scan Report
-* Enhancement: Improved Virus Scanner - Scan Specific Folders
+= New features in v4.7: =
+* Added: Feature Requests #87: Add self unblock support
+* Added: Feature Requests #90: OEM user access control
+* Added: Feature Requests #92: Ability to edit alert notificaiton email template
+* Enhancement: Improvements #96: For admin to receive emails, adding the domain in the email so the administrator knows which domain the attack is from
+* Enhancement: Improvements #97: Add units on traffic map and fix Facebook like box errors
+* Enhancement: Improvements #106: Improve the block page layout and design
+* Enhancement: Improvements #108: Only send email out when the domains are matched in the attack
+* Enhancement: Improvements #115: Log in page improvement and bug fix
 
 = Customer Support =
 If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here for help.</a>
@@ -86,6 +89,22 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+= 4.7.0 =
+* Added: Feature Requests #87: Add self unblock support
+* Added: Feature Requests #90: OEM user access control
+* Added: Feature Requests #92: Ability to edit alert notificaiton email template
+* Enhancement: Improvements #96: For admin to receive emails, adding the domain in the email so the administrator knows which domain the attack is from
+* Enhancement: Improvements #97: Add units on traffic map and fix Facebook like box errors
+* Enhancement: Improvements #106: Improve the block page layout and design
+* Enhancement: Improvements #108: Only send email out when the domains are matched in the attack
+* Enhancement: Improvements #115: Log in page improvement and bug fix
+* Fixed: Bugs #89: Virus Scanner Cronjob Stops
+* Fixed: Bugs #93: Language codes missing in Admin email panel
+* Fixed: Bugs #102: IP address not showing correctly when suite installed on Mac
+* Fixed: Bugs #109: Windows server support (from Scott)
+* Fixed: Bugs #110: Subscription Logout 500 Internal Server Error
+* Fixed: Subscription checkout JQuery tag
+* Fixed: Various other minor bug fixes and improvements
 
 = 4.6.2 =
 * Fixed: Fixed Windows server cannot add IP into the database issue - Credits to Scott Berry (www.processingpoint.com) to report this issue
@@ -118,7 +137,7 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 * Minor Enhancement: improve new email notification function to increase efficiency
 * Minor Enhancement: improve updater to update to 4.5.0
 
-= 4.5.0= 
+= 4.5.0 =
 * Fixed: Bugs #15: IP management some flags are missing for some websites
 * Fixed: Bugs #53: Fix variable cannot be added to suite / joomla in some websites
 * Fixed: Bugs #55: In a specific website website, the variable Whitelist not working

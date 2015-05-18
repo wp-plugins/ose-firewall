@@ -25,7 +25,12 @@ $seoConfArray = $this->model->getConfiguration('seo');
 			  </div>
 			  <div class="panel-body">
 				  <ul class="list-group">
-				    <li class="list-group-item"><span class="label label-warning">Note</span> <b>[Affiliate Tracking] </b>: Don't miss out the chance to earn at least $14,500 for the 1st year and $338,900 in five years with our affiliate program!  <a class="btn btn-danger btn-xs fx-button" data-toggle="modal" data-target="#affiliateFormModal" href="#">Add Tracking Code</a> <a class="btn btn-primary btn-xs fx-button mr5" href="http://www.centrora.com/store/affiliate-program" target="_blank">Read More</a> </li>
+                      <li class="list-group-item"><span
+                              class="label label-warning">Note</span><?php oLang::_('AFFILIATE_PROGRAM_DESC'); ?> <a
+                              class="btn btn-danger btn-xs fx-button" data-toggle="modal"
+                              data-target="#affiliateFormModal" href="#">Add Tracking Code</a> <a
+                              class="btn btn-primary btn-xs fx-button mr5"
+                              href="http://www.centrora.com/store/affiliate-program" target="_blank">Read More</a></li>
 		          </ul>
 			  </div>
 			</div>
@@ -45,7 +50,10 @@ $seoConfArray = $this->model->getConfiguration('seo');
 			  </div>
 			  <div class="panel-body">
 				  <ul class="list-group">
-				    <li class="list-group-item"><span class="label label-warning">Note</span> <b>[Security Badge] </b>: The security badge is disabled now. You can increase sales conversion of your website by enabling it. <a class="btn btn-danger btn-xs fx-button mr5" href="<?php echo OSE_WPURL.'/wp-admin/widgets.php';?>" target="_blank">Fix it</a> </li>
+                      <li class="list-group-item"><span
+                              class="label label-warning">Note</span> <?php oLang::_('SECURITY_BADGE_DESC'); ?><a
+                              class="btn btn-danger btn-xs fx-button mr5"
+                              href="<?php echo OSE_WPURL . '/wp-admin/widgets.php';?>" target="_blank">Fix it</a></li>
 		          </ul>
 			  </div>
 			</div>

@@ -32,6 +32,7 @@ class oseFirewallScanner {
 	private $ip32 = null;
 	private $ipStatus = null;
 	private $url = null;
+    private $domain = null;
 	private $referer = null;
 	private $tags = null;
 	private $target = null;
@@ -122,7 +123,29 @@ class oseFirewallScanner {
 			return;
 		}
 		else if ($this->ipStatus == 1) {
-			$this->showBanPage();
+            $blockMode = $this->getblockIP();
+            $notified = $this->getNotified();
+            switch ($blockMode) {
+                case 1:
+                    $this->sendEmail('blacklisted', $notified);
+                    break;
+                case 0:
+                    $this->sendEmail('403blocked', $notified);
+                    break;
+            }
+            if (!empty($_POST['googleAuthCode'])) {
+                $flag = $this->verifyGA();
+                if ($flag == true) {
+                    $this->updateStatus(3);
+                    print_r(1);
+                    exit;
+                } else {
+                    print_r(0);
+                    exit;
+                }
+            } else {
+                $this->showBanPage();
+            }
 		}
 		else
 		{
@@ -130,6 +153,18 @@ class oseFirewallScanner {
 		}
 		$this->db->closeDBO ();
 	}
+
+    public function verifyGA()
+    {
+        require_once(OSE_FWFRAMEWORK . ODS . 'googleAuthenticator' . ODS . 'class_gauthenticator.php');
+        $gauthenticator = new GoogleAuthenticator();
+        $otp = trim($_POST ['googleAuthCode']);
+        $googleAuth = oseFirewall::getConfiguration('scan');
+        $secret = $googleAuth['data']['gaSecret'];
+        require_once(OSE_FWFRAMEWORK . ODS . 'googleAuthenticator' . ODS . 'class_base32.php');
+        $match = $gauthenticator->verify($secret, $otp);
+        return $match;
+    }
 	protected function filterAttack($type)
 	{
 		$attrList = array("`detattacktype`.`attacktypeid` AS `attacktypeid`", "`detcontdetail`.`rule_id` AS `rule_id`", "`vars`.`keyname` AS `keyname`","`detcontent`.`content` AS `content`");
@@ -526,6 +561,7 @@ class oseFirewallScanner {
 	}
 	protected function getBanPage($adminEmail, $pageTitle, $metaKeys, $metaDescription, $metaGenerator, $customBanPage)
 	{
+
 		$banbody = $this->getBanPageBody($customBanPage, $adminEmail);
 		header('Content-type: text/html; charset=UTF-8') ;
 		$banhtml = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -537,20 +573,69 @@ class oseFirewallScanner {
 							  <meta name="description" content="' . $metaDescription . '" />
 							  <meta name="generator" content="' . $metaGenerator . '" />
 							  <title>' . $pageTitle . '</title>
+            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/bootstrap.min.css">
+            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/blockpage.css">
+                        <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/animate.css">
 						</head>
+						<script src="' . OSE_FWPUBLICURL . '/js/jquery-1.11.1.min.js"></script>
+						<script src="' . OSE_FWPUBLICURL . '/js/plugins/wow/wow.min.js"></script>
+						<script>new WOW().init();</script>
+						<script>
+      jQuery(document).ready(function($){
+           $("#googleAuth-form").submit(function() {
+             var data = $("#googleAuth-form").serialize();
+             $.ajax({
+           //  url: "index.php?",
+            type: "POST",
+            data: data,
+            success: function(data)
+            {
+
+               console.log(data);
+
+                if (data == 1)
+                {
+                   location.reload(true);
+                }
+                else
+                {
+                   alert("wrong code, try again");
+                }
+            }
+        });
+       return false; // avoid to execute the actual submit of the form.
+});
+})
+                      </script>
 						<body>
-						'.$banbody.'	  
+						' . $banbody . '
 						</body>
 					</html>';
 		return $banhtml;
 	}
 	protected function getBanPageBody($customBanPage, $adminEmail)
 	{
-		$banbody = '<div style="margin:auto;width:780px;border:0px solid #0082b0;padding:0px 10px 10px 10px;z-index:100;color:#000000;">
-							  <br/>
-								' . $customBanPage . '
-							  <div style="font-family: arial,helvetica,sans-serif;background-color:#ffffff;padding: 10px 0px 0px 0px" align="center"><font color="#666666" size="1">Your IP address is ' . $this->ip . '. If you believe this is an error, please contact the <a href="mailto:' . $adminEmail . '?Subject=Inquiry:%20Banned%20for%20suspicious%20hacking%20behaviour - IP: ' . $this->ip . ' - Violation"> Webmaster </a>.</font></div>
-					</div>';
+        $banhead = '<header>
+        <div id="hero">
+            <div class="container herocontent">
+				 <h2 class="wow fadeInUp" data-wow-duration="2s" style="color:#fff; text-shadow: 1px 1px 2px #000000;" >Your IP Address Has Been Blocked.</h2>
+                <h4 class="wow fadeInDown" data-wow-duration="3s" style="color:#fff; text-shadow: 1px 1px 2px #000000;">The firewall has flagged your IP address, but don\'t worry!</h4>
+            </div>
+        </div>
+     </header>';
+        $banfooter = '<footer>
+        <div class="container">
+            <div class="copyright"><!-- FOOTER COPYRIGHT START -->
+                <p style="color:#fff;">' . $customBanPage . '</p>
+
+                 <h3 style="color:#fff;">WHAT NOW?</h3>
+                 <p style="color:#fff;">Your IP address is ' . $this->ip . '. If you believe this is an error, please contact the <a href="mailto:' . $adminEmail . '?Subject=Inquiry:%20Banned%20for%20suspicious%20hacking%20behaviour - IP: ' . $this->ip . ' - Violation"> Webmaster </a>
+
+            </p>
+            </div><!-- FOOTER COPYRIGHT END -->
+         </div>
+     </footer>';
+        $banbody = $banhead . $banfooter;
 		$banbody = str_replace ('info@opensource-excellence.com', $adminEmail, $banbody);
 		$banbody = str_replace ('info@your-website.com', $adminEmail, $banbody);
 		$banbody = str_replace ('OSE Team', 'Management Team', $banbody);
@@ -591,14 +676,18 @@ class oseFirewallScanner {
 	}
 	protected function sendEmail($type, $notified)
 	{
-		if ($this->receiveEmail == true && $notified == 0)
+        if ($this->receiveEmail == true && $notified == 0)
 		{
 			$config_var = $this->getConfigVars();
 			oseFirewall::loadEmails();
 			$oseEmail = new oseEmail('firewall');
 			$email = $this->getEmailByType($type);
 			$email = $this->convertEmail($email, $config_var);
-            $receiptient = oseFirewall::getActiveReceivers();
+
+            $receiptient = oseFirewall::getActiveReceiveEmails();
+
+            $receiptient = $this->filterReceiptient($receiptient);
+
             $result = $oseEmail->sendMailTo($email, $config_var, $receiptient);
             if ($result == true) {
                  $this->updateNotified(1);
@@ -606,6 +695,32 @@ class oseFirewallScanner {
             $oseEmail->closeDBO();
 		}
 	}
+
+    protected function filterReceiptient($receiptient)
+    {
+        $filter = "('" . implode("', '", $receiptient) . "')";
+        $this->domain = $_SERVER['HTTP_HOST'];
+
+        $db = oseFirewall::getDBO();
+
+        $query = "SELECT `A_email`,`A_name`
+					  FROM `#__osefirewall_adminemails` `admin` LEFT JOIN `#__osefirewall_domains` `dom`
+					  ON `admin`.`D_id` = `dom`.`D_id`
+					  WHERE `D_address` = '$this->domain' AND `admin`.`A_email` IN $filter";
+        $db->setQuery($query);
+
+        $results = $db->loadObjectList();
+        $i = 0;
+        $return = array();
+
+        foreach ($results as $result) {
+            $return[$i] = new StdClass;
+            $return[$i]->name = $result->A_name;
+            $return[$i]->email = $result->A_email;
+            $i++;
+        }
+        return $return;
+    }
 	protected function getEmailByType ($type) {
 		$email = new stdClass();
 		switch ($type) {
@@ -619,7 +734,12 @@ class oseFirewallScanner {
 				$email->subject = 'Centrora Security Alert For an Access Denied Entry';
 				break;
 		}
-		$email->body = file_get_contents(dirname(__FILE__).'/email.tpl');
+        $emailTmp = oseFirewall::getConfiguration('emailTemp');
+        if (empty($emailTmp['data']['emailTemplate'])) {
+            $email->body = file_get_contents(dirname(__FILE__) . ODS . 'email.tpl');
+        } else {
+            $email->body = stripslashes($emailTmp['data']['emailTemplate']);
+        }
 		return $email;
 	}
 	protected function updateNotified($status)
@@ -643,14 +763,11 @@ class oseFirewallScanner {
 		$email->subject = $email->subject." for [".$_SERVER['HTTP_HOST']."]";
 		$email->body = str_replace('{name}', 'Administrator', $email->body);
 		$email->body = str_replace('{header}', $email->subject, $email->body);
-		$email->body = str_replace('{attackType}', $attackType, $email->body);
-		$email->body = str_replace('{violation}', $violation, $email->body);
-		$email->body = str_replace('{logtime}', $this->logtime, $email->body);
-		$email->body = str_replace('{ip}', $this->ip, $email->body);
-		$email->body = str_replace('{ip_id}', $this->aclid, $email->body);
-		$email->body = str_replace('{target}', $this->url, $email->body);
-		$email->body = str_replace(array('{referrer}', '{referer}'), $this->referer, $email->body);
-		$email->body = str_replace('{score}', $score, $email->body);
+        $content = "An attack attempt was logged on: " . $this->logtime . "<br/> IP Address: " . $this->ip . "<br/> IP ID: " . $this->aclid . "<br/>
+        URL: " . $this->url . "<br/> Referer (if any): " . $this->referer . "<br/> Attack Type: " . $attackType . "<br/> violation: " . $violation . "<br/>
+        Total Risk Score: " . $score . "<br/> IP information: http://www.infosniper.net/index.php?ip_address=" . $this->ip;
+        $email->body = str_replace('{content}', $content, $email->body);
+
 		return $email;
 	}
 	protected function getViolation()
@@ -1024,3 +1141,9 @@ class oseFirewallScanner {
 		}
 	}
 }
+//<form id = "googleAuth-form" class="form-horizontal group-border stripped" role="form" action="index.php?">
+//            <lable style="color:#fff" for="googleAuthCode" class="form-label form-label-left form-label-auto">If you have Google Authenticator enabled for your WordPress account, please input your Google Authenticator code</lable>
+//            <input  type="text" id="googleAuthCode" class=" form-textbox"  name="googleAuthCode">
+//            <button type="submit" class="btn btn-default" id="save-button">submit</button>
+//            </div>
+//            </form>

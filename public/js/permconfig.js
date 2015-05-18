@@ -64,7 +64,7 @@ jQuery(document).ready(function($){
             } else {
                 selectedids.splice(index, 1);
             }
-            console.log(selectedids);
+            //console.log(selectedids);
         }
     });
     $( '#FileTreeDisplay' ).html( '<ul class="filetree start"><li class="wait">' + 'Generating Tree...' + '<li></ul>' );
@@ -99,10 +99,10 @@ jQuery(document).ready(function($){
         document.editpermform.chmodbinary.value = binary;
         if (selectedids.length < 1){
             $('#editpermModal').modal('hide');
-            showDialogue ('Please select some Files or Folders', 'ERROR', 'OK');
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
         }else if(binary === '0000') {
             $('#editpermModal').modal('hide');
-            showDialogue ('Make sure to set appropriate file permissions 0000 would render your selected Files/Folders inaccessible', 'ERROR', 'OK');
+            showDialogue(O_FILE_PERMISSION_DESC, O_ERROR, O_OK);
         }else{
             showLoading ();
             $.ajax({
@@ -113,7 +113,7 @@ jQuery(document).ready(function($){
                     data = jQuery.parseJSON(data);
                     $('#editpermModal').modal('hide');
                     hideLoading ();
-                    showDialogue (data.result, data.status, 'OK');
+                    showDialogue(data.result, data.status, O_OK);
                     $('#permconfigTable').dataTable().api().ajax.reload();
                 }
             });

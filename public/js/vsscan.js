@@ -6,11 +6,6 @@ jQuery(document).ready(function($){
 	//get object with colros from plugin and store it.
     colours = $('body').data('appStart').getColors();
     var sizes = $('body').data('appStart').getSizes();
-    ////generate random number for charts
-    //randNum = function(){
-    //	//return Math.floor(Math.random()*101);
-    //	return (Math.floor( Math.random()* (1+40-20) ) ) + 20;
-    //}
     initPlotChart($, [0, 0], true, colours);
     initPlotChart($, [0, 0], false, colours);
     initPieChartPage($, sizes.pielinewidth, sizes.piesize, 1500, colours);

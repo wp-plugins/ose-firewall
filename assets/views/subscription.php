@@ -16,7 +16,7 @@ $this->model->getNounce ();
 					<div class="panel panel-primary plain toggle panelClose panelRefresh">
 						<!-- Start .panel -->
 						<div class="panel-heading white-bg">
-							<h4 class="panel-title">My Subscriptions</h4>
+                            <h4 class="panel-title"><?php oLang::_('MY_SUBSCRIPTION'); ?></h4>
 
 						</div>
 						<div class="panel-controls"></div>
@@ -24,7 +24,7 @@ $this->model->getNounce ();
 							<button class="btn btn-primary btn-sm mr5 mb10" type="button" onClick="goSubscribe();"><?php oLang::_('SUBSCRIBE'); ?></button>
 							<button onclick="activateCode();" type="button" class="btn btn-danger btn-sm mr5 mb10"><?php oLang::_('ENTER_ACTIVATION_CODE'); ?></button>
 							<button onclick="redirectTut('http://www.centrora.com/store/index.php?route=affiliate/login');" type="button"
-								class="btn btn-yellow btn-sm mr5 mb10">Get Your Premium Service For FREE</button>
+                                    class="btn btn-yellow btn-sm mr5 mb10"><?php oLang::_('PREMIUM_SERVICE_FREE'); ?></button>
 							<button class="btn btn-danger btn-sm mr5 mb10" type="button"
 								onClick="redirectTut('https://www.centrora.com/store/activating-premium-service');"><?php oLang::_('TUTORIAL'); ?></button>
 							<button class="btn btn-primary btn-sm mr5 mb10" type="button" onClick="centLogout();"><?php oLang::_('LOGOUT'); ?></button>

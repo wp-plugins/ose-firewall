@@ -31,6 +31,7 @@ class oseAdminManager
 {
     private $adminTable = '#__osefirewall_adminemails';
     private $domainTable = '#__osefirewall_domains';
+    private $configTable = '#__ose_secConfig';
     public $columns = array(
         array(
             'db' => 'A_id',
@@ -162,7 +163,6 @@ class oseAdminManager
         $db->closeDBO();
         return $this->convertResultsList($results);
     }
-
     protected function convertResultsList($results)
     {
         $return = array();
@@ -173,9 +173,9 @@ class oseAdminManager
             $db->setQuery($sql);
             $domain = $db->loadObjectList();
             if ($file->A_status == 'active') {
-                $status = '<a id="' . $file->A_id . '" href="#adminTable" onclick="changeStatus(0,' . $file->A_id . ')"><div class="fa fa-check"></div></a>';
+                $status = '<a id="' . $file->A_id . '" href="javascript:void(0);" onclick="changeStatus(0,' . $file->A_id . ')"><div class="fa fa-check"></div></a>';
             } else {
-                $status = '<a id="' . $file->A_id . '" href="#adminTable" onclick="changeStatus(1,' . $file->A_id . ')"><div class="fa fa-times"></div></a>';
+                $status = '<a id="' . $file->A_id . '" href="javascript:void(0);" onclick="changeStatus(1,' . $file->A_id . ')"><div class="fa fa-times"></div></a>';
             }
             $db->closeDBO();
             $return [$i] = array(
@@ -244,6 +244,8 @@ class oseAdminManager
             $result[$i] = "<option value='$option->D_address'>" . $option->D_address . "</option>";
             $i++;
         }
+        $allDomain = "<option value='all'>Select All</option>";
+        array_unshift($result, $allDomain);
         return $result;
     }
 
@@ -251,15 +253,21 @@ class oseAdminManager
     {
         $adminArray = $this->getAdminArray($name, $email, $status, $domain);
         $db = oseFirewall::getDBO();
-        $id = $db->addData('insert', $this->adminTable, '', '', $adminArray);
+        if ($domain == 'all') {
+            foreach ($adminArray as $sole) {
+                $id = $db->addData('insert', $this->adminTable, '', '', $sole);
+            }
+        } else {
+            $id = $db->addData('insert', $this->adminTable, '', '', $adminArray);
+        }
         $db->closeDBO();
         return $id;
     }
-
     public function getAdminArray($name, $email, $status, $domain)
     {
         $adminNameNoSpace = str_replace(' ', '', $name);
         $adminEmailNoSpace = str_replace(' ', '', $email);
+        if ($domain !== 'all') {
         $domainID = $this->getDomainID($domain);
         $adminArray = array(
             'A_name' => $adminNameNoSpace,
@@ -267,15 +275,35 @@ class oseAdminManager
             'A_status' => $status,
             'D_id' => $domainID[0]->D_id
         );
+        } else {
+            $i = 0;
+            $domainID = $this->getDomainID();
+            foreach ($domainID as $domainSole) {
+                $adminArray[$i] = array(
+                    'A_name' => $adminNameNoSpace,
+                    'A_email' => $adminEmailNoSpace,
+                    'A_status' => $status,
+                    'D_id' => $domainSole->D_id
+                );
+                $i++;
+            }
+        }
+
         return $adminArray;
     }
 
-    public function getDomainID($domain)
+    public function getDomainID($domain = null)
     {
         $db = oseFirewall::getDBO();
+        if ($domain == null) {
+            $query = "SELECT `D_id` FROM `" . $this->domainTable;
+            $db->setQuery($query);
+            $results = $db->loadObjectList();
+        } else {
         $query = "SELECT `D_id` FROM `" . $this->domainTable . "` WHERE `D_address` = '" . $domain . "'";
         $db->setQuery($query);
         $results = $db->loadObjectList();
+        }
         $db->closeDBO();
         return $results;
     }
@@ -308,5 +336,37 @@ class oseAdminManager
             $db->closeDBO();
         }
         return $flag;
+    }
+
+    public function saveEmailEditor($content)
+    {
+        $db = oseFirewall::getDBO();
+        $query = "SELECT `key` FROM `" . $this->configTable . "` WHERE `key` = 'emailTemplate'";
+        $db->setQuery($query);
+        $flag = $db->loadObjectList();
+        if (empty($flag)) {
+            $contentArray = array(
+                'key' => 'emailTemplate',
+                'value' => $content,
+                'type' => 'emailTemp',
+            );
+            $db->addData('insert', $this->configTable, '', '', $contentArray);
+            $db->closeDBO();
+        } else {
+            $contentArray = array(
+                'value' => $content,
+            );
+            $db->addData('update', $this->configTable, 'key', 'emailTemplate', $contentArray);
+            $db->closeDBO();
+        }
+    }
+
+    public function readEmailTemp()
+    {
+        $content = "";
+        if (file_exists(dirname(__FILE__) . ODS . 'email.tpl')) {
+            $content = file_get_contents(dirname(__FILE__) . ODS . 'email.tpl');
+        }
+        return $content;
     }
 }

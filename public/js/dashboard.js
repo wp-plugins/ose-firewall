@@ -68,16 +68,22 @@ jQuery(document).ready(function($){
 			show: true,
 		    aboveData: false,
             color: colours.black,
-		    labelMargin: 5,
-		    axisMargin: 0, 
+            labelMargin: 10,
+            axisMargin: 0,
 		    borderWidth: 0,
 		    borderColor:null,
-		    minBorderMargin: 5 ,
+            minBorderMargin: 20,
 		    clickable: true, 
 		    hoverable: true,
 		    autoHighlight: false,
-		    mouseActiveRadius: 20
-		}, 
+            mouseActiveRadius: 20,
+            margin: {
+                top: 8,
+                bottom: 20,
+                left: 20
+            }
+        },
+
 		colors: chartColours,
         tooltip: true, //activate tooltip
 		tooltipOpts: {
@@ -86,10 +92,12 @@ jQuery(document).ready(function($){
 				x: -30,
 				y: -50
 			}
-		},	
-        yaxis: { min: 0, max: 100 },
+		},
+        yaxis: {min: 0, max: 100},
         xaxis: { show: true}
     };
+
+
     retrieveCountryData();
     setInterval(function(){retrieveCountryData()}, 30000);
     retrieveTrafficData(options);
@@ -106,7 +114,6 @@ jQuery(document).ready(function($){
     }, 5000);
     checkWebBrowsingStatus();
 });
-
 function retrieveCountryData() {
 	jQuery(document).ready(function($){
 		$.ajax({
@@ -128,7 +135,6 @@ function retrieveCountryData() {
 	      });
 	});
 }
-
 function retrieveTrafficData(options) {
 	jQuery(document).ready(function($){
 		$.ajax({
@@ -156,12 +162,19 @@ function retrieveTrafficData(options) {
                 $.each(data[2], function (i, item) {
                     arr2[i] = [parseInt(item.hour), parseInt(item.count)];
                 });
+
                 var plot = $.plot($("#traffic-overview"),
                     [{data: arr0, label: "blacklist", lines: {show: true}}
                         , {data: arr1, label: "monitor", lines: {show: true}}
                         , {data: arr2, label: "whitelist", lines: {show: true}}]
                     , options);
-	        }
+
+                var xaxisLabel = $("<div class='axisLabel xaxisLabel'></div>").text("Attack History (hours)").appendTo($('#traffic-overview'));
+
+                var yaxisLabel = $("<div class='axisLabel yaxisLabel'></div>").text("Number of attacking IPs (times)").appendTo($('#traffic-overview'));
+
+                yaxisLabel.css("margin-top", yaxisLabel.width() / 2 - 20);
+            }
 	      });
 	});
 }
@@ -195,7 +208,13 @@ function retrieveHackingTraffic() {
 function retrieveScanningResult() {
     jQuery(document).ready(function ($) {
         var scanRecentResultTable = $('#scanRecentResultTable').dataTable({
-            bFilter: false, bInfo: false, bPaginate: true,  "bLengthChange": false,  bProcessing: false, iDisplayLength: 5, "order": [[ 0, "desc" ]],
+            bFilter: false,
+            bInfo: false,
+            bPaginate: false,
+            "bLengthChange": false,
+            bProcessing: false,
+            iDisplayLength: 5,
+            "order": [[0, "desc"]],
             processing: true,
             serverSide: true,
             ajax: {
@@ -206,6 +225,7 @@ function retrieveScanningResult() {
                     d.controller = controller;
                     d.action = 'getMalwareMap';
                     d.task = 'getMalwareMap';
+                    d.type = 'home';
                     d.centnounce = $('#centnounce').val();
                 }
             },
@@ -221,7 +241,13 @@ function retrieveScanningResult() {
 function retrieveBackupResult() {
     jQuery(document).ready(function ($) {
         var backupTable = $('#backupTable').dataTable({
-            bFilter: false, bInfo: false, bPaginate: true, "bLengthChange": false,  bProcessing: false, iDisplayLength: 5, "order": [[ 0, "desc" ]],
+            bFilter: false,
+            bInfo: false,
+            bPaginate: false,
+            "bLengthChange": false,
+            bProcessing: false,
+            iDisplayLength: 5,
+            "order": [[0, "desc"]],
             processing: true,
             serverSide: true,
             ajax: {

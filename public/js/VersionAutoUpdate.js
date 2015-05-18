@@ -10,7 +10,7 @@ function showAutoUpdateDialogue (message, title, buttonLabel, Updateurl, upgrade
 				label: buttonLabel,
 			  	className: "btn-primary btn-alt",
 				callback: function () {
-					 showLoadingStatus ('Updating...');
+                    showLoadingStatus(O_UPDATE);
 					  runAutoUpdate(Updateurl, upgradeplugin, activateurl);
 				}
 			}
@@ -49,7 +49,7 @@ function activateWordpressPlugin (activateurl){
         url: activateurl,
         type: "POST", 
 		success: function (output) {
-			showLoadingStatus ('Activating plugin...')
+            showLoadingStatus(O_ACTIVATE_PLUGIN)
 			hideLoadingStatus ();
         	location.reload();
 		}
@@ -68,7 +68,7 @@ function hideLoadingStatus () {
 function showLoadingStatus (text) {
 	if (text =='')
 	{
-		text = 'Please wait...';
+        text = O_LOADING_TEXT;
 	}
 	jQuery(document).ready(function($){
 		$('body').waitMe({

@@ -522,7 +522,8 @@ class panel
             } else{
                 $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
                 $list .= '<li class="" name="" id=""><a href="http://www.centrora.com/centrora-security-suite-tutorial/installing-centrora-suite-dedicated-server/#special"
-                            target="_blank" title="Please follow this guide If you would like Centrora to scan all website folders under the /home/ directory">{Restricted Permissions}</a></li>';
+                            target="_blank" title="Please follow this guide to stop seeing this restriction (right click and open in new tab/window)">
+                            {Restricted Permissions}</a></li>';
                 $list .= '</ul>';
             }
             echo($list);

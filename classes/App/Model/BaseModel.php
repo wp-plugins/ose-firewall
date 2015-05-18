@@ -266,17 +266,26 @@ class BaseModel  {
 			}
 		}
 	}
-//    public function showGoogleSecret() {
-//        require_once(OSE_FWFRAMEWORK.ODS.'googleAuthenticator'.ODS.'class_gauthenticator.php');
-//        $gauthenticator = new GoogleAuthenticator();
-//        $secret = $gauthenticator->create_secret();
-//        $QRcode = $gauthenticator->get_qrcode();
-//        $result = array(
-//            'secret' => $secret,
-//            'QRcode' => $QRcode
-//        );
-//        return $result;
-//    }
+
+    public function showGoogleSecret()
+    {
+        require_once(OSE_FWFRAMEWORK . ODS . 'googleAuthenticator' . ODS . 'class_gauthenticator.php');
+        $gauthenticator = new GoogleAuthenticator();
+        $googleAuth = oseFirewall::getConfiguration('scan');
+
+        if (empty($googleAuth['data']['gaSecret'])) {
+            $secret = $gauthenticator->create_secret();
+            $QRcode = $gauthenticator->get_qrcode($secret);
+        } else {
+            $secret = $googleAuth['data']['gaSecret'];
+            $QRcode = $gauthenticator->get_qrcode($secret);
+        }
+        $result = array(
+            'secret' => "<input name=\"GA_secret\" id=\"GA_secret\" value=\"{$secret}\" readonly=\"readonly\"  type=\"text\" size=\"25\" />",
+            'QRcode' => $QRcode
+        );
+        return $result;
+    }
 	public function saveConfiguration($type, $data)
 	{
 		$this->loadFirewallStat () ;

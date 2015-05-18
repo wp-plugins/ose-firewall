@@ -79,7 +79,6 @@ class GoogleAuthenticator {
 	 */
 	public function __construct() {
 	}
-	
 	/**
 	 * Initialization, Hooks, and localization
 	 */
@@ -110,15 +109,16 @@ class GoogleAuthenticator {
 	/**
 	 * Check the verification code entered by the user.
 	 */
-	function verify($secretkey, $thistry, $relaxedmode) {
-		
+    function verify($secretkey, $thistry, $relaxedmode = 'enabled')
+    {
+
 		// Did the user enter 6 digits ?
 		if (strlen ( $thistry ) != 6) {
 			return false;
 		} else {
 			$thistry = intval ( $thistry );
 		}
-		
+
 		// If user is running in relaxed mode, we allow more time drifting
 		// ±4 min, as opposed to ± 30 seconds in normal mode.
 		if ($relaxedmode == 'enabled') {
@@ -130,9 +130,10 @@ class GoogleAuthenticator {
 		}
 		
 		$tm = floor ( time () / 30 );
-		
+
 		$secretkey = Base32::decode ( $secretkey );
 		// Keys from 30 seconds before and after are valid aswell.
+
 		for($i = $firstcount; $i <= $lastcount; $i ++) {
 			// Pack time into binary string
 			$time = chr ( 0 ) . chr ( 0 ) . chr ( 0 ) . chr ( 0 ) . pack ( 'N*', $tm + $i );
@@ -149,10 +150,12 @@ class GoogleAuthenticator {
 			$value = $value & 0x7FFFFFFF;
 			$value = $value % 1000000;
 			if ($value == $thistry) {
-				return true;
+
+                return true;
 			}
 		}
-		return false;
+
+        return false;
 	}
 	
 	/**
@@ -164,7 +167,7 @@ class GoogleAuthenticator {
 		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; // allowed characters in Base32
 		$secret = '';
 		for($i = 0; $i < 16; $i ++) {
-			$secret .= substr ( $chars, wp_rand ( 0, strlen ( $chars ) - 1 ), 1 );
+            $secret .= substr($chars, rand(0, strlen($chars) - 1), 1);
 		}
 		return $secret;
 	}
@@ -174,12 +177,13 @@ class GoogleAuthenticator {
 	 */
 	function loginform() {
 		echo "\t<p>\n";
-		echo "\t\t<label title=\"" . __ ( 'If you don\'t have Google Authenticator enabled for your WordPress account, leave this field empty.', 'google-authenticator' ) . "\">" . __ ( 'Google Authenticator code', 'google-authenticator' ) . "<span id=\"google-auth-info\"></span><br />\n";
-		echo "\t\t<input type=\"text\" name=\"googleotp\" id=\"user_email\" class=\"input\" value=\"\" size=\"20\" /></label>\n";
-		echo "\t</p>\n";
+        echo "\t\t<label title=\"" . __('If you don\'t have Google Authenticator enabled for your WordPress account, leave this field empty.', 'google-authenticator') . "\">" . __('Google Authenticator code', 'google-authenticator') . "<span id=\"google-auth-info\"></span><br />\n";
+        echo "\t\t<input type=\"text\" name=\"googleotp\" id=\"user_email\" class=\"input\" value=\"\" size=\"20\" /></label>\n";
+        echo "\t</p>\n";
 	}
-	
-	/**
+
+
+    /**
 	 * Disable autocomplete on Google Authenticator code input field.
 	 */
 	function loginfooter() {
@@ -242,7 +246,18 @@ class GoogleAuthenticator {
 		// just resume normal authentication.
 		return $userstate;
 	}
-	
+
+    /**
+     * Get QRcode.
+     */
+    function get_qrcode($secret)
+    {
+        $GA_description = "Centrora security";
+        $chl = urlencode("otpauth://totp/{$GA_description}?secret={$secret}");
+        $qrcodeurl = "https://chart.googleapis.com/chart?cht=qr&amp;chs=300x300&amp;chld=H|0&amp;chl={$chl}";
+        $return = "<img id=\"GA_QRCODE\"  src=\"{$qrcodeurl}\" alt=\"QR Code\"/>";
+        return $return;
+    }
 	/**
 	 * Extend personal profile page with Google Authenticator settings.
 	 */

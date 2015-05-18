@@ -68,6 +68,9 @@ class oseFirewallIpManager
 		$tmp= explode('.', $ip);
 		foreach ($tmp as $key => $val)  {
 			$tmp[$key] = ltrim($val, '0');
+            if (empty($tmp[$key])) {
+                $tmp[$key] = "0";
+            }
 		}
 		return implode('.',$tmp);
 	}

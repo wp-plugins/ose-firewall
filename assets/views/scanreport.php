@@ -21,7 +21,11 @@ if ($status == true)
 								<div class ="col-md-12">
 									<div class="alert alert-dismissable alert-danger">
 									  <button type="button" class="close" data-dismiss="alert">×</button>
-									  <strong>Need Help Cleaning?</strong> We can help you clean the infected files. <button class="btn btn-danger" onClick ="window.location='http://www.centrora.com/cleaning/';">Contact us here</button>
+                                        <?php oLang::_('O_HELP_CLEAN'); ?>
+                                        <button class="btn btn-danger"
+                                                onClick="window.location='http://www.centrora.com/cleaning/';">Contact
+                                            us here
+                                        </button>
 									</div>
 								</div>
 							<?php 
@@ -32,7 +36,7 @@ if ($status == true)
                             <div class="panel panel-primary plain toggle panelClose panelRefresh">
                                 <!-- Start .panel -->
                                 <div class="panel-heading white-bg">
-                                    <h4 class="panel-title">Scanning Report</h4>
+                                    <h4 class="panel-title"><?php oLang::_('O_SCAN_REPORT_TITLE'); ?></h4>
                                 </div>
                                 <div class="panel-controls"></div>
                                 <div class="panel-controls-buttons">
@@ -45,12 +49,7 @@ if ($status == true)
                                     <button id="delete-button" class="btn btn-danger btn-sm mr5 mb10" type="button"
                                             style="display: none"
                                             onClick="confirmbatchdl()"><?php oLang::_('O_SCANREPORT_DELETE'); ?></button>
-                                    <!--                                    <button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="confirmalldl()">-->
-                                    <?php //oLang::_('O_SCANREPORT_DELETEALL');
-                                    ?><!--</button>-->
-
                                 </div>
-
                                 <div class="panel-body">
                                     <table class="table display" id="scanreportTable">
                                         <thead>

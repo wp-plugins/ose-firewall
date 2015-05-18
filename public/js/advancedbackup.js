@@ -57,11 +57,11 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 hideLoading();
                 if (data == true) {
-                    showDialogue("The backup file has been uploaded to your dropbox", "Success", "OK");
+                    showDialogue(O_UPLOAD_DROPBOX, O_SUCCESS, O_OK);
                     //sendemail(id);
                 }
                 else {
-                    showDialogue("An error occured while uploading: <pre>" + data + "</pre>", "Fail", "OK");
+                    showDialogue(O_UPLOAD_ERROR + "<pre>" + data + "</pre>", O_FAIL, O_OK);
                 }
             }
         })
@@ -96,11 +96,10 @@ function sendemail(id) {
             success: function (data) {
                 hideLoading();
                 if (data == true) {
-                    showDialogue("A Confirmation Email will be sent to you", "Success", "OK");
+                    showDialogue(O_CONFIRM_EMAIL_NOTICE, O_SUCCESS, O_OK);
                 }
                 else {
-                    showDialogue("An error occured while sending a confrimation email: <br />" +
-                    "Please make sure you have added a valid email address in the 'Administrator Panel'", "Confrimation Email not Sent", "OK");
+                    showDialogue(O_SEND_EMAIL_ERROR, O_FAIL, O_OK);
                 }
             }
         })
@@ -126,12 +125,12 @@ function ajaxdeletebackup() {
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
-                if (data.length > 0) {
-                    showDialogue("There are no spammers in your selected emails!",
-                        "Great!", 'OK');
+                if (data == true) {
+                    showDialogue(O_BACKUP_DELE_DESC,
+                        O_SUCCESS, O_OK);
                 } else {
-                    showDialogue("Spammers are deleted successfully!", "Success!",
-                        'OK');
+                    showDialogue(O_DELE_FAIL_DESC, O_FAIL,
+                        O_OK);
                 }
                 $('#advancedbackupTable').dataTable().api().ajax.reload();
             }
@@ -144,17 +143,17 @@ function deletebackup() {
         if (ids.length > 0) {
             bootbox
                 .dialog({
-                    message: "Are you sure you want to delete the selected backup(s)? <br/> Press Yes to proceed",
-                    title: "Confirm",
+                    message: O_DELETE_CONFIRM_DESC,
+                    title: O_CONFIRM,
                     buttons: {
                         success: {
-                            label: "Yes",
+                            label: O_YES,
                             callback: function () {
                                 ajaxdeletebackup();
                             }
                         },
                         main: {
-                            label: "No",
+                            label: O_NO,
                             callback: function () {
                                 this.close();
                             }
@@ -162,7 +161,7 @@ function deletebackup() {
                     }
                 });
         } else {
-            showDialogue("Please select a file to delete first!", "Notice!", 'OK');
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_NO);
         }
     })
 }
@@ -185,23 +184,12 @@ function backup(backup_type, backup_to) {
             success: function (data) {
                 hideLoading();
                 if (data.data == true) {
-                    showDialogue("Backup success", "Success", "OK");
+                    showDialogue(O_BACKUP_SUCCESS, O_SUCCESS, O_OK);
                     $('#advancedbackupTable').dataTable().api().ajax.reload();
                 } else {
-                    showDialogue("Backup failed, please try again", "Notice", "OK");
+                    showDialogue(O_BACKUP_FAIL, O_FAIL, O_OK);
                 }
             }
         })
     })
-}
-function showDialogue(message, title, buttonLabel) {
-    bootbox.dialog({
-        message: message,
-        title: title,
-        buttons: {
-            success: {
-                label: buttonLabel
-            }
-        }
-    });
 }

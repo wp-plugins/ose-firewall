@@ -493,7 +493,10 @@ class oseBackupManager {
 		$post_length = oRequest::getInt ( 'length' );
 		if (isset ( $post_start ) && $post_length != - 1) {
 			$limit = "LIMIT " . $post_start . ", " . $post_length;
-		}
+        } elseif ($post_length == -1) {
+            $post_length = 5;
+            $limit = "LIMIT " . $post_start . ", " . $post_length;
+        }
 		return $limit;
 	}
 	public function getOrder() {
@@ -1154,7 +1157,6 @@ class oseBackupManager {
     {
         return oseFirewall::getConfigVars();
     }
-
     protected function getEmailByType($type)
     {
         $email = new stdClass();
@@ -1166,7 +1168,13 @@ class oseBackupManager {
                 $email->subject = 'Centrora backup file was uploaded to your dropbox';
                 break;
         }
-        $email->body = file_get_contents(dirname(__FILE__) . '/email.tpl');
+        $emailTmp = oseFirewall::getConfiguration('emailTemp');
+
+        if (empty($emailTmp['data']['emailTemplate'])) {
+            $email->body = file_get_contents(dirname(__FILE__) . ODS . 'email.tpl');
+        } else {
+            $email->body = stripslashes($emailTmp['data']['emailTemplate']);
+        }
         return $email;
     }
 
@@ -1180,10 +1188,10 @@ class oseBackupManager {
             $backuplocation = "uploaded to dropbox";
         }
         $email->subject = $email->subject . " for [" . $_SERVER['HTTP_HOST'] . "]";
+        $content = $basename . " was " . $backuplocation;
+        $email->body = str_replace('{content}', $content, $email->body);
         $email->body = str_replace('{name}', 'Administrator', $email->body);
         $email->body = str_replace('{header}', $email->subject, $email->body);
-        $email->body = str_replace('{backupfile}', $basename, $email->body);
-        $email->body = str_replace('{download to address}', $backuplocation, $email->body);
         return $email;
     }
 }

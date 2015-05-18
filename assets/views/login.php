@@ -196,20 +196,6 @@ $urls = oseFirewall::getDashboardURLs ();
 	</div>
 </div>
 <div id='fb-root'></div>
-<!-- Form Modal -->
-<div class="modal fade" id="featureListModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width:1020px;">
-        <div class="modal-content">
-            <div class="modal-body">
-				<div id='salespage'>
-					<iframe src="http://app.myinstapage.com/server/view-by-id/306979" style="border:0px #FFFFFF none;" name="landing" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="400px" width="1000px"></iframe>
-				</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- /.modal -->
 <?php
 // \PHPBenchmark\Monitor::instance()->snapshot('Finish loading Centrora');
 ?>

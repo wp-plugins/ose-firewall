@@ -46,9 +46,51 @@ jQuery(document).ready(function ($) {
             $('#adminTable tr').removeClass('selected');
         }
     });
+    tinymce.init({
+        selector: "textarea.tinymce",
+        menubar: false,
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code ",
+            "insertdatetime table contextmenu paste"
+        ],
+        height: '500',
+        toolbar: "bold italic strikethrough bullist numlist blockquote hr alignleft aligncenter alignright alignjustify link unlink code image media | fullscreen"
+    });
+
+    $("#emailEditorForm").submit(function () {
+        tinyMCE.triggerSave();
+        var postdata = $("#emailEditorForm").serialize();
+        postdata += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: postdata,
+            success: function (data) {
+                showDialogue(
+                    O_EMAIL_TEMP_SAVE,
+                    O_SUCCESS, O_OK);
+                document.getElementById('emailEditorForm').style.display = "none";
+                document.getElementById('adminBody').style.display = "block";
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
 });
+
+function emailEditor() {
+    jQuery(document).ready(function ($) {
+
+        document.getElementById('emailEditorForm').style.display = "block";
+        document.getElementById('adminBody').style.display = "none";
+
+    })
+}
 function addAdmin() {
     jQuery(document).ready(function ($) {
+        document.getElementById('emailEditorForm').style.display = "none";
+        document.getElementById('adminBody').style.display = "block";
         $('#addAdminModal').modal();
     })
 }
@@ -136,6 +178,8 @@ function deleteAdminAjax(id) {
     })
 }
 function deleteAdmin() {
+    document.getElementById('emailEditorForm').style.display = "none";
+    document.getElementById('adminBody').style.display = "block";
     jQuery(document).ready(
         function ($) {
             ids = $('#adminTable').dataTable().api().rows('.selected').data();
@@ -146,17 +190,17 @@ function deleteAdmin() {
             }
             if (ids.length > 0) {
                 bootbox.dialog({
-                    message: "Are you sure to delete selected administrators, press yes to proceed",
-                    title: "Confirm",
+                    message: O_DELETE_CONFIRM_DESC,
+                    title: O_CONFIRM,
                     buttons: {
                         success: {
-                            label: "Yes",
+                            label: O_YES,
                             callback: function () {
                                 deleteAdminAjax(id);
                             }
                         },
                         main: {
-                            label: "No",
+                            label: O_NO,
                             callback: function () {
                                 this.close();
                             }
@@ -164,9 +208,7 @@ function deleteAdmin() {
                     }
                 });
             } else {
-                showDialogue(
-                    "Please select administrators first!",
-                    "Notice!", 'OK');
+                showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
             }
         })
 }

@@ -1121,11 +1121,8 @@
 
                                         <p style="Margin-top: 0;color: #61606c;font-weight: 400;font-size: 15px;font-family: Roboto,Tahoma,sans-serif !important;line-height: 24px;Margin-bottom: 24px">
                                             <b>Dear {name}</b>,<br/><br/>
-
-                                            {content}<br/>
-
-                                            If you have techinical problems, please consult Centrora support team for
-                                            advices.<br/><br/>
+                                            {content}
+                                            <br/><br/>
                                             <b>Centrora Security</b></p>
                                     </td>
                                 </tr>

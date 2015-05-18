@@ -34,16 +34,20 @@ class LoginController extends \App\Base {
 		$website= $this->model->getVar('website', null);
 		$email= $this->model->getVar('email', null);
 		$password= $this->model->getVar('password', null);
-		$token = $this->getToken();
+        $pattern = "/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-zA-Z]{2,6}(?:\.[a-zA-Z]{2})?)$/";
+
+        $token = $this->getToken();
 		if (empty($website) || empty($email) || empty($password))
 		{
 			$this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("PLEASE_ENTER_REQUIRED_INFO"), false);
-		}
-		else
+		} elseif (preg_match($pattern, $email)) {
+            $result = $this->model->validate($website, $email, $password, $token);
+            print_r($result);
+            exit;
+        }
 		{
-			$result = $this->model->validate ($website, $email, $password, $token);
-			print_r($result);exit;
-		}
+            $this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("PLEASE_ENTER_CORRECT_EMAIL"), false);
+        }
 	}
 	public function action_Createaccount () {
 		$this->model->loadRequest();
@@ -52,19 +56,24 @@ class LoginController extends \App\Base {
 		$email= $this->model->getVar('email', null);
 		$password= $this->model->getVar('password', null);
 		$password2= $this->model->getVar('password2', null);
-		$token = $this->getToken();
+        $pattern = "/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-zA-Z]{2,6}(?:\.[a-zA-Z]{2})?)$/";
+
+        $token = $this->getToken();
 		if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($password2))
 		{
 			$this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("PLEASE_ENTER_REQUIRED_INFO"), false);
 		}
 		else if ($password != $password2) {
 			$this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("PASSWORD_DONOT_MATCH"), false);
-		}
+		} elseif (preg_match($pattern, $email)) {
+            $result = $this->model->createAccount($firstname, $lastname, $email, $password, $token);
+            print_r($result);
+            exit;
+        }
 		else
 		{
-			$result = $this->model->createAccount($firstname, $lastname, $email, $password, $token);
-			print_r($result);exit;
-		}
+            $this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("PLEASE_ENTER_CORRECT_EMAIL"), false);
+        }
 	}
 	protected function getToken() {
 		$token = array();
@@ -84,7 +93,8 @@ class LoginController extends \App\Base {
 	}
 	public function action_verifyKey () {
 		$this->model->loadRequest();
-		$result = $this->model->verifyKey();
+
+        $result = $this->model->verifyKey();
 		print_r($result);exit;
 	}
 	public function action_getNumbOfWebsite() {

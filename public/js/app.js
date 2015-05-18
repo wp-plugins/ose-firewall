@@ -86,7 +86,7 @@ function encodeAllIDs(selections)
 function showLoading (text) {
 	if (text =='')
 	{
-		text = 'Please wait...';
+        text = O_LOADING_TEXT;
 	}
 	jQuery(document).ready(function($){
 		$('body').waitMe({
@@ -158,7 +158,7 @@ function AppChangeBatchItemStatus (action, table) {
 	        success: function(data)
 	        {
 	           hideLoading ();
-	           showDialogue (data.result, data.status, 'OK');
+                showDialogue(data.result, data.status, O_OK);
 	           $(table).dataTable().api().ajax.reload();
 	        }
 	      });
@@ -171,14 +171,14 @@ function AppRemoveItems (action) {
 		title: O_DELETE_CONFIRM,
 		buttons: {
 			success: {
-				label: "Yes",
+                label: O_YES,
 				className: "btn-success",
 				callback: function(result) {
 					changeBatchItemStatus(action);
 				}
 			},
 			main: {
-				label: "No",
+                label: O_NO,
 				className: "btn-danger",
 				callback: function(result) {
 					this.close();
@@ -194,7 +194,7 @@ function AppRemoveAllItems (task, table) {
 		title: O_DELETE_CONFIRM,
 		buttons: {
 			success: {
-				label: "Yes",
+                label: O_YES,
 				className: "btn-success",
 				callback: function(result) {
 					showLoading ();
@@ -213,7 +213,7 @@ function AppRemoveAllItems (task, table) {
 					        success: function(data)
 					        {
 					        	hideLoading ();
-					        	showDialogue (data.result, data.status, 'OK');
+                                showDialogue(data.result, data.status, O_OK);
 					            $(table).dataTable().api().ajax.reload();
 					        }
 					      });
@@ -221,7 +221,7 @@ function AppRemoveAllItems (task, table) {
 				}
 			},
 			main: {
-				label: "No",
+                label: O_NO,
 				className: "btn-danger",
 				callback: function(result) {
 					this.close();
@@ -248,7 +248,7 @@ function AppRunAction (action, table) {
 	        success: function(data)
 	        {
 	           hideLoading ();
-	           showDialogue (data.result, data.status, 'OK');
+                showDialogue(data.result, data.status, O_OK);
 	           $(table).dataTable().api().ajax.reload();
 	        }
 	      });
@@ -266,7 +266,7 @@ jQuery(document).ready(function($){
            {
         	   hideLoading();
         	   data = jQuery.parseJSON(data);
-       		   showDialogue (data.config, 'Recommended Setting', 'OK','phpconfig');
+               showDialogue(data.config, 'Recommended Setting', O_OK, 'phpconfig');
            }
          });
     return false; // avoid to execute the actual submit of the form.
@@ -326,18 +326,19 @@ jQuery(document).ready(function($){
             	   data = jQuery.parseJSON(data);
             	   if (data.status == 'SUCCESS')
             	   {
-            		   showLoading(data.result);
+                       showDialogue(data.result, data.status, O_OK);
+                       showLoading(data.result);
             		   hideLoading();
                    }
             	   else
             	   {
-            		   showDialogue (data.result, data.status, 'OK');   
+                       showDialogue(data.result, data.status, O_OK);
             	   }
                }
              });
         return false; // avoid to execute the actual submit of the form.
     });
-	
+
 	$("#seo-configuraton-form").submit(function() {
 		showLoading();
 		$('#customBanpage').html(tinymce.get('customBanpage').getContent());
@@ -357,7 +358,7 @@ jQuery(document).ready(function($){
                    }
             	   else
             	   {
-            		   showDialogue (data.result, data.status, 'OK');   
+                       showDialogue(data.result, data.status, O_OK);
             	   }
                }
              });
@@ -385,7 +386,7 @@ jQuery(document).ready(function($){
 	                }
 	         	   else
 	         	   {
-	         		   showDialogue (data.result, data.status, 'OK');   
+                       showDialogue(data.result, data.status, O_OK);
 	         	   }
 	            }
              });
@@ -407,14 +408,14 @@ jQuery(document).ready(function($){
 	         	   {
 	         		   $("#affiliateFormModal").modal('hide');
 	         		   hideLoading();
-	         		   showDialogue (data.result, data.status, 'OK');   
+                       showDialogue(data.result, data.status, O_OK);
 	         		   setTimeout(function(){
 		           		   window.location.reload(1);
 		           		}, 6000);
 	                }
 	         	   else
 	         	   {
-	         		   showDialogue (data.result, data.status, 'OK');   
+                       showDialogue(data.result, data.status, O_OK);
 	         	   }
 	            }
              });

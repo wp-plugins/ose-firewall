@@ -34,7 +34,6 @@ class ScanconfigController extends ConfigurationController {
 		$type = $this->model->getVar('type', null);
 		if (empty($type)) {return;}
 		$data = array();
-		
 		switch ($type)
 		{
 			case 'scan':
@@ -45,6 +44,7 @@ class ScanconfigController extends ConfigurationController {
 				$data['adminEmail'] = $this->model->getVar('adminEmail', null);
 				$data['receiveEmail'] = $this->model->getInt('receiveEmail', 1);
 				$data['googleVerification'] = $this->model->getVar('googleVerification', 0);
+                $data['gaSecret'] = $this->model->getVar('GA_secret', null);
 				break;
 			case 'advscan':
 				$data['adRules'] = $this->model->getInt('adRules', 20);
@@ -77,5 +77,11 @@ class ScanconfigController extends ConfigurationController {
 		//$data['scanClamav'] = $this->model->getInt('scanClamav', 0);
 		$this->model->saveConfiguration($type, $data);
 	}
+
+    public function action_showGoogleSecret()
+    {
+        $result = $this->model->showGoogleSecret();
+        $this->model->returnJSON($result);
+    }
 }
 ?>	

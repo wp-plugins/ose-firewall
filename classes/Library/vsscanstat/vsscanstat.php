@@ -55,6 +55,9 @@ class oseVsscanStat {
 	public function getMalwareMap () {
 		$columns = oRequest::getVar('columns', null);
 		$limit = oRequest::getInt('length', 15);
+        if ($limit == -1) {
+            $limit = 5;
+        }
 		$start = oRequest::getInt('start', 0);
         //$type_id = oRequest::getInt('type_id', 0);
 		$search = oRequest::getVar('search', null);
@@ -79,6 +82,7 @@ class oseVsscanStat {
 		return $return;
 	}
 	private function convertMalwareMap ($results) {
+        $type = oRequest::getVar('type', null);
 		$return = array();
 		$i=0;  
 		foreach ($results as $result)
@@ -86,6 +90,11 @@ class oseVsscanStat {
 			$return[$i] = $result;
 			$return[$i] ->checkbox = '';
             $return[$i]->view = "<a href='#' title = 'View detail' onClick= 'viewFiledetail(" . $result->file_id . ", " . $result->checked . ")' ><i class='im-dashboard'></i></a>";
+            if ($type == 'home') {
+                $draft = substr($result->filename, -20, 20);
+                $final = "..." . $draft;
+                $return[$i]->filename = $final;
+            }
             if ($result->checked == 0) {
                 $return[$i]->checked = "No action";
             } elseif ($result->checked == 1) {

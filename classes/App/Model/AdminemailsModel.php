@@ -44,6 +44,7 @@ class AdminemailsModel extends BaseModel
     public function loadLocalScript()
     {
         $this->loadAllAssets();
+        oseFirewall::loadJSFile('CentroraSEOTinyMCE', 'plugins/tinymce/tinymce.min.js', false);
         oseFirewall::loadJSFile('CentroraManageIPs', 'adminemails.js', false);
     }
 
@@ -99,4 +100,17 @@ class AdminemailsModel extends BaseModel
         return $return;
     }
 
+    public function saveEmailEditor($content)
+    {
+        $adminManager = new oseAdminManager();
+        $return = $adminManager->saveEmailEditor($content);
+        return $return;
+    }
+
+    public function readEmailTemp()
+    {
+        $adminManager = new oseAdminManager();
+        $return = $adminManager->readEmailTemp();
+        return $return;
+    }
 }

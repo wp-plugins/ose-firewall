@@ -74,12 +74,12 @@ class PermconfigModel extends BaseModel
                         $newfileinfo = new SplFileInfo($fileinfo-> getRealPath() . ODS.'public_html');
                         if (is_readable($newfileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) == '/')) {
                             $parentfolder = $fileinfo->getfilename() .'/';
-                            $filearray['data'][] = self::getfileinfo($newfileinfo, $parentfolder);
+                            $filearray['data'][] = self::getfileinfo($newfileinfo, $rootpath, $parentfolder);
                         } elseif(!is_readable($newfileinfo-> getRealPath()) && is_readable($fileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) != '/')) {
-                            $filearray['data'][] = self::getfileinfo($fileinfo);
+                            $filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
                         }
-                    } else{
-                        $filearray['data'][] = self::getfileinfo($fileinfo);
+                    } elseif (is_readable($fileinfo-> getRealPath()) && !class_exists('SConfig')){
+                        $filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
                     }
                 }
             } else {
@@ -90,9 +90,9 @@ class PermconfigModel extends BaseModel
             return $filearray = array("draw" => 1, "recordsTotal" => "0", "recordsFiltered" => "0", "data" => array());
         }
     }
-    private function  getfileinfo ($fileinfo, $parentfolder = null){
+    private function  getfileinfo ($fileinfo, $rootpath, $parentfolder = null){
         if ($fileinfo->isDir()) {
-            $filearray = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+            $filearray = array('path' => str_replace($rootpath, "", $fileinfo->getRealPath()),
                 'name' => $parentfolder . $fileinfo->getfilename(),
                 'type' => $fileinfo->getType(),
                 'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
@@ -104,7 +104,7 @@ class PermconfigModel extends BaseModel
             if (strpos('css,db,doc,file,film,flash,html,java,linux,music,pdf,application,code,directory,folder_open,spinner,php,picture,ppt,psd,ruby,script,txt,xls,xml,zip', $ext_code) == false) {
                 $ext_code = 'file';
             }
-            $filearray = array('path' => str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath()),
+            $filearray = array('path' => str_replace($rootpath, "", $fileinfo->getRealPath()),
                 'name' => $parentfolder . $fileinfo->getfilename(),
                 'type' => pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION), // $fileinfo->getExtension() for 5.3.6 onwards
                 'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),

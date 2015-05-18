@@ -3,14 +3,14 @@ var controller = "audit";
 jQuery(document).ready(function($){
 	$('#dbinstall-form').submit(function() {
 		showLoading ();
-		$('#message-box').html('Database installer preparing in progress');
+        $('#message-box').html(O_DB_INSTALL_DESC);
 		createTables(0);
 	    return false; 
 	});
 	
 	$('#dbuninstall-form').submit(function() {
 		showLoading ();
-		$('#message-box').html('Database installer preparing in progress');
+        $('#message-box').html(O_DB_INSTALL_DESC);
 		uninstallDB();
 	    return false; 
 	});

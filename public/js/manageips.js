@@ -88,20 +88,13 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 data = jQuery.parseJSON(data);
                 $('#addIPModal').modal('hide');
-                showDialogue(data.result, data.status, 'OK');
+                showDialogue(data.result, data.status, O_OK);
                 $('#manageIPsTable').dataTable().api().ajax.reload();
             }
         });
         return false; // avoid to execute the actual submit of the form.
     });
-    var correctFormat = '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>' +
-        '<ul>' +
-        '<li>title: the title of the rule for this IP / IP Range<li>' +
-        '<li>ip_start: the start IP in the IP Range<li>' +
-        '<li>ip_end: the end IP in the IP Range<li>' +
-        '<li>ip_type: the type of this record, \'0\' refers to one single IP, whereas \'1\' refers to IP ranges<li>' +
-        '<li>ip_status: the status of the IP, \'1\' for blocked IP, \'3\' for whitelisted IP, \'2\' for monitored IP <li>' +
-        '</ul>';
+    var correctFormat = O_CSV_FORMAT;
     $('#import-ip-form').submit(function () {
         showLoading();
         // submit the form
@@ -113,11 +106,11 @@ jQuery(document).ready(function ($) {
                     hideLoading();
                     $('#importModal').modal('hide');
                     $('#manageIPsTable').dataTable().api().ajax.reload();
-                    showDialogue(data.result, data.status, 'OK');
+                    showDialogue(data.result, data.status, O_OK);
                 }
                 else {
                     hideLoading();
-                    showDialogue(data.result + correctFormat, data.status, 'OK');
+                    showDialogue(data.result + correctFormat, data.status, O_OK);
                 }
             }
         });
@@ -154,7 +147,7 @@ function removeItems () {
         if (ids.length > 0) {
             AppRemoveItems ('removeips');
         } else {
-            showDialogue("Please select files first!", "Notice!", 'OK');
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
         }
     })
 }
@@ -182,7 +175,7 @@ function viewIPdetail(id)
 	        success: function(data)
 	        {
 	        	hideLoading ();
-	        	showDialogue (data.result, data.status, 'OK', 'detailed-form');
+                showDialogue(data.result, data.status, O_OK, 'detailed-form');
 	        }
 	      });
 	});

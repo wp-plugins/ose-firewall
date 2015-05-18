@@ -1,39 +1,6 @@
-var O_DELETE_CONFIRM = "Delete Confirmation";
-var O_DELETE_CONFIRM_DESC = "Please confirm that you would like to delete the selected items";
-
-var O_LATEST_SIGNATURE = "<div class='signatureInfo'>Latest signature version (major update): 20140901, updated on 1st Sep 2014</div>";
-var O_DOWNLOAD_FILES = "Downloading files";
-var O_DOWNLOAD_TERMINATED = "Downloading terminates";
+var O_DELETE_CONFIRM = "Slet Bekræftelse";
+var O_DELETE_CONFIRM_DESC = "Bekræft venligst, at du ønsker at slette de valgte emner";
 var O_APIKEY = "API key";
-var O_BLACKLIST_IP = "Blacklist IPs";
-var O_WHITELIST_IP = "Whitelist IPs";
-var O_MONITORLIST_IP = "Monitor IPs";
-var O_BLACKLIST_CONFIRM = "Blacklist_IPs_confirmation";
-var O_BLACKLIST_CONFIRM_DESC = "Please confirm that you would like to blacklist the selected items";
-var O_WHITELIST_CONFIRM = "Whitelist IPs confirmation";
-var O_WHITELIST_CONFIRM_DESC = "Please confirm that you would like to whitelist the selected items";
-var O_MONILIST_CONFIRM = "Monitored IPs confirmation";
-var O_MONILIST_CONFIRM_DESC = "Please confirm that you would like to monitor the selected items";
-var O_UPDATE_HOST = "Update Host";
-var O_UPDATE_HOST_CONFIRM = "Update Host confirmation";
-var O_UPDATE_HOST_CONFIRM_DESC = "Please confirm that you would like to updatehost the selected items";
-var O_FILTER = "Filter";
-var O_IMPACT = "Impact";
-var O_DESCRIPTION = "Description";
-var O_ATTACKTYPE = "Attack Type";
-var O_RULE = "Rule";
-var O_FILTER = "Filter";
-var O_CHANGE_IP_STATUS= "Change IP Status";
-var O_CHANGE_IP_STATUS_DESC= "This will change the access control rules for this IP/IP range. Are you sure you want to change the status?";
-var O_CHANGE_VAR_STATUS = "Change Variables Status";
-var O_CHANGE_VAR_STATUS_DESC = "This will change the access control rules for this variables. Are you sure you want to change the status?";
-var O_CHANGE_FIREWALL_STATUS = "Change Firewall Status";
-var O_CHANGE_FIREWALL_STATUS_DESC = "This will change the access control rules for firewall. Are you sure you want to change the status?";
-var O_ANTI_HACKING_SCANNING_OPTIONS = "<b>Anti-Hacking Scanning Options</b>";
-var O_SECRET_WORD = "Secret Word";
-var O_SECRET_WORD_DESC = "Secret Word, please note this down. The secret word allows you to get in OSE Suite when you are blocked.";
-var O_DEVELOPMENT_MODE = "Development Mode";
-var O_FRONTEND_BLOCKING_MODE = "Frontend Blocking Mode";
 var O_ENABLE_SFSPAM = "Enable Stop Forum Spam";
 var O_SFS_CONFIDENCE_LEVEL = "Stop Forum Spam Confidence Level (between 1 and 100)";
 var O_EDIT_EMAIL_TEMP = "Edit email template";
@@ -45,119 +12,63 @@ var O_USER = "User";
 var O_USER_ID = "User ID";
 var O_EMAIL = "Email";
 var O_ADD_A_LINK = "Add a linkage";
-
-var O_SCANNED_FILE_EXTENSIONS_DESC = "Only the following file extensions have been tested and supported by OSE Anti-Virus, if you broke the system after changing the file extension field, please revert the file extension value to the following: <br/> <b>htm,html,shtm,shtml,css,js,php,php3,php4,php5,inc,phtml,jpg,jpeg,gif,png,bmp,c,sh,pl,perl,cgi,txt</b>";
-var O_UPDATE_VERSION_DESC = "This will update local anti-virus database";
-var O_CLAMAV_DESC = "To use ClamAV Anti-Virus, please ensure you have installed ClamAV or consult your hosting company on whether ClamAV is installed. If you have a dedicated server, please see this <a href = ' http://www.centrora.com/blog/install-free-antivirus-clamav-on-linux/' target='_blank'>tutorial</a> on how to install ClamAV. Once installed, please see <a href='http://www.centrora.com/blog/free-antivirus-for-wordpress/' target = '_blank'>this tutorial</a> to enable ClamAV scanning in Centrora Security.";
-var O_CLAMAV_SOCKET_LOCATION = "Clam AV Socket path (if installed) ";
-var O_DO_NOT_SCAN_BIGGER_THAN = "Do not scan files bigger than (unit: MB)";
-var O_ENABLE_CLAMAV_SCANNING = "Enable ClamAV Scanning";
-var O_PLEASE_ENTER_A_PATH = "Please enter a path for scanning";
-var O_SCAN_PATH = "Scanning Path";
-var O_INIT_DATABASE = "Initialize Database";
-var O_STOP = "Stop"	;
-var O_SCAN_VIRUS = "Scan Viruses";	
-var O_VIRUS_SCANNING = "Viruses Scanning";
-var O_SCAN_VIRUS_CONTINUE = "Continue Scan";
-var VIRUS_SCANNING_IN_PROGRESS = "Virus Scanning In Progress";
-var DB_INITIALIZATION_IN_PROGRESS = "Database Initialization In Progress";
-var O_FILE_ID  = "File ID";
-var O_FILE_NAME  = "File Name";
-var O_CONFIDENCE = "Confidence";
-var O_LOAD_DATA_CONFIRMATION = "Load data confirmation";
-var O_LOAD_DATA_CONFIRMATION_DESC = "Please confirm that you would like to load the Wordpress whitelisted variable rules";
-var ADD_A_VARIABLE = "Add a Variable";
-var O_VARIABLE_NAME = "Variable Name";
-var O_VARIABLES = "Variables";
-var LOAD_WORDPRESS_DATA = "Load WordPress default variables";
-var LOAD_WORDPRESS_CONFIRMATION = "Please confirm that you would like to load the Wordpress whitelisted variable rules";
-var O_CLEAR_DATA = "Clear Data";
-var O_CLEAR_DATA_CONFIRMATION = "Clear Data Confirmation";
-var O_CLEAR_DATA_CONFIRMATION_DESC = "Please confirm that you would like to clear all variables, it will remove some other hacking information related to this rule";
-var O_STATUS_EXP = "Status Explanation";
-var O_CLOSE = "Close";
-var O_INITDB_COMPLETED = "Database Initialization Completed";
-var O_INITDB_INPROGRESS = "Database Initialization In Progress";
-var O_INITDB_TERMINATED = "Database Initialization Terminated";
-var O_VSSCAN_INPROGRESS = "Virus Scanning In Progress";
-var O_VSSCAN_COMPLETED = "Virus Scanning Completed";
-var O_VSSCAN_TERMINATED = "Virus Scanning In Terminated";
-var O_PLS_ENTER_ADMIN_EMAIL = "Please enter an administrator email in the SEO section";
 var O_PLEASE_WAIT = "Please wait, this will take a few seconds ...";
-var O_PLS_ENTER_ADMIN_EMAIL_LONG = "Please edit your custom ban page and meta keywords and descriptions here. These will help you maintain Search Engine Ranking when OSE blocks search engine bots by mistake.";
-var O_CONF_UPDATE_SUCCESS = "Configuration is updated successfully.";
-var O_SUCCESS = "Success"
-var O_SHOW_OSEFIREWALL_BADGE = "Show OSE Firewall Badge";
-var O_BADGE_CSS_STYLE = "Badge CSS style";
-var O_SUBSCRIPTION_USERNAME = "Name";
-var O_SUBSCRIPTION_PASSWORD = "Password";
-var O_PLS_ENTER_USERINFO = "Please enter your username/password";
-// Added from 2.1.4
-var O_DEBUG_MODE = "Detect errors in the website?";
-// Added from 2.3.0
-var O_SERVER_BACKUP_TYPE ="Backup Server";
-var O_BACKUP_TYPE ="Backup Type";
-var O_BACKUP_TO = "Backup To:";
-var O_FILE_SIZE = "File Size";
-var O_BACKUP = "Backup";
-var O_BACKUP_PREFIX = "Backup File Prefix";
-var O_FILE_BACKUP = "File Backup";
-var O_IMPACT = "Impact";
-var O_GOOGLE_2_VERIFICATION = "Google 2-Step Verification";
-var O_SOCIAL_BOARD1 = "Like us? Tell your friend about us";
-var O_SOCIAL_BOARD2 = "Visit & Like us";
-var O_ADRULESETS = "Advanced Firewall Setting (See <a href ='http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/' target='_blank'>Tutorial Here</a>)";
-var O_ADVS_PATTERNS = "Advanced Virus Patterns (<a href = 'http://www.centrora.com/centrora-premium/' target='_blank'>Premium Only</a>)";
-var O_SOCIAL_SHARE = "Protect your website better? Choose Centrora";
-var O_CONTINUE = "Continue";
-var O_CONTINUE_SCAN = "Continue Scanning";
-var O_BACKUP_FILE_COMPLETE = "BackUp files complete";
-var O_UNINSTALL_TITLE = "Uninstall Centrora Security";
-var O_UNINSTALL_CONFIRM = "Are you sure you want to uninstall Centrora Security?";
-var O_NEWUSERNAME = "New username";
-var O_NEWUSERNAME_NOTE = "Please mark down the new username for the administrator account as once it is changed, you will need to use the new user account to login in the future.";  
-var O_BLACKLIST_COUNTRY = "Blacklist Country";
-var O_WHITELIST_COUNTRY = "Whitelist Country";
-var DOWNLOAD_COUNTRY = "Download Country Database";
-var O_SCAN_CLAMAV = "Scan files with <a href ='http://www.clamav.net' target = '_blank'>ClamAV</a>";
-var CLAMAV_ACTIVATION_METHOD  = "ClamAV Activation Method";
-var CLAMAV_SOCKET_LOCATION = "Clam AV Socket path (if installed)";
-var O_PATTERNS = "Patterns"; 
-var O_PATTERN_ID = "Pattern ID";
-var O_GET_RULES = "Retrieve Updated Advance Firewall Rules";
-var LOAD_JOOMLA_DATA = "Load Joomla default variables";
-var LOAD_JSOCIAL_DATA = "Load JomSocial default variables";
-var LOAD_JOOMLA_CONFIRMATION = "Please confirm that you would like to load the Joomla whitelisted variable rules";
-var O_MONITOR_COUNTRY = "Monitor Country";
-var AUDIT_FREQ = "Audit Report Schedule";
-var ATTACK_BLOCKING_THRESHOLD = "Attack blocking risk score threshold (default: 35)";
-var O_SILENTLY_FILTER_ATTACK = "Silent Mode (Silently filter hacking values. Recommended for new users)";
-var O_ADV_ANTI_HACKING_SCANNING_OPTIONS = "<b>Centrora Premium Service Options</b>";
-var SILENT_MODE_BLOCK_MAX_ATTEMPTS = "Maximum attack attempts allowed for an IP in silent mode (default: 10)"
-var O_SCHEDULE_AUDITING = "<b>Schedule Auditing Options</b>";	
-var O_CHANGEALL_COUNTRY = "Change All Countries";
-var O_CHANGEALL_COUNTRY_STATUS = "What status would you like to change all countries to?";
-var O_SYSTEM_FINETUNING = "<b>System Fine Tuning</b>";
-var O_DISABLE_REGISTER_GLOBAL = "Disable PHP register_global directive";
-var O_DISABLE_SAFE_MODE = "Disable PHP safe_mode directive";
-var O_DISABLE_ALLOW_URL_FOPEN = "Disable PHP allow_url_fopen directive";
-var O_DISABLE_DISPLAY_ERRORS = "Disable PHP display_errors directive";
-var O_DISABLE_PHP_FUNCTIONS = "Disable PHP system functions";
-var O_UPDATE_PATTERN = "Update virus patterns";
-var O_SCHEDULE_VSSCAN = "Schedule Virus Scanning"
-var O_IMPORT_IP_CSV = "Import IP from CSV";
-var O_EXPORT_IP_CSV = "Export IP to CSV";
-var O_EXPORT_IP_CONFIRM = "Export IP to CSV confirmation";
-var O_EXPORT_IP_CONFIRM_DESC = "Please confirm that you would like to export all IP from the database";
-var O_SCANNED_PATH = "Scanning Path";
-var O_SCAN_SPECIFIC_FOLDER = "Scan specific folder";
-var O_START_SCANNING = "Start scanning";
-var O_BACKUP_DROPBOX = "Dropbox API Setting";
+
 //added from 4.4.1
 var O_CALLTOSUBSCRIBE = "Activate Subscription";
 var O_CALLTOSUBSCRIBE_DESC = "Please activate your subscription to use this feature.";
 var O_CANCEL = "Cancel";
+var O_CONFIRM = "Confirm";
+var O_YES = "Yes";
+var O_NO = "No";
+var O_FAIL = "Fail";
+var O_NOTICE = "Notice"
 var O_SUBSCRIBE = "Subscribe";
 var O_FIXPERMISSIONS = "Fix Permissions";
 var O_FIXPERMISSIONS_LONG = "One Click Permissions Fix";
 var O_FIXPERMISSIONS_DESC = "This will set the recommended default file/folder permissions to the config files";
+var O_CLOSE = "Close";
+
+//added from 4.7.0
+
+var O_OK = "OK";
+var O_SUCCESS = "Success";
+var O_EMAIL_TEMP_SAVE = "Email template was saved successfully";
+var O_SELECT_FIRST = "Please select one item first";
+var O_UPLOAD_DROPBOX = "The backup file has been uploaded to your dropbox";
+var O_UPLOAD_ERROR = "An error occured while uploading:";
+var O_CONFIRM_EMAIL_NOTICE = "A Confirmation Email will be sent to you";
+var O_SEND_EMAIL_ERROR = "An error occured while sending a confrimation email: <br />" + "Please make sure you have added a valid email address in the 'Administrator Panel'";
+var O_BACKUP_DELE_DESC = "The backup file has been deleted successfully";
+var O_DELE_FAIL_DESC = "The delete operation failed! Please try again";
+var O_BACKUP_SUCCESS = "Backup success";
+var O_BACKUP_FAIL = "Backup failed, please try again";
+var O_ERROR = "Error";
+var O_BACKUP_ERROR = "Operational error during backup<br /> Error Code: <pre>";
+var O_LOADING_TEXT = "Please wait...";
+var O_DB_INSTALL_DESC = "Database installer preparing in progress";
+var O_CSV_FORMAT = '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>' +
+    '<ul>' +
+    '<li>title: the title of the rule for this IP / IP Range<li>' +
+    '<li>ip_start: the start IP in the IP Range<li>' +
+    '<li>ip_end: the end IP in the IP Range<li>' +
+    '<li>ip_type: the type of this record, \'0\' refers to one single IP, whereas \'1\' refers to IP ranges<li>' +
+    '<li>ip_status: the status of the IP, \'1\' for blocked IP, \'3\' for whitelisted IP, \'2\' for monitored IP <li>' +
+    '</ul>';
+var O_FILE_PERMISSION_DESC = "Make sure to set appropriate file permissions 0000 would render your selected Files/Folders inaccessible";
+var O_QUARANTINE_FAIL_DESC = "Quarantine failed, please try again";
+var O_QUARANTINE_SUCCESS_DESC = "Quarantine success";
+var O_CLEAN_SUCCESS = "Clean success";
+var O_CLEAN_FAIL = "Clean failed, please try again";
+var O_RESTORE_SUCCESS = "Restore success";
+var O_RESTORE_FAIL = "Restore failed, please try again";
+var O_DELE_SUCCESS_DESC = "Delete success";
+var O_CLEAN = "Clean";
+var O_DELETE = "Delete";
+var O_QUARANTINE = "Quarantine";
+var O_RESTORE = "Restore";
+var O_ORDER_NOTICE = "Your order has been successfully placed.";
+var O_UPDATE = "Updating...";
+var O_ACTIVATE_PLUGIN = "Activating plugin...";
+
+

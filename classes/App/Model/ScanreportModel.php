@@ -43,12 +43,6 @@ class ScanreportModel extends BaseModel
 	{
 		$this->loadAllAssets ();
 // 		oseFirewall::loadCSSFile ('CentroraCodeMirrorCSS', 'codemirror.css', false);
-// 		oseFirewall::loadJSFile ('CentroraCodeMirror', 'plugins/codemirror/codemirror.js', false);
-// 		oseFirewall::loadJSFile ('CentroraCodeMirrorXML', 'plugins/codemirror/xml.js', false);
-// 		oseFirewall::loadJSFile ('CentroraCodeMirrorJavascript', 'plugins/codemirror/javascript.js', false);
-// 		oseFirewall::loadJSFile ('CentroraCodeMirrorCSS', 'plugins/codemirror/css.js', false);
-// 		oseFirewall::loadJSFile ('CentroraCodeMirrorClike', 'plugins/codemirror/clike.js', false);
-// 		oseFirewall::loadJSFile ('CentroraCodeMirrorPHP', 'plugins/codemirror/php.js', false);
 		oseFirewall::loadJSFile ('CentroraManageIPs', 'scanreport.js', false);
 	}
 	public function getCHeader()

@@ -1,6 +1,12 @@
 <?php
 oseFirewall::checkDBReady();
-
+//$condition = $this->model->is_authorized();
+//if ($condition == 'ok') {
+//    oseFirewall::callLibClass ( 'backup', 'oseBackup' );
+//    $dropbox = new oseBackupManager ();
+//$account_info = $dropbox->get_account_info();
+//$used = round(($account_info->quota_info->quota - ($account_info->quota_info->normal + $account_info->quota_info->shared)) / 1073741824, 1);
+//$quota = round($account_info->quota_info->quota / 1073741824, 1);}
 $this->model->getNounce();
 ?>
 <div id="oseappcontainer">
@@ -16,11 +22,21 @@ $this->model->getNounce();
                     <div class="panel panel-primary plain toggle panelClose panelRefresh">
                         <!-- Start .panel -->
                         <div class="panel-heading white-bg">
-                            <h4 class="panel-title">Advanced Back Up Management</h4>
+                            <h4 class="panel-title"><?php oLang::_('O_ADVANCED_BACKUP'); ?></h4>
                         </div>
                         <div class="panel-controls">
+
                         </div>
                         <div class="panel-controls-buttons">
+                            <!--                            <p class="bump">-->
+                            <!--                                --><?php //echo
+                            //                                    $account_info->display_name . ', ' .
+                            //                                    __('you have', 'wpbtd') . ' ' .
+                            //                                    $used .
+                            //                                    '<acronym title="' . __('Gigabyte', 'wpbtd') . '">GB</acronym> ' .
+                            //                                    __('of', 'wpbtd') . ' ' . $quota . 'GB (' . round(($used / $quota) * 100, 0) .
+                            //                                    '%) ' . __('free', 'wpbtd') ?>
+                            <!--                            </p>-->
                             <button class="btn btn-success btn-sm mr5 mb10" type="button"
                                     onClick="backup(2,1)"><?php oLang::_('O_BACKUP_BACKUPDB'); ?></button>
                             <button class="btn btn-success btn-sm mr5 mb10" type="button"

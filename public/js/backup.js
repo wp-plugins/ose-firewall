@@ -70,12 +70,12 @@ function ajaxdeletebackup() {
 									success : function(data) {
 										if (data == true ) {
 											showDialogue(
-													"The backup file has been deleted successfully",
-													"Great!", 'OK');
+                                                O_BACKUP_DELE_DESC,
+                                                O_SUCCESS, O_OK);
 										} else {
 											showDialogue(
-													"The delete operation failed! Please try again",
-													"FAIL!", 'OK');
+                                                O_DELE_FAIL_DESC,
+                                                O_FAIL, O_OK);
 										}
 										$('#backupTable').dataTable().api().ajax
 												.reload();
@@ -89,17 +89,17 @@ function deletebackup() {
 						ids = $('#backupTable').dataTable().api().rows('.selected').data();
 						if (ids.length > 0) {
 							bootbox.dialog({
-										message : "Are you sure you want to delete the selected file(s), press yes to continue",
-										title : "Confirm",
+                                message: O_DELETE_CONFIRM_DESC,
+                                title: O_CONFIRM,
 										buttons : {
 											success : {
-												label : "Yes",
+                                                label: O_YES,
 												callback : function() {
 													ajaxdeletebackup();
 												}
 											},
 											main : {
-												label : "No",
+                                                label: O_NO,
 												callback : function() {
 													this.close();
 												}
@@ -107,9 +107,7 @@ function deletebackup() {
 										}
 									});
 						} else {
-							showDialogue(
-									"Please select backup zip or sql files first!",
-									"Notice!", 'OK');
+                            showDialogue(O_SELECT_FIRST, O_NOTICE, O_NO);
 						}
 					})
 }
@@ -133,17 +131,16 @@ function backup(backup_type, backup_to) {
 					success : function(data) {
 						hideLoading();
 						if (data.data == true) {
-                            showDialogue("Backup successfully", "Success", "OK");
+                            showDialogue(O_BACKUP_SUCCESS, O_SUCCESS, O_OK);
 							$('#backupTable').dataTable().api().ajax.reload();
 						} else {
-							showDialogue("Backup failed, please try again.",
-									"Notice", "OK");
+                            showDialogue(O_BACKUP_FAIL, O_FAIL, O_OK);
 						}
 					},
                     error : function(request, textStatus, thrownError){
                         hideLoading();
-                        showDialogue("Operational error during backup<br /> Error Code: <pre>"+thrownError+"<br />"+request.responseText+"</pre>",
-                            "Error", "OK");
+                        showDialogue(O_BACKUP_ERROR + thrownError + "<br />" + request.responseText + "</pre>",
+                            O_ERROR, O_OK);
                     }
 				})
 			})

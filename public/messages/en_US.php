@@ -597,4 +597,60 @@ define('PERMCONFIG_ONECLICKPERMFIX', 'One Click Permisions Fix');
 define('SCANPATH', 'Select Path');
 define('PATH', 'Path');
 define('FILETREENAVIGATOR', 'Directory Navigator');
+
+// Version 4.7.0
+define('EMAIL_EDIT', 'Edit Email');
+define('O_GOOGLE_2_SECRET', 'Google authenticator secret');
+define('O_GOOGLE_2_QRCODE', 'Google authenticator QRcode');
+define('PREMIUM_SERVICE_FREE', 'Get Your Premium Service For Free');
+define('SUBSCRIPTION_SETP1', 'Step 1 - Create an Account');
+define('SUBSCRIPTION_SETP2', 'Step 2 - Place an order');
+define('SUBSCRIPTION_SETP3', 'Step 3 - Activate the subscription');
+define('SUBSCRIPTION_ACTIVATION', 'Subscription Activation');
+define('SUBSCRIPTION_DESCRIPTION1', 'Simply create an account by using the form on the right hand side below, or if you have an account in Centrora already, simply sign in by using the form on the left hand side below. <br/>We offer 60 days 100% Satisfaction Guarantee, if you are not satisfied, we issue full refund to you without asking a question.');
+define('SUBSCRIPTION_DESCRIPTION2', 'Next, click the subscribe button to place an order to a subscrption plan. Once the order is placed, pay your subscription through Paypal or Credit Card. Once payments are made, you will see a subscription is active in the subscriptions table.');
+define('SUBSCRIPTION_DESCRIPTION3', 'Final step: click the link subscription button to activate the subscription for this website.');
+define('REGISTERED_ACCOUNT_DESC', 'If you have an account already, please enter your <code>Centrora</code> or <code>OSE</code>	Account Information');
+define('CENTRORA', 'Centrora');
+define('OSE', 'Open Source Excellence [OSE]');
+define('WEBSITE', 'Website');
+define('NEW_ACCOUNT_DESC', 'If you don\'t have an account yet, please use the following form to create an account.');
+define('ADMIN_MANAGEMENT', 'Administrator Management');
+define('O_ADVANCED_BACKUP', 'Advanced Back Up Management');
+define('O_ADVANCED_RULE', 'Advanced Rulesets Table');
+define('O_AUTHENTICATION', 'Authentication');
+define('O_BACKUP_TITLE', 'Back Up Management');
+define('DBNOTREADY_AFTER', 'After that, you can proceed to the Configuration page to change settings.');
+define('SAVE_SETTINGS', 'Save Setting');
+define('IP_TABLE_TITLE', 'IP Table');
+define('PHP_CHECK_STATUS', 'Checking Status');
+define('O_RULESETS_TABLE_TITLE', 'Rulesets Table ');
+define('O_SCAN_REPORT_TITLE', 'Scanning Report');
+define('MY_SUBSCRIPTION', 'My Subscriptions');
+define('VARIABLE_TABLE_TITLE', 'Variables Table');
+define('O_HELP_CLEAN', '<strong>Need Help Cleaning?</strong> We can help you clean the infected files. ');
+define('RECURSE_INTO', 'Recurse into subdirectories');
+define('APPLY_TO_ALL', 'Apply to all Files and Folders');
+define('APPLY_TO_FILES', 'Apply to Files only');
+define('APPLY_TO_FOLDERS', 'Apply to Folders only');
+define('CLICK_TO_ACTIVATE', 'to activate your subscription and use this feature.');
+define('AFFILIATE_PROGRAM_DESC', '<b>[Affiliate Tracking] </b>: Don\'t miss out the chance to earn at least $14,500 for the 1st year and $338,900 in five years with our affiliate program!  ');
+define('SECURITY_BADGE_DESC', '<b>[Security Badge] </b>: The security badge is disabled now. You can increase sales conversion of your website by enabling it. ');
+define('CALL_TO_ACTION_TITLE', 'We are always here to help');
+define('CALL_TO_ACTION_P', 'We are now serving <span id="numofWebsite"></span> websites.');
+define('CALL_TO_ACTION_UL', '<li>We have been helping thousands of customers to protect and clean their websites since 2009, if you need any help for protecting or cleaning virus on your website, please feel free to <a href="https://www.centrora.com/support-center/" target="_blank"><span class="strong">contact us</span></a>.</li>
+					<li>With Centrora Security™, the <span class="strong">basic firewall</span> have already helped you block <b>99%</b> web application hacking attacks and ensure your customer data is secured. If you need an <span class="strong">additional layer of protection</span> with the advanced firewall rules, feel free to subscribe a subscription plan to get the protection activated.</li>
+					<li>Whenever you suspect your website is infected by malicious codes, Centrora Virus Scanner™ can help you look for any virus / malicious codes in your website within minutes. The scanner will be activated when the subscription is activated.</li>
+					<li>Not everyone needs the facilities to block a whole country, but if you would like to have this function, simply subscribe to a plan and stop traffics from a specific country easily. </li>');
+define('CALL_TO_ACTION_TITLE2', 'Become a partner');
+define('CALL_TO_ACTION_DESC2', 'Why not become our partner and enjoy high commisions for your referrals? Apart from the 35% commissions, by referring Centrora Security to <span class="strong">THREE</span> of your clients, you can get <span class="strong">ONE</span> subscription free. Don\'t miss out the chance to earn at least $14,500 for the 1st year and $338,900 in five years with our affiliate program! ');
+define('CALL_TO_ACTION_TITLE3', 'Need more help?');
+define('CALL_TO_ACTION_DECS3', 'If you would like to add more protection, you can read ');
+define('SUBSCRIBE_NOW', 'SUBSCRIBE NOW!');
+define('SIGN_IN', 'Sign In');
+define('PLEASE_ENTER_CORRECT_EMAIL', 'Please enter the correct email.');
+define('PASSWORD_DONOT_MATCH', 'The password should be identical');
+define('LOGOUT', 'Log out');
+define('O_DONT_BRACE', 'Please do not modify text within braces');
+
 ?>

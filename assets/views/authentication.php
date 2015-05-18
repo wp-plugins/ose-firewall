@@ -17,7 +17,7 @@ if ($status == true) {
                     <div class="panel panel-primary plain toggle panelClose panelRefresh">
                         <!-- Start .panel -->
                         <div class="panel-heading white-bg">
-                            <h4 class="panel-title">Authentication</h4>
+                            <h4 class="panel-title"><?php oLang::_('O_AUTHENTICATION'); ?></h4>
                         </div>
                         <div class="panel-controls">
                         </div>

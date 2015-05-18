@@ -59,7 +59,8 @@ if ($status == true)
 								</div>
 								<div class="col-md-3">
 									<div class="cron-buttons">
-										<button class="btn btn-primary" type="submit">Save Setting</button>
+                                        <button class="btn btn-primary"
+                                                type="submit"><?php oLang::_('SAVE_SETTINGS'); ?></button>
 									</div>
 								</div>
 							</div>

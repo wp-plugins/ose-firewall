@@ -41,13 +41,49 @@ jQuery(document).ready(function($){
             .search( val.val(), false, false )
             .draw();
     });
+    //var myElem = document.getElementById('HideQR');
+    //if (myElem == null) {
+    //
+    //} else {
+    //    if (document.getElementById("HideQR").checked == false) {
+    //        document.getElementById("hidden-QRcode").style.display = "block";
+    //    } else {
+    //        document.getElementById("hidden-QRcode").style.display = "none";
+    //    }
+    //}
 });
-
 function changeItemStatus(id, status)
 {
 	AppChangeItemStatus(id, status, '#rulesetsTable', 'changeRuleStatus');
 }
-
+function showSecret() {
+    //if (document.getElementById("HideQR").checked == false) {
+    //    document.getElementById("hidden-QRcode").style.display = "block";
+    //    //  showGoogleSecret();
+    //} else {
+    //    document.getElementById("hidden-QRcode").style.display = "none";
+    //}
+}
+//function showGoogleSecret() {
+//    jQuery(document).ready(function ($) {
+//        $.ajax({
+//            type: "POST",
+//            url: url,
+//            dataType: 'json',
+//            data: {
+//                option: option,
+//                controller: 'scanconfig',
+//                action: 'showGoogleSecret',
+//                task: 'showGoogleSecret',
+//                centnounce: $('#centnounce').val()
+//            },
+//            success: function (data) {
+//                document.getElementById('shhsecret').innerHTML = data.secret;
+//                document.getElementById('shhqrcode').innerHTML = data.QRcode;
+//            }
+//        });
+//    });
+//}
 tinymce.init({
     selector: "textarea.tinymce",
     menubar : false,

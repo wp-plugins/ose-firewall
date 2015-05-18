@@ -69,7 +69,7 @@ $this->model->getNounce ();
                             <div class="panel panel-primary plain toggle panelClose panelRefresh">
                                 <!-- Start .panel -->
                                 <div class="panel-heading white-bg">
-                                    <h4 class="panel-title">Variables Table</h4>
+                                    <h4 class="panel-title"><?php oLang::_('VARIABLE_TABLE_TITLE'); ?></h4>
                                 </div>
                                 <div class="panel-controls"></div>
                                 <div class="panel-controls-buttons">
@@ -103,7 +103,7 @@ $this->model->getNounce ();
 												<th><?php oLang::_('O_VARIABLES'); ?></th>
 												<th><?php oLang::_('O_STATUS'); ?></th>
 												<th><?php oLang::_('O_STATUS_EXP'); ?></th>
-												<th><input type="checkbox" name="checkedAll" id="checkedAll"></input></th>
+                                                <th><input type="checkbox" name="checkedAll" id="checkedAll"></th>
                                             </tr>
                                         </thead>
                                         <tfoot>

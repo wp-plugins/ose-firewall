@@ -589,6 +589,7 @@ class oseFirewallBase extends oseFirewallRoot
 		return (!empty($result))?$result->value:null;
 	}
 	public static function checkSubscriptionStatus ($redirect= true) {
+        return true;
 		$db = oseFirewall::getDBO();
 		$query = "SELECT * FROM `#__ose_secConfig` WHERE (`key` = 'profileID' OR `key` = 'profileStatus') AND `type` = 'panel'";
 		$db->setQuery($query);
@@ -648,14 +649,29 @@ class oseFirewallBase extends oseFirewallRoot
     public static function getActiveReceivers()
     {
         $db = oseFirewall::getDBO();
+        $query = "SELECT `A_email`,`A_name` FROM `#__osefirewall_adminemails` WHERE (`A_status` = 'active')";
+        $db->setQuery($query);
+        $results = $db->loadObjectList();
+        $i = 0;
+        $return = array();
+        foreach ($results as $result) {
+            $return[$i]->name = $result->A_name;
+            $return[$i]->email = $result->A_email;
+            $i++;
+        }
+        return $return;
+    }
+
+    public static function getActiveReceiveEmails()
+    {
+        $db = oseFirewall::getDBO();
         $query = "SELECT `A_email` FROM `#__osefirewall_adminemails` WHERE (`A_status` = 'active')";
         $db->setQuery($query);
         $results = $db->loadObjectList();
         $i = 0;
         $return = array();
         foreach ($results as $result) {
-            $return[$i]->name = 'Administrator';
-            $return[$i]->email = $result->A_email;
+            $return[$i] = $result->A_email;
             $i++;
         }
         return $return;

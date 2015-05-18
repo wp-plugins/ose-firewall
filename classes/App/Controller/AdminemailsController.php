@@ -35,6 +35,7 @@ class AdminemailsController extends \App\Base
         $this->model->loadRequest();
         $domain = $this->model->getVar('domain-address', null);
         $pattern = "/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/";
+        //  $pattern = "/localhost:8888/";
         if (empty($domain)) {
             $error = "please fill out all the form";
             $this->model->returnJSON($error);
@@ -68,6 +69,14 @@ class AdminemailsController extends \App\Base
         }
     }
 
+    public function action_saveEmailEditor()
+    {
+        $this->model->loadRequest();
+        $content = $this->model->getVar('emailEditor', null);
+
+        $result = $this->model->saveEmailEditor($content);
+        $this->model->returnJSON($result);
+    }
     public function action_getAdminList()
     {
         $this->model->loadRequest();

@@ -869,15 +869,7 @@ a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preh
 					          <h1 style="Margin-top: 0;color: #3e5771;font-weight: 400;font-size: 36px;Margin-bottom: 21px;text-align: center;font-family: Roboto,Tahoma,sans-serif !important;line-height: 44px">{header}</h1>
 					          <p style="Margin-top: 0;color: #61606c;font-weight: 400;font-size: 15px;font-family: Roboto,Tahoma,sans-serif !important;line-height: 24px;Margin-bottom: 24px">
 					          	<b>Dear {name}</b>,<br/><br/>
-					          	An attack attempt was logged on: {logtime}<br/> 
-					          	IP Address: {ip}<br/>
-					          	IP ID: {ip_id}<br/>
-					          	URL: {target}<br/>
-					          	Referer (if any): {referer}<br/>
-					          	Attack Type: {attackType}<br/>
-					          	Violation: {violation}<br/>
-					          	Total Risk Score: {score}<br/>
-								IP information: http://www.infosniper.net/index.php?ip_address={ip}<br/><br/>
+                                  {content}<br/><br/>
 								If this blocks your users by mistake, please consult Centrora support team for advices.<br/><br/>
 								<b>Centrora Security Alert</b></p>
                             </td>

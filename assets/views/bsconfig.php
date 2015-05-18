@@ -75,13 +75,34 @@ $seoConfArray = $this->model->getConfiguration ( 'seo' );
 										<label for="googleVerification" class="col-sm-4 control-label"><?php oLang::_('O_GOOGLE_2_VERIFICATION');?></label>
 										<div class="col-sm-8">
 												<label class="radio-inline">
-				                                     <input type="radio" name="googleVerification" value="1" <?php echo (!empty($confArray['data']['googleVerification']) && $confArray['data']['googleVerification']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
+                                                    <input type="radio" id="showQR" name="googleVerification" value="1"
+                                                           onchange="showSecret()"<?php echo (!empty($confArray['data']['googleVerification']) && $confArray['data']['googleVerification'] == true) ? 'checked="checked"' : '' ?>><?php oLang::_('ON'); ?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="googleVerification" value="0" <?php echo (empty($confArray['data']['googleVerification']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
+                                                    <input type="radio" id="HideQR" name="googleVerification" value="0"
+                                                           onchange="showSecret()"<?php echo (empty($confArray['data']['googleVerification'])) ? 'checked="checked"' : '' ?>><?php oLang::_('OFF'); ?>
 				                                </label>
 										</div>
 									</div>
+                                    <!--                                    <div class="form-group" id="hidden-QRcode" style="display: none">-->
+                                    <!--                                        <label for="googleSecret"-->
+                                    <!--                                               class="col-sm-4 control-label">-->
+                                    <?php //oLang::_('O_GOOGLE_2_SECRET'); ?><!--</label>-->
+                                    <!---->
+                                    <!--                                        <div id="shhsecret" class="col-sm-6">-->
+                                    <!--                                            --><?php //$googleAuth = $this->model->showGoogleSecret();
+                                    //                                            echo $googleAuth['secret'];
+                                    //                                            ?>
+                                    <!--                                        </div>-->
+                                    <!--                                        <label for="googleQRcode"-->
+                                    <!--                                               class="col-sm-4 control-label">-->
+                                    <?php //oLang::_('O_GOOGLE_2_QRCODE'); ?><!--</label>-->
+                                    <!--                                        <div id='shhqrcode' class="col-sm-6">-->
+                                    <!--                                            --><?php
+                                    //                                            echo $googleAuth['QRcode'];
+                                    //                                            ?>
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
 										<input type="hidden" name="option" value="com_ose_firewall">
 									 	<input type="hidden" name="controller" value="scanconfig"> 
 									    <input type="hidden" name="action" value="saveConfigScan">

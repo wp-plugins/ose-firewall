@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
             	   data = jQuery.parseJSON(data);
             	   hideLoading();
             	   $('#activationFormModal').modal('hide');
-            	   showDialogue (data.message, data.status, 'OK');
+                   showDialogue(data.message, data.status, O_OK);
                }
              });
         return false; // avoid to execute the actual submit of the form.
@@ -82,7 +82,7 @@ function getPaymentAddress () {
 		        	if (data.status =='Error')
 		        	{
 		        		hideLoading();
-		        		showDialogue (data.message, data.status, 'OK');
+                        showDialogue(data.message, data.status, O_OK);
 		        	}
 		        	else
 		        	{
@@ -131,7 +131,7 @@ function goSubscribe () {
 	            	   hideLoading();
 	            	   $('#next-button').hide();
 	            	   var button = data.paymentlink;
-	            	   $('#orderInfo').html('<div class="orderInfo">Your order has been successfully placed. <br/>'+data.orderInfo+'<br/>'+button+'</div>');
+                       $('#orderInfo').html('<div class="orderInfo">' + O_ORDER_NOTICE + '<br/>' + data.orderInfo + '<br/>' + button + '</div>');
 	               }
 	             });
 			return false;
@@ -184,7 +184,7 @@ function centLogout () {
 		        success: function(data)
 		        {
 		           hideLoading ();
-		           showDialogue (data.message, data.status, 'OK');
+                    showDialogue(data.message, data.status, O_OK);
 		           location.reload(); 
 		        }
 		});
@@ -209,7 +209,7 @@ function linkSub(profileID) {
 		        success: function(data)
 		        {
 		           hideLoading ();
-		           showDialogue (data.message, data.status, 'OK');
+                    showDialogue(data.message, data.status, O_OK);
 		           $('#subscriptionTable').dataTable().api().ajax.reload();
 		           if (data.profileID!='undefined' && data.profileID!='')
 		           {

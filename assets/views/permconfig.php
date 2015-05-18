@@ -76,24 +76,24 @@ elseif (OSE_CMS == 'joomla') {
                             if ($status == true) { ?>
 
                                 <input type="checkbox" onchange="disableradios()" value="recur"
-                                       id="recur"> Recurse into subdirectories
+                                       id="recur"> <?php oLang::_('RECURSE_INTO'); ?>
 
                                 <div class="radio" style="padding-left:2em">
                                     <label for="recurall">
-                                        <input type="radio" name="recuroption" id="recurall" value="recurall"> Apply to
-                                        all Files and Folders
+                                        <input type="radio" name="recuroption" id="recurall" value="recurall">
+                                        <?php oLang::_('APPLY_TO_ALL'); ?>
                                     </label>
                                 </div>
                                 <div class="radio" style="padding-left:2em">
                                     <label for="recurfiles">
-                                        <input type="radio" name="recuroption" id="recurfiles" value="recurfiles"> Apply
-                                        to Files only
+                                        <input type="radio" name="recuroption" id="recurfiles"
+                                               value="recurfiles"> <?php oLang::_('APPLY_TO_FILES'); ?>
                                     </label>
                                 </div>
                                 <div class="radio" style="padding-left:2em">
                                     <label for="recurfolders">
                                         <input type="radio" name="recuroption" id="recurfolders" value="recurfolders">
-                                        Apply to Folders only
+                                        <?php oLang::_('APPLY_TO_FOLDERS'); ?>
                                     </label>
                                 </div>
                             <?php } else {/*if not subscribed show call to subscribe*/ ?>
@@ -102,7 +102,7 @@ elseif (OSE_CMS == 'joomla') {
                                         <button type="button" class="btn btn-success btn-xs"
                                                 onclick="redirectTut('<?php echo $loginurl ?>')"> Click here
                                         </button>
-                                        to activate your subscription and use this feature.
+                                        <?php oLang::_('CLICK_TO_ACTIVATE'); ?>
                                     </div>
                                 </div>
                             <?php } ?>

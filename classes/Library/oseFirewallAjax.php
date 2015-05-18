@@ -64,7 +64,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanconfig () {
-		$actions = array ('getConfiguration', 'saveConfigScan');
+        $actions = array('getConfiguration', 'saveConfigScan', 'showGoogleSecret');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionSpamconfig () {
@@ -111,7 +111,7 @@ class oseFirewallAjax extends oseAjax{
 
     public static function loadActionAdminemails()
     {
-        $actions = array('saveDomain', 'saveAdmin', 'getAdminList', 'getDomain', 'changeStatus', 'deleteAdmin');
+        $actions = array('saveDomain', 'saveAdmin', 'getAdminList', 'getDomain', 'changeStatus', 'deleteAdmin', 'saveEmailEditor');
         parent::loadActions($actions);
     }
     public static function loadActionAuthentication()

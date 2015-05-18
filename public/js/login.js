@@ -20,7 +20,7 @@ function verifyKey (key) {
 	        	   updateKey (key, 1);
 	           }
 	           hideLoading ();
-	           showDialogue (data.message, data.status, 'OK', null);
+                showDialogue(data.message, data.status, O_OK, null);
 	        }
 	     });
 	  });	
@@ -77,7 +77,7 @@ function addOEM(oem) {
 }
 function getInstapage (id) {
     jQuery(document).ready(function ($) {
-    	$('#featureListModal').modal();
+    	//$('#featureListModal').modal();
     });
 }
 
@@ -111,7 +111,11 @@ jQuery(document).ready(function($){
         		}
         		else
         		{
-        			showDialogue (data.message, data.status, 'OK', null);
+                    if (data.message) {
+                        showDialogue(data.message, data.status, O_OK, null);
+                    } else {
+                        showDialogue(data.result, data.status, O_OK, null);
+                    }
         			hideLoading ();
         		}	
             } 
@@ -133,12 +137,12 @@ jQuery(document).ready(function($){
         		if (data.success== true)
         		{
         			$('#accountFormModal').modal('hide');
-        			showDialogue (data.message, data.status, 'OK', null);
+                    showDialogue(data.message, data.status, O_OK, null);
         			hideLoading ();
         		}
         		else
         		{
-        			showDialogue (data.result, data.status, 'OK', null);
+                    showDialogue(data.result, data.status, O_OK, null);
         			hideLoading ();
         		}	
             }

@@ -51,7 +51,7 @@ jQuery(document).ready(function($){
             	   $('#formModal').modal('hide');
             	   $('#variablesTable').dataTable().api().ajax.reload();
             	   data = jQuery.parseJSON(data);
-           		   showDialogue (data.result, data.status, 'OK');
+                   showDialogue(data.result, data.status, O_OK);
                }
              });
         return false; // avoid to execute the actual submit of the form.

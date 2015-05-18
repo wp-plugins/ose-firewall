@@ -37,6 +37,7 @@ class LoginModel extends ConfigurationModel {
 	}
 	public function loadLocalScript() {
 		$this->loadAllAssets ();
+        oseFirewall::loadCSSFile('CentroraFeatureCSS', 'featuretable.css', false);
 		oseFirewall::loadJSFile ('CentroraDashboard', 'login.js', false);
 	}
 	public function getCHeader() {

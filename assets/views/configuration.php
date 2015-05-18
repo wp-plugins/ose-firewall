@@ -76,7 +76,7 @@ $this->model->getNounce ();
 	  		<div class="alert alert-danger fade in">
                  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                  <i class="im-cancel alert-icon s24"></i>
-                 <strong><?php oLang::_('DBNOTREADY'); ?></strong>.  After that, you can proceed to the Configuration page to change settings.
+                <strong><?php oLang::_('DBNOTREADY'); ?></strong>.  <?php oLang::_('DBNOTREADY_AFTER'); ?>
             </div>
             <?php 
 	  			}
