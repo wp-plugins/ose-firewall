@@ -42,6 +42,7 @@ $urls = oseFirewall::getDashboardURLs ();
 								<h3 class="panel-title"><?php oLang::_('SUBSCRIPTION ACTIVATION'); ?></h3>
 							</div>
 							<div class="panel-controls-buttons">
+								 <button onclick="redirectTut('http://www.centrora.com/store/subscription-packages/');" type="button" class="btn btn-primary btn-sm mr5 mb10">Subscribe To A Plan Now</button>
 								 <button onclick="redirectTut('http://www.centrora.com/store/index.php?route=affiliate/login');" type="button" class="btn btn-yellow btn-sm mr5 mb10">Get Your Premium Service For FREE</button>
 	                             <button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="redirectTut('https://www.centrora.com/store/activating-premium-service');"><?php oLang::_('TUTORIAL'); ?></button>
 	                        </div>
