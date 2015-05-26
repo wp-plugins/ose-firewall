@@ -235,12 +235,12 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				'GET' => $_GET,
 				'POST' => $_POST
 		);
+		$request = $this->clearWhitelistVars ($request);
 		$return = array ();
-		$whitelistVars = $this->getWhitelistVars ();
-		foreach ( $request as $allVars ) {
+		foreach ( $request as $type => $allVars ) {
 			if (empty ( $allVars ))
 				continue;
-			$matches = $this->DFImathched ( $allVars, $whitelistVars );
+			$matches = $this->DFImathched ( $allVars, $type);
 			if (! empty ( $matches )) {
 				$return = $this->composeResult(100, $matches['value'], 5, oseJSON::encode(array(6)), $matches['key'], 'bs') ;
 				break;
@@ -248,13 +248,10 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 		}
 		return $return;
 	}
-	private function DFImathched($array, $whitelistVars) {
+	private function DFImathched($array, $type) {
 		$result = false;
 		if (is_array ( $array )) {
 			foreach ( $array as $key => $value ) {
-				if (in_array ( $key, $whitelistVars )) {
-					continue;
-				}
 				// If there's a null byte in the key, break
 				if (strstr ( $key, "\u0000" )) {
 					$result = true;
@@ -266,7 +263,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				}
 				// Scan the value
 				if (is_array ( $value )) {
-					$result = $this->DFImathched ( $value, $whitelistVars );
+					$result = $this->DFImathched ( $value, $type);
 				} else {
 					// If there's a null byte, break
 					if (strstr ( $value, "\u0000" )) {
@@ -278,7 +275,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 					if (preg_match ( '#^(\.\.)\/(\/|[a-z])+#i', $value, $matches )) {
 						// Fix 2.0.1: Check that the file exists
 						$result = @ file_exists ( $value );
-						return array('key'=>$key, 'value'=>$value);
+						return array('key'=>strtolower($type).'.'.$key, 'value'=>$value);
 						break;
 					}
 					if ($result) {
@@ -295,15 +292,15 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				'GET' => $_GET,
 				'POST' => $_POST
 		);
-		$whitelistVars = $this->getWhitelistVars ();
+		$request = $this->clearWhitelistVars ($request);
 		$regex = array ();
 		$regex [] = '#(http|ftp){1,1}(s){0,1}://.*#i';
 		$regex [] = "/^.*(%00|(?:((?:ht|f)tp(?:s?)|file|webdav)\:\/\/|~\/|\/).*\.\w{2,3}|(?:((?:ht|f)tp(?:s?)|file|webdav)%3a%2f%2f|%7e%2f%2f).*\.\w{2,3}).*/i";
-		foreach ( $request as $allVars ) {
+		foreach ( $request as $type => $allVars ) {
 			if (empty ( $allVars ))
 				continue;
 			foreach ( $regex as $reg ) {
-				$matches = $this->RFImathched ( $reg, $allVars, $whitelistVars );
+				$matches = $this->RFImathched ( $reg, $allVars, $type);
 				if (! empty ( $matches )) {
 					$return = $this->composeResult(100, $matches['value'], 5, oseJSON::encode(array(5)), $matches['key'], 'bs') ;
                     break;
@@ -311,15 +308,12 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 			}
 		}
 	}
-	private function RFImathched($regex, $array, $whitelistVars) {
+	private function RFImathched($regex, $array, $type) {
 		$result = false;
 		if (is_array ( $array )) {
 			foreach ( $array as $key => $value ) {
-				if (in_array ( $key, $whitelistVars )) {
-					continue;
-				}
 				if (is_array ( $value )) {
-					$result = $this->RFImathched ( $regex, $value, $whitelistVars);
+					$result = $this->RFImathched ( $regex, $value, $type);
 				} else {
 					$result = preg_match ( $regex, $value );
 				}
@@ -329,7 +323,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 					if (! empty ( $fContents )) {
 						$result = (strstr ( $fContents, '<?php' ) !== false);
 						if ($result) {
-							$result = array('key'=>$key, 'value'=>$value);
+							$result = array('key'=>strtolower($type).'.'.$key, 'value'=>$value);
 							break;
 						}
 					} else {
@@ -346,7 +340,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				if (! empty ( $fContents )) {
 					$result = (strstr ( $fContents, '<?php' ) !== false);
 					if ($result) {
-						$result = array('key'=>$key, 'value'=>$matches);
+						$result = array('key'=>strtolower($type).'.'.$key, 'value'=>$matches);
 					}
 				} else {
 					$result = null;
@@ -448,9 +442,10 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				'GET' => $_GET,
 				'POST' => $_POST
 		);
+		$request = $this->clearWhitelistVars ($request);
 		$return = array ();
 		$matches = array ();
-		foreach ( $request as $allVars ) {
+		foreach ( $request as $type => $allVars ) {
 			foreach ( $allVars as $element => $value ) {
 				if (empty ( $value )) {
 					continue;
@@ -460,20 +455,19 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				}
 				if (preg_match ( "/((\%3C)|<)((\%2F)|\/)*(javascript|script)+[a-z0-9\%]+((\%3E)|>)/ix", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
-					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element, 'bs') ;
+					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), strtolower($type).'.'.$element, 'bs') ;
 					break;
 				}
 				if (preg_match ( "/((\%3C)|<)((\%69)|i|(\%49))((\%6D)|m|(\%4D))((\%67)|g|(\%47))[^\n]+((\%3E)|>)/i", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
-					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element, 'bs') ;
+					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), strtolower($type).'.'.$element, 'bs') ;
 					break;
 				}
 				if (preg_match ( "/((\%3C)|<)(javascript|script)+[^\n]+((\%3E)|>)/i", $value, $matches )) 				// if (preg_match('/(?:=\s*[$\w]\s*[\(\[])|(?:\(\s*(?:this|top|window|self|parent|_?content)\s*\))|(?:src\s*=s*(?:\w+:|\/\/))|(?:\w\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")/ms', strtolower($value)))
 				{
-					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), $element, 'bs') ;
+					$return = $this->composeResult(100, $matches, 7, oseJSON::encode(array(2)), strtolower($type).'.'.$element, 'bs') ;
 					break;
 				}
-				
 			}
 		}
 		return $return;
@@ -483,10 +477,11 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 				'GET' => $_GET,
 				'POST' => $_POST
 		);
+		$request = $this->clearWhitelistVars ($request);
 		$dbprefix = $this->db->getPrefix ();
 		$return = array ();
 		$matches = array ();
-		foreach ( $request as $allVars ) {
+		foreach ( $request as $type => $allVars ) {
 			foreach ( $allVars as $element => $value ) {
 				$commonSQLInjWords = array (
 						'union',
@@ -509,19 +504,19 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 					continue;
 				}
 				if (preg_match ( '/((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(;))/i', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), strtolower($type).'.'.$element, 'bs') ;
 					break;
 				}
 				if (preg_match ( '/\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/ix', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), strtolower($type).'.'.$element, 'bs') ;
 					break;
 				}
 				if (preg_match ( '/((\%27)|(\'))union/ix', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), strtolower($type).'.'.$element, 'bs') ;
 					break;
 				}
 				if (preg_match ( '/exec(\s|\+)+(s|x)p\w+/ix', $value, $matches )) {
-					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), $element, 'bs') ;
+					$return = $this->composeResult(100, $matches, 8, oseJSON::encode(array(4)), strtolower($type).'.'.$element, 'bs') ;
 					break;
 				}
 			}

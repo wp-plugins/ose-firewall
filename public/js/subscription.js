@@ -65,7 +65,7 @@ function goSubscribe2 () {
 
 function getPaymentAddress () {
 	 showLoading ('Please wait, generating a new order...');
-	 jQuery(document).ready(function($){	
+	 jQuery(document).ready(function($){
 			$.ajax({
 		        type: "POST",
 		        url: url,
@@ -111,7 +111,7 @@ function getPaymentAddress () {
 		        failure: function (data)
 		        {}
 			}); 
-	 });		
+	 });	
 }
 function goSubscribe () {
 	 jQuery(document).ready(function($){	

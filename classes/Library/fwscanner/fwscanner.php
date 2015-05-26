@@ -137,10 +137,8 @@ class oseFirewallScanner {
                 $flag = $this->verifyGA();
                 if ($flag == true) {
                     $this->updateStatus(3);
-                    print_r(1);
                     exit;
                 } else {
-                    print_r(0);
                     exit;
                 }
             } else {

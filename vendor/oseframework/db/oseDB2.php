@@ -35,6 +35,7 @@ if (!class_exists('oseDB2', false))
 		protected static $dbh;
 		protected $dbo = null;
 		protected $prefix = null;
+		protected $stm = null;
 		public $query = null;
 		public function __construct()
 		{
@@ -56,9 +57,9 @@ if (!class_exists('oseDB2', false))
 		public function isTableExists($table)
 		{
 			$this->setQuery("SHOW TABLES LIKE '".$table."';");
-			$stm = $this->dbo->prepare($this->query);
-			$stm->execute();
-			$result = $stm->fetch(PDO::FETCH_ASSOC);
+			$this->stm = $this->dbo->prepare($this->query);
+			$this->stm->execute();
+			$result = $this->stm->fetch(PDO::FETCH_ASSOC);
 			return (!empty($result))?true:false;
 		}
 		public function setQuery($query)
@@ -68,8 +69,8 @@ if (!class_exists('oseDB2', false))
 		}
 		public function query()
 		{
-			$stm = $this->dbo->prepare($this->query);
-			return $stm->execute();
+			$this->stm = $this->dbo->prepare($this->query);
+			return $this->stm->execute();
 		}
 		public function closeDBO()
 		{
@@ -81,9 +82,9 @@ if (!class_exists('oseDB2', false))
 		}
 		public function loadResult()
 		{
-			$stm = $this->dbo->prepare($this->query);
-			$stm->execute();
-			$result = $stm->fetch(PDO::FETCH_ASSOC);
+			$this->stm = $this->dbo->prepare($this->query);
+			$this->stm->execute();
+			$result = $this->stm->fetch(PDO::FETCH_ASSOC);
 			return $result;
 		}
 		public function quoteValue($value)
@@ -100,40 +101,37 @@ if (!class_exists('oseDB2', false))
 		}
 		public function loadResultArray()
 		{
-			$query = $this->dbo->prepare($this->query);
-			$query->execute();
-			$results = $query->fetchAll(PDO::FETCH_NUM);
+			$this->stm = $this->dbo->prepare($this->query);
+			$this->stm->execute();
+			$results = $this->stm->fetchAll(PDO::FETCH_NUM);
 			return $results;
 		}
 		public function loadArrayList()
 		{
-			$query = $this->dbo->prepare($this->query);
-			$query->execute();
-			$results = $query->fetchAll(PDO::FETCH_ASSOC);
-			$query->closeCursor();
+			$this->stm = $this->dbo->prepare($this->query);
+			$this->stm->execute();
+			$results = $this->stm->fetchAll(PDO::FETCH_ASSOC);
 			return $results;
 		}
-		
 		public function loadObjectList()
 		{
-			$query = $this->dbo->prepare($this->query);
-			$query->execute();
-			$results = $query->fetchAll(PDO::FETCH_CLASS);
-			$query->closeCursor();
+			$this->stm = $this->dbo->prepare($this->query);
+			$this->stm->execute();
+			$results = $this->stm->fetchAll(PDO::FETCH_CLASS);
 			return $results;
 		}
 		public function loadResultList()
 		{
-			$query = $this->dbo->prepare($this->query);
-			$query->execute();
-			$results = $query->fetchAll(PDO::FETCH_ASSOC);
+			$this->stm = $this->dbo->prepare($this->query);
+			$this->stm->execute();
+			$results = $this->stm->fetchAll(PDO::FETCH_ASSOC);
 			return $results;
 		}
 		public function loadObject($table = null)
 		{
-			$query = $this->dbo->prepare($this->query);
-			$query->execute();
-			$obj = $query->fetchObject();
+			$this->stm = $this->dbo->prepare($this->query);
+			$this->stm->execute();
+			$obj = $this->stm->fetchObject();
 			return $obj;
 		}
 		public function getTableFields($tables, $typeonly = true)
@@ -307,15 +305,15 @@ if (!class_exists('oseDB2', false))
 		{
 			$this->setQuery ("TRUNCATE ".$this->QuoteTable($table));
 			$this->dbo->exec('SET FOREIGN_KEY_CHECKS = 0;');
-			$stm = $this->dbo->prepare($this->query);
-			return $stm->execute();
+			$this->stm = $this->dbo->prepare($this->query);
+			return $this->stm->execute();
 		}
 		public function dropTable ($table)
 		{
 			$this->setQuery ("DROP TABLE ".$this->QuoteTable($table));
 			$this->dbo->exec('SET FOREIGN_KEY_CHECKS = 0;');
-			$stm = $this->dbo->prepare($this->query);
-			return $stm->execute();
+			$this->stm = $this->dbo->prepare($this->query);
+			return $this->stm->execute();
 		} 
 	}
 }

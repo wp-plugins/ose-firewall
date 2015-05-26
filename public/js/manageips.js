@@ -56,8 +56,8 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    $('#ip_start').mask("000.000.000.000", font);
-    $('#ip_end').mask("000.000.000.000", font);
+    $('#ip_start').mask("099.099.099.099", font);
+    $('#ip_end').mask("099.099.099.099", font);
     var statusFilter = $('<label>Status: <select name="statusFilter" id="statusFilter"><option value="0"></option><option value="1">Blacklisted</option><option value="2">Monitored</option><option value="3">Whitelisted</option></select></label>');
     statusFilter.appendTo($("#manageIPsTable_filter")).on('change', function () {
         var val = $('#statusFilter');

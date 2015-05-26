@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 4.7.0
+Stable tag: 4.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.7.1 =
+* Enhancement: Improve the IP Mask function in the Add IP Form 
+* Fixed: Some whitelisted variables are still being scanned in Basic Firewall
+* Fixed: Fixed 'PhpmailerException' class redeclaration issue
+
 = 4.7.0 =
 * Added: Feature Requests #87: Add self unblock support
 * Added: Feature Requests #90: OEM user access control
