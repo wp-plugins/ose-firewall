@@ -27,7 +27,7 @@ jQuery(document).ready(function($){
     });
 });
 
-function goSubscribe2 () {
+function goSubscribe () {
  jQuery(document).ready(function($){	
 	$.ajax({
         type: "POST",
@@ -114,7 +114,7 @@ function getPaymentAddress () {
 	 });	
 }
 
-function goSubscribe () {
+function goSubscribe3 () {
 	 jQuery(document).ready(function($){	
      	getPaymentAddress ();
  		$('#subscription-form').on("submit", function () {
