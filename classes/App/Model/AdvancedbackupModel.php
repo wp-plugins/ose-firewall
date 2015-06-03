@@ -43,6 +43,12 @@ class AdvancedbackupModel extends BackupModel
         return $return;
     }
 
+    public function onedrive_upload($id)
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->onedrive_upload($id);
+        return $return;
+    }
     public function dropbox_upload($id)
     {
         $backupManager = new oseBackupManager ();

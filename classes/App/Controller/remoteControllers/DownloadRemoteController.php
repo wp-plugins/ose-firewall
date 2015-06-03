@@ -114,5 +114,25 @@ class DownloadRemoteController extends BaseRemoteController{
 			oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("VSSCANNING_FAILED"), false);
 		}
 	}
+    public function actionScheduledBackup ($cloudbackuptype){
+        $result = $this->model->runScheduledBackup($cloudbackuptype);
+        if ($result == true)
+        {
+            $receiveEmail = $this->model->getEmailConfig ();
+            $return = array(
+                'success' => true,
+                'status' => 'SUCCESS',
+                'result' => oLang::_get("BACKUP_SUCCESS"),
+                'cont' => false,
+                'receiveEmail' => (int)$receiveEmail
+            );
+            $tmp = oseJSON::encode($return);
+            print_r($tmp); exit;
+        }
+        else
+        {
+            oseAjax::aJaxReturn(false, 'ERROR', oLang::_get("BACKUP_FAILED"), false);
+        }
+    }
 }
 ?>

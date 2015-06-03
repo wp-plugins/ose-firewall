@@ -22,26 +22,32 @@ namespace App\Controller;
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *  @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
+ * @Copyright Copyright (C) 2008 - 2012- ... Open Source Excellence
  */
-if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
+if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC')) {
+    die('Direct Access Not Allowed');
+}
+
+class CronjobsController extends \App\Base
 {
- die('Direct Access Not Allowed');
+    public function action_saveCronConfig()
+    {
+        $this->model->loadRequest();
+        $custhours = $this->model->getVar('custhours', null);
+        $custweekdays = $this->model->getVar('custweekdays', array());
+        $schedule_type = $this->model->getVar('schedule_type', null);
+        $cloudbackuptype = $this->model->getVar('cloudbackuptype', null);
+        $enabled = $this->model->getVar('enabled', null);
+        if ($enabled == 1 && empty($custweekdays)){
+            $custweekdays[] = 0; //set zero for no days selected and schedule not enabled
+        }
+        if ((!isset($custhours) AND $custhours != '') || (empty($custweekdays) )) {
+            $this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("CRON_SETTING_EMPTY"), false);
+        } else {
+            $custweekdays = base64_encode($this->model->JSON_encode($custweekdays));
+            $result = $this->model->saveCronConfig($custhours, $custweekdays, $schedule_type, $cloudbackuptype, $enabled);
+        }
+    }
 }
-class CronjobsController extends \App\Base {
-	public function action_saveCronConfig() {
-		$this->model->loadRequest();
-		$custhours = $this->model->getInt('custhours', null);
-		$custweekdays =  $this->model->getVar('custweekdays', array());
-		if (empty($custhours) || empty($custweekdays))
-		{
-			$this->model->aJaxReturn(false, 'ERROR', $this->model->getLang("CRON_SETTING_EMPTY"), false);
-		}
-		else
-		{
-			$custweekdays = base64_encode($this->model->JSON_encode($custweekdays));
-			$result = $this->model->saveCronConfig($custhours, $custweekdays);
-		}
-	}
-}
-?>	
+
+?>

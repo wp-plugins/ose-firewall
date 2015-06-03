@@ -38,6 +38,24 @@ class AuthenticationController extends \App\Base
         $result = $this->model->oauth($type, $reload);
         $this->model->returnJSON($result);
     }
+
+    public function action_onedrive_logout()
+    {
+        $result = $this->model->onedrive_logout();
+        $this->model->returnJSON($result);
+    }
+
+    public function action_dropbox_init()
+    {
+        $result = $this->model->dropbox_init();
+        $this->model->returnJSON($result);
+    }
+
+    public function action_dropbox_logout()
+    {
+        $result = $this->model->dropbox_logout();
+        $this->model->returnJSON($result);
+    }
 }
 
 ?>

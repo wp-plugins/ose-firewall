@@ -113,6 +113,7 @@ function getPaymentAddress () {
 			}); 
 	 });	
 }
+
 function goSubscribe () {
 	 jQuery(document).ready(function($){	
      	getPaymentAddress ();
@@ -138,7 +139,7 @@ function goSubscribe () {
 		})
 		return false;
 	 });  
-	}
+}
 
 function redirectLink () {
 	showLoading ('Please wait, redirecting to Paypal...');

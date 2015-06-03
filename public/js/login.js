@@ -69,7 +69,7 @@ function addOEM(oem) {
                 action: 'addOEM',
                 task: 'addOEM',
                 oem: oem,
-                verified: verified,
+                //verified: verified,
                 centnounce: $('#centnounce').val()
             }
         });

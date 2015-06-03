@@ -129,11 +129,12 @@ class Dropbox_API
      * @param  boolean $overwrite Should the file be overwritten? (Default: true)
      * @return array
      */
-    public function putStream($stream, $filename, $overwrite = true)
+    public function putStream($stream, $filename, $currentDomain, $overwrite = true)
     {
         $this->OAuth->setInFile($stream);
         $path = $this->encodePath($filename);
-        $call = 'files_put/' . $this->root . '/' . $path;
+        $call = 'files_put/' . $this->root . '/' . $currentDomain . '/' . $path;
+
         $params = array('overwrite' => (int)$overwrite);
 
         return $this->fetch('PUT', self::CONTENT_URL, $call, $params);
@@ -257,6 +258,7 @@ class Dropbox_API
      */
     public function metaData($path = null, $rev = null, $limit = 10000, $hash = false, $list = true, $deleted = false)
     {
+        $this->root = "sandbox";
         $call = 'metadata/' . $this->root . '/' . $this->encodePath($path);
         $params = array(
             'file_limit' => ($limit < 1) ? 1 : (($limit > 10000) ? 10000 : (int)$limit),
@@ -436,6 +438,7 @@ class Dropbox_API
      */
     public function create($path)
     {
+        $this->root = "sandbox";
         $call = 'fileops/create_folder';
         $params = array('root' => $this->root, 'path' => $this->normalisePath($path));
 

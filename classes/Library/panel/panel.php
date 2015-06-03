@@ -414,7 +414,7 @@ class panel
 		$dbo->setQuery($query);
 		return $dbo->query();
 	}
-	public function saveCronConfig($custhours, $custweekdays) {
+	public function saveCronConfig($custhours, $custweekdays, $schedule_type, $cloudbackuptype, $enabled) {
 		$this->live_url = "https://www.centrora.com/accountApi/cronjobs/saveCronSetting";
 		$content = array ();
 		$content['custhours'] = $custhours;
@@ -422,14 +422,18 @@ class panel
 		$content['webKey'] = $this->getWebKey();
 		$content['remoteChecking'] = true;
 		$content['task'] = 'saveCronSetting';
+        $content['schedule_type'] = $schedule_type;
+        $content['cloudbackuptype'] = $cloudbackuptype;
+        $content['enabled'] = $enabled;
 		$this->sendRequest($content);
 	}
-	public function getCronSettings () {
+	public function getCronSettings ($schedule_type) {
 		$this->live_url = "https://www.centrora.com/accountApi/cronjobs/getCronSettings";
 		$content = array ();
 		$content['webKey'] = $this->getWebKey();
 		$content['remoteChecking'] = true;
 		$content['task'] = 'getCronSettings';
+        $content['schedule_type'] = $schedule_type;
 		return $this->sendRequestReturnRes($content);
 	}
 	public function activateCode($code) {
@@ -469,6 +473,7 @@ class panel
 
     /**
      * This function returns a hidden list of directory folders based on the $path.
+     * @param $rootpath
      * @param $path Directory path to return list of child directories.
      */
     public function  getFileTree($rootpath,$path){
@@ -506,9 +511,9 @@ class panel
                              } else {
                                  $isrootfolder = false;
                              }
-                            if (is_readable($newkey) && $isrootfolder){
+                            if (file_exists($newkey) && $isrootfolder){
                                 $list .= '<li class="folder collapsed" id="' . $newrel . '"><a href="#" id="' . $newkey . '/"rel="' . $newrel . '/">' . htmlentities($newfileinfo) . '</a></li>';
-                            } elseif (is_readable($key) && !$isrootfolder) {
+                            } elseif (file_exists($key) && !$isrootfolder) {
                                 $rel = htmlentities(str_replace($rootpath, "", $key));
                                 $list .= '<li class="folder collapsed" id="' . $rel . '"><a href="#" id="' . $key . '/"rel="' . $rel . '/">' . htmlentities($fileinfo) . '</a></li>';
                             }
@@ -521,9 +526,13 @@ class panel
                 $list .= '</ul>';
             } else{
                 $list = '<ul id="filetreelist" class="filetree" style="display: none;">';
-                $list .= '<li class="" name="" id=""><a href="http://www.centrora.com/centrora-security-suite-tutorial/installing-centrora-suite-dedicated-server/#special"
+                if (class_exists('SConfig')){
+                    $list .= '<li class="" name="" id=""><a href="http://www.centrora.com/centrora-security-suite-tutorial/installing-centrora-suite-dedicated-server/#special"
                             target="_blank" title="Please follow this guide to stop seeing this restriction (right click and open in new tab/window)">
                             {Restricted Permissions}</a></li>';
+                } else{
+                    $list .= '<li class="" name="" id="" title="This folder is not readable, please check file/folder permissions">{Restricted Permissions}</li>';
+                }
                 $list .= '</ul>';
             }
             echo($list);

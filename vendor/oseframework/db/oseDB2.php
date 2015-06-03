@@ -74,11 +74,18 @@ if (!class_exists('oseDB2', false))
 		}
 		public function closeDBO()
 		{
+			if (!empty($this->stm))
+			{	
+				$this->stm->closeCursor(); 
+				unset($this->stm);
+			}
 			//$this->dbo = null;
 		}
 		public function closeDBOFinal()
 		{
 			$this->dbo = null;
+			self::$dbh = null;
+			unset($this->dbo);
 		}
 		public function loadResult()
 		{
@@ -301,6 +308,18 @@ if (!class_exists('oseDB2', false))
 			$count = $this->dbo->exec($this->query);
 			return ($count>0)?true:false;
 		}
+
+        public function deleteRecordString($conditions, $table)
+        {
+            $where = array();
+            foreach ($conditions as $key => $value) {
+                $where[] = "`" . $key . "` = " . $this->quoteValue($value);
+            }
+            $where = $this->implodeWhere($where);
+            $this->setQuery("DELETE FROM `" . $table . "` " . $where);
+            $count = $this->dbo->exec($this->query);
+            return ($count > 0) ? true : false;
+        }
 		public function truncateTable ($table) 
 		{
 			$this->setQuery ("TRUNCATE ".$this->QuoteTable($table));
@@ -315,5 +334,15 @@ if (!class_exists('oseDB2', false))
 			$this->stm = $this->dbo->prepare($this->query);
 			return $this->stm->execute();
 		} 
+		public function getCurrentConnection () {
+			$this->setQuery("SHOW STATUS WHERE `variable_name` = 'Threads_connected'");
+			return $this->loadResult();
+		}
+
+        public function getlastinert()
+        {
+            $varID = $this->dbo->lastInsertId();
+            return $varID;
+        }
 	}
 }

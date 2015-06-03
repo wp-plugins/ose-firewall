@@ -105,6 +105,9 @@
 	background-color : transparent;
     border-color: #000000;
 }
+.panel-teal > .panel-heading h3 {
+    color: #587b23 !important;
+}
 
 .table > thead > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tfoot > tr > td {
     line-height: 0;
@@ -114,12 +117,18 @@
 .panel-primary > .panel-heading {
     background-color: #89bb30;
 }
+.panel-dark > .panel-heading {
+    background-color: #7ea426;
+}
 .panel-body th,
 .panel-heading h3 {
     color: #fff;
 }
 
 .panel-primary > .panel-body {
+    border: 1px solid #fff;
+}
+.panel-dark > .panel-body {
     border: 1px solid #fff;
 }
 .tickLabel {
@@ -142,6 +151,12 @@
 }
 
 .panel.plain.panel-primary .panel-heading {
+    background-color: transparent;
+    border-bottom: 1px solid #000000;
+    color: #000000;
+}
+
+.panel.plain.panel-dark .panel-heading {
     background-color: transparent;
     border-bottom: 1px solid #000000;
     color: #000000;

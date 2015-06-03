@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 4.7.1
+Stable tag: 4.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,15 +16,14 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
 Centrora Security is a new plugin that's modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 
-= New features in v4.7: =
-* Added: Feature Requests #87: Add self unblock support
-* Added: Feature Requests #90: OEM user access control
-* Added: Feature Requests #92: Ability to edit alert notificaiton email template
-* Enhancement: Improvements #96: For admin to receive emails, adding the domain in the email so the administrator knows which domain the attack is from
-* Enhancement: Improvements #97: Add units on traffic map and fix Facebook like box errors
-* Enhancement: Improvements #106: Improve the block page layout and design
-* Enhancement: Improvements #108: Only send email out when the domains are matched in the attack
-* Enhancement: Improvements #115: Log in page improvement and bug fix
+= New features in v4.8: =
+* Added: New and Improved Schedule Task: Set, forget and get notified
+* Added: Scheduled backup function
+* Added: Add Ondrive backup
+* Added: WooCommerce Support on Variables Scanner
+* Enhancement: Cloud backup folder structure now includes better support for multiple sites backup
+* Enhancement: Save backup time of new backups made
+* Enhancement: Schedule Task toggle Activate/Deactivate
 
 = Customer Support =
 If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here for help.</a>
@@ -89,6 +88,27 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.8.0 =
+* Added: New and Improved Schedule Task: Set and forget, get notified,
+* Added: Feature Requests #120: Scheduled backup function
+* Added: Feature Requests #123: Add Ondrive backup
+* Added: Feature Requests #130: WooCommerce Support on Variables Scanner
+* Added: Feature Requests #137: ADD OEM Login Page
+* Enhancement: Cloud backup folder structure now includes better support for multiple sites backup
+* Enhancement: Schedule Scanner minor UI Improvements
+* Enhancement: Save backup time of new backups made
+* Enhancement: Schedule Task toggle Activate/Deactivate
+* Enhancement: Improvements #121: Dashboard Links to Data
+* Enhancement: Numerous other minor Enhancements and fixes
+* Enhancement: Improvements #126: Check Session: Login Status
+* Fixed: Schedule Scanner failed for a few users
+* Fixed: Bugs #122: Dashboard popup error, on low resource servers.
+* Fixed: Bugs #125: Dropbox Unlink Account Fails to Relink later
+* Fixed: Bugs #129: Fix Audit my Site broken actions
+* Fixed: Bugs #132: Fix CronJobs Msg: Link for "contact support team" in WP
+* Fixed: Bugs #142: Virus Scanner Maximum Database connection saving error
+* Fixed: Several minor tweaks and fixes
 
 = 4.7.1 =
 * Enhancement: Improve the IP Mask function in the Add IP Form 

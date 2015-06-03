@@ -30,7 +30,6 @@ var O_FIXPERMISSIONS_DESC = "This will set the recommended default file/folder p
 var O_CLOSE = "Close";
 
 //added from 4.7.0
-
 var O_OK = "OK";
 var O_SUCCESS = "Success";
 var O_EMAIL_TEMP_SAVE = "Email template was saved successfully";
@@ -71,4 +70,11 @@ var O_ORDER_NOTICE = "Your order has been successfully placed.";
 var O_UPDATE = "Updating...";
 var O_ACTIVATE_PLUGIN = "Activating plugin...";
 
-
+//added from 4.8.0
+var O_UPLOAD_ONEDRIVE = "The backup file has been uploaded to your OneDrive";
+var O_DROPBOX_LOGOUT = "Dropbox Logout";
+var O_SPEECH_BUBBLE = "Hacking traffic table will refresh every minute";
+var O_SESSION_EXPIRED = "Session expired, please login again";
+var O_DROPBOX_AUTHO = "Dropbox Authorisation";
+var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Click OK to get the 'Access Token' for Dropbox authorisation";
+var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Click OK to complete Dropbox authentication";

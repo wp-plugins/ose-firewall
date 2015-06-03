@@ -52,13 +52,13 @@ class CronjobsModel extends BaseModel
 	{
 		return oLang::_get('CRONJOBS_DESC');
 	}
-	public function saveCronConfig($custhours, $custweekdays) {
+	public function saveCronConfig($custhours, $custweekdays, $schedule_type, $cloudbackuptype, $enabled) {
 		$panel = new panel ();
-		return $panel->saveCronConfig($custhours, $custweekdays);
+		return $panel->saveCronConfig($custhours, $custweekdays, $schedule_type, $cloudbackuptype, $enabled);
 	}
-	public function getCronSettings () {
+	public function getCronSettings ($schedule_type) {
 		$panel = new panel ();
-		$settings = json_decode(json_decode($panel->getCronSettings()));
+		$settings = json_decode(json_decode($panel->getCronSettings($schedule_type)));
 		$return = array (); 
 		foreach ($settings as $key => $val) {
 			switch ($key) {
@@ -86,6 +86,37 @@ class CronjobsModel extends BaseModel
 			}
 		}
 		$return['hour'] = $settings->hour;
+        $return['cloudbt'] = $settings->cloudbackuptype;
+        $return['enabled'] = $settings->enabled;
 		return $return; 
 	}
+
+    /**
+     * @param $cloudbackuptype
+     * @return bool
+     */
+    public function checkCloudAuthentication ($cloudbackuptype){
+        switch($cloudbackuptype){
+            case 1:
+                return true;
+                break;
+            case 2:
+                oseFirewall::callLibClass('backup', 'oseBackup');
+                $oseBackupManager = new oseBackupManager();
+                $dropboxautho = $oseBackupManager->is_authorized();
+                if ($dropboxautho == 'fail'){
+                    return false;
+                }elseif ($dropboxautho == 'ok'){
+                    return true;
+                }
+                break;
+            case 3:
+                oseFirewall::callLibClass('backup/onedrive', 'onedrive');
+                $oneDrive = new onedriveModelBup ();
+                return $oneDrive->isAuthenticated();
+                break;
+            default:
+                return false;
+        }
+    }
 }

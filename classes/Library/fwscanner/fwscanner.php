@@ -650,7 +650,40 @@ class oseFirewallScanner {
 						<head>
 							<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 							<title>403 Forbidden</title>
+							<link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/bootstrap.min.css">
+            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/blockpage.css">
+                        <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/animate.css">
 						</head>
+						<script src="' . OSE_FWPUBLICURL . '/js/jquery-1.11.1.min.js"></script>
+						<script src="' . OSE_FWPUBLICURL . '/js/plugins/wow/wow.min.js"></script>
+						<script>new WOW().init();</script>
+						<script>
+      jQuery(document).ready(function($){
+           $("#googleAuth-form").submit(function() {
+             var data = $("#googleAuth-form").serialize();
+             $.ajax({
+           //  url: "index.php?",
+            type: "POST",
+            data: data,
+            success: function(data)
+            {
+
+               console.log(data);
+
+                if (data == 1)
+                {
+                   location.reload(true);
+                }
+                else
+                {
+                   alert("wrong code, try again");
+                }
+            }
+        });
+       return false; // avoid to execute the actual submit of the form.
+});
+})
+                      </script>
 						<body>
 								'.$banbody.'
 						</body>

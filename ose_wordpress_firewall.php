@@ -4,7 +4,7 @@ Plugin Name: Centrora Security
 Plugin URI: http://wordpress.org/extend/plugins/ose-firewall/
 Description: Centrora Security (previously OSE Firewall) - A WordPress Security Firewall plugin created by Centrora. Protect your WordPress site by identify any malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 Author: Centrora (Previously ProWeb)
-Version: 4.7.1
+Version: 4.8.0
 Author URI: http://www.centrora.com/
 //@todo change Icon URI
 Icon URI: https://secure.gravatar.com/avatar/26d6eb39bd2613b318ad7a64f3641480?d=mm&s=300&r=G
@@ -96,6 +96,7 @@ else if ($systemReady[0] == true)
 	$signatureUpdate = oRequest :: getInt('signatureUpdate', 0);
 	$safeBrowsingUpdate = oRequest :: getInt('safeBrowsingUpdate', 0);
 	$vsScanning = oRequest :: getInt('vsScanning', 0);
+    $runBackup = oRequest :: getInt('runBackup', 0);
 	$verifyKey = oRequest::getInt('verifyKey', 0);
 	$updateProfile = oRequest::getInt('updateProfile', 0);
 	$userID = null;
@@ -133,9 +134,16 @@ else if ($systemReady[0] == true)
 			else if ($vsScanning == 1)
 			{
 				$step = oRequest :: getInt('step', 0);
+                $type = oRequest :: getInt('type', 0);
 				$remoteLogin = new RemoteLogin();
-				$remoteLogin->vsScanning($step);
+				$remoteLogin->vsScanning($step, $type);
 			}
+            else if ($runBackup == 1)
+            {
+                $cloudbackuptype = oRequest :: getInt('cloudbackuptype', 0);
+                $remoteLogin = new RemoteLogin();
+                $remoteLogin->runBackup($cloudbackuptype);
+            }
 			else
 			{
 				$oseFirewall -> enhanceSysSecurity();
@@ -159,6 +167,12 @@ if (!class_exists('GoogleAuthenticator', false))
 {
 	$oseFirewall -> initGAuthenticator ();
 }
+function destroy_session()
+{
+    session_destroy();
+}
+
+add_action('wp_logout', 'destroy_session');
 
 /*
 //\PHPBenchmark\Monitor::instance()->snapshot('After loading Centrora');

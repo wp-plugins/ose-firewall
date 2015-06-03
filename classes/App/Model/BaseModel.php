@@ -186,6 +186,7 @@ class BaseModel  {
 		}	
 		else
 		{
+            oseFirewall::loadJSFile('CentroraWPJquery', 'wordpress.js', false);
 			oseFirewall::loadJSFile ('CentroraBootStrapJS', 'bootstrap.min.js', false);
 		}
 //        oseFirewall::loadJSFile ('CentroraDropboxJS', 'dropins.js', false);
@@ -200,6 +201,8 @@ class BaseModel  {
 		oseFirewall::loadJSFile ('CentroraSlimscrolHor', 'plugins/slimscroll/jquery.slimscroll.horizontal.min.js', false);
 		oseFirewall::loadJSFile ('CentroraAppstart', 'jquery.appStart.js', false);
         oseFirewall::loadJSFile('CentroraInputMask', 'plugins/inputmask/jquery.mask.js', false);
+        oseFirewall::loadJSFile('CentroraTipsy', 'plugins/tipsy/jquery.tipsy.js', false);
+
 
         oseFirewall::callLibClass('oem', 'oem');
         $oem = new CentroraOEM();
@@ -220,7 +223,8 @@ class BaseModel  {
 		oseFirewall::loadCSSFile ('CentroraBootStrapLess', 'main.css', false);
 		oseFirewall::loadCSSFile ('CentroraV4Style', 'v4.css', false);
 		oseFirewall::loadCSSURL ('CentroraV4Font','https://fonts.googleapis.com/css?family=Open+Sans%3A400italic%2C400%2C600%2C700%7CRoboto+Slab%3A400%2C300%2C700');
-		$this->getOEMCss();
+        oseFirewall::loadCSSFile('CentroraTipsyCss', 'tipsy.css', false);
+        $this->getOEMCss();
 	}
 	protected function getOEMCss () {
 		oseFirewall::callLibClass('oem', 'oem');
@@ -327,4 +331,25 @@ class BaseModel  {
 		}
 		return $product; 
 	}
+
+    public function oempasscode()
+    {
+        if (isset($_SESSION['passcode'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkJoomlaSession()
+    {
+        $session = JFactory::getSession();
+        $state = $session->getState();
+
+        if ($state !== 'active') {
+            $app = JFactory::getApplication();
+            $app->logout();
+        }
+        return $state === 'active' ? true : false;
+    }
 }	

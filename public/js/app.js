@@ -1,6 +1,5 @@
 var url = ajaxurl; 
 var option = "com_ose_firewall";
-
 // make console.log safe to use
 window.console||(console={log:function(){}});
 
@@ -307,12 +306,80 @@ function removejscssfile(filename, filetype){
 	  if (allsuspects[i] && allsuspects[i].getAttribute(targetattr)!=null && allsuspects[i].getAttribute(targetattr).indexOf(filename)!=-1)
 	   allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
 	 }
-}  
+}
 
+function fixGoogleScan() {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: 'audit',
+                action: 'googleRot',
+                task: 'googleRot',
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                location.reload();
+            }
+        });
+    });
+}
+function joomla_check() {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                option: option,
+                controller: controller,
+                action: 'check',
+                task: 'check',
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                if (data != 1) {
+                    alert(O_SESSION_EXPIRED);
+                    location.reload();
+                }
+            }
+        });
+    });
+}
 //doc ready function
 
 
 jQuery(document).ready(function($){
+    if (cms == 'joomla') {
+        setInterval(function () {
+            joomla_check();
+        }, 30000);
+    }
+    $("#passcodeForm").submit(function () {
+        showLoading();
+        var data = $("#passcodeForm").serialize();
+        data += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data, // serializes the form's elements.
+            dataType: 'json',
+            success: function (data) {
+                hideLoading();
+                if (data.status == true) {
+                    window.location = 'admin.php?page=' + data.page;
+                    window.location.reload;
+                } else {
+                    showDialogue("wrong passcode, try again", O_FAIL, O_FAIL);
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+
+
 	$("#configuraton-form").submit(function() {
 		showLoading();
 		var data = $("#configuraton-form").serialize();
@@ -353,8 +420,8 @@ jQuery(document).ready(function($){
                {
             	   if (data.status == 'SUCCESS')
             	   {
-            		   showLoading(data.result);
             		   hideLoading();
+                       showDialogue(data.result, data.status, O_OK);
                    }
             	   else
             	   {

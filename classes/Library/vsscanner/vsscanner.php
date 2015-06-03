@@ -59,15 +59,8 @@ class virusScanner {
 		}
 	}
 	private function setConfiguration() {
-		if (!isset($_SESSION['oseConfig']))
-		{
-			$config = oseFirewall::getConfiguration('vsscan');
-			$this->config = $_SESSION['oseConfig'] = (object)$config['data'];
-		}
-		else 
-		{
-			$this->config = $_SESSION['oseConfig'];
-		}
+		$config = oseFirewall::getConfiguration('vsscan');
+		$this->config = (object)$config['data'];
 	}
 	public function setFileExts()
 	{
@@ -214,7 +207,7 @@ class virusScanner {
 		}
 	}
 	private function getfromDB($filename, $type, $fileext) {
-		$query = "SELECT `id` " 
+		$query = "SELECT `id` "
 				."FROM ".$this->db->quoteTable($this->filestable)
 			    ." WHERE `filename` = ".$this->db->quoteValue($filename)
 			    ." AND `type` = ".$this->db->quoteValue($type)
@@ -295,7 +288,7 @@ class virusScanner {
 		$result = $this->db->query();
 		return $result;
 	}
-	public function vsScan($step) {
+	public function vsScan($step, $remote=false) {
 		if ($step==-3)
 		{
 			$this->cleanMalwareData ();
@@ -314,7 +307,10 @@ class virusScanner {
 		{
 			$result = $this->showScanningStatusMsg();
 		}
-		$this->db -> closeDBO(); 
+		if ($remote == false) {
+			$this->db->closeDBO();
+			$this->db->closeDBOFinal();
+		}
 		return $result;
 	}
 	protected function scanFiles () {
@@ -488,19 +484,23 @@ class virusScanner {
 		oseFirewall::loadJSON();
 		$conn = $this->getCurrentConnection();
 		if ($conn > $this->config->maxdbconn)
-		{	
-			$result = $this->getHoldingStatus ($type);
+		{
+			$result = $this->getHoldingStatus ($type, $conn);
 		}
-		else {
-			ini_set("display_errors", "on");
+		else
+		{
+			//ini_set("display_errors", "on");
 			oseFirewall::loadFiles();
 			$this->setPatterns ($type);
 			$result = $this->showScanningResultMsg ($type, $remote);
 		}
-		$this->db -> closeDBO();
+		if ($remote == false) {
+			$this->db->closeDBO();
+			$this->db->closeDBOFinal();
+		}
 		return $result;
 	}
-	private function getHoldingStatus ($type) {
+	private function getHoldingStatus ($type, $conn) {
 		$this->vsInfo = $this->getVsFiles($type);
 		$timeUsed = $this->timeDifference($_SESSION['start_time'], time());
 		$completed = $this->vsInfo->completed;
@@ -510,16 +510,14 @@ class virusScanner {
 		$return['completed'] = 'Queue';
 		$return['summary'] = (round($progress, 3)*100). '% ' .oLang::_get('COMPLETED');
 		$return['progress'] = "<b>Progress: ".($left)." files remaining.</b>. Time Used: ".$timeUsed." seconds<br/><br/>";
-		$return['last_file'] = oLang::_get('LAST_SCANNED_FILE').' '.$last_file;
+		$return['last_file'] = oLang::_get('CURRENT_DATABASE_CONNECTIONS').': '.$conn.'. '.oLang::_get('YOUR_MAX_DATABASE_CONNECTIONS').': '.$this->config->maxdbconn.'. '.oLang::_get('WAITING_DATABASE_CONNECTIONS');
 		$return['cont'] = ($left > 0 )?true:false;
 		$return['cpuload'] = $this->getCPULoad();;
 		$return['memory'] = $this->getMemoryUsed();
 		return $return;
 	}
 	private function getCurrentConnection () {
-		$query = "SHOW STATUS WHERE `variable_name` = 'Threads_connected'";
-		$this->db->setQuery($query);
-		$result = $this->db->loadResult();
+		$result = $this->db->getCurrentConnection ();
 		return $result['Value'];
 	}
 	private function showScanningResultMsg ($type, $remote) {
@@ -974,7 +972,7 @@ class virusScanner {
 		{
 			if ($step < 0)
 			{
-				$result = $this->vsscan($step);
+				$result = $this->vsscan($step, true);
 				$filePath = OSE_FWDATA.ODS."vsscanPath".ODS."dirList.json";
 				if (file_exists($filePath))
 				{
@@ -1017,6 +1015,8 @@ class virusScanner {
 				$contFileScan = 0;
 			}
 			$url = $this->getCrawbackURL ($key, $result->completed, $result ['step'], $type, $contFileScan);
+			$this->db->closeDBO();
+			$this->db->closeDBOFinal();
 			$this->sendRequestVS($url);
 		}
 		exit;	

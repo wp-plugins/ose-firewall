@@ -100,14 +100,14 @@ class oseFirewall extends oseFirewallBase {
 		
 		// Anti-Hacking Menu; 
 		$menu .= '<li ';
-		$menu .= (in_array($view, array('ose_fw_adrulesets', 'ose_fw_variables'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= (in_array($view, array('ose_fw_advancerulesets', 'ose_fw_variables'))) ? 'class="active dropdown"' : 'class="dropdown"';
 		$menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('PREMIUM_SERVICE') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Hacking Starts; 
 		$menu .= '<ul class="dropdown-menu">';
 		
 		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_adrulesets') ? 'class="active"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_adrulesets">' . oLang::_get('ADRULESETS'). '</a></li>';
+        $menu .= ($view == 'ose_fw_advancerulesets') ? 'class="active"' : '';
+        $menu .= '><a href="admin.php?page=ose_fw_advancerulesets">' . oLang::_get('ADRULESETS') . '</a></li>';
 
       	$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_vsscan') ? 'class="active"' : '';
@@ -115,8 +115,8 @@ class oseFirewall extends oseFirewallBase {
 		
 		
 		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_vsreport') ? 'class="active"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_vsreport">' . oLang::_get('VSREPORT'). '</a></li>';
+        $menu .= ($view == 'ose_fw_scanreport') ? 'class="active"' : '';
+        $menu .= '><a href="admin.php?page=ose_fw_scanreport">' . oLang::_get('VSREPORT') . '</a></li>';
 		
 		/*
 		$menu .= '<li ';
@@ -135,7 +135,11 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_fw_advancedbackup') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_advancedbackup">' . oLang::_get('ADVANCEDBACKUP') . '</a></li>';
-		
+
+        $menu .= '<li ';
+        $menu .= ($view == 'ose_fw_authentication') ? 'class="active"' : '';
+        $menu .= '><a href="admin.php?page=ose_fw_authentication">' . oLang::_get('AUTHENTICATION') . '</a></li>';
+
 		$menu .= '</ul>';
 		// SubMenu Anti-Hacking Ends;
 		$menu .= '</li>';
@@ -168,17 +172,18 @@ class oseFirewall extends oseFirewallBase {
 
         add_submenu_page('ose_firewall', ANTIVIRUS, ANTIVIRUS, 'manage_options', 'ose_fw_vsscan', 'oseFirewall::vsscan');
 		//add_submenu_page( 'ose_firewall', CLAMAV, CLAMAV, 'manage_options', 'ose_fw_clamav', 'oseFirewall::clamav' );
-		add_submenu_page( 'ose_firewall', VSREPORT, VSREPORT, 'manage_options', 'ose_fw_vsreport', 'oseFirewall::vsreport' );
+        add_submenu_page('ose_firewall', VSREPORT, VSREPORT, 'manage_options', 'ose_fw_scanreport', 'oseFirewall::vsreport');
 		add_submenu_page( 'ose_firewall', MANAGE_IPS, MANAGE_IPS, 'manage_options', 'ose_fw_manageips', 'oseFirewall::manageips' );
 		//add_submenu_page( 'ose_firewall', ADD_IPS, ADD_IPS, 'manage_options', 'ose_fw_addips', 'oseFirewall::ipform' );
 		add_submenu_page( 'ose_firewall', AUDIT_WEBSITE, AUDIT_WEBSITE, 'manage_options', 'ose_fw_audit', 'oseFirewall::audit' );
 		add_submenu_page( 'ose_firewall', FIREWALL_RULES, FIREWALL_RULES, 'manage_options', 'ose_fw_rulesets', 'oseFirewall::rulesets' );
 		add_submenu_page( 'ose_firewall', FIREWALL_CONFIGURATION, FIREWALL_CONFIGURATION, 'manage_options', 'ose_fw_bsconfig', 'oseFirewall::bsconfig' );
-		add_submenu_page( 'ose_firewall', ADRULESETS, ADRULESETS, 'manage_options', 'ose_fw_adrulesets', 'oseFirewall::advancerulesets' );
+        add_submenu_page('ose_firewall', ADRULESETS, ADRULESETS, 'manage_options', 'ose_fw_advancerulesets', 'oseFirewall::advancerulesets');
 		add_submenu_page( 'ose_firewall', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables' );
         add_submenu_page('ose_firewall', INSTALLATION, INSTALLATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration');
         add_submenu_page('ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup');
 
+        add_submenu_page('ose_firewall', AUTHENTICATION, AUTHENTICATION, 'manage_options', 'ose_fw_authentication', 'oseFirewall::authentication');
         add_submenu_page('ose_firewall', ADVANCEDBACKUP, ADVANCEDBACKUP, 'manage_options', 'ose_fw_advancedbackup', 'oseFirewall::advancedbackup');
         add_submenu_page('ose_firewall', PERMCONFIG, PERMCONFIG, 'manage_options', 'ose_fw_permconfig', 'oseFirewall::permconfig');
         add_submenu_page('ose_firewall', ADMINEMAILS, ADMINEMAILS, 'manage_options', 'ose_fw_adminemails', 'oseFirewall::adminemails');
@@ -188,7 +193,7 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_firewall', LOGIN, LOGIN, 'manage_options', 'ose_fw_login', 'oseFirewall::login' );
 		add_submenu_page( 'ose_firewall', SUBSCRIPTION, SUBSCRIPTION, 'manage_options', 'ose_fw_subscription', 'oseFirewall::subscription' );
 		//add_submenu_page( 'ose_firewall', VERSION_UPDATE, VERSION_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::versionupdate' );
-        add_submenu_page('ose_fw_configuration', AUTHENTICATION, AUTHENTICATION, 'manage_options', 'ose_fw_authentication', 'oseFirewall::authentication');
+        add_submenu_page('ose_firewall', AUTHENTICATION, AUTHENTICATION, 'manage_options', 'ose_fw_authentication', 'oseFirewall::authentication');
         add_submenu_page('ose_fw_configuration', SEO_CONFIGURATION, SEO_CONFIGURATION, 'manage_options', 'ose_fw_seoconfig', 'oseFirewall::seoconfig');
 		add_submenu_page( 'ose_fw_configuration', SCAN_CONFIGURATION, SCAN_CONFIGURATION, 'manage_options', 'ose_fw_scanconfig', 'oseFirewall::scanconfig' );
 		add_submenu_page( 'ose_fw_configuration', ANTIVIRUS_CONFIGURATION, ANTIVIRUS_CONFIGURATION, 'manage_options', 'ose_fw_avconfig', 'oseFirewall::avconfig' );
@@ -197,7 +202,13 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_fw_configuration', EMAIL_ADMIN, EMAIL_ADMIN, 'manage_options', 'ose_fw_emailadmin', 'oseFirewall::emailadmin' );
 		add_submenu_page( 'ose_fw_configuration', API_CONFIGURATION, API_CONFIGURATION, 'manage_options', 'ose_fw_apiconfig', 'oseFirewall::apiconfig' );
 		//add_submenu_page( 'ose_firewall', ANTI_VIRUS_DATABASE_UPDATE, ANTI_VIRUS_DATABASE_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::updateChecking' );
-	}
+        oseFirewall::callLibClass('oem', 'oem');
+        $oem = new CentroraOEM();
+        $oemCustomer = $oem->hasOEMCustomer();
+        if ($oemCustomer) {
+            add_submenu_page('ose_fw_configuration', OEM_PASSCODE, OEM_PASSCODE, 'manage_options', 'ose_fw_passcode', 'oseFirewall::passcode');
+        }
+    }
 	public static function getAjaxScript() {
 		//add_action('admin_head', 'oseFirewall::showAjaxHeader');
     }
@@ -303,7 +314,7 @@ class oseFirewall extends oseFirewallBase {
 		$url[]= 'admin.php?page=ose_fw_configuration';
 		$url[]= 'admin.php?page=ose_fw_scanconfig';
 		$url[]= 'admin.php?page=ose_fw_seoconfig';
-		$url[]= 'admin.php?page=ose_fw_adrulesets';
+        $url[] = 'admin.php?page=ose_fw_advancerulesets';
 		return $url; 
 	}
 	public static function getAdminEmail () {

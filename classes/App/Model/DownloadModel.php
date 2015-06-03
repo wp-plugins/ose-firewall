@@ -62,4 +62,9 @@ class DownloadModel extends BaseModel {
 		$panel = new panel();
 		return $panel ->getDomainCount ();
 	}
+    public function runScheduledBackup ($cloudbackuptype) {
+        oseFirewall::callLibClass('backup', 'oseBackup');
+        $oseBackupManager = new oseBackupManager();
+        $oseBackupManager ->ScheduledBackup ($cloudbackuptype);
+    }
 }

@@ -43,112 +43,118 @@ class oseFirewallAjax extends oseAjax{
 			self::$method(); 
 		}
 	}
+
+    public static function loadActionPasscode()
+    {
+        $actions = array('verify', 'check');
+        parent::loadActions($actions);
+    }
 	public static function loadActionManageips () {
-		$actions = array ('getACLIPMap', 'addips', 'removeips', 'removeAllIPs', 'blacklistIP', 'whitelistIP', 'monitorIP', 'updateHost', 'changeIPStatus', 'viewAttack', 'importcsv', 'exportcsv', 'downloadCSV', 'getLatestTraffic');
+        $actions = array('getACLIPMap', 'addips', 'removeips', 'removeAllIPs', 'blacklistIP', 'whitelistIP', 'monitorIP', 'updateHost', 'changeIPStatus', 'viewAttack', 'importcsv', 'exportcsv', 'downloadCSV', 'getLatestTraffic', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionDashboard () {
-        $actions = array('getCountryStat', 'getTrafficData', 'checkWebBrowsingStatus', 'getMalwareMap', 'getBackupList');
+        $actions = array('getCountryStat', 'getTrafficData', 'checkWebBrowsingStatus', 'getMalwareMap', 'getBackupList', 'check');
 		parent::loadActions($actions); 
 	}	
 	public static function loadActionRulesets () {
-		$actions = array ('getRulesets', 'changeRuleStatus');
+        $actions = array('getRulesets', 'changeRuleStatus', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionAdvancerulesets () {
-		$actions = array ('getRulesets', 'changeRuleStatus', 'checkAPI');
+        $actions = array('getRulesets', 'changeRuleStatus', 'checkAPI', 'check');
 		parent::loadActions($actions);
 	}
 	public static function loadActionSeoconfig () {
-		$actions = array ('getConfiguration', 'saveConfigSEO');
+        $actions = array('getConfiguration', 'saveConfigSEO', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanconfig () {
-        $actions = array('getConfiguration', 'saveConfigScan', 'showGoogleSecret');
+        $actions = array('getConfiguration', 'saveConfigScan', 'showGoogleSecret', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionSpamconfig () {
-		$actions = array ('getConfiguration', 'saveConfAddon');
+        $actions = array('getConfiguration', 'saveConfAddon', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionEmailconfig () {
-		$actions = array ('getEmails','getEmailParams','getEmail', 'saveemail');
+        $actions = array('getEmails', 'getEmailParams', 'getEmail', 'saveemail', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionEmailadmin () {
-		$actions = array ('getAdminEmailmap','getAdminUsers','getEmailList','addadminemailmap','deleteadminemailmap');
+        $actions = array('getAdminEmailmap', 'getAdminUsers', 'getEmailList', 'addadminemailmap', 'deleteadminemailmap', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionAvconfig () {
-		$actions = array ('getConfiguration', 'saveConfAV');
+        $actions = array('getConfiguration', 'saveConfAV', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVsscan () {
-		$actions = array ('initDatabase', 'vsscan', 'updatePatterns', 'checkScheduleScanning', 'getFileTree');
+        $actions = array('initDatabase', 'vsscan', 'updatePatterns', 'checkScheduleScanning', 'getFileTree', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanreport () {
-        $actions = array('getTypeList', 'getMalwareMap', 'viewfile', 'quarantinevs', 'bkcleanvs', 'deletevs', 'restorevs', 'batchqt', 'batchbkcl', 'batchrs', 'batchdl');
+        $actions = array('getTypeList', 'getMalwareMap', 'viewfile', 'quarantinevs', 'bkcleanvs', 'deletevs', 'restorevs', 'batchqt', 'batchbkcl', 'batchrs', 'batchdl', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVariables () {
-		$actions = array ('getVariables','addvariables','deletevariable','loadWordpressrules','loadJoomlarules','loadJSocialrules','changeVarStatus','clearvariables','scanvar','filtervar','ignorevar','deleteAllVariables');
+        $actions = array('getVariables', 'addvariables', 'deletevariable', 'loadWordpressrules', 'loadJoomlarules', 'loadJSocialrules', 'changeVarStatus', 'clearvariables', 'scanvar', 'filtervar', 'ignorevar', 'deleteAllVariables', 'check');
 		parent::loadActions($actions);
 	}
 	public static function loadActionVersionupdate () {
-		$actions = array ('createTables', 'saveUserInfo', 'changeUserInfo');
+        $actions = array('createTables', 'saveUserInfo', 'changeUserInfo', 'check');
 		parent::loadActions($actions);
 	}
 	public static function loadActionCountryblock () {
-		$actions = array ('downLoadTables' , 'createTables' , 'getCountryList' , 'changeCountryStatus' , 'blacklistCountry' , 'whitelistCountry', 'monitorCountry', 'changeAllCountry', 'deleteCountry', 'deleteAllCountry');
+        $actions = array('downLoadTables', 'createTables', 'getCountryList', 'changeCountryStatus', 'blacklistCountry', 'whitelistCountry', 'monitorCountry', 'changeAllCountry', 'deleteCountry', 'deleteAllCountry', 'check');
 		parent::loadActions($actions);
 	}
     public static function loadActionAdvancedbackup()
     {
-        $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropbox_upload', 'sendemail');
+        $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropbox_upload', 'sendemail', 'onedrive_upload', 'check');
         parent::loadActions($actions);
     }
 
     public static function loadActionAdminemails()
     {
-        $actions = array('saveDomain', 'saveAdmin', 'getAdminList', 'getDomain', 'changeStatus', 'deleteAdmin', 'saveEmailEditor');
+        $actions = array('saveDomain', 'saveAdmin', 'getAdminList', 'getDomain', 'changeStatus', 'deleteAdmin', 'saveEmailEditor', 'check');
         parent::loadActions($actions);
     }
     public static function loadActionAuthentication()
     {
-        $actions = array('oauth');
+        $actions = array('oauth', 'onedrive_logout', 'dropbox_logout', 'dropbox_init', 'check');
         parent::loadActions($actions);
     }
 	public static function loadActionBackup () {
-        $actions = array('backup', 'getBackupList', 'deleteBackup', 'sendemail');
+        $actions = array('backup', 'getBackupList', 'deleteBackup', 'sendemail', 'check');
 		parent::loadActions($actions);
 	}
 	public static function loadactionUninstall(){
-		$actions = array ('uninstallTables');
+        $actions = array('uninstallTables', 'check');
 		parent::loadActions($actions);
 	}	
 	public static function loadactionApiconfig(){
-		$actions = array ('saveConfigScan','getConfiguration');
+        $actions = array('saveConfigScan', 'getConfiguration', 'check');
 		parent::loadActions($actions);
 	}	
 	public static function loadActionLogin () {
-        $actions = array('validate', 'verifyKey', 'updateKey', 'createaccount', 'getNumbOfWebsite', 'addOEM');
+        $actions = array('validate', 'verifyKey', 'updateKey', 'createaccount', 'getNumbOfWebsite', 'addOEM', 'check');
 		parent::loadActions($actions);
 	}
 	public static function loadActionAudit () {
-		$actions = array ('createTables','changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables','getPHPConfig', 'getTrackingCode', 'saveTrackingCode', 'updateSignature');
+        $actions = array('createTables', 'changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables', 'getPHPConfig', 'getTrackingCode', 'saveTrackingCode', 'updateSignature', 'check', 'googleRot');
 		parent::loadActions($actions);
 	}
 	public static function loadActionSubscription () {
-		$actions = array ('getSubscription', 'getToken','linkSubscription','updateProfileID', 'logout', 'getPaymentAddress', 'addOrder');
+        $actions = array('getSubscription', 'getToken', 'linkSubscription', 'updateProfileID', 'logout', 'getPaymentAddress', 'addOrder', 'check');
 		parent::loadActions($actions);
 	}
 	public static function loadActionCronjobs () {
-		$actions = array ('saveCronConfig');
+        $actions = array('saveCronConfig', 'check');
 		parent::loadActions($actions);
 	}
 	public static function loadActionPermConfig () {
-		$actions = array ('getDirFileList','getFileTree','editperms');
+        $actions = array('getDirFileList', 'getFileTree', 'editperms', 'check');
 		parent::loadActions($actions);
 	}
 }

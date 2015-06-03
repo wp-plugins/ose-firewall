@@ -162,7 +162,11 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'advancedbackup') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=advancedbackup">' . oLang::_get('ADVANCEDBACKUP') . '</a></li>';
-		
+
+        $menu .= '<li ';
+        $menu .= ($view == 'authentication') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=authentication">' . oLang::_get('AUTHENTICATION') . '</a></li>';
+
 		$menu .= '</ul>';
 		
 		

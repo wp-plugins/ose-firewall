@@ -67,6 +67,43 @@ class DashboardModel extends BaseModel {
 		return $oseFirewallStat->getTrafficData();
 	}
 
+    public function getPageUrl($page)
+    {
+        $url = $_SERVER['HTTP_REFERER'];
+        $query = $_SERVER['QUERY_STRING'];
+        if (OSE_CMS == "wordpress") {
+            switch ($page) {
+                case 'ipmanage':
+                    $replace = "page=ose_fw_manageips";
+                    echo str_replace($query, $replace, $url);
+                    break;
+                case 'scanResult':
+                    $replace = "page=ose_fw_scanreport";
+                    echo str_replace($query, $replace, $url);
+                    break;
+                case 'backup':
+                    $replace = "page=ose_fw_backup";
+                    echo str_replace($query, $replace, $url);
+                    break;
+            }
+        } else {
+            $joomla = "view=dashboad";
+            switch ($page) {
+                case 'ipmanage':
+                    $replace = "view=manageips";
+                    echo str_replace($joomla, $replace, $url);
+                    break;
+                case 'scanResult':
+                    $replace = "view=vsreport";
+                    echo str_replace($joomla, $replace, $url);
+                    break;
+                case 'backup':
+                    $replace = "view=backup";
+                    echo str_replace($joomla, $replace, $url);
+                    break;
+            }
+        }
+    }
     public function getMalwareMap()
     {
         oseFirewall::callLibClass('vsscanstat', 'vsscanstat');

@@ -70,7 +70,7 @@ class oseFirewallAudit
 		}
 		else
 		{
-			$url = 'admin.php?page=ose_fw_adrulesets';
+            $url = 'admin.php?page=ose_fw_advancerulesets';
 		}
 		return $url;
 	}
@@ -208,7 +208,7 @@ class oseFirewallAudit
 		$return = '';
 		$oseFirewallStat = new oseFirewallStatPro();
 		$enabled = $oseFirewallStat->isGoogleScan ();
-		$action = ($print == true) ? '<a href="#" data-target="#seoConfigModal" data-toggle="modal" class="btn btn-danger btn-xs fx-button">Fix It</a>' : '';
+        $action = ($print == true) ? '<a href="javascript:void(0)" onclick="fixGoogleScan()" class="btn btn-danger btn-xs fx-button">Fix It</a>' : '';
 		if ($enabled == true)
 		{
 			$this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> '.oLang::_get('GOOGLE_IS_SCANNED').". ".$action."</li>";
@@ -551,7 +551,7 @@ class oseFirewallAudit
 		$config = oseFirewall::getConfigVars();
 		$template = str_replace("[report]", $report, $template);
 		$template = str_replace("[website]", $config->url, $template);
-		$template = str_replace("[web_url]", $config->url."/wp-admin/admin.php?page=ose_fw_adrulesets", $template);
+        $template = str_replace("[web_url]", $config->url . "/wp-admin/admin.php?page=ose_fw_advancerulesets", $template);
 		$status = $this->getSafeBrowsingStatus();
 		if (empty($status))
 		{

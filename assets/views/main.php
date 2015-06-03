@@ -28,23 +28,42 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 	die('Direct Access Not Allowed');
 }
 $this->model->loadRequest();
+
+
 $rubbish = oRequest::getVar('rubbish');
 if (!empty($rubbish)) {
     echo "<script>window.close();</script>";
 }
-$flag = get_class($this->model);
-if ($flag == "AdvancedbackupModel") {
-    $condition = $this->model->is_authorized();
+//session_destroy();
+oseFirewall::callLibClass('oem', 'oem');
+$oem = new CentroraOEM();
+$oemCustomer = $oem->hasOEMCustomer();
+if ($oemCustomer) {
+    $flag = get_class($this->model);
+    $strip = strtolower(str_replace('Model', '', $flag));
 
-    if ($condition == "fail") {
-        oseFirewall::authentication();
-    } else {
+    $filter = $this->model->oempasscode();
 
+    if ($filter == true) {
         $this->model->loadLocalscript();
         include(dirname(__FILE__) . '/' . $subview . '.php');
+    } else {
+
+        if ($flag == 'DashboardModel' || $flag == 'PasscodeModel') {
+            $this->model->loadLocalscript();
+            include(dirname(__FILE__) . '/' . $subview . '.php');
+        } else {
+            if (OSE_CMS == 'wordpress') {
+                $_SESSION['previouspage'] = 'ose_fw_' . $strip;
+                oseFirewall::passcode();
+            } else {
+                $wp_session = JFactory::getSession();
+            }
+
+        }
     }
 } else {
     $this->model->loadLocalscript();
     include(dirname(__FILE__) . '/' . $subview . '.php');
-}
+};
 ?>

@@ -1,6 +1,7 @@
 var controller ='dashboard';
 		    		
 jQuery(document).ready(function($){
+    $('#ipmange-speech-bubble').tipsy({gravity: 'sw', fallback: O_SPEECH_BUBBLE})
     var colours = $('body').data('appStart').getColors();
 	var seriesData = {};
 	$('#world-map').vectorMap({
@@ -94,24 +95,24 @@ jQuery(document).ready(function($){
 			}
 		},
         yaxis: {min: 0, max: 100},
-        xaxis: { show: true}
+        xaxis: {min: 0, show: true}
     };
 
 
     retrieveCountryData();
-    setInterval(function(){retrieveCountryData()}, 30000);
+    setInterval(function () {
+        retrieveCountryData()
+    }, 60000);
     retrieveTrafficData(options);
-    setInterval(function(){retrieveTrafficData(options)}, 10000);
+    setInterval(function () {
+        retrieveTrafficData(options)
+    }, 60000);
     retrieveHackingTraffic();
-    setInterval(function(){$('#IPsTable').dataTable().api().ajax.reload();}, 5000);
+    setInterval(function () {
+        $('#IPsTable').dataTable().api().ajax.reload();
+    }, 60000);
     retrieveScanningResult();
-    setInterval(function () {
-        $('#scanRecentResultTable').dataTable().api().ajax.reload();
-    }, 5000);
     retrieveBackupResult();
-    setInterval(function () {
-        $('#backupTable').dataTable().api().ajax.reload();
-    }, 5000);
     checkWebBrowsingStatus();
 });
 function retrieveCountryData() {

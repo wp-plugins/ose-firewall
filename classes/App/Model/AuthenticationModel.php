@@ -38,6 +38,7 @@ class AuthenticationModel extends BaseModel
     protected function loadLibrary()
     {
         oseFirewall::callLibClass('backup', 'oseBackup');
+        oseFirewall::callLibClass('backup/onedrive', 'onedrive');
     }
     public function loadLocalScript()
     {
@@ -56,6 +57,55 @@ class AuthenticationModel extends BaseModel
     {
         $backupManager = new oseBackupManager ();
         $return = $backupManager->oauth($type, $reload);
+        return $return;
+    }
+    public function dropBoxVerify(){
+        $oseBackupManager = new oseBackupManager();
+        $dropboxautho = $oseBackupManager->is_authorized();
+        if ($dropboxautho == 'fail'){
+            return false;
+        }elseif ($dropboxautho == 'ok'){
+            return true;
+        }
+    }
+
+    public function oneDriveVerify()
+    {
+        $oneDrive = new onedriveModelBup ();
+        $return = $oneDrive->isAuthenticated();
+        return $return;
+    }
+
+    public function oauthOneDrive()
+    {
+        $code = $this->getVar('code', null);
+        $oneDrive = new onedriveModelBup ();
+        if (!empty($code)) {
+            $return = $oneDrive->authorize($code);
+        } else {
+            $return = $oneDrive->getAuthorizationUrl();
+        }
+        echo $return;
+    }
+
+    public function  onedrive_logout()
+    {
+        $oneDrive = new onedriveModelBup ();
+        $return = $oneDrive->logout();
+        return $return;
+    }
+
+    public function dropbox_init()
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->is_authorized();
+        return $return;
+    }
+
+    public function dropbox_logout()
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->dropbox_logout();
         return $return;
     }
 }

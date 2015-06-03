@@ -197,6 +197,7 @@ $urls = oseFirewall::getDashboardURLs ();
 	</div>
 </div>
 <div id='fb-root'></div>
+
 <?php
 // \PHPBenchmark\Monitor::instance()->snapshot('Finish loading Centrora');
 ?>

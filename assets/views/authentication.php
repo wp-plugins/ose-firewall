@@ -24,10 +24,38 @@ if ($status == true) {
                         <div class="panel-controls-buttons">
 
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body row">
+                            <div class="col-xs-2">
+                                <?php
+                                $dropboxflag = $this->model->dropBoxVerify();
+                                if ($dropboxflag) { ?>
+                                    <button id="onedriveLogout" class="btn btn-warning"
+                                            onclick="dropbox_logout()"><?php oLang::_('O_DROPBOX_LOGOUT'); ?></button>
+                                <?php } else { ?>
+                                    <button id="dropbox_authorize" class="btn-primary btn"
+                                        onclick="initial_dropboxauth()"><?php oLang::_('O_AUTHENTICATION_DROPBOX'); ?></button>
+                                <?php } ?>
+                                <label class="fa fa-dropbox"></label>
+                            </div>
+                            <div class="col-xs-2">
+                                <?php
+                                if ($flag = $this->model->oneDriveVerify()) {
+                                    ?>
+                                    <button id="onedriveLogout" class="btn btn-warning"
+                                            onclick="onedrive_logout()"><?php oLang::_('O_ONEDRIVE_LOGOUT'); ?></button>
 
-                            <button id="dropbox_authorize" class="button-primary"
-                                    onclick="dropbox_oauth()"><?php oLang::_('O_AUTHENTICATION_DROPBOX'); ?></button>
+                                <?php } elseif (!empty($_GET['code'])) {
+                                    $this->model->oauthOneDrive();
+                                    ?>
+                                    <button id="onedriveLogout" class="btn btn-warning"
+                                            onclick="onedrive_logout()"><?php oLang::_('O_ONEDRIVE_LOGOUT'); ?></button>
+                                <?php } else { ?>
+                                    <a href="<?php $this->model->oauthOneDrive(); ?>"
+                                       class="btn-primary btn"><?php oLang::_('O_AUTHENTICATION_ONEDRIVE'); ?> </a>
+                                <?php }
+                                ?>
+                                <label class="fa fa-windows"></label>
+                            </div>
                         </div>
                     </div>
                     <!-- End .panel -->

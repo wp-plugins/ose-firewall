@@ -39,6 +39,13 @@ class AdvancedbackupController extends BackupController
         $this->model->returnJSON($result);
     }
 
+    public function action_onedrive_upload()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+        $result = $this->model->onedrive_upload($id);
+        $this->model->returnJSON($result);
+    }
     public function action_sendemail()
     {
         $this->model->loadRequest();

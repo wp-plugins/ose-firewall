@@ -399,22 +399,20 @@ function scanVirusSingInd(action, cpuData, memData, type, colours) {
 	});		
 }
 jQuery(document).ready(function($){
-    $('#customscan').click(function(){
-        $( '#FileTreeDisplay' ).html( '<ul class="filetree start"><li class="wait">' + 'Generating Tree...' + '<li></ul>' );
-        getfilelist( $('#FileTreeDisplay') , '' );
-        $( '#FileTreeDisplay' ).on('click', 'LI', function() { /* monitor the click event on foldericon */
-            var entry = $(this);
-            var current = $(this);
-            var id = 'id';
-            getfiletreedisplay (entry, current, id);
-            return false;
-        });
-        $( '#FileTreeDisplay' ).on('click', 'LI A', function() { /* monitor the click event on links */
-            var currentfolder;
-            var current = $(this);
-            currentfolder = current.attr('id')
-            $("#selected_file").val(currentfolder) ;
-            return false;
-        });
+    $( '#FileTreeDisplay' ).html( '<ul class="filetree start"><li class="wait">' + 'Generating Tree...' + '<li></ul>' );
+    getfilelist( $('#FileTreeDisplay') , '' );
+    $( '#FileTreeDisplay' ).on('click', 'LI', function() { /* monitor the click event on foldericon */
+        var entry = $(this);
+        var current = $(this);
+        var id = 'id';
+        getfiletreedisplay (entry, current, id);
+        return false;
+    });
+    $( '#FileTreeDisplay' ).on('click', 'LI A', function() { /* monitor the click event on links */
+        var currentfolder;
+        var current = $(this);
+        currentfolder = current.attr('id')
+        $("#selected_file").val(currentfolder) ;
+        return false;
     });
 });

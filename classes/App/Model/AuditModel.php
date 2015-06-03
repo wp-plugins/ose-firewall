@@ -366,4 +366,12 @@ class AuditModel extends BaseModel {
 		oseFirewall :: loadInstaller();
 		return $this->insertBasicRules();
 	}
+
+    public function googleRot()
+    {
+        $this->loadFirewallStat();
+        $oseFirewallStat = new oseFirewallStat();
+        $result = $oseFirewallStat->saveConfiguration('seo', array('scanGoogleBots' => 0));
+        return $result;
+    }
 }

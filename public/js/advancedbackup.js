@@ -18,25 +18,18 @@ jQuery(document).ready(function ($) {
                 d.centnounce = $('#centnounce').val();
             }
         },
-        columns: [{
-            "data": "ID"
-        }, {
-            "data": "time"
-        }, {
-            "data": "fileName"
-        }, {
-            "data": "fileType"
-        }, {
-            "data": null,
-            "defaultContent": "<div class='clickdropbox'><i class='fa fa-dropbox'></i></div>",
-            "orderable": false,
-            "searchable": false
-        }, {
-            "data": null,
-            "defaultContent": " ",
-            "orderable": false,
-            "searchable": false
-        }]
+        columns: [
+            { "data": "ID" },
+            { "data": "time" },
+            { "data": "fileName" },
+            { "data": "fileType" },
+            { "data": null,
+                "defaultContent": "<div class='clickdropbox'><a href='#' title='Dropbox' class='fa fa-dropbox'></a></div> " +
+                                "<div class='clickonedrive'><a href='#' title='OneDrive' class='fa fa-windows'></a></div>",
+                "orderable": false, "searchable": false },
+            { "data": null, "defaultContent": " ", "orderable": false, "searchable": false }
+        ],
+        order: [0, 'desc']
     });
     $('#advancedbackupTable tbody').on('click', 'div.clickdropbox', function () {
         var data = $('#advancedbackupTable').dataTable().api().row($(this).parents('tr')).data();
@@ -66,6 +59,37 @@ jQuery(document).ready(function ($) {
             }
         })
     });
+
+    $('#advancedbackupTable tbody').on('click', 'div.clickonedrive', function () {
+        showLoading();
+        var data = $('#advancedbackupTable').dataTable().api().row($(this).parents('tr')).data();
+        var id = data["ID"];
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'onedrive_upload',
+                task: 'onedrive_upload',
+                id: id,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                hideLoading();
+                if (data == true) {
+                    showDialogue(O_UPLOAD_ONEDRIVE, O_SUCCESS, O_OK);
+                    //sendemail(id);
+                }
+                else {
+                    showDialogue(O_UPLOAD_ERROR + "<pre>" + data['error']['message'] + "</pre>", O_FAIL, O_OK);
+                }
+            }
+        })
+    });
+
+
     $('#checkbox').prop('checked', false);
     $('#advancedbackupTable tbody').on('click', 'tr', function () {
         $(this).toggleClass('selected');
@@ -106,7 +130,7 @@ function sendemail(id) {
     })
 }
 function ajaxdeletebackup() {
-    jQuery(document).ready(function ($) {
+	jQuery(document).ready(function($) {
         ids = $('#advancedbackupTable').dataTable().api().rows('.selected').data();
         multiids = [];
         index = 0;
@@ -114,23 +138,22 @@ function ajaxdeletebackup() {
             multiids[index] = (ids[index]['ID']);
         }
         $.ajax({
-            type: "POST",
-            url: url,
-            data: {
-                option: option,
-                controller: controller,
-                action: 'deleteBackup',
-                task: 'deleteBackup',
-                id: multiids,
-                centnounce: $('#centnounce').val()
+            type : "POST",
+            url : url,
+            dataType : "json",
+            data : {
+                option : option,
+                controller : controller,
+                action : 'deleteBackup',
+                task : 'deleteBackup',
+                id : multiids,
+                centnounce : $('#centnounce').val()
             },
-            success: function (data) {
-                if (data == true) {
-                    showDialogue(O_BACKUP_DELE_DESC,
-                        O_SUCCESS, O_OK);
+            success : function(data) {
+                if (data == true ) {
+                    showDialogue(O_BACKUP_DELE_DESC, O_SUCCESS, O_OK);
                 } else {
-                    showDialogue(O_DELE_FAIL_DESC, O_FAIL,
-                        O_OK);
+                    showDialogue(O_DELE_FAIL_DESC, O_FAIL, O_OK);
                 }
                 $('#advancedbackupTable').dataTable().api().ajax.reload();
             }
@@ -138,57 +161,61 @@ function ajaxdeletebackup() {
     })
 }
 function deletebackup() {
-    jQuery(document).ready(function ($) {
+	jQuery(document).ready(function($) {
         ids = $('#advancedbackupTable').dataTable().api().rows('.selected').data();
         if (ids.length > 0) {
-            bootbox
-                .dialog({
-                    message: O_DELETE_CONFIRM_DESC,
-                    title: O_CONFIRM,
-                    buttons: {
-                        success: {
-                            label: O_YES,
-                            callback: function () {
-                                ajaxdeletebackup();
-                            }
-                        },
-                        main: {
-                            label: O_NO,
-                            callback: function () {
-                                this.close();
-                            }
+            bootbox.dialog({
+                message: O_DELETE_CONFIRM_DESC,
+                title: O_CONFIRM,
+                buttons : {
+                    success : {
+                        label: O_YES,
+                        callback : function() {
+                            ajaxdeletebackup();
+                        }
+                    },
+                    main : {
+                        label: O_NO,
+                        callback : function() {
+                            this.close();
                         }
                     }
-                });
+                }
+            });
         } else {
             showDialogue(O_SELECT_FIRST, O_NOTICE, O_NO);
         }
     })
 }
 function backup(backup_type, backup_to) {
-    showLoading();
-    jQuery(document).ready(function ($) {
+	showLoading('Please wait...');
+	jQuery(document).ready(function($) {
         $.ajax({
-            type: "POST",
-            url: url,
-            dataType: 'json',
-            data: {
-                option: option,
-                controller: controller,
-                action: 'backup',
-                task: 'backup',
-                backup_type: backup_type,
-                backup_to: backup_to,
-                centnounce: $('#centnounce').val()
+            type : "POST",
+            url : url,
+            dataType : 'json',
+            data : {
+                option : option,
+                controller : controller,
+                action : 'backup',
+                task : 'backup',
+                backup_type : backup_type,
+                backup_to : backup_to,
+                centnounce : $('#centnounce').val()
             },
-            success: function (data) {
+            success : function(data) {
                 hideLoading();
-                if (data.data == true) {
+                if (data.data == false) {
+                    showDialogue(O_BACKUP_FAIL, O_FAIL, O_OK);
+                } else {
                     showDialogue(O_BACKUP_SUCCESS, O_SUCCESS, O_OK);
                     $('#advancedbackupTable').dataTable().api().ajax.reload();
-                } else {
-                    showDialogue(O_BACKUP_FAIL, O_FAIL, O_OK);
                 }
+            },
+            error : function(request, textStatus, thrownError){
+                hideLoading();
+                showDialogue(O_BACKUP_ERROR + thrownError + "<br /><pre>" + request.responseText + "</pre>",
+                    O_ERROR, O_OK);
             }
         })
     })

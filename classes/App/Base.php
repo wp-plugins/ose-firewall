@@ -62,5 +62,12 @@ class Base extends \PHPixie\Controller {
 		$controller = str_replace ( 'Controller', '', $controller );
 		$this->view->subview = strtolower($controller);
 	}
-	
+    public function action_check()
+    {
+//        require_once(OSE_FWMODEL.ODS.'BaseModel.php');
+//        $basemodel = new BaseModel();
+        $result = $this->model->checkJoomlaSession();
+        print_r($result);
+        exit;
+    }
 }

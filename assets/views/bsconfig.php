@@ -44,15 +44,19 @@ $seoConfArray = $this->model->getConfiguration ( 'seo' );
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="devMode" class="col-sm-4 control-label"><?php oLang::_('O_DEVELOPMENT_MODE');?></label>
+                                        <label for="devMode"
+                                               class="col-sm-4 control-label"><?php oLang::_('FIREWALL'); ?></label>
 										<div class="col-sm-8">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="devMode"
+                                                       value="0" <?php echo (empty($confArray['data']['devMode'])) ? 'checked="checked"' : '' ?>><?php oLang::_('ON'); ?>
+                                            </label>
 												<label class="radio-inline">
-				                                     <input type="radio" name="devMode" value="1" <?php echo (!empty($confArray['data']['devMode']) && $confArray['data']['devMode']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
+                                                    <input type="radio" name="devMode"
+                                                           value="1" <?php echo (!empty($confArray['data']['devMode']) && $confArray['data']['devMode'] == true) ? 'checked="checked"' : '' ?>><?php oLang::_('OFF'); ?>
 				                                </label>
-				                                <label class="radio-inline">
-				                                     <input type="radio" name="devMode" value="0" <?php echo (empty($confArray['data']['devMode']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
-				                                </label>
-										</div>
+
+                                        </div>
 									</div>
 									<div class="form-group">
 										<label for="blockIP" class="col-sm-4 control-label"><?php oLang::_('O_FRONTEND_BLOCKING_MODE');?></label>

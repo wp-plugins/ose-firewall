@@ -299,6 +299,11 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		self::runController ('ConfigurationController', 'index');
 	}
+
+    public static function passcode()
+    {
+        self::runController('PasscodeController', 'index');
+    }
 	public static function seoconfig()
 	{
 		self::runController ('SeoconfigController', 'index');

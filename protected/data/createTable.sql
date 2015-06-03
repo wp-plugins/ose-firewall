@@ -355,7 +355,7 @@ ENGINE = InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `#__osefirewall_backup` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `date` DATETIME NOT NULL,
   `type` SMALLINT NOT NULL,
   `dbBackupPath` TEXT NULL,
   `fileBackupPath` TEXT NULL,

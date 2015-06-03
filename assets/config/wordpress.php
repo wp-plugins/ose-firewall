@@ -31,7 +31,8 @@ define('OSEAPPDIR', OSEFWDIR);
 define('OSE_FRAMEWORK', true);
 define('OSE_FRAMEWORKDIR', OSEFWDIR . 'vendor');
 define('OSE_FWURL',plugins_url('',dirname(dirname(__FILE__))));
-define('OSE_ABSPATH', dirname(dirname(dirname(OSEFWDIR)))); 
+define('OSE_ABSPATH', dirname(dirname(dirname(OSEFWDIR))));
+define('OSE_BACKUPPATH', dirname(dirname(OSEFWDIR)));
 
 $plugins = parse_url(WP_PLUGIN_URL);
 define('OSE_FWRELURL',$plugins['path'].'/ose-firewall');

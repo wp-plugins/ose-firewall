@@ -106,4 +106,12 @@ class AuditController extends \App\Base {
 			$this->model->aJaxReturn(true, 'ERROR', 'Error: Nothing to update in php.ini', false);
 		}
 	}
+
+    public function action_googleRot()
+    {
+
+        $result = $this->model->googleRot();
+
+        $this->model->aJaxReturn(true, 'SUCCESS', $result, false);
+    }
 }

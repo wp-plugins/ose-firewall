@@ -34,8 +34,10 @@ class oseAjax
 	{
 		$centrora = oseFirewall::runApp();
 		self::secureCheck();
-		$requst = $centrora->runController($_REQUEST['controller'].'Controller', $_REQUEST['task']);
-		$requst->execute();
+
+        $requst = $centrora->runController($_REQUEST['controller'] . 'Controller', $_REQUEST['task']);
+        $requst->execute();
+
 	}
 	private static function secureCheck()
 	{

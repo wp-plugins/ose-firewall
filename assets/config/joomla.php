@@ -33,6 +33,7 @@ define('OSE_FRAMEWORK', true);
 define('OSE_FRAMEWORKDIR', OSEFWDIR . 'vendor');
 define('OSE_FWURL',OURI::root().'components/com_ose_firewall/');
 define('OSE_ABSPATH', dirname(dirname(dirname(OSEFWDIR))));
+define('OSE_BACKUPPATH', dirname(dirname(OSEFWDIR)));
 
 define('OSE_FWRELURL',OURI::root().'components/com_ose_firewall/');
 define('OSE_FWASSETS', OSEFWDIR . ODS . 'assets');

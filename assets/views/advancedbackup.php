@@ -1,13 +1,8 @@
 <?php
 oseFirewall::checkDBReady();
-//$condition = $this->model->is_authorized();
-//if ($condition == 'ok') {
-//    oseFirewall::callLibClass ( 'backup', 'oseBackup' );
-//    $dropbox = new oseBackupManager ();
-//$account_info = $dropbox->get_account_info();
-//$used = round(($account_info->quota_info->quota - ($account_info->quota_info->normal + $account_info->quota_info->shared)) / 1073741824, 1);
-//$quota = round($account_info->quota_info->quota / 1073741824, 1);}
+$status = oseFirewall::checkSubscriptionStatus(false);
 $this->model->getNounce();
+if ($status == true) {
 ?>
 <div id="oseappcontainer">
     <div class="container">
@@ -28,15 +23,6 @@ $this->model->getNounce();
 
                         </div>
                         <div class="panel-controls-buttons">
-                            <!--                            <p class="bump">-->
-                            <!--                                --><?php //echo
-                            //                                    $account_info->display_name . ', ' .
-                            //                                    __('you have', 'wpbtd') . ' ' .
-                            //                                    $used .
-                            //                                    '<acronym title="' . __('Gigabyte', 'wpbtd') . '">GB</acronym> ' .
-                            //                                    __('of', 'wpbtd') . ' ' . $quota . 'GB (' . round(($used / $quota) * 100, 0) .
-                            //                                    '%) ' . __('free', 'wpbtd') ?>
-                            <!--                            </p>-->
                             <button class="btn btn-success btn-sm mr5 mb10" type="button"
                                     onClick="backup(2,1)"><?php oLang::_('O_BACKUP_BACKUPDB'); ?></button>
                             <button class="btn btn-success btn-sm mr5 mb10" type="button"
@@ -53,7 +39,7 @@ $this->model->getNounce();
                                     <th><?php oLang::_('O_BACKUPFILE_DATE'); ?></th>
                                     <th><?php oLang::_('O_BACKUPFILE_NAME'); ?></th>
                                     <th><?php oLang::_('O_BACKUPFILE_TYPE'); ?></th>
-                                    <th><?php oLang::_('O_BACKUP_DROPBOX'); ?></th>
+                                    <th><?php oLang::_('CLOUD_BACKUP_TYPE'); ?></th>
                                     <th><input id='checkbox' type='checkbox'></th>
                                 </tr>
                                 </thead>
@@ -63,7 +49,7 @@ $this->model->getNounce();
                                     <th><?php oLang::_('O_BACKUPFILE_DATE'); ?></th>
                                     <th><?php oLang::_('O_BACKUPFILE_NAME'); ?></th>
                                     <th><?php oLang::_('O_BACKUPFILE_TYPE'); ?></th>
-                                    <th><?php oLang::_('O_BACKUP_DROPBOX'); ?></th>
+                                    <th><?php oLang::_('CLOUD_BACKUP_TYPE'); ?></th>
                                     <th></th>
                                 </tr>
                                 </tfoot>
@@ -76,3 +62,24 @@ $this->model->getNounce();
         </div>
     </div>
 </div>
+<?php
+} else {
+    ?>
+    <div id="oseappcontainer">
+        <div class="container">
+            <?php
+            $this->model->showLogo();
+            $this->model->showHeader();
+            ?>
+            <div class="row">
+                <?php
+                $image = OSE_FWURL . '/public/images/screenshot-10.png';
+                include_once dirname(__FILE__) . '/calltoaction.php';
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+    $this->model->showFooterJs();
+}
+?>

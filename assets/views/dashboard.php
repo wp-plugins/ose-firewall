@@ -40,11 +40,13 @@ $hasOEMCustomer = CentroraOEM::hasOEMCustomer();
 					</div>
 			    </div>	
 			</div>
-            <div class="col-md-5">
+            <div id="ipmange-speech-bubble" class="col-md-5">
 			  <div class="bs-component">
 				    <div class="panel panel-teal">
 					  <div class="panel-heading">
-					    <h3 class="panel-title"><?php oLang::_('RECENT_HACKING_INFO'); ?></h3>
+                          <h3 class="panel-title"><a
+                                  href="<?php $this->model->getPageUrl('ipmanage'); ?>"><?php oLang::_('RECENT_HACKING_INFO'); ?></a>
+                          </h3>
 					  </div>
 					  <div class="panel-body">
 					  		<table class="table display" id="IPsTable">
@@ -65,7 +67,9 @@ $hasOEMCustomer = CentroraOEM::hasOEMCustomer();
                 <div class="bs-component">
                     <div class="panel panel-teal">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><?php oLang::_('RECENT_SCANNING_RESULT'); ?></h3>
+                            <h3 class="panel-title"><a
+                                    href="<?php $this->model->getPageUrl('scanResult'); ?>"><?php oLang::_('RECENT_SCANNING_RESULT'); ?></a>
+                            </h3>
                         </div>
                         <div class="panel-body">
                             <table class="table display" id="scanRecentResultTable">
@@ -86,7 +90,9 @@ $hasOEMCustomer = CentroraOEM::hasOEMCustomer();
                 <div class="bs-component">
                     <div class="panel panel-teal">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><?php oLang::_('RECENT_BACKUP'); ?></h3>
+                            <h3 class="panel-title"><a
+                                    href="<?php $this->model->getPageUrl('scanResult'); ?>"><?php oLang::_('RECENT_BACKUP'); ?></a>
+                            </h3>
                         </div>
                         <div class="panel-body">
                             <table class="table display" id="backupTable">

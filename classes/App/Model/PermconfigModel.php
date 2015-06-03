@@ -72,13 +72,13 @@ class PermconfigModel extends BaseModel
                 foreach ($it as $fileinfo) {
                     if (class_exists('SConfig')){
                         $newfileinfo = new SplFileInfo($fileinfo-> getRealPath() . ODS.'public_html');
-                        if (is_readable($newfileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) == '/')) {
+                        if (file_exists($newfileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) == '/')) {
                             $parentfolder = $fileinfo->getfilename() .'/';
                             $filearray['data'][] = self::getfileinfo($newfileinfo, $rootpath, $parentfolder);
-                        } elseif(!is_readable($newfileinfo-> getRealPath()) && is_readable($fileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) != '/')) {
+                        } elseif(!file_exists($newfileinfo-> getRealPath()) && file_exists($fileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) != '/')) {
                             $filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
                         }
-                    } elseif (is_readable($fileinfo-> getRealPath()) && !class_exists('SConfig')){
+                    } elseif (file_exists($fileinfo-> getRealPath()) && !class_exists('SConfig')){
                         $filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
                     }
                 }
@@ -157,10 +157,14 @@ class PermconfigModel extends BaseModel
         $resultarray['errors'] = '';
         /*for each item in $chmodpaths run the appropriate chmod*/
         foreach ($chmodpaths as $chmodpath){
+            $path = (str_replace("dir:", "",OSE_ABSPATH.$chmodpath));
+            if (strpos($chmodpath, 'dir:') !== false) {
+                $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::SELF_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD);
+            }
             switch ($recuroption) {
                 case "recurall":
                     if (strpos($chmodpath, 'dir:') !== false){
-                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace("dir:", "",OSE_ABSPATH.$chmodpath)));
                         foreach($it as $fileinfo) {
                             $ret = @chmod($fileinfo->getRealPath(), $chmodbinary);
                             if(!$ret) {$resultarray['errors'][] = str_replace(OSE_ABSPATH, "", $fileinfo->getRealPath());}
@@ -172,7 +176,6 @@ class PermconfigModel extends BaseModel
                     break;
                 case "recurfiles":
                     if (strpos($chmodpath, 'dir:') !== false){
-                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace("dir:", "",OSE_ABSPATH.$chmodpath)));
                         foreach($it as $fileinfo) {
                             if ($fileinfo->isFile()) {
                                 $ret = @chmod($fileinfo->getRealPath(), $chmodbinary);
@@ -186,7 +189,6 @@ class PermconfigModel extends BaseModel
                     break;
                 case "recurfolders":
                     if (strpos($chmodpath, 'dir:') !== false){
-                        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(str_replace("dir:", "", OSE_ABSPATH.$chmodpath)));
                         foreach ($it as $fileinfo) {
                             if ($fileinfo->isDir()) {
                                 $ret = @chmod($fileinfo->getRealPath(), $chmodbinary);
