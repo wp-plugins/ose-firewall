@@ -48,3 +48,46 @@ function changeItemStatus(id, status)
 {
 	AppChangeItemStatus(id, status, '#AdvrulesetsTable', 'changeRuleStatus');
 }
+
+function downloadRequest() {
+    jQuery(document).ready(function ($) {
+        showLoading();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'downloadRequest',
+                task: 'downloadRequest',
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                hideLoading();
+                downloadSQL(data.downloadKey);
+            }
+        });
+    });
+}
+function downloadSQL(downloadKey) {
+    jQuery(document).ready(function ($) {
+        showLoading();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'downloadSQL',
+                task: 'downloadSQL',
+                downloadKey: downloadKey,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                hideLoading();
+            }
+        });
+    });
+}

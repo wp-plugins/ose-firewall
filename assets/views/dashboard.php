@@ -91,7 +91,7 @@ $hasOEMCustomer = CentroraOEM::hasOEMCustomer();
                     <div class="panel panel-teal">
                         <div class="panel-heading">
                             <h3 class="panel-title"><a
-                                    href="<?php $this->model->getPageUrl('scanResult'); ?>"><?php oLang::_('RECENT_BACKUP'); ?></a>
+                                    href="<?php $this->model->getPageUrl('backup'); ?>"><?php oLang::_('RECENT_BACKUP'); ?></a>
                             </h3>
                         </div>
                         <div class="panel-body">

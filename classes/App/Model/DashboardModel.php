@@ -69,7 +69,7 @@ class DashboardModel extends BaseModel {
 
     public function getPageUrl($page)
     {
-        $url = $_SERVER['HTTP_REFERER'];
+        $url = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $query = $_SERVER['QUERY_STRING'];
         if (OSE_CMS == "wordpress") {
             switch ($page) {
@@ -87,7 +87,7 @@ class DashboardModel extends BaseModel {
                     break;
             }
         } else {
-            $joomla = "view=dashboad";
+            $joomla = "view=dashboard";
             switch ($page) {
                 case 'ipmanage':
                     $replace = "view=manageips";

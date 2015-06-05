@@ -211,14 +211,20 @@ class oseFirewallScanner {
 			switch($tmp[0])
 			{
 				case 'GET':
-					$this->replaced['original']['GET'][$tmp[1]] = $_GET[$tmp[1]];
-					$_GET[$tmp[1]] = $this->filterVariable($_GET[$tmp[1]], $rule_id);
-					$this->replaced['filtered']['GET'][$tmp[1]] = $_GET[$tmp[1]];
+					if (!empty($_GET[$tmp[1]]))
+					{	
+						$this->replaced['original']['GET'][$tmp[1]] = $_GET[$tmp[1]];
+						$_GET[$tmp[1]] = $this->filterVariable($_GET[$tmp[1]], $rule_id);
+						$this->replaced['filtered']['GET'][$tmp[1]] = $_GET[$tmp[1]];
+					}
 					break;
 				case 'POST':
-					$this->replaced['original']['POST'][$tmp[1]] = $_POST[$tmp[1]];
-					$_POST[$tmp[1]] = $this->filterVariable($_POST[$tmp[1]], $rule_id);
-					$this->replaced['filtered']['POST'][$tmp[1]] = $_POST[$tmp[1]];
+					if (!empty($_POST[$tmp[1]]))
+					{
+						$this->replaced['original']['POST'][$tmp[1]] = $_POST[$tmp[1]];
+						$_POST[$tmp[1]] = $this->filterVariable($_POST[$tmp[1]], $rule_id);
+						$this->replaced['filtered']['POST'][$tmp[1]] = $_POST[$tmp[1]];
+					}
 					break;
 			}
 		}

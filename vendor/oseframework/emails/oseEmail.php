@@ -264,7 +264,7 @@ class oseEmail
 		foreach ($receiptients as $receiptient)
 		{
 			$email->body = str_replace('[user]', $receiptient->name, $email->body);
-			$mailer = new PHPMailer();
+			$mailer = new cPHPMailer();
 			$mailer->From = $config_var->mailfrom;
 			$mailer->FromName = $config_var->fromname;
 			if ($config_var->mailer == 'smtp')
@@ -291,7 +291,7 @@ class oseEmail
 		foreach ($receiptients as $receiptient)
 		{
 			$email->body = str_replace('[user]', $receiptient->name, $email->body);
-			$mailer = new PHPMailer();
+			$mailer = new cPHPMailer();
 			$mailer->From = $config_var->mailfrom;
 			$mailer->FromName = $config_var->fromname;
 			if ($config_var->mailer == 'smtp')

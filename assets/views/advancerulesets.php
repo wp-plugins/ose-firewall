@@ -23,7 +23,9 @@ if ($status == true)
                                 </div>
                                 <div class="panel-controls">
                                 </div>
-                                <div class="panel-controls-buttons">	
+                                <div class="panel-controls-buttons">
+                                    <button class="btn btn-success btn-sm mr5 mb10" type="button"
+                                            onClick="downloadRequest()"><?php oLang::_('O_UPDATE_SIGNATURE'); ?></button>
 										<button data-target="#configModal" data-toggle="modal" class="btn btn-success btn-sm mr5 mb10" type="button" ><?php oLang::_('CONFIGURATION');?></button>
 							    </div>
                                 <div class="panel-body">

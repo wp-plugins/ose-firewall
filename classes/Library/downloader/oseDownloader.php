@@ -41,6 +41,34 @@ class oseDownloader
 		$this->url = $this->live_url."download=1&downloadKey=".$this->key;
 		oseFirewall::loadFiles(); 
 	}
+
+    public function switchRoad()
+    {
+        $db = oseFirewall::getDBO();
+        //  if($this->type == "ath") {
+        $table = '#__osefirewall_advancerules';
+        $query = "SELECT COUNT(id) as `count` FROM " . $db->QuoteTable($table);
+        $db->setQuery($query);
+        $result = $db->loadResult();
+        if ($result['count'] > 0) {
+            $return = $this->update();
+        } else {
+            $return = $this->download();
+        }
+//       } else {
+//           $table = '#__osefirewall_vspatterns';
+//           $query = "SELECT COUNT(id) as `count` FROM ". $db->QuoteTable($table);
+//           $db->setQuery($query);
+//           $result = $db->loadResult();
+//           if ($result['count'] > 0) {
+//               $return =  $this->update();
+//           } else {
+//               $return =  $this->download();
+//           }
+//       }
+        $db->closeDBO();
+        return $return;
+    }
 	public function download()
 	{
 		// No key No download;
@@ -96,7 +124,7 @@ class oseDownloader
 		$this->setPHPSetting (); 
 		// Set the target path to store data
 		$target = OSE_FWDATA.ODS.'tmp'.ODS.$key.".data";
-		$url_fopen = ini_get('allow_url_fopen'); 
+        $url_fopen = ini_get('allow_url_fopen');
 		if ($url_fopen == true)
 		{
 			$target = $this->downloadThroughFopen($url, $target);

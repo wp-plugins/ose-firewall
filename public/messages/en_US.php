@@ -671,4 +671,8 @@ define('VERIFY', 'Verify');
 define('AUTHENTICATION', 'Cloud Backup Authentication');
 define('AUTHENTICATION_TITLE', '<b>Third Party Authentication</b>');
 define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise Centrora Security to your prefered cloud service.');
+
+// Version 4.9.0
+define('O_UPDATE_SIGNATURE', 'Update Signature');
+
 ?>

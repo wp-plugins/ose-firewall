@@ -203,6 +203,17 @@ class panel
         $db->addData('insert', $this->configTable, '', '', $updateArray);
         $db->closeDBO();
     }
+
+    public function getSignature()
+    {
+        $this->live_url = "https://www.centrora.com/accountApi/update/getSignature";
+        $content = array();
+        $content['webkey'] = $this->getWebKey();
+        $content['remoteChecking'] = true;
+        $content['task'] = 'getSignatures';
+        $content['type'] = 'ath';
+        $this->sendRequest($content);
+    }
 	public function getSubscriptions() {
 		$this->live_url = "https://www.centrora.com/accountApi/api/getSubscriptions";
 		$content = array ();

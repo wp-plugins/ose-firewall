@@ -369,7 +369,7 @@ class oseFirewall extends oseFirewallBase {
 	public static function loadJSFile ($tag, $filename, $remote) {
 		if ($remote == false)
 		{
-			$url = OSE_FWURL.'/public/js/'.$filename;
+			$url = OSE_FWURL.'public/js/'.$filename;
 		}
 		else
 		{
@@ -383,7 +383,7 @@ class oseFirewall extends oseFirewallBase {
 	public static function loadLanguageJSFile ($tag, $filename, $remote) {
 		if ($remote == false)
 		{
-			$url = OSE_FWURL.'/public/messages/'.$filename;
+			$url = OSE_FWURL.'public/messages/'.$filename;
 		}
 		else
 		{
@@ -394,7 +394,7 @@ class oseFirewall extends oseFirewallBase {
 	public static function loadCSSFile ($tag, $filename, $remote) {
 		if ($remote == false)
 		{
-			$url = OSE_FWURL.'/public/css/'.$filename;
+			$url = OSE_FWURL.'public/css/'.$filename;
 		}
 		else
 		{

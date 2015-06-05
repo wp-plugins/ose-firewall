@@ -91,7 +91,8 @@ if ($status == true)
                                     <input type="hidden" name="task" value="saveCronConfig">
                                     <input type="hidden" name="schedule_type" value="1">
                                     <input type="hidden" name="cloudbackuptype" value="1">
-                                    <input type="hidden" name="enabled" id="vscanenabled"> <!--set in js for myonoffswitch-->
+                                    <input type="hidden" name="enabled" value="<?php echo ($vscansettings['enabled'] == 1
+                                        && isset($vscansettings['enabled']))? 1 : 0 ; ?>"id="vscanenabled"> <!--also set in js for myonoffswitch-->
                                 </form>
                             </div>
                         <div class="tab-pane" id="backupcron">
@@ -191,7 +192,8 @@ if ($status == true)
                                 <input type="hidden" name="action" value="saveCronConfig">
                                 <input type="hidden" name="task" value="saveCronConfig">
                                 <input type="hidden" name="schedule_type" value="2">
-                                <input type="hidden" name="enabled" id="backupenabled"> <!--set in js for myonoffswitch-->
+                                <input type="hidden" name="enabled" value = "<?php echo ($backupsettings['enabled'] == 1
+                                    && isset($backupsettings['enabled']))? 1 : 0; ?>" id="backupenabled"> <!--also set in js for myonoffswitch-->
                             </form>
                         </div>
                     </div>

@@ -110,4 +110,18 @@ class AdvancerulesetsModel extends BaseModel
 		$response = $downloader->getRemoteAPIKey();
 		return $response; 
 	}
+
+    public function downloadRequest()
+    {
+        oseFirewall::callLibClass('panel', 'panel');
+        $panel = new panel ();
+        return $panel->getSignature();
+    }
+
+    public function downloadSQL($downloadKey)
+    {
+        oseFirewall::callLibClass('downloader', 'oseDownloader');
+        $downloader = new oseDownloader($type = 'ath', $downloadKey);
+        return $downloader->switchRoad();
+    }
 }

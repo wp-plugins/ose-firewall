@@ -56,7 +56,20 @@ class AdvancerulesetsController extends \App\Base {
 		$result = $model -> checkAPI();
 		print_r($result); exit;    
 	}
-	
+
+    public function action_downloadRequest()
+    {
+        $result = $this->model->downloadRequest();
+        return $result;
+    }
+
+    public function action_downloadSQL()
+    {
+        $this->model->loadRequest();
+        $downloadKey = $this->model->getVar('downloadKey', null);
+        $result = $this->model->downloadSQL($downloadKey);
+        return $result;
+    }
 }	
 
 ?>
