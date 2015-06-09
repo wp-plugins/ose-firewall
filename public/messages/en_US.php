@@ -674,5 +674,5 @@ define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise Centrora 
 
 // Version 4.9.0
 define('O_UPDATE_SIGNATURE', 'Update Signature');
-
+define('RESTORE_EMAIL', 'Restore to default');
 ?>

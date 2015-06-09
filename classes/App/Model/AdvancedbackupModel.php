@@ -62,4 +62,33 @@ class AdvancedbackupModel extends BackupModel
         $return = $backupManager->sendemail($id, $type);
         return $return;
     }
+
+    /**
+     * @param $cloudbackuptype
+     * @return bool
+     */
+    public function checkCloudAuthentication ($cloudbackuptype){
+        switch($cloudbackuptype){
+            case 1:
+                return true;
+                break;
+            case 2:
+                oseFirewall::callLibClass('backup', 'oseBackup');
+                $oseBackupManager = new oseBackupManager();
+                $dropboxautho = $oseBackupManager->is_authorized();
+                if ($dropboxautho == 'fail'){
+                    return false;
+                }elseif ($dropboxautho == 'ok'){
+                    return true;
+                }
+                break;
+            case 3:
+                oseFirewall::callLibClass('backup/onedrive', 'onedrive');
+                $oneDrive = new onedriveModelBup ();
+                return $oneDrive->isAuthenticated();
+                break;
+            default:
+                return false;
+        }
+    }
 }

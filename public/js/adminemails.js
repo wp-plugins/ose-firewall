@@ -78,13 +78,38 @@ jQuery(document).ready(function ($) {
         return false; // avoid to execute the actual submit of the form.
     });
 });
-
+function restoreDefault() {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'restoreDefault',
+                task: 'restoreDefault',
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                if (data == true) {
+                    showDialogue(O_EMAILTEMP_SUCESSS, O_SUCCESS, O_OK);
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1300);
+                } else {
+                    showDialogue(
+                        O_EMAILTEMP_FAIL,
+                        O_FAIL, O_OK);
+                }
+            }
+        })
+    });
+}
 function emailEditor() {
     jQuery(document).ready(function ($) {
-
         document.getElementById('emailEditorForm').style.display = "block";
         document.getElementById('adminBody').style.display = "none";
-
     })
 }
 function addAdmin() {

@@ -38,17 +38,20 @@ $emailTmp = $this->model->getConfiguration('emailTemp');
                                                   class="form-control tinymce"><?php echo (empty($emailTmp['data']['emailTemplate'])) ? $this->model->readEmailTemp() : stripslashes($emailTmp['data']['emailTemplate']); ?></textarea>
                                     </div>
                                     <div class="col-sm-12">
-                                        <div>
+
+
                                             <button type="submit"
                                                     class="btn btn-success"><?php oLang::_('SAVE'); ?></button>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+
                                 <input type="hidden" name="option" value="com_ose_firewall">
                                 <input type="hidden" name="controller" value="adminemails">
                                 <input type="hidden" name="action" value="saveEmailEditor">
                                 <input type="hidden" name="task" value="saveEmailEditor">
                             </form>
+                           <button type="button" onclick="restoreDefault()" class="btn btn-success"><?php oLang::_('RESTORE_EMAIL'); ?></button>
+                            </div> </div>
                             <div class="panel-body" id="adminBody">
 
                             <table class="table display" id="adminTable">

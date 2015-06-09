@@ -3,7 +3,18 @@ var controller = "advancedbackup";
 var option = "com_ose_firewall";
 
 jQuery(document).ready(function ($) {
-
+    var dropboxlink = '';
+    var dropboxauth = $("#dropboxauth").val();
+    var onedrivelink = '';
+    var onedriveauth = $("#onedriveauth").val();
+    if (dropboxauth == 1) {
+        dropboxlink = "<div class='clickdropbox'><a href='#' title='Dropbox' class='fa fa-dropbox'></a></div> ";
+    }
+    if (onedriveauth == 1) {
+        onedrivelink = "<div class='clickonedrive'><a href='#' title='OneDrive' class='fa fa-windows'></a></div>";
+    } else if (onedriveauth == 0 && dropboxauth == 0) {
+        dropboxlink = O_AUTH_CLOUD;
+    }
     $('#advancedbackupTable').dataTable({
         processing: true,
         serverSide: true,
@@ -19,15 +30,16 @@ jQuery(document).ready(function ($) {
             }
         },
         columns: [
-            { "data": "ID" },
-            { "data": "time" },
-            { "data": "fileName" },
-            { "data": "fileType" },
-            { "data": null,
-                "defaultContent": "<div class='clickdropbox'><a href='#' title='Dropbox' class='fa fa-dropbox'></a></div> " +
-                                "<div class='clickonedrive'><a href='#' title='OneDrive' class='fa fa-windows'></a></div>",
-                "orderable": false, "searchable": false },
-            { "data": null, "defaultContent": " ", "orderable": false, "searchable": false }
+            {"data": "ID"},
+            {"data": "time"},
+            {"data": "fileName"},
+            {"data": "fileType"},
+            {
+                "data": null,
+                "defaultContent": dropboxlink + onedrivelink,
+                "orderable": false, "searchable": false
+            },
+            {"data": null, "defaultContent": " ", "orderable": false, "searchable": false}
         ],
         order: [0, 'desc']
     });
@@ -130,7 +142,7 @@ function sendemail(id) {
     })
 }
 function ajaxdeletebackup() {
-	jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         ids = $('#advancedbackupTable').dataTable().api().rows('.selected').data();
         multiids = [];
         index = 0;
@@ -138,19 +150,19 @@ function ajaxdeletebackup() {
             multiids[index] = (ids[index]['ID']);
         }
         $.ajax({
-            type : "POST",
-            url : url,
-            dataType : "json",
-            data : {
-                option : option,
-                controller : controller,
-                action : 'deleteBackup',
-                task : 'deleteBackup',
-                id : multiids,
-                centnounce : $('#centnounce').val()
+            type: "POST",
+            url: url,
+            dataType: "json",
+            data: {
+                option: option,
+                controller: controller,
+                action: 'deleteBackup',
+                task: 'deleteBackup',
+                id: multiids,
+                centnounce: $('#centnounce').val()
             },
-            success : function(data) {
-                if (data == true ) {
+            success: function (data) {
+                if (data == true) {
                     showDialogue(O_BACKUP_DELE_DESC, O_SUCCESS, O_OK);
                 } else {
                     showDialogue(O_DELE_FAIL_DESC, O_FAIL, O_OK);
@@ -161,22 +173,22 @@ function ajaxdeletebackup() {
     })
 }
 function deletebackup() {
-	jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         ids = $('#advancedbackupTable').dataTable().api().rows('.selected').data();
         if (ids.length > 0) {
             bootbox.dialog({
                 message: O_DELETE_CONFIRM_DESC,
                 title: O_CONFIRM,
-                buttons : {
-                    success : {
+                buttons: {
+                    success: {
                         label: O_YES,
-                        callback : function() {
+                        callback: function () {
                             ajaxdeletebackup();
                         }
                     },
-                    main : {
+                    main: {
                         label: O_NO,
-                        callback : function() {
+                        callback: function () {
                             this.close();
                         }
                     }
@@ -188,22 +200,22 @@ function deletebackup() {
     })
 }
 function backup(backup_type, backup_to) {
-	showLoading('Please wait...');
-	jQuery(document).ready(function($) {
+    showLoading('Please wait...');
+    jQuery(document).ready(function ($) {
         $.ajax({
-            type : "POST",
-            url : url,
-            dataType : 'json',
-            data : {
-                option : option,
-                controller : controller,
-                action : 'backup',
-                task : 'backup',
-                backup_type : backup_type,
-                backup_to : backup_to,
-                centnounce : $('#centnounce').val()
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'backup',
+                task: 'backup',
+                backup_type: backup_type,
+                backup_to: backup_to,
+                centnounce: $('#centnounce').val()
             },
-            success : function(data) {
+            success: function (data) {
                 hideLoading();
                 if (data.data == false) {
                     showDialogue(O_BACKUP_FAIL, O_FAIL, O_OK);
@@ -212,7 +224,7 @@ function backup(backup_type, backup_to) {
                     $('#advancedbackupTable').dataTable().api().ajax.reload();
                 }
             },
-            error : function(request, textStatus, thrownError){
+            error: function (request, textStatus, thrownError) {
                 hideLoading();
                 showDialogue(O_BACKUP_ERROR + thrownError + "<br /><pre>" + request.responseText + "</pre>",
                     O_ERROR, O_OK);

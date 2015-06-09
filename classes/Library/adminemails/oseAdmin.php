@@ -369,4 +369,13 @@ class oseAdminManager
         }
         return $content;
     }
+
+    public function restoreDefault()
+    {
+        $condition = array('type' => 'emailTemp');
+        $db = oseFirewall::getDBO();
+        $flag = $db->deleteRecordString($condition, $this->configTable);
+        $db->closeDBO();
+        return $flag;
+    }
 }

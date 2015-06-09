@@ -79,5 +79,8 @@ var O_DROPBOX_AUTHO = "Dropbox Authorisation";
 var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Click OK to get the 'Access Token' for Dropbox authorisation";
 var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Click OK to complete Dropbox authentication";
 
-
-
+//added from 4.9.0
+var O_EMAILTEMP_FAIL = "Email template cannot be restored, please try again";
+var O_AUTH_CLOUD = "Authenticate a cloud Service"//added from 4.8.0
+var O_EMAILTEMP_FAIL = "Email template cannot be restored as it is already default";
+var O_EMAILTEMP_SUCESSS = "Email template is restoring to default";

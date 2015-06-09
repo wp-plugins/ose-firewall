@@ -46,7 +46,13 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 			if (! empty ( $scanResult )) {
 				$status = $this->getBlockIP();
 				$this->addACLRule ( $status, $scanResult ['impact'] );
-				$this->detected = implode(",", $scanResult ['detcontent_content']);
+				if (is_array($scanResult ['detcontent_content'])) {
+					$this->detected = implode(",", $scanResult ['detcontent_content']);
+				}
+				else
+				{
+					$this->detected = $scanResult ['detcontent_content'];
+				}
 				if (!empty($scanResult['spamtype']) && $scanResult['spamtype'] =='email')
 				{	
 					$this->blockIP = 1 ;
@@ -130,6 +136,9 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 						if ($isJson == false) {
 							$attackContent = $value;
 							$attackVar = ($index==0)?"get.".$key:"post.".$key;
+							if (is_array($attackContent)) {
+								$attackContent = implode("|", $attackContent);
+							} 
 							preg_match_all ( "/".$option['filter']."/ims", $attackContent, $matched );
 							if(!empty($matched[0])){
 								$tmpResult = $this -> composeResult($option['impact'], $matched[0], $option['id'], $option['attacktype'], $attackVar, 'ad');

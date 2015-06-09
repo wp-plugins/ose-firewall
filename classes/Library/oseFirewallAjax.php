@@ -117,7 +117,7 @@ class oseFirewallAjax extends oseAjax{
 
     public static function loadActionAdminemails()
     {
-        $actions = array('saveDomain', 'saveAdmin', 'getAdminList', 'getDomain', 'changeStatus', 'deleteAdmin', 'saveEmailEditor', 'check');
+        $actions = array('saveDomain', 'saveAdmin', 'getAdminList', 'getDomain', 'changeStatus', 'deleteAdmin', 'saveEmailEditor', 'restoreDefault', 'check');
         parent::loadActions($actions);
     }
     public static function loadActionAuthentication()

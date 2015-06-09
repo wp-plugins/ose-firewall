@@ -447,7 +447,13 @@ class oseBackupManager {
 
         }
 		return str_replace ( $path_prefix, "", $filePath );*/
-        return pathinfo($filePath)['basename'];
+        $path = pathinfo($filePath);
+        if (!empty($path)) {
+        	return $path['basename'];
+        }
+        else {
+        	return null;
+        }
 	}
 	public static function downloadBackupFile () {
 		$id = oRequest :: getInt('id', 0);

@@ -113,4 +113,11 @@ class AdminemailsModel extends BaseModel
         $return = $adminManager->readEmailTemp();
         return $return;
     }
+
+    public function restoreDefault()
+    {
+        $adminManager = new oseAdminManager();
+        $return = $adminManager->restoreDefault();
+        return $return;
+    }
 }

@@ -72,8 +72,7 @@ class AdminemailsController extends \App\Base
     public function action_saveEmailEditor()
     {
         $this->model->loadRequest();
-        $content = $this->model->getVar('emailEditor', null);
-
+        $content = $_POST['emailEditor'];
         $result = $this->model->saveEmailEditor($content);
         $this->model->returnJSON($result);
     }
@@ -105,6 +104,12 @@ class AdminemailsController extends \App\Base
         $this->model->loadRequest();
         $id = $this->model->getVar('id', null);
         $result = $this->model->deleteAdmin($id);
+        $this->model->returnJSON($result);
+    }
+
+    public function action_restoreDefault()
+    {
+        $result = $this->model->restoreDefault();
         $this->model->returnJSON($result);
     }
 }

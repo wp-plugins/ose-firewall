@@ -577,12 +577,11 @@ class oseFirewallScanner {
 							  <meta name="description" content="' . $metaDescription . '" />
 							  <meta name="generator" content="' . $metaGenerator . '" />
 							  <title>' . $pageTitle . '</title>
-            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/bootstrap.min.css">
-            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/blockpage.css">
+            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . 'css/bootstrap.min.css">
+            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . 'css/blockpage.css">
                         <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/animate.css">
-						</head>
-						<script src="' . OSE_FWPUBLICURL . '/js/jquery-1.11.1.min.js"></script>
-						<script src="' . OSE_FWPUBLICURL . '/js/plugins/wow/wow.min.js"></script>
+						<script src="' . OSE_FWPUBLICURL . 'js/jquery-1.11.1.min.js"></script>
+						<script src="' . OSE_FWPUBLICURL . 'js/plugins/wow/wow.min.js"></script>
 						<script>new WOW().init();</script>
 						<script>
       jQuery(document).ready(function($){
@@ -611,6 +610,7 @@ class oseFirewallScanner {
 });
 })
                       </script>
+						</head>
 						<body>
 						' . $banbody . '
 						</body>
@@ -659,7 +659,6 @@ class oseFirewallScanner {
 							<link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/bootstrap.min.css">
             <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/blockpage.css">
                         <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/animate.css">
-						</head>
 						<script src="' . OSE_FWPUBLICURL . '/js/jquery-1.11.1.min.js"></script>
 						<script src="' . OSE_FWPUBLICURL . '/js/plugins/wow/wow.min.js"></script>
 						<script>new WOW().init();</script>
@@ -690,6 +689,7 @@ class oseFirewallScanner {
 });
 })
                       </script>
+						</head>
 						<body>
 								'.$banbody.'
 						</body>
@@ -880,7 +880,7 @@ class oseFirewallScanner {
 				elseif ($result->email->appears == 1 && $result->email->confidence >= (int)$this->sfs_confidence) // Was the result was registered
 				{
 					$spambot = true; // Check failed. Result indicates dangerous.
-					$return = $this->composeResult(100, oseJSON::encode($data["email"]), 1, 11, 'server.HTTP_CLIENT_IP') ;
+					$return = $this->composeResult(100, oseJSON::encode($data["email"]), 1, 11, 'server.HTTP_CLIENT_IP', 'bs') ;
 					$return['spamtype'] = 'email';
 					return $return;
 				} else {
@@ -911,7 +911,7 @@ class oseFirewallScanner {
 			elseif ($result->ip->appears == 1 && $result->ip->confidence >= (int)$this->sfs_confidence) // Was the result was registered
 			{
 				$spambot = true; // Check failed. Result indicates dangerous.
-				$return = $this->composeResult(100, oseJSON::encode($result->ip), 1, 11, 'server.HTTP_CLIENT_IP') ;
+				$return = $this->composeResult(100, oseJSON::encode($result->ip), 1, 11, 'server.HTTP_CLIENT_IP'.'bs') ;
 				return $return;
 			} else {
 				return false; // Check passed. Result returned safe.
@@ -992,7 +992,7 @@ class oseFirewallScanner {
 							$ext[1] = 'msword';
 						}
 						if ($ext[1] != $mimeType[1]) {
-							$return = $this->composeResult(100, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE') ;
+							$return = $this->composeResult(100, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE', 'bs') ;
 							$this->unlinkUPloadFiles();
 							return $return;
 						}
@@ -1069,13 +1069,17 @@ class oseFirewallScanner {
 		{
 			foreach ($_FILES['tmp_name'] as $filetmp)
 			{
-				unlink($filetmp);
+				if (file_exists($filetmp)) {
+					unlink($filetmp);
+				}
 				break;
 			}
 		}
 		else
 		{
-			unlink($_FILES['tmp_name']);
+			if (file_exists($_FILES['tmp_name'])) {
+				unlink($_FILES['tmp_name']);
+			}
 		}
 		unset ($_FILES);
 	}

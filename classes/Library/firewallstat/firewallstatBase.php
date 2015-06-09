@@ -329,7 +329,6 @@ class oseFirewallStatBase
 		$sql = convertViews::convertAclipmap($attrList);
 		$query = $sql.$where.$this->orderBy." ".$this->limitStm;
 		$this->db->setQuery($query);
-
 		$results = $this->db->loadObjectList();
 		return $results;		
 	}
@@ -361,11 +360,18 @@ class oseFirewallStatBase
 		$where = $this->db->implodeWhere($this->where);
 		// Get Records Query;
 		$return['data'] = $this->getAllRecords ($where);
-		$counts = $this->getAllCounts($where);
-		$return['recordsTotal'] = $counts['recordsTotal'];
-		$return['recordsFiltered'] = $counts['recordsFiltered'];
+        $return['recordsTotal'] = $this->getTotalIP();
+        $return['recordsFiltered'] = sizeof($return['data']);
 		return $return;
 	}
+
+    private function getTotalIP()
+    {
+        $db = oseFirewall::getDBO();
+        $result = $db->getTotalNumber('id', '#__osefirewall_acl');
+        $db->closeDBO();
+        return $result;
+    }
 	private function convertACLIPMap($results)
 	{
 		$i = 0;
@@ -513,6 +519,7 @@ class oseFirewallStatBase
 	public function removeACLRule($aclid)
 	{
 		$ids = $this->getIDSOnACLID($aclid);
+
 		if (!empty($ids['detattacktype_id']))
 		{
 			$result = $this->deleteAttackTypeID($aclid, $ids['detattacktype_id']);
@@ -531,7 +538,8 @@ class oseFirewallStatBase
 		}
 		if (!empty($ids['aclid']))
 		{
-			$result = $this->deleteACLID($aclid);
+            $this->deleteIPtableID($aclid);
+            $result = $this->deleteACLID($aclid);
 			if ($result == false)
 			{
 				return false;
@@ -539,6 +547,13 @@ class oseFirewallStatBase
 		}
 		return true;
 	}
+
+    private function deleteIPtableID($aclid)
+    {
+        $result = $this->db->deleteRecord(array('id' => $aclid), '#__osefirewall_iptable');
+        $this->db->closeDBO();
+        return $result;
+    }
 	public function removeAllACLRule () {
 		$result = true;
 		$result = $this->db->truncateTable('#__osefirewall_detected');
@@ -550,7 +565,6 @@ class oseFirewallStatBase
 	}
 	private function deleteACLID($aclid)
 	{
-		
 		$result = $this->db->deleteRecord(array('id' => $aclid), '#__osefirewall_acl');
 		$this->db->closeDBO ();
 		return $result;

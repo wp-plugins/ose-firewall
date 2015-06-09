@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 4.8.1
+Stable tag: 4.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.8.2 =
+* Enhancement: Improved firewall scanner class to remove miscellaneous warning errors
+* Enhancement: Improved firewall management codes to avoid duplicated IP showing in the IP management section
+* Enhancement: Added variable validation funciton on backup path variable in backup management section
+* Enhancement: Improved Dropbox and One Drive Authentication function
 
 = 4.8.1 =
 * Fixed: Schedule Tasks hour selector saving the wrong time on the server.
