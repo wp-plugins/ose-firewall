@@ -327,8 +327,9 @@ class oseFirewallStatBase
 		$attrList = array("`acl`.`id` AS `id`","`acl`.`country_code` AS `country_code`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`",
             "`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`vars`.`keyname` AS `keyname`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
 		$sql = convertViews::convertAclipmap($attrList);
-		$query = $sql.$where.' GROUP BY `acl`.`id`, `vars`.`id` '.$this->orderBy." ".$this->limitStm;
+		$query = $sql.$where.$this->orderBy." ".$this->limitStm;
 		$this->db->setQuery($query);
+
 		$results = $this->db->loadObjectList();
 		return $results;		
 	}
@@ -337,15 +338,13 @@ class oseFirewallStatBase
 		// Get total count
 		$attrList = array("COUNT(`acl`.`id`) AS count");
 		$sql = convertViews::convertAclipmap($attrList);
-		$query = $sql.$where.' GROUP BY `acl`.`id`, `vars`.`id` '.$this->orderBy." ";
-		$this->db->setQuery($query);
-		$results = $this->db->loadObjectList();
-		$return['recordsFiltered'] = count($results);
-		
-		$query = $sql.' GROUP BY `acl`.`id`, `vars`.`id` '.$this->orderBy." ";
-		$this->db->setQuery($query);
-		$results = $this->db->loadObjectList();
-		$return['recordsTotal'] = count($results);
+		$this->db->setQuery($sql);
+		$result = $this->db->loadObject();
+		$return['recordsTotal'] = $result->count;
+		// Get filter count
+		$this->db->setQuery($sql.$where);
+		$result = $this->db->loadObject();
+		$return['recordsFiltered'] = $result->count;
 		return $return;
 	}
 
@@ -363,8 +362,8 @@ class oseFirewallStatBase
 		// Get Records Query;
 		$return['data'] = $this->getAllRecords ($where);
 		$counts = $this->getAllCounts($where);
-        $return['recordsTotal'] = (int)$counts['recordsTotal'];
-        $return['recordsFiltered'] = (int)$counts['recordsFiltered'];
+		$return['recordsTotal'] = $counts['recordsTotal'];
+		$return['recordsFiltered'] = $counts['recordsFiltered'];
 		return $return;
 	}
     private function getTotalIP()
