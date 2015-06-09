@@ -44,7 +44,7 @@ define('OSE_FWCONTROLLERS', OSEFWDIR . 'protected' . ODS . 'controllers');
 define('OSE_FWMODEL', OSEFWDIR . 'classes' . ODS.'App' . ODS . 'Model');
 define('OSE_FWFRAMEWORK', OSEFWDIR . 'classes' . ODS.'Library'); 
 define('OSE_FWPUBLIC', OSEFWDIR . ODS . 'public');
-define('OSE_FWPUBLICURL', OSE_FWURL . ODS . 'public');
+define('OSE_FWPUBLICURL', OSE_FWURL . ODS . 'public/');
 define('OSE_FWLANGUAGE', OSE_FWPUBLIC . ODS.'messages');
 define('OSE_FWDATA', OSEFWDIR . 'protected' . ODS.'data'); 
 define('OSE_FWDATABACKUP',OSEFWDIR . 'protected' . ODS.'data'.ODS.'backup');
