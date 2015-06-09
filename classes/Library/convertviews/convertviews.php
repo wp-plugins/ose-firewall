@@ -35,7 +35,7 @@ class convertViews {
 				            LEFT JOIN `#__osefirewall_iptable` `ip` on((`acl`.`id` = `ip`.`acl_id`)))
 				           LEFT JOIN `#__osefirewall_detected` `detected` on((`acl`.`id` = `detected`.`acl_id`)))
 				         LEFT JOIN `#__osefirewall_detcontdetail` `detcontdetail` on((`detected`.`detattacktype_id` = `detcontdetail`.`detattacktype_id`)))
-				       LEFT JOIN `#__osefirewall_vars` `vars` on((`vars`.`id` = `detcontdetail`.`var_id`))) GROUP BY `acl`.`id`, `vars`.`id`";
+				       LEFT JOIN `#__osefirewall_vars` `vars` on((`vars`.`id` = `detcontdetail`.`var_id`))) ";
 		return $sql;
 	}
 	public static function convertAdminEmail($attrArray) {
