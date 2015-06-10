@@ -104,10 +104,11 @@ jQuery(document).ready(function($){
         		if (data.success== true && data.status!='Error' && data.webkey!='')
         		{
         			showLoading(data.message);
-        			updateKey (data.webkey, 0);
                     if (data.oem !== 0) {
                         addOEM(data.oem);
                     }
+                    updateKey(data.webkey, 0);
+
         		}
         		else
         		{

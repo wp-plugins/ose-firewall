@@ -675,4 +675,8 @@ define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise Centrora 
 // Version 4.9.0
 define('O_UPDATE_SIGNATURE', 'Update Signature');
 define('RESTORE_EMAIL', 'Restore to default');
+define('CHANGE_PASSCODE', 'Change passcode');
+define('OLD_PASSCODE', 'Input old passcode');
+define('NEW_PASSCODE', 'Input new passcode');
+define('CONFIRM_PASSCODE', 'Confirm new passcode');
 ?>

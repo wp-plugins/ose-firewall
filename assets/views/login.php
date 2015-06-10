@@ -7,7 +7,7 @@ $urls = oseFirewall::getDashboardURLs ();
 	<div class="container">
 	<?php
 	$this->model->showLogo ();
-	$this->model->showHeader ();
+    $this->model->showHeader();
 	?>
 	<div class="row">
 			<?php 

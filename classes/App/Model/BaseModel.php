@@ -298,6 +298,15 @@ class BaseModel  {
 		$result = $oseFirewallStat->saveConfiguration($type, $data);
 		$this -> confAjaxReturn ($result);
 	}
+
+    public function saveConfigurationNoExit($type, $data)
+    {
+        $this->loadFirewallStat();
+        $this->isConfigurationDBReady($data);
+        $oseFirewallStat = new oseFirewallStat();
+        $result = $oseFirewallStat->saveConfiguration($type, $data);
+        return $result;
+    }
 	public function confAjaxReturn ($result)
 	{
 		if ($result==true)

@@ -35,7 +35,6 @@ class LoginController extends \App\Base {
 		$email= $this->model->getVar('email', null);
 		$password= $this->model->getVar('password', null);
         $pattern = "/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-zA-Z]{2,6}(?:\.[a-zA-Z]{2})?)$/";
-
         $token = $this->getToken();
 		if (empty($website) || empty($email) || empty($password))
 		{

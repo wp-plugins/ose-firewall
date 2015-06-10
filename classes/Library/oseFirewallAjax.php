@@ -46,11 +46,11 @@ class oseFirewallAjax extends oseAjax{
 
     public static function loadActionPasscode()
     {
-        $actions = array('verify', 'check');
+        $actions = array('verify', 'changePasscode', 'check');
         parent::loadActions($actions);
     }
 	public static function loadActionManageips () {
-        $actions = array('getACLIPMap', 'addips', 'removeips', 'removeAllIPs', 'blacklistIP', 'whitelistIP', 'monitorIP', 'updateHost', 'changeIPStatus', 'viewAttack', 'importcsv', 'exportcsv', 'downloadCSV', 'getLatestTraffic', 'check');
+        $actions = array('getACLIPMap', 'addips', 'removeips', 'removeAllIPs', 'blacklistIP', 'whitelistIP', 'monitorIP', 'updateHost', 'changeIPStatus', 'viewAttack', 'importcsv', 'exportcsv', 'downloadCSV', 'getLatestTraffic', 'getKeyName', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionDashboard () {
