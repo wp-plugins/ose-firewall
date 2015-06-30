@@ -111,17 +111,17 @@ class AdvancerulesetsModel extends BaseModel
 		return $response; 
 	}
 
-    public function downloadRequest()
+    public function downloadRequest($type)
     {
         oseFirewall::callLibClass('panel', 'panel');
         $panel = new panel ();
-        return $panel->getSignature();
+        return $panel->getSignature($type);
     }
 
-    public function downloadSQL($downloadKey)
+    public function downloadSQL($type, $downloadKey)
     {
         oseFirewall::callLibClass('downloader', 'oseDownloader');
-        $downloader = new oseDownloader($type = 'ath', $downloadKey);
+        $downloader = new oseDownloader($type, $downloadKey);
         return $downloader->switchRoad();
     }
 }

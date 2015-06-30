@@ -61,7 +61,7 @@ var initPlotChart = function ($, data, cpu, colours) {
 			    aboveData: true,
                 color: colours.black,
 			    labelMargin: 15,
-			    axisMargin: 0, 
+                axisMargin: 0,
 			    borderWidth: 0,
 			    borderColor:null,
 			    minBorderMargin: 0,
@@ -86,6 +86,8 @@ var initPlotChart = function ($, data, cpu, colours) {
                     borderColor: colours.white
 	            }
 	        },
+        yaxis: {min: 0},
+        xaxis: {min: 0},
 	        legend: { position: "se" },
 	        colors: chartColours,
 	        shadowSize:1,
@@ -398,6 +400,53 @@ function scanVirusSingInd(action, cpuData, memData, type, colours) {
 	      });
 	});		
 }
+function downloadRequest(type) {
+    showLoading();
+    jQuery(document).ready(function ($) {
+        showLoading();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: "advancerulesets",
+                action: 'downloadRequest',
+                task: 'downloadRequest',
+                type: type,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                hideLoading();
+                downloadSQL(type, data.downloadKey);
+            }
+        });
+    });
+}
+function downloadSQL(type, downloadKey) {
+    jQuery(document).ready(function ($) {
+        showLoading();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: "advancerulesets",
+                action: 'downloadSQL',
+                task: 'downloadSQL',
+                type: type,
+                downloadKey: downloadKey,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                hideLoading();
+                showDialogue(O_VSPATTERN_UPDATE, O_SUCCESS, O_OK);
+            }
+        });
+    });
+}
+
 jQuery(document).ready(function($){
     $( '#FileTreeDisplay' ).html( '<ul class="filetree start"><li class="wait">' + 'Generating Tree...' + '<li></ul>' );
     getfilelist( $('#FileTreeDisplay') , '' );

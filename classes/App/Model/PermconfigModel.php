@@ -66,18 +66,29 @@ class PermconfigModel extends BaseModel
                     ( new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
                         RecursiveIteratorIterator::SELF_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
                     );
-            // keep to the base folder
+           // keep to the base folder
             $it->setMaxDepth(0);
             if ($it->valid()) {
                 foreach ($it as $fileinfo) {
                     if (class_exists('SConfig')){
-                        $newfileinfo = new SplFileInfo($fileinfo-> getRealPath() . ODS.'public_html');
-                        if (file_exists($newfileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) == '/')) {
-                            $parentfolder = $fileinfo->getfilename() .'/';
-                            $filearray['data'][] = self::getfileinfo($newfileinfo, $rootpath, $parentfolder);
-                        } elseif(!file_exists($newfileinfo-> getRealPath()) && file_exists($fileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) != '/')) {
-                            $filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
-                        }
+                    	if (file_exists($fileinfo-> getRealPath() . ODS.'public_html') || file_exists($fileinfo-> getRealPath() . ODS.'httpdocs'))
+                    	{
+	                    		if (file_exists($fileinfo-> getRealPath() . ODS.'public_html') ) {
+	                    	    	$newfileinfo = new SplFileInfo($fileinfo-> getRealPath() . ODS.'public_html');
+	                    		}
+	                    		else {
+	                    			$newfileinfo = new SplFileInfo($fileinfo-> getRealPath() . ODS.'httpdocs');
+	                    		}
+                    			if (file_exists($newfileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) == '/')) {
+	                            $parentfolder = $fileinfo->getfilename() .'/';
+	                            $filearray['data'][] = self::getfileinfo($newfileinfo, $rootpath, $parentfolder);
+	                        } elseif(!file_exists($newfileinfo-> getRealPath()) && file_exists($fileinfo-> getRealPath()) && (urldecode($_REQUEST['dir']) != '/')) {
+	                            $filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
+	                        }
+                    	}
+                    	else {
+                    		$filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
+                    	}
                     } elseif (file_exists($fileinfo-> getRealPath()) && !class_exists('SConfig')){
                         $filearray['data'][] = self::getfileinfo($fileinfo, $rootpath);
                     }

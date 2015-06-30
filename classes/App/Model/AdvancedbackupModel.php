@@ -43,19 +43,45 @@ class AdvancedbackupModel extends BackupModel
         return $return;
     }
 
-    public function onedrive_upload($id)
+    public function getOneDriveUploads($id)
     {
         $backupManager = new oseBackupManager ();
-        $return = $backupManager->onedrive_upload($id);
-        return $return;
-    }
-    public function dropbox_upload($id)
-    {
-        $backupManager = new oseBackupManager ();
-        $return = $backupManager->dropbox_upload($id);
+        $return = $backupManager->getOneDriveUploads($id);
         return $return;
     }
 
+    public function getGoogleDriveUploads($id)
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->getGoogleDriveUploads($id);
+        return $return;
+    }
+    public function oneDriveUpload($path, $folderID){
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->oneDriveUpload($path, $folderID);
+        return $return;
+    }
+
+    public function getDropboxUploads($id)
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->getDropboxUploads($id);
+        return $return;
+    }
+
+    public function dropboxUpload($path, $folder)
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->dropboxUpload($path, $folder);
+        return $return;
+    }
+
+    public function googledrive_upload($path, $folderID)
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->googledrive_upload($path, $folderID);
+        return $return;
+    }
     public function sendemail($id, $type)
     {
         $backupManager = new oseBackupManager ();
@@ -86,6 +112,11 @@ class AdvancedbackupModel extends BackupModel
                 oseFirewall::callLibClass('backup/onedrive', 'onedrive');
                 $oneDrive = new onedriveModelBup ();
                 return $oneDrive->isAuthenticated();
+                break;
+            case 4:
+                oseFirewall::callLibClass('backup/googledrive', 'googledrive');
+                $gDrive = new gdriveModelBup ();
+                return $gDrive->isAuthenticated();
                 break;
             default:
                 return false;

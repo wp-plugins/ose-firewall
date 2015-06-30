@@ -116,6 +116,23 @@ class SubscriptionModel extends LoginModel {
 		$trackingCode = $this->getTrackingCode();
 		return $panel->addOrder($subscriptionPlan, $payment_method, $country_id, $firstname, $lastname, $trackingCode);
 	}
+
+    public function goSubscribeUrl()
+    {
+        $config = $this->getConfiguration('panel');
+        $trackingCode = (!empty($config['data']['trackingCode'])) ? $config['data']['trackingCode'] : null;
+        if (class_exists('SConfig')) {
+            $product = 'st';
+            $redirect = 'http://www.centrora.com/store/centrora-subscriptions/suite-annual';
+        } else {
+            $product = 'pl';
+            $redirect = 'http://www.centrora.com/store/centrora-subscriptions';
+        }
+        if (!empty($trackingCode)) {
+            $redirect += '?tracking=' + $trackingCode;
+        }
+        echo $redirect;
+    }
 	public function getPaymentAddress () {
 		$panel = new panel ();
 		$return= $panel->getPaymentAddress();

@@ -164,7 +164,7 @@ define('SEO_CONFIGURATION_DESC','Konfigurationsseite für die  SEO-relevanten Ei
 define('CONFIG_SAVE_SUCCESS','Die Konfiguration wurde erfolgreich gespeichert.');
 define('CONFIG_SAVE_FAILED','Die Konfiguration konnte nicht gespeichert werden.');
 define('SCAN_CONFIGURATION','Firewall-Konfiguration');
-define('SCAN_CONFIGURATION_TITLE','Firewall-<span>Konfiguration</span>');
+define('SCAN_CONFIGURATION_TITLE', 'Firewall-Konfiguration');
 define('SCAN_CONFIGURATION_DESC','Konfigurationsseite für die Firewall-relevanten Einstellungen');
 define('ANTISPAM_CONFIGURATION','Anti-Spam-Konfiguration');
 define('ANTISPAM_CONFIGURATION_TITLE','OSE Anti-Spam™ <span>Konfiguration</span>');

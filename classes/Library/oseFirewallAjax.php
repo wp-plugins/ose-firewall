@@ -111,7 +111,7 @@ class oseFirewallAjax extends oseAjax{
 	}
     public static function loadActionAdvancedbackup()
     {
-        $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropbox_upload', 'sendemail', 'onedrive_upload', 'check');
+        $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropboxUpload', 'sendemail', 'oneDriveUpload', 'googledrive_upload', 'getGoogleDriveUploads', 'getOneDriveUploads', 'getDropboxUploads', 'check');
         parent::loadActions($actions);
     }
 
@@ -122,7 +122,7 @@ class oseFirewallAjax extends oseAjax{
     }
     public static function loadActionAuthentication()
     {
-        $actions = array('oauth', 'onedrive_logout', 'dropbox_logout', 'dropbox_init', 'check');
+        $actions = array('oauth', 'onedrive_logout', 'dropbox_logout', 'dropbox_init', 'googledrive_logout', 'check');
         parent::loadActions($actions);
     }
 	public static function loadActionBackup () {
@@ -142,7 +142,7 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions);
 	}
 	public static function loadActionAudit () {
-        $actions = array('createTables', 'changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables', 'getPHPConfig', 'getTrackingCode', 'saveTrackingCode', 'updateSignature', 'check', 'googleRot');
+        $actions = array('createTables', 'changeusername', 'checkSafebrowsing', 'updateSafebrowsingStatus', 'uninstallTables', 'getPHPConfig', 'saveTrackingCode', 'updateSignature', 'check', 'googleRot');
 		parent::loadActions($actions);
 	}
 	public static function loadActionSubscription () {

@@ -160,11 +160,11 @@ define('IP_RULE_DELETE_SUCCESS','The Access Control Rules for this IP / IP Range
 define('IP_RULE_DELETE_FAILED','The Access Control Rules for this IP / IP Range was removed unsuccessfully.');
 define('IP_RULE_CHANGED_SUCCESS','The Access Control Rules for this IP / IP Range has been changed successfully.');
 define('IP_RULE_CHANGED_FAILED','The Access Control Rules for this IP / IP Range has been changed unsuccessfully.');
-define('MANAGE_IPS','IP Management');
+define('MANAGE_IPS', 'IP Control');
 define('RULESETS','Firewall Configuration');
 define('MANAGERULESETS_TITLE','<b>Firewall</b> <span><b>Rules Fine-tuning</b></span>');
 define('MANAGERULESETS_DESC','Activate or deactivate specific firewall rules. You can change the security features of Centrora Plugin by deactivating specific security function. We highly recommend to activate all of the security functions to carry the best out of Centrora Security');
-define('ADRULESETS','Advance Firewall Settings');
+define('ADRULESETS', 'Advanced Firewall Rules Fine-tuning');
 define('MANAGE_AD_RULESETS_TITLE','<b>Advance Firewall Settings</b>');
 define('MANAGE_AD_RULESETS_DESC','The Panel to Manage your Advance Rules');
 define('ITEM_STATUS_CHANGED_SUCCESS','The status of the item has been changed successfully');
@@ -178,7 +178,7 @@ define('SEO_CONFIGURATION_DESC','Search Engine settings which protect your ranki
 define('CONFIG_SAVE_SUCCESS','The configuration was saved successfully.');
 define('CONFIG_SAVE_FAILED','The configuration was saved unsuccessfully.');
 define('SCAN_CONFIGURATION','Scanning Configuration');
-define('SCAN_CONFIGURATION_TITLE','<b>Firewall Scanning</b> <span><b>Configuration</b></span>');
+define('SCAN_CONFIGURATION_TITLE', 'Firewall Scanning Configuration');
 define('SCAN_CONFIGURATION_DESC','Connect to Centrora with API key and configure Firewall Scanning Settings');
 define('ANTISPAM_CONFIGURATION','Anti-Spam Configuration');
 define('ANTISPAM_CONFIGURATION_TITLE','<b>Anti-Spam</b> <span><b>Configuration</b></span>');
@@ -198,7 +198,7 @@ define('LINKAGE_DELETED_FAILED','The linkage was deleted unsuccessfully.');
 define('ANTIVIRUS_CONFIGURATION','Virus Scanner Configuration');
 define('ANTIVIRUS_CONFIGURATION_TITLE','<b>Virus Scanner</b> <span><b>Configuration</b></span>');
 define('ANTIVIRUS_CONFIGURATION_DESC','Configure the settings for Virus Scanner, control file extension to be scanned and limit the size of scanning files');
-define('ANTIVIRUS','Virus Scanner');
+define('ANTIVIRUS', 'Scan Malware');
 define('ANTIVIRUS_TITLE','<b>Virus</b> <span><b>Scanner</b></span>');
 define('ANTIVIRUS_DESC','Virus Scanner is a powerful malware detector, it acts like an antivirus but is more powerful than a antivirus. It scans through every single files on your server or any specific path of files for virus, malware, spam, malicious codes, SQL injection, security vulnerabilities etc.');
 define('LAST_SCANNED','Last scanned folder: ');
@@ -247,12 +247,12 @@ define('GEONOTREADY', 'Please install GeoIP Country List to enable country block
 define('COUNTRYBLOCK_TITLE', '<b>Country</b> <span><b>Blocking</b></span>');
 define('COUNTRYBLOCK_DESC','The Panel to Block IPs from countries');
 define('COUNTRYBLOCK', 'Country Blocking');
-define('BACKUP', 'Backup');
-define('ADVANCEDBACKUP', 'Advanced Backup');
+define('BACKUP', 'Backup List');
+define('ADVANCEDBACKUP', 'Cloud Backup');
 define('ADMINEMAILS_TITLE', '<b>Administrator Management</b>');
 define('ADMINEMAILS_DESC', 'You can centrally manage your administrator and domain addresses here');
-define('ADMINEMAILS', 'Administrator Management');
-define('BACKUP_MANAGER', 'Backup Management');
+define('ADMINEMAILS', 'Manage Administrators');
+define('BACKUP_MANAGER', 'Backup List');
 define('BACKUP_TITLE', '<b>Backup Management</b>');
 define('BACKUP_DESC', 'You can centrally manage your database and files backup here');
 define('BACKUP_FILES', 'files have been backed up');
@@ -456,14 +456,11 @@ define('O_SCANREPORT_DELETE', 'Delete');
 define('O_BACKUP_BACKUPDB', 'Back Up Database');
 define('O_BACKUP_BACKUPFILE', 'Back Up Files');
 define('O_BACKUP_DELETEBACKUPFILE', 'Delete');
-
-define('O_AUTHENTICATION_DROPBOX', 'Dropbox Authentication');
-define('O_AUTHENTICATION_GOOGLEDRIVE', 'GoogleDrive Authentication');
 define('O_AUTHENTICATION_CONTINUE', 'Continue');
 
 
 define('SECURITY_MANAGEMENT','Security Management');
-define('VARIABLES_MANAGEMENT','Variables Management');
+define('VARIABLES_MANAGEMENT', 'Variables List');
 define('PREMIUM_SERVICE','Premium Service');
 
 define('O_DEVELOPMENT_MODE','Development Mode');
@@ -499,7 +496,7 @@ define('RECENT_SCANNING_RESULT', 'Recent scanning result');
 define('RECENT_BACKUP', 'Recent backup');
 define('PLEASE_ENTER_REQUIRED_INFO','Please enter the required information.');
 define('MY_PREMIUM_SERVICE','Activate My Premium Service');
-define('INSTALLATION','Installation');
+define('INSTALLATION', 'Install/Uninstall');
 define('INSTALLDB','Install Database Tables');
 define('INSTALLDB_INTRO','Install the database created by Centrora Security from your website');
 define('UNINSTALLNOW','Uninstall Now');
@@ -546,10 +543,10 @@ define('FILE_CONTENT', 'File Content');
 define('O_CUSTOM_BAN_PAGE_URL', 'Custom Ban Page URL');
 define('SUCCESS', 'Successful');
 define('SUCCESS_LOGOUT', 'Successful logged out');
-define('FIREWALL_RULES','Firewall Rules Fine-tuning');
+define('FIREWALL_RULES', 'Basic Firewall Rules Fine-tuning');
 define('FIREWALL_CONFIGURATION','Firewall Configuration');
 define('FIREWALL_CONFIGURATION_DESC','This is the page that you can change the settings of Centrora Firewall.');
-define('CRONJOBS','Scheduled Tasks');
+define('CRONJOBS', 'Schedule Tasks');
 define('CRONJOBS_TITLE','Scheduled Tasks');
 define('CRONJOBS_DESC','Set up a scheduled task to automatically run at a specified day(s) and time. The time is based on the time of your system.');
 define('CRONJOBS_LONG','Select the time and day(s) for Virus Scanner to run.');
@@ -565,7 +562,7 @@ define('ACTIVATION_CODE_EMPTY', 'Activation code cannot be empty');
 define('MAX_DB_CONN', 'Maximum Database Connection');
 
 // Version 4.4.0
-define('PERMCONFIG', 'File/Folder Permissions Configuration');
+define('PERMCONFIG', 'Permission Control');
 define('PERMCONFIG_DESC', 'Manage your server\'s  files & folders permissions configuration');
 define('PERMCONFIGFORM_DESC', 'Please select the new attributes for the selected.');
 define('PERMCONFIGFORM_NB', '<h5><small><b>NB: </b>Generally used permissions: Files 0644 (drw-r--r--) and Folders 0755 (drwxr-xr-x) </small></h5>');
@@ -673,10 +670,23 @@ define('AUTHENTICATION_TITLE', '<b>Third Party Authentication</b>');
 define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise Centrora Security to your prefered cloud service.');
 
 // Version 4.9.0
-define('O_UPDATE_SIGNATURE', 'Update Signature');
+define('O_UPDATE_SIGNATURE', 'Update Firewall Signature');
+define('O_UPDATE_VIRUS_SIGNATURE', 'Update Virus Signature');
 define('RESTORE_EMAIL', 'Restore to default');
 define('CHANGE_PASSCODE', 'Change passcode');
 define('OLD_PASSCODE', 'Input old passcode');
 define('NEW_PASSCODE', 'Input new passcode');
 define('CONFIRM_PASSCODE', 'Confirm new passcode');
+define('VSSCAN_AND_BACKUP', 'Virus Scan & Backups');
+define('CENTRORA_SETTINGS', 'Centrora Security Settings');
+define('MY_ACCOUNT', 'My Account');
+define('LOGIN_OR_SUBSCIRPTION', 'Login/Subscription');
+define('O_GOOGLEDRIVE_LOGOUT', 'Google Drive Logout');
+define('O_AUTHENTICATION_GOOGLEDRIVE', 'GoogleDrive Authentication');
+define('O_AUTHENTICATION_DROPBOX', 'Dropbox Authentication');
+define('O_BACKUP', 'Backup');
+define('ADMINISTRATION', 'System Menu');
+define('FILE_PERMISSION', 'File Permission');
+define('O_BACKUP_GOOGLEDRIVE', 'GoogleDrive');
+
 ?>

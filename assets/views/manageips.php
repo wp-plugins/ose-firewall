@@ -175,7 +175,6 @@ $this->model->getNounce ();
 												<th><?php oLang::_('O_IP_RULE_TITLE'); ?></th>
 												<th><?php oLang::_('O_RISK_SCORE'); ?></th>
 												<th><?php oLang::_('O_START_IP'); ?></th>
-                                                <th><?php oLang::_('O_VARIABLE'); ?></th>
 												<th><?php oLang::_('O_STATUS'); ?></th>
 												<th><?php oLang::_('O_VISITS'); ?></th>
 												<th><?php oLang::_('O_VIEWDETAIL'); ?></th>
@@ -190,7 +189,6 @@ $this->model->getNounce ();
 												<th><?php oLang::_('O_IP_RULE_TITLE'); ?></th>
 												<th><?php oLang::_('O_RISK_SCORE'); ?></th>
 												<th><?php oLang::_('O_START_IP'); ?></th>
-                                                <th><?php oLang::_('O_VARIABLE'); ?></th>
 												<th><?php oLang::_('O_STATUS'); ?></th>
 												<th><?php oLang::_('O_VISITS'); ?></th>
 												<th><?php oLang::_('O_VIEWDETAIL'); ?></th>

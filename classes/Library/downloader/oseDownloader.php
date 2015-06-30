@@ -45,27 +45,27 @@ class oseDownloader
     public function switchRoad()
     {
         $db = oseFirewall::getDBO();
-        //  if($this->type == "ath") {
-        $table = '#__osefirewall_advancerules';
-        $query = "SELECT COUNT(id) as `count` FROM " . $db->QuoteTable($table);
-        $db->setQuery($query);
-        $result = $db->loadResult();
-        if ($result['count'] > 0) {
-            $return = $this->update();
+        if ($this->type == "ath") {
+	        $table = '#__osefirewall_advancerules';
+	        $query = "SELECT COUNT(id) as `count` FROM " . $db->QuoteTable($table);
+	        $db->setQuery($query);
+	        $result = $db->loadResult();
+	        if ($result['count'] > 0) {
+	            $return = $this->update();
+	        } else {
+	            $return = $this->download();
+	        }
         } else {
-            $return = $this->download();
+            $table = '#__osefirewall_vspatterns';
+            $query = "SELECT COUNT(id) as `count` FROM " . $db->QuoteTable($table);
+            $db->setQuery($query);
+            $result = $db->loadResult();
+            if ($result['count'] > 0) {
+                $return = $this->update();
+            } else {
+                $return = $this->download();
+            }
         }
-//       } else {
-//           $table = '#__osefirewall_vspatterns';
-//           $query = "SELECT COUNT(id) as `count` FROM ". $db->QuoteTable($table);
-//           $db->setQuery($query);
-//           $result = $db->loadResult();
-//           if ($result['count'] > 0) {
-//               $return =  $this->update();
-//           } else {
-//               $return =  $this->download();
-//           }
-//       }
         $db->closeDBO();
         return $return;
     }
@@ -166,8 +166,8 @@ class oseDownloader
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		$contents = curl_exec($curl);
 		curl_close($curl);
-		$handle = is_int(file_put_contents($target, $contents)) ? true : false;
-		return $target;
+		$return = (file_put_contents($target, $contents)!= false)? $target : false;
+		return $return;
 	}
 	public function updateVersion ($type, $version) {
 		$db = oseFirewall::getDBO ();

@@ -49,7 +49,7 @@ function changeItemStatus(id, status)
 	AppChangeItemStatus(id, status, '#AdvrulesetsTable', 'changeRuleStatus');
 }
 
-function downloadRequest() {
+function downloadRequest(type) {
     jQuery(document).ready(function ($) {
         showLoading();
         $.ajax({
@@ -61,16 +61,17 @@ function downloadRequest() {
                 controller: controller,
                 action: 'downloadRequest',
                 task: 'downloadRequest',
+                type: type,
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
                 hideLoading();
-                downloadSQL(data.downloadKey);
+                downloadSQL(type, data.downloadKey);
             }
         });
     });
 }
-function downloadSQL(downloadKey) {
+function downloadSQL(type, downloadKey) {
     jQuery(document).ready(function ($) {
         showLoading();
         $.ajax({
@@ -82,11 +83,13 @@ function downloadSQL(downloadKey) {
                 controller: controller,
                 action: 'downloadSQL',
                 task: 'downloadSQL',
+                type: type,
                 downloadKey: downloadKey,
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
                 hideLoading();
+                $('#AdvrulesetsTable').dataTable().api().ajax.reload();
             }
         });
     });

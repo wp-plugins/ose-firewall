@@ -153,10 +153,10 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 	private function getScanOptions() {
 		$query = "SELECT * FROM `#__osefirewall_basicrules` WHERE `action` = 1";
 		$this->db->setQuery ( $query );
-		$results = $this->db->loadObjectList ();
+		$results = $this->db->loadArrayList ();
 		$return = array ();
 		foreach ( $results as $result ) {
-			$return [strtolower ( $result -> rule )] = true;
+			$return [strtolower ( $result['rule'])] = true;
 		}
 		return $return;
 	}

@@ -198,4 +198,11 @@ class ManageipsModel extends BaseModel
         $oseFirewallStat = new oseFirewallStat();
         $oseFirewallStat->downloadcsv($filename);
     }
- }
+
+    public function getKeyName()
+    {
+        $oseFirewallStat = new oseFirewallStat();
+        $return = $oseFirewallStat->getKeyName();
+        return $return;
+    }
+}

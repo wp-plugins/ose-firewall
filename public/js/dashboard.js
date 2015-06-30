@@ -234,7 +234,7 @@ function retrieveScanningResult() {
                 {"data": "file_id"},
                 {"data": "filename"},
                 {"data": "checked"},
-                {"data": "confidence"},
+                {"data": "confidence", width: '35%'},
             ]
         });
     });
@@ -266,7 +266,7 @@ function retrieveBackupResult() {
                 {"data": "ID"},
                 {"data": "time"},
                 {"data": "fileName"},
-                {"data": "fileType"}
+                {"data": "fileType", width: '30%'}
             ]
         });
     });

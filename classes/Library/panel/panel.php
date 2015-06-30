@@ -192,26 +192,14 @@ class panel
 		return $webkey;
 	}
 
-    public function addOEM($oem)
-    {
-        $updateArray = array(
-            'key' => 'customer_id',
-            'value' => $oem,
-            'type' => 'oem'
-        );
-        $db = oseFirewall::getDBO();
-        $db->addData('insert', $this->configTable, '', '', $updateArray);
-        $db->closeDBO();
-    }
-
-    public function getSignature()
+    public function getSignature($type)
     {
         $this->live_url = "https://www.centrora.com/accountApi/update/getSignature";
         $content = array();
         $content['webkey'] = $this->getWebKey();
         $content['remoteChecking'] = true;
         $content['task'] = 'getSignatures';
-        $content['type'] = 'ath';
+        $content['type'] = $type;
         $this->sendRequest($content);
     }
 	public function getSubscriptions() {

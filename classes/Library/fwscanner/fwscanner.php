@@ -577,11 +577,11 @@ class oseFirewallScanner {
 							  <meta name="description" content="' . $metaDescription . '" />
 							  <meta name="generator" content="' . $metaGenerator . '" />
 							  <title>' . $pageTitle . '</title>
-            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . 'css/bootstrap.min.css">
-            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . 'css/blockpage.css">
-                        <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/animate.css">
-						<script src="' . OSE_FWPUBLICURL . 'js/jquery-1.11.1.min.js"></script>
-						<script src="' . OSE_FWPUBLICURL . 'js/plugins/wow/wow.min.js"></script>
+            <link rel="stylesheet" href="' . OSE_BANPAGE_URL . '/css/bootstrap.min.css">
+            <link rel="stylesheet" href="' . OSE_BANPAGE_URL . '/css/blockpage.css">
+                        <link rel="stylesheet" href="' . OSE_BANPAGE_URL . '/css/animate.css">
+						<script src="' . OSE_BANPAGE_URL . '/js/jquery-1.11.1.min.js"></script>
+						<script src="' . OSE_BANPAGE_URL . '/js/plugins/wow/wow.min.js"></script>
 						<script>new WOW().init();</script>
 						<script>
       jQuery(document).ready(function($){
@@ -656,11 +656,11 @@ class oseFirewallScanner {
 						<head>
 							<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 							<title>403 Forbidden</title>
-							<link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/bootstrap.min.css">
-            <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/blockpage.css">
-                        <link rel="stylesheet" href="' . OSE_FWPUBLICURL . '/css/animate.css">
-						<script src="' . OSE_FWPUBLICURL . '/js/jquery-1.11.1.min.js"></script>
-						<script src="' . OSE_FWPUBLICURL . '/js/plugins/wow/wow.min.js"></script>
+							<link rel="stylesheet" href="' . OSE_BANPAGE_URL . '/css/bootstrap.min.css">
+            <link rel="stylesheet" href="' . OSE_BANPAGE_URL . '/css/blockpage.css">
+                        <link rel="stylesheet" href="' . OSE_BANPAGE_URL . '/css/animate.css">
+						<script src="' . OSE_BANPAGE_URL . '/js/jquery-1.11.1.min.js"></script>
+						<script src="' . OSE_BANPAGE_URL . '/js/plugins/wow/wow.min.js"></script>
 						<script>new WOW().init();</script>
 						<script>
       jQuery(document).ready(function($){
@@ -928,7 +928,7 @@ class oseFirewallScanner {
 		$query = "SELECT `ischecked` FROM `#__osefirewall_sfschecked` WHERE `ip32_start` = " . $this->db->quoteValue($this->ip32);
 		$this->db->setQuery($query);
 		$result = (object)($this->db->loadResult());
-		return ($result->ischecked == 1) ? true : false;
+		return (!empty($result->ischecked) && $result->ischecked == 1) ? true : false;
 	}
 	protected function updatespamcheck($type)
 	{

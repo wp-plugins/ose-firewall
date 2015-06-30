@@ -27,42 +27,6 @@ jQuery(document).ready(function($){
     });
 });
 
-function goSubscribe () {
- jQuery(document).ready(function($){	
-	$.ajax({
-        type: "POST",
-        url: url,
-        dataType: 'json',
-	    data: {
-	    		option : option, 
-	    		controller:'audit',
-	    		action:'getTrackingCode',
-	    		task:'getTrackingCode',
-	    		centnounce:$('#centnounce').val()
-	    },
-        success: function(data)
-        { 
-        	var redirect = '';
-        	if (data.product =='st')
-        	{
-        		redirect = 'http://www.centrora.com/store/centrora-subscriptions/suite-annual';
-        	}
-        	else
-        	{
-        		redirect = 'http://www.centrora.com/store/centrora-subscriptions';
-        	}
-        	if (data.trackingCode!='' && data.trackingCode!=null)
-        	{
-        		redirect += '?tracking='+data.trackingCode;
-        	}
-        	window.open(
-        		  redirect,'_blank' // <- This is what makes it open in a new window.
-        	);
-        }
-	});  
- });  
-}
-
 function getPaymentAddress () {
 	 showLoading ('Please wait, generating a new order...');
 	 jQuery(document).ready(function($){

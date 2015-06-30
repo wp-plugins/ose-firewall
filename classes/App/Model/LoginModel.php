@@ -71,7 +71,6 @@ class LoginModel extends ConfigurationModel {
 
     public function addOEM($oem)
     {
-        $panel = new panel ();
-        return $panel->addOEM($oem);
+        $this->saveConfiguration('oem', array('customer_id' => $oem));
     }
 }

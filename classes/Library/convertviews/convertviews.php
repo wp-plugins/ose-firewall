@@ -27,6 +27,15 @@ if (! defined ( 'OSE_FRAMEWORK' ) && ! defined ( 'OSEFWDIR' ) && ! defined ( '_J
 	die ( 'Direct Access Not Allowed' );
 }
 class convertViews {
+    public static function convertAclipmapNoVar($attrArray)
+    {
+        $attrList = "";
+        $attrList = convertViews::assembleAttributes($attrArray);
+        $sql = "SELECT $attrList
+				FROM (`#__osefirewall_acl` `acl`
+				            LEFT JOIN `#__osefirewall_iptable` `ip` on `acl`.`id` = `ip`.`acl_id`)";
+        return $sql;
+    }
 	public static function convertAclipmap($attrArray) {
 		$attrList = "";
 		$attrList = convertViews::assembleAttributes ( $attrArray );

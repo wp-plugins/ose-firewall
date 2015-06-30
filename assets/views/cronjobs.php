@@ -153,6 +153,10 @@ if ($status == true)
                                                                 echo '<option value="3" '.(($backupsettings['cloudbt'] == 3)?" selected ":"").'>'
                                                                     . $this->model->getLang('O_BACKUP_ONEDRIVE') .'</option>';
                                                             }
+                                                            if ($this->model->checkCloudAuthentication(4)) {
+                                                                echo '<option value="4" ' . (($backupsettings['cloudbt'] == 4) ? " selected " : "") . '>'
+                                                                    . $this->model->getLang('O_BACKUP_GOOGLEDRIVE') . '</option>';
+                                                            }
                                                             ?>
                                                         </select>
                                                     </div>

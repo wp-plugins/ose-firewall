@@ -58,6 +58,9 @@ if ($status == true) {
                     </div>
                     <input id="dropboxauth" style="display: none" value="<?php echo ($this->model->checkCloudAuthentication (2))? 1 : 0;?>">
                     <input id="onedriveauth" style="display: none" value="<?php echo ($this->model->checkCloudAuthentication (3))? 1 : 0;?>">
+                    <input id="googledriveauth" style="display: none"
+                           value="<?php echo ($this->model->checkCloudAuthentication(4)) ? 1 : 0; ?>">
+
                     <!-- End .panel -->
                 </div>
             </div>

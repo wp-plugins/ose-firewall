@@ -23,7 +23,6 @@ jQuery(document).ready(function ($) {
             {"data": "name"},
             {"data": "score"},
             {"data": "ip32_start"},
-            {"data": "keyname"},
             {"data": "status"},
             {"data": "visits"},
             {"data": "view"},
@@ -55,7 +54,6 @@ jQuery(document).ready(function ($) {
             }
         }
     };
-
     $('#ip_start').mask("099.099.099.099", font);
     $('#ip_end').mask("099.099.099.099", font);
     var statusFilter = $('<label>Status: <select name="statusFilter" id="statusFilter"><option value="0"></option><option value="1">Blacklisted</option><option value="2">Monitored</option><option value="3">Whitelisted</option></select></label>');
@@ -67,18 +65,32 @@ jQuery(document).ready(function ($) {
     });
 
     $('#manageIPsTable').on('init.dt', function () {
-        var flag = manageIPsDataTable.api().column(6).data().unique();
-        var text = "";
-        for (i = 0; i < flag.length; i++) {
-            text += '<option value="' + flag[i] + '">' + flag[i] + '</option>';
-        }
-        var varFilter = $('<label>Variable: <select name="varFilter" id="varFilter"><option value="0"></option>' + text + '</option></select></label>');
-        varFilter.appendTo($("#manageIPsTable_filter")).on('change', function () {
-            var val2 = $('#varFilter');
-            manageIPsDataTable.api().column(6)
-                .search(val2.val(), false, false)
-                .draw();
-        });
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'getKeyName',
+                task: 'getKeyName',
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                var text = "";
+                for (i = 0; i < data.length; i++) {
+                    text += '<option value="' + data[i]['keyname'] + '">' + data[i]['keyname'] + '</option>';
+                }
+                var varFilter = $('<label>Variable: <select name="varFilter" id="varFilter"><option value="0"></option>' + text + '</option></select></label>');
+                varFilter.appendTo($("#manageIPsTable_filter")).on('change', function () {
+                    var val2 = $('#varFilter');
+                    manageIPsDataTable.api().column(9)
+                        .search(val2.val(), false, false)
+                        .draw();
+                });
+            }
+        })
+
     });
     $("#add-ip-form").submit(function () {
         $.ajax({

@@ -224,6 +224,21 @@ class onedriveModelBup
         return $this->createFolder($currentDomain, null, $root->id);
     }
 
+    public function getFileBackupFolderID ($parentfolder, $folder_id)
+    {
+        $domains = $this->getFolderObjects($folder_id->id);
+
+        foreach ($domains as $domain) {
+
+            if ($domain->type == 'folder' && $domain->name == $parentfolder) {
+                return $domain;
+            }
+        }
+
+        return $this->createFolder($parentfolder, null, $folder_id->id);
+
+    }
+
     /**
      * Returns the object with the Microsoft SkyDrive data.
      * @return stdClass|null
@@ -350,11 +365,9 @@ class onedriveModelBup
         }
     }
 
-    public function upload($file)
+    public function upload($file, $folder_id)
     {
-        $this->refreshAccessToken();
-        $folder_id = $this->getDomainObject();
-        $response = $this->put_file($file, $folder_id->id);
+        $response = $this->put_file($file, $folder_id);
         if (property_exists($response, 'id')) {
             return true;
         } else {
@@ -466,7 +479,7 @@ class onedriveModelBup
     public function getAccessToken()
     {
         if (!isset($_SESSION[self::SESSION_ID])) {
-            return null;
+            return $_SESSION[self::SESSION_ID] = $this->readToken();
         }
 
         return $_SESSION[self::SESSION_ID];
@@ -621,8 +634,11 @@ class onedriveModelBup
 
     public function removeToken()
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
-
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
+        }
         oseFile::delete($filePath);
 
     }
@@ -634,8 +650,11 @@ class onedriveModelBup
      */
     protected function saveToken($token)
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
-
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
+        }
         $this->removeToken();
 
         oseFile::write($filePath, $token);
@@ -644,7 +663,11 @@ class onedriveModelBup
 
     protected function saveFolderid($id)
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveFolderid.json";
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveFolderid.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveFolderid.json";
+        }
 
         oseFile::write($filePath, $id);
 
@@ -652,7 +675,11 @@ class onedriveModelBup
 
     protected function readFolderid()
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveFolderid.json";
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveFolderid.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveFolderid.json";
+        }
 
         $folderid = oseFile::read($filePath);
 
@@ -664,7 +691,11 @@ class onedriveModelBup
      */
     protected function readToken()
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
+        }
 
         $access_token = oseFile::read($filePath);
 
@@ -673,21 +704,33 @@ class onedriveModelBup
 
     protected function deleteRefreshToken()
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        }
 
         oseFile::delete($filePath);
     }
 
     protected function deleteRefreshTokenExpireTime()
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        }
 
         oseFile::delete($filePath);
     }
 
     protected function getRefreshToken()
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        }
         $refresh_token = oseFile::read($filePath);
 
         return $refresh_token;
@@ -696,7 +739,11 @@ class onedriveModelBup
 
     protected function getRefreshTokenExpireTime()
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        }
         $refreshTokenExpireTime = oseFile::read($filePath);
 
         return $refreshTokenExpireTime;
@@ -705,8 +752,11 @@ class onedriveModelBup
 
     protected function saveRefreshToken($refreshToken)
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
-
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveRefreshToken.json";
+        }
         $this->deleteRefreshToken();
 
         oseFile::write($filePath, $refreshToken);
@@ -715,8 +765,11 @@ class onedriveModelBup
 
     protected function saveRefreshTokenExpireTime($refreshTokenExpireTime)
     {
-        $filePath = OSE_FWDATA . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
-
+        if (OSE_CMS == "wordpress") {
+            $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        } else {
+            $filePath = OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveExpireTimeRefreshToken.json";
+        }
         $this->deleteRefreshTokenExpireTime();
 
         oseFile::write($filePath, $refreshTokenExpireTime);
@@ -744,7 +797,7 @@ class onedriveModelBup
             curl_setopt($ch, CURLOPT_INFILE, $pointer);
             curl_setopt($ch, CURLOPT_INFILESIZE, (int)$pointersize);
             curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 0);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -756,6 +809,9 @@ class onedriveModelBup
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
 
             $output = curl_exec($ch);
+
+            //$sAverageSpeedDownload = curl_getInfo( $ch, CURLINFO_SPEED_DOWNLOAD );
+            //$output['ulspd'] = curl_getInfo( $ch, CURLINFO_SPEED_UPLOAD );
 
         } catch (Exception $e) {
 

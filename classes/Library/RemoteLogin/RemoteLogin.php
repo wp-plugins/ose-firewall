@@ -283,13 +283,13 @@ class RemoteLogin
 		$RemoteController = new App\Controller\remoteControllers\DownloadRemoteController($centrora);
 		$RemoteController->actionVsscan($step, $type);
 	}
-    public function runBackup ($cloudbackuptype) {
+    public function runBackup ($cloudbackuptype, $upload , $fileNum ) {
         $this->validateIP ();
         $this->callControllerClass('DownloadRemoteController');
         oseFirewall::runApp();
         global $centrora;
         $RemoteController = new App\Controller\remoteControllers\DownloadRemoteController($centrora);
-        $RemoteController->actionScheduledBackup($cloudbackuptype);
+        $RemoteController->actionScheduledBackup($cloudbackuptype, $upload , $fileNum );
     }
 	private function validateIP () {
 		$ip = $this->getRealIP(); 

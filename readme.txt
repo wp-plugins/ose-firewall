@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 4.8.4
+Stable tag: 4.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,14 +16,13 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
 Centrora Security is a new plugin that's modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 
-= New features in v4.8: =
-* Added: New and Improved Schedule Task: Set, forget and get notified
-* Added: Scheduled backup function
-* Added: Add Ondrive backup
-* Added: WooCommerce Support on Variables Scanner
-* Enhancement: Cloud backup folder structure now includes better support for multiple sites backup
-* Enhancement: Save backup time of new backups made
-* Enhancement: Schedule Task toggle Activate/Deactivate
+= New features in v4.9: =
+* Added: Add Google Drive backup
+* Added: Backup option for low memory/timeout constraint servers.
+* Added: Support for larger file size uploads (cloud backup)
+* Enhancement: Reorganise Menu System for better navigability
+* Enhancement: Scheduled backup function
+* Enhancement: Faster More efficient Cloud Backups
 
 = Customer Support =
 If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here for help.</a>
@@ -88,6 +87,26 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.9.0 =
+* Added: Add Google Drive backup
+* Added: Feature Requests #91: Back up function Offer other Options for Low server memory constraint users
+* Added: Support for larger file size uploads (cloud backup)
+* Added: Feature Requests #124: Add manual update function in the admin backend
+* Added: Feature Requests #167: Add download virus pattern function to virus scanner section
+* Enhancement: Improved backup Upload time - Faster More efficient Cloud Backups.
+* Enhancement: Split backups for manageable file sizes
+* Enhancement: Backup option for timeout constraint servers (during filesbackup )
+* Enhancement: Improvements #119: Reorganise Menu System for better navigability
+* Fix: Scheduled backup function fixes
+* Fix: Bugs #85: Creating Backup Zip fails for some users
+* Fix: Bugs #127: Premium Subscription multisite login Issues
+* Fix: Bugs #161: Email template mass
+* Fix: Minor UI fixes
+* Fixed: Fixed warning error: "Undefined property: stdClass::$ischecked in fwscanner.php" 
+
+= 4.8.5 =
+* Fixed: Fixed Quarantine file failed issue in Joomla component version
 
 = 4.8.4 =
 * Fixed: Ban IP page css not loaded properly for some websites

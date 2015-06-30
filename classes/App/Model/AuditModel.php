@@ -351,10 +351,6 @@ class AuditModel extends BaseModel {
 		$result = $oseFirewallStat->saveConfiguration('panel', array('trackingCode'=>$trackingCode));
 		return $result;
 	}
-	public function getTrackingCode() {
-		$config = $this->getConfiguration('panel');
-		return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;
-	}
 	public function isBadgeEnabled () {
 		return oseFirewall::isBadgeEnabled();
 	}

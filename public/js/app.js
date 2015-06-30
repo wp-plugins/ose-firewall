@@ -399,7 +399,7 @@ jQuery(document).ready(function($){
                    }
             	   else
             	   {
-            		   hideLoading();
+                       hideLoading();
                        showDialogue(data.result, data.status, O_OK);
             	   }
                }

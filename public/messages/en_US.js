@@ -43,7 +43,7 @@ var O_DELE_FAIL_DESC = "The delete operation failed! Please try again";
 var O_BACKUP_SUCCESS = "Backup success";
 var O_BACKUP_FAIL = "Backup failed, please try again";
 var O_ERROR = "Error";
-var O_BACKUP_ERROR = "Operational error during backup<br /> Error Code: <pre>";
+var O_BACKUP_ERROR = "Operational error during backup<br /> Error Code: ";
 var O_LOADING_TEXT = "Please wait...";
 var O_DB_INSTALL_DESC = "Database installer preparing in progress";
 var O_CSV_FORMAT = '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>' +
@@ -71,7 +71,7 @@ var O_UPDATE = "Updating...";
 var O_ACTIVATE_PLUGIN = "Activating plugin...";
 
 //added from 4.8.0
-var O_UPLOAD_ONEDRIVE = "The backup file has been uploaded to your OneDrive";
+var O_UPLOAD_ONEDRIVE = "The backup has been uploaded to your OneDrive";
 var O_DROPBOX_LOGOUT = "Dropbox Logout";
 var O_SPEECH_BUBBLE = "Hacking traffic table will refresh every minute";
 var O_SESSION_EXPIRED = "Session expired, please login again";
@@ -81,6 +81,9 @@ var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Click OK to complete Dropbox authenticatio
 
 //added from 4.9.0
 var O_EMAILTEMP_FAIL = "Email template cannot be restored, please try again";
-var O_AUTH_CLOUD = "Authenticate a cloud Service"//added from 4.8.0
+var O_AUTH_CLOUD = "Authenticate a cloud Service"
 var O_EMAILTEMP_FAIL = "Email template cannot be restored as it is already default";
 var O_EMAILTEMP_SUCESSS = "Email template is restoring to default";
+var O_UPLOAD_GOOGLEDRIVE = "The backup file has been uploaded to your GoogleDrive";
+var O_VSPATTERN_UPDATE = "Virus signature has been updated";
+var O_PREP_FILES = "Preparing File(s) for Upload...";

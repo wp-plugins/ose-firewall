@@ -57,6 +57,16 @@ class BackupController extends \App\Base
         $result = $this->model->backup($backup_type, $backup_to);
         $this->model->returnJSON($result);
 	}
+
+    public function action_contBackup(){
+        $sourcePath = $this->model->getVar('sourcePath', null);
+        $outZipPath = $this->model->getVar('outZipPath', null);
+        $serializefile = $this->model->getVar('serializefile', null);
+        $recall = true;
+        $result = $this->model->contBackup($sourcePath, $outZipPath, $serializefile, $recall);
+        exit;
+
+    }
     public function action_DeleteBackup()
     {
         $this->model->loadRequest();

@@ -468,7 +468,7 @@ class oseVsscanStat {
 
     public function pickupID($status, $id)
     {
-        $stringID = " AND `id` IN (" . implode(", ", $id) . ")";
+        $stringID = " AND `id` IN (" . implode(", ", (int)$id) . ")";
         $query = "SELECT `id` FROM `#__osefirewall_files` WHERE `checked` =" . (int)$status . $stringID;
         $this->db->setQuery($query);
         $result = (array)$this->db->loadObjectList();

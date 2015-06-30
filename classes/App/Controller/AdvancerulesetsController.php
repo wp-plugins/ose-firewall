@@ -59,16 +59,26 @@ class AdvancerulesetsController extends \App\Base {
 
     public function action_downloadRequest()
     {
-        $result = $this->model->downloadRequest();
+        $this->model->loadRequest();
+        $type = $this->model->getVar('type', null);
+        $result = $this->model->downloadRequest($type);
         return $result;
     }
 
     public function action_downloadSQL()
     {
         $this->model->loadRequest();
+        $type = $this->model->getVar('type', null);
         $downloadKey = $this->model->getVar('downloadKey', null);
-        $result = $this->model->downloadSQL($downloadKey);
-        return $result;
+        $result = $this->model->downloadSQL($type, $downloadKey);
+		if ($result==true)
+		{
+			$this->model->aJaxReturn(true, 'SUCCESS', $this->model->getLang('DOWNLOAD_SUCCESS'), FALSE);
+		} 
+		else
+		{
+			$this->model->aJaxReturn(true, 'ERROR', $this->model->getLang('DOWNLOAD_FAILED'), false);
+		}
     }
 }	
 

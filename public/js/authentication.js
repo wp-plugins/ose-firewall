@@ -1,6 +1,7 @@
 var controller = "authentication";
 var option = "com_ose_firewall";
 
+//onedrive authentication
 function onedrive_logout() {
     jQuery(document).ready(function ($) {
         $.ajax({
@@ -26,6 +27,8 @@ function onedrive_logout() {
         })
     })
 }
+
+// dropbox authentication
 function dropbox_oauth() {
     jQuery(document).ready(function ($) {
         $.ajax({
@@ -137,4 +140,32 @@ function oauth_step2(url) {
             }
         }
     });
+}
+
+// Google authentication
+
+function googledrive_logout() {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'googledrive_logout',
+                task: 'googledrive_logout',
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                if (cms == 'wordpress') {
+                    window.location = 'admin.php?page=ose_fw_authentication';
+                    window.location.reload;
+                } else {
+                    window.location = 'index.php?option=com_ose_firewall&view=authentication';
+                    window.location.reload;
+                }
+            }
+        })
+    })
 }

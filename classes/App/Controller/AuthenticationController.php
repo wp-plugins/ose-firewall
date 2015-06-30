@@ -39,6 +39,12 @@ class AuthenticationController extends \App\Base
         $this->model->returnJSON($result);
     }
 
+    public function action_googledrive_logout()
+    {
+        $result = $this->model->googledrive_logout();
+        $this->model->returnJSON($result);
+    }
+
     public function action_onedrive_logout()
     {
         $result = $this->model->onedrive_logout();

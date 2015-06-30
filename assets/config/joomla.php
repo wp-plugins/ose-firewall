@@ -35,6 +35,9 @@ define('OSE_FWURL',OURI::root().'components/com_ose_firewall/');
 define('OSE_ABSPATH', dirname(dirname(dirname(OSEFWDIR))));
 define('OSE_BACKUPPATH', dirname(dirname(OSEFWDIR)));
 
+define('OSE_BANPAGE_ADMIN', str_replace('administrator/', '', OURI::root() ). 'administrator/components/com_ose_firewall/');
+define('OSE_BANPAGE_URL', OSE_BANPAGE_ADMIN . ODS . 'public');
+
 define('OSE_FWRELURL',OURI::root().'components/com_ose_firewall/');
 define('OSE_FWASSETS', OSEFWDIR . ODS . 'assets');
 define('OSE_WPURL',rtrim(OURI::base(), '/') );
@@ -44,9 +47,10 @@ define('OSE_FWCONTROLLERS', OSEFWDIR . 'protected' . ODS . 'controllers');
 define('OSE_FWMODEL', OSEFWDIR . 'classes' . ODS.'App' . ODS . 'Model');
 define('OSE_FWFRAMEWORK', OSEFWDIR . ODS . 'classes' . ODS.'Library'); 
 define('OSE_FWPUBLIC', OSEFWDIR . ODS . 'public');
-define('OSE_FWPUBLICURL', OSE_FWURL . ODS . 'public');
+define('OSE_FWPUBLICURL', OSE_FWURL . 'public');
 define('OSE_FWLANGUAGE', OSE_FWPUBLIC . ODS.'messages');
 define('OSE_FWDATA', OSEFWDIR . ODS . 'protected' . ODS.'data'); 
+define('OSE_FWDATABACKUP',OSEFWDIR . 'protected' . ODS.'data'.ODS.'backup');
 define('OSE_DEFAULT_SCANPATH', dirname(dirname(dirname(OSEFWDIR))));
 define('BACKUP_DOWNLOAD_URL', '?option=com_ose_firewall&view=backup&task=downloadBackupFile&action=downloadBackupFile&controller=backup&id=');
 define('EXPORT_DOWNLOAD_URL', '?option=com_ose_firewall&view=manageips&task=downloadCSV&action=downloadCSV&controller=manageips&filename=');

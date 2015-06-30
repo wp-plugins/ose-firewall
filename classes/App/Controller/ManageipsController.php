@@ -262,5 +262,12 @@ class ManageipsController extends \App\Base {
         $filename = $this->model->getVar('filename', null);
         $this->model->downloadCSV($filename);
     }
+
+    public function action_getKeyName()
+    {
+        $this->model->loadRequest();
+        $result = $this->model->getKeyName();
+        $this->model->returnJSON($result);
+    }
 }
 ?>	

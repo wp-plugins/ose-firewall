@@ -115,6 +115,11 @@ class CronjobsModel extends BaseModel
                 $oneDrive = new onedriveModelBup ();
                 return $oneDrive->isAuthenticated();
                 break;
+            case 4:
+                oseFirewall::callLibClass('backup/googledrive', 'googledrive');
+                $gDrive = new gdriveModelBup ();
+                return $gDrive->isAuthenticated();
+                break;
             default:
                 return false;
         }

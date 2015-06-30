@@ -60,18 +60,6 @@ class AuditController extends \App\Base {
 			}
 		}
 	}
-	public function action_getTrackingCode() {
-		$trackingCode = $this->model->getTrackingCode();
-		if (class_exists('SConfig'))
-		{
-			$product = 'st';
-		}
-		else
-		{
-			$product = 'pl';
-		}
-		$this->model->returnJSON(array('trackingCode'=>$trackingCode, 'product'=>$product));
-	}
 	public function action_UninstallTables() {
 		$this->model->loadRequest();
 		$result = $this ->model->actionUninstallTables();

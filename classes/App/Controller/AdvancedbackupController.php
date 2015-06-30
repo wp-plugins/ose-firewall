@@ -31,19 +31,52 @@ require_once('BackupController.php');
 
 class AdvancedbackupController extends BackupController
 {
-    public function action_Dropbox_upload()
-    {
+    public function action_getDropboxUploads(){
         $this->model->loadRequest();
         $id = $this->model->getVar('id', null);
-        $result = $this->model->dropbox_upload($id);
+        $result = $this->model->getDropboxUploads($id);
         $this->model->returnJSON($result);
     }
 
-    public function action_onedrive_upload()
+    public function action_dropboxUpload()
+    {
+        $this->model->loadRequest();
+        $path = $this->model->getVar('path', null);
+        $folder = $this->model->getVar('folder', null);
+        $result = $this->model->dropboxUpload($path, $folder);
+        $this->model->returnJSON($result);
+    }
+
+    public function action_getOneDriveUploads()
     {
         $this->model->loadRequest();
         $id = $this->model->getVar('id', null);
-        $result = $this->model->onedrive_upload($id);
+        $result = $this->model->getOneDriveUploads($id);
+        $this->model->returnJSON($result);
+    }
+
+    public function action_oneDriveUpload(){
+        $this->model->loadRequest();
+        $path = $this->model->getVar('path', null);
+        $folderID = $this->model->getVar('folderID', null);
+        $result = $this->model->oneDriveUpload($path, $folderID);
+        $this->model->returnJSON($result);
+    }
+
+    public function action_getGoogleDriveUploads()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+        $result = $this->model->getGoogleDriveUploads($id);
+        $this->model->returnJSON($result);
+    }
+
+    public function action_googledrive_upload()
+    {
+        $this->model->loadRequest();
+        $path = $this->model->getVar('path', null);
+        $folderID = $this->model->getVar('folderID', null);
+        $result = $this->model->googledrive_upload($path, $folderID);
         $this->model->returnJSON($result);
     }
     public function action_sendemail()

@@ -1022,6 +1022,11 @@ li.dropdown {
     float: left;
 }
 
+.clickgoogledrive {
+    padding: 10px;
+    float: left;
+}
+
 .onoffswitch {
     position: relative; width: 90px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
@@ -1067,4 +1072,18 @@ li.dropdown {
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
+}
+
+.dropdown {
+    text-align: center;
+}
+
+.button, .dropdown-menu {
+    margin: 10px auto
+}
+
+.dropdown-menu {
+    width: 270px;
+    left: 50%;
+    margin-left: -130px;
 }

@@ -33,9 +33,7 @@ class BackupModel extends BaseModel {
 		$this->loadLibrary ();
 		$this->loadDatabase ();
 	}
-
-    public function is_authorized()
-    {
+    public function is_authorized(){
     }
 	protected function loadLibrary() {
 		oseFirewall::callLibClass ( 'backup', 'oseBackup' );
@@ -55,23 +53,23 @@ class BackupModel extends BaseModel {
 		$return = $backupManager->getBackupList ();
 		return $return;
 	}
-
-    public function oauth()
-    {
+    public function oauth(){
     }
 	public function backup($backup_type, $backup_to) {
 		$backupManager = new oseBackupManager ();
 		$return ['data'] = utf8_encode ( $backupManager->backup ( $backup_type, $backup_to ) );
 		return $return;
 	}
+    public function contBackup($sourcePath, $outZipPath, $serializefile, $recall) {
+        $backupManager = new oseBackupManager ();
+        $backupManager-> addFilesToArchive ($sourcePath, $outZipPath, $serializefile, $recall);
+    }
 	public function deleteBackUp($ids) {
 		$backupManager = new oseBackupManager ();
 		$result = $backupManager->deleteBackUp ( $ids );
         return $result;
 	}
-
-    public function downloadBackupFile()
-    {
+    public function downloadBackupFile(){
         oseBackupManager::downloadBackupFile();
     }
 }

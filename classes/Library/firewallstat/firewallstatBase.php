@@ -261,8 +261,8 @@ class oseFirewallStatBase
 		{
 			$status = null;
 		}
-        if (!empty($columns[6]['search']['value'])) {
-            $variable = $columns[6]['search']['value'];
+        if (!empty($columns[9]['search']['value'])) {
+            $variable = $columns[9]['search']['value'];
         } else {
             $variable = null;
         }
@@ -324,12 +324,13 @@ class oseFirewallStatBase
 		}
 	}
 	private function getAllRecords ($where) {
-		$attrList = array("`acl`.`id` AS `id`","`acl`.`country_code` AS `country_code`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`",
-            "`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`vars`.`keyname` AS `keyname`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
-		$sql = convertViews::convertAclipmap($attrList);
+//		$attrList = array("`acl`.`id` AS `id`","`acl`.`country_code` AS `country_code`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`",
+//            "`ip`.`iptype` AS `iptype`", "`ip`.`ip32_start` AS `ip32_start`", "`vars`.`keyname` AS `keyname`", "`acl`.`status` AS `status`", "`acl`.`host` AS `host`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
+//		$sql = convertViews::convertAclipmap($attrList);
+        $attrList = array("`acl`.`id` AS `id`", "`acl`.`country_code` AS `country_code`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`", "`ip`.`ip32_start` AS `ip32_start`", "`acl`.`status` AS `status`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
+        $sql = convertViews::convertAclipmapNoVar($attrList);
 		$query = $sql.$where.$this->orderBy." ".$this->limitStm;
 		$this->db->setQuery($query);
-
 		$results = $this->db->loadObjectList();
 		return $results;		
 	}
@@ -355,23 +356,38 @@ class oseFirewallStatBase
 		if (!empty($status)) {$this->getWhereStatus ($status);}
         if (!empty($variable)) {
             $this->getWhereVarible($variable);
+            $this->getOrderBy($sortby, $orderDir);
+            if (!empty($limit)) {
+                $this->getLimitStm($start, $limit);
+            }
+            $where = $this->db->implodeWhere($this->where);
+            $return['data'] = $this->getAllRecordsAlter($where);
+            $count = $this->getAllCounts($where);
+            $return['recordsTotal'] = $count['recordsTotal'];
+            $return['recordsFiltered'] = $count['recordsFiltered'];
+        } else {
+            $this->getOrderBy($sortby, $orderDir);
+            if (!empty($limit)) {
+                $this->getLimitStm($start, $limit);
+            }
+            $where = $this->db->implodeWhere($this->where);
+            // Get Records Query;
+            $return['data'] = $this->getAllRecords($where);
+            $count = $this->getAllCounts($where);
+            $return['recordsTotal'] = $count['recordsTotal'];
+            $return['recordsFiltered'] = $count['recordsFiltered'];
         }
-		$this->getOrderBy ($sortby, $orderDir);
-		if (!empty($limit)) {$this->getLimitStm ($start, $limit);}
-		$where = $this->db->implodeWhere($this->where);
-		// Get Records Query;
-		$return['data'] = $this->getAllRecords ($where);
-		$counts = $this->getAllCounts($where);
-		$return['recordsTotal'] = $counts['recordsTotal'];
-		$return['recordsFiltered'] = $counts['recordsFiltered'];
 		return $return;
 	}
-    private function getTotalIP()
+
+    private function getAllRecordsAlter($where)
     {
-        $db = oseFirewall::getDBO();
-        $result = $db->getTotalNumber('id', '#__osefirewall_acl');
-        $db->closeDBO();
-        return $result;
+        $attrList = array("`acl`.`id` AS `id`", "`acl`.`country_code` AS `country_code`", "`acl`.`score`AS `score`", " `acl`.`name` AS `name`", "`ip`.`ip32_start` AS `ip32_start`", "`acl`.`status` AS `status`", "`acl`.`datetime` AS `datetime`, `acl`.`visits` AS `visits`");
+        $sql = convertViews::convertAclipmap($attrList);
+        $query = $sql . $where . $this->orderBy . " " . $this->limitStm;
+        $this->db->setQuery($query);
+        $results = $this->db->loadObjectList();
+        return $results;
     }
 	private function convertACLIPMap($results)
 	{
@@ -810,10 +826,10 @@ class oseFirewallStatBase
 		switch ($status)
 		{
 		case '0':
-			return "<a href='#' title = 'Inactive' onClick= 'changeItemStatus(".urlencode($id).", 1)' ><div class='grid-block'></div></a>";
+            return "<a href='javascript:void(0);' title = 'Inactive' onClick= 'changeItemStatus(" . urlencode($id) . ", 1)' ><div class='grid-block'></div></a>";
 			break;
 		case '1':
-			return "<a href='#' title = 'Active' onClick= 'changeItemStatus(".urlencode($id).", 0)' ><div class='grid-accept'></div></a>";
+            return "<a href='javascript:void(0);' title = 'Active' onClick= 'changeItemStatus(" . urlencode($id) . ", 0)' ><div class='grid-accept'></div></a>";
 			break;
 		default:
 			return '';
@@ -1593,7 +1609,6 @@ class oseFirewallStatBase
     public function downloadcsv($filename)
     {
         $fileContent = $this->getOutputData();
-
         ob_clean();
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Content-Length: " . strlen($fileContent));
@@ -1602,5 +1617,15 @@ class oseFirewallStatBase
         header("Content-Disposition: attachment; filename=$filename");
         print_r($fileContent);
         exit;
+    }
+
+    public function getKeyName()
+    {
+        $attrList = array("`vars`.`keyname` AS `keyname`");
+        $sql = convertViews::convertAclipmap($attrList);
+        $sql = str_replace("SELECT", "SELECT DISTINCT", $sql);
+        $this->db->setQuery($sql);
+        $results = $this->db->loadObjectList();
+        return $results;
     }
 }

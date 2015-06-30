@@ -178,7 +178,7 @@ define('SEO_CONFIGURATION_DESC','S&oslash;gemaskine indstillinger som beskytter 
 define('CONFIG_SAVE_SUCCESS','Konfiguration er blevet &aelig;ndret.');
 define('CONFIG_SAVE_FAILED','The configuration er ikke blevet &aelig;ndret.');
 define('SCAN_CONFIGURATION','Scannings Konfiguration');
-define('SCAN_CONFIGURATION_TITLE','<b>Firewall Scanning</b> <span><b>Konfiguration</b></span>');
+define('SCAN_CONFIGURATION_TITLE', 'Firewall Scanning Konfiguration');
 define('SCAN_CONFIGURATION_DESC','Forbind til Gabemedia with API key og konfigurer Firewall Scanning indstillinger');
 define('ANTISPAM_CONFIGURATION','Anti-Spam Konfiguration');
 define('ANTISPAM_CONFIGURATION_TITLE','<b>Anti-Spam</b> <span><b>Konfiguration</b></span>');
@@ -669,4 +669,23 @@ define('VERIFY', 'Verify');
 define('AUTHENTICATION', 'Cloud Backup Authentication');
 define('AUTHENTICATION_TITLE', '<b>Third Party Authentication</b>');
 define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise Centrora Security to your prefered cloud service.');
+
+// Version 4.9.0
+define('O_UPDATE_SIGNATURE', 'Update Firewall Signature');
+define('O_UPDATE_VIRUS_SIGNATURE', 'Update Virus Signature');
+define('RESTORE_EMAIL', 'Restore to default');
+define('CHANGE_PASSCODE', 'Change passcode');
+define('OLD_PASSCODE', 'Input old passcode');
+define('NEW_PASSCODE', 'Input new passcode');
+define('CONFIRM_PASSCODE', 'Confirm new passcode');
+define('VSSCAN_AND_BACKUP', 'Virus Scan & Backups');
+define('CENTRORA_SETTINGS', 'Centrora Security Settings');
+define('MY_ACCOUNT', 'My Account');
+define('LOGIN_OR_SUBSCIRPTION', 'Login/Subscription');
+define('O_GOOGLEDRIVE_LOGOUT', 'Google Drive Logout');
+define('O_AUTHENTICATION_GOOGLEDRIVE', 'GoogleDrive Authentication');
+define('O_AUTHENTICATION_DROPBOX', 'Dropbox Authentication');
+define('O_BACKUP', 'Backup');
+define('ADMINISTRATION', 'Administration');
+define('FILE_PERMISSION', 'File Permission')
 ?>

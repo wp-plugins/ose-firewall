@@ -114,10 +114,54 @@ function backup(backup_type, backup_to) {
                 centnounce : $('#centnounce').val()
             },
             success : function(data) {
-                hideLoading();
                 if (data.data == false) {
+                    hideLoading();
                     showDialogue(O_BACKUP_FAIL, O_FAIL, O_OK);
-                } else {
+                }else if (data.conti == 1) {
+
+                    contbackup(data.sourcePath, data.outZipPath, data.serializefile);
+
+                }else /*if (typeof data.data == "number" && data.conti == 0 )*/ {
+                    hideLoading();
+                    showDialogue(O_BACKUP_SUCCESS, O_SUCCESS, O_OK);
+                    $('#backupTable').dataTable().api().ajax.reload();
+                }
+            },
+            error : function(request, textStatus, thrownError){
+                hideLoading();
+                showDialogue(O_BACKUP_ERROR + thrownError + "<br /><pre>" + request.responseText + "</pre>",
+                    O_ERROR, O_OK);
+            }
+        })
+    })
+}
+
+function contbackup(sourcePath, outZipPath, serializefile){
+    showLoading('Archiving files, Please wait...');
+    jQuery(document).ready(function($) {
+        $.ajax({
+            type : "POST",
+            url : url,
+            dataType : 'json',
+            data : {
+                option : option,
+                controller : controller,
+                action : 'contBackup',
+                task : 'contBackup',
+                sourcePath : sourcePath,
+                outZipPath : outZipPath,
+                serializefile : serializefile,
+                centnounce : $('#centnounce').val()
+            },
+            success : function(data) {
+                if (data.data == false) {
+                    hideLoading();
+                    showDialogue(O_BACKUP_FAIL, O_FAIL, O_OK);
+                }else if (data.conti == 1) {
+                    contbackup(data.sourcePath, data.outZipPath, data.serializefile);
+
+                }else if (data.conti == 0 ) {
+                    hideLoading();
                     showDialogue(O_BACKUP_SUCCESS, O_SUCCESS, O_OK);
                     $('#backupTable').dataTable().api().ajax.reload();
                 }

@@ -85,8 +85,8 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="index.php?option=' . $extension . '&view=dashboard">' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
 		
 		$menu .= '<li ';
-		$menu .= (in_array($view, array('manageips', 'rulesets','variables','audit'))) ?'class="active dropdown"' : 'class="dropdown"';
-		$menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('SECURITY_MANAGEMENT') . '<b class="caret"></b></a>';
+        $menu .= (in_array($view, array('manageips', 'rulesets', 'bsconfig', 'advancerulesets', 'countryblock', 'variables'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('FIREWALL') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Virus Starts;
 		$menu .= '<ul class="dropdown-menu">';
 		$menu .= '<li ';
@@ -94,33 +94,25 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="index.php?option=' . $extension . '&view=manageips">' . oLang::_get('MANAGE_IPS') . '</a></li>';
 
         $menu .= '<li ';
-        $menu .= ($view == 'adminemails') ? 'class="active"' : '';
-        $menu .= '><a href="index.php?option=' . $extension . '&view=adminemails">' . oLang::_get('ADMINEMAILS') . '</a></li>';
+        $menu .= ($view == 'variables') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=variables">' . oLang::_get('VARIABLES_MANAGEMENT') . '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'countryblock') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=countryblock">' . oLang::_get('COUNTRYBLOCK') . '</a></li>';
 
         $menu .= '<li ';
 		$menu .= ($view == 'bsconfig') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=bsconfig">' . oLang::_get('RULESETS'). '</a></li>';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=bsconfig">' . oLang::_get('FIREWALL_CONFIGURATION') . '</a></li>';
 		
 		$menu .= '<li ';
 		$menu .= ($view == 'rulesets') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=rulesets">' . oLang::_get('FIREWALL_RULES'). '</a></li>';
-		
-		$menu .= '<li ';
-		$menu .= ($view == 'variables') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=variables">' . oLang::_get('VARIABLES_MANAGEMENT'). '</a></li>';
-		
-		$menu .= '<li ';
-		$menu .= ($view == 'audit') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=audit">' . oLang::_get('AUDIT_WEBSITE'). '</a></li>';
 
         $menu .= '<li ';
-        $menu .= ($view == 'permconfig') ? 'class="active"' : '';
-        $menu .= '><a href="index.php?option=' . $extension . '&view=permconfig">' . oLang::_get('PERMCONFIG'). '</a></li>';
-		
-		$menu .= '<li ';
-		$menu .= ($view == 'backup') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=backup">' . oLang::_get('BACKUP_MANAGER') . '</a></li>';
-		
+        $menu .= ($view == 'advancerulesets') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=advancerulesets">' . oLang::_get('ADRULESETS') . '</a></li>';
+
 		$menu .= '</ul>';
 		// SubMenu Anti-Virus Ends;
 		$menu .= '</li>';
@@ -128,15 +120,11 @@ class oseFirewall extends oseFirewallBase {
 		
 		// Anti-Hacking Menu;
 		$menu .= '<li ';
-		$menu .= (in_array($view, array('advancerulesets', 'vsscan', 'vsreport', 'countryblock'))) ? 'class="active dropdown"' : 'class="dropdown"';
-		$menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('PREMIUM_SERVICE') . '<b class="caret"></b></a>';
+        $menu .= (in_array($view, array('vsscan', 'vsreport'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('ANTIVIRUS') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Hacking Starts;
 		$menu .= '<ul class="dropdown-menu">';
-		
-		$menu .= '<li ';
-		$menu .= ($view == 'advancerulesets') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=advancerulesets">' . oLang::_get('ADRULESETS'). '</a></li>';
-		
+
 		$menu .= '<li ';
 		$menu .= ($view == 'vsscan') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=vsscan">' . oLang::_get('ANTIVIRUS'). '</a></li>';
@@ -144,20 +132,25 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'vsreport') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=vsreport">' . oLang::_get('VSREPORT'). '</a></li>';
-		
+
+        $menu .= '</ul>';
+        // SubMenu Anti-Hacking Ends;
+        $menu .= '</li>';
 		/*
 		 $menu .= '<li ';
 		$menu .= ($view == 'ose_fw_clamav') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_clamav">' . oLang::_get('CLAMAV'). '</a></li>';
 		*/
-		
-		$menu .= '<li ';
-		$menu .= ($view == 'countryblock') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=countryblock">' . oLang::_get('COUNTRYBLOCK'). '</a></li>';
-		
-		$menu .= '<li ';
-		$menu .= ($view == 'cronjobs') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=cronjobs">' . oLang::_get('CRONJOBS'). '</a></li>';
+        $menu .= '<li ';
+        $menu .= (in_array($view, array('backup', 'advancebackup', 'authentication'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('O_BACKUP') . '<b class="caret"></b></a>';
+        // SubMenu Anti-Hacking Starts;
+        $menu .= '<ul class="dropdown-menu">';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'backup') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=backup">' . oLang::_get('BACKUP_MANAGER') . '</a></li>';
+
 		
 		$menu .= '<li ';
 		$menu .= ($view == 'advancedbackup') ? 'class="active"' : '';
@@ -178,20 +171,47 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'ose_fw_backup') ? 'class="active"' : '';
 		$menu .= '><a href="admin.php?page=ose_fw_backup">' . oLang::_get('BACKUP'). '</a></li>';
 		*/
+        $menu .= '<li ';
+        $menu .= (in_array($view, array('permconfig'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('FILE_PERMISSION') . '<b class="caret"></b></a>';
+        // SubMenu Anti-Hacking Starts;
+        $menu .= '<ul class="dropdown-menu">';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'permconfig') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=permconfig">' . oLang::_get('PERMCONFIG') . '</a></li>';
+
+        $menu .= '</ul>';
+        // SubMenu Anti-Hacking Ends;
+        $menu .= '</li>';
+        // Anti-Hacking Menu;
+        $menu .= '<li ';
+        $menu .= (in_array($view, array('adminemails', 'cronjobs', 'audit', 'configuration'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('ADMINISTRATION') . '<b class="caret"></b></a>';
+        // SubMenu Anti-Hacking Starts;
+        $menu .= '<ul class="dropdown-menu">';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'adminemails') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=adminemails">' . oLang::_get('ADMINEMAILS') . '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'audit') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=audit">' . oLang::_get('AUDIT_WEBSITE') . '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'cronjobs') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=cronjobs">' . oLang::_get('CRONJOBS') . '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'configuration') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=configuration">' . oLang::_get('INSTALLATION') . '</a></li>';
+
+        $menu .= '</ul>';
+        // SubMenu Anti-Hacking Ends;
+        $menu .= '</li>';
 		// BackUp Feature Ends
-		
-		// Configuration Menu;
-		$menu .= '<li ';
-		$menu .= ($view == 'configuration') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=configuration">' . oLang::_get('INSTALLATION'). '</a></li>';
-		// Configuration Feature Ends
-		
-		// About Menu
-		$menu .= '<li ';
-		$menu .= (in_array($view, array('login', 'subscription'))) ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=login">' . oLang::_get('MY_PREMIUM_SERVICE'). '</a></li>';
-		// About Ends
-		
+
 		if (class_exists('SConfig'))
 		{
 			// About Menu
@@ -200,8 +220,28 @@ class oseFirewall extends oseFirewallBase {
 			$menu .= '><a href="index.php?option=' . $extension . '&view=activation">' . oLang::_get('ACTIVATION_CODES'). '</a></li>';
 			// About Ends
 		}
-		$menu .=self::addSuiteMenu ();
-		
+        $menu .= self::addSuiteMenu();
+
+        // My account menu starts
+        $menu .= '<li ';
+        $menu .= (in_array($view, array('login', 'subscription'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('MY_ACCOUNT') . '<b class="caret"></b></a>';
+        // SubMenu Anti-Hacking Starts;
+        $menu .= '<ul class="dropdown-menu">';
+
+        $menu .= '<li ';
+        $menu .= '><a href="http://www.centrora.com/store/subscription-packages/" target="_blank">' . oLang::_get('MY_PREMIUM_SERVICE') . '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= (in_array($view, array('login', 'subscription'))) ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=login">' . oLang::_get('LOGIN_OR_SUBSCIRPTION') . '</a></li>';
+
+        $menu .= '</ul>';
+        // My account menu ends
+
+
+        // SubMenu Anti-Hacking Ends;
+        $menu .= '</li>';
 		// Main Feature Ends;
 		$menu .= '</ul></div></div></div>';
         echo $menu;

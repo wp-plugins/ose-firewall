@@ -51,6 +51,9 @@ jQuery(document).ready(function ($) {
             case "3":
                 classname = "fa fa-windows";
                 break;
+            case "4":
+                classname = "fa fa-google";
+                break;
             default:
                 classname = "";
         }

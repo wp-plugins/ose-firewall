@@ -21,7 +21,9 @@ $this->model->getNounce ();
 						</div>
 						<div class="panel-controls"></div>
 						<div class="panel-controls-buttons">
-							<button class="btn btn-primary btn-sm mr5 mb10" type="button" onClick="goSubscribe();"><?php oLang::_('SUBSCRIBE'); ?></button>
+                            <a class="btn btn-primary btn-sm mr5 mb10" type="button"
+                               href="<?php $this->model->goSubscribeUrl(); ?>"
+                               target="_blank"><?php oLang::_('SUBSCRIBE'); ?></a>
 							<button onclick="activateCode();" type="button" class="btn btn-danger btn-sm mr5 mb10"><?php oLang::_('ENTER_ACTIVATION_CODE'); ?></button>
 							<button onclick="redirectTut('http://www.centrora.com/store/index.php?route=affiliate/login');" type="button"
                                     class="btn btn-yellow btn-sm mr5 mb10"><?php oLang::_('PREMIUM_SERVICE_FREE'); ?></button>

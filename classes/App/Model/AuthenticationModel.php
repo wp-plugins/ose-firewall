@@ -39,6 +39,7 @@ class AuthenticationModel extends BaseModel
     {
         oseFirewall::callLibClass('backup', 'oseBackup');
         oseFirewall::callLibClass('backup/onedrive', 'onedrive');
+        oseFirewall::callLibClass('backup/googledrive', 'googledrive');
     }
     public function loadLocalScript()
     {
@@ -53,6 +54,8 @@ class AuthenticationModel extends BaseModel
     {
         return oLang::_get('AUTHENTICATION_DESC');
     }
+
+    //dropbox oauth
     public function oauth($type, $reload)
     {
         $backupManager = new oseBackupManager ();
@@ -69,6 +72,21 @@ class AuthenticationModel extends BaseModel
         }
     }
 
+    public function dropbox_init()
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->is_authorized();
+        return $return;
+    }
+
+    public function dropbox_logout()
+    {
+        $backupManager = new oseBackupManager ();
+        $return = $backupManager->dropbox_logout();
+        return $return;
+    }
+
+    // onedrive oauth
     public function oneDriveVerify()
     {
         $oneDrive = new onedriveModelBup ();
@@ -95,17 +113,30 @@ class AuthenticationModel extends BaseModel
         return $return;
     }
 
-    public function dropbox_init()
+    //google drive oauth
+    public function  oauthGoogleDrive()
     {
-        $backupManager = new oseBackupManager ();
-        $return = $backupManager->is_authorized();
+        $code = $this->getVar('googlecode', null);
+        $gDrive = new gdriveModelBup ();
+        if (!empty($code)) {
+            $return = $gDrive->authenticate($code);
+        } else {
+            $return = $gDrive->getAuthenticationURL();
+        }
+        echo $return;
+    }
+
+    public function googleDriveVerify()
+    {
+        $gDrive = new gdriveModelBup ();
+        $return = $gDrive->isAuthenticated();
         return $return;
     }
 
-    public function dropbox_logout()
+    public function googledrive_logout()
     {
-        $backupManager = new oseBackupManager ();
-        $return = $backupManager->dropbox_logout();
+        $gDrive = new gdriveModelBup ();
+        $return = $gDrive->logout();
         return $return;
     }
 }

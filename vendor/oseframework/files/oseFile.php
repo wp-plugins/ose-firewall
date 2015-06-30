@@ -91,6 +91,15 @@ class oseFile
 		}
 		return true;
 	}
+
+    public static function deletefolder($dir)
+    {
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? self::deletefolder("$dir/$file") : self::delete("$dir/$file");
+        }
+        return rmdir($dir);
+    }
 	public static function read($filename, $incpath = false, $amount = 0, $chunksize = 8192, $offset = 0)
 	{
 		// Initialise variables.
