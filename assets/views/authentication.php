@@ -30,7 +30,7 @@ if ($status == true) {
                                 $dropboxflag = $this->model->dropBoxVerify();
                                 if ($dropboxflag) { ?>
                                     <button id="onedriveLogout" class="btn btn-warning"
-                                            onclick="dropbox_logout()"><label class="fa fa-windows"></label>&nbsp;<?php oLang::_('O_DROPBOX_LOGOUT'); ?></button>
+                                            onclick="dropbox_logout()"><i class="fa fa-dropbox"></i>&nbsp;<?php oLang::_('O_DROPBOX_LOGOUT'); ?></button>
                                 <?php } else { ?>
                                     <button id="dropbox_authorize" class="btn-primary btn"
                                         onclick="initial_dropboxauth()"><i class="fa fa-dropbox"></i>&nbsp;<?php oLang::_('O_AUTHENTICATION_DROPBOX'); ?></button>
@@ -42,16 +42,16 @@ if ($status == true) {
                                 if ($flag = $this->model->oneDriveVerify()) {
                                     ?>
                                     <button id="onedriveLogout" class="btn btn-warning"
-                                            onclick="onedrive_logout()"><label class="fa fa-windows"></label>&nbsp;<?php oLang::_('O_ONEDRIVE_LOGOUT'); ?></button>
+                                            onclick="onedrive_logout()"><i class="fa fa-windows"></i>&nbsp;<?php oLang::_('O_ONEDRIVE_LOGOUT'); ?></button>
 
                                 <?php } elseif (!empty($_GET['code'])) {
                                     $this->model->oauthOneDrive();
                                     ?>
                                     <button id="onedriveLogout" class="btn btn-warning"
-                                            onclick="onedrive_logout()"><label class="fa fa-windows"></label>&nbsp;<?php oLang::_('O_ONEDRIVE_LOGOUT'); ?></button>
+                                            onclick="onedrive_logout()"><i class="fa fa-windows"></i>&nbsp;<?php oLang::_('O_ONEDRIVE_LOGOUT'); ?></button>
                                 <?php } else { ?>
                                     <a href="<?php $this->model->oauthOneDrive(); ?>"
-                                       class="btn-primary btn"><label class="fa fa-windows"></label>&nbsp;<?php oLang::_('O_AUTHENTICATION_ONEDRIVE'); ?> </a>
+                                       class="btn-primary btn"><i class="fa fa-windows"></i>&nbsp;<?php oLang::_('O_AUTHENTICATION_ONEDRIVE'); ?> </a>
                                 <?php }
                                 ?>
                                
