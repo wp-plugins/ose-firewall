@@ -77,7 +77,9 @@ function getPaymentAddress () {
 			}); 
 	 });	
 }
-
+function goSubscribe() {
+    window.open('http://www.centrora.com/store/centrora-subscriptions', '_blank');
+}
 function goSubscribe3 () {
 	 jQuery(document).ready(function($){	
      	getPaymentAddress ();

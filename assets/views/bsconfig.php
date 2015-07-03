@@ -183,10 +183,12 @@ $seoConfArray = $this->model->getConfiguration ( 'seo' );
 										<label for="scanMSNBots" class="col-sm-4 control-label"><?php oLang::_('O_SCAN_MSN_BOTS');?></label>
 										<div class="col-sm-8">
 												<label class="radio-inline">
-				                                     <input type="radio" name="scanMSNBots" value="1" <?php echo (!empty($seoConfArray['data']['scanMSNBots']) && $seoConfArray['data']['scanMSNBots']==true)?'checked="checked"':''?>><?php oLang::_('ON');?>
+                                                    <input type="radio" name="scanMsnBots"
+                                                           value="1" <?php echo (!empty($seoConfArray['data']['scanMsnBots']) && $seoConfArray['data']['scanMsnBots'] == true) ? 'checked="checked"' : '' ?>><?php oLang::_('ON'); ?>
 				                                </label>
 				                                <label class="radio-inline">
-				                                     <input type="radio" name="scanMSNBots" value="0" <?php echo (empty($seoConfArray['data']['scanMSNBots']))?'checked="checked"':''?>><?php oLang::_('OFF');?>
+                                                    <input type="radio" name="scanMsnBots"
+                                                           value="0" <?php echo (empty($seoConfArray['data']['scanMsnBots'])) ? 'checked="checked"' : '' ?>><?php oLang::_('OFF'); ?>
 				                                </label>
 										</div>
 									</div>

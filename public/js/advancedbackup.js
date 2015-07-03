@@ -299,6 +299,10 @@ jQuery(document).ready(function ($) {
             $('#advancedbackupTable tr').removeClass('selected');
         }
     });
+
+    $("a.panel-refresh").click(function () {
+        $('#advancedbackupTable').dataTable().api().ajax.reload();
+    });
 });
 function sendemail(id) {
     jQuery(document).ready(function ($) {

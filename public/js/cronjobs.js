@@ -32,11 +32,13 @@ jQuery(document).ready(function ($) {
     }
 
     function setvisualdisabled() {
-        $('#vscanweekdays').attr('disabled', !vscanonoffswitch.checked);
-        $('#vscancusthours').attr('disabled', !vscanonoffswitch.checked);
-        $('#backupweekdays').attr('disabled', !backuponoffswitch.checked);
-        $('#backupcusthours').attr('disabled', !backuponoffswitch.checked);
-        $('#cloudbackuptype').attr('disabled', !backuponoffswitch.checked);
+        if (typeof vscanonoffswitch != 'undefined'){
+            $('#vscanweekdays').attr('disabled', !vscanonoffswitch.checked);
+            $('#vscancusthours').attr('disabled', !vscanonoffswitch.checked);
+            $('#backupweekdays').attr('disabled', !backuponoffswitch.checked);
+            $('#backupcusthours').attr('disabled', !backuponoffswitch.checked);
+            $('#cloudbackuptype').attr('disabled', !backuponoffswitch.checked);
+        }
     }
 
     function iconload() {

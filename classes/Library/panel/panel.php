@@ -194,12 +194,19 @@ class panel
 
     public function getSignature($type)
     {
+        $dbo = oseFirewall::getDBO();
+        $flag = $dbo->getTotalNumber('id', '#__osefirewall_advancerules');
         $this->live_url = "https://www.centrora.com/accountApi/update/getSignature";
         $content = array();
         $content['webkey'] = $this->getWebKey();
         $content['remoteChecking'] = true;
         $content['task'] = 'getSignatures';
         $content['type'] = $type;
+        if (empty($flag)) {
+            $content['update'] = 0;
+        } else {
+            $content['update'] = 1;
+        }
         $this->sendRequest($content);
     }
 	public function getSubscriptions() {

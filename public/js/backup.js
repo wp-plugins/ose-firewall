@@ -36,7 +36,9 @@ jQuery(document).ready(function($) {
 			$('#backupTable tr').removeClass('selected');
 		}
 	});
-
+    $("a.panel-refresh").click(function () {
+        $('#backupTable').dataTable().api().ajax.reload();
+    });
 });
 
 function ajaxdeletebackup() {

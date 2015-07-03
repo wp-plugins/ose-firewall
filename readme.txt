@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 4.9.0
+Stable tag: 4.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 4.9.1 = 
+* Fixed: Fixed the signature update function in Advance Firewall Panel
+* Fixed: Fixed backup panel not showing up properly in some servers with PHP version lower than 5.4
+* Fixed: Minor fix for Javascript functions
+* Updated: updated the Danish language file
 
 = 4.9.0 =
 * Added: Add Google Drive backup

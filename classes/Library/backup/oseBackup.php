@@ -287,6 +287,15 @@ class oseBackupManager
         }
     }
 
+    private function getPathInfoRB ($file, $info){
+        $pInfo = pathinfo($file);
+        $name = '';
+        if (! empty($pInfo) && is_array($pInfo)) {
+            $name = $pInfo[$info];
+        }
+        return $name;
+    }
+
     public function getDropboxUploads($id)
     {
         require_once dirname(__FILE__) . '/oauthCurl.php';
@@ -301,13 +310,13 @@ class oseBackupManager
                 $currentDomain = preg_replace('/[:\/;*<>|?]/', '', $_SERVER['HTTP_HOST']);
                 $this->dropboxCreateFolder($this->dropbox, $currentDomain);
                 $file = $this->getBackupDBByID($id);
-                $filename1 = pathinfo($file)['filename'];
-                $dirpath = pathinfo($file)['dirname'];
-                $parentfolder = pathinfo($dirpath)['basename'];
+                $filename1 = $this -> getPathInfoRB ($file, 'filename');
+                $dirpath = $this -> getPathInfoRB ($file, 'dirname');
+                $parentfolder = $this -> getPathInfoRB ($dirpath, 'basename');
                 if ($parentfolder == $filename1){
                     $files = array_diff(scandir($dirpath), array('.', '..'));
                     foreach ($files as $dirfile) {
-                        $filename2 = pathinfo("$dirpath/$dirfile")["filename"];
+                        $filename2 = $this -> getPathInfoRB ("$dirpath/$dirfile", 'filename');
                         if (!is_dir("$dirpath/$dirfile") && ($filename2 == $parentfolder)) {
                             $response['varArray'][] = array('path'=> "$dirpath/$dirfile", 'folder' => "$currentDomain/$filename1");
                             $e++;
@@ -716,9 +725,9 @@ class oseBackupManager
                 $result = osefile::delete($token->dbBackupPath);
             }
             if (!empty ($token->fileBackupPath)) {
-                $filename = pathinfo($token->fileBackupPath)['filename'];
-                $dirpath = pathinfo($token->fileBackupPath)['dirname'];
-                $parentfolder = pathinfo($dirpath)['basename'];
+                $filename = $this -> getPathInfoRB ($token->fileBackupPath, 'filename');
+                $dirpath = $this -> getPathInfoRB ($token->fileBackupPath, 'dirname');
+                $parentfolder = $this -> getPathInfoRB ($dirpath, 'basename');
                 if ($parentfolder == $filename){
                     $result = osefile::deletefolder($dirpath);
                 }else {
@@ -1133,7 +1142,7 @@ class oseBackupManager
         if (function_exists('ini_set')) {
             $this->enableSystemFunction();
         }
-        $this->outputFolder = pathinfo($outZipPath)['dirname'];
+        $this->outputFolder = $this -> getPathInfoRB ($outZipPath, 'dirname');
         mkdir($this->outputFolder);
         if (!file_exists($outZipPath)) {
             if (function_exists('system') /*&& ini_get('max_execution_time') < 300*/){
@@ -1175,7 +1184,7 @@ class oseBackupManager
         ob_end_clean();
     }
 
-    Private function zipPHPArchive($sourcePath, $outZipPath, $excludearray)
+    private function zipPHPArchive($sourcePath, $outZipPath, $excludearray)
     {
         $serializefile = (OSE_CMS == 'wordpress') ?
             OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "filesbackuplist.txt" : OSE_ABSPATH . ODS . 'media' . ODS . 'CentroraBackup' . ODS . "filesbackuplist.txt";
@@ -1206,7 +1215,8 @@ class oseBackupManager
     public function addFilesToArchive($sourcePath, $outZipPath, $serializefile, $recall = false)
     {
         $starttime = microtime(true);
-        $exclusiveLength = strlen(pathinfo($sourcePath)['dirname']."/");
+        $parent = $this -> getPathInfoRB ($sourcePath, 'dirname');
+        $exclusiveLength = strlen($parent."/");
         //load filelist variable from serialized file and check if complete
         $filelist = unserialize(oseFile::read($serializefile));
         $zip = new ZipArchive();
@@ -1298,9 +1308,9 @@ class oseBackupManager
     }
     public function checkZipSplitType ($outZipPath){
         $ZipSplitType = 'none';
-        $filename1 = pathinfo($outZipPath)['filename'];
-        $dirpath = pathinfo($outZipPath)['dirname'];
-        $parentfolder = pathinfo($dirpath)['basename'];
+        $filename1 = $this -> getPathInfoRB ($outZipPath, 'filename');
+        $dirpath = $this -> getPathInfoRB ($outZipPath, 'dirname');
+        $parentfolder = $this -> getPathInfoRB ($dirpath, 'basename');
         if ($parentfolder == $filename1) {
             $files = array_diff(scandir($dirpath), array('.', '..'));
             foreach ($files as $dirfile) {
@@ -1323,9 +1333,9 @@ class oseBackupManager
     private function getNumMergeZipFiles ($outZipPath)
     {
         $count = 0;
-        $filename1 = pathinfo($outZipPath)['filename'];
-        $dirpath = pathinfo($outZipPath)['dirname'];
-        $parentfolder = pathinfo($dirpath)['basename'];
+        $filename1 = $this -> getPathInfoRB ($outZipPath, 'filename');
+        $dirpath = $this -> getPathInfoRB ($outZipPath, 'dirname');
+        $parentfolder = $this -> getPathInfoRB ($dirpath, 'basename');
         if ($parentfolder == $filename1) {
             $files = array_diff(scandir($dirpath), array('.', '..'));
             foreach ($files as $dirfile) {
@@ -1361,9 +1371,9 @@ class oseBackupManager
         require_once dirname(__FILE__) . '/onedrive/onedrive.php';
         $oneDrive = new onedriveModelBup();
         $file = $this->getBackupDBByID($id);
-        $filename = pathinfo($file)['filename'];
-        $dirpath = pathinfo($file)['dirname'];
-        $parentfolder = pathinfo($dirpath)['basename'];
+        $filename = $this -> getPathInfoRB ($file, 'filename');
+        $dirpath = $this -> getPathInfoRB ($file, 'dirname');
+        $parentfolder = $this -> getPathInfoRB ($dirpath, 'basename');
         $oneDrive->refreshAccessToken();
         $folder_id = $oneDrive->getDomainObject();
         $e = 0;
@@ -1371,7 +1381,7 @@ class oseBackupManager
             $filebackupfolder_id = $oneDrive-> getFileBackupFolderID( $parentfolder,$folder_id );
             $files = array_diff(scandir($dirpath), array('.', '..'));
             foreach ($files as $dirfile) {
-                $filename2 = pathinfo("$dirpath/$dirfile")["filename"];
+                $filename2 = $this -> getPathInfoRB ("$dirpath/$dirfile", 'filename');
                 if (!is_dir("$dirpath/$dirfile") && ($filename2 == $parentfolder)) {
                     $e++;
                     $response['varArray'][] = array('path'=> "$dirpath/$dirfile", 'folderID' => $filebackupfolder_id -> id );
@@ -1398,9 +1408,9 @@ class oseBackupManager
         require_once dirname(__FILE__) . '/googledrive/googledrive.php';
         $gDrive = new gdriveModelBup();
         $file = $this->getBackupDBByID($id);
-        $filename = pathinfo($file)['filename'];
-        $dirpath = pathinfo($file)['dirname'];
-        $parentfolder = pathinfo($dirpath)['basename'];
+        $filename = $this -> getPathInfoRB ($file, 'filename');
+        $dirpath = $this -> getPathInfoRB ($file, 'dirname');
+        $parentfolder = $this -> getPathInfoRB ($dirpath, 'basename');
         $flag = $gDrive->getRefreshToken();
         if (!empty($flag)) {
             $gDrive->refreshAccessToken();
@@ -1411,7 +1421,7 @@ class oseBackupManager
             $filebackupfolder_id = $gDrive->createFolder($parentfolder, $folder_id->id);// createFolder($parentfolder, null, $folder_id->id);
             $files = array_diff(scandir($dirpath), array('.', '..'));
             foreach ($files as $dirfile) {
-                $filename2 = pathinfo("$dirpath/$dirfile")["filename"];
+                $filename2 = $this -> getPathInfoRB ("$dirpath/$dirfile", 'filename');
                 if (!is_dir("$dirpath/$dirfile") && ($filename2 == $parentfolder)) {
                     $e++;
                     $response['varArray'][] = array('path' => "$dirpath/$dirfile", 'folderID' => $filebackupfolder_id->id);
