@@ -688,5 +688,5 @@ define('O_BACKUP', 'Backup');
 define('ADMINISTRATION', 'System Menu');
 define('FILE_PERMISSION', 'File Permission');
 define('O_BACKUP_GOOGLEDRIVE', 'GoogleDrive');
-
+define('DOWNLOAD_SUCCESS', 'Signatures are updated successfully');
 ?>
