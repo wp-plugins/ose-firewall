@@ -116,7 +116,7 @@ class VsscanModel extends BaseModel {
 	}
 	public function updatePatterns ($patternType) {
 		oseFirewall::callLibClass('downloader', 'oseDownloader');
-		$downloader = new oseDownloader('ath', null);
+		$downloader = new oseDownloader('avs', null);
 		$response = $downloader->updateVSPattern($patternType);
 		return $response; 
 	}

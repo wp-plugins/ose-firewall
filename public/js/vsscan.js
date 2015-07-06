@@ -418,12 +418,12 @@ function downloadRequest(type) {
             },
             success: function (data) {
                 hideLoading();
-                downloadSQL(type, data.downloadKey);
+                downloadSQL(type, data.downloadKey, data.version);
             }
         });
     });
 }
-function downloadSQL(type, downloadKey) {
+function downloadSQL(type, downloadKey, version) {
     jQuery(document).ready(function ($) {
         showLoading();
         $.ajax({
@@ -437,12 +437,18 @@ function downloadSQL(type, downloadKey) {
                 task: 'downloadSQL',
                 type: type,
                 downloadKey: downloadKey,
+                version: version,
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
+                showLoading(data.result);
                 hideLoading();
-                showDialogue(O_VSPATTERN_UPDATE, O_SUCCESS, O_OK);
-            }
+                if (data.status == "ERROR"){
+                    showDialogue(O_VSPATTERN_UPDATE_FAIL, O_FAIL, O_OK);
+                } else {
+                    showDialogue(O_VSPATTERN_UPDATE, O_SUCCESS, O_OK);
+                }
+                }
         });
     });
 }

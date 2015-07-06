@@ -65,12 +65,12 @@ function downloadRequest(type) {
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
-                downloadSQL(type, data.downloadKey);
+                downloadSQL(type, data.downloadKey, data.version);
             }
         });
     });
 }
-function downloadSQL(type, downloadKey) {
+function downloadSQL(type, downloadKey, version) {
     jQuery(document).ready(function ($) {
         showLoading('Signature is being updated, please wait...');
         $.ajax({
@@ -84,6 +84,7 @@ function downloadSQL(type, downloadKey) {
                 task: 'downloadSQL',
                 type: type,
                 downloadKey: downloadKey,
+                version: version,
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {

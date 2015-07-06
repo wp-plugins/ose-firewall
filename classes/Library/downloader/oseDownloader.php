@@ -32,11 +32,13 @@ class oseDownloader
 	private $type = null;
 	private $key = null;
 	private $url = null; 
-	private $live_url = null; 
-	public function __construct($type, $key = null)
+	private $live_url = null;
+
+    public function __construct($type, $key = null, $version = null)
 	{
 		$this->type = $type;
 		$this->key = $key;
+        $this->version = $version;
 		$this->live_url = "http://www.centrora.com/?";
 		$this->url = $this->live_url."download=1&downloadKey=".$this->key;
 		oseFirewall::loadFiles(); 
@@ -66,6 +68,7 @@ class oseDownloader
                 $return = $this->download();
             }
         }
+        $this->updateVersion($this->type, $this->version);
         $db->closeDBO();
         return $return;
     }

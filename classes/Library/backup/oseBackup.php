@@ -1308,9 +1308,9 @@ class oseBackupManager
     }
     public function checkZipSplitType ($outZipPath){
         $ZipSplitType = 'none';
-        $filename1 = $this -> getPathInfoRB ($outZipPath, 'filename');
-        $dirpath = $this -> getPathInfoRB ($outZipPath, 'dirname');
-        $parentfolder = $this -> getPathInfoRB ($dirpath, 'basename');
+        $filename1 = self::getPathInfoRB ($outZipPath, 'filename');
+        $dirpath = self::getPathInfoRB ($outZipPath, 'dirname');
+        $parentfolder = self::getPathInfoRB ($dirpath, 'basename');
         if ($parentfolder == $filename1) {
             $files = array_diff(scandir($dirpath), array('.', '..'));
             foreach ($files as $dirfile) {

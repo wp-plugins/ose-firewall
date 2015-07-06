@@ -195,7 +195,11 @@ class panel
     public function getSignature($type)
     {
         $dbo = oseFirewall::getDBO();
-        $flag = $dbo->getTotalNumber('id', '#__osefirewall_advancerules');
+        if ($type == 'ath') {
+            $flag = $dbo->getTotalNumber('id', '#__osefirewall_advancerules');
+        } else {
+            $flag = $dbo->getTotalNumber('id', '#__osefirewall_vspatterns');
+        }
         $this->live_url = "https://www.centrora.com/accountApi/update/getSignature";
         $content = array();
         $content['webkey'] = $this->getWebKey();

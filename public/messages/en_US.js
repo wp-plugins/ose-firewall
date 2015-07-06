@@ -87,3 +87,5 @@ var O_EMAILTEMP_SUCESSS = "Email template is restoring to default";
 var O_UPLOAD_GOOGLEDRIVE = "The backup file has been uploaded to your GoogleDrive";
 var O_VSPATTERN_UPDATE = "Virus signature has been updated";
 var O_PREP_FILES = "Preparing File(s) for Upload...";
+var O_VSPATTERN_UPDATE_FAIL = "There are errors when updating virus signature ";
+

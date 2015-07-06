@@ -152,7 +152,7 @@ if ($status == true)
               <div class="panel-heading">
               </div>
               <div class="panel-controls-buttons">
-              <button class="btn btn-success btn-sm mr5 mb10" type="button" onClick="downloadRequest('bsavs')"><?php oLang::_('O_UPDATE_VIRUS_SIGNATURE'); ?></button>
+              <button class="btn btn-success btn-sm mr5 mb10" type="button" onClick="downloadRequest('avs')"><?php oLang::_('O_UPDATE_VIRUS_SIGNATURE'); ?></button>
               <button data-target="#configModal" data-toggle="modal" class="btn btn-success btn-sm mr5 mb10" type="button" ><?php oLang::_('CONFIGURATION');?></button>
 			  </div>
               <div class="panel-body">

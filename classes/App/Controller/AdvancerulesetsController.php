@@ -70,7 +70,8 @@ class AdvancerulesetsController extends \App\Base {
         $this->model->loadRequest();
         $type = $this->model->getVar('type', null);
         $downloadKey = $this->model->getVar('downloadKey', null);
-        $result = $this->model->downloadSQL($type, $downloadKey);
+        $version = $this->model->getVar('version', null);
+        $result = $this->model->downloadSQL($type, $downloadKey, $version);
 		if ($result==true)
 		{
 			$this->model->aJaxReturn(true, 'SUCCESS', $this->model->getLang('DOWNLOAD_SUCCESS'), FALSE);
