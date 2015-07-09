@@ -1151,7 +1151,7 @@ class oseFirewallScanner {
 		}
 		return $return;
 	} 
-	protected function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname, $type) {
+	protected function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname, $type = 'bs') {
 		$return = array ();
 		$return ['impact'] = $impact;
 		$return ['attackTypeID'] = $attackTypeID;

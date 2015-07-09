@@ -273,13 +273,13 @@ class virusScanner {
 	private function setPatterns($type) {
 		$query = "SELECT `id`,`patterns` FROM `#__osefirewall_vspatterns` WHERE `type_id` = ".(int)$type;
 		$this->db->setQuery($query);
-		$_SESSION['patterns'] = $this->db->loadObjectList();
+		$this->patterns = $this->db->loadObjectList();
 		//$_SESSION['patterns'][]= (object) array('id'=>'20', 'patterns'=>'[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|\'<>.^*()%!-~\s]+\"[\(abcdeos46_]+\w+\'\)+\;');
 		//$_SESSION['patterns'][]= (object) array('id'=>'21', 'patterns'=>"\<\?php\s+[$]([A-Z0-9a-z_])\w+[\s\=]+[\'|\w]+[$&+,:;=?@#|'<>.^*()%!-~\s]+\;\?\>");
 		//$_SESSION['patterns'][]= (object) array('id'=>'22', 'patterns'=>"base64\_decode");
 		//$_SESSION['patterns'][]= (object) array('id'=>'23', 'patterns'=>"eval\(");
-		$_SESSION['patterns'][]= (object) array('id'=>'23', 'patterns'=>"\<\?php\s*(\$|\w|\s|\=)*.*HTTP_USER_AGENT.*keywordsRegex.*exit\(\)\;\s*\}\s*\?\>");
-		$_SESSION['patterns'][]= (object) array('id'=>'24', 'patterns'=>"\<\?php\s*(\$|\w|\s|\=|\"|\.)*\;eval\(.*\)\;\?>");
+		$this->patterns[]= (object) array('id'=>'23', 'patterns'=>"\<\?php\s*(\$|\w|\s|\=)*.*HTTP_USER_AGENT.*keywordsRegex.*exit\(\)\;\s*\}\s*\?\>");
+		$this->patterns[]= (object) array('id'=>'24', 'patterns'=>"\<\?php\s*(\$|\w|\s|\=|\"|\.)*\;eval\(.*\)\;\?>");
 	}
 	private function updateAllFileStatus($status = 0)
 	{
@@ -583,7 +583,7 @@ class virusScanner {
 		if (count($this->vsInfo->fileset) == 0)
 		{
 			$this->clearFile ($type);
-			$this->clearDirFile();
+			//$this->clearDirFile();
             return $this->returnCompleteMsg($_SESSION['last_scanned'], $type);
 		}
 		return true; 
@@ -762,10 +762,10 @@ class virusScanner {
 		$matches = array ();
         $i = 0;
 
-		foreach($_SESSION['patterns'] as $key => $pattern)
+		foreach($this->patterns as $key => $pattern)
 		{
 			$i++;
-			$array = preg_split('/'.trim($pattern->patterns).'/im', $content, 2);
+			$array = preg_split('/'.trim($pattern->patterns).'/ims', $content, 2);
 
             if(count($array)>1)
 			{
