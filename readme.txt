@@ -13,8 +13,8 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 
 == Description ==
 
-= MOST POWERFUL WORDPRESS SECURITY PLUGIN =
-Centrora Security is a new plugin that's modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities.
+= YOUR ALL IN ONE SECURITY PLUGIN =
+Centrora Security is an all in one security plugin. Firewall, malware scanner, backup and file permissions are all integrated into one solution. It is a WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 
 = New features in v5.0: =
 * Added: Brand New Look and feel! - We took valuable feedback from you our customers and revamped the look of Centrora Security. Give it a go, we think you will love it!
