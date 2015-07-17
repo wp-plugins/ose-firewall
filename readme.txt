@@ -2,7 +2,7 @@
 Contributors: osexcel, ProHelix, ProKai, ProChase
 Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
-Tags: wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware, google drive, google drive backup, dropbox, dropbox backup, one drive, one drive backup, virus scanner, malware scanning, malware removal
+Tags: wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware, google drive, google drive backup, dropbox, dropbox backup, one drive, one drive backup, virus scanner, malware scanning, malware removal, backup, wordpress backup
 Requires at least: 3.7
 Tested up to: 4.2.2
 Stable tag: 5.0.0
