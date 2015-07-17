@@ -1,6 +1,6 @@
 function updateNumbOfWebsite()
 {
-	showLoading();
+	//showLoading();
 	jQuery(document).ready(function($){
 		$.ajax({
 	        type: "POST",
@@ -15,7 +15,7 @@ function updateNumbOfWebsite()
 		    },
 	        success: function(data)
 	        {
-		           hideLoading();  
+		           //hideLoading();
 		           $('#numofWebsite').text(data.total);
 	        }
 	      });

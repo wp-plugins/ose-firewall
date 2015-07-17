@@ -11,7 +11,7 @@ h6,
 .h5,
 .h6 {
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.1;
   letter-spacing: 0;
 }
@@ -405,7 +405,7 @@ h6 small,
   color: #ae5304 !important;
 }
 .color-gray {
-  color: #ecf0f1 !important;
+  color: #d7dbdc !important;
 }
 .color-grayspr {
   color: #f2f1ef !important;
@@ -495,7 +495,7 @@ a.text-primary:hover {
   color: #176b97;
 }
 .text-success {
-  color: #3fc380;
+  color: #4caf50;
 }
 a.text-success:hover {
   color: #319e67;
@@ -559,6 +559,12 @@ a.text-magenta:hover {
 }
 a.text-lime:hover {
   color: #90c526;
+}
+.text-block {
+  color: #f44336;
+}
+a.text-block:hover {
+  color: #f44336;
 }
 /* ------------------ Positions --------------------*/
 .relative {
@@ -719,9 +725,9 @@ body {
   overflow-x: hidden;
   min-height: 100%;
   background: #f2f1ef;
-  color: #030303;
+  color: #3e4855;
   -webkit-font-smoothing: antialiased;
-  font-weight: 300;
+  font-weight: 350;
   position: relative;
 }
 body.ovh {
@@ -3431,7 +3437,7 @@ body.full-screen #header {
 }
 
 .navbar {
-    border: 1px solid #e5e5e5;
+    border: 0px solid #e5e5e5;
     margin-bottom: 3px;
 }
    

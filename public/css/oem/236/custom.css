@@ -12,10 +12,11 @@
 .vendorname {
     float: left;
     margin-top: 38px;
-    width: 90px;
-    font-size: 42px;
+    min-width: 90px;
+    font-size: 40px;
     height: 90px;
-    color: #000000;
+    font-weight: bold;
+    color: #3e4855;
 }
 
 /** version icon **/
@@ -29,14 +30,14 @@
 .version-update {
     background-color: #ff7a00;
     margin-top: 74px;
-    border-radius: 5px;
-    border: solid #ff7a00;
     color: #ffffff;
     float: left;
     font-size: 10px;
     margin-left: 40px;
     margin-bottom: 5px;
     padding: 0 6px;
+    border: 0 solid #ff7a00;
+    border-radius: 2px;
 }
 .version-update:hover,
 .version-update:focus,
@@ -50,7 +51,6 @@
 
 /** vendor logo **/
 .logo {
-    background: url("imgs/logo-header.png") no-repeat scroll 0 0 transparent;
     height: 75px;
     margin-right: -150px;
     margin-top: 30px;
@@ -60,17 +60,13 @@
 
 /** navbar top **/
 .navbar-top {
-    background: none repeat scroll 0 0 #89bb30;
-    border-bottom: 1px solid #e5e5e5;
-    box-shadow: 0px 7px 45px #888888;
-
-}
-
+    background: #090B04 none repeat scroll 0 0;
+}    
 /**********************************************************************/
 
 /*  Navigation Bar */
 .navbar-default .navbar-nav > li > a {
-    color: #89bb30;
+    color: #E1F7BA;
 }
 
 .navbar.navbar-default {
@@ -78,11 +74,13 @@
     margin-bottom: -1px;
 }
 .bs-component .navbar.navbar-default {
-    background-color: #d7d8d9;
+    background-color: #89bb30;
+    margin-bottom: -9px;
+    margin-top: 10px;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-    color: white;
+    color: #fff;
     background-color: #89bb30;
 }
 
@@ -93,7 +91,8 @@
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     background-color: #89bb30;
     color: white;
-    opacity: 0.4;
+    opacity: 1;
+    font-weight: bold;
 }
 
 .nav li.active {
@@ -110,13 +109,13 @@
 }
 
 
-.navbar {
-    border: 1px solid #e5e5e5;
-    margin-bottom: 3px;
+.navbar-default {
+    border: 0px solid rgba(158, 173, 195, 0.16);
+    margin-bottom: 0px;
 }
 
 .userMenu li a {
-    color: #000000;
+    color: #fff;
 }
 
 .panel, .dataTables_wrapper{ 
@@ -132,8 +131,7 @@
 }
 
 .table > thead > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tfoot > tr > td {
-    line-height: 0;
-    width: 90px;
+    min-width: 90px;
 }
 
 .panel-primary > .panel-heading {
@@ -148,7 +146,7 @@
 }
 
 .panel-primary > .panel-body {
-    border: 1px solid #fff;
+    border: 1px solid rgba(158, 173, 195, 0.16);
 }
 .panel-dark > .panel-body {
     border: 1px solid #fff;
@@ -164,7 +162,7 @@
 
 .bs-callout-info {
     background-color: transparent;
-    border-bottom: 1px solid #000000;
+    border-bottom: 0px solid #000000;
     border-left: 0px solid #fefefe;
 }
 
@@ -174,8 +172,12 @@
 
 .panel.plain.panel-primary .panel-heading {
     background-color: transparent;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid rgba(158, 173, 195, 0.16);
     color: #000000;
+}
+
+#oseappcontainer .container {
+	border: 1px solid rgba(158, 173, 195, 0.16);
 }
 
 .panel.plain.panel-dark .panel-heading {
@@ -185,8 +187,7 @@
 }
 .panel-heading,
 .panel-body {
-	padding-top: 20px !important;
-	margin: 5px 15px !important;
+	margin: 0px 15px !important;
 }
 .panel-heading.white-bg {
 	background-color: transparent !important;
@@ -239,10 +240,11 @@
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     background-color: #89bb30;
-	opacity: 0.4;
+	opacity: 1;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-	color: #444;
+	color: #fff;
+	font-weight: bold;
 }
 .nav-tabs > li > a {
     color: #000000;
@@ -291,9 +293,6 @@
     border-bottom: 0px solid #000000;
 }
 
-.list-group a, .list-group a:link {
-	color: #444 !important;
-}
 .list-group-item {
     color: #000000;
 }
@@ -317,22 +316,26 @@ table.dataTable {
 /**********************************************************************/
 /*  Modal  */
 .modal .modal-content .modal-header {
-    background: #89bb30;
+    background: #fff;
 }
 
 /**********************************************************************/
 /*  Button  */
+.btn {
+    padding: 2px 12px;
+}
+
 .btn-primary,
 .btn-success,
 .btn-danger,
 .btn-yellow,
 .btn-default,
 .btn-primary.btn-alt {
-    color: white;
     background-color: #89bb30;
-    border-color: initial;
+    border: 0 solid #fff;
+    border-radius: 2px;
     box-shadow: none;
-    border-radius: 7px;
+    color: white;
 }
 
 .btn-primary:hover,
@@ -345,7 +348,6 @@ table.dataTable {
     background-color: #89bb30;
     border-color: initial;
     box-shadow: none;
-    border-radius: 7px;
 }
 
 .btn-primary:visited,
@@ -384,6 +386,52 @@ table.dataTable {
     color: #89bb30 !important;
 }
 
+.everythingOnOneLine .col-lg-12 {
+	padding: 0px;
+}
+#versions {
+    float: left;
+    margin-top: 0px;
+    padding: 75px 20px 0;
+}
+.version-update { 
+	 margin-top: 0px;
+}
+.centrora-affiliates .btn {
+	border: 0px solid #89bb30;
+    border-radius: 2px;
+    font-size: 10px;
+    padding: 2px 6px;
+}
+.centrora-affiliates {
+	float: left;
+	margin-top: 73px;
+}
+ .centrora-news {
+	float: left;
+	margin-top: 75px;
+	padding: 1px 6px;
+}
+.centrora-news .btn {
+	border: 1px solid #89bb30;
+    border-radius: 2px;
+    font-size: 10px;
+    padding: 2px 6px;
+}
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+.modal-footer {
+	background-color: #fff;
+}
+#passcodeForm {
+    margin: 10px auto;
+    width: 800px;
+}
+#passcodeForm input {
+	width: 100%;
+}
 /*#wpcontent {*/
 /*background: url(imgs/background.jpg) repeat-y 0px 0px white !important;*/
 /*}*/

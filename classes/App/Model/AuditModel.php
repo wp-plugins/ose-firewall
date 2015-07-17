@@ -341,10 +341,6 @@ class AuditModel extends BaseModel {
 		$audit = new oseFirewallAudit ();
 		$audit -> showSafeBrowsingBar(true);
 	}
-	public function affiliateAccountExists () {
-		$config = $this->getConfiguration('panel');
-		return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;
-	}
 	public function saveTrackingCode ($trackingCode) {
 		$this->loadFirewallStat () ;
 		$oseFirewallStat = new oseFirewallStat();

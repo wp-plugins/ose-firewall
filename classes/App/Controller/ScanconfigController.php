@@ -37,20 +37,23 @@ class ScanconfigController extends ConfigurationController {
 		switch ($type)
 		{
 			case 'scan':
-				$data['devMode'] = $this->model->getInt('devMode', 0);
+				$data['devMode'] = $this->model->getInt('devMode', 1);
+                $data['strongPassword'] = $this->model->getInt('strongPassword', 0);
 				$data['allowExts'] = $this->model->getVar('allowExts', null);
 				$data['scanUpFiles'] = $this->model->getInt('scanUpFiles', null);
 				$data['blockIP'] = $this->model->getInt('blockIP', 0);
 				$data['adminEmail'] = $this->model->getVar('adminEmail', null);
-				$data['receiveEmail'] = $this->model->getInt('receiveEmail', 1);
+				$data['receiveEmail'] = $this->model->getInt('receiveEmail', 0);
 				$data['googleVerification'] = $this->model->getVar('googleVerification', 0);
                 $data['gaSecret'] = $this->model->getVar('GA_secret', null);
+				$data['customBanpage'] = $_POST['customBanpage'];
+				$data['customBanURL'] = $this->model->getVar('customBanURL',null);
 				break;
 			case 'advscan':
-				$data['adRules'] = $this->model->getInt('adRules', 20);
+				$data['adRules'] = $this->model->getInt('adRules', 0);
 				$data['threshold'] = $this->model->getInt('threshold', 20);
 				$data['slient_max_att'] = $this->model->getInt('slient_max_att', 10);
-				$data['silentMode'] = $this->model->getInt('silentMode', 1);
+				$data['silentMode'] = $this->model->getInt('silentMode', 0);
 				$data['blockCountry'] = $this->model->getInt('blockCountry', 0);
 				break;
 			case 'communicate':
@@ -78,6 +81,22 @@ class ScanconfigController extends ConfigurationController {
 		$this->model->saveConfiguration($type, $data);
 	}
 
+    public function action_checkPassword()
+    {
+        $result = $this->model->checkPassword();
+        $this->model->returnJSON($result);
+    }
+
+    public function action_savePassword()
+    {
+        $this->model->loadRequest();
+        $mpl = $this->model->getInt('mpl', 4);
+        $pmi = $this->model->getInt('pmi', 0);
+        $pms = $this->model->getInt('pms', 0);
+        $pucm = $this->model->getInt('pucm', 0);
+        $result = $this->model->savePassword($mpl, $pmi, $pms, $pucm);
+        $this->model->returnJson($result);
+    }
     public function action_showGoogleSecret()
     {
         $result = $this->model->showGoogleSecret();

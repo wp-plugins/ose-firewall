@@ -11,15 +11,12 @@
                             <div class="modal-body">
 								<form id = 'affiliate-form' class="form-horizontal group-border stripped" role="form">
 									<div class="form-group">
+											<p class="bg-danger"><?php oLang::_('AFFILIATE_PROGRAM_DESC');?></p>
+									</div>
+									<div class="form-group">
 										<label for="pageTitle" class="col-sm-4 control-label"><?php oLang::_('ADD_TRACKING_CODE');?></label>
 										<div class="col-sm-8">
 				                               <input type="text" name="trackingCode" value="" class="form-control">
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-sm-8"></div>
-										<div class="col-sm-4" >
-											<a class="btn btn-primary btn-xs fx-button mr5" href="http://www.centrora.com/store/affiliate-program#addTrackingCode" target="_blank">Tutorial</a>
 										</div>
 									</div>
 										<input type="hidden" name="option" value="com_ose_firewall"> 
@@ -27,8 +24,11 @@
 										<input type="hidden" name="action" value="saveTrackingCode">
 										<input type="hidden" name="task" value="saveTrackingCode">
 									<div class="form-group">
-										<div class="col-sm-offset-10">
-											<button type="submit" class="btn btn-default" ><?php oLang::_('SAVE');?></button>
+										<div class="col-md-12">
+											<div class="pull-right">
+											<a class="btn btn-default mr5 mr10" href="http://www.centrora.com/affiliate-partners/" target="_blank"><i class="glyphicon glyphicon-list-alt"></i> Tutorial</a>
+											<button type="submit" class="btn btn-default mr5 mr10" ><i class="glyphicon glyphicon-save"></i> <?php oLang::_('SAVE');?></button>
+											</div>
 										</div>
 									</div>
 								</form>

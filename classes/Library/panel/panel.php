@@ -303,31 +303,39 @@ class panel
         $dbo->setQuery($query);
         return $dbo->loadObject()->value;
     }
+
     public function getLatestVersion (){
-
-        $query1 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LastUpdateCheck'";
         $query2 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LatestVersion'";
-
-        $LastUpdateCheck = $this->returnValueDBQuery($query1);
         $LatestVersion = $this->returnValueDBQuery($query2);
-        $elapsedtime = round(abs(time() - $LastUpdateCheck) / 60,2); //elapsedtime in minutes
-        $timeinterval = 30; // Time delay Interval in minutes
-
-        if (empty ($LastUpdateCheck)) {
+		$checkUpdateInterval = self::checkUpdateInterval();
+        if (empty ( $LatestVersion )) {
             $LatestVersion = self::getUpdateCheck();
-            $query3 = "INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LastUpdateCheck','" . time() . "','UpdateCheck')";
             $query4 = " INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LatestVersion','" . $LatestVersion . "','UpdateCheck')";
-            $this->runDbQuery($query3);
             $this->runDbQuery($query4);
-        } elseif ( $elapsedtime >= $timeinterval) {
+        } elseif ( $checkUpdateInterval ) {
             $LatestVersion = self::getUpdateCheck();
-            $query5 = "UPDATE `#__ose_secConfig` SET `value`='" . time() . "' WHERE `key` LIKE 'LastUpdateCheck'";
             $query6 = " UPDATE `#__ose_secConfig` SET `value`='" . $LatestVersion . "' WHERE `key` LIKE 'LatestVersion'";
-            $this->runDbQuery($query5);
             $this->runDbQuery($query6);
         }
         return $LatestVersion;
     }
+
+	private function checkUpdateInterval($timeinterval = 30){
+		$query1 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LastUpdateCheck'";
+		$LastUpdateCheck = $this->returnValueDBQuery($query1);
+		$elapsedtime = round(abs(time() - $LastUpdateCheck) / 60,2); //elapsedtime in minutes
+		$result = false;
+		if (empty ($LastUpdateCheck)) {
+			$query3 = "INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LastUpdateCheck','" . time() . "','UpdateCheck')";
+			$this->runDbQuery($query3);
+		} elseif ( $elapsedtime >= $timeinterval) {
+			$result = true;
+			$query5 = "UPDATE `#__ose_secConfig` SET `value`='" . time() . "' WHERE `key` LIKE 'LastUpdateCheck'";
+			$this->runDbQuery($query5);
+		}
+		return $result;
+	}
+
 	private function getUpdateCheck () {
 		$url = "http://www.centrora.com/accountApi/version/getLastestVersion";
 		$ch = curl_init();
@@ -551,4 +559,60 @@ class panel
             echo $list;
         }
     }
+	public function getJSONFeed($rssUrl, $limit) {
+		$params = array(
+			'q' => $rssUrl,
+			'v' => '1.0', // API version
+			'num' => $limit, // maximum entries (limited)
+			'output' => 'json_xml', // mixed content: JSON for feed, XML for full entries (json|xml|json_xml)
+			'scoring' => 'h', // include historical entries
+		);
+		$result = file_get_contents('http://ajax.googleapis.com/ajax/services/feed/load?' . http_build_query($params));
+		$json = json_decode($result);
+		return $json->responseData;
+	}
+
+	public function checkNewsUpdated ($limit = 1){
+		#Check for news after 60min
+		$checkUpdateInterval = self::checkUpdateInterval(60);
+		$result = false;
+		if ($checkUpdateInterval ) {
+			$data =  $this->getJSONFeed("http://www.centrora.com/category/blog/feed/atom", $limit);
+			$LatestNewsHash = hash('md5', serialize($data->feed->entries));
+
+			$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LastNewsHash'";
+			$LastNewsHash = $this->returnValueDBQuery($query);
+
+			$result = self::hasNewsRead(false, 'notread');
+
+			if (empty ( $LastNewsHash )) {
+				$query = " INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LastNewsHash','" . $LatestNewsHash . "','NewsCheck')";
+				$this->runDbQuery($query);
+				$result = true;
+			} elseif ( $LastNewsHash != $LatestNewsHash) {
+				$query = " UPDATE `#__ose_secConfig` SET `value`='" . $LatestNewsHash . "' WHERE `key` LIKE 'LastNewsHash'";
+				$this->runDbQuery($query);
+				self::hasNewsRead(true, 'notread');
+				$result = true;
+			}
+		}
+		return $result;
+	}
+
+	public function hasNewsRead ($addValue = true, $readValue = 'notread'){
+		$query1 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LatestNewsRead'";
+		$LatestNewsRead = $this->returnValueDBQuery($query1);
+		$result = $LatestNewsRead == $readValue ? true : false;
+		if ($addValue){
+			if (empty ($LatestNewsRead)) {
+				$query3 = "INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LatestNewsRead','" . $readValue . "','NewsCheck')";
+				$this->runDbQuery($query3);
+			} else {
+				$result = true;
+				$query5 = "UPDATE `#__ose_secConfig` SET `value`='" . $readValue . "' WHERE `key` LIKE 'LatestNewsRead'";
+				$this->runDbQuery($query5);
+			}
+		}
+		return $result;
+	}
 }

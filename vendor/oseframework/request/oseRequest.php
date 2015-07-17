@@ -112,11 +112,11 @@ class oRequest {
 	 * @deprecated 12.1
 	 */
 	public static function getInt($name, $default = 0, $hash = 'default') {
-		if (isset($_REQUEST [$name]) && is_numeric ( $_REQUEST [$name] )) {
+		//if (isset($_REQUEST [$name]) && is_numeric ( $_REQUEST [$name] )) {
 			return intval ( self::getVar ( $name, $default, $hash, 'int' ) );
-		} else {
-			return null;
-		}
+		//} else {
+		//	return null;
+		//}
 	}
 	
 	/**

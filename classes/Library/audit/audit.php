@@ -40,18 +40,18 @@ class oseFirewallAudit
 	{
 		$return = '';
 		$dbReady = oseFirewall::isDBReady();
-		$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="#" data-target="#configModal" data-toggle="modal">Fix It</a>' : '';
+		$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="'.$this->urls[7].'#firewall" ><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($dbReady == true)
 		{
 			$oseFirewallStat = new oseFirewallStat();
 			$isEnable = $oseFirewallStat->getConfigurationByName('devMode');
 			if ($isEnable)
 			{
-				$this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> '.oLang::_get('DISDEVELOPMODE')." ".$action."</li>";
+				$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('DEVELOPMODE_DISABLED').' </li>';
 			}
 			else
 			{
-				$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('DEVELOPMODE_DISABLED').' </li>';
+				$this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> '.oLang::_get('DISDEVELOPMODE')." ".$action."</li>";
 			}
 		}
 		if ($print == true)
@@ -79,8 +79,7 @@ class oseFirewallAudit
 		$return = '';
 		$oseFirewallStat = new oseFirewallStatPro();
 		$isReady = $oseFirewallStat->isAdFirewallReady();
-		$url = $this->getAdvFirewallURL ();
-		$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="'.$url.'" target="_blank">Fix It</a>' : '';
+		$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="'.$this->urls[6].'#adfirewall-rule" target="_blank"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if (!$isReady)
 		{
 			$this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> '.oLang::_get('ADVANCERULESNOTREADY')." ".$action." </li>";
@@ -105,7 +104,7 @@ class oseFirewallAudit
 		$userID = $oseFirewallStat->isUserAdminExist ();
 		if ($userID != false)
 		{
-			$action = ($print == true) ? '<a href="#" data-target="#adminFormModal" data-toggle="modal" class="btn btn-danger btn-xs fx-button" >Fix It</a>' : '';
+			$action = ($print == true) ? '<a href="#" data-target="#adminFormModal" data-toggle="modal" class="btn btn-danger btn-xs fx-button" ><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 			$this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> '.oLang::_get('ADMINUSER_EXISTS')." ".$action." </li>";
 		}
 		else
@@ -131,7 +130,7 @@ class oseFirewallAudit
 		{
 			$oseFirewallStat = new oseFirewallStatPro();
 			$ready = $oseFirewallStat->isGAuthenticatorReady ();
-			$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Fix It</a>' : '';
+			$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 			if ($ready == true)
 			{
 				$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('GAUTHENTICATOR_READY')."</li>";
@@ -154,7 +153,7 @@ class oseFirewallAudit
 	{
 		$oseFirewallStat = new oseFirewallStatPro();
 		$ready = $oseFirewallStat->isGAuthenticatorReady ();
-		$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank">Fix It</a>' : '';
+		$action = ($print == true) ? '<a class="btn btn-danger btn-xs fx-button" href ="http://www.centrora.com/plugin-tutorial/google-2-step-verification/" target="_blank"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($ready == true)
 		{
 			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('GAUTHENTICATOR_READY')."</li>";
@@ -184,7 +183,7 @@ class oseFirewallAudit
 			$updated = $oseFirewallStat->isWPUpToDate ();
 			global $wp_version;
 			$wp_version = htmlspecialchars($wp_version);
-			$action = ($print == true) ? '<a href="update-core.php" class="btn btn-danger btn-xs fx-button">Fix It</a>' : '';
+			$action = ($print == true) ? '<a href="update-core.php" class="btn btn-danger btn-xs fx-button"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 			if ($updated == true)
 			{
 				$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('WORDPRESS_UPTODATE').$wp_version."</li>";
@@ -208,7 +207,7 @@ class oseFirewallAudit
 		$return = '';
 		$oseFirewallStat = new oseFirewallStatPro();
 		$enabled = $oseFirewallStat->isGoogleScan ();
-        $action = ($print == true) ? '<a href="javascript:void(0)" onclick="fixGoogleScan()" class="btn btn-danger btn-xs fx-button">Fix It</a>' : '';
+        $action = ($print == true) ? '<a href="javascript:void(0)" onclick="fixGoogleScan()" class="btn btn-danger btn-xs fx-button"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($enabled == true)
 		{
 			$this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> '.oLang::_get('GOOGLE_IS_SCANNED').". ".$action."</li>";
@@ -228,7 +227,7 @@ class oseFirewallAudit
 		$oseFirewallStat = new oseFirewallStatPro();
 		$version = $oseFirewallStat->getCurrentSignatureVersion();
 		$url = $this->getAdvFirewallURL ();
-		$action = ($print == true) ? '<a href="'.$this->urls[6].'" class="btn btn-danger btn-xs fx-button">Fix It</a>' : '';
+		$action = ($print == true) ? '<a href="'.$this->urls[6].'#adfirewall-rule" class="btn btn-danger btn-xs fx-button"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($version > O_LATEST_SIGNATURE)
 		{
 			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('SIGNATURE_UPTODATE')."</li>";
@@ -249,7 +248,7 @@ class oseFirewallAudit
 	public function checkRegisterGlobals ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('register_globals');
-		$action = ($print == true) ? '<a href="#" class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();">Fix It</a>' : '';
+		$action = ($print == true) ? '<a href="#" class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($enable == false)
 		{
 			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('REG_GLOBAL_OFF')."</li>";
@@ -270,7 +269,7 @@ class oseFirewallAudit
 	public function checkSafeMode ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('safe_mode');
-		$action = ($print == true) ? '<a href="#" class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();">Fix It</a>' : '';
+		$action = ($print == true) ? '<a href="#" class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($enable == false)
 		{
 			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('SAFEMODE_OFF')."</li>";
@@ -291,7 +290,7 @@ class oseFirewallAudit
 	public function checkURLFopen ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('allow_url_fopen');
-		$action = ($print == true) ? '<a href="#"  class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();">Fix It</a>' : '';
+		$action = ($print == true) ? '<a href="#"  class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($enable == false)
 		{
 			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('URL_FOPEN_OFF')."</li>";
@@ -312,7 +311,7 @@ class oseFirewallAudit
 	public function checkDisplayErrors ($print) {
 		$return = '';
 		$enable = $this->getPHPConfig('display_errors');
-		$action = ($print == true) ? '<a href="#" class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();">Fix It</a>' : '';
+		$action = ($print == true) ? '<a href="#" class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>' : '';
 		if ($enable == false)
 		{
 			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('DISPLAY_ERROR_OFF')."</li>";
@@ -333,7 +332,7 @@ class oseFirewallAudit
 	public function checkDisableFunctions ($print) {
 		$return = '';
 		$result = $this->getDisableFunctions();
-		$action = ($print == true) ? '<a href="#"  class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();">Fix It</a> ' : '';
+		$action = ($print == true) ? '<a href="#"  class="btn btn-danger btn-xs fx-button" onClick="checkphpConfig();"><i class="glyphicon glyphicon-wrench"></i> Fix It</a> ' : '';
 		if ($result['result'] == false)
 		{
 			$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('DISABLE_FUNCTIONS_READY').$result['off']."</li>";
@@ -779,7 +778,7 @@ class oseFirewallAudit
 		}
 	}
 	public function getPluginActionLink ($plugin) {
-		return '<a class="btn btn-danger btn-xs fx-button" href ="index.php?option=com_plugins&task=plugin.edit&extension_id='.$plugin->extension_id.'" target="_blank">Fix It</a>';
+		return '<a class="btn btn-danger btn-xs fx-button" href ="index.php?option=com_plugins&task=plugin.edit&extension_id='.$plugin->extension_id.'" target="_blank"><i class="glyphicon glyphicon-wrench"></i> Fix It</a>';
 	}
 	public function isPluginEnabled ($type, $element, $folder) {
 		$db = oseFirewall::getDBO (); 

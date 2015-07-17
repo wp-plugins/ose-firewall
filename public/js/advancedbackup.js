@@ -17,7 +17,7 @@ jQuery(document).ready(function ($) {
     }
     if (onedriveauth == 1) {
         onedrivelink = "<div class='clickonedrive'><a href='javascript:void(0)' title='OneDrive' class='fa fa-windows'></a></div>";
-    } else if (onedriveauth == 0 && dropboxauth == 0) {
+    } else if (onedriveauth == 0 && dropboxauth == 0 && googledriveauth == 0) {
         dropboxlink = O_AUTH_CLOUD;
     }
 
@@ -358,7 +358,7 @@ function ajaxdeletebackup() {
             },
             success: function (data) {
                 if (data == true) {
-                    showDialogue(O_BACKUP_DELE_DESC, O_SUCCESS, O_OK);
+                	showLoading(O_BACKUP_DELE_DESC);
                 } else {
                     showDialogue(O_DELE_FAIL_DESC, O_FAIL, O_OK);
                 }
@@ -395,7 +395,7 @@ function deletebackup() {
                 }
             });
         } else {
-            showDialogue(O_SELECT_FIRST, O_NOTICE, O_NO);
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
         }
     })
 }
@@ -424,8 +424,8 @@ function backup(backup_type, backup_to) {
                     contbackup(data.sourcePath, data.outZipPath, data.serializefile);
 
                 }else /*if (typeof data.data == "number" && data.conti == 0 )*/ {
-                    hideLoading();
-                    showDialogue(O_BACKUP_SUCCESS, O_SUCCESS, O_OK);
+                	showLoading(O_BACKUP_SUCCESS);
+                	hideLoading();
                     $('#advancedbackupTable').dataTable().api().ajax.reload();
                 }
             },
@@ -462,8 +462,8 @@ function contbackup(sourcePath, outZipPath, serializefile){
                     contbackup(data.sourcePath, data.outZipPath, data.serializefile);
 
                 }else if (data.conti == 0 ) {
-                    hideLoading();
-                    showDialogue(O_BACKUP_SUCCESS, O_SUCCESS, O_OK);
+                    showLoading(O_BACKUP_SUCCESS);
+                	hideLoading();
                     $('#advancedbackupTable').dataTable().api().ajax.reload();
                 }
             },

@@ -65,5 +65,6 @@ if ($oemCustomer) {
 } else {
     $this->model->loadLocalscript();
     include(dirname(__FILE__) . '/' . $subview . '.php');
+    include_once(dirname(__FILE__).'/affiliateform.php');
 };
 ?>

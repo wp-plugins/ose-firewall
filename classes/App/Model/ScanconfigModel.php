@@ -43,4 +43,30 @@ class ScanconfigModel extends ConfigurationModel {
 		$this->loadAllAssets ();
 		oseFirewall::loadJSFile ('CentroraScanConfig', 'scanconfig.js', false);
 	}
-}	
+
+    public function checkPassword()
+    {
+        $query = "SELECT `params` From `#__extensions` WHERE `name` = 'com_users';";
+        $this->db->setQuery($query);
+        $results = $this->db->loadObject();
+        return $results->params;
+    }
+
+    public function savePassword($mpl, $pmi, $pms, $pucm)
+    {
+        $query = "SELECT `params` From `#__extensions` WHERE `name` = 'com_users';";
+        $this->db->setQuery($query);
+        $results = $this->db->loadObject();
+        $results = json_decode($results->params);
+        $results->minimum_length = $mpl;
+        $results->minimum_integers = $pmi;
+        $results->minimum_symbols = $pms;
+        $results->minimum_uppercase = $pucm;
+        $results = json_encode($results);
+        $Array = array(
+            'params' => $results
+        );
+        $id = $this->db->addData('update', '#__extensions', 'name', 'com_users', $Array);
+        return $id;
+    }
+}

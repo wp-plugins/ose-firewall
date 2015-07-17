@@ -157,4 +157,8 @@ class oseFirewallAjax extends oseAjax{
         $actions = array('getDirFileList', 'getFileTree', 'editperms', 'check');
 		parent::loadActions($actions);
 	}
+	public static function loadActionNews () {
+		$actions = array('getFeed', 'check');
+		parent::loadActions($actions);
+	}
 }

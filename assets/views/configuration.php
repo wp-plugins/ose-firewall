@@ -22,7 +22,7 @@ $this->model->getNounce ();
                                     <div class="form-group">
                                            <label class="col-sm-9 control-label" for="textfield"></label>
                                            <div class="col-sm-3">
-                                               <button type="submit" class="btn btn-primary" id='add-variable-button'><?php oLang::_('INSTALLNOW');?></button>
+                                               <button type="submit" class="btn " id='add-variable-button'><i class="text-success glyphicon glyphicon-cog"></i> <?php oLang::_('INSTALLNOW');?></button>
                                            </div>
                                     </div>
                               </form>
@@ -53,7 +53,7 @@ $this->model->getNounce ();
                                     <div class="form-group">
                                            <label class="col-sm-8 control-label" for="textfield"></label>
                                            <div class="col-sm-4">
-                                               <button type="submit" class="btn btn-primary" id='add-variable-button'><?php oLang::_('UNINSTALLNOW');?></button>
+                                               <button type="submit" class="btn" id='add-variable-button'><i class="text-danger glyphicon glyphicon-trash"></i> <?php oLang::_('UNINSTALLNOW');?></button>
                                            </div>
                                     </div>
                               </form>

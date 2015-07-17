@@ -38,8 +38,9 @@ class CentroraOEM {
 		$config = self::getConfiguration('oem');
 		if (!empty($config['data']['customer_id'])) {
 			require_once (dirname(__FILE__).ODS.$config['data']['customer_id'].'.php') ;
-			$className = 'CentroraOEM'.$config['data']['customer_id']; 
-			$this->newInstance =  new $className();
+			$className = 'CentroraOEM'.$config['data']['customer_id'];
+			$this->customer_id = $config['data']['customer_id'];
+			$this->newInstance =  new $className($this->customer_id);
 		}
 	}
 	public function getTopBarURL () {
@@ -51,14 +52,15 @@ class CentroraOEM {
 						<li><a href="http://www.centrora.com/" title="Subscription"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">Subscription</span></a></li>
 						<li><a href="http://www.centrora.com/tutorial/" title="Tutorial"><i class="im-stack-list"></i> <span class="hidden-xs hidden-sm hidden-md">Tutorial</span></a></li>
 						<li><a href="http://www.centrora.com/cleaning" title="Malware Removal"><i class="im-spinner10"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
+			return $urls;
 		}
 		else
 		{
-			$urls = '<li><a href="http://gabemedia.dk/" title="My Account"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
-						<li><a href="http://gabemedia.dk/" id="support-center" title="Support"><i class="im-support"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
-						<li><a href="http://gabemedia.dk/" title="Malware Removal"><i class="im-spinner10"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
+			return $this->newInstance->getTopBarURL();
 		}
-		return $urls;
+	}
+	public function addLogo () {
+		return $this->newInstance->addLogo();
 	}
 	public function showOEMName () { 
 		if (!empty($this->newInstance))
@@ -131,5 +133,13 @@ class CentroraOEM {
 		$products[]= array ("url"=>"http://gabemedia.dk/", "title"=>"Malware cleaning");
 		$products[]= array ("url"=>"http://gabemedia.dk/", "title"=>"Malware cleaning");
 		return $products;
+	}
+	public function defineVendorName () {
+		if (!empty($this->newInstance)) {
+			$this->newInstance->defineVendorName();
+		}
+		else {
+			define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
+		}
 	}
 }

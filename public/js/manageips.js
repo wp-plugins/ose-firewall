@@ -93,6 +93,7 @@ jQuery(document).ready(function ($) {
 
     });
     $("#add-ip-form").submit(function () {
+    	showLoading(O_PLEASE_WAIT);
         $.ajax({
             type: "POST",
             url: url,
@@ -100,7 +101,13 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 data = jQuery.parseJSON(data);
                 $('#addIPModal').modal('hide');
-                showDialogue(data.result, data.status, O_OK);
+                if (data.status =='SUCCESS') {
+	        		showLoading(data.result);
+	            }
+	            else {
+	        		showDialogue(data.result, data.status, O_OK);
+	            }
+                hideLoading();
                 $('#manageIPsTable').dataTable().api().ajax.reload();
             }
         });
@@ -131,9 +138,7 @@ jQuery(document).ready(function ($) {
     });
 
     $('#export-ip-button').click(function () {
-
         $('#exportModal').modal('hide');
-
     })
 })
 function changeView() {
@@ -142,7 +147,6 @@ function changeView() {
     } else {
         document.getElementById("hidden_ip_end").style.display = "none";
     }
-    ;
 }
 function changeItemStatus(id, status)
 {
@@ -187,7 +191,12 @@ function viewIPdetail(id)
 	        success: function(data)
 	        {
 	        	hideLoading ();
-                showDialogue(data.result, data.status, O_OK, 'detailed-form');
+	        	bootbox.dialog({
+		    			message: data.result,
+		    			title: data.status,
+		    			className: 'detailed-form',
+		    			buttons: {}
+		    	});
 	        }
 	      });
 	});

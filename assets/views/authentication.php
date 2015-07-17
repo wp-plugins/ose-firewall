@@ -14,11 +14,9 @@ if ($status == true) {
             <div class="row ">
                 <div class="col-lg-12 sortable-layout">
                     <!-- col-lg-12 start here -->
-                    <div class="panel panel-primary plain toggle panelClose panelRefresh">
+                    <div class="panel panel-primary plain">
                         <!-- Start .panel -->
-                        <div class="panel-heading white-bg">
-                            <h4 class="panel-title"><?php oLang::_('O_AUTHENTICATION'); ?></h4>
-                        </div>
+                        <div class="panel-heading white-bg"></div>
                         <div class="panel-controls">
                         </div>
                         <div class="panel-controls-buttons">
@@ -97,7 +95,7 @@ if ($status == true) {
             ?>
             <div class="row">
                 <?php
-                $image = OSE_FWURL . '/public/images/screenshot-10.png';
+                $image = OSE_FWURL . '/public/images/premium/cloudbackupauthentication.png';
                 include_once dirname(__FILE__) . '/calltoaction.php';
                 ?>
             </div>

@@ -51,8 +51,8 @@ class ConfigurationModel extends BaseModel {
 		echo $html; 	
 	}
 	public function getAllBtns () {
-		$html = '<div class="form-group"><div class="col-sm-3"><button class = "btn btn-success ml10" id ="install-button" name ="install-button" data-target="#formModal" data-toggle="modal">'.INSTALLDB.'</button></div><div class="col-sm-9">'.INSTALLDB_INTRO.'</div></div>';
-		$html .= '<div class="form-group"><div class="col-sm-3"><button class = "btn btn-success ml10" data-target="#formModal2" data-toggle="modal">'.UNINSTALLDB.'</button></div><div class="col-sm-9">'.UNINSTALLDB_INTRO.'</div></div>';
+		$html = '<div class="form-group"><div class="col-sm-3"><button class = "btn ml10" id ="install-button" name ="install-button" data-target="#formModal" data-toggle="modal"><i class="text-success glyphicon glyphicon-cog"></i> '.INSTALLDB.'</button></div><div class="col-sm-9">'.INSTALLDB_INTRO.'</div></div>';
+		$html .= '<div class="form-group"><div class="col-sm-3"><button class = "btn ml10" data-target="#formModal2" data-toggle="modal"><i class="text-danger glyphicon glyphicon-trash"></i> '.UNINSTALLDB.'</button></div><div class="col-sm-9">'.UNINSTALLDB_INTRO.'</div></div>';
 		return $html;  
 	}
 	public function getURL($view) {

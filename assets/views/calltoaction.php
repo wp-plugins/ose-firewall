@@ -30,13 +30,6 @@
                 <button class="btn btn-primary btn-xs mr5"
                         onClick="location.href='http://www.centrora.com/store/affiliate-program'">Read More
                 </button>
-				<div class="row">
-					<div class="col-md-4"></div>
-					<div class="col-md-4">
-						<div class="container"><button onClick ="location.href='https://www.centrora.com/store/index.php?route=affiliate/login'" class="btn btn-danger mr5 mb10">Join Our Affliate Program Now</button></div>
-					</div>
-					<div class="col-md-4"></div>
-				</div>
 			</p>
 			<p class="text-left">
 

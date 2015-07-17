@@ -24,7 +24,7 @@ var O_NO = "No";
 var O_FAIL = "Fail";
 var O_NOTICE = "Notice"
 var O_SUBSCRIBE = "Subscribe";
-var O_FIXPERMISSIONS = "Fix Permissions";
+var O_FIXPERMISSIONS = "<i class='text-success glyphicon glyphicon-wrench'></i> Fix Permissions";
 var O_FIXPERMISSIONS_LONG = "One Click Permissions Fix";
 var O_FIXPERMISSIONS_DESC = "This will set the recommended default file/folder permissions to the config files";
 var O_CLOSE = "Close";
@@ -80,7 +80,6 @@ var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Click OK to get the 'Access Token' for Dro
 var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Click OK to complete Dropbox authentication";
 
 //added from 4.9.0
-var O_EMAILTEMP_FAIL = "Email template cannot be restored, please try again";
 var O_AUTH_CLOUD = "Authenticate a cloud Service"
 var O_EMAILTEMP_FAIL = "Email template cannot be restored as it is already default";
 var O_EMAILTEMP_SUCESSS = "Email template is restoring to default";
@@ -88,4 +87,18 @@ var O_UPLOAD_GOOGLEDRIVE = "The backup file has been uploaded to your GoogleDriv
 var O_VSPATTERN_UPDATE = "Virus signature has been updated";
 var O_PREP_FILES = "Preparing File(s) for Upload...";
 var O_VSPATTERN_UPDATE_FAIL = "There are errors when updating virus signature ";
+
+//added from 5.0.0
+var O_PASSWORD_STRENGTH_STRONG = 'Your current password strength is <b>strong</b>';
+var O_PASSWORD_STRENGTH_WEAK = 'Your current password strength is <b>weak</b>, we suggest you change to recommend settings and save';
+var O_PASSWORD_SUCCESS = "Password setting saved successfully";
+var O_PASSWORD_FAIL = "There are errors when saving password setting";
+var O_UPDATE_NOW = "Update Now";
+var O_UPDATE_CONF = "Update Confirmation";
+var O_UPDATE_CONF_DESC = "Are you sure you want to update to: ";
+var O_ADD_ADMIN_SUCCESS = "Successfully added the administrator account";
+var O_ADD_ADMIN_FAIL = "There are errors when adding the administrator account";
+var O_PLEASE_WAIT = 'Please wait...';
+var O_GDIALOG_MSG = 'Be sure to link your account with Google Authenticator under WordPress users ';
+var O_GDIALOG_TITLE = 'REMINDER: Link Google Autheniticator';
 

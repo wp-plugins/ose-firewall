@@ -425,21 +425,21 @@ class oseFirewallStatBase
 	}
 	private function getViewIcon($id)
 	{
-        return "<a href='javascript:void(0);' title = 'View detail' onClick= 'viewIPdetail(" . urlencode($id) . ")' ><i class='im-dashboard'></i></a>";
+        return "<a href='javascript:void(0);' title = 'View detail' onClick= 'viewIPdetail(" . urlencode($id) . ")' ><i class='glyphicon glyphicon-record'></i></a>";
 	}
 	private function getStatusIcon($id, $status)
 	{
 		switch ($status)
 		{
 		case '3':
-            return "<a href='javascript:void(0);' title = 'WhiteList' onClick= 'changeItemStatus(" . urlencode($id) . ", 2)' ><div class='grid-accept'></div></a>";
+            return "<a href='javascript:void(0);' title = 'WhiteList' onClick= 'changeItemStatus(" . urlencode($id) . ", 2)' ><i class='text-success glyphicon glyphicon-ok-sign'></i></a>";
 			break;
 		case '2':
 		case '0':
-            return "<a href='javascript:void(0);' title = 'Monitering' onClick= 'changeItemStatus(" . urlencode($id) . ", 1)' ><div class='grid-error'></div></a>";
+            return "<a href='javascript:void(0);' title = 'Monitering' onClick= 'changeItemStatus(" . urlencode($id) . ", 1)' ><i class='text-yellow glyphicon glyphicon-eye-open'></i></a>";
 			break;
 		case '1':
-            return "<a href='javascript:void(0);' title = 'BlackList' onClick= 'changeItemStatus(" . urlencode($id) . ", 3)' ><div class='grid-block'></div></a>";
+            return "<a href='javascript:void(0);' title = 'BlackList' onClick= 'changeItemStatus(" . urlencode($id) . ", 3)' ><i class='text-block glyphicon glyphicon-minus-sign'></i></a>";
 			break;
 		default:
 			return '';
@@ -821,20 +821,33 @@ class oseFirewallStatBase
 		}
 		return $html;
 	}
-	protected function getActionIcon($id, $status)
+	protected function getActionIcon($id, $status, $type)
 	{
-		switch ($status)
-		{
-		case '0':
-            return "<a href='javascript:void(0);' title = 'Inactive' onClick= 'changeItemStatus(" . urlencode($id) . ", 1)' ><div class='grid-block'></div></a>";
-			break;
-		case '1':
-            return "<a href='javascript:void(0);' title = 'Active' onClick= 'changeItemStatus(" . urlencode($id) . ", 0)' ><div class='grid-accept'></div></a>";
-			break;
-		default:
-			return '';
-			break;
-		}
+        if ($type == 'basic') {
+            switch ($status) {
+                case '0':
+                    return "<a href='javascript:void(0);' title = 'Inactive' onClick= 'changeItemStatus(" . urlencode($id) . ", 1)' ><i class='text-block glyphicon glyphicon-minus-sign'></i></a>";
+                    break;
+                case '1':
+                    return "<a href='javascript:void(0);' title = 'Active' onClick= 'changeItemStatus(" . urlencode($id) . ", 0)' ><i class='text-success glyphicon glyphicon-ok-sign'></i></a>";
+                    break;
+                default:
+                    return '';
+                    break;
+            }
+        } else {
+            switch ($status) {
+                case '0':
+                    return "<a href='javascript:void(0);' title = 'Inactive' onClick= 'changeItemStatusAd(" . urlencode($id) . ", 1)' ><i class='text-block glyphicon glyphicon-minus-sign'></i></a>";
+                    break;
+                case '1':
+                    return "<a href='javascript:void(0);' title = 'Active' onClick= 'changeItemStatusAd(" . urlencode($id) . ", 0)' ><i class='text-success glyphicon glyphicon-ok-sign'></i></a>";
+                    break;
+                default:
+                    return '';
+                    break;
+            }
+        }
 	}
 	private function getDetattacktypeIDByRuleID($rule_id, $attacktypeidArray)
 	{
@@ -1453,7 +1466,7 @@ class oseFirewallStatBase
 		{
 			$link='<a href="http://www.centrora.com/centrora-security-tutorial/centrora-security-basic-firewall-explanations/#'.$anchors[$results[$i]->id].'" target="_blank"><i class="fa fa-info-circle ruletips"></i></a>';
 			$results[$i]->rule = ($type=='basic')?oLang::_get($results[$i]->rule).'&nbsp;'.$link:oLang::_get($results[$i]->description);
-			$results[$i]->action = $this->getActionIcon($results[$i]->id, $results[$i]->action);
+			$results[$i]->action = $this->getActionIcon($results[$i]->id, $results[$i]->action, $type);
 			$results[$i]->attacktype = $this->attackTypeDecode($attacktypes, $results[$i]->attacktype);
 			$results[$i]->checkbox ='';
 			$i++;

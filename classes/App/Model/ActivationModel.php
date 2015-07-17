@@ -44,9 +44,6 @@ class ActivationModel extends ConfigurationModel {
 	public function getCDescription() {
 		return oLang :: _get('ACTIVATION_CODE_DESC');
 	}
-	public function showHeader () { 
-		
-	}
 	public function getActivationCode() {
 		$sysGuard = new oseSysguard();
 		return $sysGuard->getActivationCode();

@@ -1,52 +1,52 @@
-var O_DELETE_CONFIRM = "Slet Bekræftelse";
-var O_DELETE_CONFIRM_DESC = "Bekræft venligst, at du ønsker at slette de valgte emner";
+var O_DELETE_CONFIRM = "Slet Bekr&aelig;ftelse";
+var O_DELETE_CONFIRM_DESC = "Bekr&aelig;ft venligst, at du &oslash;nsker at slette de valgte emner";
 var O_APIKEY = "API key";
-var O_ENABLE_SFSPAM = "Enable Stop Forum Spam";
-var O_SFS_CONFIDENCE_LEVEL = "Stop Forum Spam Confidence Level (between 1 and 100)";
-var O_EDIT_EMAIL_TEMP = "Edit email template";
-var O_EDIT = "Edit";
+var O_ENABLE_SFSPAM = "Aktiver stop forum spam";
+var O_SFS_CONFIDENCE_LEVEL = "Stop forum spam confidence level (1 and 100)";
+var O_EDIT_EMAIL_TEMP = "rediger email template";
+var O_EDIT = "rediger";
 var O_EMAIL_TYPE = "Email Type";
-var O_EMAIL_SUBJECT = "Email Subject";
+var O_EMAIL_SUBJECT = "Email Enme";
 var O_EMAIL_BODY = "Email Body";
 var O_USER = "User";
 var O_USER_ID = "User ID";
 var O_EMAIL = "Email";
-var O_ADD_A_LINK = "Add a linkage";
-var O_PLEASE_WAIT = "Please wait, this will take a few seconds ...";
+var O_ADD_A_LINK = "Tilf&oslash;j en binding";
+var O_PLEASE_WAIT = "Vent venligst , dette vil tage et par sekunder ...";
 
 //added from 4.4.1
-var O_CALLTOSUBSCRIBE = "Activate Subscription";
-var O_CALLTOSUBSCRIBE_DESC = "Please activate your subscription to use this feature.";
-var O_CANCEL = "Cancel";
-var O_CONFIRM = "Confirm";
-var O_YES = "Yes";
-var O_NO = "No";
-var O_FAIL = "Fail";
-var O_NOTICE = "Notice"
-var O_SUBSCRIBE = "Subscribe";
-var O_FIXPERMISSIONS = "Fix Permissions";
-var O_FIXPERMISSIONS_LONG = "One Click Permissions Fix";
-var O_FIXPERMISSIONS_DESC = "This will set the recommended default file/folder permissions to the config files";
-var O_CLOSE = "Close";
+var O_CALLTOSUBSCRIBE = "Aktiver abonnement";
+var O_CALLTOSUBSCRIBE_DESC = "Aktiver venligst dit abonnement for at bruge denne funktion.";
+var O_CANCEL = "Annuller";
+var O_CONFIRM = "Bekr&aelig;ft";
+var O_YES = "Ja";
+var O_NO = "Nej";
+var O_FAIL = "Fejl";
+var O_NOTICE = "Bem&aelig;rk"
+var O_SUBSCRIBE = "Tilmeld";
+var O_FIXPERMISSIONS = "Fix tilladelser";
+var O_FIXPERMISSIONS_LONG = "Et klik Tilladelse fix";
+var O_FIXPERMISSIONS_DESC = "Dette vil s&aelig;tte anbefalede tilladelser standard fil / mappe til config filer";
+var O_CLOSE = "Luk";
 
 //added from 4.7.0
 var O_OK = "OK";
 var O_SUCCESS = "Success";
-var O_EMAIL_TEMP_SAVE = "Email template was saved successfully";
-var O_SELECT_FIRST = "Please select one item first";
-var O_UPLOAD_DROPBOX = "The backup file has been uploaded to your dropbox";
-var O_UPLOAD_ERROR = "An error occured while uploading:";
-var O_CONFIRM_EMAIL_NOTICE = "A Confirmation Email will be sent to you";
-var O_SEND_EMAIL_ERROR = "An error occured while sending a confrimation email: <br />" + "Please make sure you have added a valid email address in the 'Administrator Panel'";
-var O_BACKUP_DELE_DESC = "The backup file has been deleted successfully";
-var O_DELE_FAIL_DESC = "The delete operation failed! Please try again";
+var O_EMAIL_TEMP_SAVE = "Email skabelon blev gemt med succes";
+var O_SELECT_FIRST = "V&aelig;lg et element f&oslash;rst";
+var O_UPLOAD_DROPBOX = "Den backup-fil er blevet uploadet til din dropbox";
+var O_UPLOAD_ERROR = "Der opstod en fejl under upload:";
+var O_CONFIRM_EMAIL_NOTICE = "En bekr&aelig;ftelsesmail vil blive sendt til dig";
+var O_SEND_EMAIL_ERROR = "Der opstod en fejl under afsendelse af en confrimation email: <br />" + "S&oslash;rg for at du har tilf&oslash;jet en gyldig e-mail adresse i feltet 'Administrator Panel'";
+var O_BACKUP_DELE_DESC = "Den backup-fil er blevet slettet";
+var O_DELE_FAIL_DESC = "Sletningen mislykkedes! Pr&oslash;v igen";
 var O_BACKUP_SUCCESS = "Backup success";
-var O_BACKUP_FAIL = "Backup failed, please try again";
-var O_ERROR = "Error";
-var O_BACKUP_ERROR = "Operational error during backup<br /> Error Code: ";
-var O_LOADING_TEXT = "Please wait...";
-var O_DB_INSTALL_DESC = "Database installer preparing in progress";
-var O_CSV_FORMAT = '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>' +
+var O_BACKUP_FAIL = "Backup fejlede, pr&oslash;v igen";
+var O_ERROR = "Fejl";
+var O_BACKUP_ERROR = "Operationel fejl under sikkerhedskopiering <br/> Fejlkode: ";
+var O_LOADING_TEXT = "Vent venligst...";
+var O_DB_INSTALL_DESC = "Database installat&oslash;r forbereder i gang";
+var O_CSV_FORMAT = '<br/>Skal du oprette CSV-filen med f&oslash;lgende overskrifter: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Forklaringer:<br/><br/>' +
     '<ul>' +
     '<li>title: the title of the rule for this IP / IP Range<li>' +
     '<li>ip_start: the start IP in the IP Range<li>' +
@@ -54,35 +54,50 @@ var O_CSV_FORMAT = '<br/>Please create the CSV file with the following headers: 
     '<li>ip_type: the type of this record, \'0\' refers to one single IP, whereas \'1\' refers to IP ranges<li>' +
     '<li>ip_status: the status of the IP, \'1\' for blocked IP, \'3\' for whitelisted IP, \'2\' for monitored IP <li>' +
     '</ul>';
-var O_FILE_PERMISSION_DESC = "Make sure to set appropriate file permissions 0000 would render your selected Files/Folders inaccessible";
-var O_QUARANTINE_FAIL_DESC = "Quarantine failed, please try again";
-var O_QUARANTINE_SUCCESS_DESC = "Quarantine success";
-var O_CLEAN_SUCCESS = "Clean success";
-var O_CLEAN_FAIL = "Clean failed, please try again";
-var O_RESTORE_SUCCESS = "Restore success";
-var O_RESTORE_FAIL = "Restore failed, please try again";
-var O_DELE_SUCCESS_DESC = "Delete success";
-var O_CLEAN = "Clean";
-var O_DELETE = "Delete";
-var O_QUARANTINE = "Quarantine";
-var O_RESTORE = "Restore";
-var O_ORDER_NOTICE = "Your order has been successfully placed.";
-var O_UPDATE = "Updating...";
-var O_ACTIVATE_PLUGIN = "Activating plugin...";
+var O_FILE_PERMISSION_DESC = "S&oslash;rg for at indstille passende filrettigheder 0000 ville g&oslash;re din valgte filer / mapper utilg&aelig;ngelige";
+var O_QUARANTINE_FAIL_DESC = "Karant&aelig;ne mislykkedes, pr&oslash;v igen";
+var O_QUARANTINE_SUCCESS_DESC = "karant&aelig;ne succes";
+var O_CLEAN_SUCCESS = "Reng&oslash;ring med succes";
+var O_CLEAN_FAIL = "Reng&oslash;ring fejlede, pr&oslash;v igen";
+var O_RESTORE_SUCCESS = "Genoprettelse med succes";
+var O_RESTORE_FAIL = "Genoprettelse mislykkedes, pr&oslash;v igen";
+var O_DELE_SUCCESS_DESC = "Slet succes";
+var O_CLEAN = "Reng&oslash;r";
+var O_DELETE = "Slet";
+var O_QUARANTINE = "Karant&aelig;ne";
+var O_RESTORE = "Genoprettelse ";
+var O_ORDER_NOTICE = "Din ordre er blevet placeret.";
+var O_UPDATE = "Opdater...";
+var O_ACTIVATE_PLUGIN = "Aktiver plugin...";
 
 //added from 4.8.0
-var O_UPLOAD_ONEDRIVE = "The backup file has been uploaded to your OneDrive";
-var O_DROPBOX_LOGOUT = "Dropbox Logout";
-var O_SPEECH_BUBBLE = "Hacking traffic table will refresh every minute";
-var O_SESSION_EXPIRED = "Session expired, please login again";
-var O_DROPBOX_AUTHO = "Dropbox Authorisation";
-var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Click OK to get the 'Access Token' for Dropbox authorisation";
-var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Click OK to complete Dropbox authentication";
+var O_UPLOAD_ONEDRIVE = "Den backup-fil er blevet uploadet til din OneDrive";
+var O_DROPBOX_LOGOUT = "Dropbox Logud";
+var O_SPEECH_BUBBLE = "Hacking trafik bord vil opdatere hvert minut";
+var O_SESSION_EXPIRED = "Session udl&oslash;bet, du skal logge ind igen";
+var O_DROPBOX_AUTHO = "Dropbox Tilladelse";
+var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Klik p&aring; OK for at f&aring; den 'Access Token' for Dropbox tilladelse";
+var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Klik p&aring; OK for at afslutte Dropbox-godkendelse";
 
 //added from 4.9.0
-var O_EMAILTEMP_FAIL = "Email template cannot be restored, please try again";
-var O_AUTH_CLOUD = "Authenticate a cloud Service"
-var O_EMAILTEMP_FAIL = "Email template cannot be restored as it is already default";
-var O_EMAILTEMP_SUCESSS = "Email template is restoring to default";
-var O_UPLOAD_GOOGLEDRIVE = "The backup file has been uploaded to your GoogleDrive";
-var O_PREP_FILES = "Preparing File(s) for Upload...";
+var O_AUTH_CLOUD = "Godkend en cloud service"
+var O_EMAILTEMP_FAIL = "Email skabelon kan ikke gendannes, da det allerede er standard";
+var O_EMAILTEMP_SUCESSS = "E-mail skabelon genoprette til standard";
+var O_UPLOAD_GOOGLEDRIVE = "Den backup-fil er blevet uploadet til din GoogleDrive";
+var O_VSPATTERN_UPDATE = "Virus signature has been updated";
+var O_PREP_FILES = "Forbereder fil(er) for upload ...";
+var O_VSPATTERN_UPDATE_FAIL = "There are errors when updating virus signature ";
+
+//added from 5.0.0
+var O_PASSWORD_STRENGTH_STRONG = 'Your current password strength is <b>strong</b>';
+var O_PASSWORD_STRENGTH_WEAK = 'Your current password strength is <b>weak</b>, we suggest you change to recommend settings and save';
+var O_PASSWORD_SUCCESS = "Password setting saved successfully";
+var O_PASSWORD_FAIL = "There are errors when saving password setting";
+var O_UPDATE_NOW = "Update Now";
+var O_UPDATE_CONF = "Update Confirmation";
+var O_UPDATE_CONF_DESC = "Are you sure you want to update to: ";
+var O_ADD_ADMIN_SUCCESS = "Successfully added the administrator account";
+var O_ADD_ADMIN_FAIL = "There are errors when adding the administrator account";
+var O_PLEASE_WAIT = 'Please wait...';
+var O_GDIALOG_MSG = 'Be sure to link your account with Google Authenticator under WordPress users ';
+var O_GDIALOG_TITLE = 'REMINDER: Link Google Autheniticator';

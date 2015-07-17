@@ -67,9 +67,12 @@ class BaseModel  {
 	}
 	public function showHeader () { 
 		$html = '<div class="bs-callout bs-callout-info fade in">';
-		$html .= '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
-		$html .= '<h4>'.$this->getCHeader().'</h4>';
-		$html .= '<p>'.$this->getCDescription ().'</p>';
+		$html .='<span class="icon-separator">
+                    <i class="glyphicon glyphicon-bullhorn"></i>
+                </span>';
+		$html .= '<span class="header-wrapper">
+                    '.$this->getCHeader().'<small>'.$this->getCDescription ().'</small>
+                </span>';
 		$html .= '</div>';
 		echo $html; 
 	}
@@ -190,12 +193,14 @@ class BaseModel  {
 			oseFirewall::loadJSFile ('CentroraBootStrapJS', 'bootstrap.min.js', false);
 		}
 //        oseFirewall::loadJSFile ('CentroraDropboxJS', 'dropins.js', false);
-		oseFirewall::loadJSFile ('CentroraDataTableJS', 'jquery.dataTables.min.js', false);
+        oseFirewall::loadJSFile('CentroraJueryUI', 'jquery-ui.min.js', false);
+        oseFirewall::loadJSFile('CentroraDataTableJS', 'jquery.dataTables.min.js', false);
 		oseFirewall::loadJSFile ('CentroraMaskInput','plugins/maskedinput/jquery.maskedinput.js', false);
 		oseFirewall::loadJSFile ('CentroraMaskIP','plugins/maskedinput/jquery.input-ip-address-control-1.0.min.js', false);
 		oseFirewall::loadJSFile ('CentroraBootbox', 'plugins/bootbox/bootbox.js', false);
 		oseFirewall::loadJSFile ('CentroraForm', 'plugins/form/jquery.form.min.js', false);
-		//oseFirewall::loadJSFile ('CentroraModernizr', 'modernizr.custom.js', false);
+
+        //oseFirewall::loadJSFile ('CentroraModernizr', 'modernizr.custom.js', false);
 		oseFirewall::loadJSFile ('CentroraJResponse', 'jRespond.min.js', false);
 		oseFirewall::loadJSFile ('CentroraSlimscroll', 'plugins/slimscroll/jquery.slimscroll.min.js', false);
 		oseFirewall::loadJSFile ('CentroraSlimscrolHor', 'plugins/slimscroll/jquery.slimscroll.horizontal.min.js', false);

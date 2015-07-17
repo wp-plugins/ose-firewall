@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
         scanAntivirusSing(-3, 'vsscan', [], [], colours);
 	});
 	$('#vsstop').on('click', function() { 
-		showLoading ();
+		showLoading ('Terminating scanning process');
 		location.reload(); 
 	});
 	$('#vscont').on('click', function() { 
@@ -287,6 +287,13 @@ function scanVirusInd(action, cpuData, memData, type, colours) {
                     initPlotChart($, memData, false, colours);
 	        	}	
 	        	$('#p4text').html(data.summary);
+                if (data.cont == false && data.status == 'Completed' && data.type >= 8) {
+                    if (cms == 'wordpress') {
+                        $("<a style='font-size:20px' href='admin.php?page=ose_fw_scanreport'>     View Result</a>").appendTo("#p4text");
+                    } else {
+                        $("<a style='font-size:20px' href='index.php?option=com_ose_firewall&view=vsreport'>     View Result</a>").appendTo("#p4text");
+                    }
+                }
 	        	$('#last_file').html(data.last_file);
 	        	$('#easy-pie-chart-'+type).data('easyPieChart').update(data.completed);
 	        	$('#easy-pie-chart-'+type).attr("data-percent",data.completed);
@@ -330,7 +337,8 @@ function scanAntivirusSing(step, action, cpuData, memData, colours) {
                 initPlotChart($, cpuData, true, colours);
                 initPlotChart($, memData, false, colours);
 	        	$('#p4text').html(data.summary);
-	        	$('#last_file').html(data.last_file);
+
+                $('#last_file').html(data.last_file);
 	        	if ((step == -2 && data.contFileScan==true)|| (step == -3 && data.contFileScan==true))
 	        	{
                     scanAntivirusSing(-2, action, cpuData, memData, colours);

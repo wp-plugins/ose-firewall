@@ -137,8 +137,10 @@ class oseFirewallScanner {
                 $flag = $this->verifyGA();
                 if ($flag == true) {
                     $this->updateStatus(3);
+                    print_r(1);
                     exit;
                 } else {
+                    print_r(0);
                     exit;
                 }
             } else {
@@ -588,7 +590,7 @@ class oseFirewallScanner {
            $("#googleAuth-form").submit(function() {
              var data = $("#googleAuth-form").serialize();
              $.ajax({
-           //  url: "index.php?",
+            // url: "index.php?",
             type: "POST",
             data: data,
             success: function(data)
@@ -634,7 +636,12 @@ class oseFirewallScanner {
 
                  <h3 style="color:#fff;">WHAT NOW?</h3>
                  <p style="color:#fff;">Your IP address is ' . $this->ip . '. If you believe this is an error, please contact the <a href="mailto:' . $adminEmail . '?Subject=Inquiry:%20Banned%20for%20suspicious%20hacking%20behaviour - IP: ' . $this->ip . ' - Violation"> Webmaster </a>
-
+        <form id = "googleAuth-form" class="form-horizontal group-border stripped" role="form" action="index.php?">
+            <lable style="color:#fff" for="googleAuthCode" class="form-label form-label-left form-label-auto">If you have Google Authenticator enabled for your WordPress account, please input your Google Authenticator code</lable>
+            <input  type="text" id="googleAuthCode" class=" form-textbox"  name="googleAuthCode">
+            <button type="submit" class="btn btn-default" id="save-button">submit</button>
+            </div>
+            </form>
             </p>
             </div><!-- FOOTER COPYRIGHT END -->
          </div>
@@ -1182,9 +1189,3 @@ class oseFirewallScanner {
 		}
 	}
 }
-//<form id = "googleAuth-form" class="form-horizontal group-border stripped" role="form" action="index.php?">
-//            <lable style="color:#fff" for="googleAuthCode" class="form-label form-label-left form-label-auto">If you have Google Authenticator enabled for your WordPress account, please input your Google Authenticator code</lable>
-//            <input  type="text" id="googleAuthCode" class=" form-textbox"  name="googleAuthCode">
-//            <button type="submit" class="btn btn-default" id="save-button">submit</button>
-//            </div>
-//            </form>

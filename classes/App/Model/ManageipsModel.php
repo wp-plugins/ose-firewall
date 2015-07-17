@@ -188,9 +188,8 @@ class ManageipsModel extends BaseModel
         $time = date("Y-m-d");
         $filename = "ip-export-" . $time . ".csv";
         $url = EXPORT_DOWNLOAD_URL . urlencode($filename) . "&centnounce=" . urlencode(oseFirewall::loadNounce());
-        $exportButton = '<a href="' . $url . '"  id="export-ip-button" target="_blank"><div>' . oLang::_("GENERATE_CSV_NOW") . '</div><i class="fa fa-file-excel-o fa-2x"></i></a>';
-        print_r($exportButton);
-
+        $exportButton = '<a href="' . $url . '"  id="export-ip-button" target="_blank" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-export"></i> ' . oLang::_get("GENERATE_CSV_NOW") . '</a>';
+        return $exportButton;
     }
 
     public function downloadCSV($filename)

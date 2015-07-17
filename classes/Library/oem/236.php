@@ -32,10 +32,22 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
  * Attach plugin to MainWP as an extension and render settings and site pages.
  */
 class CentroraOEM236 {
-	public function __construct () { 
-		
+	public function __construct ($customer_id) {
+		$this->customer_id = $customer_id;
 	}
 	public function showOEMName () {
         return '<div class="vendorname"> Gabemedia Security </div>';
+	}
+	public function getTopBarURL () {
+		$urls = '<li><a href="http://gabemedia.dk/" title="My Account"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
+				 <li><a href="http://gabemedia.dk/" id="support-center" title="Support"><i class="im-support"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
+				 <li><a href="http://gabemedia.dk/" title="Malware Removal"><i class="im-spinner10"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
+		return $urls;
+	}
+	public function addLogo () {
+		return '<div class="logo"><img src="'.OSE_FWPUBLICURL.'css/oem/'.$this->customer_id.'/imgs/logo-header.png" width="90px" alt ="Gabemedia Security"/></div>'.$this->showOEMName ();
+	}
+	public function defineVendorName () {
+		define('OSE_WORDPRESS_FIREWALL', 'Gabemedia Security');
 	}
 }

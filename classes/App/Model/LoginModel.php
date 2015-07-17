@@ -46,9 +46,6 @@ class LoginModel extends ConfigurationModel {
 	public function getCDescription() {
 		return oLang :: _get('LOGIN_DESC');
 	}
-	public function showHeader () { 
-		
-	}
 	public function validate ($website, $email, $password, $token) {
 		$panel = new panel ();
 		return $panel->validate($website, $email, $password, $token);

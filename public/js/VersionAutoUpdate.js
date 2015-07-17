@@ -1,17 +1,39 @@
 var url = ajaxurl;
 var option = 'com_ose_firewall';
 
-function showAutoUpdateDialogue (message, title, buttonLabel, Updateurl, upgradeplugin, activateurl) {
+jQuery(document).ready(function($) {
+	// Javascript to enable link to tab
+	 var url = document.location.toString();
+	 var tabname = $('.nav-tabs a[href=#'+url.split('#')[1]+']');
+	 if (url.match('#') && tabname.length) {
+	 tabname.tab('show') ;
+	 }
+
+	 // Change hash for page-reload
+	 $('.nav-tabs a').on('shown.bs.tab', function (e) {
+	 window.location.hash = e.target.hash;
+	 });
+});
+
+function showAutoUpdateDialogue (serverversion, newsurl, Updateurl, upgradeplugin, activateurl) {
 	bootbox.dialog({
-		message: message,
-		title: title,
+		message: O_UPDATE_CONF_DESC + "<b>" + serverversion + "</b>",
+		title: O_UPDATE_CONF,
 		buttons: {
 			main: {
-				label: buttonLabel,
-			  	className: "btn-primary btn-alt",
+				label: O_UPDATE_NOW,
+			  	className: "btn-success",
 				callback: function () {
                     showLoadingStatus(O_UPDATE);
 					  runAutoUpdate(Updateurl, upgradeplugin, activateurl);
+				}
+			},
+			success: {
+				label: "Changelog",
+				className: "btn-default",
+				callback: function() {
+					window.open(newsurl + '#changelog');
+					return false; //keep dialog open
 				}
 			}
 		}

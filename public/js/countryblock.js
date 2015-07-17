@@ -64,10 +64,7 @@ var plotDownloadPieChart = function ($, lineWidth, size, animateTime, colours) {
 }
 function downLoadFile($, step) {
 	$('#message-box').waitMe({
-	        effect : 'facebook',
 	        text : 'Please wait...',
-	        bg : 'rgba(255,255,255,0.7)',
-	        color : '#1BBC9B'
 	});
 	$.ajax({
         type: "POST",
@@ -109,8 +106,7 @@ function createTables($, step) {
 	$('#message-box').waitMe({
 	        effect : 'facebook',
 	        text : 'Please wait...',
-	        bg : 'rgba(255,255,255,0.7)',
-	        color : '#1BBC9B'
+	        bg : 'rgba(255,255,255,0.7)'
 	});
 	$.ajax({
         type: "POST",

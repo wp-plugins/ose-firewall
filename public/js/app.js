@@ -89,20 +89,18 @@ function showLoading (text) {
 	}
 	jQuery(document).ready(function($){
 		$('body').waitMe({
-	        effect : 'facebook',
-	        text : text,
-	        bg : 'rgba(255,255,255,0.7)',
-	        color : '#1BBC9B'
+	        text : text
 	    });
 	});
 }
 
-function hideLoading () {
+function hideLoading(timeout) {
 jQuery(document).ready(function($){
+    timeout = typeof timeout !== 'undefined' ? timeout : 800;
 	setTimeout(function() 
 	{
 	  $('body').waitMe("hide");
-	}, 800);
+    }, timeout);
 });
 }
 
@@ -111,10 +109,40 @@ function redirectTut (url) {
 	return false;
 }
 
-function AppChangeItemStatus(id, status, table, task)
+function AppChangeItemStatusRuleset(id, status, table, task, controller)
 {
+    jQuery(document).ready(function ($) {
+        showLoading(O_PLEASE_WAIT);
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: task,
+                task: task,
+                id: id,
+                status: status,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+            	if (data.status =='SUCCESS') {
+	        		showLoading(data.result);
+	            }
+	            else {
+	        		showDialogue(data.result, data.status, O_OK);
+	            }
+                hideLoading();
+                $(table).dataTable().api().ajax.reload();
+            }
+        });
+    });
+}
+
+function AppChangeItemStatus(id, status, table, task) {
 	jQuery(document).ready(function($){
-		showLoading ();
+		showLoading (O_PLEASE_WAIT);
 		$.ajax({
 	        type: "POST",
 	        url: url,
@@ -130,9 +158,14 @@ function AppChangeItemStatus(id, status, table, task)
 		    },
 	        success: function(data)
 	        {
-	           showLoading(data.result);  
-	           hideLoading ();
-	           $(table).dataTable().api().ajax.reload();
+	        	if (data.status =='SUCCESS') {
+	        		showLoading(data.result);
+	            }
+	            else {
+	        		showDialogue(data.result, data.status, O_OK);
+	            } 
+	            hideLoading ();
+	            $(table).dataTable().api().ajax.reload();
 	        }
 	      });
 	});
@@ -140,7 +173,7 @@ function AppChangeItemStatus(id, status, table, task)
 
 function AppChangeBatchItemStatus (action, table) {
 	jQuery(document).ready(function($){
-		showLoading ();
+		showLoading (O_PLEASE_WAIT);
 		ids= encodeAllIDs($(table).dataTable().api().rows('.selected').data());
 		$.ajax({
 	        type: "POST",
@@ -156,9 +189,14 @@ function AppChangeBatchItemStatus (action, table) {
 		    },
 	        success: function(data)
 	        {
-	           hideLoading ();
-                showDialogue(data.result, data.status, O_OK);
-	           $(table).dataTable().api().ajax.reload();
+	        	if (data.status =='SUCCESS') {
+	        		showLoading(data.result);
+	            }
+	            else {
+	        		showDialogue(data.result, data.status, O_OK);
+	            }
+	        	hideLoading ();
+                $(table).dataTable().api().ajax.reload(null, false);
 	        }
 	      });
 	});
@@ -196,7 +234,7 @@ function AppRemoveAllItems (task, table) {
                 label: O_YES,
 				className: "btn-success",
 				callback: function(result) {
-					showLoading ();
+					showLoading (O_PLEASE_WAIT);
 					jQuery(document).ready(function($){
 						$.ajax({
 					        type: "POST",
@@ -212,8 +250,13 @@ function AppRemoveAllItems (task, table) {
 					        success: function(data)
 					        {
 					        	hideLoading ();
-                                showDialogue(data.result, data.status, O_OK);
-					            $(table).dataTable().api().ajax.reload();
+					        	if (data.status =='SUCCESS') {
+					        		showLoading(data.result);
+					        	}
+					        	else {
+					        		showDialogue(data.result, data.status, O_OK);
+					        	}
+                                $(table).dataTable().api().ajax.reload();
 					        }
 					      });
 					});
@@ -232,7 +275,7 @@ function AppRemoveAllItems (task, table) {
 
 function AppRunAction (action, table) {
 	jQuery(document).ready(function($){
-		showLoading ();
+		showLoading (O_PLEASE_WAIT);
 		$.ajax({
 	        type: "POST",
 	        url: url,
@@ -247,7 +290,12 @@ function AppRunAction (action, table) {
 	        success: function(data)
 	        {
 	           hideLoading ();
-                showDialogue(data.result, data.status, O_OK);
+	           if (data.status =='SUCCESS') {
+	        		showLoading(data.result);
+	           }
+	           else {
+	        		showDialogue(data.result, data.status, O_OK);
+	           }
 	           $(table).dataTable().api().ajax.reload();
 	        }
 	      });
@@ -256,7 +304,7 @@ function AppRunAction (action, table) {
 
 function checkphpConfig () {
 jQuery(document).ready(function($){
-	showLoading();
+	showLoading(O_PLEASE_WAIT);
     $.ajax({
            type: "POST",
            url: url,
@@ -275,7 +323,7 @@ jQuery(document).ready(function($){
 function updateSignature(table)
 {
 	jQuery(document).ready(function($){
-		showLoading ();
+		showLoading (O_PLEASE_WAIT);
 		$.ajax({
 	        type: "POST",
 	        url: url,
@@ -348,17 +396,35 @@ function joomla_check() {
         });
     });
 }
+
 //doc ready function
-
-
 jQuery(document).ready(function($){
     if (cms == 'joomla') {
         setInterval(function () {
             joomla_check();
         }, 30000);
     }
+	$('[data-toggle="popover"]').popover({
+		placement : 'right',
+		trigger : 'focus',
+		container : 'body',
+		title: function(){
+			if (typeof $(this).attr("data-title") != 'undefined'){
+				return $(this).attr("data-title");
+			} else{
+				return $(this).parent().text();
+			}
+		},
+		//content: function(){return "CONTENT TEXT";},
+		template : '<div class="popover" role="tooltip">' +
+						'<div class="arrow"></div>' +
+						'<h3 class="popover-title"></h3>' +
+						'<div class="popover-content help-block" style="font-weight: normal;"></div>' +
+					'</div>'
+	});
+
     $("#passcodeForm").submit(function () {
-        showLoading();
+        showLoading(O_PLEASE_WAIT);
         var data = $("#passcodeForm").serialize();
         data += '&centnounce=' + $('#centnounce').val();
         $.ajax({
@@ -381,7 +447,7 @@ jQuery(document).ready(function($){
 
 
 	$("#configuraton-form").submit(function() {
-		showLoading();
+		showLoading(O_PLEASE_WAIT);
 		var data = $("#configuraton-form").serialize();
 		data += '&centnounce='+$('#centnounce').val();
         $.ajax({
@@ -393,7 +459,6 @@ jQuery(document).ready(function($){
             	   data = jQuery.parseJSON(data);
             	   if (data.status == 'SUCCESS')
             	   {
-                       showDialogue(data.result, data.status, O_OK);
                        showLoading(data.result);
             		   hideLoading();
                    }
@@ -408,7 +473,7 @@ jQuery(document).ready(function($){
     });
 
 	$("#seo-configuraton-form").submit(function() {
-		showLoading();
+		showLoading(O_PLEASE_WAIT);
 		$('#customBanpage').html(tinymce.get('customBanpage').getContent());
 		var postdata = $("#seo-configuraton-form").serialize();
 		postdata += '&centnounce='+$('#centnounce').val();
@@ -421,8 +486,8 @@ jQuery(document).ready(function($){
                {
             	   if (data.status == 'SUCCESS')
             	   {
+            		   showLoading(data.result);
             		   hideLoading();
-                       showDialogue(data.result, data.status, O_OK);
                    }
             	   else
             	   {
@@ -432,9 +497,32 @@ jQuery(document).ready(function($){
              });
         return false; // avoid to execute the actual submit of the form.
     });
-	
+
+    $("#adconfiguraton-form").submit(function () {
+        showLoading(O_PLEASE_WAIT);
+        var addata = $("#adconfiguraton-form").serialize();
+        addata += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: addata, // serializes the form's elements.
+            success: function (data) {
+                data = jQuery.parseJSON(data);
+                if (data.status == 'SUCCESS') {
+                    showLoading(data.result);
+                    hideLoading();
+                }
+                else {
+                    hideLoading();
+                    showDialogue(data.result, data.status, O_OK);
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+
 	$("#admin-configuraton-form").submit(function() {
-		showLoading();
+		showLoading(O_PLEASE_WAIT);
 		var data = $("#admin-configuraton-form").serialize();
 		data += '&centnounce='+$('#centnounce').val();
         $.ajax({
@@ -462,7 +550,7 @@ jQuery(document).ready(function($){
     });
 
     $("#affiliate-form").submit(function () {
-		showLoading();
+		showLoading(O_PLEASE_WAIT);
 		var data = $("#affiliate-form").serialize();
 		data += '&centnounce='+$('#centnounce').val();
         $.ajax({
@@ -475,15 +563,16 @@ jQuery(document).ready(function($){
 	         	   if (data.status == 'SUCCESS')
 	         	   {
 	         		   $("#affiliateFormModal").modal('hide');
-	         		   hideLoading();
-                       showDialogue(data.result, data.status, O_OK);
-	         		   setTimeout(function(){
-		           		   window.location.reload(1);
-		           		}, 6000);
+	         		   showLoading(data.result);
+		         	   setTimeout(function(){
+			           		   window.location.reload(1);
+			           		}, 6000);
+		         		   
 	                }
 	         	   else
 	         	   {
                        showDialogue(data.result, data.status, O_OK);
+                       hideLoading();
 	         	   }
 	            }
              });
@@ -491,7 +580,7 @@ jQuery(document).ready(function($){
     });
 
     $("#domains-form").submit(function () {
-        showLoading();
+        showLoading(O_PLEASE_WAIT);
         var data = $("#domains-form").serialize();
         data += '&centnounce=' + $('#centnounce').val();
         $.ajax({
@@ -517,7 +606,7 @@ jQuery(document).ready(function($){
         return false; // avoid to execute the actual submit of the form.
     });
     $("#adminemails-form").submit(function () {
-        showLoading();
+        showLoading('Please wait...');
         var data = $("#adminemails-form").serialize();
         data += '&centnounce=' + $('#centnounce').val();
         $.ajax({
@@ -526,15 +615,40 @@ jQuery(document).ready(function($){
             dataType: 'json',
             data: data, // serializes the form's elements.
             success: function (data) {
-                hideLoading();
                 if (data === parseInt(data, 10)) {
-                    document.getElementById("admin-warning-label").style.display = 'none';
+                	showLoading(O_ADD_ADMIN_SUCCESS);
+                	hideLoading();
+                	document.getElementById("admin-warning-label").style.display = 'none';
                     $('#addAdminModal').modal('hide');
                     $('#adminTable').dataTable().api().ajax.reload();
                 }
                 else {
+                	showLoading(O_ADD_ADMIN_FAIL);
+                	hideLoading();
                     document.getElementById("admin-warning-label").style.display = 'inline';
                     document.getElementById("admin-warning-message").innerHTML = data;
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+    $("#strongPassword-form").submit(function () {
+        showLoading(O_PLEASE_WAIT);
+        var passdata = $("#strongPassword-form").serialize();
+        passdata += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: passdata, // serializes the form's elements.
+            success: function (data) {
+                hideLoading();
+                if (data !== null) {
+                    $('#strongPasswordModal').modal('hide');
+                    showDialogue(O_PASSWORD_SUCCESS, O_SUCCESS, O_OK);
+                }
+                else {
+                    $('#strongPasswordModal').modal('hide');
+                    showDialogue(O_PASSWORD_FAIL, O_FAIL, O_OK);
                 }
             }
         });

@@ -75,18 +75,17 @@ class oseFirewall extends oseFirewallBase {
 		$extension = 'com_ose_firewall';
 		$view = JRequest :: getVar('view');
 		
-		$menu = '<div class="bs-component">';
-		$menu .= '<div class="navbar navbar-default">';
+		$menu = '<div class="navbar navbar-default">';
 		$menu .= '<div class="navbar-collapse collapse navbar-responsive-collapse">';
 		$menu .= '<ul id ="nav" class="nav navbar-nav">';
 		// Dashboard Menu;
 		$menu .= '<li ';
 		$menu .= ($view == 'dashboard') ? 'class="active"' : '';
-		$menu .= '><a href="index.php?option=' . $extension . '&view=dashboard">' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
+		$menu .= '><a href="index.php?option=' . $extension . '&view=dashboard"><i class="glyphicon glyphicon-dashboard"></i> ' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
 		
 		$menu .= '<li ';
-        $menu .= (in_array($view, array('manageips', 'rulesets', 'bsconfig', 'advancerulesets', 'countryblock', 'variables'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('FIREWALL') . '<b class="caret"></b></a>';
+        $menu .= (in_array($view, array('manageips', 'rulesets', 'bsconfig', 'countryblock', 'variables'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-fire"></i> ' . oLang::_get('FIREWALL') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Virus Starts;
 		$menu .= '<ul class="dropdown-menu">';
 		$menu .= '<li ';
@@ -109,9 +108,6 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= ($view == 'rulesets') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=rulesets">' . oLang::_get('FIREWALL_RULES'). '</a></li>';
 
-        $menu .= '<li ';
-        $menu .= ($view == 'advancerulesets') ? 'class="active"' : '';
-        $menu .= '><a href="index.php?option=' . $extension . '&view=advancerulesets">' . oLang::_get('ADRULESETS') . '</a></li>';
 
 		$menu .= '</ul>';
 		// SubMenu Anti-Virus Ends;
@@ -121,7 +117,7 @@ class oseFirewall extends oseFirewallBase {
 		// Anti-Hacking Menu;
 		$menu .= '<li ';
         $menu .= (in_array($view, array('vsscan', 'vsreport'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('ANTIVIRUS') . '<b class="caret"></b></a>';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-screenshot"></i> ' . oLang::_get('ANTIVIRUS') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Hacking Starts;
 		$menu .= '<ul class="dropdown-menu">';
 
@@ -143,8 +139,8 @@ class oseFirewall extends oseFirewallBase {
 		*/
         $menu .= '<li ';
         $menu .= (in_array($view, array('backup', 'advancebackup', 'authentication'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('O_BACKUP') . '<b class="caret"></b></a>';
-        // SubMenu Anti-Hacking Starts;
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-duplicate"></i> ' . oLang::_get('O_BACKUP') . '<b class="caret"></b></a>';
+        // SubMenu Backup Starts;
         $menu .= '<ul class="dropdown-menu">';
 
         $menu .= '<li ';
@@ -161,20 +157,13 @@ class oseFirewall extends oseFirewallBase {
         $menu .= '><a href="index.php?option=' . $extension . '&view=authentication">' . oLang::_get('AUTHENTICATION') . '</a></li>';
 
 		$menu .= '</ul>';
-		
-		
-		// SubMenu Anti-Hacking Ends;
+		// SubMenu Backup Ends;
 		$menu .= '</li>';
-		/*
-		// Backup Feature Menu
-		$menu .= '<li ';
-		$menu .= ($view == 'ose_fw_backup') ? 'class="active"' : '';
-		$menu .= '><a href="admin.php?page=ose_fw_backup">' . oLang::_get('BACKUP'). '</a></li>';
-		*/
+		
         $menu .= '<li ';
         $menu .= (in_array($view, array('permconfig'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('FILE_PERMISSION') . '<b class="caret"></b></a>';
-        // SubMenu Anti-Hacking Starts;
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list-alt"></i> ' . oLang::_get('FILE_PERMISSION') . '<b class="caret"></b></a>';
+        // SubMenu File Permissions Starts;
         $menu .= '<ul class="dropdown-menu">';
 
         $menu .= '<li ';
@@ -182,13 +171,14 @@ class oseFirewall extends oseFirewallBase {
         $menu .= '><a href="index.php?option=' . $extension . '&view=permconfig">' . oLang::_get('PERMCONFIG') . '</a></li>';
 
         $menu .= '</ul>';
-        // SubMenu Anti-Hacking Ends;
+        // SubMenu File Permissions Ends;
         $menu .= '</li>';
-        // Anti-Hacking Menu;
+        
+        // System Menu;
         $menu .= '<li ';
         $menu .= (in_array($view, array('adminemails', 'cronjobs', 'audit', 'configuration'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('ADMINISTRATION') . '<b class="caret"></b></a>';
-        // SubMenu Anti-Hacking Starts;
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cd"></i> ' . oLang::_get('ADMINISTRATION') . '<b class="caret"></b></a>';
+        // SubMenu System Starts;
         $menu .= '<ul class="dropdown-menu">';
 
         $menu .= '<li ';
@@ -208,16 +198,16 @@ class oseFirewall extends oseFirewallBase {
         $menu .= '><a href="index.php?option=' . $extension . '&view=configuration">' . oLang::_get('INSTALLATION') . '</a></li>';
 
         $menu .= '</ul>';
-        // SubMenu Anti-Hacking Ends;
+        // SubMenu System Ends;
         $menu .= '</li>';
-		// BackUp Feature Ends
+		// System Ends
 
 		if (class_exists('SConfig'))
 		{
 			// About Menu
 			$menu .= '<li ';
 			$menu .= (in_array($view, array('activation'))) ? 'class="active"' : '';
-			$menu .= '><a href="index.php?option=' . $extension . '&view=activation">' . oLang::_get('ACTIVATION_CODES'). '</a></li>';
+			$menu .= '><a href="index.php?option=' . $extension . '&view=activation"><i class="glyphicon glyphicon-flash"></i> ' . oLang::_get('ACTIVATION_CODES'). '</a></li>';
 			// About Ends
 		}
         $menu .= self::addSuiteMenu();
@@ -225,8 +215,8 @@ class oseFirewall extends oseFirewallBase {
         // My account menu starts
         $menu .= '<li ';
         $menu .= (in_array($view, array('login', 'subscription'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('MY_ACCOUNT') . '<b class="caret"></b></a>';
-        // SubMenu Anti-Hacking Starts;
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-scale"></i> ' . oLang::_get('MY_ACCOUNT') . '<b class="caret"></b></a>';
+        // SubMenu My Account Starts;
         $menu .= '<ul class="dropdown-menu">';
 
         $menu .= '<li ';
@@ -235,22 +225,19 @@ class oseFirewall extends oseFirewallBase {
         $menu .= '<li ';
         $menu .= (in_array($view, array('login', 'subscription'))) ? 'class="active"' : '';
         $menu .= '><a href="index.php?option=' . $extension . '&view=login">' . oLang::_get('LOGIN_OR_SUBSCIRPTION') . '</a></li>';
-
+		// SubMenu My Account Ends;
         $menu .= '</ul>';
         // My account menu ends
-
-
-        // SubMenu Anti-Hacking Ends;
         $menu .= '</li>';
 		// Main Feature Ends;
-		$menu .= '</ul></div></div></div>';
-        echo $menu;
+		$menu .= '</ul></div></div>';
+        return $menu;
 	}
 	protected static function addSuiteMenu () {
 		$option = JRequest::getVar('option', null);
 		$menu = '';
 		$menu .= '<li class="dropdown"';
-		$menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator Menu<b class="caret"></b></a>';
+		$menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Administrator Menu<b class="caret"></b></a>';
 		// SubMenu Anti-Virus Starts;
 		$menu .= '<ul class="dropdown-menu">';
 		$menu .= '<li ';
@@ -287,7 +274,33 @@ class oseFirewall extends oseFirewallBase {
     }
 	public static function showLogo()
 	{
+		$oem = new CentroraOEM() ;
 		$head = '<nav class="navbar navbar-default" role="navigation">';
+		$head .= '<div class ="everythingOnOneLine">
+					<div class ="col-lg-12">
+						<div class="logo"><img src="'.OURI::base().'components/com_ose_firewall/public/images/logo5.png" width="250px" alt ="Centrora Logo"/></div>'.$oem->showOEMName ();
+		#server version: -1 Old, 0 Same, +1 New
+		$serverversion = self::getServerVersion();
+		$isOutdated = (self::getVersionCompare($serverversion) > 0)?true:false;
+		$hasNews = self::checkNewsUpdated();
+		$head .='<div id ="versions"> <div class ="'.(($isOutdated==true)?'version-outdated':'version-updated').'"><i class="glyphicon glyphicon-'.(($isOutdated==true)?'remove':'ok').'"></i>  '.self::getVersion ().'</div>';
+		$urls = self::getDashboardURLs();
+		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
+		self::getAjaxScript();
+		if ($isOutdated) { 
+			$head .= '<button class="version-update" type="button" onclick="showAutoUpdateDialogue(\''.$serverversion.'\', \''.$urls[8].'\')"/><i class="glyphicon glyphicon-refresh"></i> Update to : '.$serverversion.'</button>';
+		}
+		$head .= '</div>';
+		
+		$head .='<div class="centrora-news"><i class="glyphicon glyphicon-bullhorn"></i> <a class="color-white" href="'.$urls[8].'">What\'s New? </a><i class="glyphicon glyphicon-'.(($hasNews==true)?'asterisk':'').' color-magenta"></i></div>';
+		
+		if (oseFirewall::affiliateAccountExists()==false)
+		{
+			$head .='<div class="centrora-affiliates"><button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#affiliateFormModal" href="#" ><i class="glyphicon glyphicon-magnet"></i> '.oLang::_get('AFFILIATE_TRACKING').'</button></div>';
+		}
+		$head .= oseFirewall::getmenus();
+		
+		$head .= '</div></div>';
 		$head .= '<div class="navbar-top">
 					 <div class="col-lg-1 col-sm-6 col-xs-6 col-md-6">
 						<div class="pull-left">
@@ -296,36 +309,17 @@ class oseFirewall extends oseFirewallBase {
 					<div class="col-lg-11 col-sm-6 col-xs-6 col-md-6">
 					 <div class="pull-right">
 						<ul class="userMenu ">';
-		$oem = new CentroraOEM() ;
+		
 		$head .= $oem->getTopBarURL ();
 		if (OSE_CMS == 'joomla')
 		{
-			$head .= '<li><a href="index.php" title="Home"><i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Home</span> </a></li>';
-		}				
+			$head .= '<li><a href="index.php" title="Home">Quick links:&nbsp;&nbsp;&nbsp;<i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Centrora</span> </a></li>';
+		}
 		$head .=	'</ul>
 					 </div>
 					</div>
 				 </div>';
-		$head .= '<div class ="everythingOnOneLine">
-					<div class ="col-lg-12">
-						<div class="logo"></div>'.$oem->showOEMName ().'
-					<div class ="version-normal">'.self::getVersion ().'</div>';
-
-		$serverversion = self::getServerVersion();
-						#"4.2.6"; #Hardcoded for testing purposes
-		
-		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
-		self::getAjaxScript();
-		if (self::getVersionCompare($serverversion) > 0) { #server version: -1 Old, 0 Same, +1 New	
-			$head .= '<input class="version-update" type="button" value="Update to : '.$serverversion.'"
-						onclick="showAutoUpdateDialogue(\'Are you sure you want to update to:  '.$serverversion.'\', \'Update Confirmation\', \'UPDATE\')"/>
-					  </div></div></nav>';
-		} 
-		else
-		{
-				$head .= '</div></div></nav>';
-		}
-
+		$head .='</nav>';
 		#take care of ajax js to run unpdate		
 		if(isset($_POST['updateaction']) && !empty($_POST['updateaction'])) {
 		    $action = $_POST['updateaction'];
@@ -335,7 +329,6 @@ class oseFirewall extends oseFirewallBase {
 		}
 		
 		echo $head;
-		echo oseFirewall::getmenus();
 	}
 	# Run the automatic update procedures
 	private static function runUpdate(){
@@ -384,7 +377,9 @@ class oseFirewall extends oseFirewallBase {
 		$url[]= 'index.php?option=com_ose_firewall&view=configuration';
 		$url[]= 'index.php?option=com_ose_firewall&view=scanconfig';
 		$url[]= 'index.php?option=com_ose_firewall&view=seoconfig';
-		$url[]= 'index.php?option=com_ose_firewall&view=advancerulesets';
+		$url[]= 'index.php?option=com_ose_firewall&view=rulesets';
+		$url[]= 'index.php?option=com_ose_firewall&view=bsconfig';
+		$url[]= 'index.php?option=com_ose_firewall&view=news';
 		return $url; 
 	}
 	public static function getAdminEmail () {

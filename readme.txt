@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: better wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 4.9.5
+Stable tag: 5.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,13 +16,17 @@ Protect your WordPress site with Centrora Security. Also recommended for multipl
 = MOST POWERFUL WORDPRESS SECURITY PLUGIN =
 Centrora Security is a new plugin that's modified from OSE Firewall Security. A WordPress Firewall Security to protect your WordPress Sites from attacks and hacking. The built-in Malware and Security Scanner helps you identify any security risks, malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 
-= New features in v4.9: =
-* Added: Add Google Drive backup
-* Added: Backup option for low memory/timeout constraint servers.
-* Added: Support for larger file size uploads (cloud backup)
-* Enhancement: Reorganise Menu System for better navigability
-* Enhancement: Scheduled backup function
-* Enhancement: Faster More efficient Cloud Backups
+= New features in v5.0: =
+* Added: Brand New Look and feel! - We took valuable feedback from you our customers and revamped the look of Centrora Security. Give it a go, we think you will love it!
+* Added: Help text to give users a better understanding of each configuration setting
+* Added: Strong Password Enforcement under Firewall configuration settings
+* Added: A What's New section where you can view News of security and other related posts from our own security consultants - learn what you can do to harden your site's security
+* Enhancement: Merge Firewall Configuration Functions
+* Enhancement: Improved firewall configuration settings layout - Rearraged & simplified configuration settings
+* Enhancement: Reducted duplicate functions under Firewall
+* Enhancement: Improved site navigation speed
+* Enhancement: Changelog view under what's new to get details of each release
+
 
 = Customer Support =
 If you need help in using Centrora Security™ plugin, save time by starting your support request online and we'll connect you to a security analyst or even the senior security consultant.  <a href = "http://www.centrora.com/support-center/">Click here for help.</a>
@@ -87,8 +91,21 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
-= 4.9.5 = 
-* Fixed: fixed a bug in virus scanner to detect PHP injection scripts
+
+= 5.0.0 =
+* Added: Brand New Look and feel! - We took valuable feedback from you our customers and revamped the look of Centrora Security. Give it a go, we think you will love it!
+* Added: Help text to give users a better understanding of each configuration setting
+* Added: Strong Password Enforcement under Firewall configuration settings
+* Added: A What's New section where you can view News of security and other related posts from our own security consultants - learn what you can do to harden your site's security
+* Enhancement: Merge Firewall Configuration Functions
+* Enhancement: Improved firewall configuration settings layout - Rearraged & simplified configuration settings
+* Enhancement: Reducted duplicate functions under Firewall
+* Enhancement: Improved site navigation speed
+* Enhancement: Changelog view under what's new to get details of each release
+* Enhancement: Improved Dashboard design (Phase 1) - expect more to come!
+* Fixed: Audit page fixes to "Fix" button
+* Fixed: Other minor visual bug fixes
+* Fixed: Minor JS fixes for data pagination
 
 = 4.9.4 = 
 * Enhancement: improve firewall scanner to avoid an warnning error when returning scanning results

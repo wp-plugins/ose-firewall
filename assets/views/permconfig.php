@@ -117,7 +117,7 @@ elseif (OSE_CMS == 'joomla') {
                             <input style="display: none;">
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-default"
+                            <button type="submit" class="btn"
                                     id='ChangePermBut'><?php oLang::_('PERMCONFIG_CHANGE'); ?></button>
                         </div>
                     </form>
@@ -131,21 +131,17 @@ elseif (OSE_CMS == 'joomla') {
                     <!-- col-lg-12 start here -->
                     <div class="col-lg-12 sortable-layout">
                         <!-- col-lg-12 start here -->
-                        <div class="panel panel-primary plain toggle">
+                        <div class="panel panel-primary plain">
                             <!-- Start .panel -->
                             <div class="panel-heading white-bg">
-                                <h4 class="panel-title"><?php oLang::_('PERMCONFIG_SHORT'); ?></h4>
                             </div>
-                            <div align="left" style="display:inline-block; width: 60%" id="selected_file">Current Folder:
-                                ROOT
-                            </div>
+                            <div align="left" style="display:inline-block; width: 60%" id="selected_file">Current Folder: ROOT</div>
                             <div align="right" style="display:inline-block; width: 39%;" id="buttondiv" class="panel-controls-buttons">
-                                <button data-target="#editpermModal" data-toggle="modal"
-                                        class="btn btn-success btn-sm mr5 mb10" type="button"
-                                        onclick="getselecteditemslist ()"><?php oLang::_('PERMCONFIG_EDITOR'); ?></button>
+                                <button data-target="#editpermModal" data-toggle="modal" class="btn btn-sm mr5 mb10" type="button"
+                                        onclick="getselecteditemslist ()"><i class="text-primary glyphicon glyphicon-cog"></i> <?php oLang::_('PERMCONFIG_EDITOR'); ?></button>
                                 <?php //Check subscription
                                 if ($status == true) {?>
-                                    <button class="btn btn-warning btn-sm mr5 mb10" type="button" onClick="oneClickPermFix()"><?php oLang::_('PERMCONFIG_ONECLICKPERMFIX'); ?></button>
+                                    <button class="btn btn-sm mr5 mb10" type="button" onClick="oneClickPermFix()"><i class="text-success glyphicon glyphicon-wrench"></i> <?php oLang::_('PERMCONFIG_ONECLICKPERMFIX'); ?></button>
                                 <?php } else {/*if not subscribed show call to subscribe*/?>
 
                                     <button class="btn btn-warning btn-sm mr5 mb10" type="button" onclick="callToSubscribe('<?php echo $loginurl?>')"><?php oLang::_('PERMCONFIG_ONECLICKPERMFIX'); ?></button>
@@ -153,7 +149,7 @@ elseif (OSE_CMS == 'joomla') {
                             </div>
                             <div style="width: 100%; display: table;">
                                 <div style="display: table-row">
-                                    <div class="panel-body" style="display: table-cell;vertical-align: top;padding-top: 70px;">
+                                    <div class="panel-body" style="display: table-cell;vertical-align: top;padding-top: 70px; width: 200px;">
                                         <label style="vertical-align: top;"><?php oLang::_('FILETREENAVIGATOR'); ?></label>
                                         <div id="FileTreeDisplay"></div>
                                     </div>

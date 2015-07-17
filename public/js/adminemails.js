@@ -3,7 +3,6 @@ var option = "com_ose_firewall";
 jQuery(document).ready(function ($) {
 
     $('#adminTable').dataTable({
-
         processing: true,
         serverSide: true,
         ajax: {
@@ -68,9 +67,8 @@ jQuery(document).ready(function ($) {
             dataType: 'json',
             data: postdata,
             success: function (data) {
-                showDialogue(
-                    O_EMAIL_TEMP_SAVE,
-                    O_SUCCESS, O_OK);
+                showLoading(O_EMAIL_TEMP_SAVE);
+            	hideLoading();
                 document.getElementById('emailEditorForm').style.display = "none";
                 document.getElementById('adminBody').style.display = "block";
             }
@@ -197,6 +195,8 @@ function deleteAdminAjax(id) {
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
+           		showLoading(data.result);
+            	hideLoading();
                 $('#adminTable').dataTable().api().ajax.reload();
             }
         });

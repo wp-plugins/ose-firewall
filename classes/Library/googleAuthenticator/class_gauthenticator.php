@@ -208,14 +208,14 @@ class GoogleAuthenticator {
 		
 		// Get information on user, we need this in case an app password has been enabled,
 		// since the $user var only contain an error at this point in the login flow.
-		$user = get_userdatabylogin ( $username );
-		
+		$user =  get_user_by( 'login', $username );
+
 		// Does the user have the Google Authenticator enabled ?
 		if (trim ( get_user_option ( 'googleauthenticator_enabled', $user->ID ) ) == 'enabled') {
-			
+
 			// Get the users secret
 			$GA_secret = trim ( get_user_option ( 'googleauthenticator_secret', $user->ID ) );
-			
+
 			// Figure out if user is using relaxed mode ?
 			$GA_relaxedmode = trim ( get_user_option ( 'googleauthenticator_relaxedmode', $user->ID ) );
 			

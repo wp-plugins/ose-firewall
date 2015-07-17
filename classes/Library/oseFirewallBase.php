@@ -89,6 +89,9 @@ class oseFirewallBase extends oseFirewallRoot
 	public function loadBackendFunctions()
 	{
 		$this->addMenuActions();
+		oseFirewall::callLibClass('oem', 'oem');
+		$oem = new CentroraOEM() ;
+		$oem->defineVendorName();
 		self::loadLanguage();
 		self::loadJSON();
 		$this->loadAjax();
@@ -197,7 +200,7 @@ class oseFirewallBase extends oseFirewallRoot
 		$count = self::getCountSignatures();
 	    if ($count<12)
 	    {
-	    	echo '<span class="label label-warning">Warning: Firewall Outdated</span>&nbsp;&nbsp;<button class="btn btn-danger btn-xs fx-button" id="fixSignature" name="fixSignature" onClick="updateSignature(\'#rulesetsTable\')">Fix It</button>';
+	    	echo '<span class="label label-warning"><i class="glyphicon glyphicon-remove"></i> Warning: Firewall Outdated</span>&nbsp;&nbsp;<button class="btn btn-danger btn-xs fx-button" id="fixSignature" name="fixSignature" onClick="updateSignature(\'#rulesetsTable\')">Fix It</button>';
 	    	if (OSE_CMS!='joomla')
 	    	{	
 	    		echo '<script type="text/javascript">document.getElementById("fixSignature").click();</script>';
@@ -205,7 +208,7 @@ class oseFirewallBase extends oseFirewallRoot
 	    }
 	    else
 	   {
-	    	echo '<span class="label label-success">Firewall Updated</span>';
+	    	echo '<span class="label label-success"><i class="glyphicon glyphicon-ok"></i> Firewall Updated</span>';
 	    }
 	}
 	private static function getCountSignatures () {
@@ -413,6 +416,10 @@ class oseFirewallBase extends oseFirewallRoot
 	public static function activation()
 	{
 		self::runController ('ActivationController', 'index');
+	}
+	public static function news()
+	{
+		self::runController('NewsController', 'index');
 	}
 	public static function showLogo()
 	{}
@@ -714,7 +721,14 @@ class oseFirewallBase extends oseFirewallRoot
             $oseDB2->setQuery($query);
             $oseDB2->loadResult();
         }
-
-
+    }
+    public static function affiliateAccountExists () {
+    	$config = self::getConfiguration('panel');
+    	return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;
+    }
+    protected static function checkNewsUpdated(){
+    	oseFirewall::callLibClass('panel','panel');
+    	$panel = new panel ();
+    	return $panel->checkNewsUpdated();
     }
 }

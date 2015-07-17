@@ -47,7 +47,7 @@ if ($status == true)
 								    <input type="hidden" name="type" value="vsscan">
 								    <div class="form-group">
 									<div class="col-sm-offset-10">
-											<button type="submit" class="btn btn-default" id='save-button'><?php oLang::_('SAVE');?></button>
+											<button type="submit" class="btn btn-default" id='save-button'><i class="glyphicon glyphicon-save"></i> <?php oLang::_('SAVE');?></button>
 									</div>
                               </form>
                             </div>
@@ -63,15 +63,44 @@ if ($status == true)
 		$this ->model->showLogo ();
 		$this ->model->showHeader ();
 	?>
+	
 	<div class="row">
 		<div class="col-md-12">
-			<div class="panel panel-primary plain toggle panelMove panelClose panelRefresh">
+			<div class="panel panel-primary plain ">
                                 <!-- Start .panel -->
                                 <div class="panel-heading">
-                                    <h4 class="panel-title">Virus Scanning Status</h4>
+                                    
                                 </div>
                                 <div class="panel-body">
-                                  <div class="row">
+                                	<div class="row config-buttons pull-right">
+                                		<div class="col-md-12">
+	                                		<button class="btn btn-config btn-sm mr5 mb10" type="button" onClick="downloadRequest('avs')" data-toggle="tooltip" data-placement="left" title ="<?php oLang::_('O_UPDATE_VIRUS_SIGNATURE'); ?>" ><i class="glyphicon glyphicon-refresh" ></i></button>
+	            							<button data-target="#configModal" data-toggle="modal" class="btn btn-config btn-sm mr5 mb10" type="button" title ="<?php oLang::_('CONFIGURATION'); ?>"><i class="glyphicon glyphicon-cog" ></i></button>
+            							</div>
+                                	</div>
+                                	<div class="row">
+							        	<div id = "scan-window" class="col-md-12"> 
+							                	<div id='scan_progress' class="alert alert-info fade in">
+							                    	  <div class="bg-primary alert-icon">
+								                            <i class="glyphicon glyphicon-info-sign s24"></i>
+								                      </div>
+							                    	  <strong>Status: </strong> <span id="p4text"></span>
+							                          <div id='last_file' class='col-md-12'>&nbsp;</div>
+							            		</div>
+							         	</div>
+									</div>	
+                                
+                                	<div class="row">
+							        	<div id = "scanbuttons" >
+							        		<button data-target="#scanModal" data-toggle="modal" id="customscan" class='btn btn-sm mr5 mb10'><i class="glyphicon glyphicon-screenshot text-primary"></i> <?php oLang::_('SCAN_SPECIFIC_FOLDER') ?></button>	
+											<button id="vsstop" class='btn btn-sm mr5 mb10'><i class="glyphicon glyphicon-stop text-primary"></i> <?php oLang::_('STOP_VIRUSSCAN') ?></button>
+										    <button id="vscont" class='btn btn-sm mr5 mb10'><i class="glyphicon glyphicon-play text-primary"></i> <?php oLang::_('O_CONTINUE_SCAN') ?></button>
+										    <button id="vsscan" class='btn btn-sm mr5 mb10'><i class="glyphicon glyphicon-random text-primary"></i> <?php oLang::_('START_NEW_VIRUSSCAN') ?></button>
+										    <button id="vsscanSing" class='btn btn-sm mr5 mb10'><i class="glyphicon glyphicon-search text-primary"></i> <?php oLang::_('START_NEW_SING_VIRUSSCAN') ?></button>
+							            </div>
+								    </div>
+                                  <div class="row vsscanner-piechart">
+                                  
                                   	<div class="pie-charts">
                                         <div class="easy-pie-chart" data-percent="0" id='easy-pie-chart-1'><span id='pie-1'>0%</span></div>
                                         <div class="label">
@@ -113,10 +142,9 @@ if ($status == true)
                                    </div>
                                     
                                     <div class="row">
-	                                    <div class="col-md-12">
-											<div class="col-lg-6 col-md-12 sortable-layout">
+	                                   	<div class="col-lg-6 col-md-12 sortable-layout">
 									                            <!-- col-lg-6 start here -->
-									                            <div class="panel panel-default plain toggle panelMove panelClose panelRefresh">
+									                            <div class="panel panel-default plain ">
 									                                <!-- Start .panel -->
 									                                <div class="panel-heading">
 									                                    <h4 class="panel-title">CPU Load</h4>
@@ -129,7 +157,7 @@ if ($status == true)
 											</div>
 											<div class="col-lg-6 col-md-12 sortable-layout">
 									                            <!-- col-lg-6 start here -->
-									                            <div class="panel panel-default plain toggle panelMove panelClose panelRefresh">
+									                            <div class="panel panel-default plain ">
 									                                <!-- Start .panel -->
 									                                <div class="panel-heading">
 									                                    <h4 class="panel-title">Memory Usage</h4>
@@ -140,41 +168,12 @@ if ($status == true)
 									                            </div>
 									                            <!-- End .panel -->
 											</div>		
-										</div>
+
                                     </div>
                                 </div>
                           </div>
 		</div>
-		<div id = "scan-window" class="col-md-12"> 
 		
-		<div class="panel panel-primary plain">
-              <!-- Start .panel -->
-              <div class="panel-heading">
-              </div>
-              <div class="panel-controls-buttons">
-              <button class="btn btn-success btn-sm mr5 mb10" type="button" onClick="downloadRequest('avs')"><?php oLang::_('O_UPDATE_VIRUS_SIGNATURE'); ?></button>
-              <button data-target="#configModal" data-toggle="modal" class="btn btn-success btn-sm mr5 mb10" type="button" ><?php oLang::_('CONFIGURATION');?></button>
-			  </div>
-              <div class="panel-body">
-                <div class="row">
-                	<div id='scan_progress' class="alert alert-info fade in">
-                    	  <i class="im-info alert-icon s24"></i>
-                          <strong>Status: </strong> <span id="p4text"></span>
-                          <div id='last_file' class='col-md-12'>&nbsp;</div>
-                    </div>
-                </div>
-			    <div class="row">
-		        	<div id = "scanbuttons" >
-						<button data-target="#scanModal" data-toggle="modal" id="customscan" class='btn btn-primary mr5 mb10'><?php oLang::_('SCAN_SPECIFIC_FOLDER') ?></button>	
-						<button id="vsstop" class='btn btn-primary mr5 mb10'><?php oLang::_('STOP_VIRUSSCAN') ?></button>
-					    <button id="vscont" class='btn btn-primary mr5 mb10'><?php oLang::_('O_CONTINUE_SCAN') ?></button>
-					    <button id="vsscan" class='btn btn-primary mr5 mb10'><?php oLang::_('START_NEW_VIRUSSCAN') ?></button>
-					    <button id="vsscanSing" class='btn btn-primary mr5 mb10'><?php oLang::_('START_NEW_SING_VIRUSSCAN') ?></button>
-		            </div>
-			    </div>
-			 </div>    
-		  </div>    
-	    </div>	
  	</div>
  </div>
 </div>
@@ -195,7 +194,7 @@ else {
 	?>
 	<div class="row">
 		<?php 
-				$image = OSE_FWURL.'/public/images/screenshot-6.png';
+				$image = OSE_FWURL.'/public/images/premium/virusscanner.png';
 				include_once dirname(__FILE__).'/calltoaction.php';
 			?>
 	</div>

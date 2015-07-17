@@ -199,18 +199,11 @@ function oneClickPermFix (){
             buttons: {
                 success: {
                     label: O_FIXPERMISSIONS,
-                    className: "btn-success",
+                    className: "btn btn-sm",
                     callback: function () {
                         showLoading('Fixing...');
                         AppRunAction('oneClickFixPerm', '#permconfigTable');
                         hideLoading();
-                    }
-                },
-                main: {
-                    label: O_CANCEL,
-                    className: "btn-alt",
-                    callback: function(result) {
-                        this.close();
                     }
                 }
             }

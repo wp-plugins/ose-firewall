@@ -42,16 +42,23 @@ jQuery(document).ready(function($){
             .draw();
     });
     $("#add-variable-form").submit(function() {
+    	showLoading(O_PLEASE_WAIT);
         $.ajax({
                type: "POST",
                url: url,
                data: $("#add-variable-form").serialize(), // serializes the form's elements.
                success: function(data)
                {
-            	   $('#formModal').modal('hide');
-            	   $('#variablesTable').dataTable().api().ajax.reload();
             	   data = jQuery.parseJSON(data);
-                   showDialogue(data.result, data.status, O_OK);
+            	   $('#formModal').modal('hide');
+            	   if (data.status =='SUCCESS') {
+   	        		 	showLoading(data.result);
+	   	           }
+	   	           else {
+	   	        	    showDialogue(data.result, data.status, O_OK);
+	   	           }
+	               $('#variablesTable').dataTable().api().ajax.reload();
+	               hideLoading();
                }
              });
         return false; // avoid to execute the actual submit of the form.

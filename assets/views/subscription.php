@@ -13,23 +13,16 @@ $this->model->getNounce ();
 			<div class="row ">
 				<div class="col-lg-12 sortable-layout">
 					<!-- col-lg-12 start here -->
-					<div class="panel panel-primary plain toggle panelClose panelRefresh">
+					<div class="panel panel-primary plain">
 						<!-- Start .panel -->
-						<div class="panel-heading white-bg">
-                            <h4 class="panel-title"><?php oLang::_('MY_SUBSCRIPTION'); ?></h4>
-
-						</div>
+						<div class="panel-heading white-bg"></div>
 						<div class="panel-controls"></div>
 						<div class="panel-controls-buttons">
-                            <a class="btn btn-primary btn-sm mr5 mb10" type="button"
-                               href="<?php $this->model->goSubscribeUrl(); ?>"
-                               target="_blank"><?php oLang::_('SUBSCRIBE'); ?></a>
-							<button onclick="activateCode();" type="button" class="btn btn-danger btn-sm mr5 mb10"><?php oLang::_('ENTER_ACTIVATION_CODE'); ?></button>
-							<button onclick="redirectTut('http://www.centrora.com/store/index.php?route=affiliate/login');" type="button"
-                                    class="btn btn-yellow btn-sm mr5 mb10"><?php oLang::_('PREMIUM_SERVICE_FREE'); ?></button>
-							<button class="btn btn-danger btn-sm mr5 mb10" type="button"
-								onClick="redirectTut('https://www.centrora.com/store/activating-premium-service');"><?php oLang::_('TUTORIAL'); ?></button>
-							<button class="btn btn-primary btn-sm mr5 mb10" type="button" onClick="centLogout();"><?php oLang::_('LOGOUT'); ?></button>
+                            <button onclick="activateCode();" type="button" class="btn btn-sm mr5 mb10"><i class="text-danger glyphicon glyphicon-flash"></i><?php oLang::_('ENTER_ACTIVATION_CODE'); ?></button>
+							<button onclick="redirectTut('<?php $this->model->goSubscribeUrl(); ?>');" type="button" class="btn btn-sm mr5 mb10"><i class="text-primary glyphicon glyphicon-shopping-cart"></i> Subscribe To A Plan Now</button>
+                            <button onclick="redirectTut('http://www.centrora.com/premium-service/');" type="button" class="btn btn-sm mr5 mb10"><i class="text-yellow glyphicon glyphicon-info-sign"></i> More about premium service</button>
+	                        <button class="btn btn-sm mr5 mb10" type="button" onClick="redirectTut('https://www.centrora.com/store/activating-premium-service');"><i class="text-danger glyphicon glyphicon-book"></i> <?php oLang::_('HOW_TO_ACTIVATE'); ?></button>
+	                        <button class="btn btn-sm mr5 mb10" type="button" onClick="centLogout();"><i class="text-yellow glyphicon glyphicon-log-out"></i> <?php oLang::_('LOGOUT'); ?></button>
 						</div>
 						<div class="panel-body">
 							<table class="table display" id="subscriptionTable">

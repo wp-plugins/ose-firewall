@@ -108,7 +108,7 @@ class PermconfigModel extends BaseModel
                 'type' => $fileinfo->getType(),
                 'groupowner' => $fileinfo->getOwner() . ":" . $fileinfo->getGroup(),
                 'perm' => substr(sprintf('%o', $fileinfo->getPerms()), -4),
-                'icon' => "<img src='" . OSE_FWPUBLICURL . "/images/filetree/folder.png' alt='dir' />",
+                'icon' => "<i class='glyphicon glyphicon-folder-close text-primary'></i>",
                 'dirsort' => 1);
         } elseif ($fileinfo->isFile()) {
             $ext_code = strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION));

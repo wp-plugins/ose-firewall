@@ -37,17 +37,16 @@ $urls = oseFirewall::getDashboardURLs ();
             ?>
             <div class="col-md-12">
 					<div class="bs-component">
-						<div class="panel panel-teal">
-							<div class="panel-heading">
-								<h3 class="panel-title"><?php oLang::_('SUBSCRIPTION ACTIVATION'); ?></h3>
-							</div>
+						<div class="panel panel-primary plain">
+							<div class="panel-heading"></div>
 							<div class="panel-controls-buttons">
-								 <button onclick="redirectTut('http://www.centrora.com/store/subscription-packages/');" type="button" class="btn btn-primary btn-sm mr5 mb10">Subscribe To A Plan Now</button>
-								 <button onclick="redirectTut('http://www.centrora.com/store/index.php?route=affiliate/login');" type="button" class="btn btn-yellow btn-sm mr5 mb10">Get Your Premium Service For FREE</button>
-	                             <button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="redirectTut('https://www.centrora.com/store/activating-premium-service');"><?php oLang::_('TUTORIAL'); ?></button>
+								 <button onclick="redirectTut('http://www.centrora.com/store/subscription-packages/');" type="button" class="btn btn-sm mr5 mb10"><i class="text-primary glyphicon glyphicon-shopping-cart"></i> Subscribe To A Plan Now</button>
+								 <button onclick="redirectTut('http://www.centrora.com/premium-service/');" type="button" class="btn btn-sm mr5 mb10"><i class="text-yellow glyphicon glyphicon-info-sign"></i> More about premium service</button>
+	                             <button class="btn btn-sm mr5 mb10" type="button" onClick="redirectTut('https://www.centrora.com/store/activating-premium-service');"><i class="text-danger glyphicon glyphicon-book"></i> <?php oLang::_('HOW_TO_ACTIVATE'); ?></button>
 	                        </div>
-	                        <div class ="row">
-	                        	<div class='col-md-11 col-md-offset-1'>
+	                        <div class ="row mt20">
+	                        	<div class="col-md-1"></div>
+	                        	<div class='col-md-10'>
 							  		<ul class='nav nav-wizard'>
 									  <li class='active'><a href='#step1' data-toggle="tab">Step 1 - Create an Account</a></li>
 									  <li><a href='#step2' data-toggle="tab">Step 2 - Place an order</a></li>
@@ -84,15 +83,16 @@ $urls = oseFirewall::getDashboardURLs ();
 										</div>
 									</div>
 								</div>
-								
+								<div class="col-md-1"></div>
 								
 							</div>
-							<div class="panel-body">
-							 <div class="col-md-6 white-bg login-form">
+							<div class="row mt20">
+							 <div class="col-md-1"></div>
+							 <div class="col-md-5 white-bg login-form">
 								<div class="panel panel-primary">
 								<div class="panel-heading">
 									<p>
-										<br/>If you have an account already, please enter your <code>Centrora</code> or <code>OSE</code>	Account Information
+										If you have an account already, please enter your <code>Centrora</code> or <code>OSE</code>	Account Information
 									</p>
 								</div>
 								<div class="panel-body">
@@ -119,8 +119,10 @@ $urls = oseFirewall::getDashboardURLs ();
 										</div>
 									</div>
 									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-10">
-											<button type="submit" class="btn btn-default">Sign in</button>
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<button type="submit" class="btn"><i class="text-primary glyphicon glyphicon-log-in"></i> Sign in</button>
+											</div>
 										</div>
 									</div>
 									<input type="hidden" name="option" value="com_ose_firewall"> 
@@ -134,11 +136,11 @@ $urls = oseFirewall::getDashboardURLs ();
 							</div>
 							
 							
-							<div class="col-md-6 white-bg">
+							<div class="col-md-5 white-bg login-form">
 								<div class="panel panel-primary">
 								<div class="panel-heading">
 									<p>
-										<br/>If you don't have an account yet, please use the following form to create an account.
+										If you don't have an account yet, please use the following form to create an account.
 									</p>
 								</div>
 								<div class="panel-body">
@@ -180,14 +182,17 @@ $urls = oseFirewall::getDashboardURLs ();
 										<input type="hidden" name="task" value="createaccount">
 										<?php echo $this->model->getToken();?>
 									<div class="form-group">
-										<div class="col-sm-offset-10">
-											<button type="submit" class="btn btn-default" id='save-button'><?php oLang::_('CREATE');?></button>
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<button type="submit" class="btn" id='save-button'><i class="text-primary glyphicon glyphicon-user"></i> <?php oLang::_('CREATE');?></button>
+											</div>
 										</div>
 									</div>
 								</form>
 								</div>
 							  </div>
 							</div>
+							<div class="col-md-1"></div>
 						  </div>
 						</div>
 					</div>

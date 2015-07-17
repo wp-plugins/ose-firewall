@@ -831,23 +831,22 @@ a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preh
       <tbody><tr>
         <td style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top">
           <center>
-            <table class="preheader" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 600px; background-color: #fff; color: #2ea2cc; border-left: 1px solid #efefef; border-right: 1px solid #efefef;">
+            <table class="preheader" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 600px; background-color: #fff; color: #0047ab; border-left: 1px solid #efefef; border-right: 1px solid #efefef;">
               <tbody><tr>
                 <td class="inner" style="padding-top: 11px;padding-bottom: 12px;padding-left: 0;padding-right: 0;vertical-align: top">
                   <table style="border-collapse: collapse;border-spacing: 0;width: 540px;Margin-left: auto;Margin-right: auto" align="center">
                     <tbody><tr>
-                      <td class="title" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #2ea2cc;font-family: Roboto,Tahoma,sans-serif !important;text-align: left">Centrally protecting your websites</td>
-                      <td class="webversion" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #2ea2cc;font-family: Roboto,Tahoma,sans-serif !important;text-align: right;width: 240px">
-                        No Images? &nbsp;<webversion>Click here</webversion>
+                      <td class="title" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #0047ab;font-family: Roboto,Tahoma,sans-serif !important;text-align: left">Centrally protecting your websites</td>
+                      <td class="webversion" style="padding-top: 0;padding-bottom: 0;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 11px;font-weight: normal;letter-spacing: 0.01em;line-height: 17px;color: #0047ab;font-family: Roboto,Tahoma,sans-serif !important;text-align: right;width: 240px">
                       </td>
                     </tr>
                   </tbody></table>
                 </td>
               </tr>
             </tbody></table>
-            <table class="header" style="border-collapse: collapse;border-spacing: 0;width: 600px;border-top-color: #fff;border-top-style: solid;border-top-width: 1px;Margin-left: auto;Margin-right: auto; background-color: #2ea2cc; color: #fafafa;">
+            <table class="header" style="border-collapse: collapse;border-spacing: 0;width: 600px;border-top-color: #fff;border-top-style: solid;border-top-width: 1px;Margin-left: auto;Margin-right: auto; background-color: #0047ab; color: #fafafa;">
               <tbody><tr>
-                <td class="logo" style="padding-top: 40px;padding-bottom: 37px;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 42px;line-height: 50px;text-align: center;color: #555;font-family: Roboto,Tahoma,sans-serif !important" align="center"><center><div id="emb-email-header"><img style="border-left-width: 0;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;-ms-interpolation-mode: bicubic;display: block;Margin-left: auto;Margin-right: auto;max-width: 321px" src="https://www.centrora.com/store/image/email/mail_logo.png" alt="Centrora" width="300" height="47" /></div></center></td>
+                <td class="logo" style="padding-top: 40px;padding-bottom: 37px;padding-left: 0;padding-right: 0;vertical-align: top;font-size: 42px;line-height: 50px;text-align: center;color: #555;font-family: Roboto,Tahoma,sans-serif !important" align="center"><center><div id="emb-email-header"><img style="border-left-width: 0;border-top-width: 0;border-bottom-width: 0;border-right-width: 0;-ms-interpolation-mode: bicubic;display: block;Margin-left: auto;Margin-right: auto;max-width: 321px" src="https://d35q8ug2n7npkr.cloudfront.net/centrora_logo_header.png" alt="Centrora" width="300" /></div></center></td>
               </tr>
             </tbody></table>
           </center>
@@ -870,7 +869,7 @@ a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preh
 					          <p style="Margin-top: 0;color: #61606c;font-weight: 400;font-size: 15px;font-family: Roboto,Tahoma,sans-serif !important;line-height: 24px;Margin-bottom: 24px">
 					          	<b>Dear {name}</b>,<br/><br/>
                                   {content}<br/><br/>
-								If this blocks your users by mistake, please consult Centrora support team for advices.<br/><br/>
+								If this blocks your users by mistake, please consult <a href="https://www.centrora.com/support/" >Centrora support team</a> for advices.<br/><br/>
 								<b>Centrora Security Alert</b></p>
                             </td>
                           </tr>
@@ -913,23 +912,20 @@ a{color:#fff}.wrapper .address a:hover,.wrapper .campaign a:hover,.wrapper .preh
                         <div>Centrora&nbsp;is a portfolio of<br />
 Luxur Group PTY LTD<br />
 ABN: 67 164 057 461<br />
-Suite 1D Level 23,&nbsp;Governor Phillip Tower,<br />
-1 Farrer Place, Sydney<br />
-NSW,&nbsp;Australia, 2000</div>
+Level 9,&nbsp;Melbourne Central Tower,<br />
+360 Elizabeth Street, Melbourne<br />
+VIC,&nbsp;Australia, 3000</div>
                       </td>
                       <td class="campaign" style="padding-top: 0;padding-bottom: 40px;padding-left: 10px;padding-right: 30px;vertical-align: top;font-size: 11px;font-weight: 400;line-height: 19px;-webkit-font-smoothing: antialiased;text-align: right;width: 55%;color: #fff;font-family: Roboto,Tahoma,sans-serif !important">
                         <div class="links">
                           <span class="block">
                             <span>
                               <preferences>
-                                Preferences
                               </preferences>
-                              <span class="hide"> &nbsp;|&nbsp; </span>
                             </span>
                           </span>
                           <span class="block">
                             <unsubscribe href="#">
-                              Unsubscribe
                             </unsubscribe>
                           </span>
                         </div>

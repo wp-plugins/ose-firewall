@@ -40,7 +40,13 @@ class oseFirewall extends oseFirewallBase {
 	public function initSystem()
 	{
 		add_action('init', array($this, 'startSession'), 1);
-	}
+        oseFirewall::callLibClass('firewallstat', 'firewallstatWordpress');
+        $oseFirewallStat = new oseFirewallStat();
+        $results = $oseFirewallStat->getConfiguration('scan');
+        if ($results['data']['strongPassword'] == 1) {
+            add_action('user_profile_update_errors', 'oseFirewall::validatePassword', 0, 3);
+        }
+    }
     protected function addMenuActions () {
     	add_action('admin_menu', 'oseFirewall::showmenus');
     } 
@@ -54,11 +60,11 @@ class oseFirewall extends oseFirewallBase {
 		// Dashboard Menu; 
 		$menu .= '<li ';
 		$menu .= ($view == 'ose_firewall') ? 'class="active"' : '';
-		$menu .= '><a href="admin.php?page=ose_firewall">' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
+		$menu .= '><a href="admin.php?page=ose_firewall"><i class="glyphicon glyphicon-dashboard"></i> ' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
 
         $menu .= '<li id="dropdownMenu1"';
-        $menu .= (in_array($view, array('ose_fw_manageips', 'ose_fw_variables', 'ose_fw_rulesets', 'ose_fw_countryblock', 'ose_fw_bsconfig', 'ose_fw_advancerulesets'))) ? 'class="dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('FIREWALL') . '<b class="caret"></b></a>';
+        $menu .= (in_array($view, array('ose_fw_manageips', 'ose_fw_variables', 'ose_fw_rulesets', 'ose_fw_countryblock', 'ose_fw_bsconfig'))) ? 'class="dropdown"' : 'class="dropdown"';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-fire"></i> ' . oLang::_get('FIREWALL') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Virus Starts; 
         $menu .= '<ul class="dropdown-menu dropdown-menu-middle" aria-labelledby="dropdownMenu1">';
 
@@ -83,9 +89,6 @@ class oseFirewall extends oseFirewallBase {
         $menu .= ($view == 'ose_fw_rulesets') ? 'class="active"' : '';
         $menu .= '><a href="admin.php?page=ose_fw_rulesets">' . oLang::_get('FIREWALL_RULES') . '</a></li>';
 
-        $menu .= '<li ';
-        $menu .= ($view == 'ose_fw_advancerulesets') ? 'class="active"' : '';
-        $menu .= '><a href="admin.php?page=ose_fw_advancerulesets">' . oLang::_get('ADRULESETS') . '</a></li>';
 
 		$menu .= '</ul>';
 	    // SubMenu Anti-Virus Ends;
@@ -95,7 +98,7 @@ class oseFirewall extends oseFirewallBase {
 		// Anti-Hacking Menu; 
 		$menu .= '<li ';
         $menu .= (in_array($view, array('ose_fw_vsscan', 'ose_fw_scanreport'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('ANTIVIRUS') . '<b class="caret"></b></a>';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-screenshot"></i> ' . oLang::_get('ANTIVIRUS') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Hacking Starts; 
 		$menu .= '<ul class="dropdown-menu">';
 
@@ -118,7 +121,7 @@ class oseFirewall extends oseFirewallBase {
 		*/
         $menu .= '<li ';
         $menu .= (in_array($view, array('ose_fw_backup', 'ose_fw_advancedbackup', 'ose_fw_authentication'))) ? 'class="dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('O_BACKUP') . '<b class="caret"></b></a>';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-duplicate"></i> ' . oLang::_get('O_BACKUP') . '<b class="caret"></b></a>';
         // SubMenu Anti-Virus Starts;
         $menu .= '<ul class="dropdown-menu">';
 
@@ -142,7 +145,7 @@ class oseFirewall extends oseFirewallBase {
 
         $menu .= '<li ';
         $menu .= (in_array($view, array('ose_fw_permconfig'))) ? 'class="active dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('FILE_PERMISSION') . '<b class="caret"></b></a>';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list-alt"></i> ' . oLang::_get('FILE_PERMISSION') . '<b class="caret"></b></a>';
         // SubMenu Anti-Hacking Starts;
         $menu .= '<ul class="dropdown-menu">';
 
@@ -157,7 +160,7 @@ class oseFirewall extends oseFirewallBase {
 
         $menu .= '<li ';
         $menu .= (in_array($view, array('ose_fw_adminemails', 'ose_fw_audit', 'ose_fw_permconfig', 'ose_fw_cronjobs', 'configuration'))) ? 'class="dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('ADMINISTRATION') . '<b class="caret"></b></a>';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cd"></i> ' . oLang::_get('ADMINISTRATION') . '<b class="caret"></b></a>';
         // SubMenu Anti-Virus Starts;
         $menu .= '<ul class="dropdown-menu">';
         $menu .= '<li ';
@@ -185,7 +188,7 @@ class oseFirewall extends oseFirewallBase {
 
         $menu .= '<li ';
         $menu .= (in_array($view, array('login'))) ? 'class="dropdown"' : 'class="dropdown"';
-        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown">' . oLang::_get('MY_ACCOUNT') . '<b class="caret"></b></a>';
+        $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-scale"></i> ' . oLang::_get('MY_ACCOUNT') . '<b class="caret"></b></a>';
         // SubMenu Anti-Virus Starts;
         $menu .= '<ul class="dropdown-menu">';
         $menu .= '<li ';
@@ -206,6 +209,10 @@ class oseFirewall extends oseFirewallBase {
 		return $menu;
 	}
 	public static function showmenus(){
+		oseFirewall::callLibClass('oem', 'oem');
+		$oem = new CentroraOEM();
+		$oemCustomer = $oem->hasOEMCustomer();
+		
     	add_menu_page( OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard',OSE_FWURL.'/public/images/favicon.ico');
     	add_submenu_page( 'ose_firewall', OSE_DASHBOARD_SETTING, OSE_DASHBOARD, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard' );
 
@@ -217,7 +224,6 @@ class oseFirewall extends oseFirewallBase {
         add_submenu_page('ose_fw_configuration', AUDIT_WEBSITE, AUDIT_WEBSITE, 'manage_options', 'ose_fw_audit', 'oseFirewall::audit');
         add_submenu_page('ose_fw_configuration', FIREWALL_RULES, FIREWALL_RULES, 'manage_options', 'ose_fw_rulesets', 'oseFirewall::rulesets');
         add_submenu_page('ose_fw_configuration', FIREWALL_CONFIGURATION, FIREWALL_CONFIGURATION, 'manage_options', 'ose_fw_bsconfig', 'oseFirewall::bsconfig');
-        add_submenu_page('ose_fw_configuration', ADRULESETS, ADRULESETS, 'manage_options', 'ose_fw_advancerulesets', 'oseFirewall::advancerulesets');
         add_submenu_page('ose_fw_configuration', VARIABLES, VARIABLES, 'manage_options', 'ose_fw_variables', 'oseFirewall::variables');
         add_submenu_page('ose_fw_configuration', INSTALLATION, INSTALLATION, 'manage_options', 'ose_fw_configuration', 'oseFirewall::configuration');
         add_submenu_page('ose_firewall', BACKUP, BACKUP, 'manage_options', 'ose_fw_backup', 'oseFirewall::backup');
@@ -240,10 +246,8 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_fw_configuration', EMAIL_CONFIGURATION, EMAIL_CONFIGURATION, 'manage_options', 'ose_fw_emailconfig', 'oseFirewall::emailconfig' );
 		add_submenu_page( 'ose_fw_configuration', EMAIL_ADMIN, EMAIL_ADMIN, 'manage_options', 'ose_fw_emailadmin', 'oseFirewall::emailadmin' );
 		add_submenu_page( 'ose_fw_configuration', API_CONFIGURATION, API_CONFIGURATION, 'manage_options', 'ose_fw_apiconfig', 'oseFirewall::apiconfig' );
+		add_submenu_page( 'ose_fw_configuration', NEWS_TITLE, NEWS_TITLE, 'manage_options', 'ose_fw_news', 'oseFirewall::news' );
 		//add_submenu_page( 'ose_firewall', ANTI_VIRUS_DATABASE_UPDATE, ANTI_VIRUS_DATABASE_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::updateChecking' );
-        oseFirewall::callLibClass('oem', 'oem');
-        $oem = new CentroraOEM();
-        $oemCustomer = $oem->hasOEMCustomer();
         if ($oemCustomer) {
             add_submenu_page('ose_fw_configuration', OEM_PASSCODE, OEM_PASSCODE, 'manage_options', 'ose_fw_passcode', 'oseFirewall::passcode');
         }
@@ -259,9 +263,56 @@ class oseFirewall extends oseFirewallBase {
     }
 	public static function showLogo()
 	{
-		$url = 'http://www.centrora.com';
-		$appTitle = OSE_WORDPRESS_FIREWALL;
+		$oem = new CentroraOEM() ;
 		$head = '<nav class="navbar navbar-default" role="navigation">';
+		$head .= '<div class ="everythingOnOneLine">
+					<div class ="col-lg-12">';
+		$oem = new CentroraOEM();
+		$oemCustomer = $oem->hasOEMCustomer();
+		if ($oemCustomer) {
+			$head .= $oem->addLogo();
+		}
+		else 
+		{
+			$head .= '<div class="logo"><img src="'.OSE_FWPUBLICURL.'images/logo5.png" width="250px" alt ="Centrora Logo"/></div>'.$oem->showOEMName ();
+		}
+		#Get update server version
+		$plugins = get_plugin_updates();
+		foreach ( (array) $plugins as $plugin_file => $plugin_data) {
+			if ($plugin_data->update->slug  == "ose-firewall"){
+				$serverversion = $plugin_data->update->new_version;}
+		}
+		$isOutdated = (self::getVersionCompare($serverversion) > 0)?true:false;
+		$hasNews = self::checkNewsUpdated();
+		$head .='<div id ="versions"> <div class ="'.(($isOutdated==true)?'version-outdated':'version-updated').'"><i class="glyphicon glyphicon-'.(($isOutdated==true)?'remove':'ok').'"></i>  '.self::getVersion ().'</div>';
+		$urls = self::getDashboardURLs();
+		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
+		self::getAjaxScript();
+		
+		#pass update url to js to run through ajax. Update handled by url function.
+		$file ='ose-firewall/ose_wordpress_firewall.php';
+		$updateurl = wp_nonce_url( self_admin_url('update.php?action=upgrade-plugin&plugin=') . $file, 'upgrade-plugin_' . $file);
+		$activateurl = esc_url(wp_nonce_url(admin_url('plugins.php?action=activate&plugin=' . $file), 'activate-plugin_' . $file));
+		
+		if ($isOutdated) {
+			$head .= '<button class="version-update" type="button"
+						onclick="showAutoUpdateDialogue(\''.$serverversion.'\', \''.$urls[8].'\',
+														\''.$updateurl.'\',
+														\''.$file.'\',
+														\''.$activateurl.'\')"/>
+						<i class="glyphicon glyphicon-refresh"></i> Update to : '.$serverversion.'</button>';
+		}
+		$head .= '</div>';
+		$head .='<div class="centrora-news"><i class="glyphicon glyphicon-bullhorn"></i> <a class="color-white" href="'.$urls[8].'">What\'s New? </a><i class="glyphicon glyphicon-'.(($hasNews==true)?'asterisk':'').' color-magenta"></i></div>';
+		
+		if (oseFirewall::affiliateAccountExists()==false)
+		{
+			$head .='<div class="centrora-affiliates"><button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#affiliateFormModal" href="#" ><i class="glyphicon glyphicon-magnet"></i> '.oLang::_get('AFFILIATE_TRACKING').'</button></div>';
+		}
+		$head .= oseFirewall::getmenus();
+		
+		$head .= '</div></div>';
+		
 		$head .= '<div class="navbar-top">
 					 <div class="col-lg-1 col-sm-6 col-xs-6 col-md-6">
 						<div class="pull-left">
@@ -270,53 +321,24 @@ class oseFirewall extends oseFirewallBase {
 					<div class="col-lg-11 col-sm-6 col-xs-6 col-md-6">
 					 <div class="pull-right">
 						<ul class="userMenu ">';
-		$oem = new CentroraOEM() ;
+		
 		$head .= $oem->getTopBarURL ();
-		if (OSE_CMS == 'joomla')
-		{
-			$head .= '<li><a href="index.php" title="Home"><i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Home</span> </a></li>';
-		}				
+		
+		$head .= '<li><a href="index.php" title="Home"><i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Home</span> </a></li>';
 		$head .=	'</ul>
 					 </div>
-				   </div>
+					</div>
 				 </div>';
-		$head .= '<div class ="everythingOnOneLine">
-					<div class ="col-lg-12">
-						<div class="logo"></div>'.$oem->showOEMName ().'
-					<div class ="version-normal">'.self::getVersion ().'</div>';
+		$head .='</nav>';
 		
-		#Get update server version
-		$plugins = get_plugin_updates();
-		foreach ( (array) $plugins as $plugin_file => $plugin_data) {
-			if ($plugin_data->update->slug  == "ose-firewall"){
-				$serverversion = $plugin_data->update->new_version;}
+		#take care of ajax js to run unpdate
+		if(isset($_POST['updateaction']) && !empty($_POST['updateaction'])) {
+			$action = $_POST['updateaction'];
+			switch($action) {
+				case 'upgrade-plugin' : self::runUpdate() ;break;
+			}
 		}
-		
-		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
-				
-		#pass update url to js to run through ajax. Update handled by url function.
-		$file ='ose-firewall/ose_wordpress_firewall.php';
-		$updateurl = wp_nonce_url( self_admin_url('update.php?action=upgrade-plugin&plugin=') . $file, 'upgrade-plugin_' . $file);
-		$activateurl = esc_url(wp_nonce_url(admin_url('plugins.php?action=activate&plugin=' . $file), 'activate-plugin_' . $file));
-
-		#Check user, Compare versions then run bootbox js and ajax calls for confirmation
-		if (current_user_can('update_plugins') && self::getVersionCompare($serverversion) > 0) { #server version: -1 Old, 0 Same, +1 New	
-			$head .= '<input class="version-update" type="button" value="Update to : '.$serverversion.'" 
-						onclick="showAutoUpdateDialogue(\'Are you sure you want to update to: '.$serverversion.'?\', 
-														\'Update Confirmation\', 
-														\'UPDATE\', 
-														\''.$updateurl.'\', 
-														\''.$file.'\', 
-														\''.$activateurl.'\'	)"/>
-					  </div></div></nav>';
-		} 
-		else 
-		{
-				$head .= '</div></div></nav>';
-		}
-				
 		echo $head;
-		echo oseFirewall::getmenus();
 	}
 	
 	#Compare local version with the update server version
@@ -353,7 +375,9 @@ class oseFirewall extends oseFirewallBase {
 		$url[]= 'admin.php?page=ose_fw_configuration';
 		$url[]= 'admin.php?page=ose_fw_scanconfig';
 		$url[]= 'admin.php?page=ose_fw_seoconfig';
-        $url[] = 'admin.php?page=ose_fw_advancerulesets';
+        $url[] = 'admin.php?page=ose_fw_rulesets';
+		$url[] = 'admin.php?page=ose_fw_bsconfig';
+		$url[] = 'admin.php?page=ose_fw_news';
 		return $url; 
 	}
 	public static function getAdminEmail () {
@@ -435,4 +459,52 @@ class oseFirewall extends oseFirewallBase {
 	public static function getConfigurationURL () {
 		return 'admin.php?page=ose_fw_bsconfig';
 	}
+
+    public static function validatePassword($errors, $update, $userData)
+    {
+        $password = (isset($_POST['pass1']) && trim($_POST['pass1'])) ? $_POST['pass1'] : false;
+        $user_id = isset($userData->ID) ? $userData->ID : false;
+        $username = isset($_POST["user_login"]) ? $_POST["user_login"] : $userData->user_login;
+        if ($password == false) {
+            return $errors;
+        }
+        if ($errors->get_error_data("pass")) {
+            return $errors;
+        }
+        $user_info = get_userdata($user_id);
+        $enforce = implode(', ', $user_info->roles);
+        if ($enforce == 'administrator') {
+            if (!oseFirewall::isStrongPasswd($password, $username)) {
+                $errors->add('pass', "Please choose a stronger password. Use a mix of letters, numbers, and symbols in your password.");
+                return $errors;
+            }
+        }
+        return $errors;
+    }
+
+    public static function isStrongPasswd($passwd, $username)
+    {
+        $strength = 0;
+        if (strlen(trim($passwd)) < 5)
+            return false;
+        if (strtolower($passwd) == strtolower($username))
+            return false;
+        if (preg_match('/(?:password|passwd|mypass|wordpress)/i', $passwd)) {
+            return false;
+        }
+        if ($num = preg_match_all("/\d/", $passwd, $matches)) {
+            $strength += ((int)$num * 10);
+        }
+        if (preg_match("/[a-z]/", $passwd))
+            $strength += 26;
+        if (preg_match("/[A-Z]/", $passwd))
+            $strength += 26;
+        if ($num = preg_match_all("/[^a-zA-Z0-9]/", $passwd, $matches)) {
+            $strength += (31 * (int)$num);
+
+        }
+        if ($strength > 60) {
+            return true;
+        }
+    }
 }

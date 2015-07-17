@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
         colors: {
             white: '#fff',
             dark: '#2C3E50',
-            red: '#EF4836',
+            red: '#e74c3c',
             blue: '#1E8BC3',
             green: '#3FC380',
             yellow: '#F39C12',
@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
             lime: '#a8db43',
             mageta: '#e65097',
             teal: '#1BBC9B',
-            cream: "#f2f7f9",
+            cream: "#2ECC71",
             black: '#000',
             brown: '#EB974E',
             gray: '#ECF0F1',
@@ -41,7 +41,8 @@ jQuery(document).ready(function ($) {
             pieteal: '#c3e5e5',
             piepurple: '#dec1f5',
             pieorange: '#f9d7af',
-            pielime: '#cfed93'
+            pielime: '#cfed93',
+            royalblue: '#0047ab'
         },
         sizes: {
             piesize: 100,

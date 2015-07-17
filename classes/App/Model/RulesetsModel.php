@@ -37,8 +37,24 @@ class RulesetsModel extends BaseModel {
 		return oLang :: _get('MANAGERULESETS_TITLE');
 	}
 	public function getCDescription() {
-		return oLang :: _get('MANAGERULESETS_DESC');
+        $version = $this->getRuleVersion();
+        if (!empty($version)) {
+            return oLang:: _get('MANAGERULESETS_DESC') . ". Your signature version is: " . $version . ".";
+        } else {
+            return oLang:: _get('MANAGERULESETS_DESC');
+        }
+
 	}
+
+    private function getRuleVersion()
+    {
+        $oseFirewallStat = new oseFirewallStat();
+        if (oseFirewall::isDBReady()) {
+            return $oseFirewallStat->getCurrentSignatureVersion();
+        } else {
+            return "";
+        }
+    }
 	public function loadLocalScript() {
 		$this->loadAllAssets ();
 		oseFirewall::loadJSFile ('CentroraSEOTinyMCE', 'plugins/tinymce/tinymce.min.js', false);

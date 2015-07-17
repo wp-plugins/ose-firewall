@@ -12,38 +12,39 @@ $this->model->getNounce();
             <div class="row ">
                 <div class="col-lg-12 sortable-layout">
                     <!-- col-lg-12 start here -->
-                    <div class="panel panel-primary plain toggle panelClose panelRefresh">
+                    <div class="panel panel-primary plain ">
                         <!-- Start .panel -->
-                        <div class="panel-heading white-bg">
-                            <h4 class="panel-title"><?php oLang::_('PASSCODE_CONTROL'); ?></h4>
-                        </div>
+                        <div class="panel-heading white-bg"></div>
                         <div class="panel-controls">
 
                         </div>
-                        <div class="panel-controls-buttons">
-                            <button type="button" onclick="changePasscodeModal()"
-                                    class="btn btn-success"><?php oLang::_('CHANGE_PASSCODE'); ?></button>
-                        </div>
-
-                        <form id='passcodeForm' role="form">
-                            <label class="col-sm-12 control-label"><?php oLang::_('PASSCODE'); ?></label>
-
-                            <div class="form-group">
-                                <div class="col-sm-2">
-                                    <input type="password" name="passcode">
-                                </div>
-                                <div class="col-sm-2">
-                                    <div>
-                                        <button type="submit"
-                                                class="btn btn-success"><?php oLang::_('VERIFY'); ?></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="hidden" name="option" value="com_ose_firewall">
-                            <input type="hidden" name="controller" value="passcode">
-                            <input type="hidden" name="action" value="verify">
-                            <input type="hidden" name="task" value="verify">
-                        </form>
+                        <div class="panel-controls-buttons"></div>
+						<div class="row">
+							<div class="col-bg-12">
+								<form id='passcodeForm' role="form">
+		                            <label class="col-sm-12 control-label"><?php oLang::_('PASSCODE'); ?></label>
+		                           <div class="form-group">
+		                                <div class="col-sm-6">
+		                                    <input type="password" name="passcode">
+		                                </div>
+		                                <div class="col-sm-6">
+		                                    <div>
+		                                        <button type="submit"
+		                                                class="btn btn-success"><?php oLang::_('VERIFY'); ?></button>
+		                                        <button type="button" onclick="changePasscodeModal()"
+                                    					class="btn btn-success"><?php oLang::_('CHANGE_PASSCODE'); ?></button>        
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <input type="hidden" name="option" value="com_ose_firewall">
+	                            <input type="hidden" name="controller" value="passcode">
+	                            <input type="hidden" name="action" value="verify">
+	                            <input type="hidden" name="task" value="verify">
+	                        </form>
+							</div>
+						
+						</div>
+                        
                     </div>
                     <!-- End .panel -->
                 </div>

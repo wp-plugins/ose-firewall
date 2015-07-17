@@ -3,7 +3,6 @@ oseFirewall::checkDBReady ();
 $status = oseFirewall::checkSubscriptionStatus (false);
 $this->model->getNounce ();
 $confArray = $this->model->getConfiguration('country');
-$status = true;
 if ($status == true)
 {
 ?>
@@ -25,20 +24,19 @@ if ($status == true)
                             </div>
                             <div class="modal-body">
                               <form id = 'download-geoip-form' class="form-horizontal group-border stripped" role="form" enctype="multipart/form-data" method="POST">                            
-                                   	<div class="form-group">
-                                           <div class="col-sm-12">
+                                   	<div >
+                                       <div class="col-sm-12">
                                                <div class="easy-pie-chart" data-percent="0" id='easy-pie-chart-1'><span
                                                        id='pie-1'>0%</span></div>
-                                           </div>
-                                        <div class="col-sm-9">
+                                       </div>
+                                       <div class="col-sm-12">
                                             <div class="download-message" id='message-box'>Ready</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                           <label class="col-sm-9 control-label" for="textfield"></label>
-                                           <div class="col-sm-3">
-                                               <button type="submit" class="btn btn-primary" id='add-variable-button'><?php oLang::_('DOWNLOAD_NOW');?></button>
-                                           </div>
+                                           <div class="col-sm-offset-10">
+											<button type="submit" class="btn" id='save-button'><i class="glyphicon glyphicon-cloud-download"></i> <?php oLang::_('DOWNLOAD_NOW');?></button>
+										   </div>
                                     </div>
                               </form>
                             </div>
@@ -50,18 +48,16 @@ if ($status == true)
 	<div class="row ">
                         <div class="col-lg-12 sortable-layout">
                             <!-- col-lg-12 start here -->
-                            <div class="panel panel-primary plain toggle panelClose panelRefresh">
+                            <div class="panel panel-primary plain">
                                 <!-- Start .panel -->
-                                <div class="panel-heading white-bg">
-                                    <h4 class="panel-title">Country Table</h4>
-                                </div>
+                                <div class="panel-heading white-bg"></div>
                                 <div class="panel-controls"></div>
                                 <div class="panel-controls-buttons">
-                                	<button data-target="#formModal" data-toggle="modal" class="btn btn-primary btn-sm mr5 mb10"><?php oLang::_('DOWNLOAD_COUNTRY'); ?></button>
-                                	<button class="btn btn-success btn-sm mr5 mb10" type="button" onClick="changeBatchItemStatus('blacklistCountry')"><?php oLang::_('O_BLACKLIST_COUNTRY'); ?></button>
-                                	<button class="btn btn-success btn-sm mr5 mb10" type="button" onClick="changeBatchItemStatus('monitorCountry')"><?php oLang::_('O_MONITOR_COUNTRY'); ?></button>
-                                	<button class="btn btn-success btn-sm mr5 mb10" type="button" onClick="changeBatchItemStatus('whitelistCountry')"><?php oLang::_('O_WHITELIST_COUNTRY'); ?></button>
-                                	<button class="btn btn-danger btn-sm mr5 mb10" type="button" onClick="removeAllItems()"><?php oLang::_('O_DELETE__ALLITEMS'); ?></button>
+                                	<button data-target="#formModal" data-toggle="modal" class="btn btn-sm mr5 mb10"><i class="text-primary glyphicon glyphicon-cloud-download"></i> <?php oLang::_('DOWNLOAD_COUNTRY'); ?></button>
+                                	<button class="btn btn-sm mr5 mb10" type="button" onClick="changeBatchItemStatus('blacklistCountry')"><i class="text-block glyphicon glyphicon-minus-sign"></i> <?php oLang::_('O_BLACKLIST_COUNTRY'); ?></button>
+                                	<button class="btn btn-sm mr5 mb10" type="button" onClick="changeBatchItemStatus('monitorCountry')"><i class="text-yellow glyphicon glyphicon-eye-open"></i> <?php oLang::_('O_MONITOR_COUNTRY'); ?></button>
+                                	<button class="btn btn-sm mr5 mb10" type="button" onClick="changeBatchItemStatus('whitelistCountry')"><i class="text-success glyphicon glyphicon-ok-sign"></i> <?php oLang::_('O_WHITELIST_COUNTRY'); ?></button>
+                                	<button class="btn btn-sm mr5 mb10 text-danger" type="button" onClick="removeAllItems()"><i class="text-block glyphicon glyphicon-remove-sign"></i> <?php oLang::_('O_DELETE__ALLITEMS'); ?></button>
                                 </div>
                                 <div class="panel-body">
                                     <table class="table display" id="countryTable">
@@ -123,7 +119,7 @@ if ($status == true)
 									    <input type="hidden" name="type" value="country"> 
 									<div class="form-group">
 										<div class="col-sm-offset-10 ">
-											<button type="submit" class="btn btn-default" id='save-button'><?php oLang::_('SAVE');?></button>
+											<button type="submit" class="btn " id='save-button'><?php oLang::_('SAVE');?></button>
 										</div>
 									</div>
 								</form>
@@ -145,7 +141,7 @@ else {
 	?>
 	<div class="row">
 		<?php 
-				$image = OSE_FWURL.'/public/images/screenshot-8.png';
+				$image = OSE_FWURL.'/public/images/premium/countryblocking.png';
 				include_once dirname(__FILE__).'/calltoaction.php';
 			?>
 	</div>

@@ -35,7 +35,14 @@ class PasscodeModel extends BaseModel
         $this->loadLibrary();
         $this->loadDatabase();
     }
-
+    public function getCHeader()
+    {
+    	return oLang::_get('PASSCODE_TITLE');
+    }
+    public function getCDescription()
+    {
+    	return oLang::_get('PASSCODE_DESC');
+    }
     public function loadLocalScript()
     {
         $this->loadAllAssets();

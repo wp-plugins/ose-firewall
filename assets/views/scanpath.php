@@ -28,7 +28,7 @@
                                         <input type="hidden" name="step" value="-3">
                                         <div class="form-group">
                                             <div>
-                                                <button type="submit" class="btn btn-primary" id='save-button'><?php oLang::_('SCAN_SPECIFIC_FOLDER');?></button>
+                                                <button type="submit" class="btn btn-sm" id='save-button'><i class="glyphicon glyphicon-screenshot"></i> <?php oLang::_('SCAN_SPECIFIC_FOLDER');?></button>
                                             </div>
                                         </div>
                                     </form>

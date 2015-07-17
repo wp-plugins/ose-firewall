@@ -140,7 +140,9 @@ class VsscanModel extends BaseModel {
 		$response = $downloader->checkScheduleScanning();
 		return $response; 
 	}
-    public function  getFileTree(){
+
+    public function getFileTree()
+    {
         if (class_exists('SConfig')){
             $rootpath = dirname(OSE_ABSPATH );
         }else {
@@ -151,5 +153,14 @@ class VsscanModel extends BaseModel {
         oseFirewall::callLibClass('panel','panel');
         $panel = new panel();
         $panel->getFileTree($rootpath, $path);
+    }
+
+    public function getLastScanResult()
+    {
+        if (OSE_CMS == 'wordpress') {
+            echo '<a class="btn btn-success btn-sm mr5 mb10" href="admin.php?page=ose_fw_vsreport">Last Scan Result</a>';
+        } else {
+            echo '<a class="btn btn-success btn-sm mr5 mb10" href="index.php?option=com_ose_firewall&view=vsreport">Last Scan Result</a>';
+        }
     }
 }

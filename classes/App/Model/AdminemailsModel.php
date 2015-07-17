@@ -95,8 +95,9 @@ class AdminemailsModel extends BaseModel
 
     public function deleteAdmin($id)
     {
+    	$return = array();
         $adminManager = new oseAdminManager();
-        $return = $adminManager->deleteAdmin($id);
+        $return['result'] = ($adminManager->deleteAdmin($id)==true)?olang::_get('O_DELETE_ADMIN_SUCCESS'):olang::_get('O_DELETE_ADMIN_FAIL');
         return $return;
     }
 
