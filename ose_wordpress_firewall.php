@@ -22,7 +22,7 @@ if (version_compare(PHP_VERSION, '5.3.0') < 0) {
 					width: 800px;'>Centrora requires PHP 5.3.0, please contact your hosting company to update your PHP version. It will take them 5 seconds to do so.</div>");
 }
 if (function_exists("ini_set")) {
-    ini_set("display_errors", "on");
+    ini_set("display_errors", "off");
 }
 // Basic configuration; 
 define('ODS', DIRECTORY_SEPARATOR);
