@@ -8,19 +8,23 @@
 		<div class="panel-body">
 			<p>
 				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-8"><img src ="<?php echo $image; ?>" /></div>
-					<div class="col-md-2"></div>
+					<div class="col-md-6"><img src ="<?php echo $image; ?>" width="100%"/></div>
+					<div class="col-md-6">
+						<p class="text-center">
+							<span class="bs-label label-danger"><?php oLang::_('CALL_TO_ACTION_P'); ?></span>
+			            </p>
+			            <p class="text-center">
+			            	<?php oLang::_('CALL_TO_ACTION_P2'); ?>
+			            </p>
+						<p class="text-left">
+							<ul >
+			                <?php oLang::_('CALL_TO_ACTION_UL'); ?>
+							</ul>
+						</p>
+					</div>
 				</div>
 			</p>
-			<p class="text-left">
-                <?php oLang::_('CALL_TO_ACTION_P'); ?>
-			</p>
-			<p class="text-left">
-				<ul >
-                <?php oLang::_('CALL_TO_ACTION_UL'); ?>
-				</ul>
-			</p>
+			
 			<p class="text-left">
 
             <h2 class="text-danger"><?php oLang::_('CALL_TO_ACTION_TITLE2'); ?></h2>

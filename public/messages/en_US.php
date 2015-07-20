@@ -741,4 +741,5 @@ define ('NEWS_TITLE', '<b>What\'s New</b>');
 define ('NEWS_DESC', 'Find out the latest news from Centrora');
 define ('PASSCODE_TITLE', 'Passcode');
 define ('PASSCODE_DESC', 'Please enter your passcode to access the administrator panel');
+define ('CALL_TO_ACTION_P2', 'Website being hacked? Clean the malware with a free 6 month subscription PLUS 3 months warranty. <br/> <button class="btn btn-primary btn-sm">Leave the hard work to us now.</button>');
 ?>
