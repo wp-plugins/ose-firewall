@@ -765,7 +765,7 @@ class virusScanner {
 		foreach($this->patterns as $key => $pattern)
 		{
 			$i++;
-			$array = preg_split('/'.trim($pattern->patterns).'/ims', $content, 2);
+			$array = preg_split('/'.trim($pattern->patterns).'/im', $content, 2);
 
             if(count($array)>1)
 			{

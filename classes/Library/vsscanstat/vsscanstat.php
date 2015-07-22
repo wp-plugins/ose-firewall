@@ -187,7 +187,7 @@ class oseVsscanStat {
 		{
 			$fileContent = oseFile::read($filename);
 		$fileContent = preg_replace_callback(
- 						   "/".$pattern."/ims",
+ 						   "/".$pattern."/im",
 							function ($matches) {
 								return "<span class='bg-warning'>".$matches[0]."</span>";
  							},
@@ -388,7 +388,7 @@ class oseVsscanStat {
         if (!empty($filename)) {
             $fileContent = oseFile::read($filename);
             $fileContent = preg_replace_callback(
-                "/" . $pattern . "/ims",
+                "/" . $pattern . "/im",
                 function ($matches) {
                     return "";
                 },
