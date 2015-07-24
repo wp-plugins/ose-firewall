@@ -670,6 +670,9 @@ define('VSSCAN_AND_BACKUP', 'Virus Scan & Backup');
 define('CENTRORA_SETTINGS', 'Gabemedia Security Indstillinger');
 define('MY_ACCOUNT', 'Min konto');
 define('LOGIN_OR_SUBSCIRPTION', 'Login/abonnement');
+define('ADVANCED_FIREWALL_SETTINGS', 'Advanced Firewall Configuration');
+define('BASIC_FIREWALL_RULES', 'Basic Firewall Rules');
+define('ADVANCED_FIREWALL_RULES', 'Advanced Firewall Rules');
 define('O_GOOGLEDRIVE_LOGOUT', 'Google Drive logud');
 define('O_AUTHENTICATION_GOOGLEDRIVE', 'GoogleDrive bekr&aelig;ftelse');
 define('O_AUTHENTICATION_DROPBOX', 'Dropbox bekr&aelig;ftelse');
@@ -680,8 +683,8 @@ define('O_BACKUP_GOOGLEDRIVE', 'GoogleDrive');
 define('DOWNLOAD_SUCCESS', 'Signatures are updated successfully');
 
 //Version 5.0.0
-define('O_FRONTEND_BLOCKING_MODE_404','Vis en 403 fejl side');//previously O_SHOW_A_403_ERROR_PAGE_AND_STOP_THE_ATTACK
-define('O_FRONTEND_BLOCKING_MODE_404_HELP','Vis en 403 fejl side og stoppe angreb');
+define('O_FRONTEND_BLOCKING_MODE_403','Vis en 403 fejl side');//previously O_SHOW_A_403_ERROR_PAGE_AND_STOP_THE_ATTACK
+define('O_FRONTEND_BLOCKING_MODE_403_HELP','Vis en 403 fejl side og stoppe angreb');
 define('O_FRONTEND_BLOCKING_MODE_BAN','Vis forbud side');// previously O_BAN_IP_AND_SHOW_BAN_PAGE_TO_STOP_AN_ATTACK
 define('O_FRONTEND_BLOCKING_MODE_BAN_HELP','Ban IP og vis forbud side for at stoppe et angreb');
 define('O_ALLOWED_FILE_TYPES','Tilladt upload filtypenavne*');

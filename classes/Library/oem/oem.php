@@ -27,10 +27,6 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
-
-/*
- * Attach plugin to MainWP as an extension and render settings and site pages.
- */
 class CentroraOEM {
 	private $customer_id = 0;
 	private $newInstance = null;
@@ -75,6 +71,14 @@ class CentroraOEM {
             return $config;
 		}
         return false;
+	}
+	public function requiresPasscode () {
+		if (!empty($this->newInstance)) {
+			return $this->newInstance->requiresPasscode () ;
+		}
+		else {
+			return false;
+		}
 	}
 	protected static function loadFirewallStat () {
 		if (OSE_CMS == 'joomla')
@@ -140,6 +144,14 @@ class CentroraOEM {
 		}
 		else {
 			define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
+		}
+	}
+	public function getFavicon () {
+		if (!empty($this->newInstance)) {
+			return OSE_FWPUBLICURL.'css/oem/'.$this->customer_id.'/imgs/favicon.ico';
+		}
+		else {
+			return OSE_FWURL.'/public/images/favicon.ico';
 		}
 	}
 }

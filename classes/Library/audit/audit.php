@@ -47,12 +47,12 @@ class oseFirewallAudit
 			$isEnable = $oseFirewallStat->getConfigurationByName('devMode');
 			if ($isEnable)
 			{
-				$return = '<li class="list-group-item"><span class="label label-success">OK</span> '.oLang::_get('DEVELOPMODE_DISABLED').' </li>';
+                $this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> ' . oLang::_get('DISDEVELOPMODE') . " " . $action . "</li>";
 			}
 			else
 			{
-				$this->warning[] = $return = '<li class="list-group-item"><span class="label label-warning">Warning</span> '.oLang::_get('DISDEVELOPMODE')." ".$action."</li>";
-			}
+                $return = '<li class="list-group-item"><span class="label label-success">OK</span> ' . oLang::_get('DEVELOPMODE_DISABLED') . ' </li>';
+            }
 		}
 		if ($print == true)
 		{

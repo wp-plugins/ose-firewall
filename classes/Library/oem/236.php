@@ -27,10 +27,6 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 {
 	die('Direct Access Not Allowed');
 }
-
-/*
- * Attach plugin to MainWP as an extension and render settings and site pages.
- */
 class CentroraOEM236 {
 	public function __construct ($customer_id) {
 		$this->customer_id = $customer_id;
@@ -49,5 +45,8 @@ class CentroraOEM236 {
 	}
 	public function defineVendorName () {
 		define('OSE_WORDPRESS_FIREWALL', 'Gabemedia Security');
+	}
+	public function requiresPasscode () {
+		return true;
 	}
 }
