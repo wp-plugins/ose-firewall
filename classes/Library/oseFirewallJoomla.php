@@ -39,7 +39,7 @@ class oseFirewall extends oseFirewallBase {
 		if (OFRONTENDSCAN==false)
 		{
 			$this->startSession ();
-		} 
+        }
 	}
 	protected function loadViews () {
        	$view = JRequest::getVar('view');
@@ -56,17 +56,18 @@ class oseFirewall extends oseFirewallBase {
        		oseFirewall::$view();
        	}
     }
-    protected function addMenuActions () {
+    protected static function addMenuActions () {
     	//add_action('admin_menu', 'oseFirewall::showmenus');
     } 
     public static function getmenus(){
-
+    	$oem = new CentroraOEM() ;
+    	$favIconPath = $oem->getFavicon();
     	$db = JFactory :: getDBO();
-		$query = "SELECT * FROM `#__menu` WHERE `alias` =  'Centrora Security'";
+		$query = "SELECT * FROM `#__menu` WHERE `alias` =  ".$db->Quote(OSE_WORDPRESS_FIREWALL);
 		$db->setQuery($query);
 		$results = $db->loadResult();
 		if (empty ($results)) {
-			$query = "UPDATE `#__menu` SET `alias` =  'Centrora Security™', `path` =  'Centrora Security™', `published`=1, `img` = '\"components/com_ose_firewall/public/images/favicon.ico\"'  WHERE `component_id` = ( SELECT extension_id FROM `#__extensions` WHERE `element` ='com_ose_firewall')  AND `client_id` = 1 ";
+			$query = "UPDATE `#__menu` SET `alias` =  ".$db->Quote(OSE_WORDPRESS_FIREWALL).", `path` =  ".$db->Quote(OSE_WORDPRESS_FIREWALL).", `published`=1, `img` = ".$db->Quote($favIconPath)."  WHERE `component_id` = ( SELECT extension_id FROM `#__extensions` WHERE `element` ='com_ose_firewall')  AND `client_id` = 1 ";
 			$db->setQuery($query);
 			$db->query();
 		}
@@ -75,7 +76,8 @@ class oseFirewall extends oseFirewallBase {
 		$extension = 'com_ose_firewall';
 		$view = JRequest :: getVar('view');
 		
-		$menu = '<div class="navbar navbar-default">';
+		$menu = '<div class="bs-component">';
+		$menu .= '<div class="navbar navbar-default">';
 		$menu .= '<div class="navbar-collapse collapse navbar-responsive-collapse">';
 		$menu .= '<ul id ="nav" class="nav navbar-nav">';
 		// Dashboard Menu;
@@ -84,7 +86,7 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="index.php?option=' . $extension . '&view=dashboard"><i class="glyphicon glyphicon-dashboard"></i> ' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
 		
 		$menu .= '<li ';
-        $menu .= (in_array($view, array('manageips', 'rulesets', 'bsconfig', 'countryblock', 'variables'))) ? 'class="active dropdown"' : 'class="dropdown"';
+        $menu .= (in_array($view, array('manageips', 'rulesets', 'bsconfig', 'countryblock', 'variables', 'upload'))) ? 'class="active dropdown"' : 'class="dropdown"';
         $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-fire"></i> ' . oLang::_get('FIREWALL') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Virus Starts;
 		$menu .= '<ul class="dropdown-menu">';
@@ -97,6 +99,10 @@ class oseFirewall extends oseFirewallBase {
         $menu .= '><a href="index.php?option=' . $extension . '&view=variables">' . oLang::_get('VARIABLES_MANAGEMENT') . '</a></li>';
 
         $menu .= '<li ';
+        $menu .= ($view == 'upload') ? 'class="active"' : '';
+        $menu .= '><a href="index.php?option=' . $extension . '&view=upload">' . oLang::_get('FILE_UPLOAD_MANAGEMENT') . '</a></li>';
+
+        $menu .= '<li ';
         $menu .= ($view == 'countryblock') ? 'class="active"' : '';
         $menu .= '><a href="index.php?option=' . $extension . '&view=countryblock">' . oLang::_get('COUNTRYBLOCK') . '</a></li>';
 
@@ -107,7 +113,6 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '<li ';
 		$menu .= ($view == 'rulesets') ? 'class="active"' : '';
 		$menu .= '><a href="index.php?option=' . $extension . '&view=rulesets">' . oLang::_get('FIREWALL_RULES'). '</a></li>';
-
 
 		$menu .= '</ul>';
 		// SubMenu Anti-Virus Ends;
@@ -230,7 +235,7 @@ class oseFirewall extends oseFirewallBase {
         // My account menu ends
         $menu .= '</li>';
 		// Main Feature Ends;
-		$menu .= '</ul></div></div>';
+		$menu .= '</ul></div></div></div>';
         return $menu;
 	}
 	protected static function addSuiteMenu () {
@@ -277,24 +282,36 @@ class oseFirewall extends oseFirewallBase {
 		$oem = new CentroraOEM() ;
 		$head = '<nav class="navbar navbar-default" role="navigation">';
 		$head .= '<div class ="everythingOnOneLine">
-					<div class ="col-lg-12">
-						<div class="logo"><img src="'.OURI::base().'components/com_ose_firewall/public/images/logo5.png" width="250px" alt ="Centrora Logo"/></div>'.$oem->showOEMName ();
+					<div class ="col-lg-12">';
+		
+		$oem = new CentroraOEM();
+		$oemCustomer = $oem->hasOEMCustomer();
+        $oemShowNews = $oem->showNews();
+		if ($oemCustomer) {
+			$head .= $oem->addLogo();
+		}
+		else
+		{
+			$head .= '<div class="logo"><img src="'.OURI::base().'components/com_ose_firewall/public/images/logo5.png" width="250px" alt ="Centrora Logo"/></div>'.$oem->showOEMName ();
+		}
+		
 		#server version: -1 Old, 0 Same, +1 New
 		$serverversion = self::getServerVersion();
 		$isOutdated = (self::getVersionCompare($serverversion) > 0)?true:false;
-		$hasNews = self::checkNewsUpdated();
+
 		$head .='<div id ="versions"> <div class ="'.(($isOutdated==true)?'version-outdated':'version-updated').'"><i class="glyphicon glyphicon-'.(($isOutdated==true)?'remove':'ok').'"></i>  '.self::getVersion ().'</div>';
-		$urls = self::getDashboardURLs();
+		$urls = $oemShowNews? self::getDashboardURLs() : null;
 		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
 		self::getAjaxScript();
 		if ($isOutdated) { 
 			$head .= '<button class="version-update" type="button" onclick="showAutoUpdateDialogue(\''.$serverversion.'\', \''.$urls[8].'\')"/><i class="glyphicon glyphicon-refresh"></i> Update to : '.$serverversion.'</button>';
 		}
 		$head .= '</div>';
-		
-		$head .='<div class="centrora-news"><i class="glyphicon glyphicon-bullhorn"></i> <a class="color-white" href="'.$urls[8].'">What\'s New? </a><i class="glyphicon glyphicon-'.(($hasNews==true)?'asterisk':'').' color-magenta"></i></div>';
-		
-		if (oseFirewall::affiliateAccountExists()==false)
+        if ($oemShowNews) {
+            $hasNews = self::checkNewsUpdated();
+            $head .= '<div class="centrora-news"><i class="glyphicon glyphicon-bullhorn"></i> <a class="color-white" href="' . $urls[8] . '">What\'s New? </a><i class="glyphicon glyphicon-' . (($hasNews == true) ? 'asterisk' : '') . ' color-magenta"></i></div>';
+        }
+		if (oseFirewall::affiliateAccountExists()==false && CentroraOEM::hasOEMCustomer()==false)
 		{
 			$head .='<div class="centrora-affiliates"><button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#affiliateFormModal" href="#" ><i class="glyphicon glyphicon-magnet"></i> '.oLang::_get('AFFILIATE_TRACKING').'</button></div>';
 		}
@@ -313,7 +330,7 @@ class oseFirewall extends oseFirewallBase {
 		$head .= $oem->getTopBarURL ();
 		if (OSE_CMS == 'joomla')
 		{
-			$head .= '<li><a href="index.php" title="Home">Quick links:&nbsp;&nbsp;&nbsp;<i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Centrora</span> </a></li>';
+			$head .= '<li><a href="index.php" title="Home">Quick links:&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-home"></i> <span class="hidden-xs hidden-sm hidden-md">Centrora</span> </a></li>';
 		}
 		$head .=	'</ul>
 					 </div>
@@ -452,4 +469,5 @@ class oseFirewall extends oseFirewallBase {
 	public static function getConfigurationURL () {
 		return 'index.php?option=com_ose_firewall&view=bsconfig';
 	}
+
 }

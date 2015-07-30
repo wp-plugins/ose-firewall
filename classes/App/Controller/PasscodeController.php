@@ -40,14 +40,14 @@ class PasscodeController extends \App\Base
         } else {
             $defaultNum = $oemNum['data']['customer_id'];
 
-            $this->model->saveConfigurationNoExit('oem', array('oem_passcode' => base64_encode($defaultNum)));
+            $this->model->saveConfigurationNoExit('oem', array('oem_passcode' => base64_encode($defaultNum), 'passcode_status' => 1));
             $oemPass = base64_encode($defaultNum);
         }
         if ($passcode == base64_decode($oemPass)) {
 
             $_SESSION['passcode'] = $passcode;
             $results = array(
-                'page' => $_SESSION['previouspage'],
+                'page' => (OSE_CMS=='joomla')?'index.php?option=com_ose_firewall':'admin.php?page=ose_fw_vsscan',
                 'status' => true
             );
             $this->model->returnJSON($results);

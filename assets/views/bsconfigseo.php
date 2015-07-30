@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="metaDescription" class="col-sm-4 control-label"><?php oLang::_('O_SEO_META_DESC');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_SEO_META_DESC');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_SEO_META_DESC_HELP');?>"></i>
             </label>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="metaGenerator" class="col-sm-4 control-label"><?php oLang::_('O_SEO_META_GENERATOR');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_SEO_META_GENERATOR');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_SEO_META_GENERATOR_HELP');?>"></i>
             </label>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="scanGoogleBots" class="col-sm-4 control-label"><?php oLang::_('O_SCAN_GOOGLE_BOTS');?></label>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_SCAN_GOOGLE_BOTS');?></label>
             <div class="col-sm-8">
                 <div class="onoffswitch">
                     <input type="checkbox" value = 1 name="scanGoogleBots" class="onoffswitch-checkbox" id="scanGoogleBots"
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="scanYahooBots" class="col-sm-4 control-label"><?php oLang::_('O_SCAN_YAHOO_BOTS');?></label>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_SCAN_YAHOO_BOTS');?></label>
             <div class="col-sm-8">
                 <div class="onoffswitch">
                     <input type="checkbox" value = 1 name="scanYahooBots" class="onoffswitch-checkbox" id="scanYahooBots"
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="scanMsnBots" class="col-sm-4 control-label"><?php oLang::_('O_SCAN_MSN_BOTS');?></label>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_SCAN_MSN_BOTS');?></label>
             <div class="col-sm-8">
                 <div class="onoffswitch">
                     <input type="checkbox" value = 1 name="scanMsnBots" class="onoffswitch-checkbox" id="scanMsnBots"

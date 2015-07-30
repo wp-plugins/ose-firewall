@@ -408,10 +408,33 @@ CREATE TABLE IF NOT EXISTS `#__osefirewall_adminemails` (
   `A_status` VARCHAR(10) NOT NULL,
   `D_id`     INT(11),
   PRIMARY KEY (`A_id`),
-  INDEX `wp_osefirewall_adminemails_idx1` (`D_id`),
+  INDEX `osefirewall_adminemails_idx1` (`D_id`),
   FOREIGN KEY (`D_id`) REFERENCES `#__osefirewall_domains` (`D_id`)
     ON UPDATE CASCADE
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `#__osefirewall_fileuploadext` (
+  `ext_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ext_name` varchar(200) NOT NULL,
+  `ext_type` varchar(200) NOT NULL,
+  `ext_status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ext_id`),
+  UNIQUE KEY `ext_name` (`ext_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `#__osefirewall_fileuploadlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip_id` int(11) NOT NULL,
+  `file_name` varchar(100) DEFAULT NULL,
+  `file_type_id` int(11) NOT NULL,
+  `validation_status` tinyint(1) NOT NULL,
+  `vs_scan_status` tinyint(1) NOT NULL,
+  `datetime` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `osefirewall_fileuploadlog_idx1` (`id`),
+  FOREIGN KEY (`ip_id`) REFERENCES `#__osefirewall_acl` (`id`) ON UPDATE CASCADE ON DELETE CASCADE ,
+  FOREIGN KEY (`file_type_id`) REFERENCES `#__osefirewall_fileuploadext` (`ext_id`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

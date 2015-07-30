@@ -435,7 +435,7 @@ jQuery(document).ready(function($){
             success: function (data) {
                 hideLoading();
                 if (data.status == true) {
-                    window.location = 'admin.php?page=' + data.page;
+                    window.location = data.page;
                     window.location.reload;
                 } else {
                     showDialogue("wrong passcode, try again", O_FAIL, O_FAIL);
@@ -454,9 +454,10 @@ jQuery(document).ready(function($){
                type: "POST",
                url: url,
                data: data, // serializes the form's elements.
+            dataType: 'json',
                success: function(data)
                {
-            	   data = jQuery.parseJSON(data);
+
             	   if (data.status == 'SUCCESS')
             	   {
                        showLoading(data.result);
@@ -465,7 +466,10 @@ jQuery(document).ready(function($){
             	   else
             	   {
                        hideLoading();
-                       showDialogue(data.result, data.status, O_OK);
+                       showDialogue(data.message, data.status, O_OK);
+                       setTimeout(function () {
+                           window.location.reload(1);
+                       }, 7000);
             	   }
                }
              });
@@ -632,14 +636,41 @@ jQuery(document).ready(function($){
         });
         return false; // avoid to execute the actual submit of the form.
     });
-    $("#strongPassword-form").submit(function () {
-        showLoading(O_PLEASE_WAIT);
-        var passdata = $("#strongPassword-form").serialize();
-        passdata += '&centnounce=' + $('#centnounce').val();
+    $("#addext-form").submit(function () {
+        showLoading('Please wait...');
+        var data = $("#addext-form").serialize();
+        data += '&centnounce=' + $('#centnounce').val();
         $.ajax({
             type: "POST",
             url: url,
-            data: passdata, // serializes the form's elements.
+            dataType: 'json',
+            data: data, // serializes the form's elements.
+            success: function (data) {
+                if (data === parseInt(data, 10)) {
+                    showLoading(O_ADD_EXT_SUCCESS);
+                    hideLoading();
+                    document.getElementById("ext-warning-label").style.display = 'none';
+                    $('#addExtModal').modal('hide');
+                    $('#extensionListTable').dataTable().api().ajax.reload();
+                }
+                else {
+                    showLoading(O_ADD_EXT_FAIL);
+                    hideLoading();
+                    document.getElementById("ext-warning-label").style.display = 'inline';
+                    document.getElementById("ext-warning-message").innerHTML = data;
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+    $("#strongPassword-form").submit(function () {
+        showLoading(O_PLEASE_WAIT);
+        var data = $("#strongPassword-form").serialize();
+        data += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data, // serializes the form's elements.
             success: function (data) {
                 hideLoading();
                 if (data !== null) {

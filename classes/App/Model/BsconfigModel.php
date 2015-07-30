@@ -44,4 +44,48 @@ class BsconfigModel extends BaseModel {
 		oseFirewall::loadJSFile ('CentroraSEOTinyMCE', 'plugins/tinymce/tinymce.min.js', false);
 		oseFirewall::loadJSFile ('CentroraManageIPs', 'rulesets.js', false);
 	}
+
+    public function login_page_input()
+    {
+		if (OSE_CMS == 'wordpress') {
+	        if (get_option('permalink_structure')) {
+	
+	            echo '<code>' . trailingslashit(home_url()) . '</code> <input id="loginSlug" type="text" name="loginSlug" value="' . $this->new_login_slug() . '">' . ($this->use_trailing_slashes() ? ' <code>/</code>' : '');
+	
+	        } else {
+	
+	            echo '<code>' . trailingslashit(home_url()) . '?</code> <input id="loginSlug" type="text" name="loginSlug" value="' . $this->new_login_slug() . '">';
+	        }
+		}
+    }
+
+    private function use_trailing_slashes()
+    {
+
+        return ('/' === substr(get_option('permalink_structure'), -1, 1));
+
+    }
+
+    private function new_login_slug()
+    {
+        $confArray = $this->getConfiguration('scan');
+        if (!empty($confArray['data']['loginSlug'])) {
+            return $confArray['data']['loginSlug'];
+        }
+        return;
+    }
+
+    public function backend_secure_key()
+    {
+        echo '<code>' . JURI:: root() . 'administrator/index.php?</code> <input id="secureKey" type="text" name="secureKey" value="' . $this->new_secure_key() . '">';
+    }
+
+    private function new_secure_key()
+    {
+        $confArray = $this->getConfiguration('scan');
+        if (!empty($confArray['data']['secureKey'])) {
+            return $confArray['data']['secureKey'];
+        }
+        return;
+    }
 }

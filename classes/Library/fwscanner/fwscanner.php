@@ -37,14 +37,14 @@ class oseFirewallScanner {
 	private $tags = null;
 	private $target = null;
 	private $converters = array ();
-	private $allowExts = null;
+	private $allowExts = array ();
 	private $logtime = null;
 	protected $db = null;
 	private $json = null;
 	protected $tolerance = 5;
 	protected $threshold = 35;
 	protected $blockIP = true;
-	private $aclid = null;
+	protected $aclid = null;
 	protected $scanGoogleBots = true;
 	protected $scanYahooBots = true;
 	protected $scanMsnBots = true;
@@ -70,6 +70,7 @@ class oseFirewallScanner {
 		$this->setReferer();
 		$this->setClientIP();
 		$this->setConfig();
+        oseFirewall::loadBackendBasicFunctions();
 	}
 	protected function setConfig() {
 		$query = 'SELECT `key`, `value` FROM `#__ose_secConfig` WHERE `type` IN ("seo", "scan", "addons", "advscan", "country")';
@@ -83,7 +84,7 @@ class oseFirewallScanner {
 				$this->$key = (int) $result['value'];
 				if ($this->threshold == 0 )
 				{
-					$this->threshold = 35; 
+					$this->threshold = 35;
 				}
 			}
 			else
@@ -92,7 +93,7 @@ class oseFirewallScanner {
 			}
 		}
 	}
-	
+
 	protected function setTargetURL() {
 		$this->url = ((!empty($_SERVER['HTTPS'])) ? "https://" : "http://") . str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 	}
@@ -175,7 +176,7 @@ class oseFirewallScanner {
 		foreach ($results as $result)
 		{
 			if (!empty($result->keyname) && !empty($result->rule_id))
-			{	
+			{
 				if ($type == 'ad')
 				{
 					$this->convertL2Attack($result->rule_id, $result->keyname);
@@ -189,16 +190,16 @@ class oseFirewallScanner {
 	}
 	protected function convertL1Attack($keyname, $content)
 	{
-		$tmp = array (); 
-		if (isset($_GET[$keyname])) 
+		$tmp = array ();
+		if (isset($_GET[$keyname]))
 		{
 			$tmp[0] = 'GET';
-			$tmp[1] = $keyname; 
+			$tmp[1] = $keyname;
 		}
 		else if (isset($_POST[$keyname]))
 		{
 			$tmp[0]= 'POST';
-			$tmp[1] = $keyname; 
+			$tmp[1] = $keyname;
 		}
 		$this->replaced['original']['GET'][$tmp[1]] = $_GET[$tmp[1]];
 		$_GET[$tmp[1]] = NULL;
@@ -214,7 +215,7 @@ class oseFirewallScanner {
 			{
 				case 'GET':
 					if (!empty($_GET[$tmp[1]]))
-					{	
+					{
 						$this->replaced['original']['GET'][$tmp[1]] = $_GET[$tmp[1]];
 						$_GET[$tmp[1]] = $this->filterVariable($_GET[$tmp[1]], $rule_id);
 						$this->replaced['filtered']['GET'][$tmp[1]] = $_GET[$tmp[1]];
@@ -297,8 +298,8 @@ class oseFirewallScanner {
 	}
 	protected function getDateTime () {
 		oseFirewall::loadDateClass();
-		$time = new oseDatetime(); 
-		return $time->getDateTime (); 
+		$time = new oseDatetime();
+		return $time->getDateTime ();
 	}
 	protected function addACLRule($status, $score) {
 		$page_id = $this->addPages();
@@ -311,7 +312,7 @@ class oseFirewallScanner {
 				'status' => (int) $status,
 				'referers_id' => $referer_id,
 				'pages_id' => $page_id,
-				'visits' => 1 
+				'visits' => 1
 			);
 			$ipmanager = new oseFirewallIpManager($this->db);
 			$aclid = $ipmanager->getACLID();
@@ -383,8 +384,8 @@ class oseFirewallScanner {
 			$id = $this->db->addData('insert', '#__osefirewall_vars', null, null, $varValues);
 			return $id;
 		} else {
-			$tmp = array_values($id); 
-			$id = $tmp[0]; 
+			$tmp = array_values($id);
+			$id = $tmp[0];
 			return $id;
 		}
 	}
@@ -550,7 +551,7 @@ class oseFirewallScanner {
 		if (!empty($this->customBanURL))
 		{
 			header( 'Location: '.$this->customBanURL ) ;
-		}	
+		}
 	}
 	protected function showBanPage() {
 		$this->customRedirect ();
@@ -561,8 +562,8 @@ class oseFirewallScanner {
 		$metaDescription = (!empty ($this->metaDescription)) ? $this->metaDescription : 'Centrora Security';
 		$metaGenerator = (!empty ($this->metaGenerator)) ? $this->metaGenerator : 'Centrora Security';
 		$banhtml = $this->getBanPage($adminEmail, $pageTitle, $metaKeys, $metaDescription, $metaGenerator, $customBanPage);
-		echo $banhtml; 
-		$this->db->closeDBO(); 
+		echo $banhtml;
+		$this->db->closeDBO();
 		exit;
 	}
 	protected function getBanPage($adminEmail, $pageTitle, $metaKeys, $metaDescription, $metaGenerator, $customBanPage)
@@ -637,7 +638,7 @@ class oseFirewallScanner {
                  <h3 style="color:#fff;">WHAT NOW?</h3>
                  <p style="color:#fff;">Your IP address is ' . $this->ip . '. If you believe this is an error, please contact the <a href="mailto:' . $adminEmail . '?Subject=Inquiry:%20Banned%20for%20suspicious%20hacking%20behaviour - IP: ' . $this->ip . ' - Violation"> Webmaster </a>
         <form id = "googleAuth-form" class="form-horizontal group-border stripped" role="form" action="index.php?">
-            <lable style="color:#fff" for="googleAuthCode" class="form-label form-label-left form-label-auto">If you have Google Authenticator enabled for your WordPress account, please input your Google Authenticator code</lable>
+            <lable style="color:#fff" for="googleAuthCode" class="form-label form-label-left form-label-auto">'.oLang:: _get("UNBAN_PAGE_GOOGLE_AUTH_DESC").'</lable>
             <input  type="text" id="googleAuthCode" class=" form-textbox"  name="googleAuthCode">
             <button type="submit" class="btn btn-default" id="save-button">submit</button>
             </div>
@@ -653,7 +654,7 @@ class oseFirewallScanner {
 		return $banbody;
 	}
 	protected function show403Page() {
-		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail:oseFirewall::getAdminEmail(); 
+		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail:oseFirewall::getAdminEmail();
 		$customBanPage = (!empty ($this->customBanpage)) ? $this->customBanpage: 'Banned';
 		$banbody = $this->getBanPageBody($customBanPage, $adminEmail);
 		header('HTTP/1.1 200 OK');
@@ -707,16 +708,19 @@ class oseFirewallScanner {
 	}
 	protected function show403Msg ($msg) {
 		header('HTTP/1.1 403 Forbidden');
-		$banbody  = "<html>
+		$banbody  = '<html>
 						<head>
 							<title>403 Forbidden</title>
 						</head>
 						<body>
-								".$msg."
+						<div class="alert alert-danger alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Warning!</strong> '.$msg.'
+                        </div>
 						</body>
-					 </html>";
+					 </html>';
 		echo $banbody;
-		exit;
+		//exit;
 	}
 	protected function sendEmail($type, $notified)
 	{
@@ -799,7 +803,7 @@ class oseFirewallScanner {
 		$attackTypetmp = $this->getAttackTypes();
 		$attackType ='';
 		foreach ($attackTypetmp as $key =>$value) {
-			$attackType .= implode(',', $value).', ';	
+			$attackType .= implode(',', $value).', ';
 		}
 		$ipURL = $this ->getIPURL($config_var);
 		$violation = $this->getViolation();
@@ -836,7 +840,7 @@ class oseFirewallScanner {
 		}
 		else
 		{
-			$return = $this->detected; 
+			$return = $this->detected;
 		}
 		return $return;
 	}
@@ -856,7 +860,7 @@ class oseFirewallScanner {
 	}
 	protected function getConfigVars()
 	{
-		return oseFirewall::getConfigVars(); 
+		return oseFirewall::getConfigVars();
 	}
 	protected function CheckSpambotEmail() {
 		// Initiate and declare spambot/errorDetected as false - as we're just getting started
@@ -961,13 +965,16 @@ class oseFirewallScanner {
 	protected function scanUploadFiles () {
 		$this->getAllowExts ();
 		$scanResult = $this->checkFileTypes();
-		return $scanResult; 
+		return $scanResult;
 	}
 	protected function getAllowExts () {
-		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'allowExts' ";
+		$query = "SELECT `ext_name` FROM `#__osefirewall_fileuploadext` WHERE `ext_status` = 1";
 		$this->db->setQuery($query);
-		$result = (object) $this->db->loadResult();
-		$this->allowExts = (!empty($result->value))?$result->value:null;
+		$results = $this->db->loadArrayList();
+		foreach ( $results as $result ) {
+			$return[] = $result['ext_name'];
+		}
+		$this->allowExts = ( !empty($return) ) ? $return : null;
 	}
 	protected function cleanFileVariable($fileVar)
 	{
@@ -981,40 +988,59 @@ class oseFirewallScanner {
 	}
 	protected function checkFileTypes() {
 		if (!empty ($this->allowExts)) {
+            $i=0;
 			foreach ($_FILES as $file) {
 				if (!empty ($file['tmp_name'])) {
-					if (is_array($file['tmp_name']))
-					{
+					if (is_array($file['tmp_name'])) {
 						$file['tmp_name'] = $file['tmp_name'][0];
 					}
-					if (!empty($file['tmp_name']))
-					{
+					if (!empty($file['tmp_name'])) {
 						$file['tmp_name'] = $this->cleanFileVariable($file['tmp_name']);
 						$file['type'] = $this->cleanFileVariable($file['type']);
 						$mimeType = $this->getMimeType($file);
 						$ext = explode('/', $file['type']);
-						$allowExts = explode(",", trim($this->allowExts));
-						$allowExts = array_map('trim', $allowExts);
+                        $filename = is_array($file['name'])? $file['name'][$i] : $file['name']; //convert array files to get single file names
+						$allowExts = array_map('trim', $this->allowExts);
 						if ($ext[1] == 'vnd.openxmlformats-officedocument.wordprocessingml.document' && ($mimeType[1] != $ext[1])) {
 							$ext[1] = 'msword';
 						}
 						if ($ext[1] != $mimeType[1]) {
 							$return = $this->composeResult(100, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE', 'bs') ;
+                            //prepare File Upload Log
+                            $return = array_merge($return, $this->composeUploadLogResult(2, $filename, $mimeType[1] ));
+
 							$this->unlinkUPloadFiles();
 							return $return;
 						}
 						elseif (in_array($mimeType[1], $allowExts) == false) {
-							$this -> show403Msg('The upload of this file type ' . $mimeType[1] . ' is not allowed this website. If you are the server administrator, please add the extensions in the configuraiton in the configuration panel first.');
+							$this -> show403Msg(oLang:: _get('UPLOAD_FILE_403WARN') . '<br /> File Type: <b>'. $mimeType[1] . '</b>');
+                            $return = $this->composeResult(0, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE', 'bs') ;
+                            //prepare File Upload Log
+                            $return = array_merge($return, $this->composeUploadLogResult(1, $filename, $mimeType[1] ));
+
+                            $this->unlinkUPloadFiles();
+							return $return;
 						}
-						else
-						{
-							return null;
+						else {
+                            $result = array_merge(array('cont' => true), $this->composeResult(0, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE', 'bs') );
+                            $logreturn = array_merge($result, $this->composeUploadLogResult(0, $filename, $mimeType[1] ));
+                            return $logreturn;
 						}
 					}
 				}
+                $i++;
 			}
 		}
 	}
+    protected function composeUploadLogResult ($valStatus, $filename, $filetype){
+        $return['ip'] = $this->ip;
+        $return['validation_status'] = $valStatus;
+        $return['fileuploadlog'] = true;
+        $return['file_name'] = $filename;
+        $return['file_type'] = $filetype;
+        $return['datetime'] = $this -> getDateTime ();
+        return $return;
+    }
 	protected function getMimeType($file) {
 		$mimeType = $this->getFileInfo($file['tmp_name']);
 		if (empty ($mimeType)) {
@@ -1072,7 +1098,8 @@ class oseFirewallScanner {
 		}
 	}
 	protected function unlinkUPloadFiles () {
-		if (is_array($_FILES['tmp_name']))
+//        print_r($_FILES);exit;
+        if (isset($_FILES['tmp_name']) && is_array($_FILES['tmp_name']))
 		{
 			foreach ($_FILES['tmp_name'] as $filetmp)
 			{
@@ -1084,21 +1111,21 @@ class oseFirewallScanner {
 		}
 		else
 		{
-			if (file_exists($_FILES['tmp_name'])) {
+			if (isset($_FILES['tmp_name']) && file_exists($_FILES['tmp_name'])) {
 				unlink($_FILES['tmp_name']);
 			}
 		}
 		unset ($_FILES);
 	}
 	protected function checkCountryStatus () {
-		$ready = oseFirewall::getGeoIPState(); 
+		$ready = oseFirewall::getGeoIPState();
 		if ($ready == true)
 		{
 			if ($this->blockCountry == false)
 			{
-				return false; 
+				return false;
 			}
-			else 
+			else
 			{
 				$query = "SELECT country.`status` FROM `#__ose_app_geoip` as `ip` LEFT JOIN `#__osefirewall_country` AS `country` ON country.country_code = ip.country_code WHERE ".$this->db->QuoteValue($this->ip32)." BETWEEN ip.ip32_start AND ip.ip32_end ";
 				$this->db->setQuery($query);
@@ -1108,14 +1135,14 @@ class oseFirewallScanner {
 					if ($result->status == 1)
 					{
 						$this->showCountryBlockMsg ();
-					} 
+					}
 					else if ($result->status == 2)
 					{
-						return false; 
+						return false;
 					}
 					else if ($result->status == 3)
 					{
-						return true; 
+						return true;
 					}
 				}
 				else
@@ -1123,7 +1150,7 @@ class oseFirewallScanner {
 					return false;
 				}
 			}
-		} 
+		}
 		else
 		{
 			return false;
@@ -1142,22 +1169,22 @@ class oseFirewallScanner {
 			{
 				if (in_array(strtolower($method.'.'.$key), $varArray))
 				{
-					unset($request[$method][$key]);	
+					unset($request[$method][$key]);
 				}
 			}
 		}
-		return $request; 
+		return $request;
 	}
 	protected function getWhitelistVars() {
 		$query = "SELECT `keyname` FROM `#__osefirewall_vars` WHERE `status`  = 3 ";
 		$this->db->setQuery ( $query );
 		$results = $this->db->loadArrayList ( 'keyname' );
-		$return = array(); 
+		$return = array();
 		foreach ($results as $result) {
 			$return[]=strtolower($result['keyname']);
 		}
 		return $return;
-	} 
+	}
 	protected function composeResult($impact, $content, $rule_id, $attackTypeID, $keyname, $type = 'bs') {
 		$return = array ();
 		$return ['impact'] = $impact;

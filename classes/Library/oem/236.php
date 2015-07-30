@@ -35,9 +35,9 @@ class CentroraOEM236 {
         return '<div class="vendorname"> Gabemedia Security </div>';
 	}
 	public function getTopBarURL () {
-		$urls = '<li><a href="http://gabemedia.dk/" title="My Account"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
-				 <li><a href="http://gabemedia.dk/" id="support-center" title="Support"><i class="im-support"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
-				 <li><a href="http://gabemedia.dk/" title="Malware Removal"><i class="im-spinner10"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
+		$urls = '<li><a href="http://gabemedia.dk/" title="My Account"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
+				 <li><a href="http://gabemedia.dk/" id="support-center" title="Support"><i class="glyphicon glyphicon-cd"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
+				 <li><a href="http://gabemedia.dk/" title="Malware Removal"><i class="glyphicon glyphicon-screenshot"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
 		return $urls;
 	}
 	public function addLogo () {
@@ -49,4 +49,7 @@ class CentroraOEM236 {
 	public function requiresPasscode () {
 		return true;
 	}
+    public function showNews (){
+        return true;
+    }
 }

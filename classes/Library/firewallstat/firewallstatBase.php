@@ -577,6 +577,7 @@ class oseFirewallStatBase
 		$result = $this->db->truncateTable('#__osefirewall_detcontdetail');
 		$result = $this->db->truncateTable('#__osefirewall_detattacktype');
 		$result = $this->db->truncateTable('#__osefirewall_iptable');
+        $result = $this->db->truncateTable('#__osefirewall_fileuploadlog');
 		$result = $this->db->truncateTable('#__osefirewall_acl');
 		return $result;
 	}

@@ -102,3 +102,6 @@ var O_PLEASE_WAIT = 'Please wait...';
 var O_GDIALOG_MSG = 'Be sure to link your account with Google Authenticator under WordPress users ';
 var O_GDIALOG_TITLE = 'REMINDER: Link Google Autheniticator';
 
+//added from 5.0.1
+var O_ADD_EXT_SUCCESS = "Successfully added the extension";
+var O_ADD_EXT_FAIL = "There are errors when adding the extension";

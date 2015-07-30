@@ -46,7 +46,7 @@ class oseFirewallAjax extends oseAjax{
 
     public static function loadActionPasscode()
     {
-        $actions = array('verify', 'changePasscode', 'check');
+        $actions = array('verify', 'changePasscode', 'disablePasscode', 'check');
         parent::loadActions($actions);
     }
 	public static function loadActionManageips () {
@@ -73,6 +73,12 @@ class oseFirewallAjax extends oseAjax{
         $actions = array('getConfiguration', 'saveConfigScan', 'showGoogleSecret', 'check');
 		parent::loadActions($actions); 
 	}
+
+    public static function loadActionUpload()
+    {
+        $actions = array('getExtLists', 'changeStatus', 'saveExt', 'getLog', 'check');
+        parent::loadActions($actions);
+    }
 	public static function loadActionSpamconfig () {
         $actions = array('getConfiguration', 'saveConfAddon', 'check');
 		parent::loadActions($actions); 

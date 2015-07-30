@@ -46,8 +46,16 @@ class oseFirewall extends oseFirewallBase {
         if ($results['data']['strongPassword'] == 1) {
             add_action('user_profile_update_errors', 'oseFirewall::validatePassword', 0, 3);
         }
+        if (!empty($results['data']['loginSlug'])) {
+            add_action('plugins_loaded', array($this, 'plugins_loaded'), 2);
+            // add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+            add_action('wp_loaded', array($this, 'wp_loaded'));
+
+            add_filter('site_url', array($this, 'site_url'), 10, 4);
+            add_filter('wp_redirect', array($this, 'wp_redirect'), 10, 2);
+        }
     }
-    protected function addMenuActions () {
+    protected static function addMenuActions () {
     	add_action('admin_menu', 'oseFirewall::showmenus');
     } 
 	public static function getmenus(){
@@ -63,7 +71,7 @@ class oseFirewall extends oseFirewallBase {
 		$menu .= '><a href="admin.php?page=ose_firewall"><i class="glyphicon glyphicon-dashboard"></i> ' . oLang::_get('DASHBOARD_TITLE') . '</a></li>';
 
         $menu .= '<li id="dropdownMenu1"';
-        $menu .= (in_array($view, array('ose_fw_manageips', 'ose_fw_variables', 'ose_fw_rulesets', 'ose_fw_countryblock', 'ose_fw_bsconfig'))) ? 'class="dropdown"' : 'class="dropdown"';
+        $menu .= (in_array($view, array('ose_fw_manageips', 'ose_fw_variables', 'ose_fw_rulesets', 'ose_fw_countryblock', 'ose_fw_bsconfig', 'ose_fw_upload'))) ? 'class="dropdown"' : 'class="dropdown"';
         $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-fire"></i> ' . oLang::_get('FIREWALL') . '<b class="caret"></b></a>';
 		// SubMenu Anti-Virus Starts; 
         $menu .= '<ul class="dropdown-menu dropdown-menu-middle" aria-labelledby="dropdownMenu1">';
@@ -75,6 +83,10 @@ class oseFirewall extends oseFirewallBase {
         $menu .= '<li ';
         $menu .= ($view == 'ose_fw_variables') ? 'class="active"' : '';
         $menu .= '><a href="admin.php?page=ose_fw_variables">' . oLang::_get('VARIABLES_MANAGEMENT') . '</a></li>';
+
+        $menu .= '<li ';
+        $menu .= ($view == 'ose_fw_fileextension') ? 'class="active"' : '';
+        $menu .= '><a href="admin.php?page=ose_fw_upload">' . oLang::_get('FILE_UPLOAD_MANAGEMENT') . '</a></li>';
 
         $menu .= '<li ';
         $menu .= ($view == 'ose_fw_countryblock') ? 'class="active"' : '';
@@ -212,6 +224,7 @@ class oseFirewall extends oseFirewallBase {
 		oseFirewall::callLibClass('oem', 'oem');
 		$oem = new CentroraOEM();
 		$oemCustomer = $oem->hasOEMCustomer();
+        $oemShowNews = $oem->showNews();
 		
     	add_menu_page( OSE_WORDPRESS_FIREWALL_SETTING, OSE_WORDPRESS_FIREWALL, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard',$oem->getFavicon());
     	add_submenu_page( 'ose_firewall', OSE_DASHBOARD_SETTING, OSE_DASHBOARD, 'manage_options', 'ose_firewall', 'oseFirewall::dashboard' );
@@ -238,6 +251,7 @@ class oseFirewall extends oseFirewallBase {
         add_submenu_page('ose_firewall', LOGIN_OR_SUBSCIRPTION, LOGIN_OR_SUBSCIRPTION, 'manage_options', 'ose_fw_login', 'oseFirewall::login');
         add_submenu_page('ose_fw_configuration', SUBSCRIPTION, SUBSCRIPTION, 'manage_options', 'ose_fw_subscription', 'oseFirewall::subscription');
 		//add_submenu_page( 'ose_firewall', VERSION_UPDATE, VERSION_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::versionupdate' );
+        add_submenu_page('ose_fw_configuration', FILEEXTENSION, FILEEXTENSION, 'manage_options', 'ose_fw_fileextension', 'oseFirewall::fileextension');
         add_submenu_page('ose_fw_configuration', AUTHENTICATION, AUTHENTICATION, 'manage_options', 'ose_fw_authentication', 'oseFirewall::authentication');
         add_submenu_page('ose_fw_configuration', SEO_CONFIGURATION, SEO_CONFIGURATION, 'manage_options', 'ose_fw_seoconfig', 'oseFirewall::seoconfig');
 		add_submenu_page( 'ose_fw_configuration', SCAN_CONFIGURATION, SCAN_CONFIGURATION, 'manage_options', 'ose_fw_scanconfig', 'oseFirewall::scanconfig' );
@@ -246,7 +260,10 @@ class oseFirewall extends oseFirewallBase {
 		add_submenu_page( 'ose_fw_configuration', EMAIL_CONFIGURATION, EMAIL_CONFIGURATION, 'manage_options', 'ose_fw_emailconfig', 'oseFirewall::emailconfig' );
 		add_submenu_page( 'ose_fw_configuration', EMAIL_ADMIN, EMAIL_ADMIN, 'manage_options', 'ose_fw_emailadmin', 'oseFirewall::emailadmin' );
 		add_submenu_page( 'ose_fw_configuration', API_CONFIGURATION, API_CONFIGURATION, 'manage_options', 'ose_fw_apiconfig', 'oseFirewall::apiconfig' );
-		add_submenu_page( 'ose_fw_configuration', NEWS_TITLE, NEWS_TITLE, 'manage_options', 'ose_fw_news', 'oseFirewall::news' );
+        if ($oemShowNews) {
+            add_submenu_page( 'ose_fw_configuration', NEWS_TITLE, NEWS_TITLE, 'manage_options', 'ose_fw_news', 'oseFirewall::news' );
+        }
+        add_submenu_page( 'ose_fw_configuration', FILE_UPLOAD_MANAGEMENT, FILE_UPLOAD_MANAGEMENT, 'manage_options', 'ose_fw_upload', 'oseFirewall::upload' );
 		//add_submenu_page( 'ose_firewall', ANTI_VIRUS_DATABASE_UPDATE, ANTI_VIRUS_DATABASE_UPDATE, 'manage_options', 'ose_fw_versionupdate', 'oseFirewall::updateChecking' );
         if ($oemCustomer) {
             add_submenu_page('ose_fw_configuration', OEM_PASSCODE, OEM_PASSCODE, 'manage_options', 'ose_fw_passcode', 'oseFirewall::passcode');
@@ -269,6 +286,7 @@ class oseFirewall extends oseFirewallBase {
 					<div class ="col-lg-12">';
 		$oem = new CentroraOEM();
 		$oemCustomer = $oem->hasOEMCustomer();
+        $oemShowNews = $oem->showNews();
 		if ($oemCustomer) {
 			$head .= $oem->addLogo();
 		}
@@ -283,9 +301,8 @@ class oseFirewall extends oseFirewallBase {
 				$serverversion = $plugin_data->update->new_version;}
 		}
 		$isOutdated = (self::getVersionCompare($serverversion) > 0)?true:false;
-		$hasNews = self::checkNewsUpdated();
 		$head .='<div id ="versions"> <div class ="'.(($isOutdated==true)?'version-outdated':'version-updated').'"><i class="glyphicon glyphicon-'.(($isOutdated==true)?'remove':'ok').'"></i>  '.self::getVersion ().'</div>';
-		$urls = self::getDashboardURLs();
+		$urls = $oemShowNews? self::getDashboardURLs() :null ;
 		oseFirewall::loadJSFile ('CentroraUpdateApp', 'VersionAutoUpdate.js', false);
 		self::getAjaxScript();
 		
@@ -293,7 +310,7 @@ class oseFirewall extends oseFirewallBase {
 		$file ='ose-firewall/ose_wordpress_firewall.php';
 		$updateurl = wp_nonce_url( self_admin_url('update.php?action=upgrade-plugin&plugin=') . $file, 'upgrade-plugin_' . $file);
 		$activateurl = esc_url(wp_nonce_url(admin_url('plugins.php?action=activate&plugin=' . $file), 'activate-plugin_' . $file));
-		
+
 		if ($isOutdated) {
 			$head .= '<button class="version-update" type="button"
 						onclick="showAutoUpdateDialogue(\''.$serverversion.'\', \''.$urls[8].'\',
@@ -303,9 +320,13 @@ class oseFirewall extends oseFirewallBase {
 						<i class="glyphicon glyphicon-refresh"></i> Update to : '.$serverversion.'</button>';
 		}
 		$head .= '</div>';
-		$head .='<div class="centrora-news"><i class="glyphicon glyphicon-bullhorn"></i> <a class="color-white" href="'.$urls[8].'">What\'s New? </a><i class="glyphicon glyphicon-'.(($hasNews==true)?'asterisk':'').' color-magenta"></i></div>';
-		
-		if (oseFirewall::affiliateAccountExists()==false)
+
+        if ($oemShowNews) {
+            $hasNews = self::checkNewsUpdated();
+            $head .='<div class="centrora-news"><i class="glyphicon glyphicon-bullhorn"></i> <a class="color-white" href="'.$urls[8].'">What\'s New? </a><i class="glyphicon glyphicon-'.(($hasNews==true)?'asterisk':'').' color-magenta"></i></div>';
+        }
+
+		if (oseFirewall::affiliateAccountExists()==false && CentroraOEM::hasOEMCustomer()==false)
 		{
 			$head .='<div class="centrora-affiliates"><button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#affiliateFormModal" href="#" ><i class="glyphicon glyphicon-magnet"></i> '.oLang::_get('AFFILIATE_TRACKING').'</button></div>';
 		}
@@ -324,7 +345,7 @@ class oseFirewall extends oseFirewallBase {
 		
 		$head .= $oem->getTopBarURL ();
 		
-		$head .= '<li><a href="index.php" title="Home"><i class="im-home7"></i> <span class="hidden-xs hidden-sm hidden-md">Home</span> </a></li>';
+		$head .= '<li><a href="index.php" title="Home"><i class="glyphicon glyphicon-home"></i> <span class="hidden-xs hidden-sm hidden-md">Home</span> </a></li>';
 		$head .=	'</ul>
 					 </div>
 					</div>
@@ -507,4 +528,243 @@ class oseFirewall extends oseFirewallBase {
             return true;
         }
     }
+
+    public function plugins_loaded()
+    {
+
+        global $pagenow;
+
+        if (!is_multisite()
+            && (strpos($_SERVER['REQUEST_URI'], 'wp-signup') !== false
+                || strpos($_SERVER['REQUEST_URI'], 'wp-activate')) !== false
+        ) {
+
+            wp_die(__('This feature is not enabled.', 'wps-hide-login'));
+
+        }
+
+        $request = parse_url($_SERVER['REQUEST_URI']);
+
+        if ((strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false
+                || untrailingslashit($request['path']) === site_url('wp-login', 'relative'))
+            && !is_admin()
+        ) {
+
+            $this->wp_login_php = true;
+
+            $_SERVER['REQUEST_URI'] = $this->user_trailingslashit('/' . str_repeat('-/', 10));
+
+            $pagenow = 'index.php';
+
+        } elseif (untrailingslashit($request['path']) === home_url($this->new_login_slug(), 'relative')
+            || (!get_option('permalink_structure')
+                && isset($_GET[$this->new_login_slug()])
+                && empty($_GET[$this->new_login_slug()]))
+        ) {
+
+            $pagenow = 'wp-login.php';
+
+        }
+
+    }
+
+    public function wp_loaded()
+    {
+
+        global $pagenow;
+
+        if (is_admin()
+            && !is_user_logged_in()
+            && !defined('DOING_AJAX')
+        ) {
+
+            status_header(404);
+            nocache_headers();
+            include(get_404_template());
+            exit;
+        }
+
+        $request = parse_url($_SERVER['REQUEST_URI']);
+
+        if ($pagenow === 'wp-login.php'
+            && $request['path'] !== $this->user_trailingslashit($request['path'])
+            && get_option('permalink_structure')
+        ) {
+
+            wp_safe_redirect($this->user_trailingslashit($this->new_login_url())
+                . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+
+            die;
+
+        } elseif ($this->wp_login_php) {
+
+            if (($referer = wp_get_referer())
+                && strpos($referer, 'wp-activate.php') !== false
+                && ($referer = parse_url($referer))
+                && !empty($referer['query'])
+            ) {
+
+                parse_str($referer['query'], $referer);
+
+                if (!empty($referer['key'])
+                    && ($result = wpmu_activate_signup($referer['key']))
+                    && is_wp_error($result)
+                    && ($result->get_error_code() === 'already_active'
+                        || $result->get_error_code() === 'blog_taken')
+                ) {
+
+                    wp_safe_redirect($this->new_login_url()
+                        . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+
+                    die;
+
+                }
+
+            }
+
+            $this->wp_template_loader();
+
+        } elseif ($pagenow === 'wp-login.php') {
+
+            global $error, $interim_login, $action, $user_login;
+
+            @require_once ABSPATH . 'wp-login.php';
+
+            die;
+
+        }
+
+    }
+
+    private function wp_template_loader()
+    {
+
+        global $pagenow;
+
+        $pagenow = 'index.php';
+
+        if (!defined('WP_USE_THEMES')) {
+
+            define('WP_USE_THEMES', true);
+
+        }
+
+        wp();
+
+        if ($_SERVER['REQUEST_URI'] === $this->user_trailingslashit(str_repeat('-/', 10))) {
+
+            $_SERVER['REQUEST_URI'] = $this->user_trailingslashit('/wp-login-php/');
+
+        }
+
+        require_once(ABSPATH . WPINC . '/template-loader.php');
+
+        die;
+
+    }
+
+    public function site_url($url, $path, $scheme, $blog_id)
+    {
+
+        return $this->filter_wp_login_php($url, $scheme);
+
+    }
+
+    public function network_site_url($url, $path, $scheme)
+    {
+
+        return $this->filter_wp_login_php($url, $scheme);
+
+    }
+
+    public function wp_redirect($location, $status)
+    {
+
+        return $this->filter_wp_login_php($location);
+
+    }
+
+    public function filter_wp_login_php($url, $scheme = null)
+    {
+
+        if (strpos($url, 'wp-login.php') !== false) {
+
+            if (is_ssl()) {
+
+                $scheme = 'https';
+
+            }
+
+            $args = explode('?', $url);
+
+            if (isset($args[1])) {
+
+                parse_str($args[1], $args);
+
+                $url = add_query_arg($args, $this->new_login_url($scheme));
+
+            } else {
+
+                $url = $this->new_login_url($scheme);
+
+            }
+
+        }
+
+        return $url;
+
+    }
+
+    private function use_trailing_slashes()
+    {
+
+        return ('/' === substr(get_option('permalink_structure'), -1, 1));
+
+    }
+
+    private function new_login_slug()
+    {
+        $confArray = $this->getConfiguration('scan');
+        if (!empty($confArray['data']['loginSlug'])) {
+            return $confArray['data']['loginSlug'];
+        }
+        return;
+    }
+
+    private function user_trailingslashit($string)
+    {
+
+        return $this->use_trailing_slashes()
+            ? trailingslashit($string)
+            : untrailingslashit($string);
+
+    }
+
+    public function new_login_url($scheme = null)
+    {
+
+        if (get_option('permalink_structure')) {
+
+            return $this->user_trailingslashit(home_url('/', $scheme) . $this->new_login_slug());
+
+        } else {
+
+            return home_url('/', $scheme) . '?' . $this->new_login_slug();
+
+        }
+
+    }
+//    public function admin_notices() {
+//
+//        global $pagenow;
+//
+//        $out = '';
+//
+//        if ( ! is_network_admin() && $_GET['page'] == 'ose_fw_bsconfig') {
+//
+//            echo '<div class="updated notice is-dismissible"><p>' . sprintf( __( 'Your login page is now here: <strong><a href="%1$s">%2$s</a></strong>. Bookmark this page!', 'wps-hide-login' ), $this->new_login_url(), $this->new_login_url() ) . '</p></div>';
+//
+//        }
+//
+//    }
 }

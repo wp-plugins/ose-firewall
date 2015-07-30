@@ -209,39 +209,41 @@ class GoogleAuthenticator {
 		// Get information on user, we need this in case an app password has been enabled,
 		// since the $user var only contain an error at this point in the login flow.
 		$user =  get_user_by( 'login', $username );
+        if (!empty($user)) {
 
-		// Does the user have the Google Authenticator enabled ?
-		if (trim ( get_user_option ( 'googleauthenticator_enabled', $user->ID ) ) == 'enabled') {
+            // Does the user have the Google Authenticator enabled ?
+            if (trim(get_user_option('googleauthenticator_enabled', $user->ID)) == 'enabled') {
 
-			// Get the users secret
-			$GA_secret = trim ( get_user_option ( 'googleauthenticator_secret', $user->ID ) );
+                // Get the users secret
+                $GA_secret = trim(get_user_option('googleauthenticator_secret', $user->ID));
 
-			// Figure out if user is using relaxed mode ?
-			$GA_relaxedmode = trim ( get_user_option ( 'googleauthenticator_relaxedmode', $user->ID ) );
-			
-			// Get the verification code entered by the user trying to login
-			$otp = trim ( $_POST ['googleotp'] );
-			
-			// Valid code ?
-			if ($this->verify ( $GA_secret, $otp, $GA_relaxedmode )) {
-				return $userstate;
-			} else {
-				// No, lets see if an app password is enabled, and this is an XMLRPC / APP login ?
-				if (trim ( get_user_option ( 'googleauthenticator_pwdenabled', $user->ID ) ) == 'enabled' && (defined ( 'XMLRPC_REQUEST' ) || defined ( 'APP_REQUEST' ))) {
-					$GA_passwords = json_decode ( get_user_option ( 'googleauthenticator_passwords', $user->ID ) );
-					$passwordsha1 = trim ( $GA_passwords->{'password'} );
-					$usersha1 = sha1 ( strtoupper ( str_replace ( ' ', '', $password ) ) );
-					if ($passwordsha1 == $usersha1) {
-						return new WP_User ( $user->ID );
-					} else {
-						// Wrong XMLRPC/APP password !
-						return new WP_Error ( 'invalid_google_authenticator_password', __ ( '<strong>ERROR</strong>: The Google Authenticator password is incorrect.', 'google-authenticator' ) );
-					}
-				} else {
-					return new WP_Error ( 'invalid_google_authenticator_token', __ ( '<strong>ERROR</strong>: The Google Authenticator code is incorrect or has expired.', 'google-authenticator' ) );
-				}
-			}
-		}
+                // Figure out if user is using relaxed mode ?
+                $GA_relaxedmode = trim(get_user_option('googleauthenticator_relaxedmode', $user->ID));
+
+                // Get the verification code entered by the user trying to login
+                $otp = trim($_POST ['googleotp']);
+
+                // Valid code ?
+                if ($this->verify($GA_secret, $otp, $GA_relaxedmode)) {
+                    return $userstate;
+                } else {
+                    // No, lets see if an app password is enabled, and this is an XMLRPC / APP login ?
+                    if (trim(get_user_option('googleauthenticator_pwdenabled', $user->ID)) == 'enabled' && (defined('XMLRPC_REQUEST') || defined('APP_REQUEST'))) {
+                        $GA_passwords = json_decode(get_user_option('googleauthenticator_passwords', $user->ID));
+                        $passwordsha1 = trim($GA_passwords->{'password'});
+                        $usersha1 = sha1(strtoupper(str_replace(' ', '', $password)));
+                        if ($passwordsha1 == $usersha1) {
+                            return new WP_User ($user->ID);
+                        } else {
+                            // Wrong XMLRPC/APP password !
+                            return new WP_Error ('invalid_google_authenticator_password', __('<strong>ERROR</strong>: The Google Authenticator password is incorrect.', 'google-authenticator'));
+                        }
+                    } else {
+                        return new WP_Error ('invalid_google_authenticator_token', __('<strong>ERROR</strong>: The Google Authenticator code is incorrect or has expired.', 'google-authenticator'));
+                    }
+                }
+            }
+        }
 		// Google Authenticator isn't enabled for this account,
 		// just resume normal authentication.
 		return $userstate;

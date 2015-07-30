@@ -61,7 +61,9 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 			}
 			$attacktypeID = $this->getAttackTypeID ( $scanResult ['rule_id'] );
 			$this->addDetContent ( $attacktypeID, $content, $scanResult ['rule_id'], $scanResult ['keyname']);
-			$this->controlAttack (0);
+            if (!isset($scanResult['cont']) || $scanResult['cont'] != true) {
+                $this->controlAttack(0);
+            }
 		}
 		unset ( $scanResult );
 	}

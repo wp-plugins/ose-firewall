@@ -32,27 +32,58 @@ class NewsModel extends BaseModel{
     public function __construct(){
 
     }
+
     public function getCHeader(){
         return oLang::_get('NEWS_TITLE');
     }
+
     public function getCDescription(){
         return oLang::_get('NEWS_DESC');
     }
+
     public function loadLocalScript(){
         $this->loadAllAssets();
         oseFirewall::loadJSFile ('CentroraNews', 'news.js', false);
     }
 
-    public function getFeed($rssUrl, $limit){
+    private function getFeed($rssUrl, $limit){
         oseFirewall::callLibClass('panel','panel');
         $panel = new panel ();
-        $data = $panel->getJSONFeed($rssUrl, $limit);
+        $panel->hasNewsRead(true, 'read');
+        return $panel->getJSONFeed($rssUrl, $limit);
+    }
+
+    public function getAnyFeed ($rssUrl, $limit){
+        $data = $this->getFeed($rssUrl, $limit);
         echo '<br />';
         foreach ($data->feed->entries as $entry) {
             echo '<p><strong><a target="_blank" href="' . $entry->link . '" title="' . $entry->title . '">' . $entry->title . '</a></strong><br /></p>';
             echo '<p>' . $entry->contentSnippet . '</p>';
         }
+    }
 
-        $panel->hasNewsRead(true, 'read');
+    public function getchangelogFeed($rssUrl, $limit){
+        $data = $this->getFeed($rssUrl, $limit);
+        $reVersion = "/=(.*?)\\=/";
+        $reList = "/^[*].*/m";
+        $i = 0; $classname = 'hide';
+
+        foreach ($data->feed->entries as $entry) {
+            $str = strip_tags($entry->content);
+            $classShow = ($i == 0) ? 'class="changelist expanded"' : 'class="changelist collapsed" style="display: none;"';
+            preg_match_all($reVersion, $str, $verMatches);
+            preg_match_all($reList, $str, $listMatches);
+
+            echo '<div id="showmenu'.$i.'"><strong>';
+            echo '<input id="btnshowmenu'.$i.'"class="btn btn-sm" type="button" onclick=toggleChangelist('.$i.'); title="Show Changelog" value="' . $verMatches[1][0] . '">';
+            echo '</strong><br /></div>';
+            echo '<div  id="changelist'.$i.'"'.$classShow.'><pre style="color:#484848">';
+            foreach ($listMatches[0] as $list){
+                echo  $list .'<br />';
+            }
+            echo '<p class="right"><a target="_blank" href="' . $entry->link . '" title="' . $entry->title . '">View Full - ' . $verMatches[1][0] . '</a></p>';
+            echo '</pre></div><p></p>';
+        $i++;
+        }
     }
 }

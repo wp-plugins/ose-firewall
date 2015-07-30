@@ -69,4 +69,40 @@ class ScanconfigModel extends ConfigurationModel {
         $id = $this->db->addData('update', '#__extensions', 'name', 'com_users', $Array);
         return $id;
     }
+
+    public function getLoginUrl($url, $scheme = null)
+    {
+
+        if (get_option('permalink_structure')) {
+
+            return $this->user_trailingslashit(home_url('/', $scheme) . $url);
+
+        } else {
+
+            return home_url('/', $scheme) . '?' . $url;
+
+        }
+    }
+
+    private function user_trailingslashit($string)
+    {
+
+        return $this->use_trailing_slashes()
+            ? trailingslashit($string)
+            : untrailingslashit($string);
+
+    }
+
+    private function use_trailing_slashes()
+    {
+        return ('/' === substr(get_option('permalink_structure'), -1, 1));
+    }
+
+    public function sendEmail($type, $content)
+    {
+        oseFirewall::callLibClass('emails', 'emails');
+        $emailManager = new oseFirewallemails ();
+        $return = $emailManager->sendemail($type, $content);
+        return $return;
+    }
 }

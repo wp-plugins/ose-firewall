@@ -4,6 +4,7 @@ $this->model->getNounce ();
 $confArray = $this->model->getConfiguration ( 'scan' );
 $adconfArray = $this->model->getConfiguration('advscan');
 $seoConfArray = $this->model->getConfiguration ( 'seo' );
+$oemConfArray = $this->model->getConfiguration('oem');
 ?>
 <div id="oseappcontainer">
 	<div class="container">

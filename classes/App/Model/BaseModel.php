@@ -229,6 +229,10 @@ class BaseModel  {
 		oseFirewall::loadCSSFile ('CentroraV4Style', 'v4.css', false);
 		oseFirewall::loadCSSURL ('CentroraV4Font','https://fonts.googleapis.com/css?family=Open+Sans%3A400italic%2C400%2C600%2C700%7CRoboto+Slab%3A400%2C300%2C700');
         oseFirewall::loadCSSFile('CentroraTipsyCss', 'tipsy.css', false);
+        if (class_exists('JConfig'))
+        {
+        	oseFirewall::loadCSSFile ('CentroraJFix', 'jfix.css', false);
+        }
         $this->getOEMCss();
 	}
 	protected function getOEMCss () {

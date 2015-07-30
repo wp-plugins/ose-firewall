@@ -25,16 +25,16 @@ $limit = 5 ;
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="latest">
-                                        <?php $this->model->getFeed("http://www.centrora.com/category/blog/feed", $limit); ?>
+                                        <?php $this->model->getAnyFeed("http://www.centrora.com/category/blog/feed", $limit); ?>
                                     </div>
                                     <div class="tab-pane" id="changelog">
-                                        <?php $this->model->getFeed("http://www.centrora.com/category/changelog/feed/atom/", $limit); ?>
+                                        <?php $this->model->getChangelogFeed("http://www.centrora.com/category/changelog/feed/atom/", $limit); ?>
                                     </div>
 <!--                                    <div class="tab-pane" id="research-lab">-->
-<!--                                        --><?php //$this->model->getFeedJSON("https://www.centrora.com/category/research-lab/feed/", $limit); ?>
+<!--                                        --><?php //$this->model->getAnyFeed("https://www.centrora.com/category/research-lab/feed/", $limit); ?>
 <!--                                    </div>-->
 <!--                                    <div class="tab-pane" id="admin-tools">-->
-<!--                                        --><?php //$this->model->getFeedJSON("https://www.centrora.com/category/admin-tools/feed/", $limit); ?>
+<!--                                        --><?php //$this->model->getAnyFeed("https://www.centrora.com/category/admin-tools/feed/", $limit); ?>
 <!--                                    </div>-->
                                 </div>
                             </div>

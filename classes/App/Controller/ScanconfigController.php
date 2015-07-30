@@ -37,7 +37,9 @@ class ScanconfigController extends ConfigurationController {
 		switch ($type)
 		{
 			case 'scan':
-				$data['devMode'] = $this->model->getInt('devMode', 1);
+                //   $data['secureKey'] = $this->model->getVar('secureKey', null);
+                //   $data['loginSlug'] = $this->model->getVar('loginSlug', null);
+                $data['devMode'] = $this->model->getInt('devMode', 1);
                 $data['strongPassword'] = $this->model->getInt('strongPassword', 0);
 				$data['allowExts'] = $this->model->getVar('allowExts', null);
 				$data['scanUpFiles'] = $this->model->getInt('scanUpFiles', null);
@@ -78,7 +80,48 @@ class ScanconfigController extends ConfigurationController {
 		//$data['badgeCSS'] = $this->model->getVar('badgeCSS', null);
 		//$data['adRules'] = $this->model->getVar('adRules', 0);
 		//$data['scanClamav'] = $this->model->getInt('scanClamav', 0);
-		$this->model->saveConfiguration($type, $data);
+        $oemConfArray = $this->model->getConfiguration('oem');
+        if (!empty($oemConfArray['data']['customer_id'])) {
+            $single = array();
+            $single['passcode_status'] = $this->model->getInt('passcode_status', 0);
+            $this->model->saveConfigurationNoExit('oem', $single);
+        }
+        $this->model->saveConfiguration($type, $data);
+//
+//        $confArray = $this->model->getConfiguration('scan');
+//        if (OSE_CMS == 'wordpress') {
+//            if ($confArray['data']['loginSlug'] == $data['loginSlug']) {
+//                $this->model->saveConfiguration($type, $data);
+//            } else {
+//                $this->model->saveConfigurationNoExit($type, $data);
+//                $result = array();
+//                $result['status'] = 'Completed';
+//                if (!empty($data['loginSlug'])) {
+//                    $result['message'] = 'Your login page is now: <code>' . $this->model->getLoginUrl($data['loginSlug']) . '</code>, please bookmark now';
+//                } else {
+//                    $result['message'] = 'Your login page is now: <code>' . home_url() . '/wp-login.php?' . '</code>, please bookmark now';
+//
+//                }
+//                $this->model->sendemail('loginSlug', $result['message']);
+//                $this->model->returnJson($result);
+//            }
+//        } else {
+//            if ($confArray['data']['secureKey'] == $data['secureKey']) {
+//                $this->model->saveConfiguration($type, $data);
+//            } else {
+//                $this->model->saveConfigurationNoExit($type, $data);
+//                $result = array();
+//                $result['status'] = 'Completed';
+//                if (!empty($data['secureKey'])) {
+//                    $result['message'] = 'Your administrator page is now: <code>' . 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '?' . $data['secureKey'] . '</code>, please bookmark now';
+//                } else {
+//                    $result['message'] = 'Your administrator page is now: <code>' . 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '</code>, please bookmark now';
+//
+//                }
+//                $this->model->sendemail('secureKey', $result['message']);
+//                $this->model->returnJson($result);
+//            }
+//        }
 	}
 
     public function action_checkPassword()

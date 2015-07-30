@@ -30,8 +30,8 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 //Start here;
 define('O_LATEST_SIGNATURE', '20140901');
 define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140901, updated on 1st Sep 2014');
-define('OSE_WORDPRESS_FIREWALL_SETTING', 'Centrora Security™ Settings');
-define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', 'Centrora Security™ is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
+define('OSE_WORDPRESS_FIREWALL_SETTING', ''.OSE_WORDPRESS_FIREWALL.' Settings');
+define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', ''.OSE_WORDPRESS_FIREWALL.' is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
 define('OSE_WORDPRESS_FIREWALL_UPDATE_DESC', 'OSE Firewall™ has been renamed as ‘Centrora Plugin’, which will works perfectly with our new product <a href="http://www.centrora.com" target = "_blank">Centrora</a>, a security management central that gains you the ability to manage all your websites in one place.');
 define('OSE_DASHBOARD', 'Dashboard');
 define('OSE_DASHBOARD_SETTING', 'Dashboard Settings');
@@ -72,7 +72,7 @@ define('MAX_TOLERENCE', 'Maximum tolerence for an attack');
 define('OSE_SCANNING_SETTING','Scanning setting');
 define('OSE_SCANNING','Scanning');
 define('SERVERIP','Your server IP (to avoid false alerts due to empty user agent)');
-define('OSE_WORDPRESS_FIREWALL_CONFIG','Centrora Security™ Configuration');
+define('OSE_WORDPRESS_FIREWALL_CONFIG',''.OSE_WORDPRESS_FIREWALL.' Configuration');
 define('OSE_WORDPRESS_VIRUSSCAN_CONFIG','Virus Scanner Configuration');
 define('OSE_WORDPRESS_VIRUSSCAN_CONFIG_DESC','Please configure your virus scanning parameters here.');
 define('START_DB_INIT','Initialise Database');
@@ -80,7 +80,7 @@ define('STOP_DB_INIT','Stop Action');
 define('START_NEW_VIRUSSCAN','Start New Multi-Threads Scan');
 define('CONT_VIRUSSCAN','Continue Multi-Threads Scan');
 define('START_NEW_SING_VIRUSSCAN','Start New Single-Thread Scan');
-define('OSE_SCANNED','Centrora Security has scanned');
+define('OSE_SCANNED',''.OSE_WORDPRESS_FIREWALL.' has scanned');
 define('OSE_FOLDERS','folders');
 define('OSE_AND','and');
 define('OSE_FILES','files');
@@ -104,9 +104,9 @@ define('OSE_SCAN_SUMMARY','Scan Summary');
 define('OSE_SCAN_ACTIVITY','Scan Detailed Activity');
 define('OSE_WEBSITE_PROTECTED_BY','This website is protected by');
 define('OSE_PROTECTION_MODE','Protection Mode');
-define('OSE_FIREWALL_ONLY','Protected by Centrora Security Only');
+define('OSE_FIREWALL_ONLY','Protected by '.OSE_WORDPRESS_FIREWALL.' Only');
 define('OSE_SECSUITE_ONLY','Protected by OSE Security Suite Only');
-define('OSE_FWANDSUITE','Protected by Centrora Security & OSE Security Suite');
+define('OSE_FWANDSUITE','Protected by '.OSE_WORDPRESS_FIREWALL.' & '.OSE_WORDPRESS_FIREWALL.' Suite');
 define('OSE_SUITE_PATH','Absolute path of OSE Security Suite.<br/>e.g. /home/youraccount/public_html/osesecurity/ <br/> (Please ensure you have installed <a href ="https://www.opensource-excellence.com/shop/ose-security-suite.html" target="_blank">OSE Security Suite</a> already)');
 define('NEED_HELP_CLEANING','Need help removing the malicious files?');
 define('NEED_HELP_CLEANING_DESC','Viruses are changing over time. Our patterns might not be updated to scan the latest malicious files in your infected system. In this case, please consider to hire our <a href="https://www.opensource-excellence.com/service/removal-of-malware.html" target="_blank" >malware removal service</a>. The new patterns found in your website will be contributed to the community to help other users.');
@@ -125,7 +125,7 @@ define('DBNOTREADY_OTHER','<b>WARNING</b>: The database is not ready, please ret
 define('DASHBOARD_TITLE','Dashboard');
 define('INSTALLNOW','Install Now');
 define('UNINSTALLDB', 'Uninstall');
-define('UNINSTALLDB_INTRO', 'Removing the database created by Centrora Security from your website');
+define('UNINSTALLDB_INTRO', 'Removing the database created by '.OSE_WORDPRESS_FIREWALL.' from your website');
 define('UPDATEVERSION', 'Update');
 define('SUBSCRIBE', 'Subscribe');
 define('READYTOGO','Everything is ready to go! If you want to remove database, please go to configuration');
@@ -149,7 +149,7 @@ define('INSERT_STAGE7_GEOIPDATA_COMPLETED',' > GeoIP Data Stage 7 Installation C
 define('INSERT_STAGE8_GEOIPDATA_COMPLETED',' > GeoIP Data Stage 8 Installation Completed, continue...');
 define('INSERT_VSPATTERNS_COMPLETED',' > Virus Patterns Insertion Completed, continue...');
 define('MANAGEIPS_TITLE','IP Control');
-define('MANAGEIPS_DESC','Block, Manage and Control the access of IP addresses. Centrora Plugin automatically detect suspicious IP for you and set as monitored as default.');
+define('MANAGEIPS_DESC','Block, Manage and Control the access of IP addresses. '.OSE_WORDPRESS_FIREWALL.' automatically detect suspicious IP for you and set as monitored as default.');
 define('IP_EMPTY','IP is empty');
 define('IP_INVALID_PLEASE_CHECK','The IP is invalid, please check if your any of your octets is greater than 255');
 define('IP_RULE_EXISTS','The Access Control Rules for this IP / IP Range already exists.');
@@ -162,7 +162,7 @@ define('IP_RULE_CHANGED_FAILED','The Access Control Rules for this IP / IP Range
 define('MANAGE_IPS', 'IP Control');
 define('RULESETS','Firewall Configuration');
 define('MANAGERULESETS_TITLE','<b>Firewall</b> <span><b>Rules Fine-tuning</b></span>');
-define('MANAGERULESETS_DESC','Activate or deactivate specific firewall rules. You can change the security features of Centrora Plugin by deactivating specific security function. We highly recommend to activate all of the security functions to carry the best out of Centrora Security');
+define('MANAGERULESETS_DESC','Activate or deactivate specific firewall rules. You can change the security features of '.OSE_WORDPRESS_FIREWALL.' by deactivating specific security function. We highly recommend to activate all of the security functions to carry the best out of '.OSE_WORDPRESS_FIREWALL.'');
 define('ADRULESETS', 'Advanced Firewall Rules Fine-tuning');
 define('MANAGE_AD_RULESETS_TITLE','<b>Advanced Firewall Settings</b>');
 define('MANAGE_AD_RULESETS_DESC','The Panel to Manage your Advance Rules');
@@ -177,7 +177,7 @@ define('CONFIG_SAVE_SUCCESS','The configuration was saved successfully.');
 define('CONFIG_SAVE_FAILED','The configuration was saved unsuccessfully.');
 define('SCAN_CONFIGURATION','Scanning Configuration');
 define('SCAN_CONFIGURATION_TITLE', 'Firewall Scanning Configuration');
-define('SCAN_CONFIGURATION_DESC','Connect to Centrora with API key and configure Firewall Scanning Settings');
+define('SCAN_CONFIGURATION_DESC','Connect to '.OSE_WORDPRESS_FIREWALL.' with an API key and configure Firewall Scanning Settings');
 define('ANTISPAM_CONFIGURATION','Anti-Spam Configuration');
 define('ANTISPAM_CONFIGURATION_TITLE','<b>Anti-Spam</b> <span><b>Configuration</b></span>');
 define('ANTISPAM_CONFIGURATION_DESC','Enable/Disable stop forum spam to avoid persistent spammers on message boards and blogs');
@@ -224,7 +224,7 @@ define('SCANREPORT_DESC','Display the infected files last scanned by the virus s
 define('SCANREPORT_CLEAN', 'No files were infected.');
 define('VARIABLES','Variables');
 define('VARIABLES_TITLE','Variables Management');
-define('VARIABLES_DESC','Variable scanning. Centrora Plugin automatically scan the variables in the background to prevent attacks through variables');
+define('VARIABLES_DESC','Variable scanning. '.OSE_WORDPRESS_FIREWALL.' automatically scan the variables in the background to prevent attacks through variables');
 define('MANAGE_VARIABLES','Manage Variables');
 define('VIRUS_SCAN_REPORT','Virus Scanning Report');
 define('VERSION_UPDATE', 'Anti-Virus Database Update');
@@ -265,14 +265,14 @@ define('DB_DELETE_FAILED', 'The Backup item was removed unsuccessfully.');
 define('ADVRULESET_INSTALL_SUCCESS', 'Advanced security rulesets have been installed successfully');
 define('ADVRULESET_INSTALL_FAILED', 'Advanced security rulesets was installed unsuccessfully');
 define('GAUTHENTICATOR','googleVerification');
-define('IPMANAGEMENT_INTRO', 'Block, Manage and Control the access of IP addresses. Centrora Security automatically detect suspicious IP for you and set as monitored as default.');
-define('FIREWALL_SETTING_INTRO', 'Activate or Deactivate the firewall function. You can limit the security features of Centrora Security by deactivating any security function. We highly recommend to activate all of the security functions to carry the best out of Centrora Security');
-define('VARIABLES_INTRO', 'Variable scanning. Centrora Security automatically scan the variables in the background to prevent attacks through variables');
+define('IPMANAGEMENT_INTRO', 'Block, Manage and Control the access of IP addresses. '.OSE_WORDPRESS_FIREWALL.' automatically detect suspicious IP for you and set as monitored as default.');
+define('FIREWALL_SETTING_INTRO', 'Activate or Deactivate the firewall function. You can limit the security features of '.OSE_WORDPRESS_FIREWALL.' by deactivating any security function. We highly recommend to activate all of the security functions to carry the best out of '.OSE_WORDPRESS_FIREWALL.'');
+define('VARIABLES_INTRO', 'Variable scanning. '.OSE_WORDPRESS_FIREWALL.' automatically scan the variables in the background to prevent attacks through variables');
 define('VIRUS_SCANNER_INTRO', 'Virus Scanner is a powerful malware detector, it acts like an antivirus but is more powerful than an antivirus. It scans through every single files on your server or any specific path of files for virus, malware, spam, malicious codes, SQL injection, security vulnerabilities etc');
 define('SCAN_REPORT_INTRO', 'Display the infected files last scanned by the virus scanner');
-define('CONFIGURATION_INTRO', 'Configure the default settings of Centrora Security to best suit your personal needs. It includes settings for scanning, virus scanner, SEO, anti-spam, email, and admin email mapping');
+define('CONFIGURATION_INTRO', 'Configure the default settings of '.OSE_WORDPRESS_FIREWALL.' to best suit your personal needs. It includes settings for scanning, virus scanner, SEO, anti-spam, email, and admin email mapping');
 define('BACK_UP_INTRO', 'Backup database into your own server for free');
-define('COUNTRY_BLOCK_INTRO', 'Block the IP range of the entire country that you insist to. Centrora Security will keep the visitors from blocked country out of your website');
+define('COUNTRY_BLOCK_INTRO', 'Block the IP range of the entire country that you insist to. '.OSE_WORDPRESS_FIREWALL.' will keep the visitors from blocked country out of your website');
 define('SCANCONFIG_INTRO', 'Configure Firewall Scanning Settings');
 define('VSCONFIG_INTRO', 'Configure the settings for Virus Scanner, control file extension to be scanned and limit the size of scanning files');
 define('SEOCONFIG_INTRO', 'Search Engine settings which protect your rankings even if google bots block your website. Design message to be displayed for blocked IP visitors');
@@ -315,20 +315,20 @@ define('CLAMAV_STATUS', 'ClamAV Status');
 define('RELOAD_DB_DESC', 'Reload ClamAV Database');
 define('CLAMAV_DEF_VIRSION', 'ClamAV Virus Definition Version');
 define('CLAMAV_TITLE', '<b>ClamAV Integration</b>');
-define('CLAMAV_DESC', 'ClamAV is an open source anti-virus software for linux server. Centrora security can integrate ClamAV into the virus scanning function to enhance the power for picking malicious files. For server installation instruction, please see <a href ="http://www.centrora.com/blog/install-free-antivirus-clamav-on-linux/" target="_blank">this tutorial</a>. Once installed, please see <a href="http://www.centrora.com/blog/free-antivirus-for-wordpress/" target = "_blank">this tutorial</a> to enable ClamAV scanning in Centrora Security.');
+define('CLAMAV_DESC', 'ClamAV is an open source anti-virus software for linux server. '.OSE_WORDPRESS_FIREWALL.' can integrate ClamAV into the virus scanning function to enhance the power for picking malicious files. For server installation instruction, please see <a href ="http://www.centrora.com/blog/install-free-antivirus-clamav-on-linux/" target="_blank">this tutorial</a>. Once installed, please see <a href="http://www.centrora.com/blog/free-antivirus-for-wordpress/" target = "_blank">this tutorial</a> to enable ClamAV scanning in '.OSE_WORDPRESS_FIREWALL.'.');
 define('CLAMAV_CONNECT_SUCCESS', 'Successfully connected to Clam Daemon');
 define('CLAMAV_DEF_VERSION','ClamAV Definition Version'); 
 define('CLAMAV_CANNOT_CONNECT','Cannot connect to the ClamAV Daemon');
 define('SIGNATURE_UPTODATE','<b>[Better Protection] </b>Your firewall rules are up to date');
 define('SIGNATURE_OUTDATED','<b>[Better Protection] </b><b>IMPROVEMENT</b>: Your firewall rules are out-dated, please update the rules to enhance protection. The updated advance firewall protection offers 45+ detection technique to protect your website from hacking attempts');
 define('IS_MY_WEBSITE_SAFE_BROWSING','Does my website look safe in major anti-virus software blacklist database?');
-define('SAFE_BROWSING_CHECKUP','Centrora Safe Browsing Checkup (Blacklist Monitoring)');
+define('SAFE_BROWSING_CHECKUP',''.OSE_WORDPRESS_FIREWALL.' Safe Browsing Checkup (Blacklist Monitoring)');
 define('SECURITY_CONFIG_AUDIT','Security Configuration Audit');
 define('CHECK_SAFE_BROWSING','Check your website safe browsing status now.');
 define('SAFE_BROWSING_CHECKUP_UPDATED','Your Safe Browsing Checkup is updated');
 define('SAFE_BROWSING_CHECKUP_OUTDATED','Your Safe Browsing Checkup is outdated, schedule the daily checkup now.');
 define('API_CONFIGURATION','API Configuration');
-define('API_INTRO','Connect to Centrora with API key');
+define('API_INTRO','Connect to '.OSE_WORDPRESS_FIREWALL.' with API key');
 define('SYSTEM_SECURITY_AUDIT','System Security Audit');
 define('CHANGE_PHPINI', 'If this hasb been turned off in the configuration section, please change it in the php.ini');
 define('REG_GLOBAL_OFF','The PHP Setting register_global is <b>OFF</b>.');
@@ -344,8 +344,8 @@ define('DISABLE_FUNCTIONS_NOTREADY','The following PHP functions need to be disa
 define('RETRIEVE_UPDATED_PATTERNS','Retrieve Updated Virus Patterns');
 define('YOUR_VERSION', 'Your version: ');
 define('SCHEDULE_SCANNING', 'Schedule Virus Scanning');
-define('SYSTEM_PLUGIN_DISABLED', 'The Centrora system plugin is disabled, please enable it and put it to the first position.');
-define('SYSTEM_PLUGIN_READY', 'The Centrora system plugin is ready.');
+define('SYSTEM_PLUGIN_DISABLED', 'The '.OSE_WORDPRESS_FIREWALL.' system plugin is disabled, please enable it and put it to the first position.');
+define('SYSTEM_PLUGIN_READY', 'The '.OSE_WORDPRESS_FIREWALL.' system plugin is ready.');
 define('SCAN_SPECIFIC_FOLDER', 'Scan Specific Folder');
 define('O_DROPBOX_FAILED', 'Uploading the backup file to Dropbox has been failed. Please re-authorize the Dropbox API again.');
 
@@ -487,7 +487,7 @@ define('PLEASE_ENTER_REQUIRED_INFO','Please enter the required information.');
 define('MY_PREMIUM_SERVICE','Activate My Premium Service');
 define('INSTALLATION', 'Install/Uninstall');
 define('INSTALLDB','Install Database Tables');
-define('INSTALLDB_INTRO','Install the database created by Centrora Security from your website');
+define('INSTALLDB_INTRO','Install the database created by '.OSE_WORDPRESS_FIREWALL.' from your website');
 define('UNINSTALLNOW','Uninstall Now');
 define('CHANGE_ADMINFORM','New Administrator Username');
 define('CHANGE','Change');
@@ -533,7 +533,7 @@ define('SUCCESS', 'Successful');
 define('SUCCESS_LOGOUT', 'Successful logged out');
 define('FIREWALL_RULES', 'Firewall Rules Fine-tuning');
 define('FIREWALL_CONFIGURATION','Firewall Configuration');
-define('FIREWALL_CONFIGURATION_DESC','This is the page that you can change the settings of Centrora Firewall.');
+define('FIREWALL_CONFIGURATION_DESC','This is the page that you can change the settings of '.OSE_WORDPRESS_FIREWALL.' Firewall.');
 define('CRONJOBS', 'Schedule Tasks');
 define('CRONJOBS_TITLE','Scheduled Tasks');
 define('CRONJOBS_DESC','Set up a scheduled task to automatically run at a specified day(s) and time. The time is based on the time of your system.');
@@ -589,11 +589,11 @@ define('SUBSCRIPTION_SETP1', 'Step 1 - Create an Account');
 define('SUBSCRIPTION_SETP2', 'Step 2 - Place an order');
 define('SUBSCRIPTION_SETP3', 'Step 3 - Activate the subscription');
 define('SUBSCRIPTION_ACTIVATION', 'Subscription Activation');
-define('SUBSCRIPTION_DESCRIPTION1', 'Simply create an account by using the form on the right hand side below, or if you have an account in Centrora already, simply sign in by using the form on the left hand side below. <br/>We offer 60 days 100% Satisfaction Guarantee, if you are not satisfied, we issue full refund to you without asking a question.');
+define('SUBSCRIPTION_DESCRIPTION1', 'Simply create an account by using the form on the right hand side below, or if you have an account in '.OSE_WORDPRESS_FIREWALL.' already, simply sign in by using the form on the left hand side below. <br/>We offer 60 days 100% Satisfaction Guarantee, if you are not satisfied, we issue full refund to you without asking a question.');
 define('SUBSCRIPTION_DESCRIPTION2', 'Next, click the subscribe button to place an order to a subscrption plan. Once the order is placed, pay your subscription through Paypal or Credit Card. Once payments are made, you will see a subscription is active in the subscriptions table.');
 define('SUBSCRIPTION_DESCRIPTION3', 'Final step: click the link subscription button to activate the subscription for this website.');
 define('REGISTERED_ACCOUNT_DESC', 'If you have an account already, please enter your <code>Centrora</code> or <code>OSE</code>	Account Information');
-define('CENTRORA', 'Centrora');
+define('CENTRORA', ''.OSE_WORDPRESS_FIREWALL.'');
 define('OSE', 'Open Source Excellence [OSE]');
 define('WEBSITE', 'Website');
 define('NEW_ACCOUNT_DESC', 'If you don\'t have an account yet, please use the following form to create an account.');
@@ -621,13 +621,13 @@ define('SECURITY_BADGE_DESC', '<b>[Security Badge] </b>: The security badge is d
 define('CALL_TO_ACTION_TITLE', 'We are always here to help');
 define('CALL_TO_ACTION_P', 'We are now serving <span id="numofWebsite"></span> websites.');
 define('CALL_TO_ACTION_UL', '<li>We have been helping thousands of customers to protect and clean their websites since 2009, if you need any help for protecting or cleaning viruses on your website, please feel free to <a href="https://www.centrora.com/support-center/" target="_blank"><span class="strong">contact us</span></a>.</li>
-					<li>With Centrora Security™, the basic firewall we have already helped you block over 95% of threats. To further harden your web application firewall you might consider an additional layer of protection with the <b>advanced firewall</b> rules, feel free to subscribe.</li>
-					<li>Whenever you suspect your website is infected by malicious codes, <b>Centrora Virus Scanner™</b> can help you look for any virus / malicious codes in your website within minutes. The scanner will be activated when the subscription is activated.</li>
+					<li>With '.OSE_WORDPRESS_FIREWALL.', the basic firewall we have already helped you block over 95% of threats. To further harden your web application firewall you might consider an additional layer of protection with the <b>advanced firewall</b> rules, feel free to subscribe.</li>
+					<li>Whenever you suspect your website is infected by malicious codes, <b>'.OSE_WORDPRESS_FIREWALL.' Virus Scanner</b> can help you look for any virus / malicious codes in your website within minutes. The scanner will be activated when the subscription is activated.</li>
 					<li>Not everyone needs the facilities to <b>block a whole country</b>, but if you would like to have this function, simply subscribe to a plan and stop traffics from a specific country easily. </li>
 					<li>Save your backups remotely with <b>Cloud Backup</b> </li>
 					<li><b>Schedule tasks</b> for automated Virus Scanning and automated full site backups</li>');
 define('CALL_TO_ACTION_TITLE2', 'Become a partner');
-define('CALL_TO_ACTION_DESC2', 'Why not become our partner and enjoy high commisions for your referrals? Apart from the 35% commissions, by referring Centrora Security to <span class="strong">THREE</span> of your clients, you can get <span class="strong">ONE</span> subscription free. Don\'t miss out the chance to earn at least $14,500 for the 1st year and $338,900 in five years with our affiliate program! ');
+define('CALL_TO_ACTION_DESC2', 'Why not become our partner and enjoy high commisions for your referrals? Apart from the 35% commissions, by referring '.OSE_WORDPRESS_FIREWALL.' to <span class="strong">THREE</span> of your clients, you can get <span class="strong">ONE</span> subscription free. Don\'t miss out the chance to earn at least $14,500 for the 1st year and $338,900 in five years with our affiliate program! ');
 define('CALL_TO_ACTION_TITLE3', 'Need more help?');
 define('CALL_TO_ACTION_DECS3', 'If you would like to add more protection, you can read ');
 define('SUBSCRIBE_NOW', 'SUBSCRIBE NOW!');
@@ -657,7 +657,7 @@ define('PASSCODE', 'Passcode');
 define('VERIFY', 'Verify');
 define('AUTHENTICATION', 'Cloud Backup Authentication');
 define('AUTHENTICATION_TITLE', '<b>Third Party Authentication</b>');
-define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise Centrora Security to your prefered cloud service.');
+define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise '.OSE_WORDPRESS_FIREWALL.' to your prefered cloud service.');
 
 // Version 4.9.0
 define('O_UPDATE_SIGNATURE', 'Update Firewall Signature');
@@ -668,7 +668,7 @@ define('OLD_PASSCODE', 'Input old passcode');
 define('NEW_PASSCODE', 'Input new passcode');
 define('CONFIRM_PASSCODE', 'Confirm new passcode');
 define('VSSCAN_AND_BACKUP', 'Virus Scan & Backups');
-define('CENTRORA_SETTINGS', 'Centrora Security Settings');
+define('CENTRORA_SETTINGS', ''.OSE_WORDPRESS_FIREWALL.' Settings');
 define('MY_ACCOUNT', 'My Account');
 define('LOGIN_OR_SUBSCIRPTION', 'Login/Subscription');
 define('ADVANCED_FIREWALL_SETTINGS', 'Advanced Firewall Configuration');
@@ -689,7 +689,7 @@ define('O_FRONTEND_BLOCKING_MODE_403_HELP','Show a 403 error page and stop the a
 define('O_FRONTEND_BLOCKING_MODE_BAN','Show ban page');// previously O_BAN_IP_AND_SHOW_BAN_PAGE_TO_STOP_AN_ATTACK
 define('O_FRONTEND_BLOCKING_MODE_BAN_HELP','Ban IP and show ban page to stop an attack');
 define('O_ALLOWED_FILE_TYPES','Allowed upload file extensions*');
-define('O_ALLOWED_FILE_TYPES_HELP','Centrora Firewall protects against untrusted file uploads. Use this list to add exceptions (e.g. jpg, png, doc) *Please note: FILEINFO module needs to be installed and configured properly');
+define('O_ALLOWED_FILE_TYPES_HELP',''.OSE_WORDPRESS_FIREWALL.' Firewall protects against untrusted file uploads. Use this list to add exceptions (e.g. jpg, png, doc) *Please note: FILEINFO module needs to be installed and configured properly');
 
 define('O_SILENTLY_FILTER_ATTACK','Silent Mode');
 define('O_SILENTLY_FILTER_ATTACK_HELP', 'Silently filter hacking values.  To enable this mode, you must have the setting “Frontend Blocking Mode” set as “Show a 403 error page”. Under this mode, the user will be redirected having the URL with the suspicious string trimmed. The IP will not be blocked and will be added into the Monitored IP list. This can avoid false positive detections in some cases. *Recommended for new users');
@@ -698,9 +698,9 @@ define('ATTACK_BLOCKING_THRESHOLD_HELP', 'Attack blocking risk score threshold (
 define('SILENT_MODE_BLOCK_MAX_ATTEMPTS','Silent Mode Allowed Threshold');
 define('SILENT_MODE_BLOCK_MAX_ATTEMPTS_HELP', 'Maximum attack attempts allowed for an IP in silent mode (default: 10)');
 
-define('O_WEBMASTER_EMAIL_HELP','This Email address will be used to send Alert Emails from this installation of Centrora Security');
+define('O_WEBMASTER_EMAIL_HELP','This Email address will be used to send Alert Emails from this installation of '.OSE_WORDPRESS_FIREWALL.'');
 define('O_RECEIVE_EMAIL','Receive Update Email');
-define('O_RECEIVE_EMAIL_HELP','Receive Centrora Firewall or SafeBrowsing Update Email');
+define('O_RECEIVE_EMAIL_HELP','Receive '.OSE_WORDPRESS_FIREWALL.' Firewall or SafeBrowsing Update Email');
 define('O_STRONG_PASSWORD', 'Force Strong Password');
 define('O_STRONG_PASSWORD_HELP', 'Use this to enforce the use of strong passwords for all users. A strong password incorporates the use of alphanumeric characters & symbols');
 define('FIREWALL_HELP','When on, the Firewall is active. Turn this off to deacitivate the Firewall (NOT RECOMMENDED)');
@@ -727,7 +727,7 @@ define('RECOMMOND_JOOMLA', 'Joomla Default Settings');
 define('COUNTRYBLOCK_HELP', 'This function allows you to block the IPs for specific countries. Please note that you need to Download the Country Database under the menu “Firewall” –> “Country Blocking” first if you want to use this function.');
 define('O_ADRULESETS_HELP', '');
 define('CONFIG_ADRULES_FAILE', 'Save failed, \'Advanced Firewall Database\' is not ready, please update Firewall Signatures in Advanced Firewall Rules.');
-define('DEVELOPMODE_DISABLED','<b>[Firewall Activated] </b>Great! Your website is now protected by Centrora Security');
+define('DEVELOPMODE_DISABLED','<b>[Firewall Activated] </b>Great! Your website is now protected by '.OSE_WORDPRESS_FIREWALL.'');
 define('DISDEVELOPMODE', '<b>WARNING</b>: Please turn on the Firewall in the Firewall Scanning Configuration to activate the firewall protection.');
 define('O_DELETE_ADMIN_SUCCESS', 'Successfully deleted the administrator account');
 define('O_DELETE_ADMIN_FAIL', 'There are errors when deleting the administrator account');
@@ -741,5 +741,34 @@ define ('NEWS_TITLE', '<b>What\'s New</b>');
 define ('NEWS_DESC', 'Find out the latest news from Centrora');
 define ('PASSCODE_TITLE', 'Passcode');
 define ('PASSCODE_DESC', 'Please enter your passcode to access the administrator panel');
+
+// Version 5.0.1
+define ('O_LOGIN_PAGE_SETTING', 'Login Url');
+define ('O_LOGIN_PAGE_HELP', 'Login Help');
 define ('CALL_TO_ACTION_P2', 'Website being hacked? Clean the malware with a free 6 month subscription PLUS 3 months warranty. <br/> <button class="btn btn-primary btn-sm">Leave the hard work to us now.</button>');
+define ('FILE_UPLOAD_MANAGEMENT', 'Upload Control');
+define('FILEEXTENSION', 'Upload Control');
+define('FILEEXTENSION_TITLE', '<b>File</b> <span><b>Upload Control</b></span>');
+define('FILEEXTENSION_DESC', ''.OSE_WORDPRESS_FIREWALL.' Firewall protects against untrusted file uploads. From this panel you can: <b>1)</b> Set the allowed files <b>2)</b> Keep track of uploaded files <b>3)</b> Track malicious upload attempts');
+define('FILE_EXTENSION_LIST', 'File Extension List');
+define('FILE_EXTENSION_LOG', 'File Uploading Log');
+define('O_VSSCAN_STATUS', 'Virus Scan Status');
+define('O_IP_STATUS', 'File Validation Status');
+define('O_FILETYPE', 'File type');
+define('O_FILENAME', 'File name');
+define('O_EXTENSION_ID', 'ID');
+define('O_EXTENSION_NAME', 'Extension');
+define('O_EXTENSION_TYPE', 'Type');
+define('O_EXTENSION_STATUS', 'Status');
+define('ADD_EXT', 'Add Extension');
+define ('O_BACKEND_SECURE_KEY', 'Backend Access Secure Key');
+define ('O_BACKEND_SECURE_KEY_HELP', 'Backend Access Secure Key');
+define('UPLOAD_FILE_403WARN', 'The upload of this file type is not allowed on this website. <br /> <br />If you are the server administrator, please allow this file type under Firewall -> Upload Control panel.');
+define('FILE_UPLOAD_LOG', 'File Uploaded');
+define('BLOCKED_UPLOAD_LOG', 'File Blocked');
+define('INCONSISTENT_FILE', 'Inconsistent File! - IP Blocked');
+define('PASSCODE_ENTRY', 'Passcode Entry');
+define('PASSCODE_ENTRY_HELP', 'Require passcode to access other views exclude dashboard');
+define('UNBAN_PAGE_GOOGLE_AUTH_DESC', 'If you have Unban Google Authenticator enabled and setup, please input your code here')
+
 ?>

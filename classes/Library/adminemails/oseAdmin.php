@@ -57,12 +57,10 @@ class oseAdminManager
 
     public function __construct()
     {
-
         $this->setDBO();
         oseFirewall::loadRequest();
         oseFirewall::loadFiles();
         oseFirewall::loadDateClass();
-
     }
 
     protected function setDBO()

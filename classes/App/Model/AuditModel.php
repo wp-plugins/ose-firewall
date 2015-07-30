@@ -126,6 +126,10 @@ class AuditModel extends BaseModel {
 				$this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);
 				break;
 			case 10 :
+                $result = $this->insertFileExtension();
+                $step++;
+                $this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);
+                break;
 			case 11 :
 			case 12 :
 			case 13 :
@@ -204,6 +208,15 @@ class AuditModel extends BaseModel {
 		$installer->closeDBO();
 		return $result;
 	}
+
+    private function insertFileExtension()
+    {
+        $installer = new oseFirewallInstaller();
+        $dbFile = OSE_FWDATA . ODS . 'dataFileExtension.sql';
+        $result = $installer->insertFileExtension($dbFile);
+        $installer->closeDBO();
+        return $result;
+    }
 	private function insertBasicRules() {
 		$installer = new oseFirewallInstaller();
 		$dbFile = OSE_FWDATA . ODS . 'dataRulesBasic.sql';

@@ -1,7 +1,7 @@
 <div class="tab-pane active" id="firewall">
     <form id = 'configuraton-form' class="form-horizontal group-border stripped" role="form">
         <div class="form-group">
-            <label for="devMode" class="col-sm-4 control-label"><?php oLang::_('FIREWALL'); ?>
+            <label class="col-sm-4 control-label"><?php oLang::_('FIREWALL'); ?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('FIREWALL_HELP');?>"></i>
             </label>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="adminEmail" class="col-sm-4 control-label"><?php oLang::_('O_WEBMASTER_EMAIL');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_WEBMASTER_EMAIL');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_WEBMASTER_EMAIL_HELP');?>"></i>
             </label>
@@ -25,9 +25,28 @@
                 <input type="text" name="adminEmail" value="<?php echo (empty($confArray['data']['adminEmail']))?'info@yourwebsite.com':$confArray['data']['adminEmail']?>" class="form-control">
             </div>
         </div>
+        <?php if (!empty($oemConfArray['data']['customer_id'])) { ?>
+            <div class="form-group">
+                <label class="col-sm-4 control-label"><?php oLang::_('PASSCODE_ENTRY'); ?>
+                    <i tabindex="0" class="fa fa-question-circle color-gray" data-toggle="popover"
+                       data-content="<?php oLang::_('PASSCODE_ENTRY_HELP'); ?>"></i>
+                </label>
 
+                <div class="col-sm-8">
+                    <div class="onoffswitch">
+                        <input type="checkbox" value=1 name="passcode_status" class="onoffswitch-checkbox"
+                               id="passcode_status"
+                            <?php echo (!empty($oemConfArray['data']['passcode_status']) && $oemConfArray['data']['passcode_status'] == true) ? 'checked="checked"' : '' ?>>
+                        <label class="onoffswitch-label" for="passcode_status">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
         <div class="form-group">
-            <label for="receiveEmail" class="col-sm-4 control-label"><?php oLang::_('O_RECEIVE_EMAIL');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_RECEIVE_EMAIL');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_RECEIVE_EMAIL_HELP');?>"></i>
             </label>
@@ -44,7 +63,7 @@
         </div>
         <?php if (!class_exists('SConfig')) {?>
         <div class="form-group">
-            <label for="strongPassword" class="col-sm-4 control-label"><?php oLang::_('O_STRONG_PASSWORD'); ?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_STRONG_PASSWORD'); ?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_STRONG_PASSWORD_HELP');?>"></i>
             </label>
@@ -60,8 +79,32 @@
             </div>
         </div>
         <?php } ?>
+        <!--        --><?php //  if (OSE_CMS == 'wordpress') { ?>
+        <!--        <div class="form-group">-->
+        <!--            <label class="col-sm-4 control-label">--><?php //oLang::_('O_LOGIN_PAGE_SETTING'); ?>
+        <!--                <i tabindex="0" class="fa fa-question-circle color-gray" data-toggle="popover"-->
+        <!--                   data-content="--><?php //oLang::_('O_LOGIN_PAGE_HELP'); ?><!--"></i>-->
+        <!--            </label>-->
+        <!---->
+        <!--            <div class="col-sm-8">-->
+        <!--                --><?php //$this->model->login_page_input(); ?>
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        --><?php //} else { ?>
+        <!--            <div class="form-group">-->
+        <!--                <label class="col-sm-4 control-label">--><?php //oLang::_('O_BACKEND_SECURE_KEY'); ?>
+        <!--                    <i tabindex="0" class="fa fa-question-circle color-gray" data-toggle="popover"-->
+        <!--                       data-content="--><?php //oLang::_('O_BACKEND_SECURE_KEY_HELP'); ?><!--"></i>-->
+        <!--                </label>-->
+        <!---->
+        <!--                <div class="col-sm-8">-->
+        <!--                    --><?php //$this->model->backend_secure_key(); ?>
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        --><?php //} ?>
+
         <div class="form-group">
-            <label for="blockIP" class="col-sm-4 control-label"><?php oLang::_('O_FRONTEND_BLOCKING_MODE');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_FRONTEND_BLOCKING_MODE');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_FRONTEND_BLOCKING_MODE_HELP');?>"></i>
             </label>
@@ -69,21 +112,19 @@
                 <label class="radio-inline">
                     <input type="radio" id= "blockIPban" onclick="toggleDisabled(1)" name="blockIP" value="1" <?php echo (!empty($confArray['data']['blockIP']) && $confArray['data']['blockIP']==true)?'checked="checked"':''?>>
                     <?php oLang::_('O_FRONTEND_BLOCKING_MODE_BAN');?>
+                    <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover" data-title="Ban Page"
+                       data-content="<?php oLang::_('O_FRONTEND_BLOCKING_MODE_BAN_HELP');?>"></i>
                 </label>
-                <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover" data-title="Ban Page"
-                   data-content="<?php oLang::_('O_FRONTEND_BLOCKING_MODE_BAN_HELP');?>"></i>
-
                 <label class="radio-inline">
                     <input type="radio" id= "blockIP403" onclick="toggleDisabled(0)" name="blockIP" value="0" <?php echo (empty($confArray['data']['blockIP']))?'checked="checked"':''?>>
                     <?php oLang::_('O_FRONTEND_BLOCKING_MODE_403');?>
+                    <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover" data-title="403 Blocking"
+                       data-content="<?php oLang::_('O_FRONTEND_BLOCKING_MODE_403_HELP');?>"></i>
                 </label>
-                <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover" data-title="403 Blocking"
-                   data-content="<?php oLang::_('O_FRONTEND_BLOCKING_MODE_403_HELP');?>"></i>
-
             </div>
         </div>
         <div id = "customBanpageDiv" class="form-group">
-            <label for="customBanpage" class="col-sm-4 control-label"><?php oLang::_('O_CUSTOM_BAN_PAGE');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_CUSTOM_BAN_PAGE');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_CUSTOM_BAN_PAGE_HELP');?>"></i>
             </label>
@@ -92,7 +133,7 @@
             </div>
         </div>
         <div id = "customBanURLDiv" class="form-group">
-            <label for="customBanURL" class="col-sm-4 control-label"><?php oLang::_('O_CUSTOM_BAN_PAGE_URL');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_CUSTOM_BAN_PAGE_URL');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_CUSTOM_BAN_PAGE_URL_HELP');?>"></i>
             </label>
@@ -100,19 +141,19 @@
                 <input type="text" name="customBanURL" value="<?php echo (empty($confArray['data']['customBanURL']))?'':$confArray['data']['customBanURL']?>" class="form-control">
             </div>
         </div>
-        <div class="form-group">
-            <label for="allowExts" class="col-sm-4 control-label"><?php oLang::_('O_ALLOWED_FILE_TYPES');?>
+        <!--<div class="form-group">
+            <label class="col-sm-4 control-label"><?php /*oLang::_('O_ALLOWED_FILE_TYPES');*/?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
-                   data-content="<?php oLang::_('O_ALLOWED_FILE_TYPES_HELP');?>"></i>
+                   data-content="<?php /*oLang::_('O_ALLOWED_FILE_TYPES_HELP');*/?>"></i>
             </label>
             <div class="col-sm-8">
-                <input type="text" name="allowExts" value="<?php echo (empty($confArray['data']['allowExts']))?'jpg, png, doc':$confArray['data']['allowExts']?>" class="form-control">
+                <input type="text" name="allowExts" value="<?php /*echo (empty($confArray['data']['allowExts']))?'jpg, png, doc':$confArray['data']['allowExts']*/?>" class="form-control">
             </div>
-        </div>
+        </div>-->
         <?php if (OSE_CMS == 'wordpress') {?>
 <!--        @todo Split google verification for unban admin-->
         <div class="form-group">
-            <label for="googleVerification" class="col-sm-4 control-label"><?php oLang::_('O_GOOGLE_2_VERIFICATION');?>
+            <label class="col-sm-4 control-label"><?php oLang::_('O_GOOGLE_2_VERIFICATION');?>
                 <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                    data-content="<?php oLang::_('O_GOOGLE_2_VERIFICATION_HELP');?>"></i>
             </label>
@@ -128,14 +169,14 @@
                 </div>
             </div>
             <div class="col-sm-12" id="hidden-QRcode" style="display: none">
-                <label for="googleSecret" class="col-sm-4 pt20 control-label"> <?php oLang::_('O_GOOGLE_2_SECRET'); ?>
+                <label class="col-sm-4 pt20 control-label"> <?php oLang::_('O_GOOGLE_2_SECRET'); ?>
                     <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                        data-content="<?php oLang::_('O_GOOGLE_2_SECRET_HELP');?>"></i>
                 </label>
                 <div id="shhsecret" class="col-sm-8 pt20">
                     <?php $googleAuth = $this->model->showGoogleSecret(); echo $googleAuth['secret'];?>
                 </div><div class="col-sm-12"></div>
-                <label for="googleQRcode" class="col-sm-4 control-label pt25">	<?php oLang::_('O_GOOGLE_2_QRCODE'); ?>
+                <label class="col-sm-4 control-label pt25">	<?php oLang::_('O_GOOGLE_2_QRCODE'); ?>
                     <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                        data-content="<?php oLang::_('O_GOOGLE_2_QRCODE_HELP');?>"></i>
                 </label>

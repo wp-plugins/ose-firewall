@@ -53,6 +53,21 @@ class oseFirewallInstaller extends oseInstaller {
 		}
 		return true;
 	}
+
+    public function insertFileExtension($dbFile)
+    {
+        $query = "SELECT COUNT(id) as `count` FROM `#__osefirewall_fileuploadext` ";
+        $this->db->setQuery($query);
+        $result = $this->db->loadResult();
+        if ($result['count'] == 0) {
+            $query = $this->readSQLFile($dbFile);
+            $this->db->setQuery($query);
+            if (!$this->db->query()) {
+                return false;
+            }
+        }
+        return true;
+    }
 	public function insertBasicRules($dbFile) {
 		$query = "SELECT COUNT(id) as `count` FROM `#__osefirewall_basicrules` ";
 		$this->db->setQuery($query);

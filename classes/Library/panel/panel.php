@@ -320,7 +320,7 @@ class panel
         return $LatestVersion;
     }
 
-	private function checkUpdateInterval($timeinterval = 30){
+	private function checkUpdateInterval($timeinterval = 30, $update = true){
 		$query1 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LastUpdateCheck'";
 		$LastUpdateCheck = $this->returnValueDBQuery($query1);
 		$elapsedtime = round(abs(time() - $LastUpdateCheck) / 60,2); //elapsedtime in minutes
@@ -328,10 +328,12 @@ class panel
 		if (empty ($LastUpdateCheck)) {
 			$query3 = "INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LastUpdateCheck','" . time() . "','UpdateCheck')";
 			$this->runDbQuery($query3);
-		} elseif ( $elapsedtime >= $timeinterval) {
+		} elseif ( $elapsedtime >= $timeinterval ) {
 			$result = true;
 			$query5 = "UPDATE `#__ose_secConfig` SET `value`='" . time() . "' WHERE `key` LIKE 'LastUpdateCheck'";
-			$this->runDbQuery($query5);
+			$update? $this->runDbQuery($query5) : null;
+		} elseif ($elapsedtime < 0.25){
+			$result = true; //force true for situations where update software occurs 1st
 		}
 		return $result;
 	}
@@ -388,7 +390,13 @@ class panel
 		$this->enableFURLOpen ();
 		// Get a database connector
 		$db = JFactory::getDbo();
-		$url = "http://www.centrora.com/software/pkg_centrora.zip";
+		if (class_exists('SConfig') && !class_exists('JConfig')) {
+			$zipFileName = "pkg_centrora_suite.zip";
+		}
+		else {
+			$zipFileName = "pkg_centrora.zip";
+		}
+		$url = "http://www.centrora.com/software/".$zipFileName;
 		// Define Temp Folder;
 		$config		= JFactory::getConfig();
 		$tmp_dest	= $config->get('tmp_path');
@@ -400,7 +408,7 @@ class panel
 		}
 		else
 		{
-			$updatefile = $this->downloadThroughCURL ($url, $tmp_dest, 'plg_centrora.zip');
+			$updatefile = $this->downloadThroughCURL ($url, $tmp_dest, $zipFileName);
 		}
 		// Was the package downloaded?
 		if (!$updatefile) {
@@ -565,25 +573,29 @@ class panel
 			'v' => '1.0', // API version
 			'num' => $limit, // maximum entries (limited)
 			'output' => 'json_xml', // mixed content: JSON for feed, XML for full entries (json|xml|json_xml)
-			'scoring' => 'h', // include historical entries
+			//'scoring' => 'h', // include historical entries
 		);
-		$result = file_get_contents('http://ajax.googleapis.com/ajax/services/feed/load?' . http_build_query($params));
-		$json = json_decode($result);
-		return $json->responseData;
+		$url = 'http://ajax.googleapis.com/ajax/services/feed/load?' . http_build_query($params);
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		$json = curl_exec($ch);
+		curl_close($ch);
+		$json_data = json_decode($json);
+		return $json_data->responseData;
 	}
 
 	public function checkNewsUpdated ($limit = 1){
-		#Check for news after 60min
-		$checkUpdateInterval = self::checkUpdateInterval(60);
-		$result = false;
-		if ($checkUpdateInterval ) {
+		#Check for news after 29min
+		$checkUpdateInterval = self::checkUpdateInterval(29, false);
+		$result = self::hasNewsRead(false, 'notread');
+		#check for new News if interval passed and has read old news items
+		if ($checkUpdateInterval && !$result ) {
 			$data =  $this->getJSONFeed("http://www.centrora.com/category/blog/feed/atom", $limit);
 			$LatestNewsHash = hash('md5', serialize($data->feed->entries));
-
 			$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LastNewsHash'";
 			$LastNewsHash = $this->returnValueDBQuery($query);
-
-			$result = self::hasNewsRead(false, 'notread');
 
 			if (empty ( $LastNewsHash )) {
 				$query = " INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LastNewsHash','" . $LatestNewsHash . "','NewsCheck')";

@@ -7,7 +7,7 @@
         <form id='adconfiguraton-form' class="form-horizontal group-border stripped"
               role="form">
             <div class="form-group">
-                <label for="adRules" class="col-sm-4 control-label"><?php oLang::_('O_ADRULESETS'); ?>
+                <label class="col-sm-4 control-label"><?php oLang::_('O_ADRULESETS'); ?>
 <!--                    <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"-->
 <!--                       data-content="--><?php //oLang::_('O_ADRULESETS_HELP');?><!--"></i>-->
                 </label>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="silentMode" class="col-sm-4 control-label"><?php oLang::_('O_SILENTLY_FILTER_ATTACK'); ?>
+                <label class="col-sm-4 control-label"><?php oLang::_('O_SILENTLY_FILTER_ATTACK'); ?>
                     <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                        data-content="<?php oLang::_('O_SILENTLY_FILTER_ATTACK_HELP');?>"></i>
                 </label>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="slient_max_att" class="col-sm-4 control-label"><?php oLang::_('SILENT_MODE_BLOCK_MAX_ATTEMPTS'); ?>
+                <label class="col-sm-4 control-label"><?php oLang::_('SILENT_MODE_BLOCK_MAX_ATTEMPTS'); ?>
                     <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                        data-content="<?php oLang::_('SILENT_MODE_BLOCK_MAX_ATTEMPTS_HELP');?>"></i>
                 </label>
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="threshold" class="col-sm-4 control-label"><?php oLang::_('ATTACK_BLOCKING_THRESHOLD'); ?>
+                <label class="col-sm-4 control-label"><?php oLang::_('ATTACK_BLOCKING_THRESHOLD'); ?>
                     <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                        data-content="<?php oLang::_('ATTACK_BLOCKING_THRESHOLD_HELP');?>"></i>
                 </label>
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="blockCountry" class="col-sm-4 control-label"><?php oLang::_('COUNTRYBLOCK'); ?>
+                <label class="col-sm-4 control-label"><?php oLang::_('COUNTRYBLOCK'); ?>
                     <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover"
                        data-content="<?php oLang::_('COUNTRYBLOCK_HELP');?>"></i>
                 </label>

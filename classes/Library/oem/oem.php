@@ -42,12 +42,12 @@ class CentroraOEM {
 	public function getTopBarURL () {
 		if (empty($this->newInstance))
 		{
-			$urls = '<li><a href="//www.centrora.com/store/index.php?route=affiliate/login" title="Affiliate"><i class="fa fa-magnet"></i> <span class="hidden-xs hidden-sm hidden-md">Affiliate</span> </a></li>
-						<li><a href="https://www.centrora.com/store/index.php?route=account/login" title="My Account"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
-						<li><a href="https://www.centrora.com/support-center/" id="support-center" title="Support"><i class="im-support"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
-						<li><a href="http://www.centrora.com/" title="Subscription"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">Subscription</span></a></li>
-						<li><a href="http://www.centrora.com/tutorial/" title="Tutorial"><i class="im-stack-list"></i> <span class="hidden-xs hidden-sm hidden-md">Tutorial</span></a></li>
-						<li><a href="http://www.centrora.com/cleaning" title="Malware Removal"><i class="im-spinner10"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
+			$urls = '<li><a href="//www.centrora.com/store/index.php?route=affiliate/login" title="Affiliate"><i class="glyphicon glyphicon-magnet"></i> <span class="hidden-xs hidden-sm hidden-md">Affiliate</span> </a></li>
+						<li><a href="https://www.centrora.com/store/index.php?route=account/login" title="My Account"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> </a></li>
+						<li><a href="https://www.centrora.com/support-center/" id="support-center" title="Support"><i class="glyphicon glyphicon-cd"></i> <span class="hidden-xs hidden-sm hidden-md">Support</span></a></li>
+						<li><a href="http://www.centrora.com/" title="Subscription"><i class="glyphicon glyphicon-share-alt"></i> <span class="hidden-xs hidden-sm hidden-md">Subscription</span></a></li>
+						<li><a href="http://www.centrora.com/tutorial/" title="Tutorial"><i class="glyphicon glyphicon-book"></i> <span class="hidden-xs hidden-sm hidden-md">Tutorial</span></a></li>
+						<li><a href="http://www.centrora.com/cleaning" title="Malware Removal"><i class="glyphicon glyphicon-screenshot"></i> <span class="hidden-xs hidden-sm hidden-md">Malware Removal</span></a></li>';
 			return $urls;
 		}
 		else
@@ -80,6 +80,14 @@ class CentroraOEM {
 			return false;
 		}
 	}
+    public function showNews (){
+        if (!empty($this->newInstance)) {
+            return $this->newInstance->showNews () ;
+        }
+        else {
+            return true;
+        }
+    }
 	protected static function loadFirewallStat () {
 		if (OSE_CMS == 'joomla')
 		{
@@ -148,7 +156,7 @@ class CentroraOEM {
 	}
 	public function getFavicon () {
 		if (!empty($this->newInstance)) {
-			return OSE_FWPUBLICURL.'css/oem/'.$this->customer_id.'/imgs/favicon.ico';
+			return trim(OSE_FWPUBLICURL,'/').'/css/oem/'.$this->customer_id.'/imgs/favicon.ico';
 		}
 		else {
 			return OSE_FWURL.'/public/images/favicon.ico';

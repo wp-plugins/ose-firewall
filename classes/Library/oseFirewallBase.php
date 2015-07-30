@@ -97,9 +97,12 @@ class oseFirewallBase extends oseFirewallRoot
 		$this->loadAjax();
 		$this->loadViews();
 	}
-	public function loadBackendBasicFunctions()
+	public static function loadBackendBasicFunctions()
 	{
-		$this->addMenuActions();
+        oseFirewall::addMenuActions();
+        oseFirewall::callLibClass('oem', 'oem');
+        $oem = new CentroraOEM() ;
+        $oem->defineVendorName();
 		self::loadLanguage();
 	}
 	public static function loadInstaller()
@@ -303,6 +306,10 @@ class oseFirewallBase extends oseFirewallRoot
 		self::runController ('ConfigurationController', 'index');
 	}
 
+    public static function upload()
+    {
+        self::runController('UploadController', 'index');
+    }
     public static function passcode()
     {
         self::runController('PasscodeController', 'index');
@@ -595,7 +602,7 @@ class oseFirewallBase extends oseFirewallRoot
 	}
 	public static function getWebKey () {
 		$db = oseFirewall::getDBO();
-		$query = "SELECT * FROM #__ose_secConfig WHERE key = 'website' ";
+		$query = "SELECT * FROM `#__ose_secConfig` WHERE `key` = 'website' ";
 		$db->setQuery($query);
 		$result = $db->loadObject();
 		return (!empty($result))?$result->value:null;
@@ -713,11 +720,47 @@ class oseFirewallBase extends oseFirewallRoot
                           `A_status` VARCHAR(10) NOT NULL,
                           `D_id`     INT(11),
                           PRIMARY KEY (`A_id`),
-                          INDEX `wp_osefirewall_adminemails_idx1` (`D_id`),
+                          INDEX `#__osefirewall_adminemails_idx1` (`D_id`),
                           FOREIGN KEY (`D_id`) REFERENCES `#__osefirewall_domains` (`D_id`)
                             ON UPDATE CASCADE
                         )
                           ENGINE = InnoDB  DEFAULT CHARSET = utf8  AUTO_INCREMENT = 1; ";
+            $oseDB2->setQuery($query);
+            $oseDB2->loadResult();
+        }
+        $dataupload = $oseDB2->isTableExists('#__osefirewall_fileuploadext');
+        if (!$dataupload) {
+            $query = "CREATE TABLE IF NOT EXISTS `#__osefirewall_fileuploadext` (
+                     `ext_id` int(11) NOT NULL AUTO_INCREMENT,
+                     `ext_name` varchar(200) NOT NULL,
+                     `ext_type` varchar(200) NOT NULL,
+                     `ext_status` tinyint(1) NOT NULL,
+                     PRIMARY KEY (`ext_id`),
+                     UNIQUE KEY `ext_name` (`ext_name`)
+                     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8; ";
+            $oseDB2->setQuery($query);
+            $oseDB2->loadResult();
+            oseFirewallBase::loadInstaller();
+            $installer = new oseFirewallInstaller();
+            $dbFile = OSE_FWDATA . ODS . 'dataFileExtension.sql';
+            $result = $installer->insertFileExtension($dbFile);
+            $installer->closeDBO();
+        }
+        $datauploadLog = $oseDB2->isTableExists('#__osefirewall_fileuploadlog');
+        if (!$datauploadLog) {
+            $query = "CREATE TABLE `#__osefirewall_fileuploadlog` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                      `ip_id` int(11) NOT NULL,
+                      `file_name` varchar(100) DEFAULT NULL,
+                      `file_type_id` int(11) NOT NULL,
+                      `validation_status` tinyint(1) NOT NULL,
+                      `vs_scan_status` tinyint(1) NOT NULL,
+                      `datetime` datetime NOT NULL,
+                      PRIMARY KEY (`id`),
+                      INDEX `osefirewall_fileuploadlog_idx1` (`id`),
+                      FOREIGN KEY (`ip_id`) REFERENCES `#__osefirewall_acl` (`id`) ON UPDATE CASCADE ON DELETE CASCADE ,
+                      FOREIGN KEY (`file_type_id`) REFERENCES `#__osefirewall_fileuploadext` (`ext_id`) ON UPDATE CASCADE ON DELETE CASCADE
+                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
             $oseDB2->setQuery($query);
             $oseDB2->loadResult();
         }

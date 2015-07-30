@@ -53,6 +53,14 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 				{
 					$this->detected = $scanResult ['detcontent_content'];
 				}
+				if (!empty($scanResult['fileuploadlog']) && $scanResult['fileuploadlog'] == true)
+                {
+                    $scanResult['vs_scan_status'] = 0; //@todo add vscan functionality for upload files
+                    $scanResult['ip_id'] = $this->aclid; //set here incase of new ip logs
+                    oseFirewall::callLibClass ( 'uploadmanager', 'uploadmanager' );
+                    $uploadManager = new oseFirewallUploadManager();
+					$uploadManager->logViolatedFileIP($scanResult);
+				}
 				if (!empty($scanResult['spamtype']) && $scanResult['spamtype'] =='email')
 				{	
 					$this->blockIP = 1 ;
@@ -65,7 +73,9 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 				}
 				$attacktypeID = $this->getAttackTypeID ( $scanResult ['rule_id'] );
 				$this->addDetContent ( $attacktypeID, $content, $scanResult ['rule_id'], $scanResult ['keyname']);
-				$this->controlAttack (0);
+                if (!isset($scanResult['cont']) || $scanResult['cont'] != true) {
+                    $this->controlAttack(0);
+                }
 			}
 			else
 			{

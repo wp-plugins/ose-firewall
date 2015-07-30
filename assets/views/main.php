@@ -41,14 +41,11 @@ $oemCustomer = $oem->requiresPasscode();
 if ($oemCustomer) {
     $flag = get_class($this->model);
     $strip = strtolower(str_replace('Model', '', $flag));
-
     $filter = $this->model->oempasscode();
-
     if ($filter == true) {
         $this->model->loadLocalscript();
         include(dirname(__FILE__) . '/' . $subview . '.php');
     } else {
-
         if ($flag == 'DashboardModel' || $flag == 'PasscodeModel') {
             $this->model->loadLocalscript();
             include(dirname(__FILE__) . '/' . $subview . '.php');
@@ -57,7 +54,9 @@ if ($oemCustomer) {
                 $_SESSION['previouspage'] = 'ose_fw_' . $strip;
                 oseFirewall::passcode();
             } else {
-                $wp_session = JFactory::getSession();
+                $session = JFactory::getSession();
+                $session->set('previouspage', $strip);
+                oseFirewall::passcode();
             }
 
         }

@@ -2915,7 +2915,7 @@ select[multiple].input-lg {
 .btn:focus {
   color: #030303;
   text-decoration: none;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19) !important
 }
 .btn:active,
 .btn.active {
@@ -3327,7 +3327,7 @@ tbody.collapse.in {
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   text-decoration: none;
-   color: #2b2f33;
+  color: #2b2f33;
   background-color: #eff4f6;
 }
 .dropdown-menu > .active > a,
@@ -8029,7 +8029,7 @@ h6 small,
   padding: 4px 10px;
 }
 .btn.btn-sm:hover {
-	box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19);
+	box-shadow: 0 6px 10px rgba(0,0,0,0.23),0 10px 30px rgba(0,0,0,0.19) !important;
 }
 .btn.btn-lg {
   padding: 9px 16px;
@@ -9865,6 +9865,10 @@ fieldset[disabled] .btn-white.btn-alt.active {
 ----------------------------------------- */
 .modal {
   overflow-x: hidden;
+  background-color: transparent !important;
+  border: 0px solid rgba(0, 0, 0, 0.3) !important;
+  border-radius: 0px !important;;
+  box-shadow: none !important;
 }
 .modal .modal-dialog-center {
   margin: 0;

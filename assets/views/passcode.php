@@ -32,7 +32,7 @@ $this->model->getNounce();
 		                                        <button type="submit"
 		                                                class="btn btn-success"><?php oLang::_('VERIFY'); ?></button>
 		                                        <button type="button" onclick="changePasscodeModal()"
-                                    					class="btn btn-success"><?php oLang::_('CHANGE_PASSCODE'); ?></button>        
+                                                        class="btn btn-success"><?php oLang::_('CHANGE_PASSCODE'); ?></button>
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -105,3 +105,4 @@ $this->model->getNounce();
 </div>
 
 <!-- /.modal -->
+
