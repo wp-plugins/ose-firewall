@@ -1,7 +1,7 @@
 var controller = "emailconfig";
 
 Ext.ns('oseEmails');
-oseEmails.fields = new Array('id', 'subject');
+oseEmails.fields = ['id', 'subject'];
 oseEmails.store = oseGetStore('emailstore', oseEmails.fields, url, option, controller, 'getEmails');
 oseEmails.options = oseGetFirewallAlertOptions;
 

@@ -112,4 +112,60 @@ class AdminemailsController extends \App\Base
         $result = $this->model->restoreDefault();
         $this->model->returnJSON($result);
     }
+
+    public function action_getSecManagers()
+    {
+        $result = $this->model->getSecManagers();
+        $this->model->returnJSON($result);
+    }
+
+    public function action_saveSecManager()
+    {
+    	$return = array();
+        $this->model->loadRequest();
+        $name = $this->model->getVar('secManager-name', null);
+        $username = $this->model->getVar('secManager-username', null);
+        $email = $this->model->getVar('secManager-email', null);
+        $password = $this->model->getVar('secManager-password', null);
+        $password2 = $this->model->getVar('secManager-password2', null);
+        $pattern = "/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-zA-Z]{2,6}(?:\.[a-zA-Z]{2})?)$/";
+        if (empty($name) || empty($email) || empty($username) || empty($password)) {
+            $return['message'] = "Please fill out all the form";
+            $return['status'] = "FAIL";
+            $this->model->returnJSON($return);
+        } elseif ($password != $password2) {
+            $return['message'] = "Password must be identical";
+            $return['status'] = "FAIL";
+            $this->model->returnJSON($return);
+        } elseif (preg_match($pattern, $email)) {
+            $result = $this->model->saveSecManager($name, $username, $email, $password);
+            if ($result == true) {
+                $return['status'] = 'SUCCESS';
+                $return['message'] ="Security manager is successfully added.";
+            }
+            else {
+                $return['status'] = 'FAIL';
+                if (empty($result)) {
+                    $return['message'] = "Please use a stronger password.";
+                } else {
+                    $return['message'] = $result;
+                }
+            }
+            $this->model->returnJSON($return);
+
+        } else {
+            $return['message'] = "Please provide a valid email address";
+            $return['status'] = "FAIL";
+            $this->model->returnJSON($return);
+        }
+    }
+
+    public function action_changeBlock()
+    {
+        $this->model->loadRequest();
+        $status = $this->model->getVar('status', null);
+        $id = $this->model->getInt('id', null);
+        $result = $this->model->changeBlock($status, $id);
+        $this->model->returnJSON($result);
+    }
 }

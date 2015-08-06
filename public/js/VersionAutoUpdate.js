@@ -71,7 +71,7 @@ function activateWordpressPlugin (activateurl){
         url: activateurl,
         type: "POST", 
 		success: function (output) {
-            showLoadingStatus(O_ACTIVATE_PLUGIN)
+            showLoadingStatus(O_ACTIVATE_PLUGIN);
 			hideLoadingStatus ();
         	location.reload();
 		}

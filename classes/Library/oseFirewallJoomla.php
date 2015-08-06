@@ -59,7 +59,13 @@ class oseFirewall extends oseFirewallBase {
     protected static function addMenuActions () {
     	//add_action('admin_menu', 'oseFirewall::showmenus');
     } 
+    protected static function getOEMClass () {
+    	if (!class_exists('CentroraOEM')) {
+    		oseFirewall::callLibClass('oem', 'oem');
+    	}
+    }
     public static function getmenus(){
+    	self::getOEMClass();
     	$oem = new CentroraOEM() ;
     	$favIconPath = $oem->getFavicon();
     	$db = JFactory :: getDBO();
@@ -223,10 +229,15 @@ class oseFirewall extends oseFirewallBase {
         $menu .= '><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-scale"></i> ' . oLang::_get('MY_ACCOUNT') . '<b class="caret"></b></a>';
         // SubMenu My Account Starts;
         $menu .= '<ul class="dropdown-menu">';
-
-        $menu .= '<li ';
-        $menu .= '><a href="http://www.centrora.com/store/subscription-packages/" target="_blank">' . oLang::_get('MY_PREMIUM_SERVICE') . '</a></li>';
-
+		
+        oseFirewall::callLibClass('oem', 'oem');
+        $oem = new CentroraOEM();
+        $oemCustomer = $oem->hasOEMCustomer();
+        if ($oemCustomer == false) {
+	        $menu .= '<li ';
+	        $menu .= '><a href="http://www.centrora.com/store/subscription-packages/" target="_blank">' . oLang::_get('MY_PREMIUM_SERVICE') . '</a></li>';
+        }
+        
         $menu .= '<li ';
         $menu .= (in_array($view, array('login', 'subscription'))) ? 'class="active"' : '';
         $menu .= '><a href="index.php?option=' . $extension . '&view=login">' . oLang::_get('LOGIN_OR_SUBSCIRPTION') . '</a></li>';
@@ -279,7 +290,6 @@ class oseFirewall extends oseFirewallBase {
     }
 	public static function showLogo()
 	{
-		$oem = new CentroraOEM() ;
 		$head = '<nav class="navbar navbar-default" role="navigation">';
 		$head .= '<div class ="everythingOnOneLine">
 					<div class ="col-lg-12">';
@@ -330,7 +340,7 @@ class oseFirewall extends oseFirewallBase {
 		$head .= $oem->getTopBarURL ();
 		if (OSE_CMS == 'joomla')
 		{
-			$head .= '<li><a href="index.php" title="Home">Quick links:&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-home"></i> <span class="hidden-xs hidden-sm hidden-md">Centrora</span> </a></li>';
+			$head .= $oem->getHomeLink();
 		}
 		$head .=	'</ul>
 					 </div>
@@ -469,5 +479,4 @@ class oseFirewall extends oseFirewallBase {
 	public static function getConfigurationURL () {
 		return 'index.php?option=com_ose_firewall&view=bsconfig';
 	}
-
 }

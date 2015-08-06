@@ -17,6 +17,17 @@ $emailTmp = $this->model->getConfiguration ( 'emailTemp' );
 						<!-- Start .panel -->
 						<div class="panel-heading white-bg"></div>
 						<div class="panel-controls"></div>
+                        <div class="panel-body">
+                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                <li class="active"><a data-toggle="tab"
+                                                      href="#admin-manager"><?php oLang::_('ADMIN_MANAGER'); ?></a></li>
+                                <li><a data-toggle="tab"
+                                       href="#security-manager"><?php oLang::_('SECURITY_MANAGER'); ?></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <!-- basic firewall rules-->
+                                <div class="panel-heading white-bg"></div>
+                                <div class="tab-pane active" id="admin-manager">
 						<div class="panel-controls-buttons">
 							<button class="btn btn-sm mr5 mb10" type="button" onClick="emailEditor()">
 								<i class="text-primary glyphicon glyphicon-envelope"></i> <?php oLang::_('EMAIL_EDIT'); ?></button>
@@ -79,7 +90,39 @@ $emailTmp = $this->model->getConfiguration ( 'emailTemp' );
 								</tfoot>
 							</table>
 						</div>
+                                </div>
+                                <div class="tab-pane" id="security-manager">
+                                    <div class="panel-controls-buttons">
+                                        <button class="btn btn-sm mr5 mb10" type="button" onClick="addSecManager()">
+                                            <i class="text-primary glyphicon glyphicon-user"></i> <?php oLang::_('ADD_SECURITY_MANAGER'); ?>
+                                        </button>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table display" id="secManagerTable">
+                                            <thead>
+                                            <tr>
+                                                <th><?php oLang::_('O_ID'); ?></th>
+                                                <th><?php oLang::_('SECURITY_NAME'); ?></th>
+                                                <th><?php oLang::_('SECURITY_EMAIL'); ?></th>
+                                                <th><?php oLang::_('SECURITY_STATUS'); ?></th>
+                                                <th><?php oLang::_('SECURITY_CONTACT'); ?></th>
+                                            </tr>
+                                            </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th><?php oLang::_('O_ID'); ?></th>
+                                                <th><?php oLang::_('SECURITY_NAME'); ?></th>
+                                                <th><?php oLang::_('SECURITY_EMAIL'); ?></th>
+                                                <th><?php oLang::_('SECURITY_STATUS'); ?></th>
+                                                <th><?php oLang::_('SECURITY_CONTACT'); ?></th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 					</div>
+                    </div>
 					<!-- End .panel -->
 				</div>
 			</div>
@@ -88,4 +131,6 @@ $emailTmp = $this->model->getConfiguration ( 'emailTemp' );
 </div>
 <?php
 include_once (dirname ( __FILE__ ) . '/adminemailsmodal.php');
+include_once(dirname(__FILE__) . '/secManagermodal.php');
+
 ?>

@@ -41,15 +41,38 @@ class CentroraOEM236 {
 		return $urls;
 	}
 	public function addLogo () {
-		return '<div class="logo"><img src="'.OSE_FWPUBLICURL.'css/oem/'.$this->customer_id.'/imgs/logo-header.png" width="90px" alt ="Gabemedia Security"/></div>'.$this->showOEMName ();
+		return '<div class="logo"><img src="'.rtrim(OSE_FWPUBLICURL, '/').'/css/oem/'.$this->customer_id.'/imgs/logo-header.png" width="90px" alt ="Gabemedia Security"/></div>'.$this->showOEMName ();
 	}
 	public function defineVendorName () {
-		define('OSE_WORDPRESS_FIREWALL', 'Gabemedia Security');
+		if (!(defined('OSE_OEM_LANG_TAG'))) define('OSE_WORDPRESS_FIREWALL', 'Gabemedia Security');
+        if (!(defined('OSE_WORDPRESS_FIREWALL_SHORT'))) define('OSE_WORDPRESS_FIREWALL_SHORT', 'Gabemedia');
+        if (!(defined('OSE_OEM_URL_MAIN'))) define('OSE_OEM_URL_MAIN', 'http://www.gabemedia.dk');
+        if (!(defined('OSE_OEM_URL_HELPDESK'))) define('OSE_OEM_URL_HELPDESK', 'http://www.gabemedia.dk');
+        if (!(defined('OSE_OEM_URL_MALWARE_REMOVAL'))) define('OSE_OEM_URL_MALWARE_REMOVAL', 'http://www.gabemedia.dk');
+        if (!(defined('OSE_OEM_URL_ADVFW_TUT'))) define('OSE_OEM_URL_ADVFW_TUT', 'http://www.gabemedia.dk');
+        if (!(defined('OSE_OEM_URL_PREMIUM_TUT'))) define('OSE_OEM_URL_PREMIUM_TUT', 'http://www.gabemedia.dk');
+        if (!(defined('OSE_OEM_URL_AFFILIATE'))) define('OSE_OEM_URL_AFFILIATE', 'http://www.gabemedia.dk');
+        if (!(defined('OSE_OEM_URL_SUBSCRIBE'))) define('OSE_OEM_URL_SUBSCRIBE', 'http://www.gabemedia.dk');
+        if (!(defined('OSE_OEM_LANG_TAG'))) define('OSE_OEM_LANG_TAG','da_DK');
 	}
 	public function requiresPasscode () {
 		return true;
 	}
     public function showNews (){
-        return true;
+        return false;
+    }
+	public function showFooter () {
+    	return '<div class="footer-bottom">
+		    <div class="container">
+		      <p class="pull-center">
+		        Gabemedia Security is a portfolio of Gabemedia. &copy;  <?php echo date("Y"); ?> <a
+					href="http://gabemedia.dk/" target="_blank">Gabemedia</a>. All Rights Reserved. <br /> Credits
+				to: <a href="http://www.centrora.com" target="_blank">Centrora Security!&#0174;</a>
+		      </p>
+		    </div>
+		  </div>';
+    }
+    public function getHomeLink() {
+    	return '<li><a href="http://gabemedia.dk" title="Home">Quick links:&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-home"></i> <span class="hidden-xs hidden-sm hidden-md">'.OSE_WORDPRESS_FIREWALL_SHORT.'</span> </a></li>';
     }
 }

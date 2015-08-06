@@ -121,4 +121,32 @@ class AdminemailsModel extends BaseModel
         $return = $adminManager->restoreDefault();
         return $return;
     }
+
+    public function getSecManagers()
+    {
+        $return = array();
+        $secureManager = new oseAdminManager();
+        if (oseFirewall::isDBReady()) {
+            $return = $secureManager->getSecManagers();
+        } else {
+            $return = $this->getEmptyReturn();
+        }
+        $return['draw'] = $this->getInt('draw');
+        return $return;
+    }
+
+    public function saveSecManager($name, $username, $email, $password)
+    {
+        $return = array();
+        $secureManager = new oseAdminManager();
+        $return = $secureManager->saveSecManager($name, $username, $email, $password);
+        return $return;
+    }
+
+    public function changeBlock($status, $id)
+    {
+        $secManager = new oseAdminManager();
+        $return = $secManager->changeBlock($status, $id);
+        return $return;
+    }
 }

@@ -38,7 +38,7 @@ if (!empty($rubbish)) {
 oseFirewall::callLibClass('oem', 'oem');
 $oem = new CentroraOEM();
 $oemCustomer = $oem->requiresPasscode();
-if ($oemCustomer) {
+if ((get_class($this->model)!='ConfigurationModel') && ($oemCustomer || ($oem->hasOEMCustomer() && get_class($this->model)=='LoginModel'))) {
     $flag = get_class($this->model);
     $strip = strtolower(str_replace('Model', '', $flag));
     $filter = $this->model->oempasscode();

@@ -364,4 +364,40 @@ class oseFirewallInstaller extends oseInstaller {
 			}
 		} 
 	}
+	public function InsertOEMID () {
+		if (class_exists('SConfig'))
+		{
+			$file = JPATH_ADMINISTRATOR.'/templates/oem.data';
+			if (file_exists($file)) {
+				$customer_id = file_get_contents($file);
+			}
+			if (!empty($customer_id)) {
+				$exists = $this->isOEMIDExists($customer_id);
+				if ($exists == false) {
+					$this->insertOEMIDDB($customer_id);
+				}	
+			}
+		}
+		return true;
+	}
+	private function insertOEMIDDB ($customer_id) {
+		$db = oseFirewall::getDBO ();
+		$varValues = array(
+				'id' => '',
+				'key' => 'customer_id',
+				'type' => 'oem',
+				'value' => (int)$customer_id
+		);
+		$id = $db->addData ('insert', '#__ose_secConfig', '', '', $varValues);
+		$db->closeDBO ();
+		return $id;
+	}
+	private function isOEMIDExists () {
+		$db = oseFirewall::getDBO ();
+		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'customer_id' AND `type` = 'oem'";
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		return (!empty($result))?true:false;
+	}
 } 
+

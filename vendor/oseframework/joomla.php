@@ -59,8 +59,13 @@ class oseJoomla extends oseFramework
 	}
 	public static function getLocale()
 	{
-        $getlang = JFactory::getLanguage();
-		return (string)$getlang->get('tag');
+		if (class_exists('JFactory', false)) {
+	        $getlang = JFactory::getLanguage();
+			return (string)$getlang->get('tag');
+		}
+		else {
+			return 'en-GB';
+		}
 	}
 	public static function loadallJs($cs)
 	{

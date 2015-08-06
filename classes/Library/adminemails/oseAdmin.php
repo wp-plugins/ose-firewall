@@ -61,6 +61,9 @@ class oseAdminManager
         oseFirewall::loadRequest();
         oseFirewall::loadFiles();
         oseFirewall::loadDateClass();
+        if (OSE_CMS == 'joomla') {
+            $this->createGroup();
+        }
     }
 
     protected function setDBO()
@@ -171,9 +174,9 @@ class oseAdminManager
             $db->setQuery($sql);
             $domain = $db->loadObjectList();
             if ($file->A_status == 'active') {
-                $status = '<a id="' . $file->A_id . '" href="javascript:void(0);" onclick="changeStatus(0,' . $file->A_id . ')"><div class="fa fa-check"></div></a>';
+                $status = '<a id="' . $file->A_id . '" href="javascript:void(0);" onclick="changeStatus(0,' . $file->A_id . ')"><div class="fa fa-check color-green"></div></a>';
             } else {
-                $status = '<a id="' . $file->A_id . '" href="javascript:void(0);" onclick="changeStatus(1,' . $file->A_id . ')"><div class="fa fa-times"></div></a>';
+                $status = '<a id="' . $file->A_id . '" href="javascript:void(0);" onclick="changeStatus(1,' . $file->A_id . ')"><div class="fa fa-times color-red"></div></a>';
             }
             $db->closeDBO();
             $return [$i] = array(
@@ -375,5 +378,302 @@ class oseAdminManager
         $flag = $db->deleteRecordString($condition, $this->configTable);
         $db->closeDBO();
         return $flag;
+    }
+
+    public function getSecManagers()
+    {
+        $columns = oRequest::getVar('columns', null);
+        $limit = oRequest::getInt('length', 15);
+        $start = oRequest::getInt('start', 0);
+        $search = oRequest::getVar('search', null);
+        $orderArr = oRequest::getVar('order', null);
+        $sortby = null;
+        $orderDir = 'asc';
+        if (!empty($orderArr[0]['column'])) {
+            $sortby = $columns[$orderArr[0]['column']]['data'];
+            $orderDir = $orderArr[0]['dir'];
+        }
+        $return = $this->getSecManagersDB($search['value'], $start, $limit, $sortby, $orderDir);
+        $return['data'] = $this->convertSecManagers($return['data']);
+        return $return;
+    }
+
+    private function getSecManagersDB($search, $start, $limit, $sortby, $orderDir)
+    {
+        $return = array();
+        if (!empty($search)) {
+            $this->getWhereName($search);
+        }
+        $this->getOrderBy($sortby, $orderDir);
+        if (!empty($limit)) {
+            $this->getLimitStm($start, $limit);
+        }
+        $where = $this->db->implodeWhere($this->where);
+        // Get Records Query;
+        $return['data'] = $this->getAllRecords($where);
+        $count = $this->getAllCounts($where);
+        $return['recordsTotal'] = $count['recordsTotal'];
+        $return['recordsFiltered'] = $count['recordsFiltered'];
+
+        return $return;
+    }
+
+    protected function getWhereName($search)
+    {
+        $this->where[] = "`name` LIKE " . $this->db->quoteValue($search . '%', true) . " OR `email` LIKE " . $this->db->quoteValue($search . '%', true);
+    }
+
+    protected function getOrderBy($sortby, $orderDir)
+    {
+        if (empty($sortby)) {
+            $this->orderBy = "";
+        } else {
+            $this->orderBy = " ORDER BY " . addslashes($sortby) . ' ' . addslashes($orderDir);
+        }
+    }
+
+    protected function getLimitStm($start, $limit)
+    {
+        if (!empty($limit)) {
+            $this->limitStm = " LIMIT " . (int)$start . ", " . (int)$limit;
+        }
+    }
+
+    private function getAllRecords($where)
+    {
+        if (OSE_CMS == 'wordpress') {
+            $sql = 'SELECT `users`.`ID` AS `id`,`users`.`user_login` AS `username`,`users`.`user_email` AS `email`,`users`.`user_status` AS `block` FROM `#__users` AS `users` LEFT JOIN `#__ose_secConfig` `secConfig` ON `users`.`ID` = `secConfig`.`value`';
+            if (empty($where)) {
+                $where = " WHERE `secConfig`.`key` = 'SecurityManager'";
+            } else {
+                $where .= " AND `secConfig`.`key` = 'SecurityManager'";
+            }
+            $query = $sql . $where . $this->orderBy . " " . $this->limitStm;
+            $this->db->setQuery($query);
+            $results = $this->db->loadObjectList();
+        } else {
+            $sql = 'SELECT `users`.`id`,`users`.`username`,`users`.`email`,`users`.`block` FROM `#__users` AS `users` LEFT JOIN `#__user_usergroup_map` `usergroupmap` ON `users`.`id` = `usergroupmap`.`user_id`
+          LEFT JOIN `#__usergroups` `usergroups` ON `usergroups`.`id` = `usergroupmap`.`group_id`';
+            if (empty($where)) {
+                $where = " WHERE `usergroups`.`title` = 'Security Manager'";
+            } else {
+                $where .= " AND `usergroups`.`title` = 'Security Manager'";
+            }
+            $query = $sql . $where . $this->orderBy . " " . $this->limitStm;
+            $this->db->setQuery($query);
+            $results = $this->db->loadObjectList();
+        }
+        return $results;
+    }
+
+    private function convertSecManagers($results)
+    {
+        $i = 0;
+        $return = array();
+        foreach ($results as $result) {
+            $return[$i] = $result;
+            if ($return[$i]->block == 0) {
+                $return[$i]->block = '<a id="' . $return[$i]->id . '" href="javascript:void(0);" onclick="changeBlock(0,' . $return[$i]->id . ')"><div class="fa fa-check color-green"></div></a>';
+            } else {
+                $return[$i]->block = '<a id="' . $return[$i]->id . '" href="javascript:void(0);" onclick="changeBlock(1,' . $return[$i]->id . ')"><div class="fa fa-times color-red"></div></a>';
+            }
+            $return[$i]->contact = $this->getEmailIcon($result->email);
+            $i++;
+        }
+        return $return;
+    }
+
+    private function getEmailIcon($email)
+    {
+        $link = '<a href="mailto:' . $email . '?" target="_top">Send Mail</a>';
+        return $link;
+    }
+
+    private function getAllCounts($where)
+    {
+        $return = array();
+        // Get total count
+        if (OSE_CMS == 'wordpress') {
+            $sql = "SELECT COUNT(`users`.`ID`) AS count FROM `#__users`AS `users` LEFT JOIN `#__ose_secConfig` `secConfig` ON `users`.`ID` = `secConfig`.`value` WHERE `secConfig`.`key` = 'SecurityManager' ";
+
+            $query = "SELECT COUNT(`users`.`id`) AS count FROM `#__users`AS `users` LEFT JOIN `#__ose_secConfig` `secConfig` ON `users`.`ID` = `secConfig`.`value`";
+
+            $this->db->setQuery($sql);
+            $result = $this->db->loadObject();
+            $return['recordsTotal'] = $result->count;
+            // Get filter count
+            if (empty($where)) {
+                $this->db->setQuery($sql);
+                $result = $this->db->loadObject();
+                $return['recordsFiltered'] = $result->count;
+            } else {
+                $this->db->setQuery($query . $where . " AND `secConfig`.`key` = 'SecurityManager'");
+                $result = $this->db->loadObject();
+                $return['recordsFiltered'] = $result->count;
+            }
+        } else {
+            $sql = "SELECT COUNT(`users`.`id`) AS count FROM `#__users`AS `users` LEFT JOIN `#__user_usergroup_map` `usergroupmap` ON `users`.`id` = `usergroupmap`.`user_id`
+          LEFT JOIN `#__usergroups` `usergroups` ON `usergroups`.`id` = `usergroupmap`.`group_id` WHERE `usergroups`.`title` = 'Security Manager' ";
+
+            $query = "SELECT COUNT(`users`.`id`) AS count FROM `#__users`AS `users` LEFT JOIN `#__user_usergroup_map` `usergroupmap` ON `users`.`id` = `usergroupmap`.`user_id`
+          LEFT JOIN `#__usergroups` `usergroups` ON `usergroups`.`id` = `usergroupmap`.`group_id`";
+            $this->db->setQuery($sql);
+            $result = $this->db->loadObject();
+            $return['recordsTotal'] = $result->count;
+            // Get filter count
+            if (empty($where)) {
+                $this->db->setQuery($sql);
+                $result = $this->db->loadObject();
+                $return['recordsFiltered'] = $result->count;
+            } else {
+                $this->db->setQuery($query . $where . " AND `usergroups`.`title` = 'Security Manager'");
+                $result = $this->db->loadObject();
+                $return['recordsFiltered'] = $result->count;
+            }
+        }
+        return $return;
+    }
+
+    private function createGroup()
+    {
+        $db = oseFirewall::getDBO();
+        $query = "SELECT `title` FROM `#__usergroups` WHERE `title` LIKE 'Security Manager'";
+        $db->setQuery($query);
+        $flag = $this->db->loadObject();
+        if (empty($flag)) {
+            require_once(dirname(OSEFWDIR) . ODS . 'com_users' . ODS . 'models' . ODS . 'group.php');
+            $userGroup = new UsersModelGroup();
+            $Array = array(
+                'id' => 0,
+                'title' => 'Security Manager',
+                'parent_id' => 1,
+                'action' => Array(),
+                'tags' => '',
+            );
+            $userGroup->save($Array);
+        }
+        $query = "SELECT `id` FROM `#__usergroups` WHERE `title` LIKE 'Security Manager'";
+        $db->setQuery($query);
+        $flag = $this->db->loadObject();
+        $this->insertRule($flag->id);
+        $db->closeDBO();
+    }
+
+    private function insertRule($groupid)
+    {
+        $query = "SELECT `rules` From `#__assets` WHERE `name` = 'root.1';";
+        $this->db->setQuery($query);
+        $results = $this->db->loadObject();
+        $results = json_decode($results->rules);
+        $results->{'core.login.admin'}->$groupid = 1;
+        $results = json_encode($results);
+        $Array = array(
+            'rules' => $results
+        );
+        $id = $this->db->addData('update', '#__assets', 'name', 'root.1', $Array);
+        return $id;
+    }
+
+    public function saveSecManager($name, $username, $email, $password)
+    {
+        if (OSE_CMS == 'wordpress') {
+
+            $userdata = array();
+            $userdata = array(
+                'first_name' => $name,
+                'user_login' => $username,
+                'user_pass' => trim($password),  // When creating an user, `user_pass` is expected.
+                'user_email' => $email,
+                'role' => 'subscriber',
+            );
+            $user_id = wp_insert_user($userdata);
+            //On success
+            if (!is_wp_error($user_id)) {
+                $Array = array();
+                $Array = array(
+                    'key' => 'SecurityManager',
+                    'value' => $user_id,
+                    'type' => 'secManager'
+                );
+                $db = oseFirewall::getDBO();
+                $id = $db->addData('insert', '#__ose_secConfig', '', '', $Array);
+                $db->closeDBO();
+                if (is_int($id)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            $db = oseFirewall::getDBO();
+            $query = "SELECT `id` FROM `#__usergroups` WHERE `title` LIKE 'Security Manager'";
+            $db->setQuery($query);
+            $flag = $this->db->loadObject();
+            require_once(dirname(OSEFWDIR) . ODS . 'com_users' . ODS . 'models' . ODS . 'user.php');
+            $user = new UsersModelUser();
+            $Array = array(
+                'name' => $name,
+                'username' => $username,
+                'password' => $password,
+                'password2' => $password,
+                'email' => $email,
+                'registerDate' => '',
+                'lastvisitDate' => '',
+                'lastResetTime' => '',
+                'resetCount' => 0,
+                'sendEmail' => 0,
+                'block' => 0,
+                'requireReset' => 0,
+                'id' => 0,
+                'groups' => Array($flag->id),
+                'params' => Array(
+                    'admin_style' => '',
+                    'admin_language' => '',
+                    'language' => '',
+                    'editor' => '',
+                    'helpsite' => '',
+                    'timezone' => '',
+                ),
+                'tags' => ''
+            );
+            try {
+                $user->save($Array);
+                return true;
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
+            $db->closeDBO();
+        }
+    }
+
+    public function changeBlock($status, $id)
+    {
+        $statusArray = array();
+        $db = oseFirewall::getDBO();
+        if (OSE_CMS == 'wordpress') {
+            if ($status == 0) {
+                $statusArray = array(
+                    'user_status' => 1
+                );
+            } else {
+                $statusArray = array(
+                    'user_status' => 0
+                );
+            }
+            $id = $db->addData('update', '#__users', 'ID', $id, $statusArray);
+        } else {
+            if ($status == 0) {
+                $statusArray = array(
+                    'block' => 1
+                );
+            } else {
+                $statusArray = array(
+                    'block' => 0
+                );
+            }
+            $id = $db->addData('update', '#__users', 'id', $id, $statusArray);
+        }
+        $db->closeDBO();
+        return $id;
     }
 }

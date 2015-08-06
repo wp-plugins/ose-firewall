@@ -5,12 +5,12 @@ window.console||(console={log:function(){}});
 
 //Internet Explorer 10 in Windows 8 and Windows Phone 8 fix
 if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-  var msViewportStyle = document.createElement('style')
+    var msViewportStyle = document.createElement('style');
   msViewportStyle.appendChild(
     document.createTextNode(
       '@-ms-viewport{width:auto!important}'
     )
-  )
+  );
   document.querySelector('head').appendChild(msViewportStyle)
 }
 
@@ -50,8 +50,8 @@ if ( browser.chrome ) {
 jQuery.browser = browser;
 
 //Android stock browser
-var nua = navigator.userAgent
-var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+var nua = navigator.userAgent;
+var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1);
 if (isAndroid) {
   $('select.form-control').removeClass('form-control').css('width', '100%')
 }
@@ -73,7 +73,7 @@ function showDialogue (message, title, buttonLabel, className) {
 function encodeAllIDs(selections)
 {
 	var i=0;
-	ids = new Array();
+    ids = [];
 	for (i = 0; i < selections.length; i++)
 	{
       ids [i] = parseInt(selections[i].id);
@@ -347,12 +347,12 @@ function updateSignature(table)
 }
 
 function removejscssfile(filename, filetype){
-	 var targetelement=(filetype=="js")? "script" : (filetype=="css")? "link" : "none" //determine element type to create nodelist from
-	 var targetattr=(filetype=="js")? "src" : (filetype=="css")? "href" : "none" //determine corresponding attribute to test for
-	 var allsuspects=document.getElementsByTagName(targetelement)
+    var targetelement = (filetype == "js") ? "script" : (filetype == "css") ? "link" : "none"; //determine element type to create nodelist from
+    var targetattr = (filetype == "js") ? "src" : (filetype == "css") ? "href" : "none"; //determine corresponding attribute to test for
+    var allsuspects = document.getElementsByTagName(targetelement);
 	 for (var i=allsuspects.length; i>=0; i--){ //search backwards within nodelist for matching elements to remove
 	  if (allsuspects[i] && allsuspects[i].getAttribute(targetattr)!=null && allsuspects[i].getAttribute(targetattr).indexOf(filename)!=-1)
-	   allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
+          allsuspects[i].parentNode.removeChild(allsuspects[i]); //remove element by calling parentNode.removeChild()
 	 }
 }
 
@@ -382,7 +382,7 @@ function joomla_check() {
             url: url,
             data: {
                 option: option,
-                controller: controller,
+                controller: 'dashboard',
                 action: 'check',
                 task: 'check',
                 centnounce: $('#centnounce').val()
@@ -603,6 +603,7 @@ jQuery(document).ready(function($){
                 }
                 else {
                     document.getElementById("domain-warning-label").style.display = 'inline';
+                    document.getElementById("domain-warning-message").style.display = 'inline';
                     document.getElementById("domain-warning-message").innerHTML = data;
                 }
             }
@@ -630,6 +631,7 @@ jQuery(document).ready(function($){
                 	showLoading(O_ADD_ADMIN_FAIL);
                 	hideLoading();
                     document.getElementById("admin-warning-label").style.display = 'inline';
+                    document.getElementById("admin-warning-message").style.display = 'inline';
                     document.getElementById("admin-warning-message").innerHTML = data;
                 }
             }
@@ -657,7 +659,36 @@ jQuery(document).ready(function($){
                     showLoading(O_ADD_EXT_FAIL);
                     hideLoading();
                     document.getElementById("ext-warning-label").style.display = 'inline';
+                    document.getElementById("ext-warning-message").style.display = 'inline';
                     document.getElementById("ext-warning-message").innerHTML = data;
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
+    $("#secManager-form").submit(function () {
+        showLoading('Please wait...');
+        var data = $("#secManager-form").serialize();
+        data += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: data, // serializes the form's elements.
+            success: function (data) {
+                if (data.status === 'SUCCESS') {
+                    showLoading(O_ADD_SEC_SUCCESS);
+                    hideLoading();
+                    document.getElementById("sec-warning-label").style.display = 'none';
+                    $('#addSecManagerModal').modal('hide');
+                    $('#secManagerTable').dataTable().api().ajax.reload();
+                }
+                else {
+                    showLoading(O_ADD_SEC_FAIL);
+                    hideLoading();
+                    document.getElementById("sec-warning-label").style.display = 'inline';
+                    document.getElementById("sec-warning-message").style.display = 'inline';
+                    document.getElementById("sec-warning-message").innerHTML = data.message;
                 }
             }
         });

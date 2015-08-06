@@ -31,8 +31,8 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 define('O_LATEST_SIGNATURE', '20140901');
 define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140901, updated on 1st Sep 2014');
 define('OSE_WORDPRESS_FIREWALL_SETTING', ''.OSE_WORDPRESS_FIREWALL.' Settings');
-define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', ''.OSE_WORDPRESS_FIREWALL.' is a Web Application Firewall for Wordpress created by <a href="http://www.protect-website.com" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
-define('OSE_WORDPRESS_FIREWALL_UPDATE_DESC', 'OSE Firewall™ has been renamed as ‘Centrora Plugin’, which will works perfectly with our new product <a href="http://www.centrora.com" target = "_blank">Centrora</a>, a security management central that gains you the ability to manage all your websites in one place.');
+define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', ''.OSE_WORDPRESS_FIREWALL.' is a Web Application Firewall for Wordpress created by <a href="'.OSE_OEM_URL_MAIN.'" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
+define('OSE_WORDPRESS_FIREWALL_UPDATE_DESC', 'OSE Firewall™ has been renamed as ‘'.OSE_WORDPRESS_FIREWALL.'’, which will works perfectly with our new product <a href="'.OSE_OEM_URL_MAIN.'" target = "_blank">Centrora</a>, a security management central that gains you the ability to manage all your websites in one place.');
 define('OSE_DASHBOARD', 'Dashboard');
 define('OSE_DASHBOARD_SETTING', 'Dashboard Settings');
 define('NOTIFICATION_EMAIL_ATTACKS', 'Email that receives the notification of attacks');
@@ -107,9 +107,9 @@ define('OSE_PROTECTION_MODE','Protection Mode');
 define('OSE_FIREWALL_ONLY','Protected by '.OSE_WORDPRESS_FIREWALL.' Only');
 define('OSE_SECSUITE_ONLY','Protected by OSE Security Suite Only');
 define('OSE_FWANDSUITE','Protected by '.OSE_WORDPRESS_FIREWALL.' & '.OSE_WORDPRESS_FIREWALL.' Suite');
-define('OSE_SUITE_PATH','Absolute path of OSE Security Suite.<br/>e.g. /home/youraccount/public_html/osesecurity/ <br/> (Please ensure you have installed <a href ="https://www.opensource-excellence.com/shop/ose-security-suite.html" target="_blank">OSE Security Suite</a> already)');
+define('OSE_SUITE_PATH','Absolute path of Centrora Security Suite.<br/>e.g. /home/youraccount/public_html/osesecurity/ <br/> (Please ensure you have installed <a href ="'.OSE_OEM_URL_MAIN.'" target="_blank">Centrora Security Suite</a> already)');
 define('NEED_HELP_CLEANING','Need help removing the malicious files?');
-define('NEED_HELP_CLEANING_DESC','Viruses are changing over time. Our patterns might not be updated to scan the latest malicious files in your infected system. In this case, please consider to hire our <a href="https://www.opensource-excellence.com/service/removal-of-malware.html" target="_blank" >malware removal service</a>. The new patterns found in your website will be contributed to the community to help other users.');
+define('NEED_HELP_CLEANING_DESC','Viruses are changing over time. Our patterns might not be updated to scan the latest malicious files in your infected system. In this case, please consider getting our <a href="'.OSE_OEM_URL_MALWARE_REMOVAL.'" target="_blank" >malware removal service</a>. The new patterns found in your website will be contributed to the community to help other users.');
 define('OSE_DEVELOPMENT','Development mode (temporarily turn off protection)');
 // Langauges for version 1.6 + start from here;
 define('OSE_ENABLE_SFSPAM','Enable Stop Forum Spam Scanning');
@@ -196,7 +196,7 @@ define('LINKAGE_DELETED_FAILED','The linkage was deleted unsuccessfully.');
 define('ANTIVIRUS_CONFIGURATION','Virus Scanner Configuration');
 define('ANTIVIRUS_CONFIGURATION_TITLE','<b>Virus Scanner</b> <span><b>Configuration</b></span>');
 define('ANTIVIRUS_CONFIGURATION_DESC','Configure the settings for Virus Scanner, control file extension to be scanned and limit the size of scanning files');
-define('ANTIVIRUS', 'Scan Malware');
+define('ANTIVIRUS', 'Scan Malware <small>(Premium)</small>');
 define('ANTIVIRUS_TITLE','<b>Virus</b> <span><b>Scanner</b></span>');
 define('ANTIVIRUS_DESC','Virus Scanner is a powerful malware detector, it acts like an antivirus but is more powerful than a antivirus. It scans through every single files on your server or any specific path of files for virus, malware, spam, malicious codes, SQL injection, security vulnerabilities etc.');
 define('LAST_SCANNED','Last scanned folder: ');
@@ -218,7 +218,7 @@ define('O_OTHER_MAILICIOUS_CODES','Other Miscellaneous Malicious Codes');
 define('WEBSITE_CLEAN','Secured');
 define('COMPLETED','Completed');
 define('YOUR_SYSTEM_IS_CLEAN','Your system is clean.');
-define('VSREPORT','Scan Report');
+define('VSREPORT','Scan Report <small>(Premium)</small>');
 define('SCANREPORT_TITLE','<b>Scan</b> <span><b>Report</b></span>');
 define('SCANREPORT_DESC','Display the infected files last scanned by the virus scanner');
 define('SCANREPORT_CLEAN', 'No files were infected.');
@@ -244,9 +244,9 @@ define('REQUEST_DELIMITER','-----');
 define('GEONOTREADY', 'Please install GeoIP Country List to enable country blocking feature.');
 define('COUNTRYBLOCK_TITLE', '<b>Country</b> <span><b>Blocking</b></span>');
 define('COUNTRYBLOCK_DESC','The Panel to Block IPs from countries');
-define('COUNTRYBLOCK', 'Country Blocking');
+define('COUNTRYBLOCK', 'Country Blocking <small>(Premium)</small>');
 define('BACKUP', 'Backup List');
-define('ADVANCEDBACKUP', 'Cloud Backup');
+define('ADVANCEDBACKUP', 'Cloud Backup <small>(Premium)</small>');
 define('ADMINEMAILS_TITLE', '<b>Administrator Management</b>');
 define('ADMINEMAILS_DESC', 'You can centrally manage your administrator and domain addresses here');
 define('ADMINEMAILS', 'Manage Administrators');
@@ -462,7 +462,7 @@ define('O_DEVELOPMENT_MODE','Development Mode');
 define('O_FRONTEND_BLOCKING_MODE','Frontend Blocking Mode');
 define('O_COUNTRY_BLOCKING','Country Blocking');
 define('O_SILENTLY_FILTER_HACKING_VALUES_RECOMMENDED_FOR_NEW_USERS','Silently filter hacking values - Recommended for new users');
-define('O_ADRULESETS','Advanced Firewall Setting (See <a href =\'http://www.centrora.com/centrora-tutorial/enabling-advance-firewall-setting/\' target=\'_blank\'>Tutorial Here</a>)');
+define('O_ADRULESETS','Advanced Firewall Setting (See <a href ="'.OSE_OEM_URL_ADVFW_TUT.'" target=\'_blank\'>Tutorial Here</a>)');
 define('O_GOOGLE_2_VERIFICATION','Google 2-Step Verification');
 define('O_FILE_UPLOAD_SCANNING','Scan uploaded files in frontend?');
 
@@ -534,7 +534,7 @@ define('SUCCESS_LOGOUT', 'Successful logged out');
 define('FIREWALL_RULES', 'Firewall Rules Fine-tuning');
 define('FIREWALL_CONFIGURATION','Firewall Configuration');
 define('FIREWALL_CONFIGURATION_DESC','This is the page that you can change the settings of '.OSE_WORDPRESS_FIREWALL.' Firewall.');
-define('CRONJOBS', 'Schedule Tasks');
+define('CRONJOBS', 'Schedule Tasks <small>(Premium)</small>');
 define('CRONJOBS_TITLE','Scheduled Tasks');
 define('CRONJOBS_DESC','Set up a scheduled task to automatically run at a specified day(s) and time. The time is based on the time of your system.');
 define('CRONJOBS_LONG','Select the time and day(s) for Virus Scanner to run.');
@@ -573,7 +573,7 @@ define('COUNTRY', 'Country');
 define('FIRST_NAME', 'First Name');
 define('LAST_NAME', 'Last Name');
 define('O_NEXT', 'Place Order');
-define('PERMCONFIG_ONECLICKPERMFIX', 'One Click Permisions Fix');
+define('PERMCONFIG_ONECLICKPERMFIX', 'One Click Permisions Fix <small>(Premium)</small>');
 
 // Version 4.6.0
 define('SCANPATH', 'Select Path');
@@ -620,7 +620,7 @@ define('AFFILIATE_PROGRAM_DESC', '<b>Don\'t</b> miss out the chance to earn at l
 define('SECURITY_BADGE_DESC', '<b>[Security Badge] </b>: The security badge is disabled now. You can increase sales conversion of your website by enabling it. ');
 define('CALL_TO_ACTION_TITLE', 'We are always here to help');
 define('CALL_TO_ACTION_P', 'We are now serving <span id="numofWebsite"></span> websites.');
-define('CALL_TO_ACTION_UL', '<li>We have been helping thousands of customers to protect and clean their websites since 2009, if you need any help for protecting or cleaning viruses on your website, please feel free to <a href="https://www.centrora.com/support-center/" target="_blank"><span class="strong">contact us</span></a>.</li>
+define('CALL_TO_ACTION_UL', '<li>We have been helping thousands of customers to protect and clean their websites since 2009, if you need any help for protecting or cleaning viruses on your website, please feel free to <a href="'.OSE_OEM_URL_HELPDESK.'" target="_blank"><span class="strong">contact us</span></a>.</li>
 					<li>With '.OSE_WORDPRESS_FIREWALL.', the basic firewall we have already helped you block over 95% of threats. To further harden your web application firewall you might consider an additional layer of protection with the <b>advanced firewall</b> rules, feel free to subscribe.</li>
 					<li>Whenever you suspect your website is infected by malicious codes, <b>'.OSE_WORDPRESS_FIREWALL.' Virus Scanner</b> can help you look for any virus / malicious codes in your website within minutes. The scanner will be activated when the subscription is activated.</li>
 					<li>Not everyone needs the facilities to <b>block a whole country</b>, but if you would like to have this function, simply subscribe to a plan and stop traffics from a specific country easily. </li>
@@ -655,7 +655,7 @@ define('OEM_PASSCODE', 'Passcode');
 define('PASSCODE_CONTROL', 'Passcode Control');
 define('PASSCODE', 'Passcode');
 define('VERIFY', 'Verify');
-define('AUTHENTICATION', 'Cloud Backup Authentication');
+define('AUTHENTICATION', 'Cloud Backup Authentication <small>(Premium)</small>');
 define('AUTHENTICATION_TITLE', '<b>Third Party Authentication</b>');
 define('AUTHENTICATION_DESC', 'To enable cloud backup please authorise '.OSE_WORDPRESS_FIREWALL.' to your prefered cloud service.');
 
@@ -671,9 +671,9 @@ define('VSSCAN_AND_BACKUP', 'Virus Scan & Backups');
 define('CENTRORA_SETTINGS', ''.OSE_WORDPRESS_FIREWALL.' Settings');
 define('MY_ACCOUNT', 'My Account');
 define('LOGIN_OR_SUBSCIRPTION', 'Login/Subscription');
-define('ADVANCED_FIREWALL_SETTINGS', 'Advanced Firewall Configuration');
+define('ADVANCED_FIREWALL_SETTINGS', 'Advanced Firewall Configuration <small>(Premium)</small>');
 define('BASIC_FIREWALL_RULES', 'Basic Firewall Rules');
-define('ADVANCED_FIREWALL_RULES', 'Advanced Firewall Rules');
+define('ADVANCED_FIREWALL_RULES', 'Advanced Firewall Rules <small>(Premium)</small>');
 define('O_GOOGLEDRIVE_LOGOUT', 'Google Drive Logout');
 define('O_AUTHENTICATION_GOOGLEDRIVE', 'GoogleDrive Authentication');
 define('O_AUTHENTICATION_DROPBOX', 'Dropbox Authentication');
@@ -744,14 +744,14 @@ define ('PASSCODE_DESC', 'Please enter your passcode to access the administrator
 
 // Version 5.0.1
 define ('O_LOGIN_PAGE_SETTING', 'Login Url');
-define ('O_LOGIN_PAGE_HELP', 'Login Help');
-define ('CALL_TO_ACTION_P2', 'Website being hacked? Clean the malware with a free 6 month subscription PLUS 3 months warranty. <br/> <button class="btn btn-primary btn-sm">Leave the hard work to us now.</button>');
+define ('O_LOGIN_PAGE_HELP', 'This will change your default backend login url, and it will turn on your permanlink. You can harden the access to your backend by adding A Backend Access Secure Key. This key adds a layer of protection against access to the website backend. To deactivate, simply delete the content then save');
+define ('CALL_TO_ACTION_P2', 'Website being hacked? Clean the malware with a free 6 month subscription PLUS 3 months warranty. <br/> <button class="btn btn-primary btn-sm" onClick ="location.href=\''.OSE_OEM_URL_MALWARE_REMOVAL.'\'">Leave the hard work to us now.</button>');
 define ('FILE_UPLOAD_MANAGEMENT', 'Upload Control');
 define('FILEEXTENSION', 'Upload Control');
 define('FILEEXTENSION_TITLE', '<b>File</b> <span><b>Upload Control</b></span>');
 define('FILEEXTENSION_DESC', ''.OSE_WORDPRESS_FIREWALL.' Firewall protects against untrusted file uploads. From this panel you can: <b>1)</b> Set the allowed files <b>2)</b> Keep track of uploaded files <b>3)</b> Track malicious upload attempts');
 define('FILE_EXTENSION_LIST', 'File Extension List');
-define('FILE_EXTENSION_LOG', 'File Uploading Log');
+define('FILE_EXTENSION_LOG', 'File Uploading Log <small>(Premium)</small>');
 define('O_VSSCAN_STATUS', 'Virus Scan Status');
 define('O_IP_STATUS', 'File Validation Status');
 define('O_FILETYPE', 'File type');
@@ -761,14 +761,28 @@ define('O_EXTENSION_NAME', 'Extension');
 define('O_EXTENSION_TYPE', 'Type');
 define('O_EXTENSION_STATUS', 'Status');
 define('ADD_EXT', 'Add Extension');
-define ('O_BACKEND_SECURE_KEY', 'Backend Access Secure Key');
-define ('O_BACKEND_SECURE_KEY_HELP', 'Backend Access Secure Key');
+define ('O_BACKEND_SECURE_KEY', 'Backend Access Secure Key (beta)');
+define ('O_BACKEND_SECURE_KEY_HELP', 'You can harden the access to your backend by adding A Backend Access Secure Key. This key adds a layer of protection against access to the website backend. To deactivate, simply delete the content then save');
 define('UPLOAD_FILE_403WARN', 'The upload of this file type is not allowed on this website. <br /> <br />If you are the server administrator, please allow this file type under Firewall -> Upload Control panel.');
 define('FILE_UPLOAD_LOG', 'File Uploaded');
 define('BLOCKED_UPLOAD_LOG', 'File Blocked');
 define('INCONSISTENT_FILE', 'Inconsistent File! - IP Blocked');
 define('PASSCODE_ENTRY', 'Passcode Entry');
 define('PASSCODE_ENTRY_HELP', 'Require passcode to access other views exclude dashboard');
-define('UNBAN_PAGE_GOOGLE_AUTH_DESC', 'If you have Unban Google Authenticator enabled and setup, please input your code here')
+define('UNBAN_PAGE_GOOGLE_AUTH_DESC', 'If you have Unban Google Authenticator enabled and setup, please input your code here');
 
+// Version 5.0.5
+define('ADMIN_MANAGER', 'Administrator Manager');
+define('SECURITY_MANAGER', 'Security Manager (beta)');
+define('O_READMORE', 'Read More');
+define('O_OUR_TUTORIAL', 'our tutorial here');
+define('O_SUBSCRIBE_PLAN', 'to subscribe a plan');
+define('SECURITY_NAME', 'Name');
+define('SECURITY_USERNAME', 'Username');
+define('SECURITY_EMAIL', 'Email');
+define('SECURITY_STATUS', 'Status');
+define('SECURITY_CONTACT', 'Contact');
+define('ADD_SECURITY_MANAGER', 'Add Security Manager');
+define('SECURITY_PASSWORD', 'Password');
+define('SECURITY_PASSWORD2', 'Confirm Password');
 ?>

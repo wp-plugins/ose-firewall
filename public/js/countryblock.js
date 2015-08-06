@@ -35,7 +35,7 @@ jQuery(document).ready(function($){
         .nodes()
         .to$()
         .toggleClass('selected');
-    })
+    });
     var statusFilter = $('<label>Status: <select name="statusFilter" id="statusFilter"><option value="-1"></option><option value="1">Blacklisted</option><option value="2">Monitored</option><option value="3">Whitelisted</option></select></label>');
     statusFilter.appendTo($("#countryTable_filter")).on( 'change', function () {
         var val = $('#statusFilter');
@@ -45,7 +45,7 @@ jQuery(document).ready(function($){
     });
     plotDownloadPieChart($, sizes.pielinewidth, sizes.piesize, 1500, colours);
     $("#download-geoip-form").submit(function() {
-    	downLoadFile($, 8)
+    	downLoadFile($, 8);
         return false; // avoid to execute the actual submit of the form.
     });
 });
@@ -61,7 +61,7 @@ var plotDownloadPieChart = function ($, lineWidth, size, animateTime, colours) {
         size: size,
         animate: animateTime
     });
-}
+};
 function downLoadFile($, step) {
 	$('#message-box').waitMe({
 	        text : 'Please wait...',

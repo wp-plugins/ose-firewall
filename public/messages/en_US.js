@@ -22,7 +22,7 @@ var O_CONFIRM = "Confirm";
 var O_YES = "Yes";
 var O_NO = "No";
 var O_FAIL = "Fail";
-var O_NOTICE = "Notice"
+var O_NOTICE = "Notice";
 var O_SUBSCRIBE = "Subscribe";
 var O_FIXPERMISSIONS = "<i class='text-success glyphicon glyphicon-wrench'></i> Fix Permissions";
 var O_FIXPERMISSIONS_LONG = "One Click Permissions Fix";
@@ -80,7 +80,7 @@ var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Click OK to get the 'Access Token' for Dro
 var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Click OK to complete Dropbox authentication";
 
 //added from 4.9.0
-var O_AUTH_CLOUD = "Authenticate a cloud Service"
+var O_AUTH_CLOUD = "Authenticate a cloud Service";
 var O_EMAILTEMP_FAIL = "Email template cannot be restored as it is already default";
 var O_EMAILTEMP_SUCESSS = "Email template is restoring to default";
 var O_UPLOAD_GOOGLEDRIVE = "The backup file has been uploaded to your GoogleDrive";
@@ -105,3 +105,5 @@ var O_GDIALOG_TITLE = 'REMINDER: Link Google Autheniticator';
 //added from 5.0.1
 var O_ADD_EXT_SUCCESS = "Successfully added the extension";
 var O_ADD_EXT_FAIL = "There are errors when adding the extension";
+var O_ADD_SEC_SUCCESS = "Successfully added the Security Manager";
+var O_ADD_SEC_FAIL = "There are errors when adding the Security Manager";

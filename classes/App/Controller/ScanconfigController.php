@@ -33,12 +33,29 @@ class ScanconfigController extends ConfigurationController {
 		$this->model->loadRequest (); 
 		$type = $this->model->getVar('type', null);
 		if (empty($type)) {return;}
-		$data = array();
+        $pattern = "/^[a-zA-Z\d]+$/";
+        $secureKey = $this->model->getVar('secureKey', null);
+        $loginSlug = $this->model->getVar('loginSlug', null);
+        if(!empty($secureKey)){
+        if (!preg_match($pattern, $secureKey)) {
+            $result = array();
+            $result['status'] = 'Completed';
+            $result['message'] = 'Backend Access Secure Key can only contain numbers, letters';
+            $this->model->returnJSON($result);
+        }}
+        if(!empty($loginSlug)){
+            if (!preg_match($pattern, $loginSlug)) {
+                $result = array();
+                $result['status'] = 'Completed';
+                $result['message'] = 'Login Slug can only contain numbers and letters';
+                $this->model->returnJSON($result);
+            }}
+        $data = array();
 		switch ($type)
 		{
 			case 'scan':
-                //   $data['secureKey'] = $this->model->getVar('secureKey', null);
-                //   $data['loginSlug'] = $this->model->getVar('loginSlug', null);
+                $data['secureKey'] = $this->model->getVar('secureKey', null);
+                $data['loginSlug'] = $this->model->getVar('loginSlug', null);
                 $data['devMode'] = $this->model->getInt('devMode', 1);
                 $data['strongPassword'] = $this->model->getInt('strongPassword', 0);
 				$data['allowExts'] = $this->model->getVar('allowExts', null);
@@ -86,42 +103,44 @@ class ScanconfigController extends ConfigurationController {
             $single['passcode_status'] = $this->model->getInt('passcode_status', 0);
             $this->model->saveConfigurationNoExit('oem', $single);
         }
-        $this->model->saveConfiguration($type, $data);
-//
-//        $confArray = $this->model->getConfiguration('scan');
-//        if (OSE_CMS == 'wordpress') {
-//            if ($confArray['data']['loginSlug'] == $data['loginSlug']) {
-//                $this->model->saveConfiguration($type, $data);
-//            } else {
-//                $this->model->saveConfigurationNoExit($type, $data);
-//                $result = array();
-//                $result['status'] = 'Completed';
-//                if (!empty($data['loginSlug'])) {
-//                    $result['message'] = 'Your login page is now: <code>' . $this->model->getLoginUrl($data['loginSlug']) . '</code>, please bookmark now';
-//                } else {
-//                    $result['message'] = 'Your login page is now: <code>' . home_url() . '/wp-login.php?' . '</code>, please bookmark now';
-//
-//                }
-//                $this->model->sendemail('loginSlug', $result['message']);
-//                $this->model->returnJson($result);
-//            }
-//        } else {
-//            if ($confArray['data']['secureKey'] == $data['secureKey']) {
-//                $this->model->saveConfiguration($type, $data);
-//            } else {
-//                $this->model->saveConfigurationNoExit($type, $data);
-//                $result = array();
-//                $result['status'] = 'Completed';
-//                if (!empty($data['secureKey'])) {
-//                    $result['message'] = 'Your administrator page is now: <code>' . 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '?' . $data['secureKey'] . '</code>, please bookmark now';
-//                } else {
-//                    $result['message'] = 'Your administrator page is now: <code>' . 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '</code>, please bookmark now';
-//
-//                }
-//                $this->model->sendemail('secureKey', $result['message']);
-//                $this->model->returnJson($result);
-//            }
-//        }
+        if($type == 'scan') {
+            $confArray = $this->model->getConfiguration('scan');
+            if (OSE_CMS == 'wordpress') {
+                if ($confArray['data']['loginSlug'] == $data['loginSlug']) {
+                    $this->model->saveConfiguration($type, $data);
+                } else {
+                    $this->model->saveConfigurationNoExit($type, $data);
+                    $result = array();
+                    $result['status'] = 'Completed';
+                    if (!empty($data['loginSlug'])) {
+                        $result['message'] = 'Your login page is now: <code>' . $this->model->getLoginUrl($data['loginSlug']) . '</code>, please bookmark now';
+                    } else {
+                        $result['message'] = 'Your login page is now: <code>' . home_url() . '/wp-login.php?' . '</code>, please bookmark now';
+
+                    }
+                    $this->model->sendemail('loginSlug', $result['message']);
+                    $this->model->returnJson($result);
+                }
+            } else {
+                if ($confArray['data']['secureKey'] == $data['secureKey']) {
+                    $this->model->saveConfiguration($type, $data);
+                } else {
+                    $this->model->saveConfigurationNoExit($type, $data);
+                    $result = array();
+                    $result['status'] = 'Completed';
+                    if (!empty($data['secureKey'])) {
+                        $result['message'] = 'Your administrator page is now: <code>' . 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '?' . $data['secureKey'] . '</code>  please bookmark now.';
+                    } else {
+                        $result['message'] = 'Your administrator page is now: <code>' . 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '</code>  please bookmark now.';
+
+                    }
+                    $this->model->sendemail('secureKey', $result['message']);
+                    $this->model->returnJson($result);
+                }
+            }
+        } else {
+            $this->model->saveConfiguration($type, $data);
+        }
 	}
 
     public function action_checkPassword()

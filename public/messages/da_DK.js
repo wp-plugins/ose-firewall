@@ -22,7 +22,7 @@ var O_CONFIRM = "Bekr&aelig;ft";
 var O_YES = "Ja";
 var O_NO = "Nej";
 var O_FAIL = "Fejl";
-var O_NOTICE = "Bem&aelig;rk"
+var O_NOTICE = "Bem&aelig;rk";
 var O_SUBSCRIBE = "Tilmeld";
 var O_FIXPERMISSIONS = "Fix tilladelser";
 var O_FIXPERMISSIONS_LONG = "Et klik Tilladelse fix";
@@ -80,7 +80,7 @@ var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Klik p&aring; OK for at f&aring; den 'Acce
 var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Klik p&aring; OK for at afslutte Dropbox-godkendelse";
 
 //added from 4.9.0
-var O_AUTH_CLOUD = "Godkend en cloud service"
+var O_AUTH_CLOUD = "Godkend en cloud service";
 var O_EMAILTEMP_FAIL = "Email skabelon kan ikke gendannes, da det allerede er standard";
 var O_EMAILTEMP_SUCESSS = "E-mail skabelon genoprette til standard";
 var O_UPLOAD_GOOGLEDRIVE = "Den backup-fil er blevet uploadet til din GoogleDrive";

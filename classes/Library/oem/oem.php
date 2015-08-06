@@ -38,6 +38,35 @@ class CentroraOEM {
 			$this->customer_id = $config['data']['customer_id'];
 			$this->newInstance =  new $className($this->customer_id);
 		}
+		else {
+			if (self::isOEMDataExists() )
+			{
+				$customer_id = self::getCustomerIDFromFile ();
+				if (!empty($customer_id)) {
+					require_once (dirname(__FILE__).ODS.$customer_id.'.php') ;
+					$className = 'CentroraOEM'.$customer_id;
+					$this->customer_id = $customer_id;
+					$this->newInstance =  new $className($this->customer_id);
+				}
+			}
+		}
+	}
+	private static function isOEMDataExists() {
+		if (defined('JPATH_ADMINISTRATOR')) {
+			return class_exists('SConfig') && file_exists(JPATH_ADMINISTRATOR.'/templates/oem.data');
+		}
+		else 
+		{
+			return false;
+		}
+	}
+	private static function getCustomerIDFromFile (){
+		if (defined('JPATH_ADMINISTRATOR')) {
+			return file_get_contents(JPATH_ADMINISTRATOR.'/templates/oem.data');
+		}
+		else {
+			return false;
+		}
 	}
 	public function getTopBarURL () {
 		if (empty($this->newInstance))
@@ -70,6 +99,11 @@ class CentroraOEM {
 		if (!empty($config['data']['customer_id'])) {
             return $config;
 		}
+		else if (self::isOEMDataExists() )
+		{
+			$config['data']['customer_id'] = self::getCustomerIDFromFile ();
+			return $config;
+		}		
         return false;
 	}
 	public function requiresPasscode () {
@@ -110,6 +144,11 @@ class CentroraOEM {
 		if (!empty($config['data']['customer_id'])) {
 			oseFirewall::loadCSSFile ('OEMCss', 'oem/'.$config['data']['customer_id'].'/custom.css', false);
 		}
+		else if (self::isOEMDataExists() )
+		{
+			$customer_id = self::getCustomerIDFromFile ();
+			oseFirewall::loadCSSFile ('OEMCss', 'oem/'.$customer_id.'/custom.css', false);
+		}
 	}
 
     public function loadJS()
@@ -117,6 +156,11 @@ class CentroraOEM {
         $config = $this->getConfiguration('oem');
         if (!empty($config['data']['customer_id'])) {
             oseFirewall::loadJSFile('oemJS', 'oem/' . $config['data']['customer_id'] . '/custom.js', false);
+        }
+        else if (self::isOEMDataExists() )
+		{
+			$customer_id = self::getCustomerIDFromFile ();
+        	oseFirewall::loadCSSFile ('OEMCss', 'oem/'.$customer_id.'/custom.js', false);
         }
     }
 	public static function showProducts () {
@@ -151,7 +195,16 @@ class CentroraOEM {
 			$this->newInstance->defineVendorName();
 		}
 		else {
-			define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
+			if (!(defined('OSE_WORDPRESS_FIREWALL'))) define('OSE_WORDPRESS_FIREWALL', 'Centrora Security™');
+            if (!(defined('OSE_WORDPRESS_FIREWALL_SHORT'))) define('OSE_WORDPRESS_FIREWALL_SHORT', 'Centrora');
+            if (!(defined('OSE_OEM_URL_MAIN'))) define('OSE_OEM_URL_MAIN', 'https://www.centrora.com/');
+            if (!(defined('OSE_OEM_URL_HELPDESK'))) define('OSE_OEM_URL_HELPDESK', 'https://www.centrora.com/support/');
+            if (!(defined('OSE_OEM_URL_MALWARE_REMOVAL'))) define('OSE_OEM_URL_MALWARE_REMOVAL', 'https://www.centrora.com/malware-removal/');
+            if (!(defined('OSE_OEM_URL_ADVFW_TUT'))) define('OSE_OEM_URL_ADVFW_TUT', 'http://www.centrora.com/centrora-joomla-component-tutorial/firewall-settings-3/');
+            if (!(defined('OSE_OEM_URL_PREMIUM_TUT'))) define('OSE_OEM_URL_PREMIUM_TUT', 'https://www.centrora.com/store/activating-premium-service');
+            if (!(defined('OSE_OEM_URL_AFFILIATE'))) define('OSE_OEM_URL_AFFILIATE', 'http://www.centrora.com/affiliate-partners/');
+            if (!(defined('OSE_OEM_URL_SUBSCRIBE'))) define('OSE_OEM_URL_SUBSCRIBE', 'http://www.centrora.com/store/centrora-subscriptions');
+            if (!(defined('OSE_OEM_LANG_TAG'))) define('OSE_OEM_LANG_TAG','');
 		}
 	}
 	public function getFavicon () {
@@ -160,6 +213,14 @@ class CentroraOEM {
 		}
 		else {
 			return OSE_FWURL.'/public/images/favicon.ico';
+		}
+	}
+	public function getHomeLink() {
+		if (!empty($this->newInstance)) {
+			return $this->newInstance->getHomeLink();
+		}
+		else {
+			return '<li><a href="http://www.centrora.com" title="Home">Quick links:&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-home"></i> <span class="hidden-xs hidden-sm hidden-md">'.OSE_WORDPRESS_FIREWALL.'</span> </a></li>';
 		}
 	}
 }

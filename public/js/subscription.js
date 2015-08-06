@@ -102,7 +102,7 @@ function goSubscribe3 () {
 	               }
 	             });
 			return false;
-		})
+		});
 		return false;
 	 });  
 }

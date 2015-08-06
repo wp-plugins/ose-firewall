@@ -45,7 +45,7 @@ jQuery(document).ready(function ($) {
             piesize: 180,
             pielinewidth: 40
         }
-    })
+    });
     $("#changePasscode-form").submit(function () {
         var postdata = $("#changePasscode-form").serialize();
         postdata += '&centnounce=' + $('#centnounce').val();
@@ -65,7 +65,7 @@ jQuery(document).ready(function ($) {
         });
         return false; // avoid to execute the actual submit of the form.
     });
-})
+});
 function changePasscodeModal() {
     jQuery(document).ready(function ($) {
         $('#changePasscodeModal').modal();

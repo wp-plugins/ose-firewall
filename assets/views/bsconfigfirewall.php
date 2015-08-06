@@ -79,29 +79,29 @@
             </div>
         </div>
         <?php } ?>
-        <!--        --><?php //  if (OSE_CMS == 'wordpress') { ?>
-        <!--        <div class="form-group">-->
-        <!--            <label class="col-sm-4 control-label">--><?php //oLang::_('O_LOGIN_PAGE_SETTING'); ?>
-        <!--                <i tabindex="0" class="fa fa-question-circle color-gray" data-toggle="popover"-->
-        <!--                   data-content="--><?php //oLang::_('O_LOGIN_PAGE_HELP'); ?><!--"></i>-->
-        <!--            </label>-->
-        <!---->
-        <!--            <div class="col-sm-8">-->
-        <!--                --><?php //$this->model->login_page_input(); ?>
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--        --><?php //} else { ?>
-        <!--            <div class="form-group">-->
-        <!--                <label class="col-sm-4 control-label">--><?php //oLang::_('O_BACKEND_SECURE_KEY'); ?>
-        <!--                    <i tabindex="0" class="fa fa-question-circle color-gray" data-toggle="popover"-->
-        <!--                       data-content="--><?php //oLang::_('O_BACKEND_SECURE_KEY_HELP'); ?><!--"></i>-->
-        <!--                </label>-->
-        <!---->
-        <!--                <div class="col-sm-8">-->
-        <!--                    --><?php //$this->model->backend_secure_key(); ?>
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        --><?php //} ?>
+                <?php   if (OSE_CMS == 'wordpress') { ?>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><?php oLang::_('O_LOGIN_PAGE_SETTING'); ?>
+                        <i tabindex="0" class="fa fa-question-circle color-gray" data-toggle="popover"
+                           data-content="<?php oLang::_('O_LOGIN_PAGE_HELP'); ?>"></i>
+                    </label>
+
+                    <div class="col-sm-8">
+                        <?php $this->model->login_page_input(); ?>
+                    </div>
+                </div>
+                <?php } else { ?>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><?php oLang::_('O_BACKEND_SECURE_KEY'); ?>
+                            <i tabindex="0" class="fa fa-question-circle color-gray" data-toggle="popover"
+                               data-content="<?php oLang::_('O_BACKEND_SECURE_KEY_HELP'); ?>"></i>
+                        </label>
+
+                        <div class="col-sm-8">
+                            <?php $this->model->backend_secure_key(); ?>
+                        </div>
+                    </div>
+                <?php } ?>
 
         <div class="form-group">
             <label class="col-sm-4 control-label"><?php oLang::_('O_FRONTEND_BLOCKING_MODE');?>

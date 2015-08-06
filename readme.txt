@@ -4,8 +4,8 @@ Contributors: Open Source Excellence
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE4MSVEGBLLKE
 Tags: wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware, google drive, google drive backup, dropbox, dropbox backup, one drive, one drive backup, virus scanner, malware scanning, malware removal, backup, wordpress backup
 Requires at least: 3.7
-Tested up to: 4.2.2
-Stable tag: 5.0.4
+Tested up to: 4.2.4
+Stable tag: 5.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,15 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 5.0.5 =
+* Fixed: The syntax for OEM version does not work in PHP version 5.3 that caused some websites not working properly
+* Added: Administrator URL protection for both WordPress, Joomla and Suite versions
+* Added: Security Manager Account management section to add a security manager account to manaage Centrora Security
+* Enhancement: Enhanced CSS and UI support for OEM partners
+* Added: Security warning message in configuration page to enable the Centrora System plugin for Joomla and Suite users
+* Bug fixed: Suite version only – fixed errors showing in the administrator menus
+* Bug fixed: Suite version only – JFactory not found error when loading the language tags
 
 = 5.0.4 =
 * Added: Added file upload logging function for premium users

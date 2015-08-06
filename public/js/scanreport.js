@@ -259,7 +259,7 @@ function viewFiledetail(id, status) {
             success: function (data) {
                 hideLoading();
                 var newtext = data.data;
-                var newtext = "<pre>" + newtext + "</pre>"
+                var newtext = "<pre>" + newtext + "</pre>";
                 var re = /&lt;span class=&#039;bg-warning&#039;&gt;/img;
                 var subst = '<span class=\'bg-warning\'>';
                 var result = newtext.replace(re, subst);

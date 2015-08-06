@@ -30,7 +30,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 }
 class RulesetsController extends \App\Base {
 	public function action_GetRulesets() {
-		$results = $this ->model->getRulesets();
+        $results = $this->model->getRulesets();
 		$this->model->returnJSON($results);   
 	}
 	public function action_ChangeRuleStatus () {

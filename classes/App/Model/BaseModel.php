@@ -176,7 +176,7 @@ class BaseModel  {
 		if (OSE_CMS =='joomla')
 		{
 			$version = new JVersion();
-			if ($version->getShortVersion()<3 || $version->getShortVersion()>5)
+			if ($version->getShortVersion()<3 || $version->getShortVersion()>'5')
 			{	
 				oseFirewall::loadJSFile ('CentroraJquery', 'jquery-1.11.1.min.js', false);
 				oseFirewall::loadJSFile ('CentroraBootStrapJS', 'bootstrap.min.js', false);

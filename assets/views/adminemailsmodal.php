@@ -22,7 +22,9 @@
 			
 			</div>
 			<div class="modal-footer">
-				<label id="domain-warning-label" class="col-sm-6 control-label" style="display: none"><i id="domain-warning-message" class="fa fa-exclamation-triangle"></i></label>
+                <label id="domain-warning-label" class="col-sm-6 control-label" style="display: none"><i
+                        id="domain-warning-message" class="fa fa-exclamation-triangle"
+                        style="display: none"></i></label>
 				<div class="form-group">
 					<div id="buttonDiv">
 						<button type="submit" class="btn btn-sm"><i class="text-primary glyphicon glyphicon-save"></i> <?php oLang::_('SAVE'); ?></button>
@@ -79,10 +81,13 @@
 			
 			</div>
 			<div class="modal-footer">
-				<label id="admin-warning-label" class="col-sm-6 control-label" style="display: none"><i id="admin-warning-message" class="fa fa-exclamation-triangle"></i></label>
+                <label id="admin-warning-label" class="col-sm-6 control-label" style="display: none"><i
+                        id="admin-warning-message" class="fa fa-exclamation-triangle" style="display: none"></i></label>
 				<div id="buttonDiv">
 					<div class="form-group">
-						<button type='button' class='btn btn-sm' onclick='addDomain()'><i class="text-primary glyphicon glyphicon-globe"></i> <?php oLang::_('ADD_DOMAIN'); ?></button>
+                        <button type='button' class='btn btn-sm' onclick='addDomain()'><i
+                                class="text-primary glyphicon glyphicon-globe"></i> <?php oLang::_('ADD_DOMAIN'); ?>
+                        </button>
 						<button type="submit" class="btn btn-sm"><i class="text-primary glyphicon glyphicon-save"></i> <?php oLang::_('SAVE'); ?></button>
 					</div>
 				</div>

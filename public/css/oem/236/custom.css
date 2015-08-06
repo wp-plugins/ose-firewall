@@ -437,6 +437,9 @@ table.dataTable {
 #passcodeForm input {
 	width: 100%;
 }
+.popover-title {
+	background-color: #89bb30;
+}
 /*#wpcontent {*/
 /*background: url(imgs/background.jpg) repeat-y 0px 0px white !important;*/
 /*}*/

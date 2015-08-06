@@ -47,7 +47,7 @@ jQuery(document).ready(function ($) {
         });
         return false; // avoid to execute the actual submit of the form.
     });
-})
+});
 var initPlotChart = function ($, data, cpu, colours) {
 	if (cpu =='')
 	{
@@ -120,8 +120,8 @@ var initPlotChart = function ($, data, cpu, colours) {
                     points: {fillColor: colours.linechart1}
 			    }], options);
 	}
-	
-}
+
+};
 
 var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
 	$(".easy-pie-chart").easyPieChart({
@@ -204,7 +204,7 @@ var initPieChartPage = function($, lineWidth, size, animateTime, colours) {
         size: size,
         animate: animateTime
     });
-}
+};
 
 function scanAntivirus(step, action, cpuData, memData, colours) {
 	jQuery(document).ready(function($){
@@ -474,7 +474,7 @@ jQuery(document).ready(function($){
     $( '#FileTreeDisplay' ).on('click', 'LI A', function() { /* monitor the click event on links */
         var currentfolder;
         var current = $(this);
-        currentfolder = current.attr('id')
+        currentfolder = current.attr('id');
         $("#selected_file").val(currentfolder) ;
         return false;
     });

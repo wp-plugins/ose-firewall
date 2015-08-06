@@ -33,7 +33,7 @@ jQuery(document).ready(function($){
         .nodes()
         .to$()
         .toggleClass('selected');
-    })
+    });
     var statusFilter = $('<label>Status: <select name="statusFilter" id="statusFilter"><option value="-1"></option><option value="1">Active</option><option value="3">InActive</option></select></label>');
     statusFilter.appendTo($("#variablesTable_filter")).on( 'change', function () {
         var val = $('#statusFilter');

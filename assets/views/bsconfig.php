@@ -14,6 +14,32 @@ $oemConfArray = $this->model->getConfiguration('oem');
 	?>
 	<div class="content-inner">
 			<div class="row ">
+				<?php 
+	  			if (OSE_CMS =='joomla')
+	  			{
+	  				oseFirewall::callLibClass('audit', 'audit');
+	  				$audit = new oseFirewallAudit ();
+	  				$plugin = $audit->isPluginEnabled ('plugin', 'centrora', 'system');
+	  				if (empty($plugin) || $plugin->enabled == false)
+	  				{
+	  					$action = (!empty($plugin))?'<button class="btn btn-danger btn-xs fx-button" onClick ="location.href=\'index.php?option=com_plugins&task=plugin.edit&extension_id='.$plugin->extension_id.'\'" >Fix It</button>':'';
+	  				}
+	  				if (!empty($action))
+	  				{	
+	  		?>
+	  		<div class="col-md-12">
+		  		<div class="alert alert-danger fade in">
+	                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+	                 	<?php 
+	                 		echo '<span class="label label-warning">Warning</span> '.oLang::_get('SYSTEM_PLUGIN_DISABLED').$action;
+	                 	?>
+	            </div>
+            </div>
+            <?php 
+	  				}
+	  			}
+            ?>
+            
 				<div class="col-lg-12 sortable-layout">
                    <!-- col-lg-12 start here -->
                    <div class="panel panel-primary plain">

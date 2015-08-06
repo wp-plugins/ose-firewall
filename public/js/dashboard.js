@@ -1,7 +1,7 @@
 var controller ='dashboard';
 		    		
 jQuery(document).ready(function($){
-    $('#ipmange-speech-bubble').tipsy({gravity: 'sw', fallback: O_SPEECH_BUBBLE})
+    $('#ipmange-speech-bubble').tipsy({gravity: 'sw', fallback: O_SPEECH_BUBBLE});
     var colours = $('body').data('appStart').getColors();
 	var seriesData = {};
 	$('#world-map').vectorMap({

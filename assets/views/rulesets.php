@@ -29,7 +29,7 @@ $seoConfArray = $this->model->getConfiguration ( 'seo' );
 								<div class="tab-pane active" id="bsfirewall-rule">
 									<div class="panel-controls-buttons">
 	                                 	<?php echo oseFirewall::isSigUpdated(); ?>
-										<button class="btn btn-config btn-sm mr5 mb10" type="button" onClick="redirectTut('http://www.centrora.com/centrora-joomla-component-tutorial/firewall-settings-3/');" title ="<?php oLang::_('TUTORIAL'); ?>"><i class="glyphicon glyphicon-list-alt" ></i></button>
+										<button class="btn btn-config btn-sm mr5 mb10" type="button" onClick="redirectTut('<?php oLang::_('OSE_OEM_URL_ADVFW_TUT'); ?>');" title ="<?php oLang::_('TUTORIAL'); ?>"><i class="glyphicon glyphicon-list-alt" ></i></button>
 	            						<button data-target="#configModal" data-toggle="modal" class="btn btn-config btn-sm mr5 mb10" type="button" onClick="location.href='<?php echo oseFirewall::getConfigurationURL();;?>'" title ="<?php oLang::_('CONFIGURATION'); ?>"><i class="glyphicon glyphicon-cog" ></i></button>
 	            							
 									</div>

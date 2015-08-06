@@ -202,7 +202,8 @@
 	color: #000000;
 }
 
-.panel-heading, .panel-body {
+.panel-heading, .panel-body, .panel-success .m
+{
 	margin: 0px 15px !important;
 }
 
@@ -394,7 +395,7 @@ table.dataTable {
 	background-color: #0575b7 !important;
 	border-color: initial !important;
 	box-shadow: none !important;
-	border-radius: 7px !important;
+	border-radius: 0px !important;
 	background-image: none !important;
 }
 
@@ -471,6 +472,11 @@ table.dataTable {
 /*#wpcontent {*/
 /*background: url(imgs/background.jpg) repeat-y 0px 0px white !important;*/
 /*}*/
+
+.btn.btn-xs {
+    font-size: 11px !important;
+    padding: 0 5px !important;
+}
 .btn {
     font-size: 14px !important;
     line-height: 2 !important;
@@ -497,4 +503,22 @@ table.dataTable {
     text-align: center !important;;;
     text-shadow: none !important;;;
     vertical-align: middle !important;;;
+}
+.label, .badge { 
+	text-shadow: none !important;
+}
+.pull-center {
+	width: 900px; 
+	margin: 0px auto;
+}
+
+.step.active {
+    background: #0575b7 none repeat scroll 0 0;
+}    
+.panel.plain.panel-primary .panel-heading {
+    background-color: #0575b7; 
+    color: #fff;
+}
+.popover-title {
+	background-color: #0575b7;
 }

@@ -31,6 +31,10 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 class CentroraOEM218 {
 	public function __construct ($customer_id) {
 		$this->customer_id = $customer_id;
+		$this->setLanguage();
+	}
+	public function setLanguage () {
+		
 	}
 	public function showOEMName () {
         return '<div class="vendorname"> <!--WEBandWIRE <span>PagePROTECT</span>--> </div>';
@@ -45,12 +49,42 @@ class CentroraOEM218 {
 		return '<div class="logo"><img src="'.rtrim(OSE_FWPUBLICURL, '/').'/css/oem/'.$this->customer_id.'/imgs/logo-header.png" width="350px" alt ="ME Security"/></div>'.$this->showOEMName ();
 	}
 	public function defineVendorName () {
-		define('OSE_WORDPRESS_FIREWALL', 'PageProtect');
+		if (!(defined('OSE_WORDPRESS_FIREWALL'))) define('OSE_WORDPRESS_FIREWALL', 'WEBandWIRE PagePROTECT');
+        if (!(defined('OSE_WORDPRESS_FIREWALL_SHORT'))) define('OSE_WORDPRESS_FIREWALL_SHORT', 'WEBandWIRE');
+        if (!(defined('OSE_OEM_URL_MAIN'))) define('OSE_OEM_URL_MAIN', 'http://webandwire.de/');
+        if (!(defined('OSE_OEM_URL_HELPDESK'))) define('OSE_OEM_URL_HELPDESK', 'http://webandwire.de/');
+        if (!(defined('OSE_OEM_URL_MALWARE_REMOVAL'))) define('OSE_OEM_URL_MALWARE_REMOVAL', 'http://webandwire.de/');
+        if (!(defined('OSE_OEM_URL_ADVFW_TUT'))) define('OSE_OEM_URL_ADVFW_TUT', 'http://webandwire.de/');
+        if (!(defined('OSE_OEM_URL_PREMIUM_TUT'))) define('OSE_OEM_URL_PREMIUM_TUT', 'http://webandwire.de');
+        if (!(defined('OSE_OEM_URL_AFFILIATE'))) define('OSE_OEM_URL_AFFILIATE', 'http://webandwire.de');
+        if (!(defined('OSE_OEM_URL_SUBSCRIBE'))) define('OSE_OEM_URL_SUBSCRIBE', 'http://webandwire.de');
+        if (!(defined('OSE_OEM_LANG_TAG'))) define('OSE_OEM_LANG_TAG','de_DE');
 	}
 	public function requiresPasscode () {
-		return true;
+		$config = oseFirewall::getConfiguration('oem'); 
+		if (!empty($config) && !empty($config['data'])) {
+			return $config['data']['passcode_status'];
+		} 
+		else 
+		{
+			return true;
+		}
 	}
     public function showNews (){
         return false;
+    }
+    public function showFooter () {
+    	return '<div class="footer-bottom">
+		    <div class="container">
+		      <p class="pull-center">
+		        PagePROTECT is a portfolio of WEBandWIRE Internet- und EDV-Dienstleistungen. &copy;  <?php echo date("Y"); ?> <a
+					href="https://webandwire.de/" target="_blank">WEBandWIRE Internet- und EDV-Dienstleistungen</a>. All Rights Reserved. <br /> Credits
+				to: <a href="http://www.centrora.com" target="_blank">Centrora Security!&#0174;</a>
+		      </p>
+		    </div>
+		  </div>';
+    }
+    public function getHomeLink() {
+    	return '<li><a href="http://www.webandwire.de" title="Home">Quick links:&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-home"></i> <span class="hidden-xs hidden-sm hidden-md">'.OSE_WORDPRESS_FIREWALL_SHORT.'</span> </a></li>';
     }
 }

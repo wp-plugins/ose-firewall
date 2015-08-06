@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
             .nodes()
             .to$()
             .toggleClass('selected');
-    })
+    });
 
     var font = {
         onChange: function (cep, event, currentField, options) {
@@ -140,7 +140,7 @@ jQuery(document).ready(function ($) {
     $('#export-ip-button').click(function () {
         $('#exportModal').modal('hide');
     })
-})
+});
 function changeView() {
     if (document.getElementById("single_ip").checked == false) {
         document.getElementById("hidden_ip_end").style.display = "block";

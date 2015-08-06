@@ -784,7 +784,7 @@ class oseFirewallScanner {
 		}
         $emailTmp = oseFirewall::getConfiguration('emailTemp');
         if (empty($emailTmp['data']['emailTemplate'])) {
-            $email->body = file_get_contents(dirname(__FILE__) . ODS . 'email.tpl');
+            $email->body = file_get_contents(dirname(__DIR__) . ODS .'emails'. ODS. 'email.tpl');
         } else {
             $email->body = stripslashes($emailTmp['data']['emailTemplate']);
         }

@@ -1351,3 +1351,12 @@ label, input, button, select, textarea {
 .navbar-top {
 	margin-top: 9px;
 }
+.step.active {
+    background: #0047ab none repeat scroll 0 0;
+}    
+.panel.plain.panel-primary .panel-heading {
+    background-color: #0047ab; 
+}
+.white-bg .panel-title {
+    color: #3e4855;
+}

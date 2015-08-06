@@ -32,22 +32,22 @@
 			<p class="text-left">
                 <?php oLang::_('CALL_TO_ACTION_DESC2'); ?>
                 <button class="btn btn-primary btn-xs mr5"
-                        onClick="location.href='http://www.centrora.com/store/affiliate-program'">Read More
+                        onClick="location.href='<?php echo OSE_OEM_URL_AFFILIATE; ?>'"><?php oLang::_('O_READMORE'); ?>
                 </button>
 			</p>
 			<p class="text-left">
 
             <h2 class="text-danger"><?php oLang::_('CALL_TO_ACTION_TITLE3'); ?></h2>
             <?php oLang::_('CALL_TO_ACTION_DECS3'); ?><a
-                href="https://www.centrora.com/store/activating-premium-service" target="_blank">our tutorial here</a>
-            to subscribe a plan.
+                href="<?php echo OSE_OEM_URL_PREMIUM_TUT; ?>" target="_blank"><?php oLang::_('O_OUR_TUTORIAL'); ?></a>
+            <?php oLang::_('O_SUBSCRIBE_PLAN'); ?>.
 			</p>
 			<p>
 				<div class="row">
 					<div class="col-md-4"></div>
 					<div class="col-md-4">
 						<div class="container">
-							<button class="btn btn-danger mr5 mb10" type="button" onClick="location.href='http://www.centrora.com/store/centrora-subscriptions'">
+							<button class="btn btn-danger mr5 mb10" type="button" onClick="location.href='<?php oLang::_('OSE_OEM_URL_SUBSCRIBE');?>'">
                                 <i class="im-cart6 mr5"></i> <?php oLang::_('SUBSCRIBE_NOW'); ?>
 							</button>
 						</div>

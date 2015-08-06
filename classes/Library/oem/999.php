@@ -46,6 +46,11 @@ class CentroraOEM999 {
 	}
 	public function defineVendorName () {
 		define('OSE_WORDPRESS_FIREWALL', 'ME Security');
+        define('OSE_WORDPRESS_FIREWALL_SHORT', 'ME Security');
+        define('OSE_OEM_URL_MAIN', 'http://www.marketingentourage.com.au/');
+        define('OSE_OEM_URL_HELPDESK', 'http://www.marketingentourage.com.au/');
+        define('OSE_OEM_URL_MALWARE_REMOVAL', 'http://www.marketingentourage.com.au/');
+        define('OSE_OEM_URL_ADVFW_TUT', 'http://www.marketingentourage.com.au/');
 	}
 	public function requiresPasscode () {
 		return false;

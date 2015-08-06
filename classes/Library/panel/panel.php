@@ -305,17 +305,24 @@ class panel
     }
 
     public function getLatestVersion (){
-        $query2 = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'LatestVersion'";
-        $LatestVersion = $this->returnValueDBQuery($query2);
+        $query = "SELECT COUNT(`id`) AS value FROM `#__ose_secConfig` WHERE `key` = 'LatestVersion'";
+        $LatestVersionCount = $this->returnValueDBQuery($query);
 		$checkUpdateInterval = self::checkUpdateInterval();
-        if (empty ( $LatestVersion )) {
+        if (empty ( $LatestVersionCount )) {
             $LatestVersion = self::getUpdateCheck();
-            $query4 = " INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LatestVersion','" . $LatestVersion . "','UpdateCheck')";
-            $this->runDbQuery($query4);
-        } elseif ( $checkUpdateInterval ) {
-            $LatestVersion = self::getUpdateCheck();
-            $query6 = " UPDATE `#__ose_secConfig` SET `value`='" . $LatestVersion . "' WHERE `key` LIKE 'LatestVersion'";
-            $this->runDbQuery($query6);
+            $query = " INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LatestVersion','" . $LatestVersion . "','UpdateCheck')";
+            $this->runDbQuery($query);
+        } 
+        elseif ( $checkUpdateInterval ) {
+        	$LatestVersion = self::getUpdateCheck();
+        	if ($LatestVersionCount > 1 ) {
+        		$query = " DELETE FROM `#__ose_secConfig` WHERE `key` = 'LatestVersion'";
+        		$this->runDbQuery($query);
+        		$query = " INSERT INTO `#__ose_secConfig`(`key`,`value`,`type`) VALUES ('LatestVersion','" . $LatestVersion . "','UpdateCheck')";
+        		$this->runDbQuery($query);
+        	}
+            $query = " UPDATE `#__ose_secConfig` SET `value`='" . $LatestVersion . "' WHERE `key` LIKE 'LatestVersion'";
+            $this->runDbQuery($query);
         }
         return $LatestVersion;
     }

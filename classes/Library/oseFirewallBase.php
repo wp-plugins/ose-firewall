@@ -173,14 +173,24 @@ class oseFirewallBase extends oseFirewallRoot
 	public static function getLocaleString(){
         $lang = oseFirewall::getLocale();
         $lang = str_replace("-", "_",$lang);
-        if (strpos('da_DK', $lang) === false) {
+        if (strpos('da_DK', $lang) === false && strpos('de_DE', $lang) === false) {
             $lang = 'en_US';
         }
+        
         return $lang;
     }
     public static function loadLanguage()
 	{
-        $lang = self::getLocaleString();
+		if (defined('OSE_OEM_LANG_TAG') && OSE_OEM_LANG_TAG =='') {
+        	$lang = self::getLocaleString(); 
+		}
+		else if (defined('OSE_OEM_LANG_TAG')  && OSE_OEM_LANG_TAG !='')
+		{
+			$lang = OSE_OEM_LANG_TAG; 
+		}
+		else {
+			$lang = 'en-US';
+		}
         require_once(OSE_FRAMEWORKDIR.ODS.'oseframework'.ODS.'language'.ODS.'oseLanguage.php');
 		require_once(OSE_FWLANGUAGE.ODS.$lang.'.php');
 	}

@@ -1,107 +1,107 @@
-var O_DELETE_CONFIRM = "Delete Confirmation";
-var O_DELETE_CONFIRM_DESC = "Please confirm that you would like to delete the selected items";
-var O_APIKEY = "API key";
-var O_ENABLE_SFSPAM = "Enable Stop Forum Spam";
-var O_SFS_CONFIDENCE_LEVEL = "Stop Forum Spam Confidence Level (between 1 and 100)";
-var O_EDIT_EMAIL_TEMP = "Edit email template";
-var O_EDIT = "Edit";
-var O_EMAIL_TYPE = "Email Type";
-var O_EMAIL_SUBJECT = "Email Subject";
-var O_EMAIL_BODY = "Email Body";
-var O_USER = "User";
-var O_USER_ID = "User ID";
-var O_EMAIL = "Email";
-var O_ADD_A_LINK = "Add a linkage";
-var O_PLEASE_WAIT = "Please wait, this will take a few seconds ...";
+var O_DELETE_CONFIRM = "Löschbestätigung";
+var O_DELETE_CONFIRM_DESC = "Bitte bestätigen Sie, dass Sie die ausgewählten Elemente löschen möchten";
+var O_APIKEY = "API-Schlüssel";
+var O_ENABLE_SFSPAM = "Stop Forum Spam aktivieren";
+var O_SFS_CONFIDENCE_LEVEL = "Stop Forum Spam Konfidenzintervall (zwischen 1 und 100)";
+var O_EDIT_EMAIL_TEMP = "E-Mail-Vorlage bearbeiten";
+var O_EDIT = "Bearbeiten";
+var O_EMAIL_TYPE = "E-Mail-Typ";
+var O_EMAIL_SUBJECT = "E-Mail-Betreff";
+var O_EMAIL_BODY = "E-Mail-Text";
+var O_USER = "Benutzer";
+var O_USER_ID = "Benutzer ID";
+var O_EMAIL = "E-Mail";
+var O_ADD_A_LINK = "Verknüpfung hinzufügen";
+var O_PLEASE_WAIT = "Bitte warten, dieser Vorgang dauert ein paar Sekunden...";
 
 //added from 4.4.1
-var O_CALLTOSUBSCRIBE = "Activate Subscription";
-var O_CALLTOSUBSCRIBE_DESC = "Please activate your subscription to use this feature.";
-var O_CANCEL = "Cancel";
-var O_CONFIRM = "Confirm";
-var O_YES = "Yes";
-var O_NO = "No";
-var O_FAIL = "Fail";
-var O_NOTICE = "Notice";
-var O_SUBSCRIBE = "Subscribe";
-var O_FIXPERMISSIONS = "<i class='text-success glyphicon glyphicon-wrench'></i> Fix Permissions";
-var O_FIXPERMISSIONS_LONG = "One Click Permissions Fix";
-var O_FIXPERMISSIONS_DESC = "This will set the recommended default file/folder permissions to the config files";
-var O_CLOSE = "Close";
+var O_CALLTOSUBSCRIBE = "Abonnement aktivieren";
+var O_CALLTOSUBSCRIBE_DESC = "Bitte aktivieren Sie Ihr Abonnement um dieses Feature zu verwenden";
+var O_CANCEL = "Abbrechen";
+var O_CONFIRM = "Bestätigen";
+var O_YES = "Ja";
+var O_NO = "Nein";
+var O_FAIL = "Fehlgeschlagen";
+var O_NOTICE = "Mitteilung"
+var O_SUBSCRIBE = "Abonnieren";
+var O_FIXPERMISSIONS = "<i class='text-success glyphicon glyphicon-wrench'></i> Berechtigung festlegen";
+var O_FIXPERMISSIONS_LONG = "Berechtigungen mit einem Klick berichtigen";
+var O_FIXPERMISSIONS_DESC = "Dadurch wird die empfohlene Standardeinstellung Datei/Ordner-Berechtigung auf die Config-Dateien festgelegt";
+var O_CLOSE = "Schließen";
 
 //added from 4.7.0
 var O_OK = "OK";
-var O_SUCCESS = "Success";
-var O_EMAIL_TEMP_SAVE = "Email template was saved successfully";
-var O_SELECT_FIRST = "Please select one item first";
-var O_UPLOAD_DROPBOX = "The backup file has been uploaded to your dropbox";
-var O_UPLOAD_ERROR = "An error occured while uploading:";
-var O_CONFIRM_EMAIL_NOTICE = "A Confirmation Email will be sent to you";
-var O_SEND_EMAIL_ERROR = "An error occured while sending a confrimation email: <br />" + "Please make sure you have added a valid email address in the 'Administrator Panel'";
-var O_BACKUP_DELE_DESC = "The backup file has been deleted successfully";
-var O_DELE_FAIL_DESC = "The delete operation failed! Please try again";
-var O_BACKUP_SUCCESS = "Backup success";
-var O_BACKUP_FAIL = "Backup failed, please try again";
-var O_ERROR = "Error";
-var O_BACKUP_ERROR = "Operational error during backup<br /> Error Code: ";
-var O_LOADING_TEXT = "Please wait...";
-var O_DB_INSTALL_DESC = "Database installer preparing in progress";
-var O_CSV_FORMAT = '<br/>Please create the CSV file with the following headers: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Explanations:<br/><br/>' +
+var O_SUCCESS = "Erfolg";
+var O_EMAIL_TEMP_SAVE = "E-Mail-Vorlage wurde erfolgreich gespeichert";
+var O_SELECT_FIRST = "Bitte wählen Sie zuerst ein Element aus";
+var O_UPLOAD_DROPBOX = "Die Sicherungsdatei wurde auf Ihre Dropbox hochgeladen";
+var O_UPLOAD_ERROR = "Fehler beim Hochladen:";
+var O_CONFIRM_EMAIL_NOTICE = "Eine Bestätigungs-E-Mail wird an Sie gesendet";
+var O_SEND_EMAIL_ERROR = "Fehler beim Senden einer Bestätigungs-E-Mail: <br />" + "Bitte stellen Sie sicher, dass Sie eine gültige E-Mail-Adresse im 'Administratormanagement' hinzugefügt haben";
+var O_BACKUP_DELE_DESC = "Die Sicherungsdatei wurde gelöscht";
+var O_DELE_FAIL_DESC = "Der Löschvorgang ist fehlgeschlagen! Bitte versuchen Sie es erneut";
+var O_BACKUP_SUCCESS = "Sicherung erfolgreich";
+var O_BACKUP_FAIL = "Sicherung fehlgeschlagen, versuchen Sie es erneut";
+var O_ERROR = "Fehler";
+var O_BACKUP_ERROR = "Fehler während der Sicherung<br /> Fehlercode: ";
+var O_LOADING_TEXT = "Bitte warten...";
+var O_DB_INSTALL_DESC = "Datenbank wird vorbereitet";
+var O_CSV_FORMAT = '<br/>Bitte erstellen Sie die CSV-Datei mit den folgenden Überschriften: title, ip_start, ip_end, ip_type, ip_status. <br/><br/> Erläuterungen:<br/><br/>' +
     '<ul>' +
-    '<li>title: the title of the rule for this IP / IP Range<li>' +
-    '<li>ip_start: the start IP in the IP Range<li>' +
-    '<li>ip_end: the end IP in the IP Range<li>' +
-    '<li>ip_type: the type of this record, \'0\' refers to one single IP, whereas \'1\' refers to IP ranges<li>' +
-    '<li>ip_status: the status of the IP, \'1\' for blocked IP, \'3\' for whitelisted IP, \'2\' for monitored IP <li>' +
+    '<li>title: Der Titel der Regel für diese IP-Adresse / IP Bereich<li>' +
+    '<li>ip_start: Die Start-IP in dem IP-Adressbereich<li>' +
+    '<li>ip_end: Die End-IP im IP-Adressbereich<li>' +
+    '<li>ip_type: Der Typ dieses Datensatzes, \'0\' bezieht sich auf eine einzelne IP-Adresse, während \'1\' sich auf einen IP-Adressbereich bezieht<li>' +
+    '<li>ip_status: Der Status der IP-Adresse, \'1\' für blockierte IP-Adressen, \'3\' für freigegebene IP-Adressen, \'2\' für überwachte IP-Adressen <li>' +
     '</ul>';
-var O_FILE_PERMISSION_DESC = "Make sure to set appropriate file permissions 0000 would render your selected Files/Folders inaccessible";
-var O_QUARANTINE_FAIL_DESC = "Quarantine failed, please try again";
-var O_QUARANTINE_SUCCESS_DESC = "Quarantine success";
-var O_CLEAN_SUCCESS = "Clean success";
-var O_CLEAN_FAIL = "Clean failed, please try again";
-var O_RESTORE_SUCCESS = "Restore success";
-var O_RESTORE_FAIL = "Restore failed, please try again";
-var O_DELE_SUCCESS_DESC = "Delete success";
-var O_CLEAN = "Clean";
-var O_DELETE = "Delete";
-var O_QUARANTINE = "Quarantine";
-var O_RESTORE = "Restore";
-var O_ORDER_NOTICE = "Your order has been successfully placed.";
-var O_UPDATE = "Updating...";
-var O_ACTIVATE_PLUGIN = "Activating plugin...";
+var O_FILE_PERMISSION_DESC = "Achten Sie darauf, die korrekten Dateiberechtigungen festzulegen, 0000 würde Ihre ausgewählten Dateien/Ordner unzugänglich machen";
+var O_QUARANTINE_FAIL_DESC = "Quarantäne ist fehlgeschlagen, bitte versuchen Sie es erneut";
+var O_QUARANTINE_SUCCESS_DESC = "Quarantäne erfolgreich";
+var O_CLEAN_SUCCESS = "Bereinigung erfolgreich";
+var O_CLEAN_FAIL = "Bereinigung fehlgeschlagen, bitte versuchen Sie es erneut";
+var O_RESTORE_SUCCESS = "Wiederherstellen erfolgreich";
+var O_RESTORE_FAIL = "Wiederherstellung ist fehlgeschlagen, bitte versuchen Sie es erneut";
+var O_DELE_SUCCESS_DESC = "Löschen erfolgreich";
+var O_CLEAN = "Bereinigen";
+var O_DELETE = "Löschen";
+var O_QUARANTINE = "Quarantäne";
+var O_RESTORE = "Wiederherstellen";
+var O_ORDER_NOTICE = "Ihre Bestellung wurde erfolgreich platziert.";
+var O_UPDATE = "Aktualisierung...";
+var O_ACTIVATE_PLUGIN = "Plugin aktivieren...";
 
 //added from 4.8.0
-var O_UPLOAD_ONEDRIVE = "The backup has been uploaded to your OneDrive";
-var O_DROPBOX_LOGOUT = "Dropbox Logout";
-var O_SPEECH_BUBBLE = "Hacking traffic table will refresh every minute";
-var O_SESSION_EXPIRED = "Session expired, please login again";
-var O_DROPBOX_AUTHO = "Dropbox Authorisation";
-var O_DROPBOX_AUTHO_DESC2 = "Step 2 - Click OK to get the 'Access Token' for Dropbox authorisation";
-var O_DROPBOX_AUTHO_DESC3 = "Step 3 - Click OK to complete Dropbox authentication";
+var O_UPLOAD_ONEDRIVE = "Die Sicherung wurde auf Ihr OneDrive hochgeladen";
+var O_DROPBOX_LOGOUT = "Dropbox Abmeldung";
+var O_SPEECH_BUBBLE = "Hacker-Datenverkehr-Tabelle wird jede Minute aktualisiert";
+var O_SESSION_EXPIRED = "Sitzung abgelaufen, melden Sie sich bitte erneut an";
+var O_DROPBOX_AUTHO = "Dropbox Authentifizierung";
+var O_DROPBOX_AUTHO_DESC2 = "Schritt 2: Klicken Sie auf OK um das Access Token für die Dropbox-Authentifizierung zu erhalten";
+var O_DROPBOX_AUTHO_DESC3 = "Schritt 3: Klicken Sie auf OK um die Dropbox-Authentifizierung abzuschließen";
 
 //added from 4.9.0
-var O_AUTH_CLOUD = "Authenticate a cloud Service";
-var O_EMAILTEMP_FAIL = "Email template cannot be restored as it is already default";
-var O_EMAILTEMP_SUCESSS = "Email template is restoring to default";
-var O_UPLOAD_GOOGLEDRIVE = "The backup file has been uploaded to your GoogleDrive";
-var O_VSPATTERN_UPDATE = "Virus signature has been updated";
-var O_PREP_FILES = "Preparing File(s) for Upload...";
-var O_VSPATTERN_UPDATE_FAIL = "There are errors when updating virus signature ";
+var O_AUTH_CLOUD = "Authentifizierung eines Cloud-Dienstes"
+var O_EMAILTEMP_FAIL = "E-Mail-Vorlage kann nicht wiederhergestellt werden, da es sich bereits um die Standardvorlage handelt.";
+var O_EMAILTEMP_SUCESSS = "E-Mail-Vorlage wurde auf die Standardvorlage zurückgesetzt";
+var O_UPLOAD_GOOGLEDRIVE = "Die Sicherung wurde auf Ihr GoogleDrive hochgeladen";
+var O_VSPATTERN_UPDATE = "Virensignaturen wurden aktualisiert";
+var O_PREP_FILES = "Datei(en) werden für Upload vorbereitet...";
+var O_VSPATTERN_UPDATE_FAIL = "Fehler bei der Aktualisierung von Virensignaturen ";
 
 //added from 5.0.0
-var O_PASSWORD_STRENGTH_STRONG = 'Your current password strength is <b>strong</b>';
-var O_PASSWORD_STRENGTH_WEAK = 'Your current password strength is <b>weak</b>, we suggest you change to recommend settings and save';
-var O_PASSWORD_SUCCESS = "Password setting saved successfully";
-var O_PASSWORD_FAIL = "There are errors when saving password setting";
-var O_UPDATE_NOW = "Update Now";
-var O_UPDATE_CONF = "Update Confirmation";
-var O_UPDATE_CONF_DESC = "Are you sure you want to update to: ";
-var O_ADD_ADMIN_SUCCESS = "Successfully added the administrator account";
-var O_ADD_ADMIN_FAIL = "There are errors when adding the administrator account";
-var O_PLEASE_WAIT = 'Please wait...';
-var O_GDIALOG_MSG = 'Be sure to link your account with Google Authenticator under WordPress users ';
-var O_GDIALOG_TITLE = 'REMINDER: Link Google Autheniticator';
+var O_PASSWORD_STRENGTH_STRONG = 'Ihre aktuelle Kennwortstärke ist <b>HOCH</b>';
+var O_PASSWORD_STRENGTH_WEAK = 'Ihre aktuelle Kennwortstärke ist <b>SCHWACH</b>, wir empfehlen die Änderung auf die empfohlenen Einstellungen';
+var O_PASSWORD_SUCCESS = "Kennworteinstellungen erfolgreich gespeichert";
+var O_PASSWORD_FAIL = "Fehler beim Speichern der Kennworteinstellungen";
+var O_UPDATE_NOW = "Jetzt aktualisieren";
+var O_UPDATE_CONF = "Update-Bestätigung";
+var O_UPDATE_CONF_DESC = "Sind Sie sicher, dass Sie aktualisieren möchten? Aktualisierung zu: ";
+var O_ADD_ADMIN_SUCCESS = "Das Administratorkonto wurde erfolgreich hinzugefügt";
+var O_ADD_ADMIN_FAIL = "Fehler beim hinzufügen des Administratorkontos";
+var O_PLEASE_WAIT = 'Bitte warten...';
+var O_GDIALOG_MSG = 'Achten Sie darauf, Ihr Konto mit Google Authenticator unter WordPress Benutzer zu verknüpfen ';
+var O_GDIALOG_TITLE = 'Zur Erinnerung: Google Autheniticator verknüpfen';
 
 //added from 5.0.1
-var O_ADD_EXT_SUCCESS = "Successfully added the extension";
-var O_ADD_EXT_FAIL = "There are errors when adding the extension";
+var O_ADD_EXT_SUCCESS = "Die Erweiterung wurde erfolgreich hinzugefügt";
+var O_ADD_EXT_FAIL = "Fehler beim Hinzufügen der Erweiterung";

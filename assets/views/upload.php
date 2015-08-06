@@ -166,7 +166,7 @@ $this->model->migrate();
                                 </div>
                                 <div class="modal-footer">
                                     <label id="ext-warning-label" class="col-sm-6 control-label" style="display: none"><i
-                                            id="ext-warning-message" class="fa fa-exclamation-triangle"></i></label>
+                                            id="ext-warning-message" class="fa fa-exclamation-triangle" style="display: none"></i></label>
 
                                     <div id="buttonDiv">
                                         <div class="form-group">

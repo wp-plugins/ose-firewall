@@ -146,6 +146,11 @@ class AuditModel extends BaseModel {
 				$step++;
 				$this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);
 				break;	
+			case 18 :
+				$result = $this->InsertOEMID();
+				$step++;
+				$this->throwAjaxRecursive($result, 'Success', $retMessage, true, $step);
+				break;
 			default :
 				$this->throwAjaxReturn(true, 'Completed', $retMessage, false);
 				break;
@@ -266,6 +271,12 @@ class AuditModel extends BaseModel {
 		$installer->closeDBO();
 		return $result;
 	}
+	private function InsertOEMID () {
+		$installer = new oseFirewallInstaller();
+		$result = $installer->InsertOEMID();
+		$installer->closeDBO();
+		return $result;
+	} 
 	private function installGeoIPDB($step) {
 		$installer = new oseFirewallInstaller();
 		$dbFile = OSE_FWDATA . ODS . 'osegeoip{num}.sql';

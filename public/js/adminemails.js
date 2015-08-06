@@ -117,6 +117,7 @@ function addAdmin() {
         $('#addAdminModal').modal();
     })
 }
+
 function addDomain() {
     jQuery(document).ready(function ($) {
         $('#addAdminModal').modal('hide');
@@ -169,12 +170,12 @@ function changeStatus(status, id) {
                     document.getElementById(id).onclick = function () {
                         changeStatus(1, id);
                     };
-                    document.getElementById(id).innerHTML = '<div class="fa fa-times">';
+                    document.getElementById(id).innerHTML = '<div class="fa fa-times color-red">';
                 } else {
                     document.getElementById(id).onclick = function () {
                         changeStatus(0, id);
                     };
-                    document.getElementById(id).innerHTML = '<div class="fa fa-check">';
+                    document.getElementById(id).innerHTML = '<div class="fa fa-check color-green">';
                 }
             }
         })
@@ -237,3 +238,72 @@ function deleteAdmin() {
             }
         })
 }
+
+//******************** Security Manager datatable **********************
+
+
+jQuery(document).ready(function ($) {
+    $('#secManagerTable').dataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: url,
+            type: "POST",
+            data: function (d) {
+                d.option = option;
+                d.controller = controller;
+                d.action = 'getSecManagers';
+                d.task = 'getSecManagers';
+                d.centnounce = $('#centnounce').val();
+            }
+        },
+        columns: [
+            {"data": "id"},
+            {"data": "username"},
+            {"data": "email"},
+            {"data": "block"},
+            {"data": "contact"},
+        ]
+    });
+    $('#secManagerTable tbody').on('click', 'tr', function () {
+        $(this).toggleClass('selected');
+    });
+});
+function addSecManager() {
+    jQuery(document).ready(function ($) {
+        $('#addSecManagerModal').modal();
+    })
+}
+function changeBlock(status, id) {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'changeBlock',
+                task: 'changeBlock',
+                status: status,
+                id: id,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+
+                if (status == 0) {
+                    document.getElementById(id).onclick = function () {
+                        changeBlock(1, id);
+                    };
+                    document.getElementById(id).innerHTML = '<div class="fa fa-times color-red">';
+                } else {
+                    document.getElementById(id).onclick = function () {
+                        changeBlock(0, id);
+                    };
+                    document.getElementById(id).innerHTML = '<div class="fa fa-check color-green">';
+                }
+            }
+        })
+    });
+}
+
