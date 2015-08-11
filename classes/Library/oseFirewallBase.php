@@ -189,7 +189,7 @@ class oseFirewallBase extends oseFirewallRoot
 			$lang = OSE_OEM_LANG_TAG; 
 		}
 		else {
-			$lang = 'en-US';
+			$lang = 'en_US';
 		}
         require_once(OSE_FRAMEWORKDIR.ODS.'oseframework'.ODS.'language'.ODS.'oseLanguage.php');
 		require_once(OSE_FWLANGUAGE.ODS.$lang.'.php');
