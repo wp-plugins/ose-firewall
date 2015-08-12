@@ -772,6 +772,16 @@ class oseFirewall extends oseFirewallBase {
 
     }
 
+
+    public static function checkHtaccess () {
+    	if (file_exists(dirname(dirname(OSEAPPDIR)).'/CentroraBackup') && !file_exists(dirname(dirname(OSEAPPDIR)).'/CentroraBackup/.htaccess'))
+    	{
+    		if (function_exists('copy')) {
+    			$result = @copy(OSEAPPDIR.'protected/.htaccess', dirname(dirname(OSEAPPDIR)).'/CentroraBackup/.htaccess');
+    		}
+    	}
+    }
+    
     public function new_login_url($scheme = null)
     {
 
