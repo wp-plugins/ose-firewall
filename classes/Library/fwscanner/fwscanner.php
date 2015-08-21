@@ -30,7 +30,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 class oseFirewallScanner {
 	private $ip = null;
 	private $ip32 = null;
-	private $ipStatus = null;
+    public $ipStatus = null;
 	private $url = null;
     private $domain = null;
 	private $referer = null;
@@ -591,14 +591,11 @@ class oseFirewallScanner {
            $("#googleAuth-form").submit(function() {
              var data = $("#googleAuth-form").serialize();
              $.ajax({
-            // url: "index.php?",
+             url: "index.php?",
             type: "POST",
             data: data,
             success: function(data)
             {
-
-               console.log(data);
-
                 if (data == 1)
                 {
                    location.reload(true);
@@ -639,7 +636,7 @@ class oseFirewallScanner {
                  <p style="color:#fff;">Your IP address is ' . $this->ip . '. If you believe this is an error, please contact the <a href="mailto:' . $adminEmail . '?Subject=Inquiry:%20Banned%20for%20suspicious%20hacking%20behaviour - IP: ' . $this->ip . ' - Violation"> Webmaster </a>
         <form id = "googleAuth-form" class="form-horizontal group-border stripped" role="form" action="index.php?">
             <lable style="color:#fff" for="googleAuthCode" class="form-label form-label-left form-label-auto">'.oLang:: _get("UNBAN_PAGE_GOOGLE_AUTH_DESC").'</lable>
-            <input  type="text" id="googleAuthCode" class=" form-textbox"  name="googleAuthCode">
+            <input  type="text" id="googleAuthCode" class="form-textbox"  name="googleAuthCode">
             <button type="submit" class="btn btn-default" id="save-button">submit</button>
             </div>
             </form>
@@ -675,14 +672,11 @@ class oseFirewallScanner {
            $("#googleAuth-form").submit(function() {
              var data = $("#googleAuth-form").serialize();
              $.ajax({
-           //  url: "index.php?",
+             url: "index.php?",
             type: "POST",
             data: data,
             success: function(data)
             {
-
-               console.log(data);
-
                 if (data == 1)
                 {
                    location.reload(true);
@@ -1000,23 +994,26 @@ class oseFirewallScanner {
 						$mimeType = $this->getMimeType($file);
 						$ext = explode('/', $file['type']);
                         $filename = is_array($file['name'])? $file['name'][$i] : $file['name']; //convert array files to get single file names
-						$allowExts = array_map('trim', $this->allowExts);
+                        $info = new SplFileInfo($filename);
+                        $extname = $info->getExtension();
+                        $allowExts = array_map('trim', $this->allowExts);
 						if ($ext[1] == 'vnd.openxmlformats-officedocument.wordprocessingml.document' && ($mimeType[1] != $ext[1])) {
 							$ext[1] = 'msword';
 						}
 						if ($ext[1] != $mimeType[1]) {
-							$return = $this->composeResult(100, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE', 'bs') ;
+                            $this->show403Msg(oLang:: _get('UPLOAD_FILE_403WARN2') . '<br /> File Type: <b>' . $mimeType[1] . '</b>');
+                            $score = $this->getScore();
+                            $return = $this->composeResult($score + 10, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE', 'bs');
                             //prepare File Upload Log
                             $return = array_merge($return, $this->composeUploadLogResult(2, $filename, $mimeType[1] ));
 
 							$this->unlinkUPloadFiles();
 							return $return;
-						}
-						elseif (in_array($mimeType[1], $allowExts) == false) {
-							$this -> show403Msg(oLang:: _get('UPLOAD_FILE_403WARN') . '<br /> File Type: <b>'. $mimeType[1] . '</b>');
+						} elseif (in_array($extname, $allowExts) == false) {
+                            $this->show403Msg(oLang:: _get('UPLOAD_FILE_403WARN') . '<br /> File Type: <b>' . $extname . '</b>');
                             $return = $this->composeResult(0, $file['name'], 11, oseJSON::encode(array(13)), 'server.FILE_TYPE', 'bs') ;
                             //prepare File Upload Log
-                            $return = array_merge($return, $this->composeUploadLogResult(1, $filename, $mimeType[1] ));
+                            $return = array_merge($return, $this->composeUploadLogResult(1, $filename, $extname));
 
                             $this->unlinkUPloadFiles();
 							return $return;

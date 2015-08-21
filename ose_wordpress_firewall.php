@@ -4,7 +4,7 @@ Plugin Name: Centrora Security
 Plugin URI: http://wordpress.org/extend/plugins/ose-firewall/
 Description: Centrora Security (previously OSE Firewall) - A WordPress Security Firewall plugin created by Centrora. Protect your WordPress site by identify any malicious codes, spam, virus, SQL injection, and security vulnerabilities.
 Author: Centrora (Previously ProWeb)
-Version: 5.0.7
+Version: 5.0.8
 Author URI: http://www.centrora.com/
 //@todo change Icon URI
 Icon URI: https://secure.gravatar.com/avatar/26d6eb39bd2613b318ad7a64f3641480?d=mm&s=300&r=G
@@ -166,6 +166,13 @@ else if ($systemReady[0] == true)
 		}
 	}
 }
+$bfconfig = oseFirewall::getConfiguration('bf');
+$status = $bfconfig['data']['bf_status'];
+if(!empty($status)) {
+    oseFirewall::callLibClass('fwscanner', 'fwscanner');
+    $fwscanner = new oseFirewallScanner();
+    add_filter('authenticate', array($fwscanner, 'antiBruteForce'), 40, 3);
+}
 if (!class_exists('GoogleAuthenticator', false))
 {
 	$oseFirewall -> initGAuthenticator ();
@@ -174,8 +181,32 @@ function destroy_session()
 {
     session_destroy();
 }
-
+function checkIPstatus()
+{
+    /*
+        * Check IP status to protect against brute force attack
+        */
+    $bfconfig = oseFirewall::getConfiguration('bf');
+    $status = $bfconfig['data']['bf_status'];
+    if(!empty($status)) {
+        oseFirewall::callLibClass('fwscanner', 'fwscanner');
+        $fwscanner = new oseFirewallScanner();
+        if ($fwscanner->ipStatus == 4) {
+            $fwscanner->showBanPage();
+        }
+    }
+}
 add_action('wp_logout', 'destroy_session');
+$ready = oseFirewall::isDBReady();
+if($ready == true){
+    add_action('wp_loaded', 'checkIPstatus');
+}
+
+//add_action( 'admin_notices', 'display_notice');
+//
+//function display_notice(){
+//    include(  OSE_FWASSETS.'/views/template/notice/template-notice-main.php' );
+//}
 
 /*
 //\PHPBenchmark\Monitor::instance()->snapshot('After loading Centrora');

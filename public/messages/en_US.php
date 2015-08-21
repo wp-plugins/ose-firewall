@@ -176,7 +176,7 @@ define('SEO_CONFIGURATION_DESC','Search Engine settings which protect your ranki
 define('CONFIG_SAVE_SUCCESS','The configuration was saved successfully.');
 define('CONFIG_SAVE_FAILED','The configuration was saved unsuccessfully.');
 define('SCAN_CONFIGURATION','Scanning Configuration');
-define('SCAN_CONFIGURATION_TITLE', 'Firewall Scanning Configuration');
+define('SCAN_CONFIGURATION_TITLE', 'Firewall Scanning');
 define('SCAN_CONFIGURATION_DESC','Connect to '.OSE_WORDPRESS_FIREWALL.' with an API key and configure Firewall Scanning Settings');
 define('ANTISPAM_CONFIGURATION','Anti-Spam Configuration');
 define('ANTISPAM_CONFIGURATION_TITLE','<b>Anti-Spam</b> <span><b>Configuration</b></span>');
@@ -671,7 +671,7 @@ define('VSSCAN_AND_BACKUP', 'Virus Scan & Backups');
 define('CENTRORA_SETTINGS', ''.OSE_WORDPRESS_FIREWALL.' Settings');
 define('MY_ACCOUNT', 'My Account');
 define('LOGIN_OR_SUBSCIRPTION', 'Login/Subscription');
-define('ADVANCED_FIREWALL_SETTINGS', 'Advanced Firewall Configuration <small>(Premium)</small>');
+define('ADVANCED_FIREWALL_SETTINGS', 'Advanced Firewall<small>(Premium)</small>');
 define('BASIC_FIREWALL_RULES', 'Basic Firewall Rules');
 define('ADVANCED_FIREWALL_RULES', 'Advanced Firewall Rules <small>(Premium)</small>');
 define('O_GOOGLEDRIVE_LOGOUT', 'Google Drive Logout');
@@ -716,7 +716,7 @@ define('HOURS_HELP', 'Select the hour in the day you want the schedule to run. T
 define('O_GOOGLE_2_SECRET_HELP', 'Use this code with the Google Authenticator browser plugin');
 define('O_GOOGLE_2_QRCODE_HELP', 'Scan this QRCode with a smartphone which has the Google Authenticator App installed');
 define('SEO_CONFIGURATION_HELP', 'The SEO Configuration here gives you control over your ban page SEO. This ensures your main site is not affected in search engine rankings.');
-define('SEO_CONFIGURATION','Ban Page SEO Configuration');
+define('SEO_CONFIGURATION', 'Ban Page SEO');
 define('O_STRONG_PASSWORD_SETTING', 'Strong Password Settings');
 define('MPL', 'Minimum Password Length');
 define('PMI', 'Password Minimum Integers');
@@ -785,4 +785,34 @@ define('SECURITY_CONTACT', 'Contact');
 define('ADD_SECURITY_MANAGER', 'Add Security Manager');
 define('SECURITY_PASSWORD', 'Password');
 define('SECURITY_PASSWORD2', 'Confirm Password');
+
+// Version 5.1.0
+define('CORE_SCAN', 'Scan core directories(beta)');
+define('CORE_SCAN_TITLE', '<b>Core directory</b> <span><b>Scanner(beta)</b></span>');
+define('CORE_SCAN_DESC', 'Core directory Scanner is a neat and quick detector, it scans the core directory of your website and detects suspicious files.');
+define('Vl_SCAN', 'Scan Vulnerabilities');
+define('Vl_SCAN_TITLE', 'Vulnerabilities Scanner');
+define('Vl_SCAN_DESC', 'Vulnerabilities Scanner is a powerful vulnerability detector. It scans through your website and detects any real vulnerabilities. Credits to WPScan Vulnerability who provided their Database API as the base for this scan');
+define('START_NEW_VLSCAN', 'Start Scanning');
+
+define('JOOMLA_TWOFACTORAUTH', 'Two Factor Authentication - Google Authenticator');
+define('JOOMLA_TWOFACTORAUTH_HELP', 'Allows users on your site to use two factor authentication using Google Authenticator or other compatible time-based One Time Password generators. To use two factor authentication please edit the user profile and enable two factor authentication.');
+define('NO_HASHES_FOR_ALPHA', "Current Joomla! version is a non-stable version, we recommand you upgrade to the latest stable version. Hashes for non-stable version is not available. <strong>Centrora will update hashes once a new joomla stable version releases.</strong>");
+define('BRUTEFORCE_SETTINGS', 'Brute Force Protection');
+define('BRUTEFORCE_MAX_ATT', 'Maximum login attempts');
+define('BRUTEFORCE_MAX_ATT_HELP', 'This will blacklist the IP address if the user exceeds the maximum login attempts.');
+define('BRUTEFORCE_TIME', 'Time Period of counting login attempts');
+define('BRUTEFORCE_TIME_HELP', 'This period is the time frame of counting login attempts');
+define('BRUTE_FORCE_STATUS', 'Brute Force Protection Status');
+define('BRUTE_FORCE_STATUS_HELP', 'Brute Force Protection will set a login attempts limit and time frame to ensure that hackers who try to brute force into your sites will be blocked');
+
+define('VL_CHECK_VUL','Scanning for vulnerabilities...');
+define('VL_GET_LIST','Generating scan list...');
+define('VL_COMPLETE','Scanning Complete with the result:');
+
+define('ADMIN_SETTINGS', 'Administrator Settings');
+define('CENTRORA_GOOGLE_AUTH', 'Centrora Google Authenticator');
+define('CENTRORA_GOOGLE_AUTH_HELP', 'Enable centrora google authenticator and scan the QR code, you can pass through the ban page or 403 forbidden page by inputting the correct google authentication code');
+define('UPLOAD_FILE_403WARN2', 'You are uploading a suspicous file(file content <strong>does not</strong> match file extension). <br /> <br />If you are the server administrator, please notice that this is a suspicious file.');
+
 ?>

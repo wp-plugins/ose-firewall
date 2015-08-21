@@ -1360,3 +1360,6 @@ label, input, button, select, textarea {
 .white-bg .panel-title {
     color: #3e4855;
 }
+.form-control {
+    margin-left: 0px !important;
+}

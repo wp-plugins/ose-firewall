@@ -37,11 +37,13 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 			// Reset scanning result;
 			$scanResult = null;
 		}
-		else
-		{ 
+		else {
 			$scanResult = $this->ScanLayer1();
 		}
 		if (! empty ( $scanResult )) {
+            if ($scanResult['impact'] <= 10) {
+                $this->set('blockIP', 2);
+            }
 			$status = $this->getBlockIP();
 			$this->addACLRule ( $status, $scanResult ['impact'] );
 			if (!is_array($scanResult ['detcontent_content']))
