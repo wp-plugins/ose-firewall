@@ -41,7 +41,7 @@ class oseFirewallScannerBasic extends oseFirewallScanner {
 			$scanResult = $this->ScanLayer1();
 		}
 		if (! empty ( $scanResult )) {
-            if ($scanResult['impact'] <= 10) {
+            if ($scanResult['impact'] <= 35) {
                 $this->set('blockIP', 2);
             }
 			$status = $this->getBlockIP();
