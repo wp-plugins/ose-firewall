@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware, google drive, google drive backup, dropbox, dropbox backup, one drive, one drive backup, virus scanner, malware scanning, malware removal, backup, wordpress backup
 Requires at least: 3.7
 Tested up to: 4.2.3
-Stable tag: 5.0.8
+Stable tag: 5.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,12 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 5.0.10 = 
+* Fixed: Fixed firewall rules cannot be updated when server is using CloudFlare service  
+
+= 5.0.9 = 
+* Enhancement: Improve file upload function to have better user experience
 
 = 5.0.8 = 
 * Enhancement: Improve file upload function to have better user experience

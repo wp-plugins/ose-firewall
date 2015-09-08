@@ -330,7 +330,7 @@ define('SAFE_BROWSING_CHECKUP_OUTDATED','Your Safe Browsing Checkup is outdated,
 define('API_CONFIGURATION','API Configuration');
 define('API_INTRO','Connect to '.OSE_WORDPRESS_FIREWALL.' with API key');
 define('SYSTEM_SECURITY_AUDIT','System Security Audit');
-define('CHANGE_PHPINI', 'If this hasb been turned off in the configuration section, please change it in the php.ini');
+define('CHANGE_PHPINI', 'If this has been turned off in the configuration section, please change it in the php.ini');
 define('REG_GLOBAL_OFF','The PHP Setting register_global is <b>OFF</b>.');
 define('REG_GLOBAL_ON','The PHP Setting register_global is <b>ON</b>, please turn if off. '.CHANGE_PHPINI); 
 define('SAFEMODE_OFF','The PHP Setting safe_mode is <b>OFF</b>');
@@ -792,7 +792,8 @@ define('CORE_SCAN_TITLE', '<b>Core directory</b> <span><b>Scanner(beta)</b></spa
 define('CORE_SCAN_DESC', 'Core directory Scanner is a neat and quick detector, it scans the core directory of your website and detects suspicious files.');
 define('Vl_SCAN', 'Scan Vulnerabilities');
 define('Vl_SCAN_TITLE', 'Vulnerabilities Scanner');
-define('Vl_SCAN_DESC', 'Vulnerabilities Scanner is a powerful vulnerability detector. It scans through your website and detects any real vulnerabilities. Credits to WPScan Vulnerability who provided their Database API as the base for this scan');
+define('Vl_SCAN_DESC', 'Vulnerabilities Scanner is a powerful vulnerability detector. It scans through your website and detects any real vulnerabilities.');
+define('Vl_SCAN_CRED_WPSCAN', 'Credits to WPScan Vulnerability');
 define('START_NEW_VLSCAN', 'Start Scanning');
 
 define('JOOMLA_TWOFACTORAUTH', 'Two Factor Authentication - Google Authenticator');
@@ -814,5 +815,5 @@ define('ADMIN_SETTINGS', 'Administrator Settings');
 define('CENTRORA_GOOGLE_AUTH', 'Centrora Google Authenticator');
 define('CENTRORA_GOOGLE_AUTH_HELP', 'Enable centrora google authenticator and scan the QR code, you can pass through the ban page or 403 forbidden page by inputting the correct google authentication code');
 define('UPLOAD_FILE_403WARN2', 'You are uploading a suspicous file(file content <strong>does not</strong> match file extension). <br /> <br />If you are the server administrator, please notice that this is a suspicious file.');
-
+define('CRON_SETSCANPATH', 'Set Scan Path');
 ?>

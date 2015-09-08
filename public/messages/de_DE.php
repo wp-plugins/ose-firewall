@@ -330,7 +330,7 @@ define('SAFE_BROWSING_CHECKUP_OUTDATED','Ihre Safe-Browsing Prüfung ist veralte
 define('API_CONFIGURATION','API Konfiguration');
 define('API_INTRO','Verbinden Sie '.OSE_WORDPRESS_FIREWALL.' mit Ihrem API-Schlüssel');
 define('SYSTEM_SECURITY_AUDIT','Systemsicherheit Audit');
-define('CHANGE_PHPINI', 'Wenn Hasb im Konfigurationsabschnitt deaktiviert ist, ändern Sie es bitte in der php.ini');
+define('CHANGE_PHPINI', 'Wenn Has im Konfigurationsabschnitt deaktiviert ist, ändern Sie es bitte in der php.ini');
 define('REG_GLOBAL_OFF','Die PHP Einstellung register_global ist <b>AUS</b>.');
 define('REG_GLOBAL_ON','Die PHP Einstellung register_global ist <b>AN</b>, bitte schalten Sie dies aus. '.CHANGE_PHPINI);
 define('SAFEMODE_OFF','Die PHP Einstellung safe_mode ist <b>AUS</b>');
