@@ -86,11 +86,12 @@ function batchquarantine() {
                 success: function (data) {
                     hideLoading();
                     if (data.data == 1) {
-                        showDialogue(O_QUARANTINE_SUCCESS_DESC, O_SUCCESS, O_OK);
+                        showLoading(O_QUARANTINE_SUCCESS_DESC);
                         $('#scanreportTable').dataTable().api().ajax.reload();
                     } else {
-                        showDialogue(O_QUARANTINE_FAIL_DESC, O_NOTICE, O_OK);
+                        showLoading(O_QUARANTINE_FAIL_DESC);
                     }
+                    hideLoading();
                     $('#checkbox').prop('checked', false);
                 }
             });
@@ -124,12 +125,13 @@ function batchbkcl() {
                 },
                 success: function (data) {
                     hideLoading();
-                    if (data.data == O_SUCCESS) {
-                        showDialogue(O_CLEAN_SUCCESS, O_SUCCESS, O_OK);
+                    if (data.data == 'success') {
+                        showLoading(O_CLEAN_SUCCESS);
                         $('#scanreportTable').dataTable().api().ajax.reload();
                     } else {
-                        showDialogue(O_CLEAN_FAIL, O_NOTICE, O_OK);
+                        showLoading(O_CLEAN_FAIL);
                     }
+                    hideLoading();
                     $('#checkbox').prop('checked', false);
                 }
             });
@@ -163,12 +165,13 @@ function batchrs() {
                 },
                 success: function (data) {
                     hideLoading();
-                    if (data.data == O_SUCCESS) {
-                        showDialogue(O_RESTORE_SUCCESS, O_SUCCESS, O_OK);
+                    if (data.data == 'success') {
+                        showLoading(O_RESTORE_SUCCESS);
                         $('#scanreportTable').dataTable().api().ajax.reload();
                     } else {
-                        showDialogue(O_RESTORE_FAIL, O_NOTICE, O_OK);
+                        showLoading(O_RESTORE_FAIL);
                     }
+                    hideLoading();
                     $('#checkbox').prop('checked', false);
                 }
             });
@@ -230,10 +233,11 @@ function batchdl() {
             success: function (data) {
                 hideLoading();
                 if (data.data == 1) {
-                    showDialogue(O_DELE_SUCCESS_DESC, O_SUCCESS, O_OK);
+                    showLoading(O_DELE_SUCCESS_DESC);
                 } else {
-                    showDialogue(O_DELE_FAIL_DESC, O_NOTICE, O_OK);
+                    showLoading(O_DELE_FAIL_DESC);
                 }
+                hideLoading();
                 $('#checkbox').prop('checked', false);
                 $('#scanreportTable').dataTable().api().ajax.reload();
             }
@@ -308,13 +312,14 @@ function restorevs(id, status) {
             },
             success: function (data) {
                 hideLoading();
-                if (data.data == O_SUCCESS) {
-                    showDialogue(O_RESTORE_SUCCESS, O_SUCCESS, O_OK);
+                if (data.data == 'success') {
+                    showLoading(O_RESTORE_SUCCESS);
                     viewFiledetail(id, status);
                 }
                 else {
-                    showDialogue(O_RESTORE_FAIL, O_NOTICE, O_OK);
+                    showLoading(O_RESTORE_FAIL);
                 }
+                hideLoading();
             }
         })
     })
@@ -337,12 +342,13 @@ function deletevs(id) {
             success: function (data) {
                 hideLoading();
                 if (data.data == 1) {
-                    showDialogue(O_DELE_SUCCESS_DESC, O_SUCCESS, O_OK);
+                    showLoading(O_DELE_SUCCESS_DESC);
                     $('#filecontentModal').modal('hide');
                 }
                 else {
-                    showDialogue(O_DELE_FAIL_DESC, O_NOTICE, O_OK);
+                    showLoading(O_DELE_FAIL_DESC);
                 }
+                hideLoading();
             }
         })
     })
@@ -365,11 +371,12 @@ function quarantinevs(id, status) {
             success: function (data) {
                 hideLoading();
                 if (data.data == 1) {
-                    showDialogue(O_QUARANTINE_SUCCESS_DESC, O_SUCCESS, O_OK);
+                    showLoading(O_QUARANTINE_SUCCESS_DESC);
                     viewFiledetail(id, status);
                 } else {
-                    showDialogue(O_QUARANTINE_FAIL_DESC, O_NOTICE, O_OK);
+                    showLoading(O_QUARANTINE_FAIL_DESC);
                 }
+                hideLoading();
             }
         })
     })
@@ -391,12 +398,13 @@ function bkcleanvs(id, status) {
             },
             success: function (data) {
                 hideLoading();
-                if (data.data == O_SUCCESS) {
-                    showDialogue(O_CLEAN_SUCCESS, O_SUCCESS, O_OK);
+                if (data.data == 'success') {
+                    showLoading(O_CLEAN_SUCCESS);
                     viewFiledetail(id, status);
                 } else {
-                    showDialogue(O_CLEAN_FAIL, O_NOTICE, O_OK);
+                    showLoading(O_CLEAN_FAIL);
                 }
+                hideLoading();
             }
         })
     })

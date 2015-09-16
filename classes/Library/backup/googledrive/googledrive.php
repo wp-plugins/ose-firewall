@@ -228,6 +228,7 @@ class gdriveModelBup
         $state = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $redirectURI = urlencode($this->redirect_url);
         $scope = urlencode($this->scope);
+        $state = base64_encode($state);
         $state = urlencode($state);
         $client_id = $this->gdrive_client_id;
         $oauthurl = 'scope=' . $scope . '&state=' . $state . '&redirect_uri=' . $redirectURI . '&client_id=' . $client_id . '&response_type=code&access_type=offline&approval_prompt=force';
@@ -460,6 +461,62 @@ class gdriveModelBup
             }
         }
         return $this->createFolder($currentDomain, $root->id);
+    }
+
+    public function getBackupFiles()
+    {
+        $token = null;
+        $list = array();
+        $info = array();
+        $access_token = $this->readToken();
+        $file_id = $this->getDomain();
+
+        do {
+            if (!empty($token)) {
+                $token = urlencode($token);
+                $url = 'https://www.googleapis.com/drive/v2/files/' . $file_id->id . "/children/access_token=" . $access_token . '&pageToken=' . $token;
+            } else {
+                $url = 'https://www.googleapis.com/drive/v2/files/' . $file_id->id . "/children?access_token=" . $access_token;
+            }
+            try {
+
+                $files = $this->curl_get($url);
+
+            } catch (Exception $e) {
+                throw $e;
+            }
+            $list = array_merge($list, $files->items);
+            $token = null;
+            if (isset($files->nextPageToken)) {
+                $token = $files->nextPageToken;
+            }
+        } while ($token);
+
+        foreach ($list as $single) {
+            $link = 'https://www.googleapis.com/drive/v2/files/' . $single->id . "?access_token=" . $access_token;
+            $info[] = $this->curl_get($link);
+        }
+        return $info;
+    }
+
+    public function curl_delete($file_id)
+    {
+        $access_token = $this->readToken();
+        $url = 'https://www.googleapis.com/drive/v2/files/' . $file_id . "?access_token=" . $access_token;
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+            $output = curl_exec($ch);
+            $error = curl_error($ch);
+            curl_close($ch);
+            $response = json_decode($output);
+            return $response;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function getDomainFiles()

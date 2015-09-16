@@ -99,6 +99,7 @@ class onedriveModelBup
 //        $redirectURI = !empty($queryString) ? $queryString : 'admin.php?page=' . $slug;
         $redirectURI = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         // $redirectURI = str_replace("world","Peter","Hello world!");
+        $redirectURI = base64_encode($redirectURI);
         $query = array(
             'client_id' => self::CLIENT_ID,
             // 'redirect_uri'  => urlencode(admin_url($redirectURI)),
@@ -689,7 +690,7 @@ class onedriveModelBup
     /**
      * Reads the token
      */
-    protected function readToken()
+    public function readToken()
     {
         if (OSE_CMS == "wordpress") {
             $filePath = OSE_BACKUPPATH . ODS . 'CentroraBackup' . ODS . "onedrive" . ODS . "onedriveAccessToken.json";
@@ -842,6 +843,24 @@ class onedriveModelBup
             }
         } else {
             return Array('error' => 'HTTP status code not expected - got ', 'description' => $httpCode);
+        }
+    }
+
+    public function curl_delete($uri)
+    {
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $uri);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+            $output = curl_exec($ch);
+            $error = curl_error($ch);
+            curl_close($ch);
+            $response = json_decode($output);
+            return $response;
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
     }
 }
