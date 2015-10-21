@@ -169,4 +169,11 @@ class ScanreportModel extends BaseModel
 		return $oseFirewallStat->getACLIPStatistic();
 	}
 
+	public function markAsClean ($id)
+	{
+		$return = array();
+		$oseVsscanStat = new oseVsscanStat();
+		$return['data'] = utf8_encode($oseVsscanStat->markAsClean($id));
+		return $return;
+	}
 }

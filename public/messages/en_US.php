@@ -29,7 +29,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 }
 //Start here;
 define('O_LATEST_SIGNATURE', '20140901');
-define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140901, updated on 1st Sep 2014');
+define('O_LATEST_PATTERN', 'Latest version of virus pattern (major update) is 20140901, updated on 1st Sep 2014.');
 define('OSE_WORDPRESS_FIREWALL_SETTING', ''.OSE_WORDPRESS_FIREWALL.' Settings');
 define('OSE_WORDPRESS_FIREWALL_SETTING_DESC', ''.OSE_WORDPRESS_FIREWALL.' is a Web Application Firewall for Wordpress created by <a href="'.OSE_OEM_URL_MAIN.'" target="_blank">Protect Website</a>. It protects your website against attacks and hacking attempts effectively.');
 define('OSE_WORDPRESS_FIREWALL_UPDATE_DESC', 'OSE Firewall™ has been renamed as ‘'.OSE_WORDPRESS_FIREWALL.'’, which will works perfectly with our new product <a href="'.OSE_OEM_URL_MAIN.'" target = "_blank">Centrora</a>, a security management central that gains you the ability to manage all your websites in one place.');
@@ -125,10 +125,10 @@ define('DBNOTREADY_OTHER','<b>WARNING</b>: The database is not ready, please ret
 define('DASHBOARD_TITLE','Dashboard');
 define('INSTALLNOW','Install Now');
 define('UNINSTALLDB', 'Uninstall');
-define('UNINSTALLDB_INTRO', 'Removing the database created by '.OSE_WORDPRESS_FIREWALL.' from your website');
+define('UNINSTALLDB_INTRO', 'Removing the database created by '.OSE_WORDPRESS_FIREWALL.' from your website.');
 define('UPDATEVERSION', 'Update');
 define('SUBSCRIBE', 'Subscribe');
-define('READYTOGO','Everything is ready to go! If you want to remove database, please go to configuration');
+define('READYTOGO','Everything is ready to go! If you would like to uninstall the database, please do so from System Menu > Install/Uninstall.');
 define('CREATE_BASETABLE_COMPLETED',' > Create Base Table Completed, continue...');
 define('INSERT_CONFIGCONTENT_COMPLETED',' > Inserting Configuration Data Completed, continue...');
 define('INSERT_EMAILCONTENT_COMPLETED',' > Inserting Email Content Completed, continue...');
@@ -196,7 +196,7 @@ define('LINKAGE_DELETED_FAILED','The linkage was deleted unsuccessfully.');
 define('ANTIVIRUS_CONFIGURATION','Virus Scanner Configuration');
 define('ANTIVIRUS_CONFIGURATION_TITLE','<b>Virus Scanner</b> <span><b>Configuration</b></span>');
 define('ANTIVIRUS_CONFIGURATION_DESC','Configure the settings for Virus Scanner, control file extension to be scanned and limit the size of scanning files');
-define('ANTIVIRUS', 'Scan Malware <small>(Premium)</small>');
+define('ANTIVIRUS', 'Anti Malware');
 define('ANTIVIRUS_TITLE','<b>Virus</b> <span><b>Scanner</b></span>');
 define('ANTIVIRUS_DESC','Virus Scanner is a powerful malware detector, it acts like an antivirus but is more powerful than a antivirus. It scans through every single files on your server or any specific path of files for virus, malware, spam, malicious codes, SQL injection, security vulnerabilities etc.');
 define('LAST_SCANNED','Last scanned folder: ');
@@ -304,7 +304,7 @@ define('OSE_AUDIT','Audit');
 define('GAUTHENTICATOR_NOTUSED','<b>[Admin Protection] </b><b>WARNING</b>: Google 2 Step Authenticator is not used. This is an effective method to avoid brute force attack, we strongly suggest you enable this function. Please follow this tutorial to enable it.');
 define('GAUTHENTICATOR_READY','<b>[Admin Protection] </b>Great! Google Authenticator is available in this website, please ensure all web adminsitrators have enabled the function for their accounts.');
 define('WORDPRESS_OUTDATED','<b>[Wordpress Update] </b><b>WARNING</b>: Your Wordpress is out dated, please update it ASAP. Current version is ');
-define('WORDPRESS_UPTODATE','<b>[Wordpress Update] </b>Great! Your website is up-to-date with current version of ');
+define('WORDPRESS_UPTODATE','<b>[Wordpress Update] </b>Great! Your website is up-to-date with the current version of ');
 define('USERNAME_CANNOT_EMPTY','Username cannot be empty');
 define('USERNAME_UPDATE_SUCCESS','Successfully changed the username. The browser will be refreshed soon, if you logged in as \'admin\', please login with your new username then.');
 define('USERNAME_UPDATE_FAILED','Failed to change the username');
@@ -550,7 +550,7 @@ define('ACTIVATION_CODE_EMPTY', 'Activation code cannot be empty');
 define('MAX_DB_CONN', 'Maximum Database Connection');
 
 // Version 4.4.0
-define('PERMCONFIG', 'Permission Control');
+define('PERMCONFIG', 'File Permissions Editor');
 define('PERMCONFIG_DESC', 'Manage your server\'s  files & folders permissions configuration');
 define('PERMCONFIGFORM_DESC', 'Please select the new attributes for the selected.');
 define('PERMCONFIGFORM_NB', '<h5><small><b>NB: </b>Generally used permissions: Files 0644 (drw-r--r--) and Folders 0755 (drwxr-xr-x) </small></h5>');
@@ -616,7 +616,7 @@ define('APPLY_TO_ALL', 'Apply to all Files and Folders');
 define('APPLY_TO_FILES', 'Apply to Files only');
 define('APPLY_TO_FOLDERS', 'Apply to Folders only');
 define('CLICK_TO_ACTIVATE', 'to activate your subscription and use this feature.');
-define('AFFILIATE_PROGRAM_DESC', '<b>Don\'t</b> miss out the chance to earn at least $24,500 for the 1st year and $575,800 in five years with our affiliate program!  ');
+define('AFFILIATE_PROGRAM_DESC', '<b>Don\'t</b> miss out on the chance to earn at least $24,500 for the 1st year and $338,900 in five years with our affiliate program! Please read the tutorial to learn how to achieve this');
 define('SECURITY_BADGE_DESC', '<b>[Security Badge] </b>: The security badge is disabled now. You can increase sales conversion of your website by enabling it. ');
 define('CALL_TO_ACTION_TITLE', 'We are always here to help');
 define('CALL_TO_ACTION_P', 'We are now serving <span id="numofWebsite"></span> websites.');
@@ -679,7 +679,7 @@ define('O_AUTHENTICATION_GOOGLEDRIVE', 'GoogleDrive Authentication');
 define('O_AUTHENTICATION_DROPBOX', 'Dropbox Authentication');
 define('O_BACKUP', 'Backup');
 define('ADMINISTRATION', 'System Menu');
-define('FILE_PERMISSION', 'File Permission');
+define('FILE_PERMISSION', 'File System Audit');
 define('O_BACKUP_GOOGLEDRIVE', 'GoogleDrive');
 define('DOWNLOAD_SUCCESS', 'Signatures are updated successfully');
 
@@ -731,7 +731,7 @@ define('DEVELOPMODE_DISABLED','<b>[Firewall Activated] </b>Great! Your website i
 define('DISDEVELOPMODE', '<b>WARNING</b>: Please turn on the Firewall in the Firewall Scanning Configuration to activate the firewall protection.');
 define('O_DELETE_ADMIN_SUCCESS', 'Successfully deleted the administrator account');
 define('O_DELETE_ADMIN_FAIL', 'There are errors when deleting the administrator account');
-define('AFFILIATE_TRACKING', 'Affiliate Tracking');
+define('AFFILIATE_TRACKING', 'Affiliate Program');
 define('LOGIN_TITLE', 'Centrora Member Login');
 define('LOGIN_DESC', 'You can login here with your Centrora Account or OSE Account to activate your premium services');
 define('HOW_TO_ACTIVATE', 'How to activate my premium service?');
@@ -761,7 +761,7 @@ define('O_EXTENSION_NAME', 'Extension');
 define('O_EXTENSION_TYPE', 'Type');
 define('O_EXTENSION_STATUS', 'Status');
 define('ADD_EXT', 'Add Extension');
-define ('O_BACKEND_SECURE_KEY', 'Backend Access Secure Key (beta)');
+define ('O_BACKEND_SECURE_KEY', 'Backend Access Secure Key <sup><span>(beta)</span></sup>');
 define ('O_BACKEND_SECURE_KEY_HELP', 'You can harden the access to your backend by adding A Backend Access Secure Key. This key adds a layer of protection against access to the website backend. To deactivate, simply delete the content then save');
 define('UPLOAD_FILE_403WARN', 'The upload of this file type is not allowed on this website. <br /> <br />If you are the server administrator, please allow this file type under Firewall -> Upload Control panel.');
 define('FILE_UPLOAD_LOG', 'File Uploaded');
@@ -773,7 +773,7 @@ define('UNBAN_PAGE_GOOGLE_AUTH_DESC', 'If you have Unban Google Authenticator en
 
 // Version 5.0.5
 define('ADMIN_MANAGER', 'Administrator Manager');
-define('SECURITY_MANAGER', 'Security Manager (beta)');
+define('SECURITY_MANAGER', 'Security Manager <sup><span>(beta)</span></sup>');
 define('O_READMORE', 'Read More');
 define('O_OUR_TUTORIAL', 'our tutorial here');
 define('O_SUBSCRIBE_PLAN', 'to subscribe a plan');
@@ -787,14 +787,14 @@ define('SECURITY_PASSWORD', 'Password');
 define('SECURITY_PASSWORD2', 'Confirm Password');
 
 // Version 5.1.0
-define('CORE_SCAN', 'Scan core directories(beta)');
-define('CORE_SCAN_TITLE', '<b>Core directory</b> <span><b>Scanner(beta)</b></span>');
-define('CORE_SCAN_DESC', 'Core directory Scanner is a neat and quick detector, it scans the core directory of your website and detects suspicious files.');
-define('Vl_SCAN', 'Scan Vulnerabilities');
-define('Vl_SCAN_TITLE', 'Vulnerabilities Scanner');
+define('CORE_SCAN', 'Core Directories Scanner<sup><span>(beta)</span></sup>');
+define('CORE_SCAN_TITLE', '<b>Core Directories </b> <span><b>Scanner</b><sup><span>(beta)</span></sup>');
+define('CORE_SCAN_DESC', 'Core directories Scanner is a neat and quick detector, it scans the core directories of your website and detects suspicious files.');
+define('Vl_SCAN', 'Vulnerabilities Scanner');
+define('Vl_SCAN_TITLE', '<b>Vulnerabilities Scanner</b> <sup><span>(beta)</span></sup>');
 define('Vl_SCAN_DESC', 'Vulnerabilities Scanner is a powerful vulnerability detector. It scans through your website and detects any real vulnerabilities.');
 define('Vl_SCAN_CRED_WPSCAN', 'Credits to WPScan Vulnerability');
-define('START_NEW_VLSCAN', 'Start Scanning');
+define('START_NEW_SCAN', 'Start Scanning');
 
 define('JOOMLA_TWOFACTORAUTH', 'Two Factor Authentication - Google Authenticator');
 define('JOOMLA_TWOFACTORAUTH_HELP', 'Allows users on your site to use two factor authentication using Google Authenticator or other compatible time-based One Time Password generators. To use two factor authentication please edit the user profile and enable two factor authentication.');
@@ -810,10 +810,57 @@ define('BRUTE_FORCE_STATUS_HELP', 'Brute Force Protection will set a login attem
 define('VL_CHECK_VUL','Scanning for vulnerabilities...');
 define('VL_GET_LIST','Generating scan list...');
 define('VL_COMPLETE','Scanning Complete with the result:');
+define('VL_CALL_TOACTION', 'We highly recommend you update the following to the latest version immediately, or if you are no longer using it, remove it from your site. If your site has been compromised due to this vulnerability, <a href="'.OSE_OEM_URL_MALWARE_REMOVAL.'" target="_blank" > we can help </a>.');
 
 define('ADMIN_SETTINGS', 'Administrator Settings');
 define('CENTRORA_GOOGLE_AUTH', 'Centrora Google Authenticator');
 define('CENTRORA_GOOGLE_AUTH_HELP', 'Enable centrora google authenticator and scan the QR code, you can pass through the ban page or 403 forbidden page by inputting the correct google authentication code');
 define('UPLOAD_FILE_403WARN2', 'You are uploading a suspicous file(file content <strong>does not</strong> match file extension). <br /> <br />If you are the server administrator, please notice that this is a suspicious file.');
-define('CRON_SETSCANPATH', 'Set Scan Path');
+define('SETSCANPATH', 'Set Scan Path');
+define('SURF_SCAN', 'Static Scanner <sup><span>(beta)</span></sup>');
+define('SURF_SCAN_TITLE', '<b>Static Scanner</b> <span><sup>(beta)</sup></span>');
+define('SURF_SCAN_DESC', 'Static Scanner checks for all known viruses and malware. It is recommended that if nothing is detected you use the Dynamic Scanner');
+define('DEEPSCAN', 'Dynamic Scanner');
+define('SURF_SCAN_SIG_UPDATED', 'Your Static Scan signatures have been updated!');
+define('SURF_SCAN_SIG_UPTODATE', 'Great! Your Static Scan signatures are up-to-date.');
+define('SURF_SCAN_SIG_NOTUPTODATE', 'Updating Your Static Scan signatures.');
+define('SURF_SCAN_CALL_TOACTION', 'We highly recommend you review the files listed immediately! If your site has been compromised due to the malicious file(s), <a href="'.OSE_OEM_URL_MALWARE_REMOVAL.'" target="_blank" > we can help</a>.');
+
+// Version 6.0.0
+define('FILE_PERM_SCAN', 'File Permissions Scanner<sup><span>(beta)</span></sup>');
+define('FILE_PERM_SCAN_TITLE', '<b>File Permissions Scanner</b> <sup><span>(beta)</span></sup>');
+define('FILE_PERM_SCAN_DESC', 'File Permissions Scanner can detect files with insecure file permission and repair them with just one click(For folders, folder permission will be set to 755, for files, file permission will be set to 644). ');
+define('CHOOSE_MULTISITE', 'Choose sites to scan');
+define('SUITE_CF_NOTICE', 'Please notice that this core file scanner only works on wordpress or joomla site');
+define('NO_DETECT_WEBSITE', 'No Joomla or Wordpress sites detected, Please note only Joomla or Wordpress site can use this function');
+define('CLEAR_BACKUP_TIME', 'Clean old backups');
+define('LAST_ONE_WEEK', 'Keep last one week');
+define('LAST_TWO_WEEK', 'Keep last two weeks');
+define('LAST_THREE_WEEK', 'Keep last three weeks');
+define('LAST_FOUR_WEEK', 'Keep last four weeks');
+define('LAST_TWO_MONTH', 'Keep last two months');
+define('LAST_THREE_MONTH', 'Keep last three months');
+define('LAST_HALF_YEAR', 'Keep last half year');
+define('LAST_FOREVER', 'Keep all backups');
+define('O_BK_TAB_BACKUPS', 'Backups');
+define('O_BK_TAB_NEW_BACKUP', 'Create New');
+define('O_AUTHENTICATION_BACKUP', '&nbspAuthentication');
+define('O_LOGOUT', '&nbspLogout');
+
+define('SETDATE', 'Set Date Range');
+define('SETSTARTDATE', 'Set Start Date');
+define('SETENDDATE', 'Set End Date');
+define('SYMLINK', 'Scan symbolic link');
+define('MF_SCAN', 'Modified Files Scanner');
+define('MF_SCAN_TITLE', '<b>Modified Files Scanner</b> <sup><span>(beta)</span></sup>');
+define('MF_SCAN_DESC', 'The Modified Files Scanner can detect modified files within a certain time period and files which are symbolic links.');
+define('O_RESTORE_TEST', 'Restore testing button');
+define('O_BASE_FILEPERM', 'Base file permission');
+define('O_BASE_FOLDERPERM', 'Base folder permission');
+define('CLEAR_BLACKLIST_URL', 'Clear Blacklist Cronjob Url (See <a href ="' . OSE_OEM_URL_ADVFW_TUT . '" target=\'_blank\'>Tutorial Here</a>)');
+define('CATCH_VIRUS_MD5', 'Update Virus MD5');
+define('O_BACKUP_ACTION', 'Action');
+define('FPSCAN_CALL_TOACTION', 'We highly recommend you review the files listed.');
+
+define('O_SCANREPORT_MARKASCLEAN', 'Mark As Clean');
 ?>

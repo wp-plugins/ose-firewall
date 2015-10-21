@@ -96,11 +96,11 @@ class oseFirewallAjax extends oseAjax{
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVsscan () {
-        $actions = array('initDatabase', 'vsscan', 'updatePatterns', 'checkScheduleScanning', 'getFileTree', 'check');
+        $actions = array('initDatabase', 'vsscan', 'updatePatterns', 'checkScheduleScanning', 'getFileTree', 'check', 'getLastScanRecord');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionScanreport () {
-        $actions = array('getTypeList', 'getMalwareMap', 'viewfile', 'quarantinevs', 'bkcleanvs', 'deletevs', 'restorevs', 'batchqt', 'batchbkcl', 'batchrs', 'batchdl', 'check');
+        $actions = array('getTypeList', 'getMalwareMap', 'viewfile', 'quarantinevs', 'bkcleanvs', 'deletevs', 'restorevs', 'batchqt', 'batchbkcl', 'batchrs', 'batchdl', 'markasclean', 'check');
 		parent::loadActions($actions); 
 	}
 	public static function loadActionVariables () {
@@ -115,7 +115,7 @@ class oseFirewallAjax extends oseAjax{
         $actions = array('downLoadTables', 'createTables', 'getCountryList', 'changeCountryStatus', 'blacklistCountry', 'whitelistCountry', 'monitorCountry', 'changeAllCountry', 'deleteCountry', 'deleteAllCountry', 'check');
 		parent::loadActions($actions);
 	}
-    public static function loadActionAdvancedbackup()
+	public static function loadActionAdvancedbackup()
     {
         $actions = array('backup', 'getBackupList', 'deleteBackup', 'dropboxUpload', 'sendemail', 'oneDriveUpload', 'googledrive_upload', 'getGoogleDriveUploads', 'getOneDriveUploads', 'getDropboxUploads', 'check');
         parent::loadActions($actions);

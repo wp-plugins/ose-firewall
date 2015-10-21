@@ -99,8 +99,10 @@ class oseVsscanStat {
                 $return[$i]->checked = "No action";
             } elseif ($result->checked == 1) {
                 $return[$i]->checked = "Cleaned";
-            } else {
+            } elseif ($result->checked == 2) {
                 $return[$i]->checked = "Quarantined";
+            } elseif ($result->checked == -1) {
+                $return[$i]->checked = "Marked As Clean";
             }
             $i++;
 		}
@@ -509,5 +511,30 @@ class oseVsscanStat {
             $db->addData('update', $this->filestable, 'id', $id, $statusArray);
             $db->closeDBO();
         }
+    }
+
+    public function markAsClean ($ids)
+    {
+        if (is_array($ids)) {
+            foreach ($ids as $single) {
+                $return = $this->markAsCleanSgl($single);
+            }
+        } else {
+            $return = $this->markAsCleanSgl($ids);
+        }
+        return $return;
+    }
+
+    public function markAsCleanSgl ($id)
+    {
+        $statusArray = array(
+            'checked' => -1,
+            'content' => md5_file($this->getFilePath($id))
+        );
+        $db = oseFirewall::getDBO();
+        $result = $db->addData('update', $this->filestable, 'id', $id, $statusArray);
+        $db->closeDBO();
+
+        return true;
     }
 }	

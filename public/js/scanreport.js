@@ -273,19 +273,21 @@ function viewFiledetail(id, status) {
                 var result1 = result.replace(re1, subst1);
                 if (status == 0) {
                     var buttons =
-                        "<button type='button' class='btn btn-primary' onclick='bkcleanvs(" + id + ", 1" + ")'>" + O_CLEAN + "</button>" +
-                        "<button type='button' class='btn btn-primary' onclick='quarantinevs(" + id + ", 2" + ")'>" + O_QUARANTINE + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='bkcleanvs(" + id + ", 1" + ")'><i class='text-success glyphicon glyphicon-erase'></i>" + O_CLEAN + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='quarantinevs(" + id + ", 2" + ")'><i class='text-primary glyphicon glyphicon-alert'></i>" + O_QUARANTINE + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='markAsClean(" + id + ")'><i class='text-warning glyphicon glyphicon-check'></i>" + O_MARKASCLEAN + "</button>" +
                         "<button type='button' class='btn btn-default' data-dismiss='modal'>" + O_CLOSE + "</button>";
                 } else if (status == 1) {
                     var buttons =
-                        "<button type='button' class='btn btn-primary' onclick='restorevs(" + id + ", 0" + ")'>" + O_RESTORE + "</button>" +
-                        "<button type='button' class='btn btn-primary' onclick='quarantinevs(" + id + ", 2" + ")'>" + O_QUARANTINE + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='restorevs(" + id + ", 0" + ")'><i class='text-success glyphicon glyphicon-retweet'></i>" + O_RESTORE + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='quarantinevs(" + id + ", 2" + ")'><i class='text-primary glyphicon glyphicon-alert'></i>" + O_QUARANTINE + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='markAsClean(" + id + ")'><i class='text-warning glyphicon glyphicon-check'></i>" + O_MARKASCLEAN + "</button>" +
                         "<button type='button' class='btn btn-default' data-dismiss='modal'>" + O_CLOSE + "</button>";
                 }
                 else {
                     var buttons =
-                        "<button type='button' class='btn btn-primary' onclick='restorevs(" + id + ", 0" + ")'>" + O_RESTORE + "</button>" +
-                        "<button type='button' class='btn btn-primary' onclick='confirmdeletevs(" + id + ")'>" + O_DELETE + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='restorevs(" + id + ", 0" + ")'><i class='text-success glyphicon glyphicon-retweet'></i>" + O_RESTORE + "</button>" +
+                        "<button type='button' class='btn btn-sm' onclick='confirmdeletevs(" + id + ")'><i class='text-danger glyphicon glyphicon-trash'></i>" + O_DELETE + "</button>" +
                         "<button type='button' class='btn btn-default' data-dismiss='modal'>" + O_CLOSE + "</button>";
                 }
                 $('#codeareaDiv').html(result1);
@@ -429,4 +431,70 @@ function confirmdeletevs(id, status) {
                 }
             }
         });
+}
+function batchMarkAsClean() {
+    showLoading();
+    jQuery(document).ready(function ($) {
+        ids = $('#scanreportTable').dataTable().api().rows('.selected').data();
+        multiids = [];
+        index = 0;
+        if (ids.length > 0) {
+            for (index = 0; index < ids.length; ++index) {
+                multiids[index] = (ids[index]['file_id']);
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                data: {
+                    option: option,
+                    controller: controller,
+                    action: 'markasclean',
+                    task: 'markasclean',
+                    id: multiids,
+                    centnounce: $('#centnounce').val()
+                },
+                success: function (data) {
+                    hideLoading();
+                    if (data.data == 1) {
+                        showLoading(O_MARKASCLEAN_SUCCESS_DESC);
+                        $('#scanreportTable').dataTable().api().ajax.reload();
+                    } else {
+                        showLoading(O_MARKASCLEAN_FAIL_DESC);
+                    }
+                    hideLoading();
+                    $('#checkbox').prop('checked', false);
+                }
+            });
+        } else {
+            hideLoading();
+            showDialogue(O_SELECT_FIRST, O_NOTICE, O_OK);
+        }
+    })
+}
+function markAsClean(id) {
+    showLoading();
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: controller,
+                action: 'markAsClean',
+                task: 'markAsClean',
+                id: id,
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                hideLoading();
+                if (data.data == 1) {
+                    showLoading(O_MARKASCLEAN_SUCCESS_DESC);
+                } else {
+                    showLoading(O_MARKASCLEAN_FAIL_DESC);
+                }
+            }
+        })
+    })
 }

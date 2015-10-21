@@ -396,7 +396,7 @@ class oseFirewallInstaller extends oseInstaller {
 		$db = oseFirewall::getDBO ();
 		$query = "SELECT `value` FROM `#__ose_secConfig` WHERE `key` = 'customer_id' AND `type` = 'oem'";
 		$db->setQuery($query);
-		$result = $db->loadResult();
+		$result = $db->loadResult(); 
 		return (!empty($result))?true:false;
 	}
 } 

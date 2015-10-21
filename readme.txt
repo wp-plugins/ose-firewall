@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware, google drive, google drive backup, dropbox, dropbox backup, one drive, one drive backup, virus scanner, malware scanning, malware removal, backup, wordpress backup
 Requires at least: 3.7
 Tested up to: 4.2.3
-Stable tag: 5.0.12
+Stable tag: 5.0.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,9 +92,14 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 
 == Changelog ==
 
+= 5.0.13 =
+* Fixed: incorrect IP address when CloudFlare is turned on
+* Added: added mark as clean function to ignore clean files in virus scanning
+* Enhanced: enhanced the firewall scanner to run faster 
+
 = 5.0.12 =
-* Fixed incorrect status message in malware removal function
-* Fixed Google Drive and One Drive return URL error after server moved
+* Fixed: incorrect status message in malware removal function
+* Fixed: Google Drive and One Drive return URL error after server moved
  
 = 5.0.11 = 
 * Update Centrora server IP address to allow API access

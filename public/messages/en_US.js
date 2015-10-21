@@ -12,7 +12,6 @@ var O_USER = "User";
 var O_USER_ID = "User ID";
 var O_EMAIL = "Email";
 var O_ADD_A_LINK = "Add a linkage";
-var O_PLEASE_WAIT = "Please wait, this will take a few seconds ...";
 
 //added from 4.4.1
 var O_CALLTOSUBSCRIBE = "Activate Subscription";
@@ -107,3 +106,22 @@ var O_ADD_EXT_SUCCESS = "Successfully added the extension";
 var O_ADD_EXT_FAIL = "There are errors when adding the extension";
 var O_ADD_SEC_SUCCESS = "Successfully added the Security Manager";
 var O_ADD_SEC_FAIL = "There are errors when adding the Security Manager";
+
+//added from 5.1.0
+var O_ACTIVATE_FAIL = "Activate centrora plugin failed";
+
+//added from 6.0.0
+var O_TERMINATE_SCAN = 'Terminating scanning process';
+var O_SCAN_COMPLETE = 'Scanning Complete';
+var O_BACKUP_CREATENEW_STEP1 = 'Step 1: Setup Backup';
+var O_BACKUP_CREATENEW_STEP2 = 'Step 2: Backup Configuration';
+var O_BACKUP_CREATENEW_STEP3 = 'Step 3: Building Backup';
+var O_ONEDRIVE_AUTHO = 'OneDrive Authentication';
+var O_ONEDRIVE_AUTHO_DESC = "Click 'OK' to complete OneDrive Authentication";
+var O_GOOGLEDRIVE_AUTHO = 'GoogleDrive Authentication';
+var O_GOOGLEDRIVE_AUTHO_DESC = "Click 'OK' to complete Google Authentication";
+var O_DELETEALL_CONFIRM_DESC = 'You are about to delete ALL records on this table! Are you sure?';
+var O_DELETEALLIP_CONFRIM = 'This also removes all IP log related detail e.g. File upload log details';
+var O_MARKASCLEAN_SUCCESS_DESC = 'File(s) marked as Clean.';
+var O_MARKASCLEAN_FAIL_DESC = 'Unsuccessful mark as Clean! Please try again.';
+var O_MARKASCLEAN = 'Mark As Clean';

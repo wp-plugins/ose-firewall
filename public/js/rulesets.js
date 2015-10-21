@@ -3,6 +3,17 @@ var controller = "rulesets";
 var option = "com_ose_firewall";
 
 jQuery(document).ready(function($){
+    tinymce.init({
+        selector: "textarea.tinymce",
+        menubar : false,
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code ",
+            "insertdatetime table contextmenu paste"
+        ],
+        height: 200,
+        toolbar: "undo redo | bold italic blockquote hr| alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    });
 
     if (window.location.hash == '#migrate') {
         document.getElementById('hehe').className = 'inactive';
@@ -36,6 +47,9 @@ jQuery(document).ready(function($){
     $('#rulesetsTable tbody').on( 'click', 'tr', function () {
         $(this).toggleClass('selected');
     });
+    $('#save-button-fw').on( 'click', function () {
+        tinyMCE.triggerSave();
+    });
     var statusFilter = $('<label>Status: <select name="statusFilter" id="statusFilter"><option value="-1"></option><option value="1">Active</option><option value="0">InActive</option></select></label>');
     statusFilter.appendTo($("#rulesetsTable_filter")).on( 'change', function () {
         var val = $('#statusFilter');
@@ -43,16 +57,13 @@ jQuery(document).ready(function($){
             .search( val.val(), false, false )
             .draw();
     });
-    var myElem = document.getElementById('HideQR');
-    if (myElem == null) {
 
-    } else {
-        if (document.getElementById("HideQR").checked == false) {
-            document.getElementById("hidden-QRcode").style.display = "block";
+    if ($("centroraGASwitch").is(':checked')) {
+            $("hidden-QRcode").attr("style", "display: block;");
         } else {
-            document.getElementById("hidden-QRcode").style.display = "none";
+            $("hidden-QRcode").attr("style", "display: none;");
         }
-    }
+
 
     if($('#blockIP403').is(':checked')) {
         $("#customBanpageDiv").attr("style", "display: none;");
@@ -62,8 +73,11 @@ jQuery(document).ready(function($){
         $("#customBanpageDiv").attr("style", "display: block;");
         $("#customBanURLDiv").attr("style", "display: block;");
     }
+    if ($("bf_status").is(':checked')) {
+        $("#bf-config").attr("style", "display: inline;");
+    }
 
-    $('#strongPassword').change(function() {
+    $('#strongPassword').change(function () {
         if($(this).is(":checked") && cms == 'joomla') {
             checkPassword();
         }
@@ -138,11 +152,20 @@ function showGDialog (){
         showDialogue(O_GDIALOG_MSG, O_GDIALOG_TITLE, O_OK, '');
     }
 }
+function showbfconfig() {
+    jQuery(document).ready(function ($) {
+        if (document.getElementById("bf_status").checked == true) {
+            $("#bf-config").slideDown({duration: 300});
+        } else {
+            $("#bf-config").slideUp({duration: 300});
+        }
+    })
+}
 function showSecret() {
     jQuery(document).ready(function ($) {
-        if (document.getElementById("googleVerificationSwitch").checked == true) {
+        if (document.getElementById("centroraGASwitch").checked == true) {
             $("#hidden-QRcode").slideDown({ duration: 300 });
-              showGoogleSecret();
+            // showGoogleSecret();
         } else {
             $("#hidden-QRcode").slideUp({ duration: 300 });
         }
@@ -168,18 +191,6 @@ function showGoogleSecret() {
         });
     });
 }
-tinymce.init({
-    selector: "textarea.tinymce",
-    menubar : false,
-    plugins: [
-        "advlist autolink lists link image charmap print preview anchor",
-        "searchreplace visualblocks code ",
-        "insertdatetime table contextmenu paste"
-    ],
-    height: 200,
-    toolbar: "bold italic strikethrough bullist numlist blockquote hr alignleft aligncenter alignright alignjustify link unlink code image media | fullscreen"
-});
-
 
 //******************** Advanced rule datatable **********************
 

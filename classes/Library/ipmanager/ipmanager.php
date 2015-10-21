@@ -228,11 +228,53 @@ class oseFirewallIpManager
 			return $result->ipid;
 		}
 	}
+	private function cidr_match($ip, $cidr)
+	{
+		list($subnet, $mask) = explode('/', $cidr);
+	
+		if ((ip2long($ip) & ~((1 << (32 - $mask)) - 1) ) == ip2long($subnet))
+		{
+			return true;
+		}
+	
+		return false;
+	}
+	private function isCloudFlareIPs($ip) {
+		// Cloudflare IP addresses;
+		$array = array();
+		$array[] = '103.21.244.0/22';
+		$array[] = '103.22.200.0/22';
+		$array[] = '103.31.4.0/22';
+		$array[] = '104.16.0.0/12';
+		$array[] = '108.162.192.0/18';
+		$array[] = '141.101.64.0/18';
+		$array[] = '162.158.0.0/15';
+		$array[] = '172.64.0.0/13';
+		$array[] = '173.245.48.0/20';
+		$array[] = '188.114.96.0/20';
+		$array[] = '190.93.240.0/20';
+		$array[] = '197.234.240.0/22';
+		$array[] = '198.41.128.0/17';
+		$array[] = '199.27.128.0/21';
+		
+		foreach ($array as $cidr) {
+			$result = $this->cidr_match($ip, $cidr);
+			if ($result == true) {
+				return true;
+			}
+		}
+		return false;
+	}
 	private function getRealIP()
 	{
 		$ip = null;
 		if (!empty($_SERVER['REMOTE_ADDR']))
 		{
+			if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+				if ($this->isCloudFlareIPs($_SERVER['REMOTE_ADDR'])==true) {
+					$_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+				}
+			}
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 		else 
@@ -335,6 +377,52 @@ class oseFirewallIpManager
 					(int) $default
 				);
 			}
+		}
+	}
+
+	public function clearBlacklistIP ($clearIPKey)
+	{
+		$storedkey = $this->getCronKey();
+		if (!empty($storedkey) && $storedkey == $clearIPKey ) {
+			$this->loadFirewallStat();
+			$oseFirewallStat = new oseFirewallStat();
+			$aclids = $this->getBlacklistACLIDs();
+			$numcleared = 0;
+			foreach ($aclids as $key => $aclid) {
+				$result = $oseFirewallStat->removeACLRule($aclid->id);
+				if ($result == false) {
+					return false;
+				}
+				$numcleared++;
+			}
+			return $numcleared;
+		} else {
+			die ('Invalid Call! Are you sure you are allowed to do this? :)');
+		}
+	}
+
+	private function getCronKey()
+	{
+		$confArray = oseFirewall::getConfiguration('advscan');
+		if (!empty($confArray['data']['clearCronKey'])) {
+			return $confArray['data']['clearCronKey'];
+		}
+		return;
+	}
+
+	private function getBlacklistACLIDs ()
+	{
+		$query = 'SELECT id FROM wp_osefirewall_acl WHERE status = 1';
+		$this->db->setQuery($query);
+		return $this->db->loadObjectList();
+	}
+
+	private function loadFirewallStat()
+	{
+		if (OSE_CMS == 'joomla') {
+			oseFirewall::callLibClass('firewallstat', 'firewallstatJoomla');
+		} else {
+			oseFirewall::callLibClass('firewallstat', 'firewallstatWordpress');
 		}
 	}
 }

@@ -76,8 +76,8 @@ class oseFirewallBase extends oseFirewallRoot
 	}
 	private function isGAuthenticatorEnabled()
 	{
-		$enabled = $this->checkOseConfig ('googleVerification', 'scan');  
-		if ($this->checkOseConfig ('googleVerification', 'scan') == true || $this->checkOseConfig ('googleVerification', 'advscan') == true)
+		$enabled = $this->checkOseConfig ('googleVerification', 'bf');
+		if ($this->checkOseConfig ('googleVerification', 'bf') == true || $this->checkOseConfig ('googleVerification', 'advscan') == true)
 		{
 			return true;
 		}
@@ -336,7 +336,14 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		self::runController ('AuditController', 'index');
 	}
-
+    public static function cfscan()
+    {
+        self::runController ('cfscanController', 'index');
+    }
+    public static function fpscan()
+    {
+        self::runController ('fpscanController', 'index');
+    }
     public static function adminemails()
     {
         self::runController('AdminemailsController', 'index');
@@ -369,6 +376,19 @@ class oseFirewallBase extends oseFirewallRoot
 	{
 		self::runController ('ScanreportController', 'index');
 	}
+    public static function vlscan()
+    {
+        self::runController ('VlscanController', 'index');
+    }
+
+    public static function mfscan()
+    {
+        self::runController('MfscanController', 'index');
+    }
+    public static function surfscan()
+    {
+        self::runController ('SurfscanController', 'index');
+    }
 	public static function variables()
 	{
 		self::runController ('VariablesController', 'index');
@@ -550,7 +570,7 @@ class oseFirewallBase extends oseFirewallRoot
 	public static function getTime () {
 		self::loadDateClass(); 
 		$oseDatetime = new oseDatetime();
-		$oseDatetime->setFormat("Y-m-d H:i:s ");
+		$oseDatetime->setFormat("Y-m-d H:i:s");
 		$time = $oseDatetime->getDateTime();
 		return $time;  
 	}
@@ -774,7 +794,116 @@ class oseFirewallBase extends oseFirewallRoot
             $oseDB2->setQuery($query);
             $oseDB2->loadResult();
         }
+
+        $vlscanner = $oseDB2->isTableExists('#__osefirewall_vlscanner');
+        if (!$vlscanner) {
+            $query = "CREATE TABLE `#__osefirewall_vlscanner` (
+                      `vls_id` int(11) NOT NULL AUTO_INCREMENT,
+                      `vls_type` tinyint(4) NOT NULL,
+                      `content` longtext NOT NULL,
+                      PRIMARY KEY (`vls_id`)
+                    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8";
+            $oseDB2->setQuery($query);
+            $oseDB2->loadResult();
+        }
+
+        $scanhist = $oseDB2->isTableExists('#__osefirewall_scanhist');
+        if (!$scanhist) {
+            $query = "CREATE TABLE `#__osefirewall_scanhist` (
+                      `scanhist_id` int(11) NOT NULL AUTO_INCREMENT,
+                      `super_type` varchar(10) NOT NULL,
+                      `sub_type` int(11) NOT NULL,
+                      `content` longtext NOT NULL,
+                      `inserted_on` datetime NOT NULL,
+                      PRIMARY KEY (`scanhist_id`)
+                    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8";
+            $oseDB2->setQuery($query);
+            $oseDB2->loadResult();
+        }
+
+        $vshash = $oseDB2->isTableExists('#__osefirewall_vshash');
+        if (!$vshash) {
+            $query = "CREATE TABLE `#__osefirewall_vshash` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                      `type` tinyint(4) NOT NULL DEFAULT '0',
+                      `name` varchar(100) NOT NULL,
+                      `hash` text NOT NULL,
+                      `inserted_on` datetime DEFAULT NULL,
+                      PRIMARY KEY (`id`),
+                      UNIQUE KEY `unique_id` (`id`)
+                    ) ENGINE=InnoDB AUTO_INCREMENT=8883 DEFAULT CHARSET=utf8";
+            $oseDB2->setQuery($query);
+            $oseDB2->loadResult();
+        }
+		self::ammendDBTables($oseDB2);
     }
+
+	private static function ammendDBTables ($oseDB2)
+	{
+		#run check on table to ammend
+		$addcolumn_detcontdetail = self::checkTabledetcontdetail($oseDB2);
+		$addcolumn_files = self::checkTablefiles($oseDB2);
+		if ($addcolumn_detcontdetail){
+			#Create New DateTime Column
+			self::addcolumndetcontdetail($oseDB2);
+		}
+		if ($addcolumn_files){
+			#Create new content column
+			self::addcolumnfiles($oseDB2);
+		}
+	}
+
+	private function checkTabledetcontdetail($oseDB2, $return = true)
+	{
+		$query = 'DESCRIBE #__osefirewall_detcontdetail;';
+		$oseDB2->setQuery($query);
+		$result = ($oseDB2->loadObjectList());
+		#Run Check for ammending
+		foreach ($result as $key => $value) {
+			if ($value->Field == 'inserted_on'){
+				$return = false;
+				break;
+			}
+		}
+		return $return;
+	}
+
+	private function addcolumndetcontdetail ($oseDB2)
+	{
+		$query = 'ALTER TABLE `#__osefirewall_detcontdetail` ADD inserted_on DATETIME NOT NULL;';
+		$oseDB2->setQuery($query);
+		$oseDB2->query();
+		#Add ACL Date for Existing Data for backward Compatibility
+		$query = 'UPDATE `#__osefirewall_detcontdetail` as dcd
+				INNER JOIN `#__osefirewall_detected` as dc ON dcd.detattacktype_id = dc.detattacktype_id
+				INNER JOIN `#__osefirewall_acl` as acl ON dc.acl_id = acl.id
+				SET dcd.inserted_on = acl.datetime';
+		$oseDB2->setQuery($query);
+		$oseDB2->query();
+	}
+
+	private function checkTablefiles($oseDB2, $return = true)
+	{
+		$query = 'DESCRIBE #__osefirewall_files;';
+		$oseDB2->setQuery($query);
+		$result = ($oseDB2->loadObjectList());
+		#Run Check for ammending
+		foreach ($result as $key => $value) {
+			if ($value->Field == 'content'){
+				$return = false;
+				break;
+			}
+		}
+		return $return;
+	}
+
+	private function addcolumnfiles ($oseDB2)
+	{
+		$query = 'ALTER TABLE `#__osefirewall_files` ADD content text NULL;';
+		$oseDB2->setQuery($query);
+		$oseDB2->query();
+	}
+
     public static function affiliateAccountExists () {
     	$config = self::getConfiguration('panel');
     	return (!empty($config['data']['trackingCode']))?$config['data']['trackingCode']:null;

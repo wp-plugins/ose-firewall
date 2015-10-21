@@ -589,7 +589,7 @@ class virusScanner {
 		return true; 
 	}
 	private function ignoredFiles ($file) {
-		if (preg_match('/mootree\.gif/ims', $file))
+		if (preg_match('/mootree\.gif/ims', $file) || ($this->checkIsMarkedAsClean($file)) )
 		{
 			return true;
 		}
@@ -597,6 +597,19 @@ class virusScanner {
 		{
 			return false; 
 		}
+	}
+	private function checkIsMarkedAsClean ($file)
+	{
+		$query = "SELECT * FROM `$this->filestable` WHERE `type` = 'f' AND `filename` = '$file' ";
+		$this->db->setQuery($query);
+		$result = $this->db->loadObject();
+		if (!empty($result)){
+			if (($result->checked == -1) && (md5_file( $file ) == $result->content )){
+				return true;
+			}
+		}
+		return false;
+
 	}
 	private function clearFileFromArray ($index) {
 		unset($_SESSION['oseFileArray'][$index]);

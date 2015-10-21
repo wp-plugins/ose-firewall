@@ -28,7 +28,7 @@ if (!defined('OSE_FRAMEWORK') && !defined('OSEFWDIR') && !defined('_JEXEC'))
 	die('Direct Access Not Allowed');
 }
 class oseFirewallScanner {
-	private $ip = null;
+    public $ip = null;
 	private $ip32 = null;
     public $ipStatus = null;
 	private $url = null;
@@ -48,7 +48,7 @@ class oseFirewallScanner {
 	protected $scanGoogleBots = true;
 	protected $scanYahooBots = true;
 	protected $scanMsnBots = true;
-	protected $devMode = false;
+	public $devMode = false;
 	protected $slient_max_att = 10;
 	protected $banpagetype = false;
 	protected $sfspam = false;
@@ -70,6 +70,7 @@ class oseFirewallScanner {
 		$this->setReferer();
 		$this->setClientIP();
 		$this->setConfig();
+        $this->checkAttackTypesNum();
         oseFirewall::loadBackendBasicFunctions();
 	}
 	protected function setConfig() {
@@ -160,7 +161,7 @@ class oseFirewallScanner {
         require_once(OSE_FWFRAMEWORK . ODS . 'googleAuthenticator' . ODS . 'class_gauthenticator.php');
         $gauthenticator = new GoogleAuthenticator();
         $otp = trim($_POST ['googleAuthCode']);
-        $googleAuth = oseFirewall::getConfiguration('scan');
+        $googleAuth = oseFirewall::getConfiguration('admin');
         $secret = $googleAuth['data']['gaSecret'];
         require_once(OSE_FWFRAMEWORK . ODS . 'googleAuthenticator' . ODS . 'class_base32.php');
         $match = $gauthenticator->verify($secret, $otp);
@@ -301,7 +302,9 @@ class oseFirewallScanner {
 		$time = new oseDatetime();
 		return $time->getDateTime ();
 	}
-	protected function addACLRule($status, $score) {
+
+    public function addACLRule($status, $score)
+    {
 		$page_id = $this->addPages();
 		$referer_id = $this->addReferer();
 		if (empty ($this->aclid)) {
@@ -553,7 +556,9 @@ class oseFirewallScanner {
 			header( 'Location: '.$this->customBanURL ) ;
 		}
 	}
-	protected function showBanPage() {
+
+    public function showBanPage()
+    {
 		$this->customRedirect ();
 		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail: '';
 		$customBanPage = (!empty ($this->customBanpage)) ? $this->customBanpage: 'Banned';
@@ -966,7 +971,7 @@ class oseFirewallScanner {
 		$this->db->setQuery($query);
 		$results = $this->db->loadArrayList();
 		foreach ( $results as $result ) {
-			$return[] = $result['ext_name'];
+			$return[] = strtolower($result['ext_name']);
 		}
 		$this->allowExts = ( !empty($return) ) ? $return : null;
 	}
@@ -995,10 +1000,16 @@ class oseFirewallScanner {
 						$ext = explode('/', $file['type']);
                         $filename = is_array($file['name'])? $file['name'][$i] : $file['name']; //convert array files to get single file names
                         $info = new SplFileInfo($filename);
-                        $extname = $info->getExtension();
+                        $extname = strtolower($info->getExtension());
                         $allowExts = array_map('trim', $this->allowExts);
 						if ($ext[1] == 'vnd.openxmlformats-officedocument.wordprocessingml.document' && ($mimeType[1] != $ext[1])) {
 							$ext[1] = 'msword';
+						}
+						if ($ext[1] == 'jpg' && ($mimeType[1] == 'jpeg')) {
+							$ext[1] = 'jpeg';
+						}
+						if ($ext[1] == 'jpeg' && ($mimeType[1] == 'jpg')) {
+							$ext[1] = 'jpg';
 						}
 						if ($ext[1] != $mimeType[1]) {
                             $this->show403Msg(oLang:: _get('UPLOAD_FILE_403WARN2') . '<br /> File Type: <b>' . $mimeType[1] . '</b>');
@@ -1212,4 +1223,101 @@ class oseFirewallScanner {
 			$this->db->query();
 		}
 	}
+
+    public static function inet_pton($ip)
+    {
+        // convert the 4 char IPv4 to IPv6 mapped version.
+        $pton = str_pad(self::hasIPv6Support() ? inet_pton($ip) : self::_inet_pton($ip), 16,
+            "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\x00\x00\x00\x00", STR_PAD_LEFT);
+        return $pton;
+    }
+
+    public static function hasIPv6Support()
+    {
+        return defined('AF_INET6');
+    }
+
+    public function antiBruteForce($authUser, $username, $passwd)
+    {
+
+        $tKey = 'oselginfl_' . bin2hex(oseFirewallScanner::inet_pton($this->ip));
+
+        $bfconfig = oseFirewall::getConfiguration('bf');
+
+        $maxfail = $bfconfig['data']['loginSec_maxFailures'];
+        $timeFrame = $bfconfig['data']['loginSec_countFailMins'];
+        if (is_wp_error($authUser) && ($authUser->get_error_code() == 'invalid_username' || $authUser->get_error_code() == 'incorrect_password')) {
+
+            $tries = get_transient($tKey);
+            if ($tries) {
+                $tries++;
+            } else {
+                $tries = 1;
+            }
+            if ($tries >= $maxfail) {
+                $this->addACLRule(4, 99);
+                $content = $tries . ' login attempts from IP address ' . $this->ip . ' this ip address is blocked due to exceeding the maximum login failure limit';
+                $this->addDetAttempts(15, $content);
+            }
+            set_transient($tKey, $tries, $timeFrame * 60);
+        } else if (get_class($authUser) == 'WP_User') {
+            delete_transient($tKey); //reset counter on success
+        }
+
+        if (is_wp_error($authUser) && ($authUser->get_error_code() == 'invalid_username' || $authUser->get_error_code() == 'incorrect_password')) {
+            return new WP_Error('incorrect_password', sprintf(__('<strong>ERROR</strong>: The username or password you entered is incorrect. <a href="%2$s" title="Password Lost and Found">Lost your password</a>?'), $_POST['log'], wp_lostpassword_url()));
+        }
+
+        return $authUser;
+    }
+
+    private function checkAttackTypesNum()
+    {
+        $sql = 'SELECT COUNT(`id`) AS count FROM `#__osefirewall_attacktype`';
+        $this->db->setQuery($sql);
+        $result = $this->db->loadObject();
+        if ($result->count == 14) {
+            $name = 'Brute Force Attack';
+            $tag = 'bf';
+            $this->addAttackType($name, $tag);
+        }
+    }
+
+    private function addAttackType($name, $tag)
+    {
+
+        $varValues = array(
+            'name' => $name,
+            'tag' => $tag
+        );
+        $this->db->addData('insert', '#__osefirewall_attacktype', null, null, $varValues);
+
+    }
+
+    public function addDetAttempts($attackID, $tries)
+    {
+        $exists = $this->isDetContentExists($attackID);
+        if (!empty ($exists)) {
+            return;
+        }
+        $detattacktype_id = $this->insertDetAttacktype($attackID);
+        if (!empty ($detattacktype_id)) {
+            $this->insertDetected($detattacktype_id);
+            if (!empty ($tries)) {
+                $this->insertBFDetail($detattacktype_id, $tries);
+            }
+        }
+        return $detattacktype_id;
+    }
+
+    protected function insertBFDetail($detattacktype_id, $tries)
+    {
+        $detcontent_id = $this->insertDetContent($tries);
+        $varValues = array(
+            'detattacktype_id' => (int)$detattacktype_id,
+            'detcontent_id' => $detcontent_id,
+        );
+        $this->db->addData('insert', '#__osefirewall_detcontdetail', null, null, $varValues);
+        return;
+    }
 }

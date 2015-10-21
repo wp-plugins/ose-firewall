@@ -65,14 +65,15 @@ function downloadRequest(type) {
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
-                downloadSQL(type, data.downloadKey, data.version);
+                hideLoading();
+                downloadSQL(type, data.downloadKey);
             }
         });
     });
 }
-function downloadSQL(type, downloadKey, version) {
+function downloadSQL(type, downloadKey) {
     jQuery(document).ready(function ($) {
-        showLoading('Signature is being updated, please wait...');
+        showLoading();
         $.ajax({
             type: "POST",
             url: url,
@@ -84,12 +85,10 @@ function downloadSQL(type, downloadKey, version) {
                 task: 'downloadSQL',
                 type: type,
                 downloadKey: downloadKey,
-                version: version,
                 centnounce: $('#centnounce').val()
             },
             success: function (data) {
-                showLoading(data.result);
-            	hideLoading();
+                hideLoading();
                 $('#AdvrulesetsTable').dataTable().api().ajax.reload();
             }
         });

@@ -68,8 +68,7 @@ class RulesetsModel extends BaseModel {
 		}else{
 			$return = $this->getEmptyReturn ();
 		}
-		$_SESSION['rulesetdraw'] = (isset($_SESSION['rulesetdraw']))?$_SESSION['rulesetdraw']+1:1;
-		$return['draw']=$_SESSION['rulesetdraw'];
+		$return['draw']=$this->getInt('draw');
 		return $return; 
 	}
 	public function changeRuleStatus($ids, $status)

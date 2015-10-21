@@ -126,5 +126,17 @@ class ScanreportController extends \App\Base {
         $returns = $this->model->batchdl($id);
         $this->model->returnJSON($returns);
     }
+
+    public function action_Markasclean()
+    {
+        $this->model->loadRequest();
+        $id = $this->model->getVar('id', null);
+
+        if (empty($id)) {
+            $this->model->showSelectionRequired();
+        }
+        $returns = $this->model->markAsClean($id);
+        $this->model->returnJSON($returns);
+    }
 }
 ?>	

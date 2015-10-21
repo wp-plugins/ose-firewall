@@ -479,4 +479,12 @@ class oseFirewall extends oseFirewallBase {
 	public static function getConfigurationURL () {
 		return 'index.php?option=com_ose_firewall&view=bsconfig';
 	}
+	public static function checkHtaccess () {
+		if (file_exists(JPATH_SITE.'/media/CentroraBackup') && !file_exists(JPATH_SITE.'/media/CentroraBackup/.htaccess'))
+		{
+			if (function_exists('copy')) {
+				$result = @copy(OSEAPPDIR.'protected/.htaccess', JPATH_SITE.'/media/CentroraBackup/.htaccess');
+			}
+		}
+	}
 }

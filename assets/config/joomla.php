@@ -35,7 +35,18 @@ define('OSE_FWURL',OURI::root().'components/com_ose_firewall/');
 define('OSE_ABSPATH', dirname(dirname(dirname(OSEFWDIR))));
 define('OSE_BACKUPPATH', dirname(dirname(OSEFWDIR)));
 
-define('OSE_BANPAGE_ADMIN', str_replace('administrator/', '', OURI::root() ). 'administrator/components/com_ose_firewall/');
+if (class_exists('SConfig')) {
+	$conf = new SConfig ();
+	if (!empty($conf->live_site)) {
+		define('OSE_BANPAGE_ADMIN', $conf->live_site.'administrator/components/com_ose_firewall/');
+	}
+	else {
+		define('OSE_BANPAGE_ADMIN', str_replace('administrator/', '', OURI::root() ). 'administrator/components/com_ose_firewall/');
+	}
+}
+else {
+	define('OSE_BANPAGE_ADMIN', str_replace('administrator/', '', OURI::root() ). 'administrator/components/com_ose_firewall/');
+}
 define('OSE_BANPAGE_URL', OSE_BANPAGE_ADMIN . ODS . 'public');
 
 define('OSE_FWRELURL',OURI::root().'components/com_ose_firewall/');

@@ -41,15 +41,27 @@ if ($status == true)
 								<div class="row">
                                   <div class="col-md-12">
                                    <div class="clean-buttons pull-right">
-	                                    <button class="btn btn-sm mr5 mb10" type="button"
-	                                            onClick="batchbkcl()"><i class="text-primary glyphicon glyphicon-erase"></i> <?php oLang::_('O_SCANREPORT_CLEAN'); ?></button>
-	                                    <button class="btn btn-sm mr5 mb10" type="button"
-	                                            onClick="batchquarantine()"><i class="text-primary glyphicon glyphicon-alert"></i> <?php oLang::_('O_SCANREPORT_QUARANTINE'); ?></button>
-	                                    <button class="btn btn-sm mr5 mb10" type="button"
-	                                            onClick="batchrs()"><i class="text-success glyphicon glyphicon-retweet"></i> <?php oLang::_('O_SCANREPORT_RESTORE'); ?></button>
+	                                    <button class="btn btn-sm mr5 mb10" type="button" onClick="batchbkcl()">
+											<i class="text-success glyphicon glyphicon-erase"></i>
+											<?php oLang::_('O_SCANREPORT_CLEAN'); ?>
+										</button>
+	                                    <button class="btn btn-sm mr5 mb10" type="button" onClick="batchquarantine()">
+											<i class="text-primary glyphicon glyphicon-alert"></i>
+											<?php oLang::_('O_SCANREPORT_QUARANTINE'); ?>
+										</button>
+									   <button class="btn btn-sm mr5 mb10" type="button" onClick="batchMarkAsClean()">
+										   <i class="text-warning glyphicon glyphicon-check"></i>
+										   <?php oLang::_('O_SCANREPORT_MARKASCLEAN'); ?>
+									   </button>
+	                                    <button class="btn btn-sm mr5 mb10" type="button" onClick="batchrs()">
+											<i class="text-success glyphicon glyphicon-retweet"></i>
+											<?php oLang::_('O_SCANREPORT_RESTORE'); ?>
+										</button>
 	                                    <button id="delete-button" class="btn btn-danger btn-sm mr5 mb10" type="button"
-	                                            style="display: none"
-	                                            onClick="confirmbatchdl()"><i class="text-primary glyphicon glyphicon-erase"></i> <?php oLang::_('O_SCANREPORT_DELETE'); ?></button>
+												style="display: none" onClick="confirmbatchdl()">
+											<i class="text-danger glyphicon glyphicon-trash"></i>
+											<?php oLang::_('O_SCANREPORT_DELETE'); ?>
+										</button>
                                   </div>
                                  </div>
                                 </div>

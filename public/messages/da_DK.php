@@ -730,7 +730,7 @@ define('DEVELOPMODE_DISABLED','<b>[Firewall Activated] </b>Great! Your website i
 define('DISDEVELOPMODE', '<b>WARNING</b>: Please turn on the Firewall in the Firewall Scanning Configuration to activate the firewall protection.');
 define('O_DELETE_ADMIN_SUCCESS', 'Successfully deleted the administrator account');
 define('O_DELETE_ADMIN_FAIL', 'There are errors when deleting the administrator account');
-define('AFFILIATE_TRACKING', 'Affiliate Tracking');
+define('AFFILIATE_TRACKING', 'Affiliate Program');
 define('LOGIN_TITLE', 'Centrora Member Login');
 define('LOGIN_DESC', 'You can login here with your Centrora Account or OSE Account to activate your premium services');
 define('HOW_TO_ACTIVATE', 'How to activate my premium service?');
@@ -772,7 +772,7 @@ define('UNBAN_PAGE_GOOGLE_AUTH_DESC', 'If you have Unban Google Authenticator en
 
 // Version 5.0.5
 define('ADMIN_MANAGER', 'Administrator Manager');
-define('SECURITY_MANAGER', 'Security Manager (beta)');
+define('SECURITY_MANAGER', 'Security Manager <sup><span>(beta)</span></sup>');
 define('O_READMORE', 'Read More');
 define('O_OUR_TUTORIAL', 'our tutorial here');
 define('O_SUBSCRIBE_PLAN', 'to subscribe a plan');
@@ -786,13 +786,14 @@ define('SECURITY_PASSWORD', 'Password');
 define('SECURITY_PASSWORD2', 'Confirm Password');
 
 // Version 5.1.0
-define('CORE_SCAN', 'Scan core directories(beta)');
-define('CORE_SCAN_TITLE', '<b>Core directory</b> <span><b>Scanner(beta)</b></span>');
-define('CORE_SCAN_DESC', 'Core directory Scanner is a neat and quick detector, it scans the core directory of your website and detects suspicious files.');
-define('Vl_SCAN', 'Scan Vulnerabilities');
-define('Vl_SCAN_TITLE', 'Vulnerabilities Scanner');
-define('Vl_SCAN_DESC', 'Vulnerabilities Scanner is a powerful vulnerability detector. It scans through your website and detects any real vulnerabilities. Credits to WPScan Vulnerability who provided their Database API as the base for this scan');
-define('START_NEW_VLSCAN', 'Start Scanning');
+define('CORE_SCAN', 'Core Directories Scanner<sup><span>(beta)</span></sup>');
+define('CORE_SCAN_TITLE', '<b>Core Directories </b> <span><b>Scanner</b><sup><span>(beta)</span></sup>');
+define('CORE_SCAN_DESC', 'Core directories Scanner is a neat and quick detector, it scans the core directories of your website and detects suspicious files.');
+define('Vl_SCAN', 'Vulnerabilities Scanner');
+define('Vl_SCAN_TITLE', '<b>Vulnerabilities Scanner</b> <sup><span>(beta)</span></sup>');
+define('Vl_SCAN_DESC', 'Vulnerabilities Scanner is a powerful vulnerability detector. It scans through your website and detects any real vulnerabilities.');
+define('Vl_SCAN_CRED_WPSCAN', 'Credits to WPScan Vulnerability');
+define('START_NEW_SCAN', 'Start Scanning');
 
 define('JOOMLA_TWOFACTORAUTH', 'Two Factor Authentication - Google Authenticator');
 define('JOOMLA_TWOFACTORAUTH_HELP', 'Allows users on your site to use two factor authentication using Google Authenticator or other compatible time-based One Time Password generators. To use two factor authentication please edit the user profile and enable two factor authentication.');
@@ -808,10 +809,57 @@ define('BRUTE_FORCE_STATUS_HELP', 'Brute Force Protection will set a login attem
 define('VL_CHECK_VUL','Scanning for vulnerabilities...');
 define('VL_GET_LIST','Generating scan list...');
 define('VL_COMPLETE','Scanning Complete with the result:');
+define('VL_CALL_TOACTION', 'We highly recommend you update the following to the latest version immediately, or if you are no longer using it, remove it from your site. If your site has been compromised due to this vulnerability, <a href="'.OSE_OEM_URL_MALWARE_REMOVAL.'" target="_blank" > we can help </a>.');
 
 define('ADMIN_SETTINGS', 'Administrator Settings');
 define('CENTRORA_GOOGLE_AUTH', 'Centrora Google Authenticator');
 define('CENTRORA_GOOGLE_AUTH_HELP', 'Enable centrora google authenticator and scan the QR code, you can pass through the ban page or 403 forbidden page by inputting the correct google authentication code');
 define('UPLOAD_FILE_403WARN2', 'You are uploading a suspicous file(file content <strong>does not</strong> match file extension). <br /> <br />If you are the server administrator, please notice that this is a suspicious file.');
+define('SETSCANPATH', 'Set Scan Path');
+define('SURF_SCAN', 'Static Scanner <sup><span>(beta)</span></sup>');
+define('SURF_SCAN_TITLE', '<b>Static Scanner</b> <span><sup>(beta)</sup></span>');
+define('SURF_SCAN_DESC', 'Static Scanner checks for all known viruses and malware. It is recommended that if nothing is detected you use the Dynamic Scanner');
+define('DEEPSCAN', 'Dynamic Scanner');
+define('SURF_SCAN_SIG_UPDATED', 'Your Static Scan signatures have been updated!');
+define('SURF_SCAN_SIG_UPTODATE', 'Great! Your Static Scan signatures are up-to-date.');
+define('SURF_SCAN_SIG_NOTUPTODATE', 'Updating Your Static Scan signatures.');
+define('SURF_SCAN_CALL_TOACTION', 'We highly recommend you review the files listed immediately! If your site has been compromised due to the malicious file(s), <a href="'.OSE_OEM_URL_MALWARE_REMOVAL.'" target="_blank" > we can help</a>.');
 
+// Version 5.1.5
+define('FILE_PERM_SCAN', 'File Permissions Scanner<sup><span>(beta)</span></sup>');
+define('FILE_PERM_SCAN_TITLE', '<b>File Permissions Scanner</b> <sup><span>(beta)</span></sup>');
+define('FILE_PERM_SCAN_DESC', 'File Permissions Scanner can detect files with insecure file permission and repair them with just one click(For folders, folder permission will be set to 755, for files, file permission will be set to 644). ');
+define('CHOOSE_MULTISITE', 'Choose sites to scan');
+define('SUITE_CF_NOTICE', 'Please notice that this core file scanner only works on wordpress or joomla site');
+define('NO_DETECT_WEBSITE', 'No Joomla or Wordpress sites detected, Please note only Joomla or Wordpress site can use this function');
+define('CLEAR_BACKUP_TIME', 'Clean old backups');
+define('LAST_ONE_WEEK', 'Keep last one week');
+define('LAST_TWO_WEEK', 'Keep last two weeks');
+define('LAST_THREE_WEEK', 'Keep last three weeks');
+define('LAST_FOUR_WEEK', 'Keep last four weeks');
+define('LAST_TWO_MONTH', 'Keep last two months');
+define('LAST_THREE_MONTH', 'Keep last three months');
+define('LAST_HALF_YEAR', 'Keep last half year');
+define('LAST_FOREVER', 'Keep all backups');
+define('O_BK_TAB_BACKUPS', 'Backups');
+define('O_BK_TAB_NEW_BACKUP', 'Create New');
+define('O_AUTHENTICATION_BACKUP', '&nbspAuthentication');
+define('O_LOGOUT', '&nbspLogout');
+
+define('SETDATE', 'Set Date Range');
+define('SETSTARTDATE', 'Set Start Date');
+define('SETENDDATE', 'Set End Date');
+define('SYMLINK', 'Scan symbolic link');
+define('MF_SCAN', 'Modified Files Scanner');
+define('MF_SCAN_TITLE', '<b>Modified Files Scanner</b> <sup><span>(beta)</span></sup>');
+define('MF_SCAN_DESC', 'The Modified Files Scanner can detect modified files within a certain time period and files which are symbolic links.');
+define('O_RESTORE_TEST', 'Restore testing button');
+define('O_BASE_FILEPERM', 'Base file permission');
+define('O_BASE_FOLDERPERM', 'Base folder permission');
+define('CLEAR_BLACKLIST_URL', 'Clear Blacklist Cronjob Url (See <a href ="' . OSE_OEM_URL_ADVFW_TUT . '" target=\'_blank\'>Tutorial Here</a>)');
+define('CATCH_VIRUS_MD5', 'Update Virus MD5');
+define('O_BACKUP_ACTION', 'Action');
+define('FPSCAN_CALL_TOACTION', 'We highly recommend you review the files listed.');
+
+define('O_SCANREPORT_MARKASCLEAN', 'Mark As Clean');
 ?>

@@ -87,8 +87,7 @@ class AdvancerulesetsModel extends BaseModel
 				$return = $this->getEmptyReturn ();
 			}
 		}
-		$_SESSION['advrulesetdraw'] = (isset($_SESSION['advrulesetdraw']))?$_SESSION['advrulesetdraw']+1:1;
-		$return['draw']=$_SESSION['advrulesetdraw'];
+		$return['draw']=$this->getInt('draw');
 		return $return;
 	}
 	public function changeRuleStatus($ids, $status)

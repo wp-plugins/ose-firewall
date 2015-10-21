@@ -779,7 +779,7 @@ UL.filetree
 UL.filetree LI
 {
     list-style: none;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 10px;
     margin: 0px 0px 0px 10px;
     white-space: nowrap;
 }
@@ -818,8 +818,8 @@ UL.filetree A:hover
 }
 .filetree LI UL LI:before
 {
-    margin-left: -40px;
-    content: "\2014";
+    margin-left: -10px;
+    /*content: "\2014";*/
     position: absolute;
 }
 .filetree LI UL LI
@@ -1040,6 +1040,11 @@ li.dropdown {
     font-size: 12px;
 }
 
+.backupType {
+	padding: 10px;
+	float: left;
+}
+
 .clickdropbox {
     padding: 10px;
     float: left;
@@ -1092,7 +1097,7 @@ li.dropdown {
 	display: block; width: 16px; margin: 0px;
 	background: #A1A1A1;
 	border: 1px solid rgba(158, 173, 195, 0.16); border-radius: 20px;
-	position: absolute; top: 5px; bottom: 7px; right: 55px;
+	position: absolute; top: 6px; bottom: 1px; right: 55px;
 	-moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
 	-o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
 }
@@ -1214,7 +1219,7 @@ li.dropdown {
     padding: 2px;
 }
 
-#save-button {
+#save-button, #save-button-fw{
 	margin-top: 10px;
 	float: right;
 }
@@ -1360,6 +1365,209 @@ label, input, button, select, textarea {
 .white-bg .panel-title {
     color: #3e4855;
 }
-.form-control {
-    margin-left: 0px !important;
+
+/*vulnerability scanner*/
+.vl-short-desc{
+    background-color: #F5F5F5;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: help;
 }
+
+.vl-long-desc{
+    border: 2px dotted #808080;
+    border-radius: 4px;
+}
+.vl-desc-item{
+    padding: 10px 10px ;
+}
+
+.bubble {
+    background-color: #F37061;
+    font-size: 10px !important;
+    border-radius: 30px !important;
+    min-width: 24px;
+    padding: 3px -1px;
+    margin-left: 5px;
+    text-align: center;
+    vertical-align: baseline;
+    display: inline-block;
+    white-space: nowrap;
+    font-weight: 400;
+    color:white;
+}
+.vl-tabs{
+    width: 140px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+
+
+/*-------- new backup page ---------*/
+
+
+#breadcrumb {
+    list-style: none;
+    display: inline-block;
+    padding-left: 33px;
+}
+#breadcrumb .icon {
+    font-size: 14px;
+}
+#breadcrumb li {
+    float: left;
+}
+#breadcrumb li a {
+    color: #FFF;
+    display: block;
+    background: #3498db;
+    text-decoration: none;
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px 0 5px;
+    text-align: center;
+    margin-right: 23px;
+}
+.breadcrumb-span {
+    color: #000000;
+    display: block;
+    text-decoration: none;
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px 0 5px;
+    text-align: center;
+    margin-right: 23px;
+    font-size: 20px;
+}
+#breadcrumb li:nth-child(even) a {
+    background-color: #2980b9;
+}
+#breadcrumb li:nth-child(even) a:before {
+    border-color: #2980b9;
+    border-left-color: transparent;
+}
+#breadcrumb li:nth-child(even) a:after {
+    border-left-color: #2980b9;
+}
+#breadcrumb li a:before, #breadcrumb li a:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    border: 0 solid #3498db;
+    border-width: 20px 10px;
+    width: 0;
+    height: 0;
+}
+#breadcrumb li a:before {
+    left: -20px;
+    border-left-color: transparent;
+}
+#breadcrumb li a:after {
+    left: 100%;
+    border-color: transparent;
+    border-left-color: #3498db;
+}
+/*#breadcrumb li a:hover {*/
+    /*background-color: #1abc9c;*/
+/*}*/
+/*#breadcrumb li a:hover:before {*/
+    /*border-color: #1abc9c;*/
+    /*border-left-color: transparent;*/
+/*}*/
+/*#breadcrumb li a:hover:after {*/
+    /*border-left-color: #1abc9c;*/
+/*}*/
+/*#breadcrumb li a.select {*/
+    /*background-color: #1abc9c;*/
+/*}*/
+/*#breadcrumb li a.select:before {*/
+    /*border-color: #1abc9c;*/
+    /*border-left-color: transparent;*/
+/*}*/
+/*#breadcrumb li a.select:after {*/
+    /*border-left-color: #1abc9c;*/
+/*}*/
+/*#breadcrumb li a:active {*/
+    /*background-color: #16a085;*/
+/*}*/
+/*#breadcrumb li a:active:before {*/
+    /*border-color: #16a085;*/
+    /*border-left-color: transparent;*/
+/*}*/
+/*#breadcrumb li a:active:after {*/
+    /*border-left-color: #16a085;*/
+/*}*/
+
+.new_backup_pf_info
+{
+    border: 3px dotted #877777;
+    border-radius: 6px;
+    min-height: 100px;
+
+}
+
+.dot-line
+{
+    border-bottom: 2px dotted #EEEEEE;
+    margin-bottom: 20px;
+}
+
+.backup-list-dotline
+{
+    margin-top: 20px;
+}
+
+.btn_enable_dropbox
+{
+    background-color: #1081DE;
+    width: 20px;
+}
+
+.backup-config-item
+{
+    height: 40px !important;
+    margin-bottom: 10px;
+}
+
+.select-platform{
+    padding: 8px 15px !important;
+}
+
+.backup-loading-info{
+    color: #999999;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.backup-loading-info-snippet{
+    color: #999999;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    font-style: oblique;
+}
+
+.backup-short-desc{
+    background-color: #F5F5F5;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+.backup-long-desc{
+    border: 2px dotted #808080;
+    border-radius: 4px;
+}
+.backup-item{
+    padding: 10px 10px ;
+}
+
+.backuplist-action
+{
+	padding: 10px;
+}
+
+/*---------- end of new backup page -------------*/
+

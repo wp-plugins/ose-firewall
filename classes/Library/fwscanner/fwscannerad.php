@@ -172,12 +172,31 @@ class oseFirewallScannerAdvance extends oseFirewallScannerBasic {
 	private function groupRequest($request){
 		$request_Str = null;
 		if(isset($request)){
-			$get_Str = implode("\n", $request['GET']);
-			$post_Str = implode("\n", $request['POST']);
+			//$get_Str = implode("\n", $request['GET']);
+			//$post_Str = implode("\n", $request['POST']);
+            $get_Str = $this->recursive_implode("\n", $request['GET']);
+            $post_Str = $this->recursive_implode("\n", $request['POST']);
 			$request_Str = implode("\n", array($get_Str, $post_Str));	
 		}
 		return $request_Str; 
-	} 
+	}
+
+    private function recursive_implode($glue = ',', array $array, $include_keys = false, $trim_all = false)
+    {
+        $glued_string = '';
+        // Recursively iterates array and adds key/value to glued string
+        array_walk_recursive($array, function($value, $key) use ($glue, $include_keys, &$glued_string)
+        {
+            $include_keys and $glued_string .= $key.$glue;
+            $glued_string .= $value.$glue;
+        });
+        // Removes last $glue from string
+        strlen($glue) > 0 and $glued_string = substr($glued_string, 0, -strlen($glue));
+        // Trim ALL whitespace
+        if ($trim_all)
+            $glued_string = preg_replace("/(\s)/ixsm", '', $glued_string);
+        return (string) $glued_string;
+    }
 	private function convertVariables ($requestArray) {
 		foreach ($requestArray as $arrayKey => $request)
 		{
