@@ -853,7 +853,7 @@ class oseFirewallBase extends oseFirewallRoot
 		}
 	}
 
-	private function checkTabledetcontdetail($oseDB2, $return = true)
+	private static function checkTabledetcontdetail($oseDB2, $return = true)
 	{
 		$query = 'DESCRIBE #__osefirewall_detcontdetail;';
 		$oseDB2->setQuery($query);
@@ -882,7 +882,7 @@ class oseFirewallBase extends oseFirewallRoot
 		$oseDB2->query();
 	}
 
-	private function checkTablefiles($oseDB2, $return = true)
+	private static function checkTablefiles($oseDB2, $return = true)
 	{
 		$query = 'DESCRIBE #__osefirewall_files;';
 		$oseDB2->setQuery($query);
