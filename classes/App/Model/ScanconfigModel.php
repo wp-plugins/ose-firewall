@@ -105,4 +105,14 @@ class ScanconfigModel extends ConfigurationModel {
         $return = $emailManager->sendemail($type, $content);
         return $return;
     }
+
+    public function updatetotp($status)
+    {
+        $Array = array(
+            'enabled' => $status,
+        );
+        $id = $this->db->addData('update', '#__extensions', 'name', 'plg_twofactorauth_totp', $Array);
+        return $id;
+    }
+
 }

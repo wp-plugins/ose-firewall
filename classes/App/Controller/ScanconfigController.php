@@ -58,23 +58,31 @@ class ScanconfigController extends ConfigurationController {
                 $data['loginSlug'] = $this->model->getVar('loginSlug', null);
                 $data['devMode'] = $this->model->getInt('devMode', 1);
                 $data['strongPassword'] = $this->model->getInt('strongPassword', 0);
-				$data['allowExts'] = $this->model->getVar('allowExts', null);
 				$data['scanUpFiles'] = $this->model->getInt('scanUpFiles', null);
 				$data['blockIP'] = $this->model->getInt('blockIP', 0);
-				$data['adminEmail'] = $this->model->getVar('adminEmail', null);
-				$data['receiveEmail'] = $this->model->getInt('receiveEmail', 0);
-				$data['googleVerification'] = $this->model->getVar('googleVerification', 0);
-                $data['gaSecret'] = $this->model->getVar('GA_secret', null);
 				$data['customBanpage'] = $_POST['customBanpage'];
 				$data['customBanURL'] = $this->model->getVar('customBanURL',null);
 				break;
-			case 'advscan':
+            case 'admin':
+                $data['adminEmail'] = $this->model->getVar('adminEmail', null);
+                $data['receiveEmail'] = $this->model->getInt('receiveEmail', 0);
+                $data['gaSecret'] = $this->model->getVar('GA_secret', null);
+                $data['centroraGA'] = $this->model->getVar('centroraGA', 0);
+                break;
+            case 'advscan':
 				$data['adRules'] = $this->model->getInt('adRules', 0);
 				$data['threshold'] = $this->model->getInt('threshold', 20);
 				$data['slient_max_att'] = $this->model->getInt('slient_max_att', 10);
 				$data['silentMode'] = $this->model->getInt('silentMode', 0);
 				$data['blockCountry'] = $this->model->getInt('blockCountry', 0);
-				break;
+                $data['clearCronKey'] = $this->model->getVar('clearCronKey', null);
+                break;
+            case 'bf':
+                $data['bf_status'] = $this->model->getInt('bf_status', 0);
+                $data['loginSec_maxFailures'] = $this->model->getInt('loginSec_maxFailures', 20);
+                $data['loginSec_countFailMins'] = $this->model->getInt('loginSec_countFailMins', 5);
+                $data['googleVerification'] = $this->model->getVar('googleVerification', 0);
+                break;
 			case 'communicate':
 				$data['auditReport'] = $this->model->getInt('auditReport', 1);
 				break;
@@ -102,6 +110,10 @@ class ScanconfigController extends ConfigurationController {
             $single = array();
             $single['passcode_status'] = $this->model->getInt('passcode_status', 0);
             $this->model->saveConfigurationNoExit('oem', $single);
+        }
+        if (OSE_CMS == 'joomla') {
+            $totp = $this->model->getInt('totp', 0);
+            $this->model->updatetotp($totp);
         }
         if($type == 'scan') {
             $confArray = $this->model->getConfiguration('scan');

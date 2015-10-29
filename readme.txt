@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: wordpress security, admin, anti-spam, comments, anti-hack, anti-virus, firewall, plugin, virus cleaning, google, phishing, malware, google drive, google drive backup, dropbox, dropbox backup, one drive, one drive backup, virus scanner, malware scanning, malware removal, backup, wordpress backup
 Requires at least: 3.7
 Tested up to: 4.2.3
-Stable tag: 5.0.14
+Stable tag: 5.0.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,11 @@ Visit the Full Tutorial <a href = "http://www.centrora.com/plugin-tutorial/plugi
 8. Country Blocking Management Panel
 
 == Changelog ==
+
+= 5.0.15 =
+* Enhanced: Enhanced the firewallbase class to fulfill the restrict PHP coding standard
+* Fixed: Administrator email is not shown in contact message field in the banned page
+* Enhanced: Enhanced firewall scanner class to enhance efficiency
 
 = 5.0.14 =
 * Enhanced: Enhanced the firewallbase class to fulfill the restrict PHP coding standard

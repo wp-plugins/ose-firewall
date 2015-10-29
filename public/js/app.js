@@ -227,7 +227,7 @@ function AppRemoveItems (action) {
 
 function AppRemoveAllItems (task, table) {
 	bootbox.dialog({
-		message: O_DELETE_CONFIRM_DESC,
+		message: O_DELETEALL_CONFIRM_DESC + '</br> </br><b>NB: </b>' + O_DELETEALLIP_CONFRIM,
 		title: O_DELETE_CONFIRM,
 		buttons: {
 			success: {
@@ -502,6 +502,28 @@ jQuery(document).ready(function($){
         return false; // avoid to execute the actual submit of the form.
     });
 
+    $("#adminconfiguraton-form").submit(function () {
+        showLoading(O_PLEASE_WAIT);
+        var addata = $("#adminconfiguraton-form").serialize();
+        addata += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: addata, // serializes the form's elements.
+            success: function (data) {
+                data = jQuery.parseJSON(data);
+                if (data.status == 'SUCCESS') {
+                    showLoading(data.result);
+                    hideLoading();
+                }
+                else {
+                    hideLoading();
+                    showDialogue(data.result, data.status, O_OK);
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
     $("#adconfiguraton-form").submit(function () {
         showLoading(O_PLEASE_WAIT);
         var addata = $("#adconfiguraton-form").serialize();
@@ -525,6 +547,28 @@ jQuery(document).ready(function($){
         return false; // avoid to execute the actual submit of the form.
     });
 
+    $("#bfconfiguraton-form").submit(function () {
+        showLoading(O_PLEASE_WAIT);
+        var bfdata = $("#bfconfiguraton-form").serialize();
+        bfdata += '&centnounce=' + $('#centnounce').val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: bfdata, // serializes the form's elements.
+            success: function (data) {
+                data = jQuery.parseJSON(data);
+                if (data.status == 'SUCCESS') {
+                    showLoading(data.result);
+                    hideLoading();
+                }
+                else {
+                    hideLoading();
+                    showDialogue(data.result, data.status, O_OK);
+                }
+            }
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
 	$("#admin-configuraton-form").submit(function() {
 		showLoading(O_PLEASE_WAIT);
 		var data = $("#admin-configuraton-form").serialize();
@@ -768,4 +812,28 @@ function getfiletreedisplay (entry, current, rel_id){
             return current.attr( rel_id );
         } else {return '';}
     }
+}
+function actCentroraPlugin() {
+    jQuery(document).ready(function ($) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                option: option,
+                controller: 'audit',
+                action: 'actCentroraPlugin',
+                task: 'actCentroraPlugin',
+                centnounce: $('#centnounce').val()
+            },
+            success: function (data) {
+                if (data.status == 'Completed') {
+                    $('#pluginNotice').html('<div class="alert alert-success fade in"> <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> <span class="label label-success">Success</span> Centrora Plugin is enabled now</div>');
+                }
+                else {
+                    showDialogue(O_ACTIVATE_FAIL, O_FAIL, O_OK);
+                }
+            }
+        });
+    });
 }

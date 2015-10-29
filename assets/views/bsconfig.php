@@ -5,6 +5,8 @@ $confArray = $this->model->getConfiguration ( 'scan' );
 $adconfArray = $this->model->getConfiguration('advscan');
 $seoConfArray = $this->model->getConfiguration ( 'seo' );
 $oemConfArray = $this->model->getConfiguration('oem');
+$bfConfArray = $this->model->getConfiguration('bf');
+$adminConfArray = $this->model->getConfiguration('admin');
 ?>
 <div id="oseappcontainer">
 	<div class="container">
@@ -47,13 +49,20 @@ $oemConfArray = $this->model->getConfiguration('oem');
                     <div class="panel-body">
                         <div id="tabs">
                             <ul class="nav nav-tabs" data-tabs="tabs">
-                                <li id="hehe" class="active"><a data-toggle="tab" href="#firewall"><?php oLang::_('SCAN_CONFIGURATION_TITLE'); ?></a>
+                                <li id="scantabid" class="active"><a data-toggle="tab"
+                                                                     href="#firewall"><?php oLang::_('SCAN_CONFIGURATION_TITLE'); ?></a>
+                                </li>
+                                <li><a data-toggle="tab" href="#admin"><?php oLang::_('ADMIN_SETTINGS'); ?></a>
                                 </li>
                                 <li><a data-toggle="tab" href="#seo"><?php oLang::_('SEO_CONFIGURATION'); ?>
                                         <i tabindex="0" class="fa fa-question-circle color-gray"  data-toggle="popover" data-content="<?php oLang::_('SEO_CONFIGURATION_HELP');?>"></i>
                                     </a>
                                 </li>
-                                <li id="haha"><a data-toggle="tab" href="#adfirewall"><?php oLang::_('ADVANCED_FIREWALL_SETTINGS'); ?></a>
+                                <li id="adfirewalltabid"><a data-toggle="tab"
+                                                            href="#adfirewall"><?php oLang::_('ADVANCED_FIREWALL_SETTINGS'); ?></a>
+                                </li>
+                                <li><a data-toggle="tab"
+                                       href="#bruteforce"><?php oLang::_('BRUTEFORCE_SETTINGS'); ?></a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -61,6 +70,8 @@ $oemConfArray = $this->model->getConfiguration('oem');
                                 include_once (dirname ( __FILE__ ) . '/bsconfigfirewall.php');
                                 include_once (dirname ( __FILE__ ) . '/bsconfigseo.php');
                                 include_once (dirname ( __FILE__ ) . '/bsconfigadfirewall.php');
+                                include_once(dirname(__FILE__) . '/bsconfigbruteforce.php');
+                                include_once(dirname(__FILE__) . '/bsconfigadmin.php');
                                 ?>
                             </div>
                         </div>

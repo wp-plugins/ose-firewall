@@ -41,7 +41,7 @@ class oseFirewallIpManager
 		$this->setIP();
 		if ($db!=null) {
 			$this->db = $db;
-			$this->checkIPStatus();
+			$this->checkIPStatusV2();
 		}
 	}
 	public function getIP()
@@ -141,6 +141,33 @@ class oseFirewallIpManager
 			{
 				$this->countryBlock = false;
 			}
+		}
+	}
+	private function checkIPStatusV2()
+	{
+		$ipLong = $this->getIPLong(true);
+		$attrList = array("`acl`.`id` AS `id`", "`acl`.`status` AS `status`");
+		$sql = "SELECT `acl`.`id` AS `id`, `acl`.`status` AS `status` ".
+			   "FROM `#__osefirewall_acl` AS `acl` LEFT JOIN `#__osefirewall_iptable` AS `ip` ".
+			   "ON `acl`.`id` = `ip`.`acl_id` ";
+		$query = $sql." WHERE `ip32_start` = ".$this->db->quoteValue($ipLong);
+		$this->db->setQuery($query);
+		$result = $this->db->loadObject();
+		if (empty($result))
+		{
+			$query = $sql." WHERE `ip32_start`<= ".$this->db->quoteValue($ipLong)." AND ".$this->db->quoteValue($ipLong)."<=`ip32_end`";
+			$this->db->setQuery($query);
+			$result = $this->db->loadObject();
+		}
+		if (!empty($result))
+		{
+			$this->aclid = $result->id;
+			$this->ipStatus = $result->status;
+		}
+		else
+		{
+			$this->aclid = null;
+			$this->ipStatus = null;
 		}
 	}
 	private function checkIPStatus()

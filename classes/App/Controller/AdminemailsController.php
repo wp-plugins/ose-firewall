@@ -144,12 +144,8 @@ class AdminemailsController extends \App\Base
                 $return['message'] ="Security manager is successfully added.";
             }
             else {
-                $return['status'] = 'FAIL';
-                if (empty($result)) {
-                    $return['message'] = "Please use a stronger password.";
-                } else {
-                    $return['message'] = $result;
-                }
+            	$return['status'] = 'FAIL';
+            	$return['message'] ="Please use a stronger password.";
             }
             $this->model->returnJSON($return);
 

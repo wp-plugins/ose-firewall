@@ -74,7 +74,7 @@ class oseFirewallScanner {
         oseFirewall::loadBackendBasicFunctions();
 	}
 	protected function setConfig() {
-		$query = 'SELECT `key`, `value` FROM `#__ose_secConfig` WHERE `type` IN ("seo", "scan", "addons", "advscan", "country")';
+		$query = 'SELECT `key`, `value` FROM `#__ose_secConfig` WHERE `type` IN ("seo", "scan", "addons", "advscan", "country", "admin")';
 		$this->db->setQuery($query);
 		$results = $this->db->loadArrayList();
 		foreach ($results as $result)
@@ -560,7 +560,7 @@ class oseFirewallScanner {
     public function showBanPage()
     {
 		$this->customRedirect ();
-		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail: '';
+		$adminEmail = (isset ($this->adminEmail)) ? $this->adminEmail : oseFirewall::getAdminEmail();
 		$customBanPage = (!empty ($this->customBanpage)) ? $this->customBanpage: 'Banned';
 		$pageTitle = (!empty ($this->pageTitle)) ? $this->pageTitle : 'Centrora Security';
 		$metaKeys = (!empty ($this->metaKeywords)) ? $this->metaKeywords : 'Centrora Security';
@@ -970,8 +970,11 @@ class oseFirewallScanner {
 		$query = "SELECT `ext_name` FROM `#__osefirewall_fileuploadext` WHERE `ext_status` = 1";
 		$this->db->setQuery($query);
 		$results = $this->db->loadArrayList();
-		foreach ( $results as $result ) {
-			$return[] = strtolower($result['ext_name']);
+		$return = array();
+		if (!empty($results)) {
+			foreach ( $results as $result ) {
+				$return[] = strtolower($result['ext_name']);
+			}
 		}
 		$this->allowExts = ( !empty($return) ) ? $return : null;
 	}
@@ -1126,14 +1129,14 @@ class oseFirewallScanner {
 		unset ($_FILES);
 	}
 	protected function checkCountryStatus () {
-		$ready = oseFirewall::getGeoIPState();
-		if ($ready == true)
+		if ($this->blockCountry == false)
 		{
-			if ($this->blockCountry == false)
-			{
-				return false;
-			}
-			else
+			return false;
+		}
+		else 
+		{
+			$ready = oseFirewall::getGeoIPState();
+			if ($ready == true)
 			{
 				$query = "SELECT country.`status` FROM `#__ose_app_geoip` as `ip` LEFT JOIN `#__osefirewall_country` AS `country` ON country.country_code = ip.country_code WHERE ".$this->db->QuoteValue($this->ip32)." BETWEEN ip.ip32_start AND ip.ip32_end ";
 				$this->db->setQuery($query);
@@ -1158,11 +1161,11 @@ class oseFirewallScanner {
 					return false;
 				}
 			}
-		}
-		else
-		{
-			return false;
-		}
+			else
+			{
+				return false;
+			}
+		}	
 	}
 	protected function showCountryBlockMsg () {
 		$style= "font-family: arial; background: none repeat scroll 0 0 #0C56B0; border-bottom: 5px solid #4D91E2;color: #FFFFFF; padding: 10px; font-size: 12px; text-align: center;";

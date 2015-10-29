@@ -868,7 +868,7 @@ class oseFirewallBase extends oseFirewallRoot
 		return $return;
 	}
 
-	private function addcolumndetcontdetail ($oseDB2)
+	private static function addcolumndetcontdetail ($oseDB2)
 	{
 		$query = 'ALTER TABLE `#__osefirewall_detcontdetail` ADD inserted_on DATETIME NOT NULL;';
 		$oseDB2->setQuery($query);
@@ -897,7 +897,7 @@ class oseFirewallBase extends oseFirewallRoot
 		return $return;
 	}
 
-	private function addcolumnfiles ($oseDB2)
+	private static function addcolumnfiles ($oseDB2)
 	{
 		$query = 'ALTER TABLE `#__osefirewall_files` ADD content text NULL;';
 		$oseDB2->setQuery($query);

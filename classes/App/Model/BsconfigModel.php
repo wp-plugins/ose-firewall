@@ -88,4 +88,142 @@ class BsconfigModel extends BaseModel {
         }
         return;
     }
+
+    public function checktotp()
+    {
+        $query = "SELECT `enabled` From `#__extensions` WHERE `name` = 'plg_twofactorauth_totp';";
+        $this->db->setQuery($query);
+        $results = $this->db->loadObject();
+        if (empty($results)) {
+            $Array = array(
+                'type' => 'plugin',
+                'name' => 'plg_twofactorauth_totp',
+                'enabled' => 0,
+                'element' => 'totp',
+                'folder' => 'twofactorauth',
+                'client_id' => 0,
+                'access' => 1,
+                'protected' => 0,
+                'manifest_cache' => '{"name":"plg_twofactorauth_totp","type":"plugin","creationDate":"August 2013","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2015 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.2.0","description":"PLG_TWOFACTORAUTH_TOTP_XML_DESCRIPTION","group":"","filename":"totp"}',
+                'ordering' => 0,
+                'state' => 0
+            );
+            $id = $this->db->addData('insert', '#__extensions', '', '', $Array);
+            return 0;
+        } else {
+            return ($results == 1) ? true : false;
+        }
+    }
+    public function getmaxFailures()
+    {
+        $confArray = $this->getConfiguration('bf');
+        $limit = $confArray['data']['loginSec_maxFailures'];
+        if (!empty($limit)) {
+            $tub = '<option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>';
+            $re = "/\"".$limit."\"/";
+            $subst = "\"".$limit."\" selected";
+
+            $result = preg_replace($re, $subst, $tub, 1);
+            echo $result;
+
+        } else {
+            $tub = '<option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="20" selected >20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>';
+            echo $tub;
+        }
+    }
+    public function getTimeFrame()
+    {
+        $confArray = $this->getConfiguration('bf');
+        $limit = $confArray['data']['loginSec_countFailMins'];
+        if (!empty($limit)) {
+            $tub = ' <option value="5" selected >5 minutes</option>
+                   <option value="10">10 minutes</option>
+                   <option value="30">30 minutes</option>
+                   <option value="60">1 hour</option>
+                   <option value="120">2 hours</option>
+                   <option value="360">6 hours</option>
+                   <option value="720">12 hours</option>
+                   <option value="1440">1 day</option>';
+            $re = "/\"".$limit."\"/";
+            $subst = "\"".$limit."\" selected";
+
+            $result = preg_replace($re, $subst, $tub, 1);
+            echo $result;
+
+        } else {
+            $tub = '<option value="5" selected >5 minutes</option>
+                   <option value="10">10 minutes</option>
+                   <option value="30">30 minutes</option>
+                   <option value="60">1 hour</option>
+                   <option value="120">2 hours</option>
+                   <option value="360">6 hours</option>
+                   <option value="720">12 hours</option>
+                   <option value="1440">1 day</option>';
+            echo $tub;
+        }
+    }
+
+    public function clear_blacklist_url()
+    {
+        $key = $this->getCronKey();
+        if (empty($key)) {
+            $key = $this->getRandomKey();
+        }
+        if (OSE_CMS == 'wordpress') {
+            echo '<code>' . trailingslashit(home_url()) . 'index.php?clearIPKey=</code> <input id="clearCronKey" type="text" name="clearCronKey" readonly="readonly" value="' . $key . '">';
+        } else {
+            echo '<code>' . JURI:: root() . '/index.php?clearIPKey=</code> <input id="clearCronKey" type="text" name="clearCronKey" readonly="readonly" value="' . $key . '">';
+        }
+    }
+
+    private function getRandomKey()
+    {
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; // allowed characters in Base32
+        $secret = '';
+        for ($i = 0; $i < 16; $i++) {
+            $secret .= substr($chars, rand(0, strlen($chars) - 1), 1);
+        }
+        return $secret;
+    }
+
+    private function getCronKey()
+    {
+        $confArray = $this->getConfiguration('advscan');
+        if (!empty($confArray['data']['clearCronKey'])) {
+            return $confArray['data']['clearCronKey'];
+        }
+        return;
+    }
 }
